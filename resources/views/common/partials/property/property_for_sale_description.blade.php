@@ -3,6 +3,13 @@
 
         <?php 
 
+            if(isset($property_data->facilities) && !empty($property_data->facilities))
+            {   
+
+                $facilities = explode(",",rtrim($property_data->facilities, ","));
+
+            }
+
             $name       = $property_data->media->first()->name_unique;
             $path       = \App\Helpers\common::getMediaPath($property_data);
             $full_path  = $path."".$name; 
@@ -35,7 +42,7 @@
                         <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
                         <div class="row single-realestate-detail p-3">
                             <div class="col-md-12">
-                                <div class="u-t3 mt-3">JESSHEIM SENTRUM</div>
+                                <div class="u-t3 mt-3">{{$property_data->local_area_name}}</div>
                                 <h1 class="u-t2">{{$property_data->headline}}</h1>
                             </div>
                             <div class="col-md-12 text-muted">{{$property_data->street_address}}</div>
@@ -59,18 +66,33 @@
                             <div class="col-md-6"><span class="font-weight-bold">Byggeår </span>&nbsp;<span>{{$property_data->year}}</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Primærrom </span>&nbsp;<span>{{$property_data->primary_room}} m²</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Energimerking </span>&nbsp;<span> {{$property_data->energy_grade}} - {{ $property_data-> heating_character }} </span></div>
-                        
+                            
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Facilities</span>
+                                <ul>
+                                    @foreach($facilities as $key=>$val)
+                                        <li>
+                                            <?php 
+                                                if($val != "")
+                                                {
+                                                    echo $val;
+                                                }
+                                            ?>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
 
                             <!-- <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a> -->
 
                             <div class="col-md-12"><p>{{ $property_data-> essential_information}}</p></div>
-                            <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
+                            <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                                 eiendommen
-                            </div>
-                            <div class="col-md-12"><button class="btn btn-info btn-lg mt-2">Se komplett salgsoppgave</button></div>
-                            <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
+                            </div> -->
+                            <!-- <div class="col-md-12"><button class="btn btn-info btn-lg mt-2">Se komplett salgsoppgave</button></div> -->
+                            <!-- <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
                             <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
-                            <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>
+                            <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div> -->
                             <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                             <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> 140424636</span></div>
                             <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span> <span>7. jun 2019 13:37</span></div>
@@ -90,10 +112,10 @@
                         </div>
                         <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
                         <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
-                        <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
+                        <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                                 salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
-                        <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div>
+                        <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                         <h2 class="u-t3">Visning</h2>
                         <div class="mb-2">Ta kontakt for å avtale visning</div>
                         <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>

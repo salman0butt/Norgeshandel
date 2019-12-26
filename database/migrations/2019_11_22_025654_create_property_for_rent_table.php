@@ -53,6 +53,7 @@ class CreatePropertyForRentTable extends Migration
             $table->string('secondary_clockwise_clock')->nullable();
             $table->string('secondary_note')->nullable();
 
+
             $table->timestamps();
 
         });
