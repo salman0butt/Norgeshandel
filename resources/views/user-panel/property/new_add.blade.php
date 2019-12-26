@@ -35,7 +35,9 @@
                     var url = '{{url('add/property/for/rent/ad')}}';
             
                     var myform = document.getElementById("property_for_rent_form");
-                    var fd = new FormData(myform );
+                    var fd = new FormData(myform);
+                    fd.append('property_photos', $('#property_photos').get(0).files[0]);
+
                     
                     $.ajax({
                         type: "POST",

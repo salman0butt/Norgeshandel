@@ -48,9 +48,9 @@ class CreatePropertyForRentTable extends Migration
             $table->string('note')->nullable();
             $table->integer('published_on')->nullable();
 
-            $table->string('secondary_delivery_date');
+            $table->string('secondary_delivery_date')->nullable();;
             $table->string('secondary_from_clock');
-            $table->string('secondary_clockwise_clock');
+            $table->string('secondary_clockwise_clock')->nullable();;
             $table->string('secondary_note');
 
             $table->timestamps();

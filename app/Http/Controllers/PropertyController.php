@@ -53,11 +53,11 @@ class PropertyController extends Controller
 
 
     public function newAdd(){
-        return view('user-panel.property.new_Add');
+        return view('user-panel.property.new_add');
     }
 
     public function newSaleAdd(){
-        return view('user-panel.property.new_sale_Add');
+        return view('user-panel.property.new_sale_add');
     }
 
     public function getHomeForSaleAdd(Request $request){
@@ -316,7 +316,6 @@ class PropertyController extends Controller
 
     }
 
-    //AddPropertyForSale $request
     public function addSaleAdd(AddPropertyForSale $request)
     {
         $property_for_sale_data = $request->all();
@@ -570,10 +569,10 @@ class PropertyController extends Controller
         {
             $property_for_rent_data['published_on'] = 0;
         }
-        
+    
         unset($property_for_rent_data['property_photos']);
         $property_for_rent_data['user_id'] = Auth::user()->id;
-
+       
         //add Add to table
         $add = array();
         $add['ad_type'] = 'property';
@@ -584,15 +583,11 @@ class PropertyController extends Controller
         $property_for_rent_data['ad_id'] = $add_response->id;
         $response = PropertyForRent::create($property_for_rent_data);
 
-
-
         if ($request->file('property_photos')) 
         {
-            $files = $request->file('property_photos');
-            foreach ($files as $file)
-            {
-                common::update_media($file, $response->id , 'App\PropertyForRent', 'propert_for_rent');
-            }
+            $file = $request->file('property_photos');
+            common::update_media($file, $response->id , 'App\PropertyForRent', 'propert_for_rent');
+        
         }
 
         $data['success'] = $response;
