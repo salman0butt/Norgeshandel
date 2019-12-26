@@ -86,20 +86,25 @@ class common
 //    }
 
     public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar'){
+
         self::delete_media($mediable_id, $mediable_type, $type);
         if (!is_array($files)){
             $files = array($files);
         }
+
         foreach ($files as $file) {
+
+
             $unique_name = date('ymd') . '-' . time() . '-' . mt_rand(1000000, 9999999);
 
             $name = $file->getClientOriginalName();
             $name_unique = $unique_name . '.' . $file->getClientOriginalExtension();
             $path = 'public/uploads/' . date('Y') . '/' . date('m');
 
-            if ($file->getClientOriginalExtension() == 'jpg' ||
-                $file->getClientOriginalExtension() == 'jpeg' ||
-                $file->getClientOriginalExtension() == 'png'
+
+            if (strtolower($file->getClientOriginalExtension()) == 'jpg' ||
+                strtolower($file->getClientOriginalExtension()) == 'jpeg' ||
+                strtolower($file->getClientOriginalExtension()) == 'png'
             ) {
                 $file->move($path, $name_unique);
                 Image::make(asset($path . '/' . $name_unique))->heighten(66)->widen(66)->save($path . '/' . $unique_name . '-66x66.' . $file->getClientOriginalExtension());

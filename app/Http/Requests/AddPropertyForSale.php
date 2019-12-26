@@ -59,7 +59,6 @@ class AddPropertyForSale extends FormRequest
             'loan_rate' => 'sometimes|nullable|numeric',
             'percentage_of_common_wealth' => 'sometimes|nullable|numeric',
             'muncipal_fees_per_year' => 'sometimes|nullable|numeric',
-            'published-on' => 'required',
           
 
         ];
