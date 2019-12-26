@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.rar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Favorite.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Favorite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_11_22_025654_create_property_for_rent_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_11_22_025654_create_property_for_rent_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/my-business/my_business.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/my-business/my_business.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -190,19 +192,19 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\NorgesHandel\app\Models" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\my-business" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\partials" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\common\partials" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\app\Http\Controllers" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\common\partials" />
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel" />
       <recent name="C:\xampp\htdocs\NorgesHandel\app\Http" />
       <recent name="C:\xampp\htdocs\NorgesHandel\database\migrations" />
       <recent name="C:\xampp\htdocs\NorgesHandel\app\Http\Controllers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\norgeshandel\app\Models" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\app\Models" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\my-business" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\partials" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\common\partials" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -339,6 +341,7 @@
       <workItem from="1577085779252" duration="13722000" />
       <workItem from="1577166519110" duration="29649000" />
       <workItem from="1577343721216" duration="1680000" />
+      <workItem from="1577348917534" duration="11704000" />
     </task>
     <servers />
   </component>
@@ -357,5 +360,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php</url>
+          <line>965</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
