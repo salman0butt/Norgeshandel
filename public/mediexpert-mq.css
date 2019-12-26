@@ -1,0 +1,128 @@
+/*bootstrap overridden style*/
+@media (min-width: 992px){
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 0;
+        padding-top:10px;
+    }
+
+}
+@media (max-width: 576px) {
+    .right-ad, .left-ad{
+        display: none;
+    }
+    .dme-container,.nav-container {
+        margin:auto;
+        max-width: 540px;
+    }
+}
+@media (min-width: 576px) {
+    .right-ad, .left-ad{
+        display: none;
+    }
+    .dme-container,.nav-container {
+        margin:auto;
+        max-width: 540px;
+    }
+}
+@media (min-width: 768px) {
+    .dme-container,.nav-container {
+        max-width: 720px;
+    }
+}
+@media (min-width: 992px) {
+    .dme-container,.nav-container {
+        max-width: 960px;
+    }
+}
+@media (min-width: 1200px) {
+    .dme-container, .container,.nav-container {
+        max-width: 1010px;
+    }
+    .dme-container{
+        margin-left:0;
+    }
+    .right-ad{
+        width: calc(100% - 1010px) !important;
+        display: block !important;
+    }
+}
+@media (max-width: 1249px){
+}
+@media (min-width: 1250px) {
+    .dme-container, .container {
+        max-width: 1010px;
+        margin:auto;
+    }
+    .left-ad, .right-ad{
+        width: calc(calc(100% - 1010px)/2) !important;
+        display: block;
+    }
+}
+.left-ad, .right-ad, .top-ad {
+    /*background-color: red;*/
+}
+.left-ad, .right-ad {
+    width: calc(calc(100% - 1010px) / 2);
+    position: fixed;
+    top:51px;
+    height:calc(100vh - 51px);
+}
+@media (max-width: 991px) {
+    .nav-link div{
+        display: none;
+    }
+    .top-bar .nav-item {
+        min-width: 100px !important;
+        width: 100px !important;
+    }
+    .top-ad{
+        height:70px;
+    }
+    .top-ad img{
+        height:70px;
+    }
+    .search-control{
+        font-size:20px;
+    }
+}
+@media (max-width: 767px) {
+    .navbar-brand img{
+        content: url("assets/images/NorgesHondel-logo-sm.png");
+    }
+    .nav-icons{
+        width:24px;
+    }
+    .nav-container{
+        width:100%;
+    }
+}
+@media (max-width: 575px) {
+    .top-bar .nav-item{
+        width:100%;
+        background-color: #fff;
+        border-top:1px solid #ced4da;
+        border-bottom:1px solid #ced4da;
+        margin-bottom:-1px;
+    }
+    .navbar{
+        background-color: white;;
+    }
+    .nav-link div{
+        display: block;
+        text-align: left;
+        padding-left: 30px;
+    }
+    .navbar-toggler{
+        cursor: pointer;
+    }
+    .navbar-toggler:focus{
+        outline:none;
+    }
+    .product-img{
+        width:100%;
+    }
+    .product-sub-cat-list li{
+        width:100%;
+        display: block;
+    }
+}

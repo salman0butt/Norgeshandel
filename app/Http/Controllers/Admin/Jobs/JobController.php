@@ -1,0 +1,387 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Jobs;
+
+use App\Admin\Jobs\Job;
+use App\Http\Controllers\Admin\Users\AdminUserController;
+use App\Http\Controllers\Controller;
+use App\Term;
+use App\User;
+use App\Models\Ad;
+use App\Media;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use App\Helpers\common;
+use Intervention\Image\AbstractDecoder;
+
+class JobController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function index()
+    {
+        if(request()->route()->getPrefix() == '/admin'){
+            $ads = Ad::all();
+            return response()->view('admin.jobs.jobs', compact('ads'));
+        }
+        $ads = Ad::where('status', 'published')->where('ad_type', 'job')->get();
+        return response()->view('user-panel.jobs.jobs', compact('ads'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create($type = '')
+    {
+        $view = 'new_';
+        if ($type=='full_time' ||
+            $type=='part_time' ||
+            $type=='management'){
+            return view('admin.jobs.new_'.$type);
+        }
+        else{
+            return view('admin.jobs.jobs_select_category');
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $ad = Ad::find($request->ad_id);
+        $ad->update(['status'=>'published']);
+
+//        dd($request->job_type);
+//        $arr = array(
+//            'name' => $request->name,
+//            'title' => $request->title,
+//            'job_type'=>$request->job_type,
+//            'positions' => $request->positions,
+//            'commitment_type' => $request->commitment_type,
+//            'sector' => $request->sector,
+//            'keywords' => $request->keywords,
+//            'description' => $request->description,
+//            'deadline' => $request->deadline,
+//            'accession' => $request->accession,
+//            'emp_name' => $request->emp_name,
+//            'emp_company_information' => $request->emp_company_information,
+//            'emp_website' => $request->emp_website,
+//            'emp_facebook' => $request->emp_facebook,
+//            'emp_linkedin' => $request->emp_linkedin,
+//            'emp_twitter' => $request->emp_twitter,
+//            'country' => $request->country,
+//            'zip' => $request->zip,
+//            'address' => $request->address,
+//            'workplace_video' => $request->workplace_video,
+//            'app_receive_by' => $request->app_receive_by,
+//            'app_link_to_receive' => $request->app_link_to_receive,
+//            'app_email_to_receive' => $request->app_email_to_receive,
+//            'app_contact' => $request->app_contact,
+//            'app_contact_title' => $request->app_contact_title,
+//            'app_mobile' => $request->app_mobile,
+//            'app_phone' => $request->app_phone,
+//            'app_email' => $request->app_email,
+//            'app_linkedin' => $request->app_linkedin,
+//            'app_twitter' => $request->app_twitter,
+//            'user_id'=>Auth::user()->id,
+//        );
+
+//        $job = new Job($arr);
+
+//        $job->slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
+
+//        $terms = Term::find([$request->industry, $request->job_function]);
+
+//        $ad = new Ad(['ad_type'=>'job', 'status'=>'published', 'user_id'=>Auth::user()->id]);
+//        $ad->save();
+//        $ad->job()->save($job);
+
+//        $job->save();
+//        $job->terms()->attach($terms);
+
+//        if ($request->file('company_logo')) {
+//            $file = $request->file('company_logo');
+//            common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_logo');
+//        }
+//        if ($request->file('company_gallery')) {
+//            $files = $request->file('company_gallery');
+//            foreach ($files as $file)
+//            {
+//                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+//            }
+//        }
+
+        //$jobs = Job::all();
+        $request->session()->flash('success', 'Job has been added successfully');
+        return back();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_dummy(Request $request){
+        $ad = new Ad(['ad_type'=>'job', 'status'=>'saved', 'user_id'=>Auth::user()->id]);
+        $ad->save();
+        $job = new Job(['job_type'=>$request->job_type, 'user_id'=>Auth::user()->id]);
+        $ad->job()->save($job);
+        $ids = ['ad_id'=>$ad->id, 'job_id'=>$ad->job->id];
+        return response(json_encode($ids));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Admin\Jobs\Job $job->id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_dummy(Request $request){
+        $job_id = $request->job_id;
+        $job = Job::where('id',$job_id)->first();
+        $arr = array(
+            'name' => $request->name,
+            'title' => $request->title,
+            'job_type'=>$request->job_type,
+            'positions' => $request->positions,
+            'commitment_type' => $request->commitment_type,
+            'sector' => $request->sector,
+            'keywords' => $request->keywords,
+            'description' => htmlentities($request->description),
+            'deadline' => $request->deadline,
+            'accession' => $request->accession,
+            'emp_name' => $request->emp_name,
+            'emp_company_information' => htmlentities($request->emp_company_information),
+            'emp_website' => $request->emp_website,
+            'emp_facebook' => $request->emp_facebook,
+            'emp_linkedin' => $request->emp_linkedin,
+            'emp_twitter' => $request->emp_twitter,
+            'country' => $request->country,
+            'zip' => $request->zip,
+            'address' => $request->address,
+            'workplace_video' => $request->workplace_video,
+            'app_receive_by' => $request->app_receive_by,
+            'app_link_to_receive' => $request->app_link_to_receive,
+            'app_email_to_receive' => $request->app_email_to_receive,
+            'app_contact' => $request->app_contact,
+            'app_contact_title' => $request->app_contact_title,
+            'app_mobile' => $request->app_mobile,
+            'app_phone' => $request->app_phone,
+            'app_email' => $request->app_email,
+            'app_linkedin' => $request->app_linkedin,
+            'app_twitter' => $request->app_twitter,
+            'user_id'=>Auth::user()->id,
+        );
+
+        $job->update($arr);
+
+        if(empty($job->slug)){
+            $slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
+            $job->update(['slug'=>$slug]);
+        }
+
+        $terms = Term::find([$request->industry, $request->job_function]);
+
+        $job->terms()->detach();
+        $job->terms()->attach($terms);
+
+        if ($request->file('company_logo')) {
+            $file = $request->file('company_logo');
+            common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_logo');
+        }
+        if ($request->file('company_gallery')) {
+            $files = $request->file('company_gallery');
+            foreach ($files as $file)
+            {
+                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+            }
+        }
+
+        $ids = ['ad_id'=>$request->ad_id, 'job_id'=>$request->job_id];
+        return response(json_encode($ids));
+        //$jobs = Job::all();
+//        $request->session()->flash('success', 'Job has been added successfully');
+//        return back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Job $job)
+    {
+        $prev = Job::where('id','<',$job->id)->orderBy('id','desc')->first();
+        $next = Job::where('id','>',$job->id)->orderBy('id','asc')->first();
+        return view('user-panel/jobs/single', compact('job', 'prev', 'next'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Job $job)
+    {
+        if(request()->route()->getPrefix() == '/admin'){
+            return view('admin.jobs.new_'.$job->job_type, compact('job'));
+        }
+        return view('user-panel.jobs.new_'.$job->job_type, compact('job'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Job $job)
+    {
+        $this->update_dummy($request);
+        Session::flash('success', 'Job has been saved successfully');
+        return back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Job $job)
+    {
+        common::delete_media($job->id, 'App\Admin\Jobs\Job', 'company_logo');
+        common::delete_media($job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+        $job->terms()->detach();
+        $job->ad()->delete();
+        $job->delete();
+
+        Session::flash('success', 'Job has been deleted successfully');
+        return back();
+//        $jobs = Job::all();
+//        return response()->view('admin.jobs.jobs', compact('jobs'));
+//        return redirect()->back();
+    }
+
+    /**
+     * Change status of Ad.
+     *
+     * @param  \App\Admin\Jobs\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function status_change(Ad $ad, $status){
+//        $status = '';
+        if ($status=='draft' ||
+            $status=='pending' ||
+            $status=='published'){
+            $ad = Ad::where('id', $ad->id)->first();
+            $ad->status = $status;
+            $ad->update();
+            session()->flash('success', 'Status has been updated');
+        }
+        else{
+            session()->flash('danger', 'Not valid status!');
+        }
+        return back();
+    }
+    /**
+     * Change status of Ad.
+     *
+     * @param  \App\Admin\Jobs\Job  $job
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request){
+        $filters = $request->all();
+        $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+        if (is_array($filters) && !empty($filters)) {
+            $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+        }
+        return response()->view('user-panel.jobs.jobs_filter_page', compact('ads', 'filters'));
+    }
+
+    public function sort(Request $request){
+        $sortings = [
+            "0"=>'Most relevent',
+            "1"=>"Published",
+            "2"=>"Employer",
+            "3"=>"Place",
+            "4"=>"Closest",
+        ];
+        $filters = $request->all();
+        $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+        if (is_array($filters) && !empty($filters)) {
+            $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+        }
+        return response()->view('user-panel.jobs.jobs_filter_page', compact('ads', 'filters'));
+    }
+
+    public function sort_jobs($job_type, $orderBy = 0){
+        $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+            ->where('ads.status', 'published')
+            ->orderByDesc('ads.updated_at')->get();
+
+
+        $jobs = Job::where('job_type', $job_type)->orderBy('name', 'asc')->get();
+        if ($job_type==='all'){
+            switch ($orderBy){
+                case 1: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->orderBy('jobs.updated_at', 'desc')->get();
+                    break;
+                case 2: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->orderBy('jobs.emp_name', 'asc')->get();
+                    break;
+                case 3: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->orderBy('jobs.country', 'asc')->get();
+                    break;
+                default: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->orderBy('jobs.name', 'asc')->get();
+            }
+        }
+        else{
+            switch ($orderBy){
+                case 1: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.updated_at', 'desc')->get();
+                    break;
+                case 2: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.emp_name', 'asc')->get();
+                    break;
+                case 3: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.country', 'asc')->get();
+                    break;
+                default: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.name', 'asc')->get();
+            }
+        }
+        $html = "";
+        if(count($jobs)>0) {
+            foreach ($jobs as $filtered_ad) {
+                $html .= view('user-panel.partials.templates.job-sequare', compact('filtered_ad'))->render();
+            }
+        }
+        else{
+            $html = '<div class="col-md-12 ml-3 alert alert-warning no-ads dme-tab-content" style="" data-id="no-ads">
+                        <h3 class=" text-center">Ingen annonser funnet.</h3>
+                    </div>';
+        }
+        exit($html);
+    }
+}
