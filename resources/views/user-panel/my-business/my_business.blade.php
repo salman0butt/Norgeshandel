@@ -56,7 +56,7 @@
         </ul>
         <ul class="list-unstyled col-md-4">
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{url('my-business/cv')}}" style="text-decoration: none;">
                     <span class="font-weight-bold">Min CV</span>
                 </a>
             </li>

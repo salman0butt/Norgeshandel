@@ -74,6 +74,10 @@ Route::group(['middleware'=>'auth'], function(){
             $list = \App\fav_list::where('id', $list_id)->get()->first();
             return view('user-panel.my-business.favorites.my_favorites_list', compact('list'));
         });
+
+        Route::resources([
+            'cv'=>'CvController'
+        ]);
     });
 
 
