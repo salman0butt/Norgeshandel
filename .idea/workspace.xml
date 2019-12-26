@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="" />
+    <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CvController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Cv.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cv.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -334,7 +340,7 @@
       <workItem from="1577085779252" duration="13722000" />
       <workItem from="1577166519110" duration="29649000" />
       <workItem from="1577343721216" duration="1680000" />
-      <workItem from="1577348917534" duration="11952000" />
+      <workItem from="1577348917534" duration="16292000" />
     </task>
     <servers />
   </component>
@@ -359,7 +365,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php</url>
-          <line>965</line>
+          <line>964</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

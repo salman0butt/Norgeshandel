@@ -772,17 +772,16 @@
                             <div class="col-md-8"><p class="text-dark ">
                                 </p>
                                 <div class="form-group">
-
                                     <div class="form-check">
                                         <label class="form-check-label" for="check1">
                                             <input type="checkbox" class="form-check-input" id="check1" name="vehicle1"
-                                                   value="something" checked="">Published
+                                                   value="something" @if($cv->status==="published") checked @endif>Published
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="check2">
                                             <input type="checkbox" class="form-check-input" id="check2" name="vehicle2"
-                                                   value="something">Inactive
+                                                   value="something" @if($cv->status==="inactive") checked @endif>Inactive
                                         </label>
                                     </div>
                                     <p class="text-dark pt-3">When your CV is published, it will be available for all
@@ -802,13 +801,13 @@
                                     <div class="form-check">
                                         <label class="form-check-label" for="check1">
                                             <input type="checkbox" class="form-check-input" id="check1" name="vehicle1"
-                                                   value="something" checked="">Personal information visible
+                                                   value="something" @if($cv->visibility==="visible") checked @endif>Personal information visible
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="check2">
                                             <input type="checkbox" class="form-check-input" id="check2" name="vehicle2"
-                                                   value="something">Anonymous
+                                                   value="something" @if($cv->visibility==="anonymous") checked @endif>Anonymous
                                         </label>
                                     </div>
                                     <p class="text-dark pt-3">Your contact information will only be visible to
@@ -825,19 +824,19 @@
 
                         <div class="row row-border ">
                             <div class="col-md-4 pt-2"><p class="text-dark ">Registered for the first time</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">2019.03.08</p></div>
+                            <div class="col-md-8 pt-2"><p class="text-dark ">{{date('d.m.Y', strtotime($cv->user->created_at))}}</p></div>
                         </div>
                         <div class="row row-border ">
                             <div class="col-md-4 pt-2"><p class="text-dark ">Last updated</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">2019.03.08</p></div>
+                            <div class="col-md-8 pt-2"><p class="text-dark ">{{date('d.m.Y', strtotime($cv->created_at))}}</p></div>
                         </div>
                         <div class="row row-border ">
                             <div class="col-md-4 pt-2"><p class="text-dark ">Your CV-number</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">10670303</p></div>
+                            <div class="col-md-8 pt-2"><p class="text-dark ">{{$cv->id}}</p></div>
                         </div>
                         <div class="row row-border">
                             <div class="col-md-4 pt-2"><p class="text-dark ">Expires</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">2019.09.08<a class="ml-3" href="#">Another
+                            <div class="col-md-8 pt-2"><p class="text-dark ">{{date('d.m.Y', strtotime($cv->expiry))}}<a class="ml-3" href="{{url('my-business/cv/extend')}}">Another
                                         6
                                         months</a></p></div>
                         </div>

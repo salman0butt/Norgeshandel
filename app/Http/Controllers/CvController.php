@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Cv;
+use App\Models\Cv;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +16,13 @@ class CvController extends Controller
     public function index()
     {
         if (Auth::check()){
-            Cv::where('user_id', Auth::user()->id)->get();
-            return view('user-panel.my-business.cv.cv');
+            $cv = Cv::where('user_id', Auth::user()->id)->get()->first();
+            if($cv==null){
+                $cv = new Cv(['user_id'=>Auth::user()->id, 'expiry'=>date('Y-m-d', strtotime("+6 months"))]);
+                $cv->save();
+            }
+
+            return view('user-panel.my-business.cv.cv', compact('cv'));
         }
     }
 
@@ -85,5 +90,15 @@ class CvController extends Controller
     public function destroy(Cv $cv)
     {
         //
+    }
+
+    public function extend(){
+        if (Auth::check()){
+            $cv = Cv::where('user_id', Auth::user()->id)->get()->first();
+            $cv->expiry = date('Y-m-d', strtotime("+6 months", strtotime($cv->expiry)));
+            $cv->save();
+            return back();
+        }
+        return back();
     }
 }

@@ -75,9 +75,12 @@ Route::group(['middleware'=>'auth'], function(){
             return view('user-panel.my-business.favorites.my_favorites_list', compact('list'));
         });
 
-        Route::resources([
-            'cv'=>'CvController'
-        ]);
+        Route::group(['prefix'=>'cv'], function (){
+            Route::resources([
+                '/'=>'CvController'
+            ]);
+            Route::get('extend', 'CvController@extend');
+        });
     });
 
 
