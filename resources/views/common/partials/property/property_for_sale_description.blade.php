@@ -10,9 +10,17 @@
 
             }
 
-            $name       = $property_data->media->first()->name_unique;
-            $path       = \App\Helpers\common::getMediaPath($property_data);
-            $full_path  = $path."".$name; 
+            $name       =    $property_data->media->first();
+            if($name != null)
+            {
+                $name       =    $name->name_unique;
+                $path       = \App\Helpers\common::getMediaPath($property_data);
+                $full_path  = $path."".$name; 
+            }
+            else
+            {
+                $full_path  = "";
+            }
 
         ?>
 

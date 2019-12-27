@@ -66,11 +66,20 @@
                             <?php
 
                                 $property_for_rent = App\PropertyForRent::find($value->id);
-                            
-                                
-                                $name       = $property_for_rent->media->first()->name_unique;
-                                $path       = \App\Helpers\common::getMediaPath($property_for_rent);
-                                $full_path  = $path."".$name; 
+
+                                $name       = $property_for_rent->media->first();
+                                if($name != null)
+                                {
+                                    $name       =    $name->name_unique;
+                                    $path       = \App\Helpers\common::getMediaPath($property_for_rent);
+                                    $full_path  = $path."".$name; 
+                                }
+                                else
+                                {
+                                    $full_path  = "";
+                                }
+
+
 
                             ?>
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">

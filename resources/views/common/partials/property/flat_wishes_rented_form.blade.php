@@ -1,18 +1,4 @@
-@extends('layouts.landingSite')
-@section('page_content')
-
-<main>
-        <div class="dme-container">
-            <div class="row">
-                <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
-                    <h2 class="text-muted">Bolig ønskes leid</h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>  
-                    <form action="#" method="post" id="flat_wishes_rented_form" enctype="multipart/form-data">
+<form action="#" method="post" id="flat_wishes_rented_form" enctype="multipart/form-data">
                         <div class="pl-3">
                             <div class="form-group">
                                 <h3 class="u-t5">Ønsket leieområde</h3>
@@ -255,7 +241,7 @@
                             <div class="form-group">
                                 <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                                     <div class="profile-icon">
-                                        <img src="<?php $_SERVER['SERVER_NAME'] ?>/NorgesHandel/assets/images/profile-placeholder.png" alt="Profile image" style="width:80px;">
+                                        <img src="{{asset('public/images/profile-1.jpg')}}" alt="Profile image" style="width:80px;">
                                     </div>
                                     <div class="profile-name">
                                         <h3 class="text-muted">Ola Nordmann</h3>
@@ -280,59 +266,3 @@
 
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        
-        $(document).ready(function(){
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-
-        });
-
-        $("#publiserannonsen").click(function(e){
-
-            e.preventDefault();
-
-            var url = '{{url('add/flat/wishes/rented')}}';
-            $('.notice').html("");
-            var myform = document.getElementById("flat_wishes_rented_form");
-            var fd = new FormData(myform);
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: fd,
-                dataType: "json",
-                processData: false,
-                contentType: false,
-                success: function(data){
-                        $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
-                },
-                error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
-                        var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
-                        var html="<ul>";
-                        $.each( errors.errors, function( index, value ){
-                        console.log(value);
-                        html += "<li>"+value+"</li>";
-                        });
-                        html += "</ul>";
-                        $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
-                    },
-            });
-
-    });
-
-    </script>
-
-
-@endsection

@@ -68,15 +68,23 @@
                                 
                                 $property_for_sale              = App\PropertyForSale::find($value->id);
                                 $property_for_sale_collection   =  $property_for_sale->media->toArray();
-                                $path                           = \App\Helpers\common::getMediaPath($property_for_sale);
-                                foreach($property_for_sale_collection as $key=>$val)
-                                {
-                                    if($val['type'] == "propert_for_sale_photos")
+                                if(!empty($property_for_sale_collection))
+                                {                                
+                                    $path                           = \App\Helpers\common::getMediaPath($property_for_sale);
+                                    foreach($property_for_sale_collection as $key=>$val)
                                     {
-                                        $name = $val['name_unique'];
+                                        if($val['type'] == "propert_for_sale_photos")
+                                        {
+                                            $name = $val['name_unique'];
+                                        }
+                                        $full_path_photos = $path."".$name; 
                                     }
-                                    $full_path_photos = $path."".$name; 
                                 }
+                                else
+                                {
+                                    $full_path_photos = "";
+                                }
+
 
                             ?>
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">

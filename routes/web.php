@@ -132,16 +132,15 @@ Route::get('property/realestate', 'PropertyController@list');
 Route::get('property/realestate/homes', 'PropertyController@ads');
 Route::get('new/property/rent/ad', 'PropertyController@newAdd');
 Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
-Route::post('get/property/ad', 'PropertyController@getAd');
 Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
 Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
 Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
 Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
 Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
-Route::get('property/for/rent', 'PropertyController@AdsForRent');
+Route::get('property/for/rent', 'PropertyController@adsForRent');
 Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
-Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAdd');
+Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
 Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
 Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
 Route::post('add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
@@ -151,3 +150,11 @@ Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercia
 Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
 Route::get('/property/description/{id}', ['uses' =>'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' =>'PropertyController@propertyForSaleDescription']);
+
+//flatwishesrented
+Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
+Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
+Route::get('/flat/wishes/rented/description/{id}', ['uses' =>'PropertyController@flatWishesRentedDescription']);
+
+//holidayhomeforsale
+Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');

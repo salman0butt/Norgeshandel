@@ -1,21 +1,4 @@
-
-@extends('layouts.landingSite')
-@section('page_content')
-
-
-
-<main>
-        <div class="dme-container">
-            <div class="row">
-                <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
-                    <h2 class="text-muted">Fritidsbolig til salgs</h2>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>  
-                    <form action="#" method="post" id="property_holiday_home_for_sale_form" enctype="multipart/form-data">
+<form action="#" method="post" id="property_holiday_home_for_sale_form" enctype="multipart/form-data">
                         <div class="pl-3">
 
                             <div class="form-group">
@@ -75,7 +58,7 @@
                                 <h3 class="u-t5">Adkomst og beliggenhet (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="access_and_location" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="access_and_location" id="beskrivelsethird" cols="30" rows="10"></textarea>
                                         <span class="u-t5">Forklar kort om Adkomst og beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler, strøksattraktivitet og hvordan man finner fram, gjerne om nærhet til vei, buss og tog.</span>
                                     </div>
                                 </div>
@@ -230,7 +213,7 @@
                                 <h3 class="u-t5">Arealbeskrivelse (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="area_description" id="beskrivelse" cols="30" rows="10" placeholder="F.eks. grunnflate 60m², stue 30m², kjøkken 10m², WC 10m² osv."></textarea>
+                                        <textarea name="area_description" id="beskrivelsefourth" cols="30" rows="10" placeholder="F.eks. grunnflate 60m², stue 30m², kjøkken 10m², WC 10m² osv."></textarea>
                                         <span class="u-t5">Her kan du gi en kort oversikt over størrelsen på rom i eiendommen din.</span>
                                     </div>
                                 </div>
@@ -324,7 +307,7 @@
                                 <h3 class="u-t5">Standard (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="standard" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="standard" id="beskrivelsefifth" cols="30" rows="10"></textarea>
                                         <span class="u-t5">Gi en kort beskrivelse på hvordan boligen fremstår og standarden på overflater og utstyr, nevn gjerne type gulv, kjøkkeninnredning og bad.</span>
                                     </div>
                                 </div>
@@ -533,7 +516,7 @@
                                 <h3 class="u-t5">Prisantydning</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="asking_price" type="text" class="dme-form-control" placeholder="Kr.">
+                                        <input name="asking_price" type="text" class="dme-form-control asking_price" placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -555,7 +538,7 @@
                                 <h3 class="u-t5">Omkostninger inkluderer (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="cost_includes" type="text" class="dme-form-control">
+                                        <input name="cost_includes" type="text" class="dme-form-control cost_includes">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -566,7 +549,7 @@
                                 <h3 class="u-t5">Andel fellesgjeld (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="prcentage_of_joint_debt" type="text" class="dme-form-control" placeholder="Kr.">
+                                        <input name="prcentage_of_joint_debt"  type="text" class="dme-form-control prcentage_of_joint_debt" placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -577,7 +560,7 @@
                                 <h3 class="u-t5">Totalpris</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="total_price" type="text" class="dme-form-control disabled" disabled>
+                                        <input name="total_price" id="total_price" value="" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -650,7 +633,7 @@
                                 <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="description" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="description" id="beskrivelsefirst" cols="30" rows="10"></textarea>
                                         <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                                     </div>
                                 </div>
@@ -659,7 +642,7 @@
                                 <h3 class="u-t5">Vesentlige opplysninger (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="essential_information" id="beskrivelse" cols="30" rows="10" placeholder="F.eks. Taket på det ene soverommet lekker. Det elektriske anlegget i kjelleren er utført av ufaglært."></textarea>
+                                        <textarea name="essential_information" id="beskrivelsecond" cols="30" rows="10" placeholder="F.eks. Taket på det ene soverommet lekker. Det elektriske anlegget i kjelleren er utført av ufaglært."></textarea>
                                         <span class="u-t5">Opplysninger om vesentlige kjente feil og mangler som er av betydning for kjøper. Dette kan f.eks være større fysiske skader på boligen, endringer på boligen som er gjort uten å skaffe nødvendig tillatelse, byggeprosjekter som kan påvirke boligen eller utført arbeid på eiendommen av ufaglærte. Henvis også gjerne til takst.</span>
                                     </div>
                                 </div>
@@ -669,7 +652,8 @@
                                 <h3 class="u-t5">Last opp komplett salgsinformasjon</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <button type="button" id="sales_quote class="dme-btn-outlined-blue">Legg til salgsoppgave</button>
+                                        <!-- <button type="button" id="sales_quote class="dme-btn-outlined-blue">Legg til salgsoppgave</button> -->
+                                        <input type="file" name="property_home_for_sale_sale_quote[]" id="property_home_for_sale_sale_quote" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -698,7 +682,7 @@
                                 <h3 class="u-t5">Visningsdato (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-4 pr-md-0">
-                                        <input name="delivery_date" type="date" class="dme-form-control">
+                                        <input name="delivery_date[]" type="date" class="dme-form-control">
                                     </div>
                                     <div class="col-md-8"></div>
                                     <div class="col-md-12 u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</div>
@@ -708,7 +692,7 @@
                                 <h3 class="u-t5">Fra klokken (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-4 pr-md-0">
-                                        <input name="from_clock" type="text" class="dme-form-control" placeholder="tt.mm">
+                                        <input name="from_clock[]" type="text" class="dme-form-control" placeholder="tt.mm">
                                     </div>
                                     <div class="col-md-8"></div>
                                     <div class="col-md-12 u-t5">Tid (eksempel 18:00)</div>
@@ -718,12 +702,23 @@
                                 <h3 class="u-t5">Til klokken (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-4 pr-md-0">
-                                        <input name="clockwise" type="text" class="dme-form-control" placeholder="tt.mm">
+                                        <input name="clockwise[]" type="text" class="dme-form-control" placeholder="tt.mm">
                                     </div>
                                     <div class="col-md-8"></div>
                                     <div class="col-md-12 u-t5">Tid (eksempel 19:30)</div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <h3 class="u-t5">Merknad (valgfritt)</h3>
+                                <div class="row">
+                                    <div class="col-md-12 pr-md-0">
+                                        <input name="note[]" type="text" class="dme-form-control" placeholder="F.eks.: visning etter avtale">
+                                    </div>
+                                    <div class="col-md-12 u-t5">Tid (eksempel 19:30)</div>
+                                </div>
+                            </div>
+
 
                             <div id="add_more_viewing_times_fields">
 
@@ -757,7 +752,7 @@
                             <div class="form-group">
                                 <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                                     <div class="profile-icon">
-                                        <img src="<?php $_SERVER['SERVER_NAME'] ?>/NorgesHandel/assets/images/profile-placeholder.png" alt="Profile image" style="width:80px;">
+                                        <img src="{{asset('public/images/profile-1.jpg')}}" alt="Profile image" style="width:80px;">
                                     </div>
                                     <div class="profile-name">
                                         <h3 class="text-muted">Ola Nordmann</h3>
@@ -782,104 +777,3 @@
 
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </main>
-    <script type="text/javascript">
-        
-        $(document).ready(function(){
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $("#publiserannonsen").click(function(e){
-
-                e.preventDefault();
-
-                var url = '{{url('add/property/home/for/sale/ad')}}';
-                $('.notice').html("");
-                var myform = document.getElementById("property_holiday_home_for_sale_form");
-                var fd = new FormData(myform);
-
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: fd,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    success: function(data){
-                            $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
-                    },
-                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
-                            var errors = jqXhr.responseJSON;
-                            console.log(errors.errors);
-                            var html="<ul>";
-                            $.each( errors.errors, function( index, value ){
-                               console.log(value);
-                               html += "<li>"+value+"</li>";
-                            });
-                            html += "</ul>";
-                            $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
-                        },
-                });
-
-            });
-
-            
-            var i = 0;
-            $("#add_more_viewing_times_sales").click(function(e){
-                    
-                    e.preventDefault();
-                    i=i+1;
-                    var html = '<div class="form-group">'+
-                            '<label class="u-t5">Visningsdato (valgfritt)</label>'
-                            +'<div class="row">'+
-                                '<div class="col-sm-4 pr-md-0">'+
-                                    '<input type="date" name="delivery_date'+i+'" class="dme-form-control">'+
-                                    '<span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label class="u-t5">Fra klokken (valgfritt)</label>'+
-                            '<div class="row">'+
-                                '<div class="col-sm-4 pr-md-0">'+
-                                    '<input type="text" name="from_clock'+i+'" placeholder="tt.mm" class="dme-form-control">'+
-                                    '<span class="u-t5">Tid (eksempel 18:00)</span>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label class="u-t5">Til klokken (valgfritt)</label>'+
-                            '<div class="row">'+
-                                '<div class="col-sm-4 pr-md-0">'+
-                                    '<input type="text" name="clockwise_clock'+i+'" placeholder="tt.mm" class="dme-form-control">'+
-                                    '<span class="u-t5">Tid (eksempel 19:00)</span>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="form-group">'+
-                            '<label class="u-t5">Merknad (valgfritt)</label>'+
-                            '<div class="row">'+
-                                '<div class="col-sm-12 pr-md-0">'+
-                                    '<input type="text" name="note'+i+'" placeholder="F.eks.: visning etter avtale" class="dme-form-control">'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>';
-                        $("#add_more_viewing_times_fields").append(html);
-
-            });
-
-
-     
-        })
-
-    </script>
-
-
-    @endsection
