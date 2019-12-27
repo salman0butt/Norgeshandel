@@ -50,18 +50,16 @@ $posts         =   array('img'=>'',
                     <div class="">
                         <label for="sort-by" class="mb-1">Sortér på</label>
                         <select name="sort-by" id="sort-by" class="dme-form-control">
-                            <option value="0">Mest relevant</option>
-                            <option value="published" selected>Publisert</option>
+        
+                            <option value="most-relevant">Mest relevant</option>
+                            <option value="1" selected="">Publisert</option>
                             <option value="priced-low-high">Prisant lav-høy</option>
                             <option value="priced-high-low">Prisant høy-lav</option>
-                            <option value="p-rom-area-low-high">P-ROM Areal lav-høy</option>
-                            <option value="p-rom-area-high-low">P-ROM Areal høy-lav</option>
-                            <option value="tot-price-low-high">Tot pris lav-høy</option>
-                            <option value="tot-price-high-low">Tot pris høy-lav</option>
-                            <option value="8">Kvmeterpris lav-høy</option>
-                            <option value="9">Kvmeterpris høy-lav</option>
+                            <option value="4">Boa lav-høy</option>
+                            <option value="5">Boa høy-lav</option>
                             <option value="99">Nærmest</option>
-                        </select>
+
+                        </select>>
                     </div>
                 </div>
             </div>
@@ -75,35 +73,46 @@ $posts         =   array('img'=>'',
                             <?php
                                 
                                 $property_holiday_home_for_sale = App\PropertyHolidaysHomesForSale::find($value->id);
-                                $name       = $property_holiday_home_for_sale->media->first()->name_unique;
-                                $path       = \App\Helpers\common::getMediaPath($property_holiday_home_for_sale);
-                                $full_path  = $path."".$name; 
+                                $name       = $property_holiday_home_for_sale->media;
+                                if(!empty($name))
+                                {
+                                    $name = $property_holiday_home_for_sale->media->first()->name_unique;
+                                    $path       = \App\Helpers\common::getMediaPath($property_holiday_home_for_sale);
+                                    $full_path  = $path."".$name; 
+                                }
+                                else
+                                {
+                                    $full_path  = "";
+                                }
 
-                            ?>
-
+                            ?>  
 
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
-                                <a href="#" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
+                                <a href="{{url('/property/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                         <div class="trailing-border">
                                             <img src="{{$full_path}}" alt="" class="img-fluid radius-8">
                                         </div>
                                     </div>
                                     <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
-                                        <div class="week-status u-t5 text-muted" style="">Eggedal</div>
+                                        <div class="u-t5 text-muted" style=""></div>
                                         <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
-                                        <div class="location u-t5 text-muted mt-2">{{$value->street_address }}, {{$value->local_area_name}}</div>
-                                        <div class="title color-grey">{{$value->area_description}}</div>
+                                        <div class="location u-t5 text-muted mt-2">{{ $property_holiday_home_for_sale -> street_address}}</div>
+                                        <div class="title color-grey">{{ $property_holiday_home_for_sale -> ad_headline}}</div>
                                         <div class="mt-2">
-                                            <div class="area font-weight-bold float-left color-grey">{{$value->primary_room}}</div>
-                                            <div class="price font-weight-bold float-right color-grey">{{$value->asking_price}} kr</div>
+                                            <div class="area font-weight-bold float-left color-grey">{{ $property_holiday_home_for_sale ->  primary_room }} m²</div>
+                                            <div class="price font-weight-bold float-right color-grey"> {{  $property_holiday_home_for_sale ->  asking_price  }} kr</div>
                                         </div>
                                         <br>
-                                        <div class="detail u-t5 mt-3 float-left text-muted">Privat</div>
-                                        <div class="dealer-logo float-right mt-3" ><img src="assets/images/dealer-logo.png" alt="" class="img-fluid"></div>
+                                        <div class="location u-t5 text-muted">{{  $property_holiday_home_for_sale ->  local_area_name  }}</div>
+                                        <div class="location u-t5 text-muted"><span>TotalPris:</span><span>{{  $property_holiday_home_for_sale ->  total_price  }}</span></div>
+                                        <div class="location u-t5 text-muted"><span>{{  $property_holiday_home_for_sale ->  ownership_type  }}</span>  • <span>{{  $property_holiday_home_for_sale ->  property_type  }}</span></div>
+                                        <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
+                                        
                                     </div>
                                 </a>
                             </div>
+                        
                         @endforeach
                 </div>
             </div>

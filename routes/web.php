@@ -136,7 +136,7 @@ Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
 Route::get('property/for/rent', 'PropertyController@adsForRent');
 Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
-Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAdd');
+Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
 Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
 Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
 Route::post('add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
@@ -152,3 +152,5 @@ Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedR
 Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
 Route::get('/flat/wishes/rented/description/{id}', ['uses' =>'PropertyController@flatWishesRentedDescription']);
 
+//holidayhomeforsale
+Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');

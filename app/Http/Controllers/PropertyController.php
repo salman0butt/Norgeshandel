@@ -76,98 +76,14 @@ class PropertyController extends Controller
             $order_by_thing = "asking_price";
             $order_by = "desc";
         }
-        elseif($data['sending'] == "p-rom-area-low-high")
-        {
-            $order_by_thing = "primary_room";
-            $order_by = "asc";
-        }
-        else if($data['sending'] == "p-rom-area-high-low")
-        {
-            $order_by_thing = "primary_room";
-            $order_by = "desc";
-        }
-        elseif($data['sending'] == "p-rom-area-low-high")
-        {
-            $order_by_thing = "primary_room";
-            $order_by = "asc";
-        }
-        else if($data['sending'] == "tot-price-low-high")
-        {
-            $order_by_thing = "asking_price";
-            $order_by = "asc";
-        }
-        else if($data['sending'] == "tot-price-high-low")
-        {
-            $order_by_thing = "asking_price";
-            $order_by = "desc";
-        }
-
-
-        $add_array = DB::table('property_holidays_homes_for_sales')
-        ->join('media', 'property_holidays_homes_for_sales.id', '=', 'media.mediable_id')
-        ->where(['user_id'=>Auth::user()->id, 'mediable_type' => 'App\App\PropertyHolidaysHomesForSale'])->orderBy($order_by_thing, $order_by)->get()->toArray();
-        
-        $response =  view('user-panel.property.order_specific_holiday_home_for_sale')->with(compact('add_array'))->render();
+      
+        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $response =  view('common.partials.property.holiday_home_for_sale_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
-        echo json_encode($data);
+        echo json_encode($data); 
+    
         
-    }
-
-    public function getAd(Request $request)
-    {
-        // $data = $request->all();
-        // $searchable = $data['sending'];
-        
-        // if($data['sending'] == 'priced-low-high')
-        // {
-        //     $order_by_thing = "monthly_rent";
-        //     $order_by       =  "asc";
-
-        // }
-        // else if($data['sending'] == "priced-high-low")
-        // {
-        //     $order_by_thing = "monthly_rent";
-        //     $order_by = "desc";
-        // }
-        // elseif($data['sending'] == "p-rom-area-low-high")
-        // {
-        //     $order_by_thing = "primary_rom";
-        //     $order_by = "asc";
-        // }
-        // else if($data['sending'] == "p-rom-area-high-low")
-        // {
-        //     $order_by_thing = "primary_rom";
-        //     $order_by = "desc";
-        // }
-        // elseif($data['sending'] == "p-rom-area-low-high")
-        // {
-        //     $order_by_thing = "primary_rom";
-        //     $order_by = "asc";
-        // }
-        // else if($data['sending'] == "tot-price-low-high")
-        // {
-        //     $order_by_thing = "monthly_rent";
-        //     $order_by = "asc";
-        // }
-        // else if($data['sending'] == "tot-price-high-low")
-        // {
-        //     $order_by_thing = "monthly_rent";
-        //     $order_by = "desc";
-        // }
-
-
-        // $add_array = DB::table('property_for_rent')
-        // ->join('media', 'property_for_rent.id', '=', 'media.mediable_id')
-        // ->where(['user_id'=>Auth::user()->id, 'mediable_type' => 'App\PropertyForRent'])->orderBy($order_by_thing, $order_by)->get()->toArray();
-
-        
-        // $response =  view('user-panel.property.order_specific_jobs')->with(compact('add_array'))->render();
-
-        // $data['success'] = $response;
-        // echo json_encode($data);
-        
-       
     }
 
     
@@ -272,43 +188,143 @@ class PropertyController extends Controller
         return view('user-panel.property.holiday_home_for_sale');
     }
 
-    public function addHomeForSaleAdd(AddPropertyHolidayHomeForSale $request)
+    //AddPropertyHolidayHomeForSale $request
+    public function addHomeForSaleAd(AddPropertyHolidayHomeForSale $request)
     {
         $property_home_for_sale_data = $request->all();
 
-        unset($property_home_for_sale_data['property_home_for_sale_photos']);
-
-        $property_home_for_sale_data['user_id'] = Auth::user()->id;
-
-        //Manage Facilities
-        $facilities = "";
-        foreach($property_home_for_sale_data['facilities'] as $key=>$val)
+        //Add More ViewingTimes
+        if(isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "")
         {
-            $facilities .= $val . ",";
+            $property_home_for_sale_data['secondary_deliver_date'] = null;
+            $i = 0;
+            foreach($property_home_for_sale_data['delivery_date'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_home_for_sale_data['delivery_date']  = $val;
+                }
+                else
+                {
+                    $property_home_for_sale_data['secondary_deliver_date'] .= $val.",";
+                }
+                $i++;
+            }
         }
-        $property_home_for_sale_data['facilities'] = $facilities;
-    
-        $property_home_for_sale_data['user_id'] = Auth::user()->id;
+   
+        $property_home_for_sale_data['secondary_from_clock'] = "";
+        if(isset($property_home_for_sale_data['from_clock']))
+        {
+            $i = 0;
+            foreach($property_home_for_sale_data['from_clock'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_home_for_sale_data['from_clock']  = $val;
+                }
+                else
+                {
+                    $property_home_for_sale_data['secondary_from_clock'] .= $val.",";
+                }
+                $i++;
+            }
+        }
+   
+          $property_home_for_sale_data['secondary_clockwise'] = "";
+          if(isset($property_home_for_sale_data['clockwise']))
+          {
+              $i = 0;
+              foreach($property_home_for_sale_data['clockwise'] as $key=>$val)
+              {
+                  if($i == 0)
+                  {
+                      $property_home_for_sale_data['clockwise']  = $val;
+                  }
+                  else
+                  {
+                      $property_home_for_sale_data['secondary_clockwise'] .= $val.",";
+                  }
+                  $i++;
+              }
+          }
+         
+          $property_home_for_sale_data['secondary_note'] = "";
+          if(isset($property_home_for_sale_data['note']))
+          {
+              $i = 0;
+              foreach($property_home_for_sale_data['note'] as $key=>$val)
+              {
+                  if($i == 0)
+                  {
+                      $property_home_for_sale_data['note']  = $val;
+                  }
+                  else
+                  {
+                      $property_home_for_sale_data['secondary_note'] .= $val.",";
+                  }
+                  $i++;
+              }
+        }
+        //Manage Facilities
+        if(isset($property_home_for_sale_data['facilities']))
+        {
+            $facilities = "";
+            foreach($property_home_for_sale_data['facilities'] as $key=>$val)
+            {
+                $facilities .= $val . ",";
+            }
+            $property_home_for_sale_data['facilities'] = $facilities;
+        }
 
+        $property_home_for_sale_data['user_id'] = Auth::user()->id;
+       
         //add Add to table
         $add = array();
         $add['ad_type'] = 'property';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-        
         $property_home_for_sale_data['ad_id'] = $add_response->id;
-
+        unset($property_home_for_sale_data['property_home_for_sale_photos']);
+        unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
+        unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
         $response = PropertyHolidaysHomesForSale::create($property_home_for_sale_data);
-
-        
-        if ($request->file('property_home_for_sale_photos')) 
+       
+        //upload files
+        if ($request->file('property_home_for_sale_photos') || $request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote')) 
         {
-            $files = $request->file('property_home_for_sale_photos');
-            foreach ($files as $file)
+            // $files = $request->file('property_photos');
+            // $files_pdf = $request->file('property_pdf');
+            // $files_quote = $request->file('property_quote');
+            
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
             {
-                common::update_media($file, $response->id , 'App\PropertyHolidaysHomesForSale', 'propert_home_holiday_for_sale');
+                array_push($files_builded_arr,$val[0]);
             }
+            
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {   
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_photos');
+                }
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
+                }
+                if($i == 2)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
+                }
+                $i++;
+                
+            }
+            
+
+            
         }
 
         $data['success'] = $response;
@@ -773,6 +789,12 @@ class PropertyController extends Controller
     {
         $property_data = FlatWishesRented::where('id',$id)->first();
         return view('common.partials.property.flat_wishes_rented_description')->with(compact('property_data'));
+    }
+
+    public function holidayHomeForSaleAds()
+    {
+        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
+        return view('user-panel.property.ads_for_holiday_home_for_sale')->with(compact('add_array'));
     }
 
 
