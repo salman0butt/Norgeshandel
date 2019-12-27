@@ -35,7 +35,7 @@
                                 <a href="{{url('property/for/rent')}}">Bolig til leie <span class="u-stone">(9 993)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="">Bolig ønskes leid <span class="u-stone">(714)</span></a>
+                                <a href="{{url('property/flat/wishes/rented')}}">Bolig ønskes leid <span class="u-stone">(714)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href=businesssale.php?grid">Næringseiendom til salgs <span class="u-stone">(600)</span></a>

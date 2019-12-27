@@ -3,12 +3,12 @@
 
         <?php 
 
-            if(isset($property_data->facilities) && !empty($property_data->facilities))
-            {   
+            // if(isset($property_data->facilities) && !empty($property_data->facilities))
+            // {   
 
-                $facilities = explode(",",rtrim($property_data->facilities, ","));
+            //     $facilities = explode(",",rtrim($property_data->facilities, ","));
 
-            }
+            // }
             $name       = $property_data->media->first();
             if($name != null)
             {
@@ -20,8 +20,7 @@
             {
                 $full_path  = "";
             }
-          
-
+            
         ?>
 
         <main>
@@ -51,42 +50,24 @@
                         <div class="row single-realestate-detail p-3">
                             <div class="col-md-12">
                                 <!-- <div class="u-t3 mt-3">JESSHEIM SENTRUM</div> -->
-                                <h1 class="u-t2">{{$property_data->heading}}</h1>
+                                <h1 class="u-t2">{{$property_data->headline}}</h1>
                             </div>
-                            <div class="col-md-12 text-muted">{{$property_data->street_address}}</div>
+                            <div class="col-md-12 text-muted"> </div>
                             <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
-                            <div class="col-md-12 font-weight-bold mt-3">Månedsleie</div>
-                            <div class="col-md-12 u-t3">{{$property_data->monthly_rent}} Kr</div>
+                            <div class="col-md-12 font-weight-bold mt-3">Maks månedsleie</div>
+                            <div class="col-md-12 u-t3">{{$property_data->max_rent_per_month}} Kr</div>
                             <div class="clearfix"></div>
                             <div class="mt-2 col-md-12"></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Primærrom </span>&nbsp;<span>{{$property_data->primary_rom}} m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Soverom </span>&nbsp;<span>{{$property_data->number_of_bedrooms}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>{{$property_data->floor}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Boligtype </span>&nbsp;<span>{{$property_data->property_type}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Leieperiode </span>&nbsp;<span>{{ date("d.m.Y", strtotime($property_data-> rented_to)) }}</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Boligtype: </span>&nbsp;<span> {{rtrim($property_data->property_type,",")}} </span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Ønsket område: </span>&nbsp;<span></span></div>
+                            <div class="col-md-12"><span class=""><span>{{rtrim($property_data->region)}}</span></div>
+                            <div class="col-md-6"><span class="font-weight-bold">Ønskes fra: </span>&nbsp;<span> {{date("d.m.Y", strtotime($property_data->wanted_from))}}</span></div>
                         
 
                             <!-- <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a> -->
 
-                            <div class="col-md-12">
-                                <span class="font-weight-bold">Facilities</span>
-                                <ul>
-                                    @foreach($facilities as $key=>$val)
-                                        <li>
-                                            <?php 
-                                                if($val != "")
-                                                {
-                                                    echo $val;
-                                                }
-                                            ?>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
                             
                             <div class="col-md-12">
-                            <span class="font-weight-bold">Description</span>
                             <p>{{$property_data->description}}</p></div>
                             <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                                 eiendommen
@@ -95,11 +76,10 @@
                             <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div> -->
                             <!-- <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
                             <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>!-->
+                            
+                            <div class="col-md-12"><span class="font-weight-bold">FINN-kode: </span> <span> 140424636</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span> <span> {{date("d.m.Y h:i", strtotime($property_data->created_at))}}</span></div>
                             <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> 140424636</span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span> <span>{{date("d.m.Y h:i", strtotime($property_data->created_at))}}</span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Referanse: </span> <span>302190059</span></div>
-                            <div class="col-md-12 u-d1">Annonsene kan være mangelfulle i forhold til lovpålagt opplysningsplikt. Før bindende avtale inngås oppfordres interessenter til å innhente komplett informasjon fra meglerforetaket, selger eller utleier.</div>
                         </div>
                     </div>
                     <div class="col-md-4">

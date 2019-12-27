@@ -269,7 +269,7 @@ class PropertyController extends Controller
 
     public function holidayHomeForSale(Request $request)
     {
-        return view('user-panel.property.holiday_home_sale');
+        return view('user-panel.property.holiday_home_for_sale');
     }
 
     public function addHomeForSaleAdd(AddPropertyHolidayHomeForSale $request)
@@ -597,12 +597,12 @@ class PropertyController extends Controller
 
     public function newAddFlatWishesRented()
     {
-        return view('user-panel.property.realestate-letting-wanted');
+        return view('user-panel.property.flat_wishes_rented');
     }
 
     public function addFlatWishesRented(AddFlatWishesRented $request)
     {
-        
+
         $flat_wishes_rented_data = $request->all();
         $regions = "";
         foreach($flat_wishes_rented_data['region'] as $key=>$val)
@@ -638,7 +638,7 @@ class PropertyController extends Controller
             $files = $request->file('flat_wishes_rented');
             foreach ($files as $file)
             {
-                common::update_media($file, $response->id , 'App\flatWishesRenteds', 'flatWishesRenteds');
+                common::update_media($file, $response->id , 'App\FlatWishesRented', 'flat_wishes_rented');
             }
         }
 
@@ -708,7 +708,7 @@ class PropertyController extends Controller
     
     }
 
-    public function AdsForRent(Request $request)
+    public function adsForRent(Request $request)
     {
 
         $add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->get(['id'])->toArray();
@@ -726,6 +726,53 @@ class PropertyController extends Controller
     {
         $property_data = PropertyForSale::where('id',$id)->first();
         return view('common.partials.property.property_for_sale_description')->with(compact('property_data'));
+    }
+
+    public function adsForFlatWishedRented(){
+        
+        $add_array = DB::table('flat_wishes_renteds')->orderBy('id', 'DESC')->get(['id'])->toArray();
+        return view('user-panel.property.ads_for_flat_wishes_rented')->with(compact('add_array'));
+
+    }
+
+    public function flatWishesRentedSortedAd(Request $request)
+    {
+
+        $sorted_by =  $request->all();
+        $searchable = $sorted_by['sending'];
+
+        $order_by_thing = "max_rent_per_month";
+        $order_by       =  "ASC";
+
+        if($searchable == 'max_rent_low_high')
+        {   
+            $order_by_thing = "max_rent_per_month";
+            $order_by       =  "ASC";
+        }
+        else if($searchable == 'max_rent_high_low')
+        {
+            $order_by_thing = "max_rent_per_month";
+            $order_by       =  "DESC";
+        }
+        else if($searchable == 'time_from')
+        {
+            $order_by_thing = "wanted_from";
+            $order_by       =  "DESC";
+        }
+   
+        $add_array = DB::table('flat_wishes_renteds')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $response  =  view('common.partials.property.render_flat_wishes_rented_ads')->with(compact('add_array'))->render();
+
+
+        $data['success'] = $response;
+        echo json_encode($data);
+
+    }
+
+    public function flatWishesRentedDescription($id)
+    {
+        $property_data = FlatWishesRented::where('id',$id)->first();
+        return view('common.partials.property.flat_wishes_rented_description')->with(compact('property_data'));
     }
 
 

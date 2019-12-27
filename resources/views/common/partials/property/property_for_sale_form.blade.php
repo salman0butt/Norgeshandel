@@ -796,7 +796,7 @@
                             <div class="form-group">
                                 <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                                     <div class="profile-icon">
-                                        <img src="<?php $_SERVER['SERVER_NAME'] ?>/NorgesHandel/assets/images/profile-placeholder.png" alt="Profile image" style="width:80px;">
+                                        <img src="{{asset('public/images/profile-1.jpg')}}" alt="Profile image" style="width:80px;">
                                     </div>
                                     <div class="profile-name">
                                         <h3 class="text-muted">Ola Nordmann</h3>
