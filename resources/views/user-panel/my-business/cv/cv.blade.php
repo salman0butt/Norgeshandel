@@ -1,5 +1,5 @@
 @extends('layouts.landingSite')
-
+<?php $countries = countries(); ?>
 @section('page_content')
     <style type="text/css">
         a.edit-btn {
@@ -41,7 +41,7 @@
                 </nav>
             </div>
             <div class="mt-5 mb-5">
-                <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
+                <ul class="nav nav-tabs mb-5" id="cv_tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                            aria-controls="home" aria-selected="true">Din CV</a>
@@ -62,146 +62,149 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="inner-tab">
-                            <h3 class="text-dark font-weight-normal" style="font-size:22px;">Your CV<span
-                                    class="float-right"><a href="#"><img src="{{asset('public/images/united-kingdom.svg')}}" width="16px"></a> <a href="#">
-                                        <img src="{{asset('public/images/norway.svg')}}" width="20px"></a></span></h3>
-                            <p class="text-dark">CVen din er inaktiv, med utløpsdato 08.09.2019. Personlige detaljer er
-                                ikke synlige.</p>
-                            <p class="text dark pt-5 pb-5">CVen din kan bare vises av våre kunder når du har registrert
-                                personopplysninger og utdanning eller erfaring.</p>
-
+                            <h3 class="text-dark font-weight-normal" style="font-size:22px;">Your CV
+                                <span class="float-right">
+                                    <a href="#"><img src="{{asset('public/images/united-kingdom.svg')}}"
+                                                     width="16px"></a>
+                                    <a href="#"><img src="{{asset('public/images/norway.svg')}}" width="20px"></a>
+                                </span>
+                            </h3>
+                            <p>
+                                @if($cv->status=="inactive")
+                                    CVen din er <span class="text-danger font-weight-bold">inaktiv</span>, med utløpsdato {{date('d.m.Y', strtotime($cv->expiry))}}.
+                                @endif
+                                @if($cv->visibility!="visible")
+                                    Personlige detaljer er <span class="font-weight-bold">ikke synlige.</span>
+                                @endif
+                            </p>
+                            <div class="alert alert-danger row">
+                                <div class="col-md-10 pt-2">CVen din kan bare vises av våre kunder når du har registrert personopplysninger og utdanning eller erfaring.</div>
+                                <a href="#profile" id="publish_tab" class="btn dme-btn-maroon radius-8 p-2 col-md-2">Publiser CV</a>
+                            </div>
                             <hr>
                             <div class="row">
                                 <div class="col-md-6 mt-4 mb-4">
-
                                     <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:22px;">
-                                        Personalia <span class="float-right"><a href="#"
-                                                                                class="edit-btn"> Endre</a></span></h3>
-
+                                        Personalia <span class="float-right">
+{{--                                            <a href="#" class="edit-btn"> Endre</a>--}}
+                                        </span>
+                                    </h3>
                                     <div class="table-main">
-                                        <form>
+                                        <?php $cvpersonal = $cv->personal; ?>
+                                            <form action="{{route('cvpersonal.update', $cvpersonal->id)}}" name="cvpersonal-form" id="cvpersonal-form" method="POST" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            {{method_field('PUT')}}
+{{--                                        <form action="" method="POST">--}}
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput1">CV-tittel *</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
+                                                <label for="personal_title">CV-tittel *</label>
+                                                <input type="text" class="form-control" id="personal_title" name="title" value="{{$cvpersonal->title}}" required>
                                                 <small id="emailHelp" class="form-text text-muted">F.eks "Bachelor med 4
                                                     års erfaring som regnskapsfører" eller "Anestesisykepleier med
                                                     betydelig erfaring fra akuttmedisin, ambulansetjeneste og kirurgi
                                                     utført på polikliniske pasienter"</small>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput2">Fornavn*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
+                                                <label for="personal_first_name">Fornavn*</label>
+                                                <input type="text" class="form-control" id="personal_first_name" name="first_name" value="{{$cvpersonal->first_name}}" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput3">Etternavn*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
+                                                <label for="personal_last_name">Etternavn*</label>
+                                                <input type="text" class="form-control" id="personal_last_name" name="last_name" value="{{$cvpersonal->last_name}}" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput4">Adresse*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
+                                                <label for="personal_address">Adresse*</label>
+                                                <input type="text" class="form-control" id="personal_address" name="address" value="{{$cvpersonal->address}}" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput5">Postnummer*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
+                                                <label for="personal_zip">Postnummer*</label>
+                                                <input type="text" class="form-control" id="personal_zip" name="zip" value="{{$cvpersonal->zip}}" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput6">Poststed*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
+                                                <label for="personal_city">Poststed*</label>
+                                                <input type="text" class="form-control" id="personal_city" name="city" value="{{$cvpersonal->city}}" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput7">Land*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlemail">E-post*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput8">Telefon*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput8">Mobil*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect1">Gender*</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>Choose</option>
-                                                    <option>Male</option>
-                                                    <option>Female</option>
+                                                <label for="personal_country">Land</label>
+                                                <select class="form-control" id="personal_country" name="country">
+                                                    <option value="">Velg..</option>
+                                                    @foreach($countries as $ctry)
+                                                        <option value="{{$ctry['name']}}" @if($cvpersonal->country==$ctry['name']) selected @endif>{{$ctry['name']}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlSelect1">Occupational status*</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option value="0" selected="selected">Choose</option>
-                                                    <option value="1">Job hunting</option>
-                                                    <option value="2">Part time job</option>
-                                                    <option value="3">Permanent</option>
-                                                    <option value="4">Freelance</option>
-                                                    <option value="5">Self employed</option>
-                                                    <option value="6">Student</option>
-                                                    <option value="7">Temporary employed</option>
-
+                                                <label for="personal_email">E-post*</label>
+                                                <input type="text" class="form-control" id="personal_email" name="email" value="{{$cvpersonal->email}}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="personal_tell">Telefon</label>
+                                                <input type="text" class="form-control" id="personal_tell" name="tell" value="{{$cvpersonal->tell}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="personal_mobile">Mobil</label>
+                                                <input type="text" class="form-control" id="personal_mobile" name="mobile" value="{{$cvpersonal->mobile}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="personal_birthday">Fødselsdato*</label>
+                                                <input type="date" class="form-control" id="personal_birthday" name="birthday" value="{{$cvpersonal->birthday}}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="personal_gender">Kjønn*</label>
+                                                <select class="form-control" id="personal_gender" name="gender" required>
+                                                    <option value="">Velg...</option>
+                                                    <option value="male" @if($cvpersonal->gender=="male") selected @endif>Kvinne</option>
+                                                    <option value="female" @if($cvpersonal->gender=="female") selected @endif>Mann</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput8">Homepage*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
-                                                <small id="Help" class="form-text text-muted"> Only to be filled in if
-                                                    you have a homepage or profile page</small>
+                                                <label for="personal_occupational_status">Yrkesstatus*</label>
+                                                <select class="form-control" id="personal_occupational_status" name="occupational_status" required>
+                                                    <option>Velg..</option>
+                                                    <option @if($cvpersonal->occupational_status=="Arbeidssøkende") selected @endif value="Arbeidssøkende">Arbeidssøkende</option>
+                                                    <option @if($cvpersonal->occupational_status=="Deltidsstilling") selected @endif value="Deltidsstilling">Deltidsstilling</option>
+                                                    <option @if($cvpersonal->occupational_status=="Fast jobb") selected @endif value="Fast jobb">Fast jobb</option>
+                                                    <option @if($cvpersonal->occupational_status=="Freelance") selected @endif value="Freelance">Freelance</option>
+                                                    <option @if($cvpersonal->occupational_status=="Næringsdrivende") selected @endif value="Næringsdrivende">Næringsdrivende</option>
+                                                    <option @if($cvpersonal->occupational_status=="Student") selected @endif value="Student">Student</option>
+                                                    <option @if($cvpersonal->occupational_status=="Midlertidig ansatt") selected @endif value="Midlertidig ansatt">Midlertidig ansatt</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput8">Drivers license*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
-                                                <small id="Help" class="form-text text-muted"> E.g. A, B, C1 or
-                                                    D1E</small>
+                                                <label for="personal_website">Hjemmeside</label>
+                                                <input type="url" class="form-control" id="personal_website" name="website" value="{{$cvpersonal->website}}">
+                                                <small  class="form-text text-muted">Fylles bare ut dersom du har egen hjemmeside eller profilside</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="personal_driving_license">Førerkort</label>
+                                                <input type="text" class="form-control" id="personal_driving_license" name="driving_license" value="{{$cvpersonal->website}}">
+                                                <small  class="form-text text-muted"> E.g. A, B, C1 or D1E</small>
                                             </div>
 
 
-                                            <a class="dme-btn-outlined-blue float-left" href="/NorgesHandel/user.php">
-                                                <div class="ml-2">Save changes</div>
-                                            </a>
+                                            <button type="submit" class="dme-btn-outlined-blue float-left">
+                                                Lagre endringer
+                                            </button>
                                             <a class="dme-btn-outlined-blue float-left ml-2"
-                                               href="/NorgesHandel/user.php">
-                                                <div class="ml-2">Cancel</div>
+                                               href="">
+                                                <div class="ml-2">Avbryt</div>
                                             </a>
                                         </form>
                                     </div>
 
                                 </div>
 
-                                <!--================================
-                                      tab 1 form
-                          ====================================-->
-
                                 <div class="col-md-6  mb-4">
                                     <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:22px;">Bilde
                                         <span class="float-right">
 
-                          <p>
-                              <a class="edit-btn" data-toggle="collapse" href="#colapsedata" role="button"
-                                 aria-expanded="false" aria-controls="colapsedata">
-                                Endre
-                              </a>
+                                        <a class="edit-btn" data-toggle="collapse" href="#colapsedata" role="button"
+                                           aria-expanded="false" aria-controls="colapsedata">
+                                        Endre
+                                        </a>
 
-                            </p>
-
-                          </span></h3>
-                                    <small id="Help" class="form-text text-muted pl-4 pr-4 mb-5"> Du har ikke lagret et
+                                        </span>
+                                    </h3>
+                                    <small  class="form-text text-muted pl-4 pr-4 mb-5"> Du har ikke lagret et
                                         bilde til din CV.</small>
                                     <div class="collapse" id="colapsedata">
                                         <div class="card card-body">
@@ -215,37 +218,35 @@
 
 
                             </div>
-
-                            <!--================================
-                                      tab 1 profile
-                          ====================================-->
                         </div>
                         <hr>
                         <div class="row row-border">
                             <div class="col-12 pt-4 ">
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Utdanning
-                                    <span class="float-right"> <a class="edit-btn" data-toggle="collapse"
-                                                                  href="#colapedu" role="button" aria-expanded="false"
-                                                                  aria-controls="colapedu">Legg til</a></span></h3>
-                                <small id="Help" class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen
+                                    <span class="float-right">
+                                        <a class="edit-btn" data-toggle="collapse" href="#colapedu" role="button"
+                                           aria-expanded="false" aria-controls="colapedu">Legg til</a>
+                                    </span>
+                                </h3>
+                                <small  class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen
                                     utdannelse er registrert</small>
                                 <div class="collapse" id="colapedu" style="margin-top: -40px;">
                                     <div class="table-main">
                                         <form>
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Skole *</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
-                                                <small id="emailHelp" class="form-text text-muted">F.eks "Bachelor med 4
+                                                <input type="text" class="form-control"
+                                                       >
+                                                <small id="emailHelp" class="form-text text-muted">
+                                                    F.eks "Bachelor med 4
                                                     års erfaring som regnskapsfører" eller "Anestesisykepleier med
                                                     betydelig erfaring fra akuttmedisin, ambulansetjeneste og kirurgi
-                                                    utført på polikliniske pasienter"</small>
+                                                    utført på polikliniske pasienter"
+                                                </small>
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Fag*</label>
-                                                <select name="education.tradeValueId" id="trade" class="form-control"
-                                                        required="true">
+                                                <select name="education.tradeValueId"  class="form-control" required="true">
                                                     <option value="0">Velg..</option>
                                                     <option value="74">Annet</option>
                                                     <option value="1">Allmennfag</option>
@@ -326,7 +327,6 @@
 
                                                 </select>
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput2">Fornavn*</label>
                                                 <select name="education.levelValueId" id="level" class="form-control"
@@ -348,19 +348,16 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput3">Grad*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp">
+                                                <input type="text" class="form-control"
+                                                       >
                                                 <small>Velg det som passer best i nedtrekksfeltet og evt. spesifiser
                                                     grad</small>
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Beskrivelse</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                <textarea class="form-control"
                                                           rows="3"></textarea>
                                             </div>
-
-
                                             <a class="dme-btn-outlined-blue float-left" href="/NorgesHandel/user.php">
                                                 <div class="ml-2">Save changes</div>
                                             </a>
@@ -370,14 +367,17 @@
                                             </a>
                                         </form>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                         <div class="row row-border">
                             <div class="col-12 pt-4 ">
-                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Erfaring <span class="float-right"> <a class="edit-btn" data-toggle="collapse" href="#colapeder" role="button" aria-expanded="false" aria-controls="colapeder">Legg til</a></span></h3>
-                                <small id="Help" class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen utdannelse er registrert</small>
+                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Erfaring
+                                    <span class="float-right"> <a class="edit-btn" data-toggle="collapse"
+                                                                  href="#colapeder" role="button" aria-expanded="false"
+                                                                  aria-controls="colapeder">Legg til</a></span></h3>
+                                <small  class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen
+                                    utdannelse er registrert</small>
                                 <div class="collapse" id="colapeder" style="margin-top: -40px;">
                                     <div class="table-main">
                                         <form>
@@ -386,9 +386,10 @@
                                                 <div class="input">
 
                                                     <div class="line">
-                                                        <input type="hidden" name="from.day" value="1" id="form_from_day">
-
-                                                        <select name="from.month" id="fromMonth" class="span2" required="true">
+                                                        <input type="hidden" name="from.day" value="1"
+                                                               id="form_from_day">
+                                                        <select name="from.month" id="fromMonth" class="span2"
+                                                                required="true">
                                                             <option value="1">Jan</option>
                                                             <option value="2">Feb</option>
                                                             <option value="3">Mar</option>
@@ -401,10 +402,7 @@
                                                             <option value="10">Okt</option>
                                                             <option value="11">Nov</option>
                                                             <option value="12">Des</option>
-
-
                                                         </select>
-
 
 
                                                         <select name="from.year" id="fromYear" class="span2">
@@ -524,14 +522,11 @@
                                                         </select>
 
 
-
-
                                                         <select name="to.year" id="toYear" class="span2">
                                                             <option value="2019" selected="selected">2019</option>
                                                             <option value="2018">2018</option>
                                                             <option value="2017">2017</option>
                                                             <option value="2016">2016</option>
-
 
 
                                                         </select>
@@ -540,8 +535,10 @@
                                                     </div>
 
                                                     <label for="untilPresent" class="inline mlm">
-                                                        <input type="checkbox" name="to.untilPresent" value="true" id="untilPresent" class="checkbox">
-                                                        <input type="hidden" name="__checkbox_to.untilPresent" value="true">
+                                                        <input type="checkbox" name="to.untilPresent" value="true"
+                                                               id="untilPresent" class="checkbox">
+                                                        <input type="hidden" name="__checkbox_to.untilPresent"
+                                                               value="true">
 
                                                         <span>Er fortsatt i studiet</span>
                                                     </label>
@@ -551,18 +548,21 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Skole *</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                <input type="text" class="form-control"
+                                                       >
 
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Stillingstittel *</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                <input type="text" class="form-control"
+                                                       >
 
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Fag*</label>
-                                                <select name="education.tradeValueId" id="trade" class="form-control" required="true">
+                                                <select name="education.tradeValueId"  class="form-control"
+                                                        required="true">
                                                     <option value="0">Velg..</option>
                                                     <option value="74">Annet</option>
                                                     <option value="1">Allmennfag</option>
@@ -646,20 +646,24 @@
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput3">Grad*</label>
-                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                                <small>Velg det som passer best i nedtrekksfeltet og evt. spesifiser grad</small>
+                                                <input type="text" class="form-control"
+                                                       >
+                                                <small>Velg det som passer best i nedtrekksfeltet og evt. spesifiser
+                                                    grad</small>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Beskrivelse</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                <textarea class="form-control"
+                                                          rows="3"></textarea>
                                             </div>
 
 
                                             <a class="dme-btn-outlined-blue float-left" href="/NorgesHandel/user.php">
                                                 <div class="ml-2">Save changes</div>
                                             </a>
-                                            <a class="dme-btn-outlined-blue float-left ml-2" href="/NorgesHandel/user.php">
+                                            <a class="dme-btn-outlined-blue float-left ml-2"
+                                               href="/NorgesHandel/user.php">
                                                 <div class="ml-2">Cancel</div>
                                             </a>
                                         </form>
@@ -669,57 +673,68 @@
                             </div>
 
 
-
-
                         </div>
                         <div class="row row-border">
-
-
-
                             <div class="col-12 pt-4 ">
-                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Nøkkelkompetanse <span class="float-right"> <a class="edit-btn" data-toggle="collapse" href="#colapednok" role="button" aria-expanded="false" aria-controls="colapednok">Legg til</a></span></h3>
-                                <small id="Help" class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen utdannelse er registrert</small>
+                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">
+                                    Nøkkelkompetanse
+                                    <span class="float-right">
+                                        <a class="edit-btn" data-toggle="collapse" href="#colapednok" role="button"
+                                           aria-expanded="false" aria-controls="colapednok">Legg til</a>
+                                    </span>
+                                </h3>
+                                <small  class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen
+                                    utdannelse er registrert</small>
                                 <div class="collapse" id="colapednok" style="margin-top: -40px;">
                                     <div class="table-main">
                                         <form>
-
-
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Nøkkelkompetanse</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                                <small>F.eks. "Anestesisykepleier med bred erfaring innen akutt medisin, ambulansetransport, sentraloperasjon og dagkirurgi."</small>
+                                                <textarea class="form-control"
+                                                          rows="3"></textarea>
+                                                <small>F.eks. "Anestesisykepleier med bred erfaring innen akutt medisin,
+                                                    ambulansetransport, sentraloperasjon og dagkirurgi."</small>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">Annen erfaring, tillitsverv, interesser etc.</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                <label for="exampleFormControlTextarea1">Annen erfaring, tillitsverv,
+                                                    interesser etc.</label>
+                                                <textarea class="form-control"
+                                                          rows="3"></textarea>
                                             </div>
 
 
                                             <a class="dme-btn-outlined-blue float-left" href="/NorgesHandel/user.php">
                                                 <div class="ml-2">Save changes</div>
                                             </a>
-                                            <a class="dme-btn-outlined-blue float-left ml-2" href="/NorgesHandel/user.php">
+                                            <a class="dme-btn-outlined-blue float-left ml-2"
+                                               href="/NorgesHandel/user.php">
                                                 <div class="ml-2">Cancel</div>
                                             </a>
                                         </form>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="row row-border">
                             <div class="col-12 pt-4 ">
-                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Language<span class="float-right"><a href="#" class="edit-btn"> Add</a></span></h3>
-                                <small id="Help" class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5"> No Language is registered</small>
+                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Language<span
+                                        class="float-right"><a href="#" class="edit-btn"> Add</a></span></h3>
+                                <small  class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5"> No
+                                    Language is registered</small>
                             </div>
                         </div>
                         <div class="row ">
                             <div class="col-12 pt-4 ">
-                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Preferences for future positions  <span class="float-right"><a href="#" class="edit-btn"> Edit</a></span></h3>
+                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Preferences
+                                    for future positions <span class="float-right"><a href="#"
+                                                                                      class="edit-btn"> Edit</a></span>
+                                </h3>
 
                                 <div class="mhl pl-4 pr-4">
-                                    <table class="sectioninfo super-condensed border-white w-100" cellspacing="0" summary="Preferences for future positions">
-                                        <tbody><tr>
+                                    <table class="sectioninfo super-condensed border-white w-100" cellspacing="0"
+                                           summary="Preferences for future positions">
+                                        <tbody>
+                                        <tr>
                                             <th class="th_row size1of4" scope="row">Job category</th>
                                             <td id="float-left">Not given</td>
                                         </tr>
@@ -747,112 +762,117 @@
                                             <th class="th_row" scope="row">Term of notice in current position</th>
                                             <td id="future-period">Not given</td>
                                         </tr>
-                                        </tbody></table>
+                                        </tbody>
+                                    </table>
                                 </div>
 
 
                             </div>
                         </div>
-                        <p class="pt-5 pb-5 pl-4 pr-4 text-dark">Your CV can only be viewed by our customers when you have registered personal details and education or experience.</p>
+                        <p class="pt-5 pb-5 pl-4 pr-4 text-dark">Your CV can only be viewed by our customers when you
+                            have registered personal details and education or experience.</p>
                         <p class="text-dark pl-4 pr-4">10670303</p>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="inner-tab">
-                            <p class="text-dark pb-4">Your CV can only be viewed by our customers when you have
-                                registered
-                                personal details and education or experience.</p>
-                            <h3 class="text-dark font-weight-normal" style="font-size:22px;">CV Setting</h3>
-                            <p class="text-dark pb-4">This is where you manage your CV. Remember to keep it updated with
-                                your latest information. This way your chances of being contacted by potential employers
-                                will increase.</p>
-                        </div>
+                        <form action="{{route('cv.update', compact('cv'))}}" method="POST">
+                            {{ csrf_field() }}
+                            {{method_field('PUT')}}
+                            <div class="inner-tab">
+                                <p class="text-dark pb-4">Din CV kan først søkes opp av våre kunder når du har registrert
+                                    personalia og utdanning eller erfaring.</p>
+                                <h3 class="text-dark font-weight-normal" style="font-size:22px;">CV-innstillinger</h3>
+                                <p class="text-dark pb-4">Her kan du administrere din CV. Husk å alltid holde den oppdatert
+                                    med fersk informasjon. Det øker sjansene for å bli kontaktet av potensielle
+                                    arbeidsgivere.</p>
+                            </div>
 
-                        <div class="row row-border pb-4" style="border-top:1px solid #ccc">
-                            <div class="col-md-4 pt-4"><p class="text-dark ">Your CVs</p></div>
-                            <div class="col-md-8"><p class="text-dark ">
-                                </p>
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check1">
-                                            <input type="checkbox" class="form-check-input" id="check1" name="vehicle1"
-                                                   value="something" @if($cv->status==="published") checked @endif>Published
-                                        </label>
+                            <div class="row row-border pb-4" style="border-top:1px solid #ccc">
+                                <div class="col-md-4 pt-4"><p class="text-dark ">Din CV er</p></div>
+                                <div class="col-md-8"><p class="text-dark ">
+                                    </p>
+                                    <div class="form-group">
+                                        <div class="">
+                                            <label class="radio-lbl" for="status1">
+                                                <input type="radio" id="status1" name="status"
+                                                       value="published" @if($cv->status==="published") checked @endif>Publisert
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="">
+                                            <label class="radio-lbl" for="status2">
+                                                <input type="radio" id="status2" name="status"
+                                                       value="inactive" @if($cv->status==="inactive") checked @endif>Inaktiv
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <p class="text-dark pt-3">Som publisert vil din CV kunne bli søkt opp av FINN.nos
+                                            kunder. Din CV kan først publiseres når du har registrert minst en gyldig
+                                            utdanning eller erfaring.</p>
                                     </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check2">
-                                            <input type="checkbox" class="form-check-input" id="check2" name="vehicle2"
-                                                   value="something" @if($cv->status==="inactive") checked @endif>Inactive
-                                        </label>
-                                    </div>
-                                    <p class="text-dark pt-3">When your CV is published, it will be available for all
-                                        companies who uses NorgesHandel. You will have to register either a valid
-                                        education
-                                        or a valid experience before the CV is published.</p>
+
                                 </div>
+                            </div>
+                            <div class="row row-border pb-4">
+                                <div class="col-md-4 pt-4"><p class="text-dark ">Vis personalia</p></div>
+                                <div class="col-md-8"><p class="text-dark ">
+                                    </p>
+                                    <div class="form-group">
 
-                                <p></p></div>
-                        </div>
-                        <div class="row row-border pb-4">
-                            <div class="col-md-4 pt-4"><p class="text-dark ">Show personal information</p></div>
-                            <div class="col-md-8"><p class="text-dark ">
-                                </p>
-                                <div class="form-group">
+                                        <div class="form-check">
+                                            <label class="radio-lbl" for="visibility1">
+                                                <input type="radio" class="" id="visibility1" name="visibility"
+                                                       value="visible" @if($cv->visibility==="visible") checked @endif>Personalia synlig
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="radio-lbl" for="visibility2">
+                                                <input type="radio" class="" id="visibility2" name="visibility"
+                                                       value="anonymous" @if($cv->visibility==="anonymous") checked @endif>Anonym
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <p class="text-dark pt-3">For profesjonelle rekrutteringsbyråer har du mulighet til
+                                            å tilgjengeliggjøre din kontaktinformasjon, mens for andre bedrifter vil din CV
+                                            fremstå anonymt og bedrifter må forespørre for å få innsyn i din CV. Som CV-eier
+                                            vil du selv avgjøre om du ønsker å gi den bedriften som forespør innsyn i dine
+                                            personlige data.</p>
+                                    </div>
 
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check1">
-                                            <input type="checkbox" class="form-check-input" id="check1" name="vehicle1"
-                                                   value="something" @if($cv->visibility==="visible") checked @endif>Personal information visible
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="check2">
-                                            <input type="checkbox" class="form-check-input" id="check2" name="vehicle2"
-                                                   value="something" @if($cv->visibility==="anonymous") checked @endif>Anonymous
-                                        </label>
-                                    </div>
-                                    <p class="text-dark pt-3">Your contact information will only be visible to
-                                        recruitment
-                                        agencies. Other companies will have to contact you with a request in order to
-                                        get
-                                        access to your details. If a company requests access to your personal
-                                        information,
-                                        it is up to you as CV-owner to decide if they should gain access or not..</p>
+                                    <p></p></div>
+                            </div>
+
+                            <div class="row row-border ">
+                                <div class="col-md-4 pt-2"><p class="text-dark ">Registrert første gang</p></div>
+                                <div class="col-md-8 pt-2"><p
+                                        class="text-dark ">{{date('d.m.Y', strtotime($cv->user->created_at))}}</p></div>
+                            </div>
+                            <div class="row row-border ">
+                                <div class="col-md-4 pt-2"><p class="text-dark ">Sist oppdatert</p></div>
+                                <div class="col-md-8 pt-2"><p
+                                        class="text-dark ">{{date('d.m.Y', strtotime($cv->created_at))}}</p></div>
+                            </div>
+                            <div class="row row-border ">
+                                <div class="col-md-4 pt-2"><p class="text-dark ">Din CV-id</p></div>
+                                <div class="col-md-8 pt-2"><p class="text-dark ">{{$cv->id}}</p></div>
+                            </div>
+                            <div class="row row-border">
+                                <div class="col-md-4 pt-2"><p class="text-dark ">Utløper</p></div>
+                                <div class="col-md-8 pt-2">
+                                    <p class="text-dark ">{{date('d.m.Y', strtotime($cv->expiry))}}
+                                        <a class="ml-3" href="{{url('my-business/cv/extend')}}">Nye 6 måneder</a>
+                                    </p>
                                 </div>
-
-                                <p></p></div>
-                        </div>
-
-                        <div class="row row-border ">
-                            <div class="col-md-4 pt-2"><p class="text-dark ">Registered for the first time</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">{{date('d.m.Y', strtotime($cv->user->created_at))}}</p></div>
-                        </div>
-                        <div class="row row-border ">
-                            <div class="col-md-4 pt-2"><p class="text-dark ">Last updated</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">{{date('d.m.Y', strtotime($cv->created_at))}}</p></div>
-                        </div>
-                        <div class="row row-border ">
-                            <div class="col-md-4 pt-2"><p class="text-dark ">Your CV-number</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">{{$cv->id}}</p></div>
-                        </div>
-                        <div class="row row-border">
-                            <div class="col-md-4 pt-2"><p class="text-dark ">Expires</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark ">{{date('d.m.Y', strtotime($cv->expiry))}}<a class="ml-3" href="{{url('my-business/cv/extend')}}">Another
-                                        6
-                                        months</a></p></div>
-                        </div>
-                        <div class="row row-border ">
-                            <div class="col-md-4 pt-2"><p class="text-dark ">CV terms</p></div>
-                            <div class="col-md-8 pt-2"><p class="text-dark "><a href="#">Read CV terms</a></p></div>
-                        </div>
-                        <div class="btn-group mt-3">
-                            <a class="dme-btn-outlined-blue float-left" href="#">
-                                <div class="ml-2">Save</div>
-                            </a>
-                            <a class="dme-btn-outlined-blue float-left ml-3" href="#">
-                                <div class="ml-2">Delete the cv</div>
-                            </a>
-
-                        </div>
+                            </div>
+                            <div class="row row-border ">
+                                <div class="col-md-4 pt-2"><p class="text-dark ">Brukervilkår</p></div>
+                                <div class="col-md-8 pt-2"><p class="text-dark "><a href="#">Les vilkår</a></p></div>
+                            </div>
+                            <div class="btn-group mt-3">
+                                <button type="submit" class="dme-btn-outlined-blue float-left"> Lagre </button>
+                                <button class="dme-btn-outlined-blue float-left ml-3"> Slett CV </button>
+                            </div>
+                        </form>
                     </div>
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="inner-tab">
@@ -1117,7 +1137,29 @@
                 </div>
             </div>
 
-
+        </div>
     </main>
-
+    <script type="text/javascript">
+        function showTab(hash){
+            if(location.hash != "") {
+                $('.tab-pane').removeClass('show');
+                $('.tab-pane').removeClass('active');
+                $('.tab-pane' + hash).addClass('show');
+                $('.tab-pane' + hash).addClass('active');
+                $('#cv_tabs a').removeClass('active');
+                $('#cv_tabs a[href="' + hash + '"]').addClass('active');
+            }
+        }
+        $(document).ready(function () {
+            showTab(location.hash);
+            $(document).on('click', '#publish_tab', function (e) {
+                e.preventDefault();
+                showTab($(this).attr('href'));
+                location.hash = $(this).attr('href');
+            });
+            $(document).on('click', '#cv_tabs a', function(){
+                location.hash = $(this).attr('href');
+            });
+        });
+    </script>
 @endsection

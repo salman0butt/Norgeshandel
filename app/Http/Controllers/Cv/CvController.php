@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Cv;
 
-use App\Models\Cv;
+use App\Http\Controllers\Controller;
+use App\Models\Cv\Cv;
+use App\Models\Cv\CvPersonal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +23,11 @@ class CvController extends Controller
                 $cv = new Cv(['user_id'=>Auth::user()->id, 'expiry'=>date('Y-m-d', strtotime("+6 months"))]);
                 $cv->save();
             }
-
+            $cvpersonal = $cv->personal;;
+            if($cvpersonal==null){
+                $cvpersonal = new CvPersonal(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
+                $cvpersonal->save();
+            }
             return view('user-panel.my-business.cv.cv', compact('cv'));
         }
     }
@@ -78,7 +84,8 @@ class CvController extends Controller
      */
     public function update(Request $request, Cv $cv)
     {
-        //
+        $cv->update(['status'=>$request->status, 'visibility'=>$request->visibility]);
+        return redirect(url('my-business/cv#profile'));
     }
 
     /**
@@ -97,8 +104,8 @@ class CvController extends Controller
             $cv = Cv::where('user_id', Auth::user()->id)->get()->first();
             $cv->expiry = date('Y-m-d', strtotime("+6 months", strtotime($cv->expiry)));
             $cv->save();
-            return back();
+            return redirect(url('my-business/cv#profile'));
         }
-        return back();
+        return redirect(url('my-business/cv#profile'));
     }
 }
