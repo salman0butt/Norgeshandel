@@ -57,13 +57,15 @@
                             <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                             <div class="col-md-12 font-weight-bold mt-3">Månedsleie</div>
                             <div class="col-md-12 u-t3">{{$property_data->monthly_rent}} Kr</div>
+                            <div class="col-md-12 mt-3"><span class="font-weight-bold">Inkluderer:</span><span>{{$property_data->include_in_rent}} Kr</sapn></div>
+                            <div class="col-md-12 "><span class="font-weight-bold"">Depositum:</span><span>{{$property_data->deposit}}</span> Kr</div>
                             <div class="clearfix"></div>
                             <div class="mt-2 col-md-12"></div>
                             <div class="col-md-6"><span class="font-weight-bold">Primærrom </span>&nbsp;<span>{{$property_data->primary_rom}} m²</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Soverom </span>&nbsp;<span>{{$property_data->number_of_bedrooms}}</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>{{$property_data->floor}}</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Boligtype </span>&nbsp;<span>{{$property_data->property_type}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Leieperiode </span>&nbsp;<span>{{ date("d.m.Y", strtotime($property_data-> rented_to)) }}</span></div>
+                            <div class="col-md-6"><span class="font-weight-bold">Leieperiode </span>&nbsp;<span>{{ date("d.m.Y", strtotime($property_data-> rented_from)) }} - {{ date("d.m.Y", strtotime($property_data-> rented_to)) }}</span></div>
                         
 
                             <!-- <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a> -->

@@ -952,3 +952,6 @@ a > .alert-warning:hover{
 .invalid-feedback{
     display: block !important;
 }
+.hide{
+    display: none;
+}

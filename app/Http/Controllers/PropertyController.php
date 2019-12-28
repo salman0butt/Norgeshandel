@@ -65,6 +65,9 @@ class PropertyController extends Controller
         $data = $request->all();
         $searchable = $data['sending'];
 
+        $order_by_thing = "priced-low-high";
+        $order_by = "asc";
+
         if($data['sending'] == 'priced-low-high')
         {
             $order_by_thing = "asking_price";
@@ -74,6 +77,16 @@ class PropertyController extends Controller
         else if($data['sending'] == "priced-high-low")
         {
             $order_by_thing = "asking_price";
+            $order_by = "desc";
+        }
+        else if($data['sending'] == "housing_area_low_high")
+        {
+            $order_by_thing = "housing_area";
+            $order_by = "asc";
+        }
+        else if($data['sending'] == "housing_area_high_low")
+        {
+            $order_by_thing = "housing_area";
             $order_by = "desc";
         }
       
@@ -794,7 +807,14 @@ class PropertyController extends Controller
     public function holidayHomeForSaleAds()
     {
         $add_array = DB::table('property_holidays_homes_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
+
         return view('user-panel.property.ads_for_holiday_home_for_sale')->with(compact('add_array'));
+    }
+
+    public function holidayHomeForSaleDescription($id)
+    {
+        $property_data = PropertyHolidaysHomesForSale::where('id',$id)->first();
+        return view('common.partials.property.holiday_home_for_sale_description')->with(compact('property_data'));
     }
 
 

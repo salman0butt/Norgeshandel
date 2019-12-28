@@ -55,11 +55,11 @@ $posts         =   array('img'=>'',
                             <option value="1" selected="">Publisert</option>
                             <option value="priced-low-high">Prisant lav-høy</option>
                             <option value="priced-high-low">Prisant høy-lav</option>
-                            <option value="4">Boa lav-høy</option>
-                            <option value="5">Boa høy-lav</option>
+                            <option value="housing_area_low_high">Boa lav-høy</option>
+                            <option value="housing_area_high_low">Boa høy-lav</option>
                             <option value="99">Nærmest</option>
 
-                        </select>>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@ $posts         =   array('img'=>'',
                             ?>  
 
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
-                                <a href="{{url('/property/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
+                                <a href="{{url('/holiday/home/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                         <div class="trailing-border">
                                             <img src="{{$full_path}}" alt="" class="img-fluid radius-8">

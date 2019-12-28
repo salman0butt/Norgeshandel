@@ -154,3 +154,4 @@ Route::get('/flat/wishes/rented/description/{id}', ['uses' =>'PropertyController
 
 //holidayhomeforsale
 Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');
+Route::get('/holiday/home/for/sale/description/{id}', ['uses' =>'PropertyController@holidayHomeForSaleDescription']);
