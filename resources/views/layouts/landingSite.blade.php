@@ -13,6 +13,9 @@
     <!--    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">-->
     <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
     <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/validate-error.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/intlTelInput.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/Telinput.css')}}">
     <!--    incluedes   -->
     <script src="{{asset('public/js/tinymce.min.js')}}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -249,6 +252,13 @@
     </div>
 </footer>
 <script src="{{asset('public/mediexpert.js')}}"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="{{ asset('public/js/additional-methods.min.js') }}"></script>
+<script src="{{asset('public/js/messages_no.min.js')}}"></script>
+<script src="{{ asset('public/js/validater.js') }}"></script>
+<script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
+<script src="{{asset('public/js/telPhone.js')}}"></script>
+<script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
+<script src="{{asset('public/js/utils.js')}}"></script>
 </body>
 </html>
