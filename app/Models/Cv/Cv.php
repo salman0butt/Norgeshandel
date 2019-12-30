@@ -12,7 +12,19 @@ class Cv extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function media(){
+        return $this->morphOne('App\Media', 'mediable');
+    }
+
     public function personal(){
         return $this->hasOne('App\Models\Cv\CvPersonal');
     }
+
+    public function experiences(){
+        return $this->hasMany('App\Models\Cv\CvExperience');
+    }
+
+//    public function education(){
+//        return $this->hasOne('App\Models\Cv\CvEducation');
+//    }
 }

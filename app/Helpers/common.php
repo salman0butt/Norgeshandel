@@ -114,7 +114,7 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(570)->widen(570)->save($path . '/' . $unique_name . '-570x570.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(768)->widen(768)->save($path . '/' . $unique_name . '-768x768.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
-
+                common::delete_media($mediable_id, $mediable_type, $type);
                 $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
                 $media->save();
             }
@@ -131,17 +131,9 @@ class common
             foreach ($old_media as $obj) {
                 $path = 'public/uploads/' . date('Y', strtotime($obj->updated_at)) . '/' . date('m', strtotime($obj->updated_at)) . '/';
                 $arr = explode('.', $obj->name_unique);
-                if (file_exists($path . $arr[0] . '.' . $arr[1])) {
-                    unlink($path . $arr[0] . '.' . $arr[1]);
-                }
 
-                if (is_array($arr) && count($arr) == 2) {
-                    if (file_exists($path . $arr[0] . '-66x66.' . $arr[1])) { unlink($path . $arr[0] . '-66x66.' . $arr[1]); };
-                    if (file_exists($path . $arr[0] . '-150x150.' . $arr[1])) { unlink($path . $arr[0] . '-150x150.' . $arr[1]); };
-                    if (file_exists($path . $arr[0] . '-360x360.' . $arr[1])) { unlink($path . $arr[0] . '-360x360.' . $arr[1]); };
-                    if (file_exists($path . $arr[0] . '-570x570.' . $arr[1])) { unlink($path . $arr[0] . '-570x570.' . $arr[1]); };
-                    if (file_exists($path . $arr[0] . '-768x768.' . $arr[1])) { unlink($path . $arr[0] . '-768x768.' . $arr[1]); };
-                    if (file_exists($path . $arr[0] . '-1024x1024.' . $arr[1])) { unlink($path . $arr[0] . '-1024x1024.' . $arr[1]); };
+                foreach (glob($path . $arr[0] . '*.*') as $file) {
+                    unlink($file);
                 }
             }
             $obj_old_media->delete();

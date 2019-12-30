@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-1024x1024.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-150x150.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-180x200.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-250x250.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-360x360.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-570x570.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-66x66.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815-768x768.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577692274-9260815.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Cv.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cv/Cv.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Term.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Term.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/common.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvPersonalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvPersonalController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Cv/Cv.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cv/Cv.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mediexpert.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/mediexpert.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -192,19 +204,19 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\norgeshandel\app\Http\Controllers\Cv" />
+      <recent name="C:\xampp\htdocs\norgeshandel\app\Models\Cv" />
+      <recent name="C:\xampp\htdocs\norgeshandel\app\Models" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\app\Models" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\my-business" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\common\partials" />
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel" />
       <recent name="C:\xampp\htdocs\NorgesHandel\app\Http" />
       <recent name="C:\xampp\htdocs\NorgesHandel\database\migrations" />
       <recent name="C:\xampp\htdocs\NorgesHandel\app\Http\Controllers" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Models\Cv" />
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Http\Controllers\Cv" />
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Models" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\app\Models" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\my-business" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -341,7 +353,8 @@
       <workItem from="1577085779252" duration="13722000" />
       <workItem from="1577166519110" duration="29649000" />
       <workItem from="1577343721216" duration="1680000" />
-      <workItem from="1577348917534" duration="39235000" />
+      <workItem from="1577348917534" duration="39409000" />
+      <workItem from="1577684938831" duration="20815000" />
     </task>
     <servers />
   </component>
@@ -360,16 +373,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php</url>
-          <line>984</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

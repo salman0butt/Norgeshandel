@@ -77,8 +77,10 @@ Route::group(['middleware'=>'auth'], function(){
         Route::resource('cv', 'Cv\CvController');
         Route::group(['prefix'=>'cv'], function (){
             Route::resources([
-                'cvpersonal'=>'Cv\CvPersonalController'
+                'cvpersonal'=>'Cv\CvPersonalController',
+                'cvexperience'=>'Cv\CvExperienceController'
             ]);
+            Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
         });
         Route::get('cv/extend', 'Cv\CvController@extend');
     });

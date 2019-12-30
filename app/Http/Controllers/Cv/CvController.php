@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Cv;
 
+use App\Helpers\common;
 use App\Http\Controllers\Controller;
 use App\Models\Cv\Cv;
+use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +25,23 @@ class CvController extends Controller
                 $cv = new Cv(['user_id'=>Auth::user()->id, 'expiry'=>date('Y-m-d', strtotime("+6 months"))]);
                 $cv->save();
             }
-            $cvpersonal = $cv->personal;;
+            $cvpersonal = $cv->personal;
             if($cvpersonal==null){
                 $cvpersonal = new CvPersonal(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvpersonal->save();
             }
-            return view('user-panel.my-business.cv.cv', compact('cv'));
+            $cvexperiences = $cv->experiences;
+            if($cvexperiences==null){
+                $cvexperience = new CvExperience(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
+                $cvexperience->save();
+                $cvexperiences = $cv->experiences;
+            }
+//            $cveducation = $cv->education;;
+//            if($cveducation==null){
+//                $cveducation = new CvPersonal(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
+//                $cveducation->save();
+//            }
+            return view('user-panel.my-business.cv.cv', compact('cv', 'cvexperiences'));
         }
     }
 
@@ -107,5 +120,11 @@ class CvController extends Controller
             return redirect(url('my-business/cv#profile'));
         }
         return redirect(url('my-business/cv#profile'));
+    }
+
+    public function upload_cv_profile(Request $request){
+        if (Auth::check()){
+            common::update_media($request->file(), Auth::user()->cv->id, 'App\Models\Cv\Cv');
+        }
     }
 }
