@@ -44,7 +44,7 @@
                                 <a href="{{url('commercial/property/for/rent/ads')}}">Næringseiendom til leie <span class="u-stone">(3 103)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="businessplots.php?grid">Næringstomter <span class="u-stone">(125)</span></a>
+                                <a href="">Næringstomter <span class="u-stone">(125)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('business/for/sale/ads')}}">Bedrifter til salgs <span class="u-stone">(105)</span></a>
