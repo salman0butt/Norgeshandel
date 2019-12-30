@@ -62,7 +62,7 @@
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="add-new/realestate-commercial-for-rent.php">Næringseiendom til leie
+                            <a href="{{url('/add/new/commercial/property/for/rent')}}">Næringseiendom til leie
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">
@@ -74,7 +74,7 @@
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="add-new/realestate-company-for-sale.php">Bedrifter til salgs
+                            <a href="{{url('/business/for/sale')}}">Bedrifter til salgs
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">

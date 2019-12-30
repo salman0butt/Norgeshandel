@@ -90,7 +90,7 @@
                                     <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
 
                                         <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
-                                        <div class="location u-t5 text-muted mt-2">&nbsp;</div>
+                                        <div class="location u-t5 text-muted mt-2">$property_for_flat_wishes_rented-></div>
                                         <div class="title color-grey">{{$property_for_flat_wishes_rented->headline}}</div>
                                         <div class="mt-2">
                                             <div class="area float-left color-grey">{{rtrim($property_for_flat_wishes_rented->property_type,",")}}</div>

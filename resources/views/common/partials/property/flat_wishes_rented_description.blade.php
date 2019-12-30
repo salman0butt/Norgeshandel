@@ -59,8 +59,8 @@
                             <div class="clearfix"></div>
                             <div class="mt-2 col-md-12"></div>
                             <div class="col-md-12"><span class="font-weight-bold">Boligtype: </span>&nbsp;<span> {{rtrim($property_data->property_type,",")}} </span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Ønsket område: </span>&nbsp;<span></span></div>
-                            <div class="col-md-12"><span class=""><span>{{rtrim($property_data->region)}}</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Ønsket område: </span>&nbsp;<span>{{rtrim($property_data->region)}}</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Antall beboere:</span>&nbsp;<span>{{rtrim($property_data->number_of_tenants)}}</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Ønskes fra: </span>&nbsp;<span> {{date("d.m.Y", strtotime($property_data->wanted_from))}}</span></div>
                         
 
@@ -90,7 +90,7 @@
                             Eiendomsmegler</p>
                         <div class="mb-2">
                             <span>Mobil: </span>
-                            <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">  465 45 247</a></span>
+                            <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS"> {{$property_data->phone}}</a></span>
                         </div>
                         <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
                         <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>

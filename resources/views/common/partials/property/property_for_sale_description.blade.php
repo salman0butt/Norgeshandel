@@ -78,7 +78,7 @@
                             <div class="col-md-12"><span class="font-weight-bold">Verditakst: </span>&nbsp;<span> SEK  {{$property_data->value_rate}}</span></div>
                             
                             <div class="col-md-12 more_details_section hide">
-                                <span class="font-weight-bold">Facilities</span>
+                                <span class="font-weight-bold">Fasiliteter</span>
                                 <ul>
                                     @foreach($facilities as $key=>$val)
                                         <li>
