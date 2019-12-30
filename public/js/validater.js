@@ -427,6 +427,90 @@ $(document).ready(function () {
 
     });
 
+    // Commercial property for sale
+
+    $("#commercial_property_for_sale").validate({
+        lang: 'no',
+        rules: {
+            property_type: {
+                required: true
+            },
+            location: {
+                required: true
+            },
+            zip_code: {
+                required: true,
+                zipcodeUS: true
+            },
+            municipal_number: {
+                required: true,
+                minlength: 4,
+                number: true
+            },
+            usage_number: {
+                required: true,
+                number: true
+            },
+            farm_number: {
+                number:true
+            },
+            gross_area_from: {
+                number: true,
+                required: true
+            },
+            gross_area_to: {
+                number: true,
+                required: true
+            },
+            use_area: {
+              number: true
+            },
+            land: {
+                number: true
+            },
+            number_of_office_space:{
+                number: true
+            },
+            number_of_parking_space: {
+                number: true
+            },
+            floors: {
+              number: true
+            },
+            primary_room: {
+                number: true
+            },
+            year_of_construction: {
+              number:true,
+              date: true
+            },
+            rennovated_year: {
+                number:true,
+                date: true
+            },
+            rental_income: {
+              number:true
+            },
+            value_rate: {
+                number: true
+            },
+            loan_rate: {
+                number: true
+            },
+            availiable_from: {
+                date: true
+            },
+            headline: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            link_for_information: {
+                url: true
+            }
+        }
+
+    });
 
 
 
@@ -463,6 +547,13 @@ $(document).ready(function () {
     });
     $('#property_holiday_home_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur
         if ($('#property_holiday_home_for_sale_form').validate().checkForm()) {                   // checks form for validity
+            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+        } else {
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+        }
+    });
+    $('#commercial_property_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
+        if ($('#commercial_property_for_sale').validate().checkForm()) {                   // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button

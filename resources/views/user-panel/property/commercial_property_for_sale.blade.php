@@ -1,7 +1,7 @@
 @extends('layouts.landingSite')
 @section('page_content')
 
-<main>
+    <main>
         <div class="dme-container">
             <div class="row">
                 <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
@@ -19,59 +19,78 @@
                                 <h3 class="u-t5">Type lokale</h3>
                                 <div class="row">
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-OFFICE" type="checkbox" value="OFFICE" name="property_type">
+                                        <input data-selector="" id="property_type-OFFICE" type="checkbox" value="OFFICE"
+                                               name="property_type">
                                         <label class="smalltext" for="property_type-OFFICE"> Kontor</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-BUSINESS" type="checkbox" value="BUSINESS" name="property_type">
+                                        <input data-selector="" id="property_type-BUSINESS" type="checkbox"
+                                               value="BUSINESS" name="property_type">
                                         <label class="smalltext" for="property_type-BUSINESS"> Butikk/Handel</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-INDUSTRIAL" type="checkbox" value="INDUSTRIAL" name="property_type">
-                                        <label class="smalltext" for="property_type-INDUSTRIAL"> Produksjon/Industri</label>
+                                        <input data-selector="" id="property_type-INDUSTRIAL" type="checkbox"
+                                               value="INDUSTRIAL" name="property_type">
+                                        <label class="smalltext" for="property_type-INDUSTRIAL">
+                                            Produksjon/Industri</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-WAREHOUSE" type="checkbox" value="WAREHOUSE" name="property_type">
+                                        <input data-selector="" id="property_type-WAREHOUSE" type="checkbox"
+                                               value="WAREHOUSE" name="property_type">
                                         <label class="smalltext" for="property_type-WAREHOUSE"> Lager/Logistikk</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox" value="MULTIPURPOSEAREA" name="property_type">
-                                        <label class="smalltext" for="property_type-MULTIPURPOSEAREA"> Kombinasjonslokaler</label>
+                                        <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox"
+                                               value="MULTIPURPOSEAREA" name="property_type">
+                                        <label class="smalltext" for="property_type-MULTIPURPOSEAREA">
+                                            Kombinasjonslokaler</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-FARM" type="checkbox" value="FARM" name="property_type">
+                                        <input data-selector="" id="property_type-FARM" type="checkbox" value="FARM"
+                                               name="property_type">
                                         <label class="smalltext" for="property_type-FARM"> Gårdsbruk/Småbruk</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-MULTIUNITS" type="checkbox" value="MULTIUNITS" name="property_type">
-                                        <label class="smalltext" for="property_type-MULTIUNITS"> Bygård/Flermannsbolig</label>
+                                        <input data-selector="" id="property_type-MULTIUNITS" type="checkbox"
+                                               value="MULTIUNITS" name="property_type">
+                                        <label class="smalltext" for="property_type-MULTIUNITS">
+                                            Bygård/Flermannsbolig</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-SHOPPINGMALL" type="checkbox" value="SHOPPINGMALL" name="property_type">
+                                        <input data-selector="" id="property_type-SHOPPINGMALL" type="checkbox"
+                                               value="SHOPPINGMALL" name="property_type">
                                         <label class="smalltext" for="property_type-SHOPPINGMALL"> Kjøpesenter</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-MECHSHOP" type="checkbox" value="MECHSHOP" name="property_type">
+                                        <input data-selector="" id="property_type-MECHSHOP" type="checkbox"
+                                               value="MECHSHOP" name="property_type">
                                         <label class="smalltext" for="property_type-MECHSHOP"> Verksted</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-GARAGE" type="checkbox" value="GARAGE" name="property_type">
+                                        <input data-selector="" id="property_type-GARAGE" type="checkbox" value="GARAGE"
+                                               name="property_type">
                                         <label class="smalltext" for="property_type-GARAGE"> Garasje/Parkering</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-HOTEL" type="checkbox" value="HOTEL" name="property_type">
+                                        <input data-selector="" id="property_type-HOTEL" type="checkbox" value="HOTEL"
+                                               name="property_type">
                                         <label class="smalltext" for="property_type-HOTEL"> Hotell/Overnatting</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-RESTAURANT" type="checkbox" value="RESTAURANT" name="property_type">
-                                        <label class="smalltext" for="property_type-RESTAURANT"> Serveringslokale/Kantine</label>
+                                        <input data-selector="" id="property_type-RESTAURANT" type="checkbox"
+                                               value="RESTAURANT" name="property_type">
+                                        <label class="smalltext" for="property_type-RESTAURANT">
+                                            Serveringslokale/Kantine</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-LEARNINGFACILITY" type="checkbox" value="LEARNINGFACILITY" name="property_type">
-                                        <label class="smalltext" for="property_type-LEARNINGFACILITY"> Undervisning/Arrangement</label>
+                                        <input data-selector="" id="property_type-LEARNINGFACILITY" type="checkbox"
+                                               value="LEARNINGFACILITY" name="property_type">
+                                        <label class="smalltext" for="property_type-LEARNINGFACILITY">
+                                            Undervisning/Arrangement</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-OTHER" type="checkbox" value="OTHER" name="property_type">
+                                        <input data-selector="" id="property_type-OTHER" type="checkbox" value="OTHER"
+                                               name="property_type">
                                         <label class="smalltext" for="property_type-OTHER"> Andre</label>
                                     </div>
                                 </div>
@@ -348,7 +367,8 @@
                                 <h3 class="u-t5">Adkomst (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="descripion_access" id="descripion_access" cols="30" rows="10"></textarea>
+                                        <textarea name="descripion_access" id="descripion_access" cols="30"
+                                                  rows="10"></textarea>
                                         <span class="u-t5">Forklar kort om adkomsten til lokalet og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
                                     </div>
                                 </div>
@@ -358,7 +378,8 @@
                                 <h3 class="u-t5">Adkomst (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="descripion_access1" id="descripion_access1" cols="30" rows="10"></textarea>
+                                        <textarea name="descripion_access1" id="descripion_access1" cols="30"
+                                                  rows="10"></textarea>
                                         <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
                                     </div>
                                 </div>
@@ -404,7 +425,8 @@
                                 <h3 class="u-t5">Bruttoareal (BTA) fra</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="gross_area_from" type="text" class="dme-form-control" placeholder="m²">
+                                        <input name="gross_area_from" type="text" class="dme-form-control"
+                                               placeholder="m²">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -416,7 +438,8 @@
                                 <h3 class="u-t5">Bruttoareal (BTA) til</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="gross_area_to" type="text" class="dme-form-control" placeholder="m²">
+                                        <input name="gross_area_to" type="text" class="dme-form-control"
+                                               placeholder="m²">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -428,7 +451,8 @@
                                 <h3 class="u-t5">Primærrom (P-ROM) (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="primary_room" type="text" class="dme-form-control" placeholder="m²">
+                                        <input name="primary_room" type="text" class="dme-form-control"
+                                               placeholder="m²">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -497,7 +521,8 @@
                                 <h3 class="u-t5">Byggeår (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="year_of_construction" type="text" class="dme-form-control" placeholder="åååå">
+                                        <input name="year_of_construction" type="text" class="dme-form-control"
+                                               placeholder="åååå">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -508,7 +533,8 @@
                                 <h3 class="u-t5">Renovert år (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="rennovated_year" type="text" class="dme-form-control" placeholder="åååå">
+                                        <input name="rennovated_year" type="text" class="dme-form-control"
+                                               placeholder="åååå">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -555,7 +581,8 @@
                                 <h3 class="u-t5">Standard/Tekniske opplysninger (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="standard_technica_information" id="standard_technica_information" cols="30" rows="10"></textarea>
+                                        <textarea name="standard_technica_information"
+                                                  id="standard_technica_information" cols="30" rows="10"></textarea>
                                         <span class="u-t5">Her kan du feks. gi en kort beskrivelse av standarden på lokalene, samt tilstand på ventilasjon, kjøling, sentralvarme, heis adgangskontroll, brannsikring m.m.</span>
                                     </div>
                                 </div>
@@ -565,7 +592,8 @@
                                 <h3 class="u-t5">Fasiliteter (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-AIRCONDITIONING" type="checkbox" value="AIRCONDITIONING" name="facilities">
+                                        <input id="facilities-AIRCONDITIONING" type="checkbox" value="AIRCONDITIONING"
+                                               name="facilities">
                                         <label class="smalltext" for="facilities-AIRCONDITIONING"> Aircondition</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
@@ -573,11 +601,14 @@
                                         <label class="smalltext" for="facilities-ALARM"> Alarm</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-BROADBAND" type="checkbox" value="BROADBAND" name="facilities">
-                                        <label class="smalltext" for="facilities-BROADBAND"> Bredbåndstilknytning</label>
+                                        <input id="facilities-BROADBAND" type="checkbox" value="BROADBAND"
+                                               name="facilities">
+                                        <label class="smalltext" for="facilities-BROADBAND">
+                                            Bredbåndstilknytning</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-RECEPTION" type="checkbox" value="RECEPTION" name="facilities">
+                                        <input id="facilities-RECEPTION" type="checkbox" value="RECEPTION"
+                                               name="facilities">
                                         <label class="smalltext" for="facilities-RECEPTION"> Felles resepsjon</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
@@ -589,11 +620,13 @@
                                         <label class="smalltext" for="facilities-LIFT"> Heis</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-CANTEEN" type="checkbox" value="CANTEEN" name="facilities">
+                                        <input id="facilities-CANTEEN" type="checkbox" value="CANTEEN"
+                                               name="facilities">
                                         <label class="smalltext" for="facilities-CANTEEN"> Kantine</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-DRIVEIN" type="checkbox" value="DRIVEIN" name="facilities">
+                                        <input id="facilities-DRIVEIN" type="checkbox" value="DRIVEIN"
+                                               name="facilities">
                                         <label class="smalltext" for="facilities-DRIVEIN"> Kjøreport</label>
                                     </div>
                                 </div>
@@ -603,7 +636,8 @@
                                 <h3 class="u-t5">Leieinntekter (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="rental_income" type="text" class="dme-form-control" placeholder="Kr.">
+                                        <input name="rental_income" type="text" class="dme-form-control"
+                                               placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -615,7 +649,7 @@
                                 <h3 class="u-t5">Verditakst (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="value_rate"  type="text" class="dme-form-control" placeholder="Kr.">
+                                        <input name="value_rate" type="text" class="dme-form-control" placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -660,7 +694,8 @@
                                 <h3 class="u-t5">Legg til bilder (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="file" name="commercial_property_for_sale_photos[]" id="commercial_property_for_sale_photos" class="" multiple>
+                                        <input type="file" name="commercial_property_for_sale_photos[]"
+                                               id="commercial_property_for_sale_photos" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -669,7 +704,8 @@
                                 <h3 class="u-t5">Legg till pdf</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="file" name="commercial_property_for_sale_pdf[]" id="commercial_property_for_sale_pdf" class="" multiple>
+                                        <input type="file" name="commercial_property_for_sale_pdf[]"
+                                               id="commercial_property_for_sale_pdf" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -687,7 +723,8 @@
                                 <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="description_simple" id="description_simple" cols="30" rows="10"></textarea>
+                                        <textarea name="description_simple" id="description_simple" cols="30"
+                                                  rows="10"></textarea>
                                         <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                                     </div>
                                 </div>
@@ -716,7 +753,9 @@
                                 <h3 class="u-t5">Telefon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="phone" type="text" class="dme-form-control">
+                                        <input name="phone" type="tel" id="phone" class="dme-form-control">
+                                        <span id="valid-msg" class="hide"></span>
+                                        <span id="error-msg" class="hide"></span>
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>
@@ -727,13 +766,15 @@
                             <div class="form-group">
                                 <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                                     <div class="profile-icon">
-                                        <img src="<?php $_SERVER['SERVER_NAME'] ?>/NorgesHandel/assets/images/profile-placeholder.png"
-                                             alt="Profile image" style="width:80px;">
+                                        <img
+                                            src="<?php $_SERVER['SERVER_NAME'] ?>/NorgesHandel/assets/images/profile-placeholder.png"
+                                            alt="Profile image" style="width:80px;">
                                     </div>
                                     <div class="profile-name">
                                         <h3 class="text-muted">Ola Nordmann</h3>
                                     </div>
-                                    <p>Hvis denne profilen ikke er riktig kan du endre den under Min handel deretter Endre profil.</p>
+                                    <p>Hvis denne profilen ikke er riktig kan du endre den under Min handel deretter
+                                        Endre profil.</p>
                                 </div>
                             </div>
 
@@ -747,7 +788,8 @@
 
                             <hr>
 
-                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!">
+                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12"
+                                   value="Publiser annonsen!">
 
                             <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for
                                     annonsering</a></p>
@@ -761,8 +803,8 @@
     </main>
 
     <script>
-        
-        $(document).ready(function(){
+
+        $(document).ready(function () {
 
             $.ajaxSetup({
                 headers: {
@@ -773,7 +815,7 @@
 
         });
 
-        $("#publiserannonsen").click(function(e){
+        $("#publiserannonsen").click(function (e) {
 
             e.preventDefault();
 
@@ -790,23 +832,23 @@
                 dataType: "json",
                 processData: false,
                 contentType: false,
-                success: function(data){
-                        $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
+                success: function (data) {
+                    $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
                 },
-                error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
-                        var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
-                        var html="<ul>";
-                        $.each( errors.errors, function( index, value ){
+                error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
+                    var errors = jqXhr.responseJSON;
+                    console.log(errors.errors);
+                    var html = "<ul>";
+                    $.each(errors.errors, function (index, value) {
                         console.log(value);
-                        html += "<li>"+value+"</li>";
-                        });
-                        html += "</ul>";
-                        $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
-                    },
+                        html += "<li>" + value + "</li>";
+                    });
+                    html += "</ul>";
+                    $('.notice').append('<div class="alert alert-danger">' + html + '</div>');
+                },
             });
 
-    });
+        });
 
     </script>
 

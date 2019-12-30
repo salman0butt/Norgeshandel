@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/validate-error.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/intlTelInput.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('public/css/ladda.min.css')}}">--}}
+    <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
 {{--    <link rel="stylesheet" href="{{asset('public/css/Telinput.css')}}">--}}
     <!--    incluedes   -->
     <script src="{{asset('public/js/tinymce.min.js')}}"></script>
@@ -260,5 +262,7 @@
 <script src="{{asset('public/js/telPhone.js')}}"></script>
 <script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
 <script src="{{asset('public/js/utils.js')}}"></script>
+<script src="{{asset('public/js/spin.min.js')}}"></script>
+<script src="{{asset('public/js/ladda.min.js')}}"></script>
 </body>
 </html>
