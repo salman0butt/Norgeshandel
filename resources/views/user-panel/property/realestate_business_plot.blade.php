@@ -2,7 +2,7 @@
 @section('page_content')
 
 
-<main>
+    <main>
         <div class="dme-container">
             <div class="row">
                 <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
@@ -12,7 +12,7 @@
 
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>  
+                    <div class="notice"></div>
                     <form action="#" method="post" id="realestate_business_plot" enctype="multipart/form-data">
                         <div class="pl-3">
                             <!--                            radio -->
@@ -20,11 +20,13 @@
                                 <h3 class="u-t5">Annonsetype</h3>
                                 <div class="row pl-3">
                                     <div class="col-md-12 input-toggle">
-                                        <input class="checkmark" type="radio" value="Bortfeste" name="type_plot" id="type_boligtomt">
+                                        <input class="checkmark" type="radio" value="Bortfeste" name="type_plot"
+                                               id="type_boligtomt">
                                         <label for="type_boligtomt" class="radio-lbl"> Salg</label>
                                     </div>
                                     <div class="col-md-12 input-toggle">
-                                        <input class="checkmark" type="radio" value="Salg" name="type_plot" id="type_fritidstomt">
+                                        <input class="checkmark" type="radio" value="Salg" name="type_plot"
+                                               id="type_fritidstomt">
                                         <label for="type_fritidstomt" class="radio-lbl"> Utleie</label>
                                     </div>
                                 </div>
@@ -301,7 +303,8 @@
                                 <h3 class="u-t5">Beliggenhet</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="location_description" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="location_description" id="beskrivelse" cols="30"
+                                                  rows="10"></textarea>
                                         <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
                                     </div>
                                 </div>
@@ -358,7 +361,8 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-ROAD_ACCESS" type="checkbox" value="ROAD_ACCESS" name="facilities">
+                                        <input id="facilities-ROAD_ACCESS" type="checkbox" value="ROAD_ACCESS"
+                                               name="facilities">
                                         <label class="smalltext" for="facilities-ROAD_ACCESS"> Eiet tomt</label>
                                     </div>
                                 </div>
@@ -368,7 +372,8 @@
                                 <h3 class="u-t5">Prisantydning</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" name="asking_price" class="dme-form-control" placeholder="Kr.">
+                                        <input type="text" name="asking_price" class="dme-form-control"
+                                               placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -404,7 +409,8 @@
                                 <h3 class="u-t5">Visningsinformasjon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-12 pr-md-0">
-                                        <input name="display_information" type="text" class="dme-form-control" placeholder="Kr.">
+                                        <input name="display_information" type="text" class="dme-form-control"
+                                               placeholder="Kr.">
                                     </div>
                                 </div>
                             </div>
@@ -413,7 +419,8 @@
                                 <h3 class="u-t5">Legg til bilder (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="file" name="realestate_business_plot_photos[]" id="realestate_business_plot_photos" class="" multiple>
+                                        <input type="file" name="realestate_business_plot_photos[]"
+                                               id="realestate_business_plot_photos" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -422,7 +429,8 @@
                                 <h3 class="u-t5">Legg till pdf</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="file" name="realestate_business_plot_pdf[]" id="realestate_business_plot_pdf" class="" multiple>
+                                        <input type="file" name="realestate_business_plot_pdf[]"
+                                               id="realestate_business_plot_pdf" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -469,7 +477,9 @@
                                 <h3 class="u-t5">Telefon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="phone" type="text" class="dme-form-control">
+                                        <input name="phone" type="tel" id="phone" class="dme-form-control">
+                                        <span id="valid-msg" class="hide"></span>
+                                        <span id="error-msg" class="hide"></span>
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>
@@ -500,13 +510,15 @@
                             <div class="form-group">
                                 <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                                     <div class="profile-icon">
-                                        <img src="<?php $_SERVER['SERVER_NAME'] ?>/NorgesHandel/assets/images/profile-placeholder.png"
-                                             alt="Profile image" style="width:80px;">
+                                        <img
+                                            src="<?php $_SERVER['SERVER_NAME'] ?>/NorgesHandel/assets/images/profile-placeholder.png"
+                                            alt="Profile image" style="width:80px;">
                                     </div>
                                     <div class="profile-name">
                                         <h3 class="text-muted">Ola Nordmann</h3>
                                     </div>
-                                    <p>Hvis denne profilen ikke er riktig kan du endre den under Min handel deretter Endre profil.</p>
+                                    <p>Hvis denne profilen ikke er riktig kan du endre den under Min handel deretter
+                                        Endre profil.</p>
                                 </div>
                             </div>
 
@@ -520,7 +532,8 @@
 
                             <hr>
 
-                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!">
+                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12"
+                                   value="Publiser annonsen!">
 
                             <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for
                                     annonsering</a></p>
@@ -534,7 +547,7 @@
     </main>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
 
             $.ajaxSetup({
                 headers: {
@@ -542,7 +555,7 @@
                 }
             });
 
-            $("#publiserannonsen").click(function(e){
+            $("#publiserannonsen").click(function (e) {
 
                 e.preventDefault();
                 var url = '{{url('add/realestate/business/plot')}}';
@@ -557,20 +570,20 @@
                     dataType: "json",
                     processData: false,
                     contentType: false,
-                    success: function(data){
-                            $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
+                    success: function (data) {
+                        $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
                     },
-                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
-                            var errors = jqXhr.responseJSON;
-                            console.log(errors.errors);
-                            var html="<ul>";
-                            $.each( errors.errors, function( index, value ){
+                    error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
+                        var errors = jqXhr.responseJSON;
+                        console.log(errors.errors);
+                        var html = "<ul>";
+                        $.each(errors.errors, function (index, value) {
                             console.log(value);
-                            html += "<li>"+value+"</li>";
-                            });
-                            html += "</ul>";
-                            $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
-                        },
+                            html += "<li>" + value + "</li>";
+                        });
+                        html += "</ul>";
+                        $('.notice').append('<div class="alert alert-danger">' + html + '</div>');
+                    },
                 });
 
             });

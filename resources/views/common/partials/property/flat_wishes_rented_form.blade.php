@@ -230,7 +230,9 @@
                                 <h3 class="u-t5">Telefon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" name="phone" class="dme-form-control">
+                                        <input type="tel" name="phone" id="phone" class="dme-form-control">
+                                        <span id="valid-msg" class="hide"></span>
+                                        <span id="error-msg" class="hide"></span>
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -253,7 +255,7 @@
                             <div class="form-group ">
                                 <h3 class="u-t5">Publisert</h3>
                                 <label class="mb-2 form-check-label" for="published-on">
-                                    <input id="published-on" name="published-on" type="checkbox">Ikke vis profilbilde og lenke til profilsiden før kjøperen tar kontakt med meg.
+                                    <input id="published-on" name="published-on" type="checkbox" class="pub_validate">Ikke vis profilbilde og lenke til profilsiden før kjøperen tar kontakt med meg.
                                 </label>
                             </div>
 
