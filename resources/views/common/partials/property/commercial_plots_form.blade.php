@@ -5,11 +5,11 @@
                                 <h3 class="u-t5">Annonsetype</h3>
                                 <div class="row pl-3">
                                     <div class="col-md-12 input-toggle">
-                                        <input class="checkmark" type="radio" value="Bortfeste" name="type_plot" id="type_boligtomt">
+                                        <input class="checkmark" type="radio" value="Bortfeste" name="plot_type" id="type_boligtomt">
                                         <label for="type_boligtomt" class="radio-lbl"> Salg</label>
                                     </div>
                                     <div class="col-md-12 input-toggle">
-                                        <input class="checkmark" type="radio" value="Salg" name="type_plot" id="type_fritidstomt">
+                                        <input class="checkmark" type="radio" value="Salg" name="plot_type" id="type_fritidstomt">
                                         <label for="type_fritidstomt" class="radio-lbl"> Utleie</label>
                                     </div>
                                 </div>
@@ -19,7 +19,7 @@
                                 <h3 class="u-t5">Land</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <select class="dme-form-control" id="location.countryCode" name="location.countryCode">
+                                        <select class="dme-form-control" id="country" name="country">
                                             <option value="AF">Afghanistan</option>
                                             <option value="AL">Albania</option>
                                             <option value="DZ">Algerie</option>
@@ -265,7 +265,7 @@
                                 <h3 class="u-t5">Postnummer</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="zip_code" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -276,7 +276,7 @@
                                 <h3 class="u-t5">Gateadresse (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="street_address" type="text" class="dme-form-control">
                                         <span class="u-t5">Forklar kort om adkomsten til boligen og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@
                                 <h3 class="u-t5">Beliggenhet</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="beskrivelse" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="location_description" id="location_description" cols="30" rows="10"></textarea>
                                         <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
                                     </div>
                                 </div>
@@ -296,7 +296,7 @@
                                 <h3 class="u-t5">Kommunenummer (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="municipal_number" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -308,7 +308,7 @@
                                 <h3 class="u-t5">Bruksnummer (Bnr)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="usage_number" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -320,7 +320,7 @@
                                 <h3 class="u-t5">Gårdsnummer (Gnr)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="farm_number" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -332,7 +332,7 @@
                                 <h3 class="u-t5">Tomteareal</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control" placeholder="m²">
+                                        <input name="plot_size" type="text" class="dme-form-control" placeholder="m²">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -343,7 +343,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-ROAD_ACCESS" type="checkbox" value="ROAD_ACCESS" name="facilities">
+                                        <input id="facilities_road_access" type="checkbox" value="ROAD_ACCESS" name="owned_plot_facilities">
                                         <label class="smalltext" for="facilities-ROAD_ACCESS"> Eiet tomt</label>
                                     </div>
                                 </div>
@@ -353,7 +353,7 @@
                                 <h3 class="u-t5">Prisantydning</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control" placeholder="Kr.">
+                                        <input name="asking_price" type="text" class="dme-form-control" placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -365,19 +365,7 @@
                                 <h3 class="u-t5">Verditakst</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control" placeholder="Kr.">
-                                    </div>
-                                    <div class="col-sm-8">
-                                    </div>
-                                </div>
-                                <span class="u-t5">Verditakst blir satt av takstmannen og er forventet salgsverdi eller markedsverdien på din eiendom.</span>
-                            </div>
-                            <!--                            small input-->
-                            <div class="form-group">
-                                <h3 class="u-t5">Verditakst</h3>
-                                <div class="row">
-                                    <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="verditakst" type="text" class="dme-form-control" placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -389,7 +377,7 @@
                                 <h3 class="u-t5">Visningsinformasjon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-12 pr-md-0">
-                                        <input type="text" class="dme-form-control" placeholder="Kr.">
+                                        <input name="display_information" type="text" class="dme-form-control" placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -398,7 +386,7 @@
                                 <h3 class="u-t5">Legg til bilder (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <button class="dme-btn-outlined-blue">Legg til Bilder</button>
+                                        <input type="file" name="commercial_plot_photos[]" id="property_photos" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -407,7 +395,7 @@
                                 <h3 class="u-t5">Legg till pdf</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <button class="dme-btn-outlined-blue">Legg til pdf</button>
+                                        <input type="file" name="commercial_plot_pdf[]" id="property_photos" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -416,7 +404,7 @@
                                 <h3 class="u-t5">Annonseoverskrift</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="headline" type="text" class="dme-form-control">
                                     </div>
                                 </div>
                             </div>
@@ -425,7 +413,7 @@
                                 <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="beskrivelse" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="description" id="description" cols="30" rows="10"></textarea>
                                         <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                                     </div>
                                 </div>
@@ -435,7 +423,7 @@
                                 <h3 class="u-t5">Tekst på lenke</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="link" type="text" class="dme-form-control">
                                     </div>
                                 </div>
                             </div>
@@ -444,7 +432,7 @@
                                 <h3 class="u-t5">Lenke for mer informasjon</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="text_for_information" type="text" class="dme-form-control">
                                     </div>
                                 </div>
                             </div>
@@ -454,7 +442,7 @@
                                 <h3 class="u-t5">Telefon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="phone" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>
@@ -465,7 +453,7 @@
                                 <h3 class="u-t5">Kontaktperson</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="contact" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>
@@ -475,7 +463,7 @@
                                 <h3 class="u-t5">E-post</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" class="dme-form-control">
+                                        <input name="e_post" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>
@@ -504,7 +492,7 @@
 
                             <hr>
                             
-                            <input type="button" class="dme-btn-outlined-blue mb-3 col-12" id="publiser_annonsen" value="Publiser annonsen!">
+                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!">
 
                             <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for
                                     annonsering</a></p>

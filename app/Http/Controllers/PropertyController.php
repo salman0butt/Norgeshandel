@@ -11,6 +11,7 @@ use App\Http\Requests\AddCommercialPropertyForSale;
 use App\Http\Requests\AddCommercialPropertyForRent;
 use App\Http\Requests\AddPropertyHolidayHomeForSale;
 use App\Http\Requests\AddBusinessForSale;
+use App\Http\Requests\AddCommercialPlot;
 use App\PropertyForRent;
 use App\Models\Ad;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,7 @@ use App\CommercialPropertyForSale;
 use App\PropertyForRentMoreTimes;
 use App\CommercialPropertyForRent;
 use App\BusinessForSale;
+use App\CommercialPlot;
 
 class PropertyController extends Controller
 {
@@ -1123,5 +1125,101 @@ class PropertyController extends Controller
     {
         return view('user-panel.property.commercial_plots');
     } 
+
+    public function addcommercialPlotsAd(AddCommercialPlot $request)
+    {
+        
+        $commercial_plot = $request->all();
+
+        unset($commercial_plot['commercial_plot_photos']);
+        unset($commercial_plot['commercial_plot_pdf']);
+        $commercial_plot['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        $add = array();
+        $add['ad_type'] = 'property';
+        $add['status']  = 'published';
+        $add['user_id'] =  Auth::user()->id;
+        $add_response   =  Ad::create($add);
+        $commercial_plot['ad_id'] = $add_response->id;  
+       
+        $response = CommercialPlot::create($commercial_plot);
+
+        if ($request->file('commercial_plot_photos') || $request->file('commercial_plot_photos')) 
+        {
+
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+            
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {   
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_photos');
+                }
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
+                }
+                $i++;
+                
+            }
+            
+        }
+
+        $data['success'] = $response;
+        echo json_encode($data);
+    }
+
+    public function commercialPlotsAds()
+    {
+        $add_array = DB::table('commercial_plots')->orderBy('id', 'DESC')->get('id')->toArray();
+        return view('user-panel.property.ads_for_commercial_plots')->with(compact('add_array'));
+    }
+
+    public function commercialPlotSortedAds(Request $request)
+    {
+
+        $data = $request->all();
+        $searchable = $data['sending'];
+
+        $order_by_thing = "asking_price";
+        $order_by = "asc";
+
+        if($data['sending'] == 'priced-low-high')
+        {
+            $order_by_thing = "asking_price";
+            $order_by       =  "asc";
+
+        }
+        else if($data['sending'] == "priced-high-low")
+        {
+            $order_by_thing = "asking_price";
+            $order_by = "desc";
+        }
+        else if($data['sending'] == "area_low_high")
+        {
+            $order_by_thing = "plot_size";
+            $order_by = "asc";
+        }
+        else if($data['sending'] == "area_high_low")
+        {
+            $order_by_thing = "plot_size";
+            $order_by = "desc";
+        }
+       
+    
+        $add_array = DB::table('commercial_plots')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        
+        $response =  view('common.partials.property.commercial_plot_render_ads')->with(compact('add_array'))->render();
+
+        $data['success'] = $response;
+        echo json_encode($data); 
+    }
 
 }

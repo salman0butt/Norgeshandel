@@ -6,7 +6,7 @@
         <div class="dme-container">
             <div class="row">
                 <div class="col-md-10 offset-md-1 mt-5 mb-5">
-                    <h2 class="text-muted">Bolig til Salgs</h2>
+                    <h2 class="text-muted">Næringstomt</h2>
                 </div>
             </div>
             <div class="row">
@@ -32,7 +32,7 @@
 
                 e.preventDefault();
 
-                var url = '{{url('add/property/sale/ad')}}';
+                var url = '{{url('add/commercial/plot/ad')}}';
                 $('.notice').html("");
                 var myform = document.getElementById("commercial_plot_form");
                 var fd = new FormData(myform);
