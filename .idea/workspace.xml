@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/public/css/ladda-themeless.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/ladda.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/ladda.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/spin.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/validater.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/validater.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/job-form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/job-form.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/flat_wishes_rented_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/flat_wishes_rented_form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/landingSite.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/landingSite.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_property_for_sale.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_property_for_sale.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/flat_wishes_rented.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/flat_wishes_rented.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +193,7 @@
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../login" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editing.templates" />
@@ -356,7 +352,11 @@
       <workItem from="1577348917534" duration="39235000" />
       <workItem from="1577686375588" duration="1983000" />
       <workItem from="1577688393844" duration="543000" />
-      <workItem from="1577689018259" duration="18258000" />
+      <workItem from="1577689018259" duration="18499000" />
+      <workItem from="1577795786277" duration="273000" />
+      <workItem from="1577796075295" duration="254000" />
+      <workItem from="1577796368453" duration="186000" />
+      <workItem from="1577945249339" duration="11644000" />
     </task>
     <servers />
   </component>
@@ -377,10 +377,14 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="580" y="186" key="FileChooserDialogImpl" timestamp="1577691987241">
+    <state x="480" y="159" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577795968415">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="580" y="186" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1577691987241" />
+    <state x="480" y="159" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1600.860@0.0.1600.860" timestamp="1577795968415" />
+    <state x="580" y="186" key="FileChooserDialogImpl" timestamp="1577796472866">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="580" y="186" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1577796472866" />
     <state width="1557" height="156" key="GridCell.Tab.0.bottom" timestamp="1577688364086">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -401,14 +405,14 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="301" y="73" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1577711711726" />
-    <state width="498" height="446" key="SwitcherDM" timestamp="1577701930566">
+    <state width="498" height="446" key="SwitcherDM" timestamp="1577947353815">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="498" height="446" key="SwitcherDM/0.0.1600.860@0.0.1600.860" timestamp="1577701930566" />
-    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1577711708535">
+    <state width="498" height="446" key="SwitcherDM/0.0.1600.860@0.0.1600.860" timestamp="1577947353815" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1577962700250">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1577711708535" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1577962700250" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

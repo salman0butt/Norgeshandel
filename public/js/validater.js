@@ -366,7 +366,6 @@ $(document).ready(function () {
     });
 
 
-
 //Næringstomt form validation
 
     $("#realestate_business_plot").validate({
@@ -378,7 +377,7 @@ $(document).ready(function () {
             location: {
                 required: true
             },
-            location_description:{
+            location_description: {
                 required: true
             },
             zip_code: {
@@ -394,21 +393,21 @@ $(document).ready(function () {
                 number: true,
                 required: true
             },
-            usage_number:{
+            usage_number: {
                 number: true
             },
             farm_number: {
                 number: true
             },
             plot_size: {
-                number:true
+                number: true
             },
-            asking_price:{
+            asking_price: {
                 required: true,
                 number: true
             },
-            valuation1:{
-                number:true
+            valuation1: {
+                number: true
             },
             valuation2: {
                 number: true
@@ -419,7 +418,7 @@ $(document).ready(function () {
             link_for_information: {
                 url: true
             },
-            email:{
+            email: {
                 required: true,
                 email: true
             }
@@ -452,7 +451,7 @@ $(document).ready(function () {
                 number: true
             },
             farm_number: {
-                number:true
+                number: true
             },
             gross_area_from: {
                 number: true,
@@ -463,33 +462,33 @@ $(document).ready(function () {
                 required: true
             },
             use_area: {
-              number: true
+                number: true
             },
             land: {
                 number: true
             },
-            number_of_office_space:{
+            number_of_office_space: {
                 number: true
             },
             number_of_parking_space: {
                 number: true
             },
             floors: {
-              number: true
+                number: true
             },
             primary_room: {
                 number: true
             },
             year_of_construction: {
-              number:true,
-              date: true
+                number: true,
+                date: true
             },
             rennovated_year: {
-                number:true,
+                number: true,
                 date: true
             },
             rental_income: {
-              number:true
+                number: true
             },
             value_rate: {
                 number: true
@@ -512,8 +511,143 @@ $(document).ready(function () {
 
     });
 
+    // LOGIN PAGE VALIDATION
+    $("#login_page").validate({
+        lang: 'no',
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 2,
+                maxlength: 20
+            }
+        }
+    });
+
+    // REGISTER PAGE VALIDATION
+    $("#register_page").validate({
+        lang: 'no',
+        rules: {
+            first_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 20
+            },
+            last_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 20
+            },
+            username: {
+                required: true,
+                minlength: 2,
+                maxlength: 20
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 2,
+                maxlength: 20
+            },
+            password_confirmation: {
+                required: true,
+                equalTo: '#password'
+            }
+        }
+    });
 
 
+    // LOGIN PAGE VALIDATION
+    $("#job-form").validate({
+        lang: 'no',
+        rules: {
+            name: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            title: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            positions: {
+                required: true,
+                number: true
+            },
+            commitment_type: {
+                required: true
+            },
+            sector: {
+                required: true
+            },
+            industry: {
+                required: true
+            },
+            job_function: {
+                required: true
+            },
+            deadline_type: {
+                required: true
+            },
+            deadline: {
+                required: true
+            },
+            emp_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            emp_website: {
+                url: true
+            },
+            emp_facebook: {
+                url: true
+            },
+            emp_linkedin: {
+                url: true
+            },
+            emp_twitter: {
+                url: true
+            },
+            country: {
+                required: true
+            },
+            zip: {
+                required: true,
+                zipcodeUS: true
+
+            },
+            workplace_video: {
+                url: true
+            },
+            app_receive_by: {
+                required: true
+            },
+            app_link_to_receive: {
+                url: true
+            },
+            app_email_to_receive: {
+                required: true,
+                email: true
+            },
+            app_email: {
+                email: true
+            },
+            app_linkedin: {
+                url: true
+            },
+            app_twitter: {
+                url: true
+            }
+        }
+    });
 
 
     //submit button checks
@@ -554,6 +688,13 @@ $(document).ready(function () {
     });
     $('#commercial_property_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
         if ($('#commercial_property_for_sale').validate().checkForm()) {                   // checks form for validity
+            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+        } else {
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+        }
+    });
+    $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
+        if ($('#job-form').validate().checkForm()) {                   // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
