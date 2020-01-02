@@ -432,6 +432,7 @@
                         <hr>
 
                         <input type="submit" class="btn btn-primary mb-3 col-12" id="publiserannonsen" value="Publiser annonsen!">
+{{--                        <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" class="btn btn-primary mb-3 col-12 ladda-button" id="publiserannonsen" data-style="expand-left"><span class="ladda-label">Publiser annonsen!</span></button>--}}
 
                         <p class="u-t5 text-center">By moving forward, the <a href="#">rules for advertising</a>are
                             also accepted</p>
@@ -458,6 +459,7 @@
         }
 
         $(document).ready(function (e) {
+
             $('#job-form input, #job-form select').blur(function (e) {
                 $('#description').text(tinyMCE.get("description").getContent());
                 $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
@@ -467,6 +469,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
                 $.ajax({
                     url: link,
                     type: "POST",
@@ -486,6 +489,7 @@
                             $('#ad_id').val(resp.ad_id);
                         }
                     }
+
 //                    document.getElementById("contact_us").reset();
                 })
             });

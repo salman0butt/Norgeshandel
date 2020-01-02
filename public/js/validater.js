@@ -694,7 +694,8 @@ $(document).ready(function () {
         }
     });
     $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#job-form').validate().checkForm()) {                   // checks form for validity
+        if ($('#job-form').validate().checkForm()) {
+           // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
