@@ -81,6 +81,8 @@ Route::group(['middleware'=>'auth'], function(){
                 'cvexperience'=>'Cv\CvExperienceController'
             ]);
             Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
+//            Route::post('update_skills', 'Cv\CvController@update_skills')->name('update_skills');
+            Route::post('update_skills/{cv_id}', 'Cv\CvController@update_skills')->name('update_skills');
         });
         Route::get('cv/extend', 'Cv\CvController@extend');
     });

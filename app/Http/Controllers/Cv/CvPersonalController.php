@@ -96,7 +96,9 @@ class CvPersonalController extends Controller
      */
     public function destroy(CvPersonal $cvPersonal)
     {
-        //
+//        $cvPersonal->delete();
+//        Session::flash('success', 'Opplevelsen slettet!');
+//        return back();
     }
 
 }

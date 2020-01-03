@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CvExperienceController extends Controller
@@ -38,7 +39,15 @@ class CvExperienceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Auth::check()){
+            $cvExperience = new CvExperience($request->all());
+            $cvExperience->user_id = Auth::user()->id;
+            $cvExperience->cv_id = Auth::user()->cv->id;
+            $cvExperience->save();
+//            dd($cvExperience);
+            Session::flash('success', 'Cv er oppdatert');
+        }
+        return back();
     }
 
     /**
@@ -84,8 +93,13 @@ class CvExperienceController extends Controller
      * @param  \App\Models\Cv\CvExperience  $cvExperience
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CvExperience $cvExperience)
+    public function destroy($id)
     {
-        //
+//        dd($id);
+        CvExperience::where('id', $id)->delete();
+//        $cvExperience->delete();
+        Session::flash('success', 'Opplevelsen slettet!');
+        return back();
+
     }
 }

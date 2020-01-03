@@ -9,6 +9,7 @@ use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CvController extends Controller
 {
@@ -126,5 +127,15 @@ class CvController extends Controller
         if (Auth::check()){
             common::update_media($request->file(), Auth::user()->cv->id, 'App\Models\Cv\Cv');
         }
+    }
+
+    public function update_skills(Request $request, $cv_id){
+        $cv = Cv::where('id', $cv_id)->get()->first();
+        $cv->key_skills = $request->key_skills;
+        $cv->other_skills = $request->other_skills;
+//        dd($cv);
+        $cv->update();
+        Session::flash('success', 'Cv er oppdatert');
+        return back();
     }
 }
