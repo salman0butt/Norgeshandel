@@ -19,12 +19,12 @@
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('property/for/sale')}}">Bolig til salgs <span class="u-stone">(16 853)</span></a>
                             </li>
-                            <li class="dme-btn-outlined-blue" style="">
+                            <!-- <li class="dme-btn-outlined-blue" style="">
                                 <a href="new-buildings.php?grid">Nye boliger <span class="u-stone">(19 416)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="plots.php?grid">Tomter <span class="u-stone">(1 575)</span></a>
-                            </li>
+                            </li> -->
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href=" {{url('holiday/home/for/sale/ads')}}">Fritidsbolig til salgs <span class="u-stone">(3 907)</span></a>
                             </li>

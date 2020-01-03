@@ -184,3 +184,5 @@ Route::get('/commercial/plots/ads', 'PropertyController@commercialPlotsAds');
 
 Route::post('get/commercial/plot/ad', 'PropertyController@commercialPlotSortedAds');
 
+Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commercialPlotDescription');
+

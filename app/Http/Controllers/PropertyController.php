@@ -1222,4 +1222,11 @@ class PropertyController extends Controller
         echo json_encode($data); 
     }
 
+    public function commercialPlotDescription($id)
+    {
+        $property_data = CommercialPlot::where('id',$id)->first();
+        return view('common.partials.property.commercial_plots_description')->with(compact('property_data'));
+    }
+
+
 }

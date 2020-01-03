@@ -104,7 +104,8 @@
                                             <div class="price font-weight-bold float-right color-grey">{{$property_for_sale->total_price}} kr</div>
                                         </div>
                                         <br>
-                                        <div class="detail u-t5 mt-3 float-left text-muted">Privat <br> <span>{{$property_for_sale->property_type}}</span></div>
+
+                                        <div class="detail u-t5 mt-3 float-left text-muted"> <span>  {{$property_for_sale->tenure}} •  {{$property_for_sale->property_type}} • {{$property_for_sale-> number_of_bedrooms}} soverom </span>  <br> Privat</div>
                                         <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
                                         
                                     </div>

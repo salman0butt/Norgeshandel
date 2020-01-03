@@ -59,13 +59,13 @@
                                     <div class="col-sm-12 pr-md-0">
                                         <select name="property_type" class="dme-form-control">
                                             <option value=""></option>
-                                            <option value="OTHER">Andre</option>
-                                            <option value="DETACHED">Enebolig</option>
-                                            <option value="GARAGE">Garasje/Parkering</option>
-                                            <option value="FARM">Gårdsbruk/Småbruk</option>
-                                            <option value="FLAT">Leilighet</option>
-                                            <option value="TERRACED">Rekkehus</option>
-                                            <option value="SEMIDETACHED">Tomannsbolig</option>
+                                            <option value="Andre">Andre</option>
+                                            <option value="Enebolig">Enebolig</option>
+                                            <option value="Garasje">Garasje/Parkering</option>
+                                            <option value="Gårdsbruk">Gårdsbruk/Småbruk</option>
+                                            <option value="Leilighet">Leilighet</option>
+                                            <option value="Rekkehus">Rekkehus</option>
+                                            <option value="Tomannsbolig">Tomannsbolig</option>
                                         </select>
                                     </div>
                                 </div>
@@ -76,11 +76,11 @@
                                     <div class="col-sm-12 pr-md-0">
                                         <select name="tenure" class="dme-form-control">
                                             <option value=""></option>
-                                            <option value="COLLECTIVE_OWNERSHIP">Aksje</option>
-                                            <option value="PART_OWNERSHIP">Andel</option>
-                                            <option value="OTHER">Annet</option>
-                                            <option value="FREEHOLD">Eier (Selveier)</option>
-                                            <option value="LEASEHOLD">Obligasjon</option>
+                                            <option value="Aksje">Aksje</option>
+                                            <option value="Andel">Andel</option>
+                                            <option value="Annet">Annet</option>
+                                            <option value="Eier (Selveier)">Eier (Selveier)</option>
+                                            <option value="Obligasjon">Obligasjon</option>
                                         </select>
                                         <span class="u-t5">Beskriv varen kort. Denne beskrivelsen brukes til å finne riktig kategori i feltene under.</span>
                                     </div>

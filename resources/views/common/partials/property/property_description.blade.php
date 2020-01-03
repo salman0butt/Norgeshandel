@@ -108,7 +108,11 @@
                         <div class="text-center">
                             <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                         </div>
-                        <p class="mt-3">Johanna Wenngren <br>
+                        <p class="mt-3">
+                            <span>
+                            {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
+                            </span>
+                            <br>
                             Eiendomsmegler</p>
                         <div class="mb-2">
                             <span>Mobil: </span>
@@ -121,7 +125,17 @@
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                         <h2 class="u-t3">Visning</h2>
-                        <div class="mb-2">Ta kontakt for å avtale visning</div>
+                        @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) || !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) || !empty($property_data->note))
+                            <div class="mb-2">
+                                <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span> 
+                                <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?> pm,</span> 
+                                <span><?php echo (!empty($property_data->clockwise_clock) ?  $property_data->clockwise_clock : ""); ?> pm</span>
+                                <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?> pm</span> 
+                            </div>
+                        @else   
+                            <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
+                        @endif
+                       
                         <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>
                         <button class="dme-btn-outlined-blue col-12">Gi bud</button>
                         <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a>
