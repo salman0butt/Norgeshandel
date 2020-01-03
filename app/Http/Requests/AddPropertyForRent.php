@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use http\Env\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddPropertyForRent extends FormRequest
@@ -38,8 +39,16 @@ class AddPropertyForRent extends FormRequest
             'deposit' => 'sometimes|nullable|numeric',
             'rented_from' => 'required|date',
             'rented_to' => 'sometimes|date',
-            'published_on' => 'required',  
-            
+            'published_on' => 'required',
+
         ];
+
     }
+//    public function messages()
+//    {
+//        return [
+//            'heading.required' => 'title enter',
+//            'body.required'  => 'A message is required',
+//        ];
+//    }
 }

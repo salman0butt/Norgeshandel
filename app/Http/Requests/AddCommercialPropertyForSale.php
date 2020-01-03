@@ -31,14 +31,14 @@ class AddCommercialPropertyForSale extends FormRequest
 
             'gross_area_from' => 'required',
             'gross_area_to' => 'required',
-           
-         
-            'floors' => 'required',
-            'year_of_construction-on' => 'required',
 
-           
+
+            'floors' => 'required',
+            'year_of_construction' => 'required',
+
+
             'headline' => 'required',
-         
+
             'published-on' => 'required',
 
 

@@ -386,8 +386,10 @@
         <hr>
         <span class="u-t5">Du må fylle ut Overskrift og 2 andre felter før du kan gå videre</span>
         <hr>
-        <input type="button" class="dme-btn-outlined-blue mb-3 col-12" id="publiser_annonsen"
-               value="Publiser annonsen!">
+{{--        <input type="button" class="dme-btn-outlined-blue mb-3 col-12" id="publiser_annonsen"--}}
+{{--               value="Publiser annonsen!">--}}
+        <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiser_annonsen"
+                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
         <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for annonsering</a></p>
 </form>
 

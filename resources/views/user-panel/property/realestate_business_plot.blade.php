@@ -532,9 +532,11 @@
 
                             <hr>
 
-                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12"
-                                   value="Publiser annonsen!">
+{{--                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12"--}}
+{{--                                   value="Publiser annonsen!">--}}
 
+                            <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiserannonsen"
+                                    class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
                             <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for
                                     annonsering</a></p>
 
@@ -562,7 +564,9 @@
                 $('.notice').html("");
                 var myform = document.getElementById("realestate_business_plot");
                 var fd = new FormData(myform);
-
+                e.preventDefault();
+                var l = Ladda.create(this);
+                l.start();
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -584,7 +588,8 @@
                         html += "</ul>";
                         $('.notice').append('<div class="alert alert-danger">' + html + '</div>');
                     },
-                });
+                }).always(function() { l.stop(); });
+                return false;
 
             });
 
