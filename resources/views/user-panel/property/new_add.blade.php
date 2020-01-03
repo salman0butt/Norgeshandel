@@ -56,11 +56,11 @@
                             console.log(errors.errors);
                             var html="<ul>";
                             $.each( errors.errors, function( index, value ){
-                               console.log(value);
-                               html += "<li>"+value+"</li>";
+                               console.log(index);
+                              $("#"+index).html(value);
                             });
-                            html += "</ul>";
-                            $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
+                            // html += "</ul>";
+                            // $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                         },
 
                     }).always(function() { l.stop(); });

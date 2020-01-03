@@ -6,6 +6,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="heading" class="dme-form-control" required/>
+                    <span id="heading"></span>
                 </div>
             </div>
         </div>
@@ -14,6 +15,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="zip_code" class="dme-form-control" required>
+                    <span id="zip_code"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -25,6 +27,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="street_address" class="dme-form-control">
+                    <span id="street_address"></span>
                 </div>
             </div>
         </div>
@@ -44,6 +47,7 @@
                         <option value="HOUSESHARE">Rom i bofellesskap</option>
                         <option value="SEMIDETACHED">Tomannsbolig</option>
                     </select>
+                    <span id="property_type"></span>
                     <span class="u-t5">Dersom du kun skal leie ut et rom må du huske å velge 'Rom i bofelleskap' under boligtype.</span>
                 </div>
             </div>
