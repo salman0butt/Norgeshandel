@@ -89,8 +89,8 @@
                                             <div class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_sale-> rental_income}} kr</div>
                                         </div>
                                         <br>
-                                        <div class="detail u-t5 mt-3 float-left text-muted">Koppang-Landbruk og Næringsmegling AS
-                                            <br>Eier (Selveier) • {{rtrim($property_commercial_property_for_sale->property_type,",")}}</div>
+                                        <div class="detail u-t5 mt-3 float-left text-muted">
+                                            Eier (Selveier) • {{rtrim($property_commercial_property_for_sale->property_type,",")}}</div>
                                                                                 <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid"></div>
                                     </div>
                                 </a>

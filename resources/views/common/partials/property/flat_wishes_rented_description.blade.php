@@ -86,7 +86,7 @@
                         <div class="text-center">
                             <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                         </div>
-                        <p class="mt-3">Johanna Wenngren <br>
+                        <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                             Eiendomsmegler</p>
                         <div class="mb-2">
                             <span>Mobil: </span>
