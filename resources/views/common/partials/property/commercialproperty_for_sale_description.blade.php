@@ -82,10 +82,11 @@
                         <a href="#" id="more_details" class="mt-2">
                             <svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer
                         </a>
-                        <a href="#" id="less_details" class="mt-2 hide">
-                            <svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line></svg> Færre detaljer
-                        </a>
-
+                        <div class="col-md-12">
+                            <a href="#" id="less_details" class="mt-2 hide">
+                                <svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line></svg> Færre detaljer
+                            </a>
+                        </div>
                         <!-- <div class="col-md-12"><p>Rimelige fellesutgifter med bla. fyring, varmtvann og TV-og Internett inkludert. To garasjeplasser i oppvarmet garasjeanlegg i kjeller samt bod.</p></div>
                         <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                             eiendommen
@@ -94,6 +95,11 @@
                         <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
                         <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
                         <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div> -->
+                        
+                        <div style="width: 500px; height: 300px;">
+                            {!! Mapper::render() !!}
+                        </div>
+                        
                         <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> 140424636</span></div>
                         <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span> <span>{{date("d.m.Y h:i", strtotime($property_data->created_at))}}</span></div>

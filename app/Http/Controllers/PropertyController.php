@@ -26,13 +26,19 @@ use App\PropertyForRentMoreTimes;
 use App\CommercialPropertyForRent;
 use App\BusinessForSale;
 use App\CommercialPlot;
+use Mapper;
 
 class PropertyController extends Controller
 {
     //
     public function __construct()
     {
+        Mapper::map(53.381128999999990000, -1.470085000000040000);
+    }
 
+    public function mapTest()
+    {
+        
     }
 
     public function list()

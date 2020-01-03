@@ -119,7 +119,9 @@
                             <!-- <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
                             <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
                             <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div> -->
-                          
+                            <div style="width: 500px; height: 300px;">
+                                {!! Mapper::render() !!}
+                            </div>
                             <div class="col-md-12"><span class="font-weight-bold">FINN-kode: </span> <span> 140424636</span></div>
                             <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span> <span>{{date("d.m.Y h:i", strtotime($property_data->created_at))}}</span></div>                            <div class="col-md-12"><span class="font-weight-bold">Referanse: </span> <span>302190059</span></div>
                             <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
