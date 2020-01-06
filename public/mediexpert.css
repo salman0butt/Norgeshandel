@@ -952,9 +952,23 @@ a > .alert-warning:hover{
 .invalid-feedback{
     display: block !important;
 }
+
+button.link{
+    background-color: transparent;
+    display: inline;
+    color: #ac304a;
+    outline: none;
+    border: none;
+}
+button.link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
 .hide{
     display: none;
 }
+
 .error-span{
     color: #ac304a;
 }
+
