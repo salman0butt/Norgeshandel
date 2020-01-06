@@ -824,7 +824,9 @@
             $('.notice').html("");
             var myform = document.getElementById("commercial_property_for_sale");
             var fd = new FormData(myform);
-
+            e.preventDefault();
+            var l = Ladda.create(this);
+            l.start();
             $.ajax({
                 type: "POST",
                 url: url,
@@ -846,7 +848,8 @@
                     html += "</ul>";
                     $('.notice').append('<div class="alert alert-danger">' + html + '</div>');
                 },
-            });
+            }).always(function() { l.stop(); });
+            return false;
 
         });
 
