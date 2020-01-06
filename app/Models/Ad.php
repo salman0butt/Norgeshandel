@@ -25,8 +25,13 @@ class Ad extends Model
     }
 
     public function propertyHolydaysHomesForSale(){
-        return $this->hasOne('App\propertyHolydaysHomesForSale');
+        return $this->hasOne('App\PropertyHolidaysHomesForSale');
     }
+
+    public function propertyFlatWishesRented(){
+        return $this->hasOne('App\FlatWishesRented');
+    }
+
 
     public function job_filtered($filter){
         return $this->hasOne('App\Admin\Jobs\Job')->where($filter)->get();

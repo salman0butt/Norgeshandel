@@ -51,20 +51,16 @@
                         },
                         error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                             var errors = jqXhr.responseJSON;
-                            var html="<ul>";
+                            // var html="<ul>";
                             if(!isEmpty(errors.errors))
                             {
                                 $.each( errors.errors, function( index, value )
                                 {
-                                    html += "<li>"+value+"</li>";
+                                    $("#"+index).html(value);
                                 });
                             }
-                            else
-                            {
-                                html += "<li>Something went wrong!</li>";
-                            }
-                            html += "</ul>";
-                            $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
+                            // html += "</ul>";
+                            $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
                         },
 
                     }).always(function() { l.stop(); });
