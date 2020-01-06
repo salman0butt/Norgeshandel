@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="{{asset('public/images/favicon.ico')}}"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="{{asset('public/js/all.js')}}"></script>
+    <script src="{{asset('public/js/all.js')}}"></script> 
     
     <!-- 
         <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
