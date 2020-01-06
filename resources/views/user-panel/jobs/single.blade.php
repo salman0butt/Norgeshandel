@@ -160,8 +160,7 @@
                 {{--right detail collumn--}}
                 <div class="col-md-4">
                     <div class=" radius-8 p-3">
-                        <div
-                            style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                        <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                             <div class="text-center">
                                 <img src="{{asset($logo)}}" class="img-fluid emp-logo mt-3" style="max-width: 150px;"
                                      alt="">

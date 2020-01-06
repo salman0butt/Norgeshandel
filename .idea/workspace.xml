@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/NorgesHandel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NorgesHandel.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/jobs/single.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/jobs/single.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -344,6 +344,7 @@
       <workItem from="1578073999490" duration="104000" />
       <workItem from="1578085963428" duration="696000" />
       <workItem from="1578284453115" duration="23996000" />
+      <workItem from="1578313747632" duration="270000" />
     </task>
     <servers />
   </component>
