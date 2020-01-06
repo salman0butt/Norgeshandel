@@ -257,7 +257,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="{{ asset('public/js/additional-methods.min.js') }}"></script>
 <script src="{{asset('public/js/messages_no.min.js')}}"></script>
-<script src="{{ asset('public/js/validater.js') }}"></script>
+{{--<script src="{{ asset('public/js/validater.js') }}"></script>--}}
 <script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
 <script src="{{asset('public/js/telPhone.js')}}"></script>
 <script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>

@@ -6,6 +6,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="heading" class="dme-form-control" required/>
+                    <span id="heading"></span>
                 </div>
             </div>
         </div>
@@ -14,6 +15,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="zip_code" class="dme-form-control" required>
+                    <span id="zip_code"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -25,6 +27,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="street_address" class="dme-form-control">
+                    <span id="street_address"></span>
                 </div>
             </div>
         </div>
@@ -44,6 +47,8 @@
                         <option value="HOUSESHARE">Rom i bofellesskap</option>
                         <option value="SEMIDETACHED">Tomannsbolig</option>
                     </select>
+                    <span id="property_type"></span>
+
                     <span class="u-t5">Dersom du kun skal leie ut et rom må du huske å velge 'Rom i bofelleskap' under boligtype.</span>
                 </div>
             </div>
@@ -386,8 +391,10 @@
         <hr>
         <span class="u-t5">Du må fylle ut Overskrift og 2 andre felter før du kan gå videre</span>
         <hr>
-        <input type="button" class="dme-btn-outlined-blue mb-3 col-12" id="publiser_annonsen"
-               value="Publiser annonsen!">
+{{--        <input type="button" class="dme-btn-outlined-blue mb-3 col-12" id="publiser_annonsen"--}}
+{{--               value="Publiser annonsen!">--}}
+        <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiser_annonsen"
+                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
         <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for annonsering</a></p>
 </form>
 
