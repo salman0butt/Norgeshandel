@@ -3,27 +3,24 @@
 <head>
     <title>@yield('main_title')</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- Compiled CSS -->
-    <link rel="stylesheet" href="{{asset('public/css/all.css')}}">
-    <!-- font awsome icons -->
+    <script src="{{asset('public/admin/js/jquery.min.js')}}"></script>
+    <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
     <link rel="shortcut icon" href="{{asset('public/images/favicon.ico')}}"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="{{asset('public/js/all.js')}}"></script> 
+    <!--    <script src="assets/js/fontawesome-all.min.js"></script>-->
+    <!--    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">-->
+    <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
+    <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
     
-    
-    <!-- 
-        <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
-        <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}"> 
-        <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
-    -->
-    <!-- 
-        <script src="{{asset('public/admin/js/jquery.min.js')}}"></script>
-        <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script> 
-         <script src="{{asset('public/js/tinymce.min.js')}}"></script>
-    -->
+
+    <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
+
+    <!--    incluedes   -->
+    <script src="{{asset('public/js/tinymce.min.js')}}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 </head>
 <body>
@@ -156,15 +153,11 @@
         $(document).on('click', 'a.fav', function () {
             var url = $('#remove_fav_url').val();
             ad_id = $(this).attr('data-id');
-
             $(this).find('span').removeClass('fa');
             $(this).find('span').addClass('far');
-
             $(this).addClass('not-fav');
             $(this).removeClass('fav');
-
             $(this).attr('data-target',"#modal_select_category");
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -181,7 +174,6 @@
             $('#modal_select_category').modal('hide');
             var url = $('#add_fav_url').val();
             var list_id = $(this).attr('data-id');
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -195,7 +187,6 @@
             });
                 $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
                 $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
-
                 $('a[data-id="'+ad_id+'"]').addClass('fav');
                 $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
                 $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
@@ -217,14 +208,12 @@
                 success: function (response) {
                 }
             });
-
             setTimeout(function () {
                 var data = '<div class="col-sm-4 pr-0">'+$('#fav_lists>div:first-child').html()+'</div>';
                 $('#fav_lists').html(data);
                 getLists();
             }, 500);
         });
-
     })
 </script>
 <footer>
@@ -255,9 +244,9 @@
         </div>
     </div>
 </footer>
-    <script src="{{asset('public/js/utils.js')}}"></script>
-    <script src="{{asset('public/js/spin.min.js')}}"></script>
-    <script src="{{asset('public/js/ladda.min.js')}}"></script>
-<!-- <script src="{{asset('public/mediexpert.js')}}"></script> -->
+<script src="{{asset('public/mediexpert.js')}}"></script>
+<script src="{{asset('public/js/utils.js')}}"></script>
+<script src="{{asset('public/js/spin.min.js')}}"></script>
+<script src="{{asset('public/js/ladda.min.js')}}"></script>
 </body>
 </html>
