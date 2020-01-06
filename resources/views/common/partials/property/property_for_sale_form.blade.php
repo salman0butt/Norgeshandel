@@ -1,4 +1,5 @@
 <form action="#" method="post" id="property_for_sale_form" enctype="multipart/form-data">
+
     <input type="hidden" id="total_price" name="total_price" value="">
     <div class="pl-3 pr-3">
         <div class="form-group">
@@ -851,6 +852,7 @@
                 <div class="u-t5">Tid (eksempel 19:30)</div>
             </div>
         </div>
+
 
         <div id="add_more_viewing_times_fields">
 

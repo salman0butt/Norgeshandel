@@ -29,7 +29,6 @@ $col='list';
                     $full_path_photos = $path."".$name; 
                 }
 
-                dd("here");
         ?>
 
 

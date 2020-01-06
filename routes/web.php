@@ -161,3 +161,36 @@ Route::get('/flat/wishes/rented/description/{id}', ['uses' =>'PropertyController
 
 //holidayhomeforsale
 Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');
+Route::get('/holiday/home/for/sale/description/{id}', ['uses' =>'PropertyController@holidayHomeForSaleDescription']);
+
+//commercialpropertyforsale
+Route::get('/commercial/property/for/sale/ads', 'PropertyController@commercialPropertyForSaleAds');
+Route::post('/property/commercial/for/sale/sorted/ad', 'PropertyController@commercialPropertyForSaleSortedAds');
+Route::get('/commercial/property/for/sale/description/{id}', ['uses' =>'PropertyController@commercialForSaleDescription']);
+
+//commercialpropertyforrent
+Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
+Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
+Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
+Route::post('property/commercial/for/rent/sorted/ad', 'PropertyController@commercialPropertyForRentSortedAds');
+
+Route::get('/commercial/property/for/rent/description/{id}', 'PropertyController@commercialForRentDescription');
+
+Route::get('/business/for/sale', 'PropertyController@BusinessForSale');
+Route::post('add/business/for/sale', 'PropertyController@addBusinessForSale');
+Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
+
+Route::post('business/for/sales/sorted/ad', 'PropertyController@businessForSaleSortedAds');
+
+Route::get('/business/for/sale/description/{id}', 'PropertyController@businessForSaleDescription');
+
+Route::get('/commercial/plots', 'PropertyController@commercialPlots');
+Route::post('/add/commercial/plot/ad', 'PropertyController@addcommercialPlotsAd');
+
+Route::get('/commercial/plots/ads', 'PropertyController@commercialPlotsAds');
+
+Route::post('get/commercial/plot/ad', 'PropertyController@commercialPlotSortedAds');
+
+Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commercialPlotDescription');
+
+Route::get('/map/test', 'PropertyController@mapTest');

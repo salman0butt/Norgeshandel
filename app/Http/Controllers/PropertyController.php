@@ -8,7 +8,10 @@ use App\Http\Requests\AddPropertyForSale;
 use App\Http\Requests\AddFlatWishesRented;
 use App\Http\Requests\AddRealEstateBusinessPlot;
 use App\Http\Requests\AddCommercialPropertyForSale;
+use App\Http\Requests\AddCommercialPropertyForRent;
 use App\Http\Requests\AddPropertyHolidayHomeForSale;
+use App\Http\Requests\AddBusinessForSale;
+use App\Http\Requests\AddCommercialPlot;
 use App\PropertyForRent;
 use App\Models\Ad;
 use Illuminate\Support\Facades\Auth;
@@ -20,13 +23,22 @@ use App\FlatWishesRented;
 use App\RealestateBusinessPlot;
 use App\CommercialPropertyForSale;
 use App\PropertyForRentMoreTimes;
+use App\CommercialPropertyForRent;
+use App\BusinessForSale;
+use App\CommercialPlot;
+use Mapper;
 
 class PropertyController extends Controller
 {
     //
     public function __construct()
     {
+        Mapper::map(53.381128999999990000, -1.470085000000040000);
+    }
 
+    public function mapTest()
+    {
+        
     }
 
     public function list()
@@ -65,6 +77,9 @@ class PropertyController extends Controller
         $data = $request->all();
         $searchable = $data['sending'];
 
+        $order_by_thing = "priced-low-high";
+        $order_by = "asc";
+
         if($data['sending'] == 'priced-low-high')
         {
             $order_by_thing = "asking_price";
@@ -74,6 +89,16 @@ class PropertyController extends Controller
         else if($data['sending'] == "priced-high-low")
         {
             $order_by_thing = "asking_price";
+            $order_by = "desc";
+        }
+        else if($data['sending'] == "housing_area_low_high")
+        {
+            $order_by_thing = "housing_area";
+            $order_by = "asc";
+        }
+        else if($data['sending'] == "housing_area_high_low")
+        {
+            $order_by_thing = "housing_area";
             $order_by = "desc";
         }
       
@@ -693,30 +718,77 @@ class PropertyController extends Controller
         echo json_encode($data);
 
     }
-    public function commercialPropertyForSale(){
-
-
+    public function commercialPropertyForSale()
+    {
         return view('user-panel.property.commercial_property_for_sale');
-
-
     }
 
     public function addCommercialPropertyForSale(AddCommercialPropertyForSale $request)
     {
         $commercial_property_for_sale = $request->all();
+    
         unset($commercial_property_for_sale['commercial_property_for_sale_photos']);
         unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
         $commercial_property_for_sale['user_id'] = Auth::user()->id;
 
-        $response = CommercialPropertyForSale::create($commercial_property_for_sale);
-    
-        if ($request->file('commercial_property_for_sale_photos')) 
+        //add Add to table
+        $add = array();
+        $add['ad_type'] = 'property';
+        $add['status']  = 'published';
+        $add['user_id'] =  Auth::user()->id;
+        $add_response   =  Ad::create($add);
+        $commercial_property_for_sale['ad_id'] = $add_response->id;  
+       
+        if(isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "")
         {
-            $files = $request->file('commercial_property_for_sale_photos');
-            foreach ($files as $file)
+            $property_type = "";
+            foreach($commercial_property_for_sale['property_type'] as $key=>$val)
             {
-                common::update_media($file, $response->id , 'App\CommercialPropertyForSale', 'CommercialPropertyForSale');
+                $property_type .= $val.",";
             }
+            $commercial_property_for_sale['property_type'] = $property_type;
+        }
+        if(isset($commercial_property_for_sale['facilities']) && $commercial_property_for_sale['facilities'] != "")
+        {
+            $facilities = "";
+            foreach($commercial_property_for_sale['facilities'] as $key=>$val)
+            {
+                $facilities .= $val.",";
+            }
+            $commercial_property_for_sale['facilities'] = $facilities;
+
+        }
+    
+        $response = CommercialPropertyForSale::create($commercial_property_for_sale);
+
+
+        if ($request->file('commercial_property_for_sale_photos') || $request->file('commercial_property_for_sale_pdf')) 
+        {
+
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+            
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {   
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_propert_for_sale_photos');
+                }
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_property_for_sale_pdf');
+                }
+                $i++;
+                
+            }
+            
+
+            
         }
 
         $data['success'] = $response;
@@ -794,7 +866,372 @@ class PropertyController extends Controller
     public function holidayHomeForSaleAds()
     {
         $add_array = DB::table('property_holidays_homes_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
+
         return view('user-panel.property.ads_for_holiday_home_for_sale')->with(compact('add_array'));
+    } 
+
+    public function holidayHomeForSaleDescription($id)
+    {
+        $property_data = PropertyHolidaysHomesForSale::where('id',$id)->first();
+        return view('common.partials.property.holiday_home_for_sale_description')->with(compact('property_data'));
+    }
+
+    public function commercialPropertyForSaleAds()
+    {
+        $add_array = DB::table('commercial_property_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
+        return view('user-panel.property.ads_for_commercial_property_for_sale')->with(compact('add_array'));
+    }
+
+    public function commercialPropertyForSaleSortedAds(Request $request)
+    {
+        $data = $request->all();
+        $searchable = $data['sending'];
+
+        $order_by_thing = "priced-low-high";
+        $order_by = "asc";
+
+        if($data['sending'] == 'priced-low-high')
+        {
+            $order_by_thing = "rental_income";
+            $order_by       =  "asc";
+
+        }
+        else if($data['sending'] == "priced-high-low")
+        {
+            $order_by_thing = "rental_income";
+            $order_by = "desc";
+        }
+       
+      
+        $add_array = DB::table('commercial_property_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $response =  view('common.partials.property.commercial_property_for_sale_render_ads')->with(compact('add_array'))->render();
+
+        $data['success'] = $response;
+        echo json_encode($data); 
+    }
+    public function commercialForSaleDescription($id)
+    {
+        $property_data = CommercialPropertyForSale::where('id',$id)->first();
+        return view('common.partials.property.commercialproperty_for_sale_description')->with(compact('property_data'));
+    }
+    public function commercialPropertyForRent()
+    {
+        return view('user-panel.property.commercial_property_for_rent');
+    }
+    public function addCommercialPropertyForRent(AddCommercialPropertyForRent $request) 
+    {
+        $commercial_property_for_rent = $request->all();
+    
+        unset($commercial_property_for_rent['commercial_property_for_rent_photos']);
+        unset($commercial_property_for_rent['commercial_property_for_rent_pdf']);
+        $commercial_property_for_rent['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        $add = array();
+        $add['ad_type'] = 'property';
+        $add['status']  = 'published';
+        $add['user_id'] =  Auth::user()->id;
+        $add_response   =  Ad::create($add);
+        $commercial_property_for_rent['ad_id'] = $add_response->id;  
+       
+        if(isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "")
+        {
+            $property_type = "";
+            foreach($commercial_property_for_rent['property_type'] as $key=>$val)
+            {
+                $property_type .= $val.",";
+            }
+            $commercial_property_for_rent['property_type'] = $property_type;
+        }
+        if(isset($commercial_property_for_rent['facilities']) && $commercial_property_for_rent['facilities'] != "")
+        {
+            $facilities = "";
+            foreach($commercial_property_for_rent['facilities'] as $key=>$val)
+            {
+                $facilities .= $val.",";
+            }
+            $commercial_property_for_rent['facilities'] = $facilities;
+
+        }
+
+    
+        $response = CommercialPropertyForRent::create($commercial_property_for_rent);
+
+
+        if ($request->file('commercial_property_for_rent_photos') || $request->file('commercial_property_for_rent_pdf')) 
+        {
+
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+            
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {   
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_photos');
+                }
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_pdf');
+                }
+                $i++;
+                
+            }
+            
+
+            
+        }
+
+        $data['success'] = $response;
+        echo json_encode($data);
+    }
+
+    public function commercialPropertyForRentAds()
+    {
+        $add_array = DB::table('commercial_property_for_rents')->orderBy('id', 'DESC')->get('id')->toArray();
+        return view('user-panel.property.ads_for_commercial_property_for_rent')->with(compact('add_array'));
+    }
+
+    public function commercialPropertyForRentSortedAds(Request $request)
+    {
+        $data = $request->all();
+        $searchable = $data['sending'];
+
+        $order_by_thing = "use_area";
+        $order_by = "asc";
+
+        if($data['sending'] == 'sqm-low-high')
+        {
+            $order_by_thing = "use_area";
+            $order_by       =  "asc";
+
+        }
+        else if($data['sending'] == "sqm-high-low")
+        {
+            $order_by_thing = "use_area";
+            $order_by = "desc";
+        }
+       
+      
+        $add_array = DB::table('commercial_property_for_rents')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $response =  view('common.partials.property.commercial_property_for_rent_render_ads')->with(compact('add_array'))->render();
+
+        $data['success'] = $response;
+        echo json_encode($data); 
+    }
+
+    public function commercialForRentDescription($id)
+    {
+        $property_data = CommercialPropertyForRent::where('id',$id)->first();
+        return view('common.partials.property.commercialproperty_for_rent_description')->with(compact('property_data'));
+    }
+
+    public function BusinessForSale()
+    {
+        return view('user-panel.property.business_for_sale');
+    }
+    public function addBusinessForSale(AddBusinessForSale $request)
+    {
+        
+        $business_for_sale = $request->all();
+
+        unset($business_for_sale['business_for_sale_photos']);
+        unset($business_for_sale['business_for_sale_pdf']);
+        $business_for_sale['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        $add = array();
+        $add['ad_type'] = 'property';
+        $add['status']  = 'published';
+        $add['user_id'] =  Auth::user()->id;
+        $add_response   =  Ad::create($add);
+        $business_for_sale['ad_id'] = $add_response->id;  
+       
+        $response = BusinessForSale::create($business_for_sale);
+
+        if ($request->file('business_for_sale_photos') || $request->file('business_for_sale_pdf')) 
+        {
+
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+            
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {   
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_photos');
+                }
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
+                }
+                $i++;
+                
+            }
+            
+        }
+
+        $data['success'] = $response;
+        echo json_encode($data);
+
+    }
+
+    public function businessForSaleAds()
+    {
+        $add_array = DB::table('business_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
+        return view('user-panel.property.ads_business_for_sale')->with(compact('add_array'));
+    }
+
+    public function businessForSaleSortedAds(Request $request)
+    {
+        $data = $request->all();
+        $searchable = $data['sending'];
+
+        $order_by_thing = "price";
+        $order_by = "asc";
+
+        if($data['sending'] == 'priced-low-high')
+        {
+            $order_by_thing = "price";
+            $order_by       =  "asc";
+
+        }
+        else if($data['sending'] == "priced-high-low")
+        {
+            $order_by_thing = "price";
+            $order_by = "desc";
+        }
+       
+      
+        $add_array = DB::table('business_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $response =  view('common.partials.property.business_for_sale_render_ads')->with(compact('add_array'))->render();
+
+        $data['success'] = $response;
+        echo json_encode($data); 
+        
+    }
+
+    public function businessForSaleDescription($id)
+    {
+        $property_data = BusinessForSale::where('id',$id)->first();
+        return view('common.partials.property.business_for_sale_description')->with(compact('property_data'));
+    }
+
+    public function commercialPlots()
+    {
+        return view('user-panel.property.commercial_plots');
+    } 
+
+    public function addcommercialPlotsAd(AddCommercialPlot $request)
+    {
+        
+        $commercial_plot = $request->all();
+
+        unset($commercial_plot['commercial_plot_photos']);
+        unset($commercial_plot['commercial_plot_pdf']);
+        $commercial_plot['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        $add = array();
+        $add['ad_type'] = 'property';
+        $add['status']  = 'published';
+        $add['user_id'] =  Auth::user()->id;
+        $add_response   =  Ad::create($add);
+        $commercial_plot['ad_id'] = $add_response->id;  
+       
+        $response = CommercialPlot::create($commercial_plot);
+
+        if ($request->file('commercial_plot_photos') || $request->file('commercial_plot_photos')) 
+        {
+
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+            
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {   
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_photos');
+                }
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
+                }
+                $i++;
+                
+            }
+            
+        }
+
+        $data['success'] = $response;
+        echo json_encode($data);
+    }
+
+    public function commercialPlotsAds()
+    {
+        $add_array = DB::table('commercial_plots')->orderBy('id', 'DESC')->get('id')->toArray();
+        return view('user-panel.property.ads_for_commercial_plots')->with(compact('add_array'));
+    }
+
+    public function commercialPlotSortedAds(Request $request)
+    {
+
+        $data = $request->all();
+        $searchable = $data['sending'];
+
+        $order_by_thing = "asking_price";
+        $order_by = "asc";
+
+        if($data['sending'] == 'priced-low-high')
+        {
+            $order_by_thing = "asking_price";
+            $order_by       =  "asc";
+
+        }
+        else if($data['sending'] == "priced-high-low")
+        {
+            $order_by_thing = "asking_price";
+            $order_by = "desc";
+        }
+        else if($data['sending'] == "area_low_high")
+        {
+            $order_by_thing = "plot_size";
+            $order_by = "asc";
+        }
+        else if($data['sending'] == "area_high_low")
+        {
+            $order_by_thing = "plot_size";
+            $order_by = "desc";
+        }
+       
+    
+        $add_array = DB::table('commercial_plots')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        
+        $response =  view('common.partials.property.commercial_plot_render_ads')->with(compact('add_array'))->render();
+
+        $data['success'] = $response;
+        echo json_encode($data); 
+    }
+
+    public function commercialPlotDescription($id)
+    {
+        $property_data = CommercialPlot::where('id',$id)->first();
+        return view('common.partials.property.commercial_plots_description')->with(compact('property_data'));
     }
 
 

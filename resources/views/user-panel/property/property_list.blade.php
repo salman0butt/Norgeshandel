@@ -19,12 +19,12 @@
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('property/for/sale')}}">Bolig til salgs <span class="u-stone">(16 853)</span></a>
                             </li>
-                            <li class="dme-btn-outlined-blue" style="">
+                            <!-- <li class="dme-btn-outlined-blue" style="">
                                 <a href="new-buildings.php?grid">Nye boliger <span class="u-stone">(19 416)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="plots.php?grid">Tomter <span class="u-stone">(1 575)</span></a>
-                            </li>
+                            </li> -->
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href=" {{url('holiday/home/for/sale/ads')}}">Fritidsbolig til salgs <span class="u-stone">(3 907)</span></a>
                             </li>
@@ -38,16 +38,16 @@
                                 <a href="{{url('property/flat/wishes/rented')}}">Bolig ønskes leid <span class="u-stone">(714)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href=businesssale.php?grid">Næringseiendom til salgs <span class="u-stone">(600)</span></a>
+                                <a href="{{url('commercial/property/for/sale/ads')}}">Næringseiendom til salgs <span class="u-stone">(600)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="businessrent.php?grid">Næringseiendom til leie <span class="u-stone">(3 103)</span></a>
+                                <a href="{{url('commercial/property/for/rent/ads')}}">Næringseiendom til leie <span class="u-stone">(3 103)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="businessplots.php?grid">Næringstomter <span class="u-stone">(125)</span></a>
+                                <a href="{{url('commercial/plots/ads')}}">Næringstomter <span class="u-stone">(125)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="companyforsale.php?grid">Bedrifter til salgs <span class="u-stone">(105)</span></a>
+                                <a href="{{url('business/for/sale/ads')}}">Bedrifter til salgs <span class="u-stone">(105)</span></a>
                             </li>
                         </ul>
                     </div>
