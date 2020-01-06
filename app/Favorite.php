@@ -9,6 +9,6 @@ class Favorite extends Model
     protected $guarded = [];
 
     public function ad(){
-        return $this->belongsTo('App\Models\ad');
+        return $this->belongsTo('App\Models\Ad');
     }
 }

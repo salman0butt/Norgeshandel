@@ -35,6 +35,7 @@ class AddCommercialPropertyForSale extends FormRequest
 
             'gross_area_from' => 'required',
             'gross_area_to' => 'required',
+
             
             'primary_room' => 'sometimes|nullable|numeric',
             'use_area' => 'sometimes|nullable|numeric',
@@ -51,6 +52,7 @@ class AddCommercialPropertyForSale extends FormRequest
            
             'headline' => 'required',
         
+
 
         ];
     }

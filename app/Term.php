@@ -22,4 +22,11 @@ class Term extends Model
         return $this->belongsToMany('App\Admin\Jobs\Job');
     }
 
+    public function getParent(){
+        return Term::where('id', $this->parent)->get();
+    }
+
+    public function getChild(){
+        return Term::where('parent', $this->id)->get();
+    }
 }
