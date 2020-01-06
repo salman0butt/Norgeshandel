@@ -955,6 +955,9 @@ a > .alert-warning:hover{
 .hide{
     display: none;
 }
+.error-span{
+    color: #ac304a;
+}
 /*bootstrap overridden style*/
 @media (min-width: 992px){
     .navbar-expand-lg .navbar-nav .nav-link {

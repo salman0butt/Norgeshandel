@@ -305,7 +305,7 @@ class PropertyController extends Controller
        
         //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_holiday_home_for_sale';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
@@ -464,7 +464,7 @@ class PropertyController extends Controller
 
         //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_for_sale';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
@@ -615,7 +615,7 @@ class PropertyController extends Controller
        
         //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_for_rent';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
@@ -664,7 +664,7 @@ class PropertyController extends Controller
 
          //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_flat_wishes_rented';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);

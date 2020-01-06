@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+
+    <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForSale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_form.blade.php" afterDir="false" />
+    </list>
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -334,8 +339,24 @@
       <workItem from="1577085779252" duration="13722000" />
       <workItem from="1577166519110" duration="29649000" />
       <workItem from="1577343721216" duration="1680000" />
-      <workItem from="1577348917534" duration="16466000" />
-      <workItem from="1578315508675" duration="304000" />
+
+      <workItem from="1577348917534" duration="39235000" />
+      <workItem from="1577686375588" duration="1983000" />
+      <workItem from="1577688393844" duration="543000" />
+      <workItem from="1577689018259" duration="18499000" />
+      <workItem from="1577795786277" duration="273000" />
+      <workItem from="1577796075295" duration="254000" />
+      <workItem from="1577796368453" duration="186000" />
+      <workItem from="1577945249339" duration="17275000" />
+      <workItem from="1577972198085" duration="79000" />
+      <workItem from="1577982688805" duration="33000" />
+      <workItem from="1578030841103" duration="19130000" />
+      <workItem from="1578160342500" duration="610000" />
+      <workItem from="1578208822163" duration="170000" />
+      <workItem from="1578218969487" duration="599000" />
+      <workItem from="1578288424245" duration="8750000" />
+      <workItem from="1578299407246" duration="4780000" />
+
     </task>
     <servers />
   </component>
@@ -355,6 +376,50 @@
       </map>
     </option>
   </component>
+
+  <component name="WindowStateProjectService">
+    <state x="480" y="159" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577795968415">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="480" y="159" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1600.860@0.0.1600.860" timestamp="1577795968415" />
+    <state x="580" y="186" key="FileChooserDialogImpl" timestamp="1577796472866">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="580" y="186" key="FileChooserDialogImpl/0.0.1600.860@0.0.1600.860" timestamp="1577796472866" />
+    <state width="1557" height="156" key="GridCell.Tab.0.bottom" timestamp="1577688364086">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="156" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1577688364086" />
+    <state width="1557" height="156" key="GridCell.Tab.0.center" timestamp="1577688364086">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="156" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1577688364086" />
+    <state width="1557" height="156" key="GridCell.Tab.0.left" timestamp="1577688364086">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="156" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1577688364086" />
+    <state width="1557" height="156" key="GridCell.Tab.0.right" timestamp="1577688364086">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="1557" height="156" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1577688364086" />
+    <state x="301" y="73" key="SettingsEditor" timestamp="1577711711726">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="301" y="73" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1577711711726" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1577964912372">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.0.1600.860@0.0.1600.860" timestamp="1577964912372" />
+    <state x="456" y="195" width="672" height="677" key="run.anything.popup" timestamp="1577966090892">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="456" y="195" width="672" height="677" key="run.anything.popup/0.0.1600.860@0.0.1600.860" timestamp="1577966090892" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1578296294833">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1578296294833" />
+  </component>
+
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>

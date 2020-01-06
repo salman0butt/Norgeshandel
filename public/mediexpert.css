@@ -967,3 +967,8 @@ button.link:hover{
 .hide{
     display: none;
 }
+
+.error-span{
+    color: #ac304a;
+}
+

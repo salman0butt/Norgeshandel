@@ -56,3 +56,6 @@ form.cmxform .gray * { color: gray; }
 #valid-msg {
     color: green !important;
 }
+.error-span{
+    color: red !important;
+}
