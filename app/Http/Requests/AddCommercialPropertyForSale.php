@@ -28,7 +28,6 @@ class AddCommercialPropertyForSale extends FormRequest
             'property_type' => 'required',
             'location' => 'required',
             'zip_code' => 'required',
-
             'municipal_number' => 'sometimes|nullable|numeric',
             'usage_number' => 'sometimes|nullable|numeric',
             'farm_number' => 'sometimes|nullable|numeric',
@@ -52,8 +51,6 @@ class AddCommercialPropertyForSale extends FormRequest
            
             'headline' => 'required',
         
-
-
         ];
     }
 }

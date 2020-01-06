@@ -11,8 +11,10 @@
 
             <div class="row">
                 <div class="col-md-10 offset-md-1">
+
                       @include('common.partials.property.commercial_property_for_sale_form')
-                    </div>
+                 </div>
+
                 </div>
             </div>
         </div>
@@ -64,7 +66,9 @@
                     html += "</ul>";
                     $('.notice').append('<div class="alert alert-danger">' + html + '</div>');
                 },
-            }).always(function() { l.stop(); });
+            }).always(function () {
+                l.stop();
+            });
             return false;
 
         });
