@@ -156,7 +156,7 @@
                             <span>{{ date('d.m.y',strtotime($job->ad->updated_at))}}</span></div>
                     </div>
                 </div>
-
+{{----}}
                 {{--right detail collumn--}}
                 <div class="col-md-4">
                     <div class=" radius-8 p-3">
