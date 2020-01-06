@@ -18,7 +18,7 @@ const mix = require('laravel-mix');
 mix.styles([
    'public/mediexpert.css',
    'public/mediexpert-mq.css',
-   'public/css/bootstrap.min.css',
+   'public/css/bootstrap.min.css', 
 ], 'public/css/all.css');
 
 //scripts mixing
