@@ -1,5 +1,6 @@
 @extends('layouts.landingSite')
 <?php $countries = countries(); ?>
+<?php $cv_id = $cv->id; ?>
 @section('page_content')
     <style type="text/css">
         a.edit-btn {
@@ -72,15 +73,19 @@
                             </h3>
                             <p>
                                 @if($cv->status=="inactive")
-                                    CVen din er <span class="text-danger font-weight-bold">inaktiv</span>, med utløpsdato {{date('d.m.Y', strtotime($cv->expiry))}}.
+                                    CVen din er <span class="text-danger font-weight-bold">inaktiv</span>, med
+                                    utløpsdato {{date('d.m.Y', strtotime($cv->expiry))}}.
                                 @endif
                                 @if($cv->visibility!="visible")
                                     Personlige detaljer er <span class="font-weight-bold">ikke synlige.</span>
                                 @endif
                             </p>
                             <div class="alert alert-danger row">
-                                <div class="col-md-10 pt-2">CVen din kan bare vises av våre kunder når du har registrert personopplysninger og utdanning eller erfaring.</div>
-                                <a href="#profile" id="publish_tab" class="btn dme-btn-maroon radius-8 p-2 col-md-2">Publiser CV</a>
+                                <div class="col-md-10 pt-2">CVen din kan bare vises av våre kunder når du har registrert
+                                    personopplysninger og utdanning eller erfaring.
+                                </div>
+                                <a href="#profile" id="publish_tab" class="btn dme-btn-maroon radius-8 p-2 col-md-2">Publiser
+                                    CV</a>
                             </div>
                             <hr>
                             <div class="row">
@@ -91,12 +96,15 @@
                                     </h3>
                                     <div class="table-main">
                                         <?php $cvpersonal = $cv->personal; ?>
-                                            <form action="{{route('cvpersonal.update', $cvpersonal->id)}}" name="cvpersonal-form" id="cvpersonal-form" method="POST" enctype="multipart/form-data">
+                                        <form action="{{route('cvpersonal.update', $cvpersonal->id)}}"
+                                              name="cvpersonal-form" id="cvpersonal-form" method="POST"
+                                              enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             {{method_field('PUT')}}
                                             <div class="form-group">
                                                 <label for="personal_title">CV-tittel *</label>
-                                                <input type="text" class="form-control" id="personal_title" name="title" value="{{$cvpersonal->title}}" required>
+                                                <input type="text" class="form-control" id="personal_title" name="title"
+                                                       value="{{$cvpersonal->title}}" required>
                                                 <small id="emailHelp" class="form-text text-muted">F.eks "Bachelor med 4
                                                     års erfaring som regnskapsfører" eller "Anestesisykepleier med
                                                     betydelig erfaring fra akuttmedisin, ambulansetjeneste og kirurgi
@@ -104,79 +112,116 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_first_name">Fornavn*</label>
-                                                <input type="text" class="form-control" id="personal_first_name" name="first_name" value="{{$cvpersonal->first_name}}" required>
+                                                <input type="text" class="form-control" id="personal_first_name"
+                                                       name="first_name" value="{{$cvpersonal->first_name}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_last_name">Etternavn*</label>
-                                                <input type="text" class="form-control" id="personal_last_name" name="last_name" value="{{$cvpersonal->last_name}}" required>
+                                                <input type="text" class="form-control" id="personal_last_name"
+                                                       name="last_name" value="{{$cvpersonal->last_name}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_address">Adresse*</label>
-                                                <input type="text" class="form-control" id="personal_address" name="address" value="{{$cvpersonal->address}}" required>
+                                                <input type="text" class="form-control" id="personal_address"
+                                                       name="address" value="{{$cvpersonal->address}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_zip">Postnummer*</label>
-                                                <input type="text" class="form-control" id="personal_zip" name="zip" value="{{$cvpersonal->zip}}" required>
+                                                <input type="text" class="form-control" id="personal_zip" name="zip"
+                                                       value="{{$cvpersonal->zip}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_city">Poststed*</label>
-                                                <input type="text" class="form-control" id="personal_city" name="city" value="{{$cvpersonal->city}}" required>
+                                                <input type="text" class="form-control" id="personal_city" name="city"
+                                                       value="{{$cvpersonal->city}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_country">Land</label>
                                                 <select class="form-control" id="personal_country" name="country">
                                                     <option value="">Velg..</option>
                                                     @foreach($countries as $ctry)
-                                                        <option value="{{$ctry['name']}}" @if($cvpersonal->country==$ctry['name']) selected @endif>{{$ctry['name']}}</option>
+                                                        <option value="{{$ctry['name']}}"
+                                                                @if($cvpersonal->country==$ctry['name']) selected @endif>{{$ctry['name']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_email">E-post*</label>
-                                                <input type="text" class="form-control" id="personal_email" name="email" value="{{$cvpersonal->email}}" required>
+                                                <input type="text" class="form-control" id="personal_email" name="email"
+                                                       value="{{$cvpersonal->email}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_tell">Telefon</label>
-                                                <input type="text" class="form-control" id="personal_tell" name="tell" value="{{$cvpersonal->tell}}">
+                                                <input type="text" class="form-control" id="personal_tell" name="tell"
+                                                       value="{{$cvpersonal->tell}}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_mobile">Mobil</label>
-                                                <input type="text" class="form-control" id="personal_mobile" name="mobile" value="{{$cvpersonal->mobile}}">
+                                                <input type="text" class="form-control" id="personal_mobile"
+                                                       name="mobile" value="{{$cvpersonal->mobile}}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_birthday">Fødselsdato*</label>
-                                                <input type="date" class="form-control" id="personal_birthday" name="birthday" value="{{$cvpersonal->birthday}}" required>
+                                                <input type="date" class="form-control" id="personal_birthday"
+                                                       name="birthday" value="{{$cvpersonal->birthday}}" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_gender">Kjønn*</label>
-                                                <select class="form-control" id="personal_gender" name="gender" required>
+                                                <select class="form-control" id="personal_gender" name="gender"
+                                                        required>
                                                     <option value="">Velg...</option>
-                                                    <option value="male" @if($cvpersonal->gender=="male") selected @endif>Kvinne</option>
-                                                    <option value="female" @if($cvpersonal->gender=="female") selected @endif>Mann</option>
+                                                    <option value="male"
+                                                            @if($cvpersonal->gender=="male") selected @endif>Kvinne
+                                                    </option>
+                                                    <option value="female"
+                                                            @if($cvpersonal->gender=="female") selected @endif>Mann
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_occupational_status">Yrkesstatus*</label>
-                                                <select class="form-control" id="personal_occupational_status" name="occupational_status" required>
+                                                <select class="form-control" id="personal_occupational_status"
+                                                        name="occupational_status" required>
                                                     <option>Velg..</option>
-                                                    <option @if($cvpersonal->occupational_status=="Arbeidssøkende") selected @endif value="Arbeidssøkende">Arbeidssøkende</option>
-                                                    <option @if($cvpersonal->occupational_status=="Deltidsstilling") selected @endif value="Deltidsstilling">Deltidsstilling</option>
-                                                    <option @if($cvpersonal->occupational_status=="Fast jobb") selected @endif value="Fast jobb">Fast jobb</option>
-                                                    <option @if($cvpersonal->occupational_status=="Freelance") selected @endif value="Freelance">Freelance</option>
-                                                    <option @if($cvpersonal->occupational_status=="Næringsdrivende") selected @endif value="Næringsdrivende">Næringsdrivende</option>
-                                                    <option @if($cvpersonal->occupational_status=="Student") selected @endif value="Student">Student</option>
-                                                    <option @if($cvpersonal->occupational_status=="Midlertidig ansatt") selected @endif value="Midlertidig ansatt">Midlertidig ansatt</option>
+                                                    <option
+                                                        @if($cvpersonal->occupational_status=="Arbeidssøkende") selected
+                                                        @endif value="Arbeidssøkende">Arbeidssøkende
+                                                    </option>
+                                                    <option
+                                                        @if($cvpersonal->occupational_status=="Deltidsstilling") selected
+                                                        @endif value="Deltidsstilling">Deltidsstilling
+                                                    </option>
+                                                    <option @if($cvpersonal->occupational_status=="Fast jobb") selected
+                                                            @endif value="Fast jobb">Fast jobb
+                                                    </option>
+                                                    <option @if($cvpersonal->occupational_status=="Freelance") selected
+                                                            @endif value="Freelance">Freelance
+                                                    </option>
+                                                    <option
+                                                        @if($cvpersonal->occupational_status=="Næringsdrivende") selected
+                                                        @endif value="Næringsdrivende">Næringsdrivende
+                                                    </option>
+                                                    <option @if($cvpersonal->occupational_status=="Student") selected
+                                                            @endif value="Student">Student
+                                                    </option>
+                                                    <option
+                                                        @if($cvpersonal->occupational_status=="Midlertidig ansatt") selected
+                                                        @endif value="Midlertidig ansatt">Midlertidig ansatt
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_website">Hjemmeside</label>
-                                                <input type="url" class="form-control" id="personal_website" name="website" value="{{$cvpersonal->website}}">
-                                                <small  class="form-text text-muted">Fylles bare ut dersom du har egen hjemmeside eller profilside</small>
+                                                <input type="url" class="form-control" id="personal_website"
+                                                       name="website" value="{{$cvpersonal->website}}">
+                                                <small class="form-text text-muted">Fylles bare ut dersom du har egen
+                                                    hjemmeside eller profilside</small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_driving_license">Førerkort</label>
-                                                <input type="text" class="form-control" id="personal_driving_license" name="driving_license" value="{{$cvpersonal->website}}">
-                                                <small  class="form-text text-muted"> E.g. A, B, C1 or D1E</small>
+                                                <input type="text" class="form-control" id="personal_driving_license"
+                                                       name="driving_license" value="{{$cvpersonal->website}}">
+                                                <small class="form-text text-muted"> E.g. A, B, C1 or D1E</small>
                                             </div>
 
 
@@ -203,16 +248,22 @@
 
                                         </span>
                                     </h3>
-                                    <small  class="form-text text-muted pl-4 pr-4 mb-5"> Du har ikke lagret et
+                                    <small class="form-text text-muted pl-4 pr-4 mb-5"> Du har ikke lagret et
                                         bilde til din CV.</small>
                                     <div class="collapse show" id="colapsedata" style="text-align: center">
                                         <form action="#" id="form_profile_picture" enctype="multipart/form-data">
-                                            <div class="profile" style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
-                                                <img src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" id="cv_profile_image" style="max-width:180px;max-height: 200px; height:200px;" alt="">
+                                            <div class="profile"
+                                                 style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
+                                                <img
+                                                    src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
+                                                    id="cv_profile_image"
+                                                    style="max-width:180px;max-height: 200px; height:200px;" alt="">
                                             </div>
                                             <div class="custom-file" style="max-width: 205px;">
-                                                <input type="file" class="custom-file-input" name="cv_profile" id="customFile">
-                                                <label class="custom-file-label" for="customFile" style="text-align: left">Velg Fil</label>
+                                                <input type="file" class="custom-file-input" name="cv_profile"
+                                                       id="customFile">
+                                                <label class="custom-file-label" for="customFile"
+                                                       style="text-align: left">Velg Fil</label>
                                             </div>
                                         </form>
                                     </div>
@@ -228,7 +279,7 @@
                                            aria-expanded="false" aria-controls="colapedu">Legg til</a>
                                     </span>
                                 </h3>
-                                <small  class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen
+                                <small class=" font-weight-normal form-text text-muted pl-4 pr-4 pb "> Ingen
                                     utdannelse er registrert</small>
                                 <div class="collapse" id="colapedu" style="margin-top: -40px;">
                                     <div class="table-main">
@@ -236,7 +287,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput1">Skole *</label>
                                                 <input type="text" class="form-control"
-                                                       >
+                                                >
                                                 <small id="emailHelp" class="form-text text-muted">
                                                     F.eks "Bachelor med 4
                                                     års erfaring som regnskapsfører" eller "Anestesisykepleier med
@@ -246,7 +297,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlSelect1">Fag*</label>
-                                                <select name="education.tradeValueId"  class="form-control" required="true">
+                                                <select name="education.tradeValueId" class="form-control"
+                                                        required="true">
                                                     <option value="0">Velg..</option>
                                                     <option value="74">Annet</option>
                                                     <option value="1">Allmennfag</option>
@@ -349,7 +401,7 @@
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput3">Grad*</label>
                                                 <input type="text" class="form-control"
-                                                       >
+                                                >
                                                 <small>Velg det som passer best i nedtrekksfeltet og evt. spesifiser
                                                     grad</small>
                                             </div>
@@ -378,14 +430,15 @@
                                            aria-expanded="false" aria-controls="new_experience">Legg til</a>
                                     </span>
                                 </h3>
-                                <small  class=" font-weight-normal form-text text-muted pl-4 pr-4 pb ">
+                                <small class=" font-weight-normal form-text text-muted pl-4 pr-4 pb ">
                                     @if(!isset($cv->experiences) || !is_countable($cv->experiences))
                                         Ingen utdannelse er registrert
                                     @endif
                                 </small>
                                 <div class="collapse" id="new_experience" style="margin-top: -40px;">
                                     <div class="table-main">
-                                        <form action="{{route('cvexperience.store')}}" name="cvexperience-form" id="cvexperience-form" method="POST" enctype="multipart/form-data">
+                                        <form action="{{route('cvexperience.store')}}" name="cvexperience-form"
+                                              id="cvexperience-form" method="POST" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -409,7 +462,8 @@
                                                 <div class="col-md-3">
                                                     <label for="">
 
-                                                        <input type="checkbox" name="still_work" value="yes" class="exp_still_work">
+                                                        <input type="checkbox" name="still_work" value="yes"
+                                                               class="exp_still_work">
                                                         Er fortsatt i stillingen
                                                     </label>
                                                 </div>
@@ -418,11 +472,12 @@
                                             <div class="row form-group mt-3">
                                                 <label class="col-md-12" for="exampleFormControlInput1">Firma *</label>
                                                 <div class="col-md-12">
-                                                    <input type="text" class="form-control" name="company" >
+                                                    <input type="text" class="form-control" name="company">
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <label class="col-md-12" for="exampleFormControlInput1">Stillingstittel *</label>
+                                                <label class="col-md-12" for="exampleFormControlInput1">Stillingstittel
+                                                    *</label>
                                                 <div class="col-md-12">
                                                     <input type="text" class="form-control" name="job_title">
                                                 </div>
@@ -482,7 +537,8 @@
                                                     <option value="Natur- og miljøvern">Natur- og miljøvern</option>
                                                     <option value="Naturfag">Naturfag</option>
                                                     <option value="Odontologi">Odontologi</option>
-                                                    <option value="Organisasjon og ledelse">Organisasjon og ledelse</option>
+                                                    <option value="Organisasjon og ledelse">Organisasjon og ledelse
+                                                    </option>
                                                     <option value="Pedagogikk">Pedagogikk</option>
                                                     <option value="Politifag">Politifag</option>
                                                     <option value="PR og kommunikasjon">PR og kommunikasjon</option>
@@ -513,7 +569,8 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">Beskriv hva du arbeidet med; verktøy, metoder,teknologi etc.</label>
+                                                <label for="exampleFormControlTextarea1">Beskriv hva du arbeidet med;
+                                                    verktøy, metoder,teknologi etc.</label>
                                                 <textarea name="detail" class="form-control" rows="3"></textarea>
                                             </div>
 
@@ -535,171 +592,199 @@
                                         <?php
                                         $cvexperience = $cvexpericences[$i];
                                         ?>
-                                            <div class="text-dark font-weight-normal pl-4 pr-4" style="min-height: 60px;">
-                                                <div class="u-t4">
-                                                    <div style="width: 80%;float: left">
-                                                        <span class="text-muted font-weight-normal small">{{$cvexperience->period_from}} - {{$cvexperience->period_from}} </span><span class="ml-3 font-weight-normal">{{$cvexperience->company}}</span><br>
-                                                        <span class="mt-1">{{$cvexperience->job_title}}</span>
-                                                    </div>
-                                                    <div class="" style="font-size: 20px;width: 20%; float: left">
-                                                        <form class="float-right" action="{{route('cvexperience.destroy', $cvexperience->id)}}" method="POST"  onsubmit="jarascript:return confirm('Vil du slette denne opplevelsen?')">
-                                                            {{ csrf_field() }} {{method_field('DELETE')}}
-                                                            <button type="submit" class="link pl-3">
-                                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                                            </button>
-                                                        </form>
-                                                        <a class="float-right" data-toggle="collapse" href="#edit_experience_{{$i}}" role="button" aria-expanded="false"
-                                                           aria-controls="#edit_experience_{{$i}}">
-                                                            <i class="fa fa-edit" aria-hidden="true"></i>
-                                                        </a>
-                                                    </div>
+                                        <div class="text-dark font-weight-normal pl-4 pr-4" style="min-height: 60px;">
+                                            <div class="u-t4">
+                                                <div style="width: 80%;float: left">
+                                                    <span class="text-muted font-weight-normal small">{{$cvexperience->period_from}} - {{$cvexperience->period_from}} </span><span
+                                                        class="ml-3 font-weight-normal">{{$cvexperience->company}}</span><br>
+                                                    <span class="mt-1">{{$cvexperience->job_title}}</span>
                                                 </div>
-                                            </div>
-                                            <div class="collapse" id="edit_experience_{{$i}}" style="margin-top: -40px;">
-                                                <div class="table-main">
-                                                    {{--                                                {{dd($cvexperience)}}--}}
-                                                    <form action="{{route('cvexperience.update', $cvexperience->id)}}" name="cvexperience-form" id="cvexperience-form_{{$i}}" method="POST" enctype="multipart/form-data">
-                                                        {{method_field('PUT')}}
-                                                        {{ csrf_field() }}
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <label class="">Periode fra</label>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <input type="date" name="period_from" class="form-control" value="{{$cvexperience->period_from}}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <label class="">til</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <input type="date" name="period_to" class="form-control period_to" value="{{$cvexperience->period_to}}" @if($cvexperience->still_work=="yes") disabled @endif>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <label for="">
-                                                                    {{--                                                        {{dd($cvexperience->still_work)}}--}}
-                                                                    <input type="checkbox" name="still_work" value="yes" @if($cvexperience->still_work=="yes") checked @endif class="still_work">
-                                                                    Er fortsatt i stillingen
-                                                                </label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row form-group mt-3">
-                                                            <label class="col-md-12" for="exampleFormControlInput1">Firma *</label>
-                                                            <div class="col-md-12">
-                                                                <input type="text" class="form-control" name="company" value="{{$cvexperience->company}}">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row form-group">
-                                                            <label class="col-md-12" for="exampleFormControlInput1">Stillingstittel *</label>
-                                                            <div class="col-md-12">
-                                                                <input type="text" class="form-control" name="job_title" value="{{$cvexperience->job_title}}">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlSelect1">Bransje/Sektor *</label>
-                                                            <select name="industry" class="form-control">
-                                                                <option value="">Velg..</option>
-                                                                @if($cvexperience->industry != "")
-                                                                    <option selected value="{{$cvexperience->industry}}">{{$cvexperience->industry}}</option>
-                                                                @endif
-
-                                                                <option value="Annet">Annet</option>
-                                                                <option value="Allmennfag">Allmennfag</option>
-                                                                <option value="Arkeologi">Arkeologi</option>
-                                                                <option value="Astronomi">Astronomi</option>
-                                                                <option value="Automasjon">Automasjon</option>
-                                                                <option value="Bibliotek">Bibliotek</option>
-                                                                <option value="Billedkunst">Billedkunst</option>
-                                                                <option value="Biologi">Biologi</option>
-                                                                <option value="Business">Business</option>
-                                                                <option value="Bygg og anlegg">Bygg og anlegg</option>
-                                                                <option value="Dans">Dans</option>
-                                                                <option value="Data og Internett">Data og Internett</option>
-                                                                <option value="Design">Design</option>
-                                                                <option value="Elektrofag">Elektrofag</option>
-                                                                <option value="Energiteknikk">Energiteknikk</option>
-                                                                <option value="Entreprenørskap">Entreprenørskap</option>
-                                                                <option value="Farmasi">Farmasi</option>
-                                                                <option value="Film og TV">Film og TV</option>
-                                                                <option value="Filosofi">Filosofi</option>
-                                                                <option value="Flyskoler">Flyskoler</option>
-                                                                <option value="Fysikk">Fysikk</option>
-                                                                <option value="Fysioterapi">Fysioterapi</option>
-                                                                <option value="Geofag">Geofag</option>
-                                                                <option value="Havbruk og fiske">Havbruk og fiske</option>
-                                                                <option value="Helsefag">Helsefag</option>
-                                                                <option value="Historie">Historie</option>
-                                                                <option value="Hotell og restaurant">Hotell og restaurant</option>
-                                                                <option value="HR og personal">HR og personal</option>
-                                                                <option value="Idrett">Idrett</option>
-                                                                <option value="Informatikk">Informatikk</option>
-                                                                <option value="Innovasjon">Innovasjon</option>
-                                                                <option value="Journalistikk">Journalistikk</option>
-                                                                <option value="Jus">Jus</option>
-                                                                <option value="Kjemi">Kjemi</option>
-                                                                <option value="Kultur">Kultur</option>
-                                                                <option value="Landbruk">Landbruk</option>
-                                                                <option value="Litteratur">Litteratur</option>
-                                                                <option value="Logistikk">Logistikk</option>
-                                                                <option value="Marinteknologi">Marinteknologi</option>
-                                                                <option value="Markedsføring">Markedsføring</option>
-                                                                <option value="Maskinteknikk">Maskinteknikk</option>
-                                                                <option value="Matematikk">Matematikk</option>
-                                                                <option value="Mediefag">Mediefag</option>
-                                                                <option value="Medisin">Medisin</option>
-                                                                <option value="Militærvesen">Militærvesen</option>
-                                                                <option value="Molekylærbiologi">Molekylærbiologi</option>
-                                                                <option value="Musikk">Musikk</option>
-                                                                <option value="Natur- og miljøvern">Natur- og miljøvern</option>
-                                                                <option value="Naturfag">Naturfag</option>
-                                                                <option value="Odontologi">Odontologi</option>
-                                                                <option value="Organisasjon og ledelse">Organisasjon og ledelse</option>
-                                                                <option value="Pedagogikk">Pedagogikk</option>
-                                                                <option value="Politifag">Politifag</option>
-                                                                <option value="PR og kommunikasjon">PR og kommunikasjon</option>
-                                                                <option value="Psykologi">Psykologi</option>
-                                                                <option value="Realfag">Realfag</option>
-                                                                <option value="Reiseliv">Reiseliv</option>
-                                                                <option value="Samfunn og politikk">Samfunn og politikk</option>
-                                                                <option value="Sjøfart">Sjøfart</option>
-                                                                <option value="Skogbruk">Skogbruk</option>
-                                                                <option value="Sosialantropologi">Sosialantropologi</option>
-                                                                <option value="Sos-pedagogikk">Sos-pedagogikk</option>
-                                                                <option value="Sosiologi">Sosiologi</option>
-                                                                <option value="Spes-pedagogikk">Spes-pedagogikk</option>
-                                                                <option value="Språk">Språk</option>
-                                                                <option value="Strategi og ledelse">Strategi og ledelse</option>
-                                                                <option value="Svakstrøm">Svakstrøm</option>
-                                                                <option value="Sykepleie">Sykepleie</option>
-                                                                <option value="Teater">Teater</option>
-                                                                <option value="Tekniske fag">Tekniske fag</option>
-                                                                <option value="Teologi">Teologi</option>
-                                                                <option value="Veterinærmedisin">Veterinærmedisin</option>
-                                                                <option value="Yrkesfag">Yrkesfag</option>
-                                                                <option value="Zoologi">Zoologi</option>
-                                                                <option value="Økonomi">Økonomi</option>
-
-
-                                                            </select>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlTextarea1">Beskriv hva du arbeidet med; verktøy, metoder,teknologi etc.</label>
-                                                            <textarea name="detail" class="form-control" rows="3">{{$cvexperience->detail}}</textarea>
-                                                        </div>
-
-                                                        <button type="submit" class="dme-btn-outlined-blue">Lagre</button>
-                                                        <button class="dme-btn-outlined-blue">Avbryt</button>
+                                                <div class="" style="font-size: 20px;width: 20%; float: left">
+                                                    <form class="float-right"
+                                                          action="{{route('cvexperience.destroy', $cvexperience->id)}}"
+                                                          method="POST"
+                                                          onsubmit="jarascript:return confirm('Vil du slette denne opplevelsen?')">
+                                                        {{ csrf_field() }} {{method_field('DELETE')}}
+                                                        <button type="submit" class="link pl-3">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
                                                     </form>
+                                                    <a class="float-right" data-toggle="collapse"
+                                                       href="#edit_experience_{{$i}}" role="button"
+                                                       aria-expanded="false"
+                                                       aria-controls="#edit_experience_{{$i}}">
+                                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                                    </a>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="collapse" id="edit_experience_{{$i}}" style="margin-top: -40px;">
+                                            <div class="table-main">
+                                                {{--                                                {{dd($cvexperience)}}--}}
+                                                <form action="{{route('cvexperience.update', $cvexperience->id)}}"
+                                                      name="cvexperience-form" id="cvexperience-form_{{$i}}"
+                                                      method="POST" enctype="multipart/form-data">
+                                                    {{method_field('PUT')}}
+                                                    {{ csrf_field() }}
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="">Periode fra</label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="date" name="period_from" class="form-control"
+                                                                   value="{{$cvexperience->period_from}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="">til</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <input type="date" name="period_to"
+                                                                   class="form-control period_to"
+                                                                   value="{{$cvexperience->period_to}}"
+                                                                   @if($cvexperience->still_work=="yes") disabled @endif>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label for="">
+                                                                {{--                                                        {{dd($cvexperience->still_work)}}--}}
+                                                                <input type="checkbox" name="still_work" value="yes"
+                                                                       @if($cvexperience->still_work=="yes") checked
+                                                                       @endif class="still_work">
+                                                                Er fortsatt i stillingen
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row form-group mt-3">
+                                                        <label class="col-md-12" for="exampleFormControlInput1">Firma
+                                                            *</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control" name="company"
+                                                                   value="{{$cvexperience->company}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <label class="col-md-12" for="exampleFormControlInput1">Stillingstittel
+                                                            *</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control" name="job_title"
+                                                                   value="{{$cvexperience->job_title}}">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlSelect1">Bransje/Sektor *</label>
+                                                        <select name="industry" class="form-control">
+                                                            <option value="">Velg..</option>
+                                                            @if($cvexperience->industry != "")
+                                                                <option selected
+                                                                        value="{{$cvexperience->industry}}">{{$cvexperience->industry}}</option>
+                                                            @endif
+
+                                                            <option value="Annet">Annet</option>
+                                                            <option value="Allmennfag">Allmennfag</option>
+                                                            <option value="Arkeologi">Arkeologi</option>
+                                                            <option value="Astronomi">Astronomi</option>
+                                                            <option value="Automasjon">Automasjon</option>
+                                                            <option value="Bibliotek">Bibliotek</option>
+                                                            <option value="Billedkunst">Billedkunst</option>
+                                                            <option value="Biologi">Biologi</option>
+                                                            <option value="Business">Business</option>
+                                                            <option value="Bygg og anlegg">Bygg og anlegg</option>
+                                                            <option value="Dans">Dans</option>
+                                                            <option value="Data og Internett">Data og Internett</option>
+                                                            <option value="Design">Design</option>
+                                                            <option value="Elektrofag">Elektrofag</option>
+                                                            <option value="Energiteknikk">Energiteknikk</option>
+                                                            <option value="Entreprenørskap">Entreprenørskap</option>
+                                                            <option value="Farmasi">Farmasi</option>
+                                                            <option value="Film og TV">Film og TV</option>
+                                                            <option value="Filosofi">Filosofi</option>
+                                                            <option value="Flyskoler">Flyskoler</option>
+                                                            <option value="Fysikk">Fysikk</option>
+                                                            <option value="Fysioterapi">Fysioterapi</option>
+                                                            <option value="Geofag">Geofag</option>
+                                                            <option value="Havbruk og fiske">Havbruk og fiske</option>
+                                                            <option value="Helsefag">Helsefag</option>
+                                                            <option value="Historie">Historie</option>
+                                                            <option value="Hotell og restaurant">Hotell og restaurant
+                                                            </option>
+                                                            <option value="HR og personal">HR og personal</option>
+                                                            <option value="Idrett">Idrett</option>
+                                                            <option value="Informatikk">Informatikk</option>
+                                                            <option value="Innovasjon">Innovasjon</option>
+                                                            <option value="Journalistikk">Journalistikk</option>
+                                                            <option value="Jus">Jus</option>
+                                                            <option value="Kjemi">Kjemi</option>
+                                                            <option value="Kultur">Kultur</option>
+                                                            <option value="Landbruk">Landbruk</option>
+                                                            <option value="Litteratur">Litteratur</option>
+                                                            <option value="Logistikk">Logistikk</option>
+                                                            <option value="Marinteknologi">Marinteknologi</option>
+                                                            <option value="Markedsføring">Markedsføring</option>
+                                                            <option value="Maskinteknikk">Maskinteknikk</option>
+                                                            <option value="Matematikk">Matematikk</option>
+                                                            <option value="Mediefag">Mediefag</option>
+                                                            <option value="Medisin">Medisin</option>
+                                                            <option value="Militærvesen">Militærvesen</option>
+                                                            <option value="Molekylærbiologi">Molekylærbiologi</option>
+                                                            <option value="Musikk">Musikk</option>
+                                                            <option value="Natur- og miljøvern">Natur- og miljøvern
+                                                            </option>
+                                                            <option value="Naturfag">Naturfag</option>
+                                                            <option value="Odontologi">Odontologi</option>
+                                                            <option value="Organisasjon og ledelse">Organisasjon og
+                                                                ledelse
+                                                            </option>
+                                                            <option value="Pedagogikk">Pedagogikk</option>
+                                                            <option value="Politifag">Politifag</option>
+                                                            <option value="PR og kommunikasjon">PR og kommunikasjon
+                                                            </option>
+                                                            <option value="Psykologi">Psykologi</option>
+                                                            <option value="Realfag">Realfag</option>
+                                                            <option value="Reiseliv">Reiseliv</option>
+                                                            <option value="Samfunn og politikk">Samfunn og politikk
+                                                            </option>
+                                                            <option value="Sjøfart">Sjøfart</option>
+                                                            <option value="Skogbruk">Skogbruk</option>
+                                                            <option value="Sosialantropologi">Sosialantropologi</option>
+                                                            <option value="Sos-pedagogikk">Sos-pedagogikk</option>
+                                                            <option value="Sosiologi">Sosiologi</option>
+                                                            <option value="Spes-pedagogikk">Spes-pedagogikk</option>
+                                                            <option value="Språk">Språk</option>
+                                                            <option value="Strategi og ledelse">Strategi og ledelse
+                                                            </option>
+                                                            <option value="Svakstrøm">Svakstrøm</option>
+                                                            <option value="Sykepleie">Sykepleie</option>
+                                                            <option value="Teater">Teater</option>
+                                                            <option value="Tekniske fag">Tekniske fag</option>
+                                                            <option value="Teologi">Teologi</option>
+                                                            <option value="Veterinærmedisin">Veterinærmedisin</option>
+                                                            <option value="Yrkesfag">Yrkesfag</option>
+                                                            <option value="Zoologi">Zoologi</option>
+                                                            <option value="Økonomi">Økonomi</option>
+
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Beskriv hva du arbeidet
+                                                            med; verktøy, metoder,teknologi etc.</label>
+                                                        <textarea name="detail" class="form-control"
+                                                                  rows="3">{{$cvexperience->detail}}</textarea>
+                                                    </div>
+
+                                                    <button type="submit" class="dme-btn-outlined-blue">Lagre</button>
+                                                    <button class="dme-btn-outlined-blue">Avbryt</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     @endfor
                                 @endif
                             </div>
@@ -719,31 +804,35 @@
                                     @else
                                         {{$cv->key_skills}}
                                         <br>
-                                        <span class="font-weight-bold">Annen erfaring, tillitsverv, interesser etc.</span>
+                                        <span
+                                            class="font-weight-bold">Annen erfaring, tillitsverv, interesser etc.</span>
                                         <br>
                                         <span>{{$cv->other_skills}}</span>
                                     @endif
                                 </div>
                                 <div class="collapse" id="colapednok" style="margin-top: -40px;">
                                     <div class="table-main">
-                                        <?php $cv_id = $cv->id; ?>
-                                        <form action="{{route('update_skills', compact('cv_id'))}}" method="post" name="form_skills">
+                                        <form action="{{route('update_skills', compact('cv_id'))}}" method="post"
+                                              name="form_skills">
                                             {{csrf_field()}}
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Nøkkelkompetanse</label>
-                                                <textarea name="key_skills" class="form-control" rows="3">{{$cv->key_skills}}</textarea>
+                                                <textarea name="key_skills" class="form-control"
+                                                          rows="3">{{$cv->key_skills}}</textarea>
                                                 <small>F.eks. "Anestesisykepleier med bred erfaring innen akutt medisin,
                                                     ambulansetransport, sentraloperasjon og dagkirurgi."</small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1">Annen erfaring, tillitsverv,
                                                     interesser etc.</label>
-                                                <textarea name="other_skills" class="form-control" rows="3">{{$cv->other_skills}}</textarea>
+                                                <textarea name="other_skills" class="form-control"
+                                                          rows="3">{{$cv->other_skills}}</textarea>
                                             </div>
                                             <button type="submit" class="dme-btn-outlined-blue float-left">
                                                 <div class="ml-2">Lagre endringer</div>
                                             </button>
-                                            <input type="reset" class="dme-btn-outlined-blue float-left ml-2" value="Avbryt">
+                                            <input type="reset" class="dme-btn-outlined-blue float-left ml-2"
+                                                   value="Avbryt">
                                         </form>
                                     </div>
                                 </div>
@@ -754,14 +843,58 @@
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">
                                     Language
                                     <span class="float-right">
-                                        <a class="edit-btn" data-toggle="collapse" href="#languages" role="button" aria-expanded="false" aria-controls="languages">Endre</a>
+                                        <a class="edit-btn" data-toggle="collapse" href="#languages" role="button"
+                                           aria-expanded="false" aria-controls="languages">Endre</a>
                                     </span>
                                 </h3>
-                                <small  class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5">
-                                    @if(!isset($cv->languages))
+                                <small class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5">
+                                    @if(!isset($cv->languages) || empty($cv->languages) || !is_countable($cv->languages))
+                                        Du har ikke registrert noen språk ennå.
+                                    @endif
                                 </small>
-                                <div class="collapse" id="languages">
-                                    fjdsaklfj
+                                <div class="collapse show bg-maroon-lighter" id="languages">
+                                    <form action="{{route('update_languages', compact('cv_id'))}}" id="form_languages" name="form_languages" method="post">
+                                        {{csrf_field()}}
+{{--                                        {{dd($cv->languages->pluck('id')->toArray())}}--}}
+                                    <div class="row">
+                                        <div class="col-md-5 p-4">
+                                            {{--                                            <div class="row form-group">--}}
+                                            <label for="source_languages">Velg språk</label>
+                                            <select id="source_languages" class="form-control" size="10"
+                                                    multiple="multiple">
+                                                <?php
+                                                $languages = \App\Models\Language::all(); ?>
+                                                @foreach($languages as $language)
+                                                    <option value="{{$language->id}}" @if(in_array($language->id, $cv->languages->pluck('id')->toArray())) selected @endif>{{$language->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5 p-4">
+                                            <label for="selected_languages">Valgte språk</label>
+                                            <select id="selected_languages" name="langs[]" class="form-control" size="10"
+                                                    multiple="multiple">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-5">
+                                            <button class="prevent btn dme-btn-outlined-blue float-right" id="add_language"> legg til <span class="fa fa-arrow-right"></span></button>
+                                        </div>
+                                        <div class="col-md-1 p-3"></div>
+                                        <div class="col-md-5">
+                                            <button class="prevent btn dme-btn-outlined-blue float-left" id="remove_language"><span class="fa fa-arrow-left"></span> ta bort </button>
+                                        </div>
+                                        <div class="col-md-1 p-3"></div>
+                                        <div class="col-md-12 p-3 pr-5">
+                                            <button type="submit"  class="m-2 float-right btn dme-btn-outlined-blue bg-maroon color-white radius-8">Lagre</button>
+                                            <button type="reset" class="m-2 float-right btn dme-btn-outlined-blue">Avbryt</button>
+                                        </div>
+                                    </div>
+                                        <div id="vals">
+                                            <input type="hidden" value="" id="langs"">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -770,7 +903,8 @@
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">
                                     Ønsker for neste jobb
                                     <span class="float-right">
-                                        <a class="edit-btn" data-toggle="collapse" href="#preferences" role="button" aria-expanded="false" aria-controls="preferences">Endre</a>
+                                        <a class="edit-btn" data-toggle="collapse" href="#preferences" role="button"
+                                           aria-expanded="false" aria-controls="preferences">Endre</a>
                                     </span>
                                 </h3>
                                 <div class="collapse mt-3 mb-3" id="preferences">
@@ -824,10 +958,12 @@
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="inner-tab">
-                                <p class="text-dark pb-4">Din CV kan først søkes opp av våre kunder når du har registrert
+                                <p class="text-dark pb-4">Din CV kan først søkes opp av våre kunder når du har
+                                    registrert
                                     personalia og utdanning eller erfaring.</p>
                                 <h3 class="text-dark font-weight-normal" style="font-size:22px;">CV-innstillinger</h3>
-                                <p class="text-dark pb-4">Her kan du administrere din CV. Husk å alltid holde den oppdatert
+                                <p class="text-dark pb-4">Her kan du administrere din CV. Husk å alltid holde den
+                                    oppdatert
                                     med fersk informasjon. Det øker sjansene for å bli kontaktet av potensielle
                                     arbeidsgivere.</p>
                             </div>
@@ -851,7 +987,8 @@
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
-                                        <p class="text-dark pt-3">Som publisert vil din CV kunne bli søkt opp av FINN.nos
+                                        <p class="text-dark pt-3">Som publisert vil din CV kunne bli søkt opp av
+                                            FINN.nos
                                             kunder. Din CV kan først publiseres når du har registrert minst en gyldig
                                             utdanning eller erfaring.</p>
                                     </div>
@@ -867,21 +1004,27 @@
                                         <div class="form-check">
                                             <label class="radio-lbl" for="visibility1">
                                                 <input type="radio" class="" id="visibility1" name="visibility"
-                                                       value="visible" @if($cv->visibility==="visible") checked @endif>Personalia synlig
+                                                       value="visible" @if($cv->visibility==="visible") checked @endif>Personalia
+                                                synlig
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="radio-lbl" for="visibility2">
                                                 <input type="radio" class="" id="visibility2" name="visibility"
-                                                       value="anonymous" @if($cv->visibility==="anonymous") checked @endif>Anonym
+                                                       value="anonymous"
+                                                       @if($cv->visibility==="anonymous") checked @endif>Anonym
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
-                                        <p class="text-dark pt-3">For profesjonelle rekrutteringsbyråer har du mulighet til
-                                            å tilgjengeliggjøre din kontaktinformasjon, mens for andre bedrifter vil din CV
-                                            fremstå anonymt og bedrifter må forespørre for å få innsyn i din CV. Som CV-eier
-                                            vil du selv avgjøre om du ønsker å gi den bedriften som forespør innsyn i dine
+                                        <p class="text-dark pt-3">For profesjonelle rekrutteringsbyråer har du mulighet
+                                            til
+                                            å tilgjengeliggjøre din kontaktinformasjon, mens for andre bedrifter vil din
+                                            CV
+                                            fremstå anonymt og bedrifter må forespørre for å få innsyn i din CV. Som
+                                            CV-eier
+                                            vil du selv avgjøre om du ønsker å gi den bedriften som forespør innsyn i
+                                            dine
                                             personlige data.</p>
                                     </div>
 
@@ -915,8 +1058,8 @@
                                 <div class="col-md-8 pt-2"><p class="text-dark "><a href="#">Les vilkår</a></p></div>
                             </div>
                             <div class="btn-group mt-3">
-                                <button type="submit" class="dme-btn-outlined-blue float-left"> Lagre </button>
-                                <button class="dme-btn-outlined-blue float-left ml-3"> Slett CV </button>
+                                <button type="submit" class="dme-btn-outlined-blue float-left"> Lagre</button>
+                                <button class="dme-btn-outlined-blue float-left ml-3"> Slett CV</button>
                             </div>
                         </form>
                     </div>
@@ -1188,8 +1331,8 @@
     <input type="hidden" id="link_upload_cv_profile" value="{{url('my-business/cv/upload_cv_profile')}}">
     <script type="text/javascript">
 
-        function showTab(hash){
-            if(location.hash != "") {
+        function showTab(hash) {
+            if (location.hash != "") {
                 $('.tab-pane').removeClass('show');
                 $('.tab-pane').removeClass('active');
                 $('.tab-pane' + hash).addClass('show');
@@ -1198,15 +1341,33 @@
                 $('#cv_tabs a[href="' + hash + '"]').addClass('active');
             }
         }
+
+        $(document).on('click', '.prevent', function (e) {
+            e.preventDefault();
+        });
+
+        $('#selected_languages').html($('#source_languages').children('option:selected'));
         $(document).ready(function () {
+            $('#form_languages').submit(function (e) {
+                $('#selected_languages option').prop('selected', true);
+            });
+            $(document).on('click','#add_language', function () {
+                $('#selected_languages').html($('#selected_languages').children().add($('#source_languages').children('option:selected')));
+                $('#xx').val('12345');
+            });
+
+            $(document).on('click','#remove_language', function () {
+                $('#source_languages').html($('#source_languages').children().add($('#selected_languages').children('option:selected')));
+            });
+
+
             $('.still_work').click(function (e) {
                 // console.log($(this).closest('.row').prev().find('input.period_to').attr('disabled'));
                 var attr = $(this).closest('.row').prev().find('input.period_to').attr('disabled');
 
-                if(typeof attr !== typeof undefined && attr !== false){
+                if (typeof attr !== typeof undefined && attr !== false) {
                     $(this).closest('.row').prev().find('input.period_to').removeAttr('disabled');
-                }
-                else{
+                } else {
                     $(this).closest('.row').prev().find('input.period_to').attr('disabled', 'disabled');
                     $(this).closest('.row').prev().find('input.period_to').val('');
                 }
@@ -1217,10 +1378,10 @@
                 showTab($(this).attr('href'));
                 location.hash = $(this).attr('href');
             });
-            $(document).on('click', '#cv_tabs a', function(){
+            $(document).on('click', '#cv_tabs a', function () {
                 location.hash = $(this).attr('href');
             });
-            $(".custom-file-input").on("change", function() {
+            $(".custom-file-input").on("change", function () {
                 readFileURL((this), '.profile img');
                 var fileName = $(this).val().split("\\").pop();
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);

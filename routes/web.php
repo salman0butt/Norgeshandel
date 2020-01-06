@@ -83,6 +83,7 @@ Route::group(['middleware'=>'auth'], function(){
             Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
 //            Route::post('update_skills', 'Cv\CvController@update_skills')->name('update_skills');
             Route::post('update_skills/{cv_id}', 'Cv\CvController@update_skills')->name('update_skills');
+            Route::post('update_languages/{cv_id}', 'Cv\CvController@update_languages')->name('update_languages');
         });
         Route::get('cv/extend', 'Cv\CvController@extend');
     });
@@ -158,3 +159,12 @@ Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercia
 Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
 Route::get('/property/description/{id}', ['uses' =>'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' =>'PropertyController@propertyForSaleDescription']);
+
+Route::get('lang', function (){
+//    $langs = ['Norsk', 'Svensk', 'Dansk', 'Finsk', 'Engelsk', 'Tysk', 'Fransk', 'Spansk', 'Italiensk', 'Portugisisk', 'Russisk', 'Japansk', 'Nederlandsk', 'Norsk tegnspråk', 'Britisk tegnspråk', 'Amerikansk tegnspråk', 'Albansk', 'Arabisk', 'Armensk', 'Bengali', 'Bosnisk', 'Bulgarsk', 'Burmesisk', 'Eskimoisk/Inuitisk', 'Estisk', 'Filipinsk', 'Færøysk', 'Georgisk', 'Gresk', 'Grønlandsk', 'Gælisk', 'Hebraisk', 'Hindi', 'Hviterussisk', 'Indonesisk', 'Irsk', 'Islandsk', 'Kantonesisk/Yue', 'Katalansk', 'Kinesisk', 'Koreansk', 'Kroatisk', 'Kurdisk', 'Latin', 'Latvisk', 'Litauisk', 'Luxemburgisk', 'Makedonsk', 'Mandarin', 'Mongolsk', 'Nepalsk', 'Persiska (Farsi)', 'Polsk', 'Rumensk', 'Samisk', 'Samoansk', 'Serbisk', 'Slovakisk', 'Slovensk', 'Somalisk', 'Swahili', 'Syrisk/Assyrisk', 'Tamil', 'Thai', 'Tibetansk', 'Tsjekkisk', 'Tsjetsjensk', 'Tyrkisk', 'Ukrainsk', 'Ungarsk', 'Urdu', 'Vietnamesisk', 'Walisisk', 'Zulu', 'Pashto', 'Punjabi/Panjabi', 'Usbekisk'];
+//
+//    foreach ($langs as $lang){
+//        \App\Models\Language::create(['name'=>$lang]);
+//    }
+//
+});

@@ -4,9 +4,8 @@
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvExperienceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvExperienceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvPersonalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvPersonalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/mediexpert.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/mediexpert.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Cv/Cv.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cv/Cv.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_01_03_124107_create_cv_languages_table.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -345,7 +344,10 @@
       <workItem from="1577348917534" duration="39409000" />
       <workItem from="1577684938831" duration="20917000" />
       <workItem from="1577729915032" duration="130000" />
-      <workItem from="1578029602009" duration="20591000" />
+      <workItem from="1578029602009" duration="21992000" />
+      <workItem from="1578073999490" duration="104000" />
+      <workItem from="1578085963428" duration="696000" />
+      <workItem from="1578284453115" duration="12476000" />
     </task>
     <servers />
   </component>

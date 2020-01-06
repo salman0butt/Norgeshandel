@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cv\Cv;
 use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
+use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -135,6 +136,15 @@ class CvController extends Controller
         $cv->other_skills = $request->other_skills;
 //        dd($cv);
         $cv->update();
+        Session::flash('success', 'Cv er oppdatert');
+        return back();
+    }
+
+    public function update_languages(Request $request, $cv_id){
+//        dd($request->all());
+        $cv = Cv::find($cv_id);
+        $cv->languages()->detach();
+        $cv->languages()->attach($request->langs);
         Session::flash('success', 'Cv er oppdatert');
         return back();
     }
