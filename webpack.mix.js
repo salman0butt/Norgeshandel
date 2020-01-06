@@ -11,5 +11,20 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+   // mix.js('resources/js/app.js', 'public/js')
+   // .sass('resources/sass/app.scss', 'public/css');
+
+//css mixing
+mix.styles([
+   'public/mediexpert.css',
+   'public/mediexpert-mq.css',
+   'public/css/bootstrap.min.css', 
+], 'public/css/all.css');
+
+//scripts mixing
+mix.scripts([
+   'public/admin/js/jquery.min.js',
+   'public/admin/js/bootstrap.min.js',
+   'public/js/tinymce.min.js',
+   'public/mediexpert.js',
+], 'public/js/all.js');
