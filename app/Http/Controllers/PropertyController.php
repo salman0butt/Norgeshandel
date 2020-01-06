@@ -868,7 +868,7 @@ class PropertyController extends Controller
         $add_array = DB::table('property_holidays_homes_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
 
         return view('user-panel.property.ads_for_holiday_home_for_sale')->with(compact('add_array'));
-    }
+    } 
 
     public function holidayHomeForSaleDescription($id)
     {
