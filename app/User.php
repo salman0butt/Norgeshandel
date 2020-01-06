@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Admin\Jobs\Job');
     }
 
+    public function property_for_rent()
+    {
+        return $this->hasMany('App\PropertyForRent','user_id');
+    }
+
     public function media(){
         return $this->morphOne('App\Media', 'mediable');
     }

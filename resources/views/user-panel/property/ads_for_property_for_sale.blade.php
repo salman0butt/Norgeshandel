@@ -22,7 +22,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
-                    <h2 class="u-t2 p-2">&nbsp; Bolig til leie </h2>
+                    <h2 class="u-t2 p-2">&nbsp; Bolig til salgs  </h2>
                 </div>
                 <div class="col-md-12">
                     <div class="hits fa-pull-right"><span class="font-weight-bold">36 331</span> treff på <span class="font-weight-bold">21 190 </span>annonser</div>
@@ -68,15 +68,23 @@
                                 
                                 $property_for_sale              = App\PropertyForSale::find($value->id);
                                 $property_for_sale_collection   =  $property_for_sale->media->toArray();
-                                $path                           = \App\Helpers\common::getMediaPath($property_for_sale);
-                                foreach($property_for_sale_collection as $key=>$val)
-                                {
-                                    if($val['type'] == "propert_for_sale_photos")
+                                if(!empty($property_for_sale_collection))
+                                {                                
+                                    $path                           = \App\Helpers\common::getMediaPath($property_for_sale);
+                                    foreach($property_for_sale_collection as $key=>$val)
                                     {
-                                        $name = $val['name_unique'];
+                                        if($val['type'] == "propert_for_sale_photos")
+                                        {
+                                            $name = $val['name_unique'];
+                                        }
+                                        $full_path_photos = $path."".$name; 
                                     }
-                                    $full_path_photos = $path."".$name; 
                                 }
+                                else
+                                {
+                                    $full_path_photos = "";
+                                }
+
 
                             ?>
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
@@ -96,7 +104,8 @@
                                             <div class="price font-weight-bold float-right color-grey">{{$property_for_sale->total_price}} kr</div>
                                         </div>
                                         <br>
-                                        <div class="detail u-t5 mt-3 float-left text-muted"><span> {{$property_for_sale->tenure}} • </span> <span> {{$property_for_sale->property_type}} • </span> <span> {{$property_for_sale->number_of_bedrooms}}  bedrooms</span></div>
+
+                                        <div class="detail u-t5 mt-3 float-left text-muted"> <span>  {{$property_for_sale->tenure}} •  {{$property_for_sale->property_type}} • {{$property_for_sale-> number_of_bedrooms}} soverom </span>  <br> Privat</div>
                                         <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
                                         
                                     </div>

@@ -141,16 +141,15 @@ Route::get('property/realestate', 'PropertyController@list');
 Route::get('property/realestate/homes', 'PropertyController@ads');
 Route::get('new/property/rent/ad', 'PropertyController@newAdd');
 Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
-Route::post('get/property/ad', 'PropertyController@getAd');
 Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
 Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
 Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
 Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
 Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
-Route::get('property/for/rent', 'PropertyController@AdsForRent');
+Route::get('property/for/rent', 'PropertyController@adsForRent');
 Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
-Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAdd');
+Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
 Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
 Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
 Route::post('add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
@@ -161,11 +160,45 @@ Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercia
 Route::get('/property/description/{id}', ['uses' =>'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' =>'PropertyController@propertyForSaleDescription']);
 
-Route::get('lang', function (){
-//    $langs = ['Norsk', 'Svensk', 'Dansk', 'Finsk', 'Engelsk', 'Tysk', 'Fransk', 'Spansk', 'Italiensk', 'Portugisisk', 'Russisk', 'Japansk', 'Nederlandsk', 'Norsk tegnspråk', 'Britisk tegnspråk', 'Amerikansk tegnspråk', 'Albansk', 'Arabisk', 'Armensk', 'Bengali', 'Bosnisk', 'Bulgarsk', 'Burmesisk', 'Eskimoisk/Inuitisk', 'Estisk', 'Filipinsk', 'Færøysk', 'Georgisk', 'Gresk', 'Grønlandsk', 'Gælisk', 'Hebraisk', 'Hindi', 'Hviterussisk', 'Indonesisk', 'Irsk', 'Islandsk', 'Kantonesisk/Yue', 'Katalansk', 'Kinesisk', 'Koreansk', 'Kroatisk', 'Kurdisk', 'Latin', 'Latvisk', 'Litauisk', 'Luxemburgisk', 'Makedonsk', 'Mandarin', 'Mongolsk', 'Nepalsk', 'Persiska (Farsi)', 'Polsk', 'Rumensk', 'Samisk', 'Samoansk', 'Serbisk', 'Slovakisk', 'Slovensk', 'Somalisk', 'Swahili', 'Syrisk/Assyrisk', 'Tamil', 'Thai', 'Tibetansk', 'Tsjekkisk', 'Tsjetsjensk', 'Tyrkisk', 'Ukrainsk', 'Ungarsk', 'Urdu', 'Vietnamesisk', 'Walisisk', 'Zulu', 'Pashto', 'Punjabi/Panjabi', 'Usbekisk'];
-//
-//    foreach ($langs as $lang){
-//        \App\Models\Language::create(['name'=>$lang]);
-//    }
-//
-});
+
+//flatwishesrented
+Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
+Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
+Route::get('/flat/wishes/rented/description/{id}', ['uses' =>'PropertyController@flatWishesRentedDescription']);
+
+//holidayhomeforsale
+Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');
+Route::get('/holiday/home/for/sale/description/{id}', ['uses' =>'PropertyController@holidayHomeForSaleDescription']);
+
+//commercialpropertyforsale
+Route::get('/commercial/property/for/sale/ads', 'PropertyController@commercialPropertyForSaleAds');
+Route::post('/property/commercial/for/sale/sorted/ad', 'PropertyController@commercialPropertyForSaleSortedAds');
+Route::get('/commercial/property/for/sale/description/{id}', ['uses' =>'PropertyController@commercialForSaleDescription']);
+
+//commercialpropertyforrent
+Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
+Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
+Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
+Route::post('property/commercial/for/rent/sorted/ad', 'PropertyController@commercialPropertyForRentSortedAds');
+
+Route::get('/commercial/property/for/rent/description/{id}', 'PropertyController@commercialForRentDescription');
+
+Route::get('/business/for/sale', 'PropertyController@BusinessForSale');
+Route::post('add/business/for/sale', 'PropertyController@addBusinessForSale');
+Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
+
+Route::post('business/for/sales/sorted/ad', 'PropertyController@businessForSaleSortedAds');
+
+Route::get('/business/for/sale/description/{id}', 'PropertyController@businessForSaleDescription');
+
+Route::get('/commercial/plots', 'PropertyController@commercialPlots');
+Route::post('/add/commercial/plot/ad', 'PropertyController@addcommercialPlotsAd');
+
+Route::get('/commercial/plots/ads', 'PropertyController@commercialPlotsAds');
+
+Route::post('get/commercial/plot/ad', 'PropertyController@commercialPlotSortedAds');
+
+Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commercialPlotDescription');
+
+Route::get('/map/test', 'PropertyController@mapTest');
+

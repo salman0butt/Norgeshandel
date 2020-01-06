@@ -11,7 +11,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
-                        <div class="notice"></div>
                         @include('common.partials.property.property_for_rent_form')
                     </div>
                 </div>
@@ -19,7 +18,7 @@
         </main>
 
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
 
             $.ajaxSetup({
@@ -33,12 +32,12 @@
                     e.preventDefault();
                     $('.notice').html("");
                     var url = '{{url('add/property/for/rent/ad')}}';
-            
                     var myform = document.getElementById("property_for_rent_form");
                     var fd = new FormData(myform);
-                    fd.append('property_photos', $('#property_photos').get(0).files[0]);
+                    // fd.append('property_photos', $('#property_photos').get(0).files[0]);
+                     var l = Ladda.create(this);
+                     l.start();
 
-                    
                     $.ajax({
                         type: "POST",
                         url: url,
@@ -50,20 +49,27 @@
                             console.log(data);
                             $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
                         },
-                        error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+                        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                             var errors = jqXhr.responseJSON;
-                            console.log(errors.errors);
                             var html="<ul>";
-                            $.each( errors.errors, function( index, value ){
-                               console.log(value);
-                               html += "<li>"+value+"</li>";
-                            });
+                            if(!isEmpty(errors.errors))
+                            {
+                                $.each( errors.errors, function( index, value )
+                                {
+                                    html += "<li>"+value+"</li>";
+                                });
+                            }
+                            else
+                            {
+                                html += "<li>Something went wrong!</li>";
+                            }
                             html += "</ul>";
                             $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                         },
-                
-                    });
-            
+
+                    }).always(function() { l.stop(); });
+                return false;
+
             });
 
         var i = 0;
@@ -107,11 +113,17 @@
                             '</div>'+
                         '</div>';
             $("#add_more_viewing_times_fields").append(html);
-                        
+
 
             });
         });
-
+        function isEmpty(obj) {
+            for(var key in obj) {
+                if(obj.hasOwnProperty(key))
+                    return false;
+            }
+            return true;
+        }
     </script>
 
 @endsection

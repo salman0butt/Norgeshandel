@@ -952,6 +952,7 @@ a > .alert-warning:hover{
 .invalid-feedback{
     display: block !important;
 }
+
 button.link{
     background-color: transparent;
     display: inline;
@@ -962,4 +963,7 @@ button.link{
 button.link:hover{
     text-decoration: underline;
     cursor: pointer;
+}
+.hide{
+    display: none;
 }

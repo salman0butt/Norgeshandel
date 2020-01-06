@@ -29,21 +29,31 @@ class AddCommercialPropertyForSale extends FormRequest
             'location' => 'required',
             'zip_code' => 'required',
 
+            'municipal_number' => 'sometimes|nullable|numeric',
+            'usage_number' => 'sometimes|nullable|numeric',
+            'farm_number' => 'sometimes|nullable|numeric',
+
             'gross_area_from' => 'required',
             'gross_area_to' => 'required',
-           
-         
-            'floors' => 'required',
-            'year_of_construction-on' => 'required',
 
+            
+            'primary_room' => 'sometimes|nullable|numeric',
+            'use_area' => 'sometimes|nullable|numeric',
+            'land' => 'sometimes|nullable|numeric',
+            'number_of_office_space' => 'sometimes|nullable|numeric',
+            'number_of_parking_space' => 'sometimes|nullable|numeric',
+            'floors' => 'sometimes|nullable|numeric',
+            'year_of_construction' => 'sometimes|nullable|numeric',
+            'rennovated_year' => 'sometimes|nullable|numeric',
+
+            'rental_income' => 'sometimes|nullable|numeric',
+            'value_rate' => 'sometimes|nullable|numeric',
+            'loan_rate' => 'sometimes|nullable|numeric',
            
             'headline' => 'required',
-         
-            'published-on' => 'required',
+        
 
 
-
-
-    ];
+        ];
     }
 }
