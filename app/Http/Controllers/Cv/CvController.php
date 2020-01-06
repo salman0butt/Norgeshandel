@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cv\Cv;
 use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
+use App\Models\Cv\CvPreference;
 use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,12 @@ class CvController extends Controller
                 $cvexperience = new CvExperience(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvexperience->save();
                 $cvexperiences = $cv->experiences;
+            }
+            $cvpreference = $cv->preference;
+            if($cvpreference==null){
+                $cvpreference = new CvPreference(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
+                $cvpreference->save();
+                $cvpreference = $cv->preference;
             }
 //            $cveducation = $cv->education;;
 //            if($cveducation==null){
@@ -134,14 +141,22 @@ class CvController extends Controller
         $cv = Cv::where('id', $cv_id)->get()->first();
         $cv->key_skills = $request->key_skills;
         $cv->other_skills = $request->other_skills;
-//        dd($cv);
         $cv->update();
         Session::flash('success', 'Cv er oppdatert');
         return back();
     }
 
+    public function update_preference(Request $request, $cv_id){
+        $cvPreference = cvPreference::where('cv_id', $cv_id)->get()->first();
+        $cvPreference->update($request->all());
+        Session::flash('success', 'Cv er oppdatert');
+        return back();
+
+        Session::flash('success', 'Cv er oppdatert');
+        return back();
+    }
+
     public function update_languages(Request $request, $cv_id){
-//        dd($request->all());
         $cv = Cv::find($cv_id);
         $cv->languages()->detach();
         $cv->languages()->attach($request->langs);

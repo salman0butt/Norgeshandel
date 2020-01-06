@@ -24,6 +24,10 @@ class Cv extends Model
         return $this->hasMany('App\Models\Cv\CvExperience');
     }
 
+    public function preference(){
+        return $this->hasOne('App\Models\Cv\CvPreference');
+    }
+
     public function languages(){
         return $this->belongsToMany('App\Models\Language');
     }

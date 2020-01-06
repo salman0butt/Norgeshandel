@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Cv/CvController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Cv/Cv.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Cv/Cv.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_01_03_124107_create_cv_languages_table.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -192,19 +191,19 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Http\Controllers\Cv" />
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Models\Cv" />
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Models" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\app\Models" />
-      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\my-business" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\common\partials" />
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel" />
       <recent name="C:\xampp\htdocs\NorgesHandel\app\Http" />
       <recent name="C:\xampp\htdocs\NorgesHandel\database\migrations" />
       <recent name="C:\xampp\htdocs\NorgesHandel\app\Http\Controllers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\norgeshandel\app\Models\Cv" />
+      <recent name="C:\xampp\htdocs\norgeshandel\app\Http\Controllers\Cv" />
+      <recent name="C:\xampp\htdocs\norgeshandel\app\Models" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\app\Models" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\my-business" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -347,7 +346,7 @@
       <workItem from="1578029602009" duration="21992000" />
       <workItem from="1578073999490" duration="104000" />
       <workItem from="1578085963428" duration="696000" />
-      <workItem from="1578284453115" duration="12476000" />
+      <workItem from="1578284453115" duration="21356000" />
     </task>
     <servers />
   </component>

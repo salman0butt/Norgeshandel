@@ -838,7 +838,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-border">
+                        <div class="row row-border language">
                             <div class="col-12 pt-4 ">
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">
                                     Language
@@ -848,11 +848,16 @@
                                     </span>
                                 </h3>
                                 <small class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5">
+                                    <?php $selected_langs = $cv->languages;?>
                                     @if(!isset($cv->languages) || empty($cv->languages) || !is_countable($cv->languages))
                                         Du har ikke registrert noen språk ennå.
+                                    @else
+                                        @foreach($selected_langs as $lang)
+                                            {{$lang->name}}&nbsp;
+                                        @endforeach
                                     @endif
                                 </small>
-                                <div class="collapse show bg-maroon-lighter" id="languages">
+                                <div class="collapse bg-maroon-lighter" id="languages">
                                     <form action="{{route('update_languages', compact('cv_id'))}}" id="form_languages" name="form_languages" method="post">
                                         {{csrf_field()}}
 {{--                                        {{dd($cv->languages->pluck('id')->toArray())}}--}}
@@ -892,61 +897,162 @@
                                         </div>
                                     </div>
                                         <div id="vals">
-                                            <input type="hidden" value="" id="langs"">
+                                            <input type="hidden" value="" id="langs">
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <div class="row ">
+                        <div class="row row-border preference">
                             <div class="col-12 pt-4 ">
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">
                                     Ønsker for neste jobb
                                     <span class="float-right">
-                                        <a class="edit-btn" data-toggle="collapse" href="#preferences" role="button"
+                                        <a class="edit-btn" data-toggle="collapse" href="#preference" role="button"
                                            aria-expanded="false" aria-controls="preferences">Endre</a>
                                     </span>
                                 </h3>
-                                <div class="collapse mt-3 mb-3" id="preferences">
-                                    div.row>
+                                <small class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5">
+                                    @if(!isset($cv->preference) || (empty($cv->preference->prospective) && empty($cv->preference->job_type)))
+                                        Du har ikke registrert noen Ønsker ennå.
+                                    @endif
+                                </small>
+                                <div class="collapse bg-maroon-lighter p-3" id="preferences">
+                                    <form action="{{route('update_preference', compact('cv_id'))}}" id="form_preferences" name="form_preferences" method="post">
+                                        {{csrf_field()}}
+                                        <div class="row form-group mt-3">
+                                            <div class="col-md-12">
+                                                <label for="">Her legger du inn det du ønsker å jobbe med i fremtiden</label>
+                                                <textarea name="prospective" id="" class="form-control">{{$cv->preference->prospective}}</textarea>
+                                                <span class="small">F.eks "Jeg ønsker å jobbe med IT-drift og backoffice-relaterte oppgaver. Jeg trives med å sette ting i system, utarbeide rutiner og dokumentere."</span>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label for="">Ønsket Jobbtype</label>
+                                                <select class="form-control" name="job_type">
+                                                    <option value="{{$cv->preference->job_type}}">{{$cv->preference->job_type}}</option>
+                                                    <option value="Ikke oppgitt">Ikke oppgitt</option>
+                                                    <option value="Fast">Fast</option>
+                                                    <option value="Midlertidig ansettelse">Midlertidig ansettelse</option>
+                                                    <option value="Vikar">Vikar</option>
+                                                    <option value="Sesongarbeid">Sesongarbeid</option>
+                                                    <option value="Deltid">Deltid</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-8"></div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <h4 class="u-t4">Personalansvar</h4>
+                                                <label for="responsibility" class="radio-lbl">Ja
+                                                    <input type="radio" id="responsibility" class="responsibility" name="responsibility" value="yes" @if($cv->preference->responsibility == "yes") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label for="responsibility1" class="radio-lbl">Uten betydning
+                                                    <input type="radio" id="responsibility1" class="responsibility" name="responsibility" value="irrelevant" @if($cv->preference->responsibility == "irrelevant") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label for="responsibility2" class="radio-lbl">Nei
+                                                    <input type="radio" id="responsibility2" class="responsibility" name="responsibility" value="no" @if($cv->preference->responsibility == "no") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h4 class="u-t4">Resultatansvar</h4>
+                                                <label for="disclaimer" class="radio-lbl">Ja
+                                                    <input type="radio" id="disclaimer" class="disclaimer" name="disclaimer" value="yes" @if($cv->preference->disclaimer == "yes") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label for="disclaimer1" class="radio-lbl">Flyttevillighet
+                                                    <input type="radio" id="disclaimer1" class="disclaimer" name="disclaimer" value="irrelevant" @if($cv->preference->disclaimer == "irrelevant") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label for="disclaimer2" class="radio-lbl">Nei
+                                                    <input type="radio" id="disclaimer2" class="disclaimer" name="disclaimer" value="no" @if($cv->preference->disclaimer == "no") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h4 class="u-t4">Personalansvar</h4>
+                                                <label for="willingness" class="radio-lbl">Ja
+                                                    <input type="radio" id="willingness" class="willingness" name="willingness" value="yes" @if($cv->preference->willingness == "yes") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label for="willingness1" class="radio-lbl">Uten betydning
+                                                    <input type="radio" id="willingness1" class="willingness" name="willingness" value="irrelevant" @if($cv->preference->willingness == "irrelevant") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label for="willingness2" class="radio-lbl">Nei
+                                                    <input type="radio" id="willingness2" class="willingness" name="willingness" value="no" @if($cv->preference->willingness == "no") checked @endif>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label for="travel_days">Reisedøgn inntil pr år</label>
+                                                <input type="text" class="form-control" id="travel_days" name="travel_days" value="{{$cv->preference->travel_days}}">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="salary">Lønnsvilkår</label>
+                                                <input type="text" id="salary" name="salary" class="form-control" value="{{$cv->preference->travel_days}}">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="">Oppsigelsestid i dagens jobb</label>
+                                                <select class="form-control" id="termination_notice" name="termination_notice">
+                                                    <option value="{{$cv->preference->termination_notice}}">{{$cv->preference->termination_notice}}</option>
+                                                    <option value="Mindre enn 1 måned">Mindre enn 1 måned</option>
+                                                    <option value="1 - 3 måneder">1 - 3 måneder</option>
+                                                    <option value="4 - 6 måneder">4 - 6 måneder</option>
+                                                    <option value="Mer enn 6 måneder">Mer enn 6 måneder</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 p-2 pr-5">
+                                                <button type="submit"  class="m-2 float-right btn dme-btn-outlined-blue bg-maroon color-white radius-8">Lagre</button>
+                                                <button type="reset" class="m-2 float-right btn dme-btn-outlined-blue">Avbryt</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
-                                <div class="mhl pl-4 pr-4">
-                                    <table class="sectioninfo super-condensed border-white w-100" cellspacing="0"
-                                           summary="Preferences for future positions">
+
+                                <div class="mhl pl-4 pr-4 mt-3">
+                                    <table class="sectioninfo super-condensed border-white w-100" cellspacing="0" summary="Preferences for future positions">
                                         <tbody>
                                         <tr>
                                             <th class="th_row size1of4" scope="row">Jobbtype</th>
-                                            <td id="float-left">Ikke oppgitt</td>
+                                            <td id="float-left">{{$cv->preference->job_type}}</td>
                                         </tr>
                                         <tr>
                                             <th class="th_row" scope="row">Personalansvar</th>
-                                            <td id="future-personnel"></td>
+                                            <td id="future-personnel">{{$cv->preference->responsibility}}</td>
                                         </tr>
                                         <tr>
                                             <th class="th_row" scope="row">Resultatansvar</th>
-                                            <td id="future-accountmanager"></td>
+                                            <td id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
                                         </tr>
                                         <tr>
                                             <th class="th_row" scope="row">Flyttevillighet</th>
-                                            <td id="future-move"></td>
+                                            <td id="future-move">{{$cv->preference->willingness}}</td>
                                         </tr>
                                         <tr>
                                             <th class="th_row" scope="row">Reisedøgn inntil pr år</th>
-                                            <td id="future-travel"></td>
+                                            <td id="future-travel">{{$cv->preference->travel_days}}</td>
                                         </tr>
                                         <tr>
                                             <th class="th_row" scope="row">Lønnsvilkår</th>
-                                            <td id="future-salary"></td>
+                                            <td id="future-salary">{{$cv->preference->salary}}</td>
                                         </tr>
                                         <tr>
                                             <th class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
-                                            <td id="future-period">Ikke oppgitt</td>
+                                            <td id="future-period">{{$cv->preference->termination_notice}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
-
-
                             </div>
                         </div>
                         <p class="pt-5 pb-5 pl-4 pr-4 text-dark">Your CV can only be viewed by our customers when you
