@@ -491,12 +491,13 @@
                             </div>
 
                             <hr>
-                            
-                            <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!">
+                            <div class="notice"></div>
+                            <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12 ladda-button">
+                                <span class="ladda-label">Publiser annonsen!</span>
+                            </button>
+                            <!-- <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!"> -->
 
-                            <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for
-                                    annonsering</a></p>
-
+                           
 
                         </div>
                     </form>

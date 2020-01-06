@@ -75,9 +75,9 @@ $posts         =   array('img'=>'',
                                 
                                 $commercial_plot = App\CommercialPlot::find($value->id);
                                 $name       = $commercial_plot->media;
-                                if(!empty($name))
+                                if(!$name->isEmpty())
                                 {
-                                    $name = $commercial_plot->media->first()->name_unique;
+                                    $name =     $commercial_plot->media->first()->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($commercial_plot);
                                     $full_path  = $path."".$name; 
                                 }
@@ -85,9 +85,10 @@ $posts         =   array('img'=>'',
                                 {
                                     $full_path  = "";
                                 }
+                               
 
-                            ?>  
-
+                            ?> 
+                             
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
                                 <a href="{{url('/commercial/plots/ads/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
@@ -110,6 +111,7 @@ $posts         =   array('img'=>'',
                                     </div>
                                 </a>
                             </div>
+                        
                         @endforeach
                     </div>
                 </div>

@@ -11,7 +11,7 @@
 
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>
+                  
                     @include('common.partials.property.commercial_property_for_rent_form')
                 </div>
             </div>
@@ -34,7 +34,8 @@
         $("#publiserannonsen").click(function(e){
 
             e.preventDefault();
-
+            var l = Ladda.create(this);
+            l.start();
             var url = '{{url('add/commercial/property/for/rent')}}';
 
             $('.notice').html("");
@@ -62,7 +63,7 @@
                         html += "</ul>";
                         $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                     },
-            });
+            }).always(function() { l.stop(); });
 
     });
 
