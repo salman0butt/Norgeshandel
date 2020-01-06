@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForRent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForRent.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_rent_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_rent_form.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/new_add.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/new_add.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -357,7 +355,11 @@
       <workItem from="1577945249339" duration="17275000" />
       <workItem from="1577972198085" duration="79000" />
       <workItem from="1577982688805" duration="33000" />
-      <workItem from="1578030841103" duration="18630000" />
+      <workItem from="1578030841103" duration="19130000" />
+      <workItem from="1578160342500" duration="610000" />
+      <workItem from="1578208822163" duration="170000" />
+      <workItem from="1578218969487" duration="599000" />
+      <workItem from="1578288424245" duration="551000" />
     </task>
     <servers />
   </component>

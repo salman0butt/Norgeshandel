@@ -48,6 +48,7 @@
                         <option value="SEMIDETACHED">Tomannsbolig</option>
                     </select>
                     <span id="property_type"></span>
+
                     <span class="u-t5">Dersom du kun skal leie ut et rom må du huske å velge 'Rom i bofelleskap' under boligtype.</span>
                 </div>
             </div>
