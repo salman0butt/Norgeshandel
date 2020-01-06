@@ -28,10 +28,8 @@ class AddFlatWishesRented extends FormRequest
             'wanted_from' => 'sometimes|nullable|date',
             'max_rent_per_month' => 'sometimes|nullable|numeric',
             'region' => 'required',
-            'property_type' => 'required',
-            'published-on' => 'required',   
+            'property_type' => 'required',   
             'headline' => 'required',
-         
         ];
     }
 }

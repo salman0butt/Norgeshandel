@@ -66,11 +66,20 @@
                             <?php
 
                                 $property_for_rent = App\PropertyForRent::find($value->id);
-                            
-                                
-                                $name       = $property_for_rent->media->first()->name_unique;
-                                $path       = \App\Helpers\common::getMediaPath($property_for_rent);
-                                $full_path  = $path."".$name; 
+
+                                $name       = $property_for_rent->media->first();
+                                if($name != null)
+                                {
+                                    $name       =    $name->name_unique;
+                                    $path       = \App\Helpers\common::getMediaPath($property_for_rent);
+                                    $full_path  = $path."".$name; 
+                                }
+                                else
+                                {
+                                    $full_path  = "";
+                                }
+
+
 
                             ?>
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
@@ -90,7 +99,7 @@
                                             <div class="price font-weight-bold float-right color-grey">{{$property_for_rent->monthly_rent}} kr</div>
                                         </div>
                                         <br>
-                                        <div class="detail u-t5 mt-3 float-left text-muted">Privat <br> <span>Leilighet</span></div>
+                                        <div class="detail u-t5 mt-3 float-left text-muted">Privat <br> <span>{{$property_for_rent->property_type}}</span></div>
                                         <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
                                         
                                     </div>

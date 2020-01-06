@@ -11,32 +11,32 @@
             </div>
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>  
                     @include('common.partials.property.property_for_sale_form')
+
                 </div>
             </div>
         </div>
     </main>
 
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
 
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }); 
-            
+            });
+
 
             $(document).on('keyup', '.asking_price,.costs_include,.percentage_of_public_debt', function() {
-                
+
                 var asking_price    = $(".asking_price").val();
                 var costs_include   = $(".costs_include").val();
                 var percentage_of_public_debt = $(".percentage_of_public_debt").val();
                 if(asking_price == "")
                 {
-                    asking_price = 0; 
+                    asking_price = 0;
                 }
                 if(costs_include == "")
                 {
@@ -46,7 +46,7 @@
                 {
                     percentage_of_public_debt = 0;
                 }
-               
+
                 var total_price = parseInt(asking_price) + parseInt(costs_include) + parseInt(percentage_of_public_debt);
                 $("#total_price_sale_add").text(total_price);
                 $("#total_price").val(total_price);
@@ -61,7 +61,8 @@
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
                 var fd = new FormData(myform);
-
+                var l = Ladda.create(this);
+                l.start();
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -72,7 +73,7 @@
                     success: function(data){
                             $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
                     },
-                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                             var errors = jqXhr.responseJSON;
                             console.log(errors.errors);
                             var html="<ul>";
@@ -83,13 +84,14 @@
                             html += "</ul>";
                             $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                         },
-                });
+                }).always(function() { l.stop(); });
+                return false;
 
             });
 
             var i = 0;
             $("#add_more_viewing_times_sales").click(function(e){
-                    
+
                     e.preventDefault();
                     var html = '<div class="form-group">'+
                             '<label class="u-t5">Visningsdato (valgfritt)</label>'
@@ -130,7 +132,7 @@
 
             });
 
-     
+
         })
 
     </script>

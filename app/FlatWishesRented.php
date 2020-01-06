@@ -9,4 +9,12 @@ class FlatWishesRented extends Model
     //  
     protected $table = 'flat_wishes_renteds';
     protected $guarded = [];
+
+    public function media(){
+        return $this->morphMany('App\Media', 'mediable');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -13,5 +13,9 @@ class PropertyForRent extends Model
     public function media(){
         return $this->morphMany('App\Media', 'mediable');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User','user_id');
+    }
 
 }

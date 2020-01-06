@@ -66,6 +66,8 @@
                     @foreach($ads as $ad)
                         @if($ad->ad_type=='job')
                             @include('user-panel.partials.templates.job-sequare')
+                        @else
+                            @include('user-panel.partials.templates.propert-sequare')
                         @endif
                     @endforeach
                 @endif
