@@ -182,6 +182,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Cornford\Googlmapper\MapperServiceProvider::class,
 
     ],
 
@@ -240,6 +241,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
 //        debug bar
 //        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Mapper'         => Cornford\Googlmapper\Facades\MapperFacade::class,
     ],
 
 ];
