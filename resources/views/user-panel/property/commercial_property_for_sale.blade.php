@@ -22,6 +22,7 @@
                                         <input data-selector="" id="property_type-OFFICE" type="checkbox" value="OFFICE"
                                                name="property_type">
                                         <label class="smalltext" for="property_type-OFFICE"> Kontor</label>
+                                        
                                     </div>
                                     <div class="col-md-4 input-toggle">
                                         <input data-selector="" id="property_type-BUSINESS" type="checkbox"
@@ -848,7 +849,9 @@
                     html += "</ul>";
                     $('.notice').append('<div class="alert alert-danger">' + html + '</div>');
                 },
-            }).always(function() { l.stop(); });
+            }).always(function () {
+                l.stop();
+            });
             return false;
 
         });

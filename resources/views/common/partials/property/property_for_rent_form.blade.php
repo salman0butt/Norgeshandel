@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="heading" class="dme-form-control" required/>
-                    <span id="heading"></span>
+                    <span id="heading" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="zip_code" class="dme-form-control" required>
-                    <span id="zip_code"></span>
+                    <span id="zip_code" class="error-span"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="street_address" class="dme-form-control">
-                    <span id="street_address"></span>
+                    <span id="street_address" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                         <option value="HOUSESHARE">Rom i bofellesskap</option>
                         <option value="SEMIDETACHED">Tomannsbolig</option>
                     </select>
-                    <span id="property_type"></span>
+                    <span id="property_type" class="error-span"></span>
 
                     <span class="u-t5">Dersom du kun skal leie ut et rom må du huske å velge 'Rom i bofelleskap' under boligtype.</span>
                 </div>
@@ -59,6 +59,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="primary_rom" class="dme-form-control" placeholder="m²">
                     <span class="u-t5">Arealet av primærrom i boligen, sekundærrom tas ikke med i betegnelsen. Du kan finne arealet for primærrom i takstrapporten.</span>
+                    <br><span id="primary_rom" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -67,6 +68,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="gross_area" class="dme-form-control" placeholder="m²">
+                    <span id="gross_area" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -75,6 +77,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="area_of_use" class="dme-form-control" placeholder="m²">
+                    <span id="area_of_use" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -83,6 +86,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="number_of_bedrooms" class="dme-form-control" placeholder="m²">
+                    <span id="number_of_bedrooms" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -91,6 +95,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="floor" class="dme-form-control" placeholder="m²">
+                    <span id="floor" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -104,6 +109,7 @@
                         <option value="FURNISHED">Møblert</option>
                         <option value="UNFURNISHED">Umøblert</option>
                     </select>
+                    <span id="furnishing" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -246,6 +252,7 @@
                     <input data-selector="" id="facilities-AIRCONDITIONING2" type="checkbox" value="AIRCONDITIONING2"
                            name="facilities2">
                     <label class="smalltext" for="facilities-AIRCONDITIONING2"> Dyrehold tillatt </label>
+                    <span id="facilities-AIRCONDITIONING2" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -254,6 +261,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="monthly_rent" class="dme-form-control" placeholder="Kr.">
+                    <span id="monthly_rent" class="error-span"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -264,6 +272,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="deposit" class="dme-form-control" placeholder="Kr.">
+                    <span id="deposit" class="error-span"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -275,6 +284,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="include_in_rent" class="dme-form-control"
                            placeholder="F.eks.: Strøm, kabeltv, bredbånd osv.">
+                    <span id="include_in_rent" class="error-span"></span>
                 </div>
             </div>
         </div>
@@ -283,6 +293,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="date" name="rented_from" class="dme-form-control">
+                    <span id="rented_from" class="error-span"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -293,6 +304,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="date" name="rented_to" class="dme-form-control">
+                    <span id="rented_to" class="error-span"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -386,7 +398,8 @@
             <label class="mb-2 form-check-label" for="published-on">
                 <input id="published-on" name="published_on" type="checkbox" class="pub_validate">Ikke vis profilbilde og lenke til
                 profilsiden før kjøperen tar kontakt med meg.
-            </label>
+            </label><br>
+            <span id="published_on" class="error-span"></span>
         </div>
         <hr>
         <span class="u-t5">Du må fylle ut Overskrift og 2 andre felter før du kan gå videre</span>

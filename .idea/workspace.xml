@@ -3,7 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AddCommercialPropertyForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AddCommercialPropertyForSale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/validate-error.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/validate-error.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_rent_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_rent_form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_property_for_sale.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_property_for_sale.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,7 +367,7 @@
       <workItem from="1578160342500" duration="610000" />
       <workItem from="1578208822163" duration="170000" />
       <workItem from="1578218969487" duration="599000" />
-      <workItem from="1578288424245" duration="551000" />
+      <workItem from="1578288424245" duration="8750000" />
     </task>
     <servers />
   </component>
@@ -416,10 +424,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="456" y="195" width="672" height="677" key="run.anything.popup/0.0.1600.860@0.0.1600.860" timestamp="1577966090892" />
-    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1578040175760">
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup" timestamp="1578296294833">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1578040175760" />
+    <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1578296294833" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
