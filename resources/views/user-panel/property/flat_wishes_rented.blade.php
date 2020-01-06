@@ -11,7 +11,6 @@
 
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>
                     @include('common.partials.property.flat_wishes_rented_form')
                 </div>
             </div>

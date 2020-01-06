@@ -28,29 +28,29 @@ class AddCommercialPropertyForSale extends FormRequest
             'property_type' => 'required',
             'location' => 'required',
             'zip_code' => 'required',
+            'municipal_number' => 'sometimes|nullable|numeric',
+            'usage_number' => 'sometimes|nullable|numeric',
+            'farm_number' => 'sometimes|nullable|numeric',
+
             'gross_area_from' => 'required',
             'gross_area_to' => 'required',
-            'floors' => 'required',
-            'year_of_construction' => 'required',
-            'headline' => 'required',
-            'published-on' => 'required',
 
-        ];
-    }
-    public function messages()
-    {
-        return [
-            'headline.required' => 'Feltet overskrift er påkrevd.',
-            'zip_code.required'  => 'Feltet post kode er påkrevd.',
-            'zip_code.numeric'  => 'Feltet post kode må være numerisk.',
-            'location.required'  => 'Feltet gateadresse er påkrevd.',
-            'property_type.required'  => 'Feltet Eiendomstype er påkrevd.',
-            'gross_area.required'  => 'Feltet brutto areal er påkrevd.',
-            'gross_area.numeric'  => 'Feltet brutto areal må være numerisk.',
-            'floor.required'  => 'Feltet gulv er påkrevd.',
-            'year_of_construction.required'  => 'byggeår er påkrevd.',
-            'floor.numeric'  => 'Feltet gulv må være numerisk.',
-            'published-on.required'  => 'Feltet publisert den er påkrevd.',
+            
+            'primary_room' => 'sometimes|nullable|numeric',
+            'use_area' => 'sometimes|nullable|numeric',
+            'land' => 'sometimes|nullable|numeric',
+            'number_of_office_space' => 'sometimes|nullable|numeric',
+            'number_of_parking_space' => 'sometimes|nullable|numeric',
+            'floors' => 'sometimes|nullable|numeric',
+            'year_of_construction' => 'sometimes|nullable|numeric',
+            'rennovated_year' => 'sometimes|nullable|numeric',
+
+            'rental_income' => 'sometimes|nullable|numeric',
+            'value_rate' => 'sometimes|nullable|numeric',
+            'loan_rate' => 'sometimes|nullable|numeric',
+           
+            'headline' => 'required',
+        
         ];
     }
 }

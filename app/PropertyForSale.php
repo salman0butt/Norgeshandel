@@ -15,4 +15,9 @@ class PropertyForSale extends Model
         return $this->morphMany('App\Media', 'mediable');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }

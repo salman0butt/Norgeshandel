@@ -59,8 +59,8 @@
                             <div class="clearfix"></div>
                             <div class="mt-2 col-md-12"></div>
                             <div class="col-md-12"><span class="font-weight-bold">Boligtype: </span>&nbsp;<span> {{rtrim($property_data->property_type,",")}} </span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Ønsket område: </span>&nbsp;<span></span></div>
-                            <div class="col-md-12"><span class=""><span>{{rtrim($property_data->region)}}</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Ønsket område: </span>&nbsp;<span>{{rtrim($property_data->region)}}</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Antall beboere:</span>&nbsp;<span>{{rtrim($property_data->number_of_tenants)}}</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Ønskes fra: </span>&nbsp;<span> {{date("d.m.Y", strtotime($property_data->wanted_from))}}</span></div>
                         
 
@@ -76,7 +76,9 @@
                             <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div> -->
                             <!-- <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
                             <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>!-->
-                            
+                            <div style="width: 500px; height: 300px;">
+                                {!! Mapper::render() !!}
+                            </div>
                             <div class="col-md-12"><span class="font-weight-bold">FINN-kode: </span> <span> 140424636</span></div>
                             <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span> <span> {{date("d.m.Y h:i", strtotime($property_data->created_at))}}</span></div>
                             <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
@@ -86,11 +88,11 @@
                         <div class="text-center">
                             <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                         </div>
-                        <p class="mt-3">Johanna Wenngren <br>
+                        <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                             Eiendomsmegler</p>
                         <div class="mb-2">
                             <span>Mobil: </span>
-                            <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">  465 45 247</a></span>
+                            <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS"> {{$property_data->phone}}</a></span>
                         </div>
                         <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
                         <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>

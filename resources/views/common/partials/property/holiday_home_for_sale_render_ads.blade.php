@@ -36,7 +36,7 @@ if(isset($_GET)){
         ?>  
 
             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
-                <a href="{{url('/property/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
+                <a href="{{url('/holiday/home/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                         <div class="trailing-border">
                             <img src="{{$full_path}}" alt="" class="img-fluid radius-8">
