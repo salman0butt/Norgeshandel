@@ -81,10 +81,10 @@
                             var html="<ul>";
                             $.each( errors.errors, function( index, value ){
                                console.log(value);
-                               html += "<li>"+value+"</li>";
+                                $("#"+index).html(value);
+                                $("input[name='"+index+"'],select[name='"+index+"']").addClass("error-input");
                             });
                             html += "</ul>";
-                            $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                         },
                 }).always(function() { l.stop(); });
                 return false;

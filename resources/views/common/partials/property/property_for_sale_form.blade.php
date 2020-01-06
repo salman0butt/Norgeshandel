@@ -93,7 +93,7 @@
                         <option value="LEASEHOLD">Obligasjon</option>
                     </select>
                     <span class="u-t5">Beskriv varen kort. Denne beskrivelsen brukes til å finne riktig kategori i feltene under.</span>
-                    <span id="tenure" class="error-span"></span>
+                    <br><span id="tenure" class="error-span"></span>
                 </div>
             </div>
         </div>
