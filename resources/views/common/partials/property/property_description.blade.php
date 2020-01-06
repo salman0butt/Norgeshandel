@@ -117,10 +117,10 @@
                             </span>
                             <br>
                             Eiendomsmegler</p>
-                        <div class="mb-2">
+                        <!-- <div class="mb-2">
                             <span>Mobil: </span>
                             <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">  465 45 247</a></span>
-                        </div>
+                        </div> -->
                         <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
                         <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
                         <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig

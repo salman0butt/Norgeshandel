@@ -11,8 +11,8 @@
             </div>
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>
                     @include('common.partials.property.property_for_sale_form')
+
                 </div>
             </div>
         </div>
@@ -61,8 +61,6 @@
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
                 var fd = new FormData(myform);
-
-                e.preventDefault();
                 var l = Ladda.create(this);
                 l.start();
                 $.ajax({

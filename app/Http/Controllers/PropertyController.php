@@ -517,7 +517,6 @@ class PropertyController extends Controller
     public function newPropertyForRentAdd(AddPropertyForRent $request)
     {
         $property_for_rent_data = $request->all();
-
         //Manage Facilities
         if(isset($property_for_rent_data['facilities']))
         {

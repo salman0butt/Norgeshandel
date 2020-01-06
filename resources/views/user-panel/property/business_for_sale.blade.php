@@ -11,7 +11,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
-                        <div class="notice"></div>
                         @include('common.partials.property.business_for_sale_form')
                     </div>
                 </div>
@@ -36,7 +35,8 @@
             
                     var myform = document.getElementById("business_for_sale");
                     var fd = new FormData(myform);
-
+                    var l = Ladda.create(this);
+                    l.start();
                     
                     $.ajax({
                         type: "POST",
@@ -61,8 +61,7 @@
                             $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                         },
                 
-                    });
-            
+                    }).always(function() { l.stop(); });
             });
 
         });
