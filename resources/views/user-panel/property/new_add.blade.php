@@ -59,7 +59,7 @@
                                     $("#"+index).html(value);
                                 });
                             }
-                            // html += "</ul>";
+                            // html += "</ul>"; 
                             $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
                         },
 
