@@ -36,7 +36,6 @@
             $property = $ad->propertyBusinessForSale;
         }
         
-        
         $media = $property->media;
 
         if(count($media)>0)
