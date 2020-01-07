@@ -204,3 +204,5 @@ Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commerc
 
 Route::get('/map/test', 'PropertyController@mapTest');
 
+Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
+

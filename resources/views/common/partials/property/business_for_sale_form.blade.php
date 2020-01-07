@@ -7,14 +7,14 @@
                                     <div class="col-sm-12 pr-md-0">
                                         <select name="industry" class="dme-form-control">
                                             <option value=""></option>
-                                            <option value="AGENCY">Agentur</option>
-                                            <option value="OTHER">Annet</option>
-                                            <option value="SHOP_KIOSK">Butikk/Kiosk</option>
-                                            <option value="HAIRDRESSER_COMFORT">Frisør/Velvære</option>
-                                            <option value="ACCOMMODATION">Hotell/Overnatting</option>
-                                            <option value="PRIMARY_INDUSTRY">Jordbruk/Skogbruk/Fiske</option>
-                                            <option value="WEB_SITE_SHOP">Nettbutikk/Nettsted</option>
-                                            <option value="RESTAURANT_CAFE">Restaurant/Kafé</option>
+                                            <option value="Agentur">Agentur</option>
+                                            <option value="Annet">Annet</option>
+                                            <option value="Butikk/Kiosk">Butikk/Kiosk</option>
+                                            <option value="Frisør/Velvære">Frisør/Velvære</option>
+                                            <option value="Hotell/Overnatting">Hotell/Overnatting</option>
+                                            <option value="Jordbruk/Skogbruk/Fiske">Jordbruk/Skogbruk/Fiske</option>
+                                            <option value="Nettbutikk/Nettsted">Nettbutikk/Nettsted</option>
+                                            <option value="Restaurant/Kafé">Restaurant/Kafé</option>
                                         </select>
                                     </div>
                                 </div>
@@ -26,14 +26,14 @@
                                     <div class="col-sm-12 pr-md-0">
                                         <select name="alternative_industry" class="dme-form-control">
                                             <option value=""></option>
-                                            <option value="AGENCY">Agentur</option>
-                                            <option value="OTHER">Annet</option>
-                                            <option value="SHOP_KIOSK">Butikk/Kiosk</option>
-                                            <option value="HAIRDRESSER_COMFORT">Frisør/Velvære</option>
-                                            <option value="ACCOMMODATION">Hotell/Overnatting</option>
-                                            <option value="PRIMARY_INDUSTRY">Jordbruk/Skogbruk/Fiske</option>
-                                            <option value="WEB_SITE_SHOP">Nettbutikk/Nettsted</option>
-                                            <option value="RESTAURANT_CAFE">Restaurant/Kafé</option>
+                                            <option value="Agentur">Agentur</option>
+                                            <option value="Annet">Annet</option>
+                                            <option value="Butikk/Kiosk">Butikk/Kiosk</option>
+                                            <option value="Frisør/Velvære">Frisør/Velvære</option>
+                                            <option value="Hotell/Overnatting">Hotell/Overnatting</option>
+                                            <option value="Jordbruk/Skogbruk/Fiske">Jordbruk/Skogbruk/Fiske</option>
+                                            <option value="Nettbutikk/Nettsted">Nettbutikk/Nettsted</option>
+                                            <option value="Restaurant/Kafé">Restaurant/Kafé</option>
                                         </select>
                                     </div>
                                 </div>
