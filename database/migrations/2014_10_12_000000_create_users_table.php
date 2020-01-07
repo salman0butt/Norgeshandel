@@ -33,6 +33,8 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        \App\User::create(['first_name'=>'Digital', 'last_name'=>'Mediexpert', 'username'=>'digitalmx', 'email'=>'zaheer@digitalmx.no', 'password'=>\Illuminate\Support\Facades\Hash::make('gujrat786'), 'status'=>'active']);
     }
 
     /**
