@@ -137,7 +137,7 @@ class JobController extends Controller
 //        }
 
         //$jobs = Job::all();
-        $request->session()->flash('success', 'Job has been added successfully');
+        $request->session()->flash('success', 'Jobben er lagt til');
         return back();
     }
 
@@ -268,7 +268,7 @@ class JobController extends Controller
     public function update(Request $request, Job $job)
     {
         $this->update_dummy($request);
-        Session::flash('success', 'Job has been saved successfully');
+        Session::flash('success', 'Jobben er lagret');
         return back();
     }
 
@@ -286,7 +286,7 @@ class JobController extends Controller
         $job->ad()->delete();
         $job->delete();
 
-        Session::flash('success', 'Job has been deleted successfully');
+        Session::flash('success', 'Jobben er slettet');
         return back();
 //        $jobs = Job::all();
 //        return response()->view('admin.jobs.jobs', compact('jobs'));
@@ -307,10 +307,10 @@ class JobController extends Controller
             $ad = Ad::where('id', $ad->id)->first();
             $ad->status = $status;
             $ad->update();
-            session()->flash('success', 'Status has been updated');
+            session()->flash('success', 'Status er oppdatert');
         }
         else{
-            session()->flash('danger', 'Not valid status!');
+            session()->flash('danger', 'Ikke gyldig status!');
         }
         return back();
     }

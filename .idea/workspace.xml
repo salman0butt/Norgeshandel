@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/NorgesHandel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NorgesHandel.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Jobs/JobController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Jobs/JobController.php" afterDir="false" />
     </list>
@@ -345,7 +344,7 @@
       <workItem from="1578332405034" duration="648000" />
       <workItem from="1578375322347" duration="443000" />
       <workItem from="1578376209726" duration="11599000" />
-      <workItem from="1578402107963" duration="40000" />
+      <workItem from="1578402107963" duration="459000" />
     </task>
     <servers />
   </component>
