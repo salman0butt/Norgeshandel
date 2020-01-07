@@ -2,7 +2,8 @@
 @section('page_content')
 
     <?php 
-
+    
+        $facilities = array();
         if(isset($property_data->facilities) && !empty($property_data->facilities))
         {   
 
