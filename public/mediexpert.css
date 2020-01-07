@@ -971,4 +971,6 @@ button.link:hover{
 .error-span{
     color: #ac304a;
 }
-
+.dme-btn-outlined-blue.collapsed{
+    opacity: .7;
+}

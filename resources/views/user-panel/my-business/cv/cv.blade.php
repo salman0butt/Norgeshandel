@@ -5,6 +5,7 @@
 $education_levels = ['Vgs/Yrkesskole', 'Folkehøgskole', 'Etatsutdannelse', 'Fagskole', '1-2 år høy. utd', 'Bachelor', '4 årig Høyskole/Universitet', 'Master', 'Phd', 'Annet'];
 $cvexperiences = $cv->experiences;
 $cveducations = $cv->educations;
+$cvlanguages = $cv->languages;
 ?>
 @section('page_content')
     <style type="text/css">
@@ -1254,23 +1255,18 @@ $cveducations = $cv->educations;
                     <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="preview-tab">
                         <div class="inner-tab">
                             <h3 class="text-dark font-weight-normal" style="font-size:22px;">CV preview</h3>
-                            <p class="text-dark">This preview shows how your CV will be presented for recruitment
-                                agencies
-                                and companies which use the NorgesHandel CV-database Previews open CV.</p>
+                            <p class="text-dark">Denne forhåndsvisningen viser hvordan din CV vil fremstå for rekrutteringsbyråer og bedrifter som benytter seg av FINNs CV-database.</p>
                             <div class="row mb-5">
                                 <div class="col-md-8">
                                     <div class="btn-group mt-3">
-                                        <a class="dme-btn-outlined-blue float-left"
-                                           id="preview-tab" data-toggle="tab" role="tab"
-                                           aria-controls="preview" aria-selected="false" href="#open_cv">
-                                            Preview of the open CV
+                                        <a class="m-2 dme-btn-outlined-blue float-left"
+                                           data-toggle="collapse" href="#open_cv">
+                                            Forhåndsvis åpen CV
                                         </a>
-                                        <a class="dme-btn-outlined-blue float-left ml-3"
-                                           id="preview-tab" data-toggle="tab" role="tab"
-                                           aria-controls="preview" aria-selected="false" href="#anonymous_cv">
-                                            Preview of the anonymous CV
+                                        <a class="m-2 dme-btn-outlined-blue float-left collapsed"
+                                           data-toggle="collapse" href="#personal_cv">
+                                            Forhåndsvis anonym CV
                                         </a>
-
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -1287,188 +1283,375 @@ $cveducations = $cv->educations;
                             </div>
                             <hr>
                             <p class="pt-3">CV-id: {{$cv->id}}</p>
-                            <div class="table-main-1">
-                                <div class="row personal">
-                                    <div class="col-md-8 pr-4">
-                                        <h2 class="u-t2">{{$cv->personal->title}}</h2>
-                                        <h3 class="text-dark font-weight-normal pt-4 pb-4 u-t3" style="font-size:22px;">
-                                            Personalia</h3>
-                                        <table class="w-100">
-                                            <tbody>
-                                            <tr>
-                                                <th class="th_row" scope="row">Navn</th>
-                                                <td id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Født</th>
-                                                <td id="cvdetails-birthdate">{{$cv->personal->birthday}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row size1of4" scope="row">Addresse</th>
-                                                <td id="cvdetails-address">{{$cv->personal->address}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Sted</th>
-                                                <td id="cvdetails-postcode">{{$cv->personal->city}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Kjønn</th>
-                                                <td id="cvdetails-gender">{{$cv->personal->gender}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Land</th>
-                                                <td id="cvdetails-country">{{$cv->personal->country}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Telefon</th>
-                                                <td id="cvdetails-phone">{{$cv->personal->tell}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Mobil</th>
-                                                <td id="cvdetails-phone2">{{$cv->personal->mobile}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">E-post</th>
-                                                <td id="cvdetails-email">{{$cv->personal->email}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Hjemmeside</th>
-                                                <td id="cvdetails-homepage">{{$cv->personal->website}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Yrkesstatus</th>
-                                                <td id="cvdetails-employmentstatus">{{$cv->personal->occupational_status}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Førerkort</th>
-                                                <td id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                            <div class="collapse show" data-toggle="collapse" data-parent="#preview" id="open_cv">
+                                <div class="table-main-1">
+                                    <div class="row personal">
+                                        <div class="col-md-8 pr-4">
+                                            <h2 class="u-t2">{{$cv->personal->title}}</h2>
+                                            <h3 class="text-dark font-weight-normal pt-4 pb-4 u-t3" style="font-size:22px;">
+                                                Personalia</h3>
+                                            <table class="w-100">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Navn</th>
+                                                    <td id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Født</th>
+                                                    <td id="cvdetails-birthdate">{{$cv->personal->birthday}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row size1of4" scope="row">Addresse</th>
+                                                    <td id="cvdetails-address">{{$cv->personal->address}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Sted</th>
+                                                    <td id="cvdetails-postcode">{{$cv->personal->city}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Kjønn</th>
+                                                    <td id="cvdetails-gender">{{$cv->personal->gender}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Land</th>
+                                                    <td id="cvdetails-country">{{$cv->personal->country}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Telefon</th>
+                                                    <td id="cvdetails-phone">{{$cv->personal->tell}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Mobil</th>
+                                                    <td id="cvdetails-phone2">{{$cv->personal->mobile}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">E-post</th>
+                                                    <td id="cvdetails-email">{{$cv->personal->email}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Hjemmeside</th>
+                                                    <td id="cvdetails-homepage">{{$cv->personal->website}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Yrkesstatus</th>
+                                                    <td id="cvdetails-employmentstatus">{{$cv->personal->occupational_status}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Førerkort</th>
+                                                    <td id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">Bilde</h3>
+                                            @if(isset($cv) && $cv->media!=null)
+                                                <div class="profile"
+                                                     style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
+                                                    <img
+                                                        src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
+                                                        id="cv_profile_image"
+                                                        style="max-width:180px;max-height: 200px; height:200px;" alt="">
+                                                </div>
+                                            @else
+                                                <small class="text-dark">Denne CVen mangler bilde.</small>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">Bilde</h3>
-                                        @if(isset($cv) && $cv->media!=null)
-                                            <div class="profile"
-                                                 style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
-                                                <img
-                                                    src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
-                                                    id="cv_profile_image"
-                                                    style="max-width:180px;max-height: 200px; height:200px;" alt="">
+                                    @if(isset($cv->educations) && is_countable($cv->educations) && !empty($cv->educations->first()->school))
+                                        <div class="row education mt-2">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Utdanning
+                                                </h3>
                                             </div>
-                                        @else
-                                            <small class="text-dark">Denne CVen mangler bilde.</small>
-                                        @endif
+                                            @foreach($cveducations as $cveducation)
+                                                <div class="col-md-9">
+                                                    <div class="text-dark font-weight-normal" style="min-height: 60px;">
+                                                        <div class="u-t4">
+                                                            <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($cveducation->period_from))}} - {{date('d.m.Y', strtotime($cveducation->period_to))}}</span>
+                                                            <span class="ml-3 font-weight-normal">{{$cveducation->school}}</span><br>
+                                                            <span class="mt-1">{{$cveducation->degree}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-9">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if(isset($cv->experiences) && is_countable($cv->experiences) && !empty($cv->experiences->first()->company))
+                                        <div class="row education mt-1">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Erfaring
+                                                </h3>
+                                            </div>
+                                            @foreach($cvexperiences as $experience)
+                                                <div class="col-md-9">
+                                                    <div class="text-dark font-weight-normal" style="min-height: 60px;">
+                                                        <div class="u-t4">
+                                                            <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($experience->period_from))}} - {{date('d.m.Y', strtotime($experience->period_to))}}</span>
+                                                            <span class="ml-3 font-weight-normal">{{$experience->company}}</span><br>
+                                                            <span class="mt-1">{{$experience->job_title}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-9">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if(isset($cv->key_skills) && !empty($cv->key_skills))
+                                        <div class="row key_skills mt-1">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Nøkkelkompetanse
+                                                </h3>
+                                                <div>{{$cv->key_skills}}</div>
+                                                <div class="font-weight-bold">Annen erfaring, tillitsverv, interesser etc.</div>
+                                                <div class="">{{$cv->other_skills}}</div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <hr>
+                                            </div>
+                                            <div class="col-md-3"></div>
+                                        </div>
+                                    @endif
+                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                        <div class="row languages mt-1">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Språk
+                                                </h3>
+                                                @foreach($cvlanguages as $language)
+                                                    <span>{{$language->name}}</span>
+                                                @endforeach
+                                            </div>
+                                            <div class="col-md-9">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="row preferences mt-5">
+                                        <div class="col-12">
+                                            <h3 class="text-dark font-weight-normal pt-4 pb-4" style="font-size:22px;">
+                                                Ønsker for neste jobb</h3>
+                                            <table class="sectioninfo super-condensed border-white w-100">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="th_row size1of4" scope="row">Jobbtype</th>
+                                                    <td id="float-left">{{$cv->preference->job_type}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Personalansvar</th>
+                                                    <td id="future-personnel">{{$cv->preference->responsibility}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Resultatansvar</th>
+                                                    <td id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Flyttevillighet</th>
+                                                    <td id="future-move">{{$cv->preference->willingness}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Reisedøgn inntil pr år</th>
+                                                    <td id="future-travel">{{$cv->preference->travel_days}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Lønnsvilkår</th>
+                                                    <td id="future-salary">{{$cv->preference->salary}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
+                                                    <td id="future-period">{{$cv->preference->termination_notice}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                @if(isset($cv->educations) && is_countable($cv->educations) && !empty($cv->educations->first()->school))
-                                    <div class="row education mt-2">
-                                        <div class="col-12 pt-4 ">
-                                            <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                Utdanning
-                                            </h3>
+                            </div>
+                            <div class="collapse" data-toggle="collapse" data-parent="#preview" id="personal_cv">
+                                <div class="table-main-1">
+                                    <div class="row personal">
+                                        <div class="col-md-8 pr-4">
+                                            <h2 class="u-t2">{{$cv->personal->title}}</h2>
+                                            <h3 class="text-dark font-weight-normal pt-4 pb-4 u-t3" style="font-size:22px;">
+                                                Personalia</h3>
+                                            <table class="w-100">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Navn</th>
+                                                    <td id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Født</th>
+                                                    <td id="cvdetails-birthdate">{{$cv->personal->birthday}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row size1of4" scope="row">Addresse</th>
+                                                    <td id="cvdetails-address">{{$cv->personal->address}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Sted</th>
+                                                    <td id="cvdetails-postcode">{{$cv->personal->city}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Kjønn</th>
+                                                    <td id="cvdetails-gender">{{$cv->personal->gender}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Land</th>
+                                                    <td id="cvdetails-country">{{$cv->personal->country}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Yrkesstatus</th>
+                                                    <td id="cvdetails-employmentstatus">{{$cv->personal->occupational_status}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Førerkort</th>
+                                                    <td id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        @foreach($cveducations as $cveducation)
-                                            <div class="col-md-9">
-                                                <div class="text-dark font-weight-normal" style="min-height: 60px;">
-                                                    <div class="u-t4">
-                                                        <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($cveducation->period_from))}} - {{date('d.m.Y', strtotime($cveducation->period_to))}}</span>
-                                                        <span class="ml-3 font-weight-normal">{{$cveducation->school}}</span><br>
-                                                        <span class="mt-1">{{$cveducation->degree}}</span>
-                                                    </div>
+                                        <div class="col-md-4">
+                                            <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">Bilde</h3>
+                                            @if(isset($cv) && $cv->media!=null)
+                                                <div class="profile"
+                                                     style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
+                                                    <img
+                                                        src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
+                                                        id="cv_profile_image"
+                                                        style="max-width:180px;max-height: 200px; height:200px;" alt="">
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-9">
-                                            <hr>
+                                            @else
+                                                <small class="text-dark">Denne CVen mangler bilde.</small>
+                                            @endif
                                         </div>
                                     </div>
-                                @endif
-                                @if(isset($cv->experiences) && is_countable($cv->experiences) && !empty($cv->experiences->first()->company))
-                                    <div class="row education mt-1">
-                                        <div class="col-12 pt-4 ">
-                                            <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                Erfaring
-                                            </h3>
-                                        </div>
-                                        @foreach($cvexperiences as $experience)
-                                            <div class="col-md-9">
-                                                <div class="text-dark font-weight-normal" style="min-height: 60px;">
-                                                    <div class="u-t4">
-                                                        <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($experience->period_from))}} - {{date('d.m.Y', strtotime($experience->period_to))}}</span>
-                                                        <span class="ml-3 font-weight-normal">{{$experience->company}}</span><br>
-                                                        <span class="mt-1">{{$experience->job_title}}</span>
+                                    @if(isset($cv->educations) && is_countable($cv->educations) && !empty($cv->educations->first()->school))
+                                        <div class="row education mt-2">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Utdanning
+                                                </h3>
+                                            </div>
+                                            @foreach($cveducations as $cveducation)
+                                                <div class="col-md-9">
+                                                    <div class="text-dark font-weight-normal" style="min-height: 60px;">
+                                                        <div class="u-t4">
+                                                            <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($cveducation->period_from))}} - {{date('d.m.Y', strtotime($cveducation->period_to))}}</span>
+                                                            <span class="ml-3 font-weight-normal">{{$cveducation->school}}</span><br>
+                                                            <span class="mt-1">{{$cveducation->degree}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-9">
-                                            <hr>
-                                        </div>
-                                    </div>
-                                @endif
-                                @if(isset($cv->key_skills) && !empty($cv->key_skills))
-                                    <div class="row key_skills mt-1">
-                                        <div class="col-12 pt-4 ">
-                                            <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                Nøkkelkompetanse
-                                            </h3>
-                                        </div>
-                                        @foreach($cvexperiences as $experience)
+                                            @endforeach
+                                            <div class="col-md-3"></div>
                                             <div class="col-md-9">
-                                                <div class="text-dark font-weight-normal" style="min-height: 60px;">
-                                                    <div class="u-t4">
-                                                        <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($experience->period_from))}} - {{date('d.m.Y', strtotime($experience->period_to))}}</span>
-                                                        <span class="ml-3 font-weight-normal">{{$experience->company}}</span><br>
-                                                        <span class="mt-1">{{$experience->job_title}}</span>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if(isset($cv->experiences) && is_countable($cv->experiences) && !empty($cv->experiences->first()->company))
+                                        <div class="row education mt-1">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Erfaring
+                                                </h3>
+                                            </div>
+                                            @foreach($cvexperiences as $experience)
+                                                <div class="col-md-9">
+                                                    <div class="text-dark font-weight-normal" style="min-height: 60px;">
+                                                        <div class="u-t4">
+                                                            <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($experience->period_from))}} - {{date('d.m.Y', strtotime($experience->period_to))}}</span>
+                                                            <span class="ml-3 font-weight-normal">{{$experience->company}}</span><br>
+                                                            <span class="mt-1">{{$experience->job_title}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            @endforeach
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-9">
+                                                <hr>
                                             </div>
-                                        @endforeach
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-9">
-                                            <hr>
                                         </div>
-                                    </div>
-                                @endif
-                                <div class="row preferences mt-5">
-                                    <div class="col-12">
-                                        <h3 class="text-dark font-weight-normal pt-4 pb-4" style="font-size:22px;">
-                                            Ønsker for neste jobb</h3>
-                                        <table class="sectioninfo super-condensed border-white w-100">
-                                            <tbody>
-                                            <tr>
-                                                <th class="th_row size1of4" scope="row">Jobbtype</th>
-                                                <td id="float-left">{{$cv->preference->job_type}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Personalansvar</th>
-                                                <td id="future-personnel">{{$cv->preference->responsibility}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Resultatansvar</th>
-                                                <td id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Flyttevillighet</th>
-                                                <td id="future-move">{{$cv->preference->willingness}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Reisedøgn inntil pr år</th>
-                                                <td id="future-travel">{{$cv->preference->travel_days}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Lønnsvilkår</th>
-                                                <td id="future-salary">{{$cv->preference->salary}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
-                                                <td id="future-period">{{$cv->preference->termination_notice}}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    @endif
+                                    @if(isset($cv->key_skills) && !empty($cv->key_skills))
+                                        <div class="row key_skills mt-1">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Nøkkelkompetanse
+                                                </h3>
+                                                <div>{{$cv->key_skills}}</div>
+                                                <div class="font-weight-bold">Annen erfaring, tillitsverv, interesser etc.</div>
+                                                <div class="">{{$cv->other_skills}}</div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <hr>
+                                            </div>
+                                            <div class="col-md-3"></div>
+                                        </div>
+                                    @endif
+                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                        <div class="row languages mt-1">
+                                            <div class="col-12 pt-4 ">
+                                                <h3 class="text-dark font-weight-normal" style="font-size:26px;">
+                                                    Språk
+                                                </h3>
+                                                @foreach($cvlanguages as $language)
+                                                    <span>{{$language->name}}</span>
+                                                @endforeach
+                                            </div>
+                                            <div class="col-md-9">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="row preferences mt-5">
+                                        <div class="col-12">
+                                            <h3 class="text-dark font-weight-normal pt-4 pb-4" style="font-size:22px;">
+                                                Ønsker for neste jobb</h3>
+                                            <table class="sectioninfo super-condensed border-white w-100">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="th_row size1of4" scope="row">Jobbtype</th>
+                                                    <td id="float-left">{{$cv->preference->job_type}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Personalansvar</th>
+                                                    <td id="future-personnel">{{$cv->preference->responsibility}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Resultatansvar</th>
+                                                    <td id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Flyttevillighet</th>
+                                                    <td id="future-move">{{$cv->preference->willingness}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Reisedøgn inntil pr år</th>
+                                                    <td id="future-travel">{{$cv->preference->travel_days}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Lønnsvilkår</th>
+                                                    <td id="future-salary">{{$cv->preference->salary}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
+                                                    <td id="future-period">{{$cv->preference->termination_notice}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
