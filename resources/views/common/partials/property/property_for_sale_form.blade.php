@@ -69,13 +69,13 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="property_type" class="dme-form-control">
                         <option value=""></option>
-                        <option value="OTHER">Andre</option>
-                        <option value="DETACHED">Enebolig</option>
-                        <option value="GARAGE">Garasje/Parkering</option>
-                        <option value="FARM">Gårdsbruk/Småbruk</option>
-                        <option value="FLAT">Leilighet</option>
-                        <option value="TERRACED">Rekkehus</option>
-                        <option value="SEMIDETACHED">Tomannsbolig</option>
+                        <option value="Andre">Andre</option>
+                        <option value="Enebolig">Enebolig</option>
+                        <option value="Garasje Parkering">Garasje/Parkering</option>
+                        <option value="Gårdsbruk Småbruk">Gårdsbruk/Småbruk</option>
+                        <option value="Leilighet">Leilighet</option>
+                        <option value="Rekkehus">Rekkehus</option>
+                        <option value="Tomannsbolig">Tomannsbolig</option>
                     </select>
                     <span id="property_type" class="error-span"></span>
                 </div>
@@ -87,11 +87,11 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="tenure" class="dme-form-control">
                         <option value=""></option>
-                        <option value="COLLECTIVE_OWNERSHIP">Aksje</option>
-                        <option value="PART_OWNERSHIP">Andel</option>
-                        <option value="OTHER">Annet</option>
-                        <option value="FREEHOLD">Eier (Selveier)</option>
-                        <option value="LEASEHOLD">Obligasjon</option>
+                        <option value="Aksje">Aksje</option>
+                        <option value="Andel">Andel</option>
+                        <option value="Annet">Annet</option>
+                        <option value="Eier Selveier">Eier (Selveier)</option>
+                        <option value="Obligasjon">Obligasjon</option>
                     </select>
                     <span class="u-t5">Beskriv varen kort. Denne beskrivelsen brukes til å finne riktig kategori i feltene under.</span>
                     <span id="tenure" class="error-span"></span>
@@ -315,11 +315,11 @@
                     <h3 for="" class="u-t5">Oppvarmingskarakter (valgfritt)</h3>
                     <select name="heating_character" class="dme-form-control">
                         <option value=""></option>
-                        <option value="YELLOW">Gul</option>
-                        <option value="LIGHT_GREEN">Lysegrønn</option>
-                        <option value="DARK_GREEN">Mørkegrønn</option>
-                        <option value="ORANGE">Oransje</option>
-                        <option value="RED">Rød</option>
+                        <option value="Gul">Gul</option>
+                        <option value="Lysegrønn">Lysegrønn</option>
+                        <option value="Mørkegrønn">Mørkegrønn</option>
+                        <option value="Oransje">Oransje</option>
+                        <option value="Rød">Rød</option>
                     </select>
                     <span id="heating_character" class="error-span"></span>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>

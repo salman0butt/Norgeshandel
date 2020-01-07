@@ -69,30 +69,16 @@
             </div>
             <!--        ended row-->
             <div class="row mt-5 home-grid">
-                <div class="col-md-12">
-                    <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
-                </div>
-                <?php
-                for ($i = 0; $i < 6; $i++):
-                    ?>
-                    <div class="col-md-4 col-sm-6">
-                        <a href="#" class="grid-box-ancor">
-                            <div class="home-grid-box">
-                                <div href="#" class="favorite-icon-outer">
-                                    <div class="favorite-icon fa fa-heart"></div>
-                                </div>
-                                
-                                <img src="{{asset('public/images/home-grid-box')}}<?php echo $i + 1; ?>.jpg"
-                                     class="img-fluid product-img" alt="">
-                                <div class="product-total-price">Totalpris: SEK 2011 111 KR</div>
-                                <div class="product-price"><span class="fa fa-home"></span> 1 120 000 KR</div>
-                            </div>
-                            <p class="product-location text-muted mb-0 mt-2 u-d1">Kristiansand S</p>
-                            <p class="product-title u-t4">Vennesla/Moseidmoen -2- Roms leilighe...</p>
-                        </a>
+                @if($ads)
+                    <div class="col-md-12">
+                        <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
                     </div>
-
-                <?php endfor; ?>
+                    @foreach($ads as $ad)
+                      
+                        @include('user-panel.partials.templates.propert-sequare')
+                        
+                    @endforeach
+                @endif
             </div>
             <!--        ended row-->
         </div>

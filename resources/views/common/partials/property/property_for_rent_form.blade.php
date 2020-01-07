@@ -38,14 +38,14 @@
                 <div class="col-sm-12 pr-md-0">
                     <select id="property_type" name="property_type" class="dme-form-control">
                         <option value=""></option>
-                        <option value="OTHER">Andre</option>
-                        <option value="DETACHED">Enebolig</option>
-                        <option value="GARAGE">Garasje/Parkering</option>
-                        <option value="BEDSIT">Hybel</option>
-                        <option value="FLAT">Leilighet</option>
-                        <option value="TERRACED">Rekkehus</option>
-                        <option value="HOUSESHARE">Rom i bofellesskap</option>
-                        <option value="SEMIDETACHED">Tomannsbolig</option>
+                        <option value="Andre">Andre</option>
+                        <option value="Enebolig">Enebolig</option>
+                        <option value="Garasje Parkering">Garasje/Parkering</option>
+                        <option value="Hybel">Hybel</option>
+                        <option value="Leilighet">Leilighet</option>
+                        <option value="Rekkehus">Rekkehus</option>
+                        <option value="Rom i bofellesskap">Rom i bofellesskap</option>
+                        <option value="Tomannsbolig">Tomannsbolig</option>
                     </select>
                     <span id="property_type" class="error-span"></span>
 
@@ -105,9 +105,9 @@
                 <div class="col-sm-12 pr-md-0">
                     <select id="furnishing" name="furnishing" class="dme-form-control">
                         <option value=""></option>
-                        <option value="PARTLY_FURNISHED">Delvis møblert</option>
-                        <option value="FURNISHED">Møblert</option>
-                        <option value="UNFURNISHED">Umøblert</option>
+                        <option value="Delvis møblert">Delvis møblert</option>
+                        <option value="Møblert">Møblert</option>
+                        <option value="Umøblert">Umøblert</option>
                     </select>
                     <span id="furnishing" class="error-span"></span>
                 </div>
@@ -236,11 +236,11 @@
                 <div class="col-sm-12 pr-md-0">
                     <select id="energy_label.color" name="energy_label_color" data-selector="" class="dme-form-control">
                         <option value=""></option>
-                        <option value="YELLOW">Gul</option>
-                        <option value="LIGHT_GREEN">Lysegrønn</option>
-                        <option value="DARK_GREEN">Mørkegrønn</option>
-                        <option value="ORANGE">Oransje</option>
-                        <option value="RED">Rød</option>
+                        <option value="Gul">Gul</option>
+                        <option value="Lysegrønn">Lysegrønn</option>
+                        <option value="Mørkegrønn">Mørkegrønn</option>
+                        <option value="Oransje">Oransje</option>
+                        <option value="Rød">Rød</option>
                     </select>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
                 </div>

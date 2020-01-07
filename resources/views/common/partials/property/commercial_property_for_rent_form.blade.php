@@ -5,55 +5,55 @@
                                 <h3 class="u-t5">Type lokale</h3>
                                 <div class="row">
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-OFFICE" type="checkbox" value="OFFICE" name="property_type[]">
+                                        <input data-selector="" id="property_type-OFFICE" type="checkbox" value="Kontor" name="property_type[]">
                                         <label class="smalltext" for="property_type-OFFICE"> Kontor</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-BUSINESS" type="checkbox" value="BUSINESS" name="property_type[]">
+                                        <input data-selector="" id="property_type-BUSINESS" type="checkbox" value="Butikk/Handel" name="property_type[]">
                                         <label class="smalltext" for="property_type-BUSINESS"> Butikk/Handel</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-INDUSTRIAL" type="checkbox" value="INDUSTRIAL" name="property_type[]">
+                                        <input data-selector="" id="property_type-INDUSTRIAL" type="checkbox" value="Produksjon/Industri" name="property_type[]">
                                         <label class="smalltext" for="property_type-INDUSTRIAL"> Produksjon/Industri</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-WAREHOUSE" type="checkbox" value="WAREHOUSE" name="property_type[]">
+                                        <input data-selector="" id="property_type-WAREHOUSE" type="checkbox" value="Lager/Logistikk" name="property_type[]">
                                         <label class="smalltext" for="property_type-WAREHOUSE"> Lager/Logistikk</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox" value="MULTIPURPOSEAREA" name="property_type[]">
+                                        <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox" value="Kombinasjonslokaler" name="property_type[]">
                                         <label class="smalltext" for="property_type-MULTIPURPOSEAREA"> Kombinasjonslokaler</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-FARM" type="checkbox" value="FARM" name="property_type[]"">
+                                        <input data-selector="" id="property_type-FARM" type="checkbox" value="Gårdsbruk/Småbruk" name="property_type[]"">
                                         <label class="smalltext" for="property_type-FARM"> Gårdsbruk/Småbruk</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-MULTIUNITS" type="checkbox" value="MULTIUNITS" name="property_type[]">
+                                        <input data-selector="" id="property_type-MULTIUNITS" type="checkbox" value="Bygård/Flermannsbolig" name="property_type[]">
                                         <label class="smalltext" for="property_type-MULTIUNITS"> Bygård/Flermannsbolig</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-SHOPPINGMALL" type="checkbox" value="SHOPPINGMALL" name="property_type[]">
+                                        <input data-selector="" id="property_type-SHOPPINGMALL" type="checkbox" value="Kjøpesenter" name="property_type[]">
                                         <label class="smalltext" for="property_type-SHOPPINGMALL"> Kjøpesenter</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-MECHSHOP" type="checkbox" value="MECHSHOP" name="property_type[]">
+                                        <input data-selector="" id="property_type-MECHSHOP" type="checkbox" value="Verksted" name="property_type[]">
                                         <label class="smalltext" for="property_type-MECHSHOP"> Verksted</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-GARAGE" type="checkbox" value="GARAGE" name="property_type[]">
+                                        <input data-selector="" id="property_type-GARAGE" type="checkbox" value="Garasje/Parkering" name="property_type[]">
                                         <label class="smalltext" for="property_type-GARAGE"> Garasje/Parkering</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-HOTEL" type="checkbox" value="HOTEL" name="property_type[]">
+                                        <input data-selector="" id="property_type-HOTEL" type="checkbox" value="Hotell/Overnatting" name="property_type[]">
                                         <label class="smalltext" for="property_type-HOTEL"> Hotell/Overnatting</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-RESTAURANT" type="checkbox" value="RESTAURANT" name="property_type[]">
+                                        <input data-selector="" id="property_type-RESTAURANT" type="checkbox" value="Serveringslokale/Kantine" name="property_type[]">
                                         <label class="smalltext" for="property_type-RESTAURANT"> Serveringslokale/Kantine</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input data-selector="" id="property_type-LEARNINGFACILITY" type="checkbox" value="LEARNINGFACILITY" name="property_type[]">
+                                        <input data-selector="" id="property_type-LEARNINGFACILITY" type="checkbox" value="Undervisning/Arrangement" name="property_type[]">
                                         <label class="smalltext" for="property_type-LEARNINGFACILITY"> Undervisning/Arrangement</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
@@ -514,11 +514,11 @@
                                     <div class="col-sm-12 pr-md-0">
                                         <select class="dme-form-control" name="heating_character">
                                             <option value=""></option>
-                                            <option value="YELLOW">Gul</option>
-                                            <option value="LIGHT_GREEN">Lysegrønn</option>
-                                            <option value="DARK_GREEN">Mørkegrønn</option>
-                                            <option value="ORANGE">Oransje</option>
-                                            <option value="RED">Rød</option>
+                                            <option value="Gul">Gul</option>
+                                            <option value="Lysegrønn">Lysegrønn</option>
+                                            <option value="Mørkegrønn">Mørkegrønn</option>
+                                            <option value="Oransje">Oransje</option>
+                                            <option value="Rød">Rød</option>
                                         </select>
                                         <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
                                     </div>
@@ -547,27 +547,27 @@
                                         <label class="smalltext" for="facilities-ALARM"> Alarm</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-BROADBAND" type="checkbox" value="BROADBAND" name="facilities[]">
+                                        <input id="facilities-BROADBAND" type="checkbox" value="Bredbåndstilknytning" name="facilities[]">
                                         <label class="smalltext" for="facilities-BROADBAND"> Bredbåndstilknytning</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-RECEPTION" type="checkbox" value="RECEPTION" name="facilities[]">
+                                        <input id="facilities-RECEPTION" type="checkbox" value="Felles resepsjon" name="facilities[]">
                                         <label class="smalltext" for="facilities-RECEPTION"> Felles resepsjon</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-GARAGE" type="checkbox" value="GARAGE" name="facilities[]">
+                                        <input id="facilities-GARAGE" type="checkbox" value="Garasje/P-plass" name="facilities[]">
                                         <label class="smalltext" for="facilities-GARAGE"> Garasje/P-plass</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-LIFT" type="checkbox" value="LIFT" name="facilities[]">
+                                        <input id="facilities-LIFT" type="checkbox" value="Heis" name="facilities[]">
                                         <label class="smalltext" for="facilities-LIFT"> Heis</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-CANTEEN" type="checkbox" value="CANTEEN" name="facilities[]">
+                                        <input id="facilities-CANTEEN" type="checkbox" value="Kantine" name="facilities[]">
                                         <label class="smalltext" for="facilities-CANTEEN"> Kantine</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-DRIVEIN" type="checkbox" value="DRIVEIN" name="facilities[]">
+                                        <input id="facilities-DRIVEIN" type="checkbox" value="Kjøreport" name="facilities[]">
                                         <label class="smalltext" for="facilities-DRIVEIN"> Kjøreport</label>
                                     </div>
                                 </div>
