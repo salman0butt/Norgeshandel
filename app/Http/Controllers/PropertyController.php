@@ -734,7 +734,7 @@ class PropertyController extends Controller
 
         //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_commercial_for_sale';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
@@ -929,7 +929,7 @@ class PropertyController extends Controller
 
         //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_commercial_for_rent';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
@@ -1047,7 +1047,7 @@ class PropertyController extends Controller
 
         //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_business_for_sale';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
@@ -1144,7 +1144,7 @@ class PropertyController extends Controller
 
         //add Add to table
         $add = array();
-        $add['ad_type'] = 'property';
+        $add['ad_type'] = 'property_commercial_plots';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
@@ -1233,6 +1233,52 @@ class PropertyController extends Controller
     {
         $property_data = CommercialPlot::where('id',$id)->first();
         return view('common.partials.property.commercial_plots_description')->with(compact('property_data'));
+    }
+
+    public function generalPropertyDescription($id,$type)
+    {
+        if($type == 'property_for_rent')
+        {
+            $property_data = PropertyForRent::where('id',$id)->first();
+            return view('common.partials.property.property_description')->with(compact('property_data'));
+        }
+        else if($type == 'property_for_sale')
+        {
+            $property_data = PropertyForSale::where('id',$id)->first();
+            return view('common.partials.property.property_for_sale_description')->with(compact('property_data'));
+        }
+        else if($type == 'property_holiday_home_for_sale')
+        {
+            $property_data = PropertyHolidaysHomesForSale::where('id',$id)->first();
+            return view('common.partials.property.holiday_home_for_sale_description')->with(compact('property_data'));
+        }
+        else if($type == 'property_flat_wishes_rented')
+        {
+            $property_data = FlatWishesRented::where('id',$id)->first();
+            return view('common.partials.property.flat_wishes_rented_description')->with(compact('property_data'));
+        }
+        else if($type == 'property_commercial_for_sale')
+        {
+            $property_data = CommercialPropertyForSale::where('id',$id)->first();
+            return view('common.partials.property.commercialproperty_for_sale_description')->with(compact('property_data'));
+        }
+        else if($type == 'property_commercial_for_rent')
+        {
+            $property_data = CommercialPropertyForRent::where('id',$id)->first();
+            return view('common.partials.property.commercialproperty_for_rent_description')->with(compact('property_data'));
+        }
+        else if($type == 'property_commercial_plots')
+        {
+            $property_data = CommercialPlot::where('id',$id)->first();
+            return view('common.partials.property.commercial_plots_description')->with(compact('property_data'));
+        }
+        else if($type == 'property_business_for_sale')
+        {
+            $property_data = BusinessForSale::where('id',$id)->first();
+            return view('common.partials.property.business_for_sale_description')->with(compact('property_data'));
+        }
+
+        
     }
 
 
