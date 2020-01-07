@@ -2,7 +2,7 @@
 
     if(isset($ad))
     {
-    
+        $property = "";
         if($ad->ad_type == 'property_for_rent')
         {
             $property = $ad->propertyForRent;
