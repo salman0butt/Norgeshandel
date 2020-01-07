@@ -29,9 +29,24 @@
                 }
             });
 
-            $("#publiser_annonsen").click(function (e) {
+            $("input,select").on("keyup change", function() {
 
+                $(this).parent().find('.error-span').html("");
+                $(this).removeClass("error-input");
+
+            });
+
+
+
+            $("#publiser_annonsen").click(function (e) {
                 e.preventDefault();
+
+                $("input ~ span,select ~ span").each(function( index ) {
+                    $(".error-span").html('');
+                    $("input, select").removeClass("error-input");
+                });
+
+
                 $('.notice').html("");
                 var url = '{{url('add/property/for/rent/ad')}}';
 
@@ -58,7 +73,7 @@
                         var html = "<ul>";
                         $.each(errors.errors, function (index, value) {
                             console.log(index);
-                            $("#" + index).html(value);
+                            $("." + index).html(value);
                             $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
                         });
                         // html += "</ul>";

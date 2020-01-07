@@ -27,6 +27,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            $("input,select").on("keyup", function() {
+
+                $(this).parent().find('.error-span').html("");
+                $(this).removeClass("error-input");
+
+            });
 
 
             $(document).on('keyup', '.asking_price,.costs_include,.percentage_of_public_debt', function() {
@@ -57,6 +63,12 @@
 
                 e.preventDefault();
 
+                $("input ~ span,select ~ span").each(function( index ) {
+                    $(".error-span").html('');
+                    $("input, select").removeClass("error-input");
+                });
+
+
                 var url = '{{url('add/property/sale/ad')}}';
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
@@ -79,7 +91,7 @@
                             var html="<ul>";
                             $.each( errors.errors, function( index, value ){
                                console.log(value);
-                                $("#"+index).html(value);
+                                $("."+index).html(value);
                                 $("input[name='"+index+"'],select[name='"+index+"']").addClass("error-input");
                             });
                             html += "</ul>";
