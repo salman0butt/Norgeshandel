@@ -71,13 +71,13 @@
                 <div class="col-sm-12 pr-md-0">
                     <select id="property_type" class="dme-form-control" name="property_type" data-selector="">
                         <option value=""></option>
-                        <option value="OTHER">Andre</option>
-                        <option value="DETACHED">Enebolig</option>
-                        <option value="FARM">Gårdsbruk/Småbruk</option>
-                        <option value="COTTAGE">Hytte</option>
-                        <option value="FLAT">Leilighet</option>
-                        <option value="TERRACED">Rekkehus</option>
-                        <option value="SEMIDETACHED">Tomannsbolig</option>
+                        <option value="Andre">Andre</option>
+                        <option value="Enebolig">Enebolig</option>
+                        <option value="Gårdsbruk Småbruk">Gårdsbruk/Småbruk</option>
+                        <option value="Hytte">Hytte</option>
+                        <option value="Leilighet">Leilighet</option>
+                        <option value="Rekkehus">Rekkehus</option>
+                        <option value="Tomannsbolig">Tomannsbolig</option>
                     </select>
                 </div>
             </div>
@@ -89,11 +89,11 @@
                 <div class="col-sm-12 pr-md-0">
                     <select id="ownership_type" class="dme-form-control" name="ownership_type" data-selector="">
                         <option value=""></option>
-                        <option value="COLLECTIVE_OWNERSHIP">Aksje</option>
-                        <option value="PART_OWNERSHIP">Andel</option>
-                        <option value="OTHER">Annet</option>
-                        <option value="FREEHOLD">Eier (Selveier)</option>
-                        <option value="LEASEHOLD">Obligasjon</option>
+                        <option value="Aksje">Aksje</option>
+                        <option value="Andel">Andel</option>
+                        <option value="Annet">Annet</option>
+                        <option value="Eier Selveier">Eier (Selveier)</option>
+                        <option value="Obligasjon">Obligasjon</option>
                     </select>
                 </div>
             </div>
@@ -300,9 +300,9 @@
                     <select name="heating_character" class="dme-form-control" id="property_details.furnishing"
                             name="property_details.furnishing">
                         <option value=""></option>
-                        <option value="PARTLY_FURNISHED">Delvis møblert</option>
-                        <option value="FURNISHED">Møblert</option>
-                        <option value="UNFURNISHED">Umøblert</option>
+                        <option value="Delvis møblert">Delvis møblert</option>
+                        <option value="Møblert">Møblert</option>
+                        <option value="Umøblert">Umøblert</option>
                     </select>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
                 </div>
@@ -366,68 +366,68 @@
             <div class="row">
 
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-DOWNHILL_SKIING" type="checkbox" value="DOWNHILL_SKIING" name="facilities[]">
+                    <input id="facilities-DOWNHILL_SKIING" type="checkbox" value="Alpinanlegg" name="facilities[]">
                     <label class="smalltext" for="facilities-DOWNHILL_SKIING"> Alpinanlegg</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-BALCONY" type="checkbox" value="BALCONY" name="facilities[]">
+                    <input id="facilities-BALCONY" type="checkbox" value="Balkong/Terrasse" name="facilities[]">
                     <label class="smalltext" for="facilities-BALCONY"> Balkong/Terrasse</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-ROAD_ACCESS" type="checkbox" value="ROAD_ACCESS" name="facilities[]">
+                    <input id="facilities-ROAD_ACCESS" type="checkbox" value="Bilvei frem" name="facilities[]">
                     <label class="smalltext" for="facilities-ROAD_ACCESS"> Bilvei frem</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-BOAT_MOORING" type="checkbox" value="BOAT_MOORING" name="facilities[]">
+                    <input id="facilities-BOAT_MOORING" type="checkbox" value="Båtplass" name="facilities[]">
                     <label class="smalltext" for="facilities-BOAT_MOORING"> Båtplass</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-GARAGE" type="checkbox" value="GARAGE" name="facilities[]">
+                    <input id="facilities-GARAGE" type="checkbox" value="Garasje/P-plass" name="facilities[]">
                     <label class="smalltext" for="facilities-GARAGE"> Garasje/P-plass</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-GOLF" type="checkbox" value="GOLF" name="facilities[]">
+                    <input id="facilities-GOLF" type="checkbox" value="Golfbane" name="facilities[]">
                     <label class="smalltext" for="facilities-GOLF"> Golfbane</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-CHARGING" type="checkbox" value="CHARGING" name="facilities[]">
+                    <input id="facilities-CHARGING" type="checkbox" value="Lademulighet" name="facilities[]">
                     <label class="smalltext" for="facilities-CHARGING"> Lademulighet</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-PUBLIC_SEWER" type="checkbox" value="PUBLIC_SEWER" name="facilities[]">
+                    <input id="facilities-PUBLIC_SEWER" type="checkbox" value="Offentlig vann/kloakk" name="facilities[]">
                     <label class="smalltext" for="facilities-PUBLIC_SEWER"> Offentlig vann/kloakk</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-FIREPLACE" type="checkbox" value="FIREPLACE" name="facilities[]">
+                    <input id="facilities-FIREPLACE" type="checkbox" value=" Peis/Ildsted" name="facilities[]">
                     <label class="smalltext" for="facilities-FIREPLACE"> Peis/Ildsted</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-VIEW" type="checkbox" value="VIEW" name="facilities[]">
+                    <input id="facilities-VIEW" type="checkbox" value="Utsikt" name="facilities[]">
                     <label class="smalltext" for="facilities-VIEW"> Utsikt</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-JANITORSERVICE" type="checkbox" value="JANITORSERVICE" name="facilities[]">
+                    <input id="facilities-JANITORSERVICE" type="checkbox" value="Vaktmester-/vektertjeneste" name="facilities[]">
                     <label class="smalltext" for="facilities-JANITORSERVICE"> Vaktmester-/vektertjeneste</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-ANGLING" type="checkbox" value="ANGLING" name="facilities">
+                    <input id="facilities-ANGLING" type="checkbox" value="Fiskemulighet" name="facilities">
                     <label class="smalltext" for="facilities-ANGLING"> Fiskemulighet</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-MAINS_ELECTRICITY" type="checkbox" value="MAINS_ELECTRICITY"
+                    <input id="facilities-MAINS_ELECTRICITY" type="checkbox" value="Innlagt strøm"
                            name="facilities[]">
                     <label class="smalltext" for="facilities-MAINS_ELECTRICITY"> Innlagt strøm</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-MAINS_WATER" type="checkbox" value="MAINS_WATER" name="facilities[]">
+                    <input id="facilities-MAINS_WATER" type="checkbox" value="Innlagt vann" name="facilities[]">
                     <label class="smalltext" for="facilities-MAINS_WATER"> Innlagt vann</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-SHORELINE" type="checkbox" value="SHORELINE" name="facilities[]">
+                    <input id="facilities-SHORELINE" type="checkbox" value="Strandlinje" name="facilities[]">
                     <label class="smalltext" for="facilities-SHORELINE"> Strandlinje</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input id="facilities-HIKING" type="checkbox" value="HIKING" name="facilities[]">
+                    <input id="facilities-HIKING" type="checkbox" value="Turterreng" name="facilities[]">
                     <label class="smalltext" for="facilities-HIKING"> Turterreng</label>
                 </div>
 

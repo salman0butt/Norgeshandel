@@ -1,8 +1,9 @@
 @extends('layouts.landingSite')
     @section('page_content')
 
-        <?php 
-
+        <?php
+         
+            $facilities = array();
             if(isset($property_data->facilities) && !empty($property_data->facilities))
             {   
 
@@ -51,7 +52,7 @@
                         <div class="row single-realestate-detail p-3">
                             <div class="col-md-12">
                                 <div class="u-t3 mt-3">{{$property_data->local_area_name}}</div>
-                                <span class="u-t2">{{$property_data->local_area_name}} | {{$property_data->number_of_bedrooms}} bedrooms |  {{$property_data->property_type}} |  </span>
+                                <span class="u-t2">{{$property_data->local_area_name}} | {{$property_data->number_of_bedrooms}} soverom |  {{$property_data->property_type}} |  </span>
                             </div>
                             <div class="col-md-12 text-muted">{{$property_data->street_address}}</div>
                             <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div>

@@ -5,6 +5,7 @@ if(!isset($job)){
     $job = $ad->job;
 }
 
+
 $media = $job->media;
 if(count($media)>0){
         foreach ($media as $item){
@@ -18,7 +19,7 @@ if(count($media)>0){
     }
     ?>
 <div class="col-sm-4 pr-0">
-{{--    {{dd(url('jobs.show',compact('job')))}}--}}
+
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
         <div class="image-section col-sm-12  p-2">
             <div class="trailing-border">

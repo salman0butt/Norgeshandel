@@ -13,6 +13,15 @@
 use App\Media;
 use App\Models\Ad;
 use Zizaco\Entrust\Entrust;
+
+Route::get('tt', function (){
+    $languages = ['Norsk','Svensk','Dansk','Finsk','Engelsk','Tysk','Fransk','Spansk','Italiensk','Portugisisk','Russisk','Japansk','Nederlandsk','Norsk tegnspråk','Britisk tegnspråk','Amerikansk tegnspråk','Albansk','Arabisk','Armensk','Bengali','Bosnisk','Bulgarsk','Burmesisk','Eskimoisk/Inuitisk','Estisk','Filipinsk','Færøysk','Georgisk','Gresk','Grønlandsk','Gælisk','Hebraisk','Hindi','Hviterussisk','Indonesisk','Irsk','Islandsk','Kantonesisk/Yue','Katalansk','Kinesisk','Koreansk','Kroatisk','Kurdisk','Latin','Latvisk','Litauisk','Luxemburgisk','Makedonsk','Mandarin','Mongolsk','Nepalsk','Persiska (Farsi)','Polsk','Rumensk','Samisk','Samoansk','Serbisk','Slovakisk','Slovensk','Somalisk','Swahili','Syrisk/Assyrisk','Tamil','Thai','Tibetansk','Tsjekkisk','Tsjetsjensk','Tyrkisk','Ukrainsk','Ungarsk','Urdu','Vietnamesisk','Walisisk','Zulu','Pashto','Punjabi/Panjabi','Usbekisk'];
+    foreach ($languages as $language){
+        \App\Models\Language::create(['name'=>$language]);
+    }
+});
+
+
 Auth::routes();
 
 //    home routes
@@ -77,8 +86,14 @@ Route::group(['middleware'=>'auth'], function(){
         Route::resource('cv', 'Cv\CvController');
         Route::group(['prefix'=>'cv'], function (){
             Route::resources([
-                'cvpersonal'=>'Cv\CvPersonalController'
+                'cvpersonal'=>'Cv\CvPersonalController',
+                'cvexperience'=>'Cv\CvExperienceController'
             ]);
+            Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
+//            Route::post('update_skills', 'Cv\CvController@update_skills')->name('update_skills');
+            Route::post('update_skills/{cv_id}', 'Cv\CvController@update_skills')->name('update_skills');
+            Route::post('update_languages/{cv_id}', 'Cv\CvController@update_languages')->name('update_languages');
+            Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
         });
         Route::get('cv/extend', 'Cv\CvController@extend');
     });
@@ -154,6 +169,7 @@ Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercia
 Route::get('/property/description/{id}', ['uses' =>'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' =>'PropertyController@propertyForSaleDescription']);
 
+
 //flatwishesrented
 Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
 Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
@@ -194,3 +210,6 @@ Route::post('get/commercial/plot/ad', 'PropertyController@commercialPlotSortedAd
 Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commercialPlotDescription');
 
 Route::get('/map/test', 'PropertyController@mapTest');
+
+Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
+

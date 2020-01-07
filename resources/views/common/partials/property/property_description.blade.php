@@ -1,10 +1,12 @@
 @extends('layouts.landingSite')
     @section('page_content')
 
-        <?php
-        $facilities = array();
-        if(isset($property_data->facilities) && !empty($property_data->facilities))
-            {
+
+        <?php 
+
+            $facilities = array();
+            if(isset($property_data->facilities) && !empty($property_data->facilities))
+            {   
 
                 $facilities = explode(",",rtrim($property_data->facilities, ","));
 

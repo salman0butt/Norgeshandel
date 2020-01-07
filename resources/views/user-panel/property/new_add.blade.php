@@ -29,6 +29,7 @@
                 }
             });
 
+
             $("input,select").on("keyup change", function() {
 
                 $(this).parent().find('.error-span').html("");
@@ -83,6 +84,7 @@
                 }).always(function () {
                     l.stop();
                 });
+
 
                 return false;
 
