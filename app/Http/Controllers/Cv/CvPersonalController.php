@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Cv;
 
+use App\Helpers\common;
 use App\Http\Controllers\Controller;
 use App\Models\Cv\Cv;
 use App\Models\Cv\CvPersonal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CvPersonalController extends Controller
 {
@@ -23,7 +25,6 @@ class CvPersonalController extends Controller
                 $cv = new Cv(['user_id'=>Auth::user()->id, 'expiry'=>date('Y-m-d', strtotime("+6 months"))]);
                 $cv->save();
             }
-
             return view('user-panel.my-business.cv.cv', compact('cv'));
         }
 
@@ -53,7 +54,7 @@ class CvPersonalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\CvPersonal  $cvPersonal
+     * @param  \App\Models\Cv\CvPersonal  $cvPersonal
      * @return \Illuminate\Http\Response
      */
     public function show(CvPersonal $cvPersonal)
@@ -64,7 +65,7 @@ class CvPersonalController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CvPersonal  $cvPersonal
+     * @param  \App\Models\Cv\CvPersonal  $cvPersonal
      * @return \Illuminate\Http\Response
      */
     public function edit(CvPersonal $cvPersonal)
@@ -76,25 +77,28 @@ class CvPersonalController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CvPersonal  $cvPersonal
+     * @param  \App\Models\Cv\CvPersonal  $cvPersonal
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $cvpersonal = CvPersonal::where('id', $id)->get()->first();
-
         $cvpersonal->update($request->all());
+        Session::flash('success', 'Cv er oppdatert');
         return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CvPersonal  $cvPersonal
+     * @param  \App\Models\Cv\CvPersonal  $cvPersonal
      * @return \Illuminate\Http\Response
      */
     public function destroy(CvPersonal $cvPersonal)
     {
-        //
+//        $cvPersonal->delete();
+//        Session::flash('success', 'Opplevelsen slettet!');
+//        return back();
     }
+
 }

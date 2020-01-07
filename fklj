@@ -1,0 +1,91 @@
+[33mcommit 18f5ac2a1b2be0758e6f31f9f0900382018ab337[m[33m ([m[1;36mHEAD -> [m[1;32mzain[m[33m)[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Mon Jan 6 13:06:51 2020 +0500
+
+    languages part done
+
+[33mcommit 9a3804d353f3b277ea830ca11461465a0d2d568c[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Fri Jan 3 17:47:57 2020 +0500
+
+    adding languages
+
+[33mcommit 200f3d88ba3d17f394bc2bf45c9394f1d3b6ff9b[m[33m ([m[1;31morigin/zain[m[33m)[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Fri Jan 3 10:48:45 2020 +0500
+
+    working on cv
+
+[33mcommit e5af67e5786ebb12a71ba743637db9965bb41bc3[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Mon Dec 30 18:44:00 2019 +0500
+
+    cv experiences added minor part(multiexperiences) needed to be fixed
+
+[33mcommit 1f683e9d55615e6f2e66d213bff2bacaa6c85a14[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Fri Dec 27 18:22:11 2019 +0500
+
+    cv basic and personal part is working
+
+[33mcommit 268796df8e6ea3a0dc4a10708472a540c00ae0d4[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Thu Dec 26 18:54:58 2019 +0500
+
+    done
+
+[33mcommit 15a64ce7247de002969028558934602784dde747[m
+Merge: 8148e9e 9f24275
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Thu Dec 26 18:02:19 2019 +0500
+
+    Merge branch 'master' of https://github.com/Digitalmx/norgeshandel into zain
+
+[33mcommit 8148e9ebdaaacb1cf58baa0415fcc11fdc7c1376[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Thu Dec 26 17:47:19 2019 +0500
+
+    x
+
+[33mcommit 9f2427534fe259b78e88e73964449769697d0e9d[m[33m ([m[1;31morigin/master[m[33m)[m
+Merge: 4e588a1 8208832
+Author: Digitalmx <59191639+Digitalmx@users.noreply.github.com>
+Date:   Thu Dec 26 17:45:55 2019 +0500
+
+    Merge pull request #2 from Digitalmx/zain
+    
+    fixed favorites list view
+
+[33mcommit 82088322fa00ea1b8a58a08e390beda6de609470[m
+Merge: b2b6ef8 4e588a1
+Author: Digitalmx <59191639+Digitalmx@users.noreply.github.com>
+Date:   Thu Dec 26 17:45:45 2019 +0500
+
+    Merge branch 'master' into zain
+
+[33mcommit 4e588a1200fdcf8104462f7c5174bca5929f9d76[m
+Merge: d412ba1 e658cdc
+Author: Digitalmx <59191639+Digitalmx@users.noreply.github.com>
+Date:   Thu Dec 26 17:43:05 2019 +0500
+
+    Merge pull request #1 from Digitalmx/norgeshandel-alpha
+    
+    done
+
+[33mcommit b2b6ef84743ad5c4a79c62e274df6e9c1a6d0878[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Thu Dec 26 17:37:49 2019 +0500
+
+    fixed favorites list view
+
+[33mcommit e658cdc640cc74ae8a660c82511c20a35c0582c9[m
+Author: syed <syedzilleshah@ymail.com>
+Date:   Thu Dec 26 04:36:35 2019 -0800
+
+    done
+
+[33mcommit d412ba1f854fb8dd8e76a6d2c99a984bd4261404[m
+Author: Zunnuran Ahmad (Zain) <zain@digitalmx.no>
+Date:   Thu Dec 26 12:54:53 2019 +0500
+
+    2nd commit with zille

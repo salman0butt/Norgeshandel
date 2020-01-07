@@ -68,4 +68,8 @@ class User extends Authenticatable
     public function media(){
         return $this->morphOne('App\Media', 'mediable');
     }
+
+    public function cv(){
+        return $this->hasOne('App\Models\Cv\Cv');
+    }
 }

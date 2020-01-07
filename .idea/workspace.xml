@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+=======
+
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForSale.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_form.blade.php" afterDir="false" />
     </list>
+
+>>>>>>> 6f8125afe99c6dcd1e8d389ab0c9c3e37ad55fca
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -176,44 +183,48 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent">
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SearchEverywhereHistoryKey" value=".env&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/.env&#10;.js&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/public/mediexpert.js&#10;adcontrol&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/AdController.php&#10;myads&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/my-business/my_ads.blade.php&#10;single&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/jobs/single.blade.php&#10;usercont&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Users/AdminUserController.php&#10;web.&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/routes/web.php&#10;job-fo&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/common/partials/job-form.blade.php&#10;jobcontrol&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Jobs/JobController.php&#10;Ad.ph&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Models/Ad.php&#10;job&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/jobs/jobs.blade.php&#10;jobs&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/jobs/jobs.blade.php&#10;jobcontro&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Jobs/JobController.php&#10;job.&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Admin/Jobs/Job.php&#10;Ad.&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Models/Ad.php&#10;seq&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/partials/templates/job-sequare.blade.php&#10;ad&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Models/Ad.php&#10;jobcon&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Jobs/JobController.php&#10;getmedia&#9;null&#9;null&#10;jobcont&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Jobs/JobController.php&#10;jobs.&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/admin/jobs/jobs.blade.php&#10;web&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/routes/web.php&#10;home&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/home.blade.php&#10;nb.&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/lang/nb.json&#10;jobform&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/common/partials/job-form.blade.php&#10;Adview&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Models/AdView.php&#10;Ad.php&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Models/Ad.php&#10;fullti&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/admin/jobs/new_full_time.blade.php&#10;admin&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/layouts/admin.blade.php&#10;adcontro&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/AdController.php&#10;we&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/routes/web.php&#10;mediex&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/public/mediexpert.js&#10;Ad&#9;null&#9;null&#10;create&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/database/migrations/2019_10_02_064948_create_jobs_table.php&#10;medi&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/public/mediexpert.js&#10;jobtab&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/database/migrations/2019_10_02_064948_create_jobs_table.php&#10;Job&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Admin/Jobs/Job.php&#10;singl&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/jobs/single.blade.php&#10;form&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/common/partials/form-job-full-time.blade.php&#10;register&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/auth/register.blade.php&#10;admin.bla&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/layouts/admin.blade.php&#10;createjob&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/database/migrations/2019_10_02_064948_create_jobs_table.php&#10;my_busi&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/my-business/my_business.blade.php&#10;jobs.blade&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/resources/views/user-panel/jobs/jobs.blade.php&#10;user&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Users/AdminUserController.php&#10;web.p&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/routes/web.php&#10;common&#9;null&#9;null&#10;mediacon&#9;null&#9;null&#10;jobcontr&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Jobs/JobController.php&#10;usercontr&#9;FILE&#9;file://C:/xampp/htdocs/NorgesHandel/app/Http/Controllers/Admin/Users/AdminUserController.php" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Blade" />
-    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="ignore.virus.scanning.warn.message" value="true" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../login" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/common/partials" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\norgeshandel\public\js" />
-      <recent name="C:\laragon\www\norgeshandel\public\css" />
-      <recent name="C:\laragon\www\norgeshandel\public\images" />
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\common\partials" />
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\app\Http" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\database\migrations" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\app\Http\Controllers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Models\Cv" />
-      <recent name="C:\xampp\htdocs\norgeshandel\app\Http\Controllers\Cv" />
       <recent name="C:\xampp\htdocs\norgeshandel\app\Models" />
       <recent name="C:\xampp\htdocs\NorgesHandel\app\Models" />
       <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\my-business" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\partials" />
+      <recent name="C:\xampp\htdocs\NorgesHandel\resources\views\common\partials" />
     </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="php artisan serve" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
     </option>
   </component>
   <component name="RunManager">
@@ -226,19 +237,6 @@
       <envs />
       <method v="2" />
     </configuration>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-    <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -346,6 +344,10 @@
       <workItem from="1577085779252" duration="13722000" />
       <workItem from="1577166519110" duration="29649000" />
       <workItem from="1577343721216" duration="1680000" />
+<<<<<<< HEAD
+      <workItem from="1577348917534" duration="16466000" />
+=======
+
       <workItem from="1577348917534" duration="39235000" />
       <workItem from="1577686375588" duration="1983000" />
       <workItem from="1577688393844" duration="543000" />
@@ -362,6 +364,8 @@
       <workItem from="1578218969487" duration="599000" />
       <workItem from="1578288424245" duration="8750000" />
       <workItem from="1578299407246" duration="4780000" />
+
+>>>>>>> 6f8125afe99c6dcd1e8d389ab0c9c3e37ad55fca
     </task>
     <servers />
   </component>
@@ -381,6 +385,9 @@
       </map>
     </option>
   </component>
+<<<<<<< HEAD
+=======
+
   <component name="WindowStateProjectService">
     <state x="480" y="159" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1577795968415">
       <screen x="0" y="0" width="1600" height="860" />
@@ -423,12 +430,18 @@
     </state>
     <state x="463" y="180" width="672" height="678" key="search.everywhere.popup/0.0.1600.860@0.0.1600.860" timestamp="1578296294833" />
   </component>
+
+>>>>>>> 6f8125afe99c6dcd1e8d389ab0c9c3e37ad55fca
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php</url>
-          <line>984</line>
+<<<<<<< HEAD
+          <line>965</line>
+=======
+          <line>1260</line>
+>>>>>>> 6f8125afe99c6dcd1e8d389ab0c9c3e37ad55fca
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
