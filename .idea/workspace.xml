@@ -2,13 +2,322 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/app/BusinessForSale.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/CommercialPlot.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/CommercialPropertyForRent.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/AddBusinessForSale.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/AddCommercialPlot.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/AddCommercialPropertyForRent.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/googlmapper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_30_062211_create_commercial_property_for_rents_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_30_101632_create_business_for_sales_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_30_115046_add_published_on_to_business_for_sales.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2019_12_31_121006_create_commercial_plots_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/all.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/all.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555795-1599979.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191228-1577555798-1600373.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191229-1577589498-2618903.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688301-2255226.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577688304-8398893.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690591-6086927.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577690594-6508470.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706785-1838666.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577706786-2336104.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709646-1871260.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191230-1577709647-2225497.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795674-4452074.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577795678-7935590.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797160-5848950.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2019/12/191231-1577797165-6933878.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296014-7470371.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578296255-7040126.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297809-3505641.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578297933-4366328.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578299670-1531385.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300036-6186316.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300038-6598404.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300107-1004251.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300110-6003314.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300805-5397722.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578300830-6729987.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305139-7454745.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578305621-8569254.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126-1024x1024.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126-150x150.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126-250x250.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126-360x360.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126-570x570.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126-66x66.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126-768x768.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/2020/01/200106-1578306314-4760126.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/business_for_sale_description.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/business_for_sale_form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/business_for_sale_render_ads.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercial_plot_render_ads.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercial_plots_description.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercial_plots_form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercial_property_for_rent_form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercial_property_for_rent_render_ads.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercial_property_for_sale_form.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercial_property_for_sale_render_ads.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercialproperty_for_rent_description.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/commercialproperty_for_sale_description.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/common/partials/property/holiday_home_for_sale_description.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/circle.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/javascript.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/map.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/mapper.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/marker.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/overlay.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/polygon.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/polyline.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/rectangle.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/googlmapper/streetview.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/cornford/maptest.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_business_for_sale.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_commercial_plots.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_commercial_property_for_rent.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_commercial_property_for_sale.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/property/business_for_sale.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_plots.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_property_for_rent.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/CommercialPropertyForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CommercialPropertyForSale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/FlatWishesRented.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/FlatWishesRented.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PropertyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PropertyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AddCommercialPropertyForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AddCommercialPropertyForSale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForRent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForRent.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/AddPropertyForSale.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/validate-error.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/validate-error.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/PropertyForRent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/PropertyForRent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/PropertyForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/PropertyForSale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/PropertyHolidaysHomesForSale.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/PropertyHolidaysHomesForSale.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mediexpert.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/mediexpert.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/flat_wishes_rented_description.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/flat_wishes_rented_description.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/flat_wishes_rented_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/flat_wishes_rented_form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/holiday_home_for_sale_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/holiday_home_for_sale_form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/holiday_home_for_sale_render_ads.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/holiday_home_for_sale_render_ads.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_description.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_description.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_rent_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_rent_form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_description.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_description.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/property_for_sale_form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/render_ads.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/render_ads.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/common/partials/property/render_ads_for_sale.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/common/partials/property/render_ads_for_sale.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/landingSite.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/landingSite.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_flat_wishes_rented.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_flat_wishes_rented.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_holiday_home_for_sale.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_holiday_home_for_sale.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_property_for_sale.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_property_for_sale.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_rent.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/ads_for_rent.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_property_for_sale.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/commercial_property_for_sale.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/flat_wishes_rented.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/flat_wishes_rented.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/holiday_home_for_sale.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/holiday_home_for_sale.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/new_add.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/new_add.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/new_sale_add.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/new_sale_add.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/property/property_list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/property/property_list.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user-panel/select-ad-category.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user-panel/select-ad-category.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,7 +675,10 @@
       <workItem from="1578218969487" duration="599000" />
       <workItem from="1578288424245" duration="8750000" />
       <workItem from="1578299407246" duration="7379000" />
-      <workItem from="1578309719007" duration="7386000" />
+      <workItem from="1578309719007" duration="10385000" />
+      <workItem from="1578332405034" duration="648000" />
+      <workItem from="1578375322347" duration="443000" />
+      <workItem from="1578376209726" duration="1255000" />
     </task>
     <servers />
   </component>
@@ -411,6 +723,14 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state width="1557" height="156" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1577688364086" />
+    <state x="104" y="68" width="1430" height="712" key="MergeDialog" timestamp="1578377188783">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="104" y="68" width="1430" height="712" key="MergeDialog/0.0.1600.860@0.0.1600.860" timestamp="1578377188783" />
+    <state x="512" y="147" key="MultipleFileMergeDialog" timestamp="1578377512612">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="512" y="147" key="MultipleFileMergeDialog/0.0.1600.860@0.0.1600.860" timestamp="1578377512612" />
     <state x="301" y="73" key="SettingsEditor" timestamp="1578309604000">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -419,6 +739,10 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1600.860@0.0.1600.860" timestamp="1577964912372" />
+    <state x="511" y="183" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1578377187441">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="511" y="183" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1600.860@0.0.1600.860" timestamp="1578377187441" />
     <state x="456" y="195" width="672" height="677" key="run.anything.popup" timestamp="1577966090892">
       <screen x="0" y="0" width="1600" height="860" />
     </state>

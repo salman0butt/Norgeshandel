@@ -3,25 +3,27 @@
 <head>
     <title>@yield('main_title')</title>
     <meta charset="UTF-8">
-    <script src="{{asset('public/admin/js/jquery.min.js')}}"></script>
-    <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- Compiled CSS -->
+    <link rel="stylesheet" href="{{asset('public/css/all.css')}}">
+    <!-- font awsome icons -->
     <link rel="shortcut icon" href="{{asset('public/images/favicon.ico')}}"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <!--    <script src="assets/js/fontawesome-all.min.js"></script>-->
-    <!--    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">-->
-    <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
-    <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
-    <link rel="stylesheet" href="{{asset('public/css/validate-error.css')}}">
-    <link rel="stylesheet" href="{{asset('public/css/intlTelInput.min.css')}}">
-{{--    <link rel="stylesheet" href="{{asset('public/css/ladda.min.css')}}">--}}
-    <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
-{{--    <link rel="stylesheet" href="{{asset('public/css/Telinput.css')}}">--}}
-    <!--    incluedes   -->
-    <script src="{{asset('public/js/tinymce.min.js')}}"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="{{asset('public/js/all.js')}}"></script> 
+    
+    
+    <!-- 
+        <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
+        <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}"> 
+        <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
+    -->
+    <!-- 
+        <script src="{{asset('public/admin/js/jquery.min.js')}}"></script>
+        <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script> 
+         <script src="{{asset('public/js/tinymce.min.js')}}"></script>
+    -->
 
 </head>
 <body>
@@ -253,16 +255,9 @@
         </div>
     </div>
 </footer>
-<script src="{{asset('public/mediexpert.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-<script src="{{ asset('public/js/additional-methods.min.js') }}"></script>
-<script src="{{asset('public/js/messages_no.min.js')}}"></script>
-{{--<script src="{{ asset('public/js/validater.js') }}"></script>--}}
-<script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
-<script src="{{asset('public/js/telPhone.js')}}"></script>
-<script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
-<script src="{{asset('public/js/utils.js')}}"></script>
-<script src="{{asset('public/js/spin.min.js')}}"></script>
-<script src="{{asset('public/js/ladda.min.js')}}"></script>
+    <script src="{{asset('public/js/utils.js')}}"></script>
+    <script src="{{asset('public/js/spin.min.js')}}"></script>
+    <script src="{{asset('public/js/ladda.min.js')}}"></script>
+<!-- <script src="{{asset('public/mediexpert.js')}}"></script> -->
 </body>
 </html>

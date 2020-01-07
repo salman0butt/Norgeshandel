@@ -65,7 +65,7 @@ class AddPropertyForSale extends FormRequest
     public function messages()
     {
         return [
-            'heading.required' => 'Feltet overskrift er påkrevd.',
+            'headline.required' => 'Feltet overskrift er påkrevd.',
             'zip_code.required'  => 'Feltet post kode er påkrevd.',
             'zip_code.numeric'  => 'Feltet post kode må være numerisk.',
             'street_address.required'  => 'Feltet gateadresse er påkrevd.',

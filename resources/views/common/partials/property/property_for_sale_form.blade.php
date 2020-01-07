@@ -1,4 +1,5 @@
 <form action="#" method="post" id="property_for_sale_form" enctype="multipart/form-data">
+
     <input type="hidden" id="total_price" name="total_price" value="">
     <div class="pl-3 pr-3">
         <div class="form-group">
@@ -910,6 +911,7 @@
             </div>
         </div>
 
+
         <div id="add_more_viewing_times_fields">
 
         </div>
@@ -958,10 +960,8 @@
             <span id="published-on" class="error-span"></span>
         </div>
         <hr>
-        <span class="u-t5">Du må fylle ut Overskrift og 2 andre felter før du kan gå videre</span>
-        <hr>
-{{--        <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!">--}}
+        <div class="notice"></div>
         <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiserannonsen"
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
-        <p class="u-t5 text-center">Ved å gå videre aksepteres samtidig <a href="#">reglene for annonsering</a></p>
+      
 </form>

@@ -14,7 +14,6 @@
 
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>
                     @include('common.partials.property.holiday_home_for_sale_form')
                 </div>
             </div>

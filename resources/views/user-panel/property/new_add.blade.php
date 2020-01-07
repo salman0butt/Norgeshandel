@@ -8,11 +8,12 @@
                 <div class="col-md-10 offset-md-1 mt-5 mb-5">
                     <h2 class="text-muted">Bolig til leie</h2>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    <div class="notice"></div>
-                    @include('common.partials.property.property_for_rent_form')
+
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        @include('common.partials.property.property_for_rent_form')
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -67,6 +68,7 @@
                 }).always(function () {
                     l.stop();
                 });
+
                 return false;
 
             });
@@ -117,6 +119,13 @@
             });
         });
 
+        function isEmpty(obj) {
+            for (var key in obj) {
+                if (obj.hasOwnProperty(key))
+                    return false;
+            }
+            return true;
+        }
     </script>
 
 @endsection

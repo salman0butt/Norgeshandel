@@ -25,6 +25,7 @@ class AddPropertyForRent extends FormRequest
     public function rules()
     {
         return [
+            
             'heading' => 'required',
             'zip_code' => 'required|numeric',
             'street_address' => 'required',
@@ -39,7 +40,6 @@ class AddPropertyForRent extends FormRequest
             'deposit' => 'sometimes|nullable|numeric',
             'rented_from' => 'required|date',
             'rented_to' => 'sometimes|date',
-            'published_on' => 'required',
 
         ];
 
