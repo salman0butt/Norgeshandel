@@ -32,7 +32,7 @@ class Cv extends Model
         return $this->belongsToMany('App\Models\Language');
     }
 
-//    public function education(){
-//        return $this->hasOne('App\Models\Cv\CvEducation');
-//    }
+    public function educations(){
+        return $this->hasMany('App\Models\Cv\CvEducation');
+    }
 }

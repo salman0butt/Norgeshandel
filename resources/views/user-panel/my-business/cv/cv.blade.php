@@ -1,6 +1,9 @@
 @extends('layouts.landingSite')
 <?php $countries = countries(); ?>
 <?php $cv_id = $cv->id; ?>
+<?php $subjects = ['Annet','Allmennfag','Arkeologi','Astronomi','Automasjon','Bibliotek','Billedkunst','Biologi','Business','Bygg og anlegg','Dans','Data og Internett','Design','Elektrofag','Energiteknikk','Entreprenørskap','Farmasi','Film og TV','Filosofi','Flyskoler','Fysikk','Fysioterapi','Geofag','Havbruk og fiske','Helsefag','Historie','Hotell og restaurant','HR og personal','Idrett','Informatikk','Innovasjon','Journalistikk','Jus','Kjemi','Kultur','Landbruk','Litteratur','Logistikk','Marinteknologi','Markedsføring','Maskinteknikk','Matematikk','Mediefag','Medisin','Militærvesen','Molekylærbiologi','Musikk','Natur- og miljøvern','Naturfag','Odontologi','Organisasjon og ledelse','Pedagogikk','Politifag','PR og kommunikasjon','Psykologi','Realfag','Reiseliv','Samfunn og politikk','Sjøfart','Skogbruk','Sosialantropologi','Sos-pedagogikk','Sosiologi','Spes-pedagogikk','Språk','Strategi og ledelse','Svakstrøm','Sykepleie','Teater','Tekniske fag','Teologi','Veterinærmedisin','Yrkesfag','Zoologi','Økonomi'];
+$education_levels =['Vgs/Yrkesskole','Folkehøgskole','Etatsutdannelse','Fagskole','1-2 år høy. utd','Bachelor','4 årig Høyskole/Universitet','Master','Phd','Annet'];
+?>
 @section('page_content')
     <style type="text/css">
         a.edit-btn {
@@ -228,8 +231,7 @@
                                             <button type="submit" class="dme-btn-outlined-blue float-left">
                                                 Lagre endringer
                                             </button>
-                                            <a class="dme-btn-outlined-blue float-left ml-2"
-                                               href="">
+                                            <a class="dme-btn-outlined-blue float-left ml-2"href="">
                                                 <div class="ml-2">Avbryt</div>
                                             </a>
                                         </form>
@@ -271,16 +273,241 @@
                             </div>
                         </div>
                         <hr>
+                        <div class="row row-border education">
+                            <div class="col-12 pt-4 ">
+                                <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Utdanning
+                                    <span class="float-right">
+                                        <a class="edit-btn" data-toggle="collapse" href="#new_education" role="button"
+                                           aria-expanded="false" aria-controls="new_education">Oppdater</a>
+                                    </span>
+                                </h3>
+                                <small class=" font-weight-normal form-text text-muted pl-4 pr-4 pb ">
+                                    @if(!isset($cv->educations) || !is_countable($cv->educations) || empty($cv->educations->first()->school))
+                                        Ingen utdanning registrert ennå
+                                    @endif
+                                </small>
+                                <div class="collapse" id="new_education" style="margin-top: -40px;">
+                                    <div class="table-main">
+                                        <form action="{{route('cveducation.store')}}" name="cveducation-form"
+                                              id="new_cvexperience-form" method="POST" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <div class="row form-group mt-3">
+                                                <label class="col-md-12">Skol *</label>
+                                                <div class="col-md-12">
+                                                    <input type="text" class="form-control" name="school" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="">Periode fra</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" name="period_from" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="">til</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <input type="date" name="period_to" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label for="">
+                                                        <input type="checkbox" name="still_work" value="yes"
+                                                               class="exp_still_work">
+                                                        Er fortsatt i studiet
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-5">
+                                                    <label>Fag</label>
+                                                    <select name="subject" class="form-control">
+                                                        <option value="">Velg...</option>
+                                                        @foreach($subjects as $subject)
+                                                            <option value="{{$subject}}">{{$subject}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <label>Fag</label>
+                                                    <select name="education_level" class="form-control">
+                                                        <option value="">Velg..</option>
+                                                        <option value="Vgs/Yrkesskole">Vgs/Yrkesskole</option>
+                                                        <option value="Folkehøgskole">Folkehøgskole</option>
+                                                        <option value="Etatsutdannelse">Etatsutdannelse</option>
+                                                        <option value="Fagskole">Fagskole</option>
+                                                        <option value="1-2 år høy. utd">1-2 år høy. utd</option>
+                                                        <option value="Bachelor">Bachelor</option>
+                                                        <option value="4 årig Høyskole/Universitet">4 årig Høyskole/Universitet</option>
+                                                        <option value="Master">Master</option>
+                                                        <option value="Phd">Phd</option>
+                                                        <option value="Annet">Annet</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2"></div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-8">
+                                                    <label for="">Grad</label>
+                                                    <input type="text" name="degree" class="form-control">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <br>
+                                                    <small class="text-muted">Velg det som passer best i nedtrekksfeltet og evt. spesifiser grad</small>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Beskrivelse</label>
+                                                <textarea name="detail" class="form-control" rows="3"></textarea>
+                                            </div>
+
+                                            <button type="submit" class="dme-btn-outlined-blue">Lagre</button>
+                                            <a href="#" class="prevent cancel dme-btn-outlined-blue">Avbryt</a>                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            @if(isset($cv->educations) && is_countable($cv->educations) && !empty($cv->educations->first()->school))
+                            <div class="col-md-6 offset-md-3">
+                                <hr>
+                            </div>
+                            @endif
+                            <div class="col-md-12">
+                                @if(isset($cv->educations) && is_countable($cv->educations))
+                                    <?php
+                                    $cveducations = $cv->educations;
+                                    ?>
+                                    @for($i=0; $i<count($cveducations); $i++)
+                                        <?php
+                                            $cveducation = $cveducations[$i];
+                                        ?>
+                                        <div class="text-dark font-weight-normal pl-4 pr-4" style="min-height: 60px;">
+                                            <div class="u-t4">
+                                                <div style="width: 80%;float: left">
+                                                    <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($cveducation->period_from))}} - {{date('d.m.Y', strtotime($cveducation->period_to))}} </span><span
+                                                        class="ml-3 font-weight-normal">{{$cveducation->school}}</span><br>
+                                                    <span class="mt-1">{{$cveducation->degree}}</span>
+                                                </div>
+                                                <div class="" style="font-size: 20px;width: 20%; float: left">
+                                                    <form class="float-right"
+                                                          action="{{route('cveducation.destroy', $cveducation->id)}}"
+                                                          method="POST"
+                                                          onsubmit="jarascript:return confirm('Vil du slette denne utdannelsen?')">
+                                                        {{ csrf_field() }} {{method_field('DELETE')}}
+                                                        <button type="submit" class="link pl-3">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                    <a class="float-right" data-toggle="collapse"
+                                                       href="#edit_education_{{$i}}" role="button"
+                                                       aria-expanded="false"
+                                                       aria-controls="#edit_education_{{$i}}">
+                                                        <i class="fa fa-edit" aria-hidden="true"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="collapse" id="edit_education_{{$i}}" style="margin-top: -40px;">
+                                            <div class="table-main">
+                                                {{--                                                {{dd($cvexperience)}}--}}
+                                                <form action="{{route('cveducation.update', $cveducation->id)}}"
+                                                      name="cveducation-form" id="cveducation-form_{{$i}}"
+                                                      method="POST" enctype="multipart/form-data">
+                                                    {{method_field('PUT')}}
+                                                    {{ csrf_field() }}
+                                                    <div class="row form-group mt-3">
+                                                        <label class="col-md-12">Skol *</label>
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control" name="school" value="{{$cveducation->school}}" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="">Periode fra</label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="date" name="period_from" class="form-control" value="{{$cveducation->period_from}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="">til</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <input type="date" name="period_to" class="form-control" value="{{$cveducation->period_to}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label for="">
+                                                                <input type="checkbox" name="still_work" value="yes"
+                                                                       class="exp_still_work" @if($cveducation->still_work == "yes") checked @endif>
+                                                                Er fortsatt i studiet
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row form-group">
+                                                        <div class="col-md-5">
+                                                            <label>Fag</label>
+                                                            <select name="subject"  class="form-control">
+                                                                <option value="">Velg...</option>
+                                                                @foreach($subjects as $subject)
+                                                                    <option value="{{$subject}}" @if($cveducation->subject==$subject) selected @endif>{{$subject}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <label>Utdanningsnivå</label>
+                                                            <select name="education_level" class="form-control">
+                                                                <option value="">Velg..</option>
+                                                                @foreach($education_levels as $education_level)
+                                                                    <option value="{{$education_level}}" @if($cveducation->education_level==$education_level) selected @endif>{{$education_level}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2"></div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-md-8">
+                                                            <label for="">Grad</label>
+                                                            <input type="text" name="degree" class="form-control" value="{{$cveducation->degree}}">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <br>
+                                                            <small class="text-muted">Velg det som passer best i nedtrekksfeltet og evt. spesifiser grad</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Beskrivelse</label>
+                                                        <textarea name="detail" class="form-control" rows="3">{{$cveducation->detail}}</textarea>
+                                                    </div>
+
+                                                    <button type="submit" class="dme-btn-outlined-blue">Lagre</button>
+                                                    <a href="#" class="prevent cancel dme-btn-outlined-blue">Avbryt</a>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endfor
+                                @endif
+                            </div>
+                        </div>
                         <div class="row row-border experience">
                             <div class="col-12 pt-4 ">
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">Erfaring
                                     <span class="float-right">
                                         <a class="edit-btn" data-toggle="collapse" href="#new_experience" role="button"
-                                           aria-expanded="false" aria-controls="new_experience">Legg til</a>
+                                           aria-expanded="false" aria-controls="new_experience">Oppdater</a>
                                     </span>
                                 </h3>
                                 <small class=" font-weight-normal form-text text-muted pl-4 pr-4 pb ">
-                                    @if(!isset($cv->experiences) || !is_countable($cv->experiences))
+                                    @if(!isset($cv->experiences) || !is_countable($cv->experiences || empty($cv->experiences->first()->company)))
                                         Ingen utdannelse er registrert
                                     @endif
                                 </small>
@@ -424,14 +651,16 @@
                                             </div>
 
                                             <button type="submit" class="dme-btn-outlined-blue">Lagre</button>
-                                            <button class="dme-btn-outlined-blue">Avbryt</button>
+                                            <button class="cancel prevent dme-btn-outlined-blue">Avbryt</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
+                            @if(isset($cv->experiences) && is_countable($cv->experiences || !empty($cv->experiences->first()->company)))
                             <div class="col-md-6 offset-md-3">
                                 <hr>
                             </div>
+                            @endif
                             <div class="col-md-12">
                                 @if(isset($cv->experiences) && is_countable($cv->experiences))
                                     <?php
@@ -444,7 +673,7 @@
                                         <div class="text-dark font-weight-normal pl-4 pr-4" style="min-height: 60px;">
                                             <div class="u-t4">
                                                 <div style="width: 80%;float: left">
-                                                    <span class="text-muted font-weight-normal small">{{$cvexperience->period_from}} - {{$cvexperience->period_from}} </span><span
+                                                    <span class="text-muted font-weight-normal small">{{date('d.m.Y', strtotime($cvexperience->period_from))}} - {{date('d.m.Y', strtotime($cvexperience->period_from))}} </span><span
                                                         class="ml-3 font-weight-normal">{{$cvexperience->company}}</span><br>
                                                     <span class="mt-1">{{$cvexperience->job_title}}</span>
                                                 </div>
@@ -630,7 +859,7 @@
                                                     </div>
 
                                                     <button type="submit" class="dme-btn-outlined-blue">Lagre</button>
-                                                    <button class="dme-btn-outlined-blue">Avbryt</button>
+                                                    <button class="prevent cancel dme-btn-outlined-blue">Avbryt</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -638,13 +867,13 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="row row-border">
+                        <div class="row row-border key_skills">
                             <div class="col-12 pt-4 ">
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">
                                     Nøkkelkompetanse
                                     <span class="float-right">
                                         <a class="edit-btn" data-toggle="collapse" href="#colapednok" role="button"
-                                           aria-expanded="false" aria-controls="colapednok">Legg til</a>
+                                           aria-expanded="false" aria-controls="colapednok">Oppdater</a>
                                     </span>
                                 </h3>
                                 <div class=" font-weight-normal form-text text-muted pl-4 pr-4 pb ">
@@ -680,8 +909,7 @@
                                             <button type="submit" class="dme-btn-outlined-blue float-left">
                                                 <div class="ml-2">Lagre endringer</div>
                                             </button>
-                                            <input type="reset" class="dme-btn-outlined-blue float-left ml-2"
-                                                   value="Avbryt">
+                                            <a class="cancel prevent dme-btn-outlined-blue float-left ml-2" href="">Avbryt</a>
                                         </form>
                                     </div>
                                 </div>
@@ -693,12 +921,12 @@
                                     Language
                                     <span class="float-right">
                                         <a class="edit-btn" data-toggle="collapse" href="#languages" role="button"
-                                           aria-expanded="false" aria-controls="languages">Endre</a>
+                                           aria-expanded="false" aria-controls="languages">Oppdater</a>
                                     </span>
                                 </h3>
                                 <small class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5">
                                     <?php $selected_langs = $cv->languages;?>
-                                    @if(!isset($cv->languages) || empty($cv->languages) || !is_countable($cv->languages))
+                                    @if(!isset($cv->languages) || empty($cv->languages) || !is_countable($cv->languages) || count($cv->languages)<1)
                                         Du har ikke registrert noen språk ennå.
                                     @else
                                         @foreach($selected_langs as $lang)
@@ -742,7 +970,7 @@
                                         <div class="col-md-1 p-3"></div>
                                         <div class="col-md-12 p-3 pr-5">
                                             <button type="submit"  class="m-2 float-right btn dme-btn-outlined-blue bg-maroon color-white radius-8">Lagre</button>
-                                            <button type="reset" class="m-2 float-right btn dme-btn-outlined-blue">Avbryt</button>
+                                            <a class="cancel prevent m-2 float-right btn dme-btn-outlined-blue">Avbryt</a>
                                         </div>
                                     </div>
                                         <div id="vals">
@@ -757,8 +985,8 @@
                                 <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:26px;">
                                     Ønsker for neste jobb
                                     <span class="float-right">
-                                        <a class="edit-btn" data-toggle="collapse" href="#preference" role="button"
-                                           aria-expanded="false" aria-controls="preferences">Endre</a>
+                                        <a class="edit-btn" data-toggle="collapse" href="#preferences" role="button"
+                                           aria-expanded="false" aria-controls="preferences">Oppdater</a>
                                     </span>
                                 </h3>
                                 <small class=" font-weight-normal form-text text-muted pl-4 pr-4 mb-5">
@@ -772,7 +1000,7 @@
                                         <div class="row form-group mt-3">
                                             <div class="col-md-12">
                                                 <label for="">Her legger du inn det du ønsker å jobbe med i fremtiden</label>
-                                                <textarea name="prospective" id="" class="form-control">{{$cv->preference->prospective}}</textarea>
+                                                <textarea name="prospective"  class="form-control">{{$cv->preference->prospective}}</textarea>
                                                 <span class="small">F.eks "Jeg ønsker å jobbe med IT-drift og backoffice-relaterte oppgaver. Jeg trives med å sette ting i system, utarbeide rutiner og dokumentere."</span>
                                             </div>
                                         </div>
@@ -861,7 +1089,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-12 p-2 pr-5">
                                                 <button type="submit"  class="m-2 float-right btn dme-btn-outlined-blue bg-maroon color-white radius-8">Lagre</button>
-                                                <button type="reset" class="m-2 float-right btn dme-btn-outlined-blue">Avbryt</button>
+                                                <a href="" class="cancel prevent m-2 float-right btn dme-btn-outlined-blue">Avbryt</a>
                                             </div>
                                         </div>
                                     </form>
@@ -869,7 +1097,7 @@
                                 </div>
 
                                 <div class="mhl pl-4 pr-4 mt-3">
-                                    <table class="sectioninfo super-condensed border-white w-100" cellspacing="0" summary="Preferences for future positions">
+                                    <table class="sectioninfo super-condensed border-white w-100">
                                         <tbody>
                                         <tr>
                                             <th class="th_row size1of4" scope="row">Jobbtype</th>
@@ -904,8 +1132,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="pt-5 pb-5 pl-4 pr-4 text-dark">Your CV can only be viewed by our customers when you
-                            have registered personal details and education or experience.</p>
+                        <p class="pt-5 pb-5 pl-4 pr-4 text-dark">CVen din kan bare vises av våre kunder når du har registrert personopplysninger og utdanning eller erfaring.</p>
                         <p class="text-dark pl-4 pr-4">10670303</p>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -1297,12 +1524,17 @@
             }
         }
 
-        $(document).on('click', '.prevent', function (e) {
-            e.preventDefault();
-        });
-
         $('#selected_languages').html($('#source_languages').children('option:selected'));
         $(document).ready(function () {
+            $(document).on('click', '.cancel', function (e) {
+                $(this).closest('.collapse').removeClass('show');
+                console.log($(this).closest('.collapse'));
+            });
+
+            $(document).on('click', '.prevent', function (e) {
+                e.preventDefault();
+            });
+
             $('#form_languages').submit(function (e) {
                 $('#selected_languages option').prop('selected', true);
             });
