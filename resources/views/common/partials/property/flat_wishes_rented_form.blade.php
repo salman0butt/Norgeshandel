@@ -118,41 +118,41 @@
             <h3 class="u-t5">Ønsket boligtype</h3>
             <div class="row">
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-FLAT" type="checkbox" value="FLAT" name="property_type[]">
+                    <input data-selector="" id="property_type-FLAT" type="checkbox" value="Leilighet" name="property_type[]">
                     <label class="smalltext" for="property_type-FLAT"> Leilighet</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-DETACHED" type="checkbox" value="DETACHED"
+                    <input data-selector="" id="property_type-DETACHED" type="checkbox" value="Enebolig"
                            name="property_type[]">
                     <label class="smalltext" for="property_type-DETACHED"> Enebolig</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-TERRACED" type="checkbox" value="TERRACED"
+                    <input data-selector="" id="property_type-TERRACED" type="checkbox" value="Rekkehus"
                            name="property_type[]">
                     <label class="smalltext" for="property_type-TERRACED"> Rekkehus</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-SEMIDETACHED" type="checkbox" value="SEMIDETACHED"
+                    <input data-selector="" id="property_type-SEMIDETACHED" type="checkbox" value="Tomannsbolig"
                            name="property_type[]">
                     <label class="smalltext" for="property_type-SEMIDETACHED"> Tomannsbolig</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-BEDSIT" type="checkbox" value="BEDSIT"
+                    <input data-selector="" id="property_type-BEDSIT" type="checkbox" value="Hybel"
                            name="property_type[]">
                     <label class="smalltext" for="property_type-BEDSIT"> Hybel</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-HOUSESHARE" type="checkbox" value="HOUSESHARE"
+                    <input data-selector="" id="property_type-HOUSESHARE" type="checkbox" value="Rom i bofellesskap"
                            name="property_type[]">
                     <label class="smalltext" for="property_type-HOUSESHARE"> Rom i bofellesskap</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-GARAGE" type="checkbox" value="GARAGE"
+                    <input data-selector="" id="property_type-GARAGE" type="checkbox" value="Garasje Parkering"
                            name="property_type[]">
                     <label class="smalltext" for="property_type-GARAGE"> Garasje/Parkering</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-OTHER" type="checkbox" value="OTHER"
+                    <input data-selector="" id="property_type-OTHER" type="checkbox" value="Andre"
                            name="property_type[]">
                     <label class="smalltext" for="property_type-OTHER"> Andre</label>
                 </div>
@@ -176,9 +176,9 @@
                 <div class="col-sm-12 pr-md-0">
                     <select class="dme-form-control" id="property_details.furnishing" name="furnishing">
                         <option value=""></option>
-                        <option value="PARTLY_FURNISHED">Delvis møblert</option>
-                        <option value="FURNISHED">Møblert</option>
-                        <option value="UNFURNISHED">Umøblert</option>
+                        <option value="Delvis møblert">Delvis møblert</option>
+                        <option value="Møblert">Møblert</option>
+                        <option value="Umøblert">Umøblert</option>
                     </select>
                 </div>
             </div>

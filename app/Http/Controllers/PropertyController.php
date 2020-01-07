@@ -43,7 +43,9 @@ class PropertyController extends Controller
 
     public function list()
     {
-        return view('user-panel.property.property_list');
+        $ads = Ad::where('status','published')
+                    ->orderBy('id', 'desc')->get();
+        return view('user-panel.property.property_list',compact('ads'));
     }
 
 
