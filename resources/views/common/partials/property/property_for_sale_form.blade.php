@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="headline" class="dme-form-control">
-                    <span id="headline" class="error-span"></span>
+                    <span class="error-span headline"></span>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="zip_code" type="text" class="dme-form-control">
-                    <span id="zip_code" class="error-span"></span>
+                    <span class="error-span zip_code"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <br>
@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="street_address" type="text" class="dme-form-control">
-                    <span id="street_address" class="error-span"></span>
+                    <span class="error-span street_address"></span>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     <textarea type="text" name="location" class="dme-form-control"
                               placeholder="F.eks. Eiendommen ligger i nærheten til flotte tur- og friluftsområder og har kort gangavstand til skole og barnehage."></textarea><br>
                     <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
-                    <span id="location" class="error-span"></span>
+                    <span class="error-span location"></span>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                     <input type="text" name="local_area_name" class="dme-form-control"
                            placeholder="F.eks. Bjerke eller Kampen">
                     <span class="u-t5">Her kan du skrive inn hvilken bydel eller område eiendommen befinner seg i</span>
-                    <span id="local_area_name" class="error-span"></span>
+                    <span class="error-span local_area_name"></span>
                 </div>
             </div>
         </div>
@@ -69,15 +69,15 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="property_type" class="dme-form-control">
                         <option value=""></option>
-                        <option value="OTHER">Andre</option>
-                        <option value="DETACHED">Enebolig</option>
-                        <option value="GARAGE">Garasje/Parkering</option>
-                        <option value="FARM">Gårdsbruk/Småbruk</option>
-                        <option value="FLAT">Leilighet</option>
-                        <option value="TERRACED">Rekkehus</option>
-                        <option value="SEMIDETACHED">Tomannsbolig</option>
+                        <option value="Andre">Andre</option>
+                        <option value="Enebolig">Enebolig</option>
+                        <option value="Garasje Parkering">Garasje/Parkering</option>
+                        <option value="Gårdsbruk Småbruk">Gårdsbruk/Småbruk</option>
+                        <option value="Leilighet">Leilighet</option>
+                        <option value="Rekkehus">Rekkehus</option>
+                        <option value="Tomannsbolig">Tomannsbolig</option>
                     </select>
-                    <span id="property_type" class="error-span"></span>
+                    <span class="error-span property_type"></span>
                 </div>
             </div>
         </div>
@@ -87,14 +87,14 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="tenure" class="dme-form-control">
                         <option value=""></option>
-                        <option value="COLLECTIVE_OWNERSHIP">Aksje</option>
-                        <option value="PART_OWNERSHIP">Andel</option>
-                        <option value="OTHER">Annet</option>
-                        <option value="FREEHOLD">Eier (Selveier)</option>
-                        <option value="LEASEHOLD">Obligasjon</option>
+                        <option value="Aksje">Aksje</option>
+                        <option value="Andel">Andel</option>
+                        <option value="Annet">Annet</option>
+                        <option value="Eier Selveier">Eier (Selveier)</option>
+                        <option value="Obligasjon">Obligasjon</option>
                     </select>
                     <span class="u-t5">Beskriv varen kort. Denne beskrivelsen brukes til å finne riktig kategori i feltene under.</span>
-                    <span id="tenure" class="error-span"></span>
+                    <br><span  class="error-span tenure"></span>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="municipality_number" type="text" class="dme-form-control">
-                        <span id="municipality_number" class="error-span"></span>
+                        <span class="error-span municipality_number"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -122,7 +122,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="farm_number" type="text" class="dme-form-control">
-                        <span id="farm_number" class="error-span"></span>
+                        <span class="error-span farm_number"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -138,7 +138,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="usage_number" type="text" class="dme-form-control">
-                        <span id="usage_number" class="error-span"></span>
+                        <span class="error-span usage_number"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -156,7 +156,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="party_number" type="text" class="dme-form-control">
-                        <span id="party_number" class="error-span"></span>
+                        <span class="error-span party_number"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -174,7 +174,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="section_number" type="text" class="dme-form-control">
-                        <span id="section_number" class="error-span"></span>
+                        <span class="error-span section_number"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -192,7 +192,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="apartment_number" type="text" class="dme-form-control" placeholder="H0201">
-                        <span id="apartment_number" class="error-span"></span>
+                        <span class="error-span apartment_number"></span>
                      </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -210,7 +210,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input type="text" name="use_area" class="dme-form-control" placeholder="m²">
-                        <span id="use_area" class="error-span"></span>
+                        <span class="error-span use_area"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -228,7 +228,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="primary_room" type="text" class="dme-form-control" placeholder="m²">
-                        <span id="primary_room" class="error-span"></span>
+                        <span class="error-span primary_room"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -246,7 +246,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input type="text" name="Base" class="dme-form-control" placeholder="m²">
-                        <span id="Base" class="error-span"></span>
+                        <span class="error-span Base"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -273,7 +273,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="year" type="text" class="dme-form-control" placeholder="åååå">
-                    <span id="year" class="error-span"></span>
+                    <span class="error-span year"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <br>
@@ -284,7 +284,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="renovated_year" type="text" class="dme-form-control" placeholder="åååå">
-                    <span id="renovated_year" class="error-span"></span>
+                    <span class="error-span renovated_year"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <br>
@@ -304,7 +304,7 @@
                         <option value="F">F</option>
                         <option value="G">G</option>
                     </select>
-                    <span id="energy_grade" class="error-span"></span>
+                    <span class="error-span energy_grade"></span>
                     <span class="u-t5">Energikarakter går fra A til G, hvor A er best. Karakteren er basert på beregnet levert energi til boligen. En god energikarakter betyr at boligen er energieffektiv.</span>
                 </div>
             </div>
@@ -315,13 +315,13 @@
                     <h3 for="" class="u-t5">Oppvarmingskarakter (valgfritt)</h3>
                     <select name="heating_character" class="dme-form-control">
                         <option value=""></option>
-                        <option value="YELLOW">Gul</option>
-                        <option value="LIGHT_GREEN">Lysegrønn</option>
-                        <option value="DARK_GREEN">Mørkegrønn</option>
-                        <option value="ORANGE">Oransje</option>
-                        <option value="RED">Rød</option>
+                        <option value="Gul">Gul</option>
+                        <option value="Lysegrønn">Lysegrønn</option>
+                        <option value="Mørkegrønn">Mørkegrønn</option>
+                        <option value="Oransje">Oransje</option>
+                        <option value="Rød">Rød</option>
                     </select>
-                    <span id="heating_character" class="error-span"></span>
+                    <span class="error-span heating_character"></span>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
                 </div>
             </div>
@@ -331,7 +331,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="number_of_bedrooms" type="text" class="dme-form-control">
-                    <span id="number_of_bedrooms" class="error-span"></span>
+                    <span class="error-span number_of_bedrooms"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <br>
@@ -342,7 +342,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="number_of_rooms" type="text" class="dme-form-control">
-                    <span id="number_of_rooms" class="error-span"></span>
+                    <span class="error-span number_of_rooms"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <div class="col-md-12">
@@ -358,7 +358,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="floor" type="text" class="dme-form-control">
-                    <span id="floor" class="error-span"></span>
+                    <span class="error-span floor"></span>
 
                 </div>
                 <div class="col-md-8"></div>
@@ -368,7 +368,7 @@
         <div class="form-group ">
             <h3 class="mb-2 form-check-label" for="approved_rental_part">
                 <input id="approved_rental_part" name="approved_rental_part" type="checkbox">Godkjent utleiedel
-                <span id="approved_rental_part" class="error-span"></span>
+                <span class="error-span approved_rental_part"></span>
             </h3>
             <div class="u-t5">Dersom eiendommen har godkjent utleiedel huker du av for dette her.</div>
         </div>
@@ -474,7 +474,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="housing_team" class="dme-form-control">
-                    <span id="housing_team" class="error-span"></span>
+                    <span class="error-span housing_team"></span>
                 </div>
             </div>
         </div>
@@ -484,7 +484,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="owner_of_housing" type="text" class="dme-form-control">
-                    <span id="owner_of_housing" class="error-span"></span>
+                    <span class="error-span owner_of_housing"></span>
                 </div>
             </div>
         </div>
@@ -493,7 +493,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="housing_type_org_number" type="text" class="dme-form-control">
-                    <span id="housing_type_org_number" class="error-span"></span>
+                    <span class="error-span housing_type_org_number"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -505,7 +505,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="housing_cooperative_share_number" type="text" class="dme-form-control">
-                    <span id="housing_cooperative_share_number" class="error-span"></span>
+                    <span class="error-span housing_cooperative_share_number"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -522,7 +522,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="land" type="text" class="dme-form-control" placeholder="m²">
-                    <span id="land" class="error-span"></span>
+                    <span class="error-span land"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -533,7 +533,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="holiday_year" type="text" class="dme-form-control" placeholder="åååå">
-                    <span id="holiday_year" class="error-span"></span>
+                    <span class="error-span holiday_year"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -547,7 +547,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="party_fee" type="text" class="dme-form-control" placeholder="Kr.">
-                    <span id="party_fee" class="error-span"></span>
+                    <span class="error-span party_fee"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -563,7 +563,7 @@
                            value="AIRCONDITIONING2" name="facilities2">
                     <label class="smalltext" for="facilities-AIRCONDITIONING2"> DEiet tomt (valgfritt) </label>
                     <div class="u-t5">Tomten eies av selger</div>
-                    <span id="facilities2" class="error-span"></span>
+                    <span class="error-span facilities2"></span>
                 </div>
             </div>
         </div>
@@ -573,7 +573,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="character" id="beskrivelse" cols="30" rows="10"></textarea>
                     <span class="u-t5">Hva består tomten av? Her kan du for eksempel fortelle litt mer om hage, innkjørsel, parkering,og offentlige reguleringer.</span>
-                    <span id="character" class="error-span"></span>
+                    <span class="error-span character"></span>
                 </div>
             </div>
         </div>
@@ -582,7 +582,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="rent_shared_cost" type="text" class="dme-form-control" placeholder="Kr.">
-                    <span id="rent_shared_cost" class="error-span"></span>
+                    <span class="error-span rent_shared_cost"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -594,7 +594,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <input name="shared_costs_include" type="text" class="dme-form-control"
                            placeholder="F.eks. kabeltv, strøm, vaktmester, trappevask, forsikring, kommunale avgifter">
-                    <span id="shared_costs_include" class="error-span"></span>
+                    <span class="error-span shared_costs_include"></span>
                 </div>
             </div>
         </div>
@@ -604,7 +604,7 @@
                 <div class="col-md-4 pr-md-0">
                     <input name="common_costs_after_interest_free_period" type="text" class="dme-form-control"
                            placeholder="Kr.">
-                    <span id="common_costs_after_interest_free_period" class="error-span"></span>
+                    <span class="error-span common_costs_after_interest_free_period"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <div class="col-md-12">
@@ -621,7 +621,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <input name="asset_value" type="text" class="dme-form-control total_price_constants"
                            placeholder="Kr.">
-                    <span id="asset_value" class="error-span"></span>
+                    <span class="error-span asset_value"></span>
                     <div class="u-t5">Formuesverdi legges til grunn av skatteetaten og kommuner når skatt av boligen
                         skal regnes ut. Mer om formuesverdi og hvordan du beregner dette kan du finne på skatteetaten
                         sin hjemmeside.
@@ -635,7 +635,7 @@
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="asking_price" class="dme-form-control total_price_constants asking_price"
                            placeholder="Kr.">
-                    <span id="asking_price" class="error-span"></span>
+                    <span class="error-span asking_price"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -649,7 +649,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="expenses" type="text" class="dme-form-control total_price_constants" placeholder="Kr.">
-                    <span id="expenses" class="error-span"></span>
+                    <span id="expenses" class="error-span expenses"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -666,7 +666,7 @@
                 <div class="col-sm-4 pr-md-0">
                     <input name="costs_include" type="text" class="dme-form-control total_price_constants costs_include"
                            placeholder="Kr">
-                    <span id="costs_include" class="error-span"></span>
+                    <span class="error-span costs_include"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -683,7 +683,7 @@
                 <div class="col-sm-4 pr-md-0">
                     <input name="percentage_of_public_debt" type="text"
                            class="dme-form-control total_price_constants percentage_of_public_debt" placeholder="Kr.">
-                    <span id="percentage_of_public_debt" class="error-span"></span>
+                    <span class="error-span percentage_of_public_debt"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -714,7 +714,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="value_rate" type="text" class="dme-form-control" placeholder="Kr.">
-                    <span id="value_rate" class="error-span"></span>
+                    <span class="error-span value_rate"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -730,7 +730,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="loan_rate" type="text" class="dme-form-control" placeholder="Kr">
-                    <span id="loan_rate" class="error-span"></span>
+                    <span class="error-span loan_rate"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -746,7 +746,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="percentage_of_common_wealth" class="dme-form-control" placeholder="Kr.">
-                    <span id="percentage_of_common_wealth" class="error-span"></span>
+                    <span class="error-span percentage_of_common_wealth"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -760,7 +760,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="muncipal_fees_per_year" type="text" class="dme-form-control" placeholder="Kr.">
-                    <span id="muncipal_fees_per_year" class="error-span"></span>
+                    <span class="error-span muncipal_fees_per_year"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -773,7 +773,7 @@
                            name="facilities3">
                     <label class="smalltext" for="facilities-AIRCONDITIONING2"> Borettslaget har
                         sikringsordning </label>
-                    <span id="facilities3" class="error-span"></span>
+                    <span class="error-span facilities3"></span>
                 </div>
             </div>
         </div>
@@ -783,7 +783,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="joint_debt_costs" id="beskrivelse" cols="30" rows="10"></textarea>
                     <span class="u-t5">Dersom du har ytterligere informasjon om fellesgjeld og felleskostnader så kan du fortelle mer om det her.</span>
-                    <span id="joint_debt_costs" class="error-span"></span>
+                    <span class="error-span joint_debt_costs"></span>
                 </div>
             </div>
         </div>
@@ -795,7 +795,7 @@
                     <div class="u-t5">Her kan du angi om det praktiseres en forkjøpsrett, eller når en eventuell
                         forkjøpsrett vil bli avklart.
                     </div>
-                    <span id="pre_empt_right" class="error-span"></span>
+                    <span class="error-span pre_empt_right"></span>
                 </div>
             </div>
         </div>
@@ -834,7 +834,7 @@
                     <textarea name="essential_information" id="beskrivelse" cols="30" rows="10"
                               placeholder="F.eks. Taket på det ene soverommet lekker. Det elektriske anlegget i kjelleren er utført av ufaglært."></textarea>
                     <span class="u-t5">Opplysninger om vesentlige kjente feil og mangler som er av betydning for kjøper. Dette kan f.eks være større fysiske skader på boligen, endringer på boligen som er gjort uten å skaffe nødvendig tillatelse, byggeprosjekter som kan påvirke boligen eller utført arbeid på eiendommen av ufaglærte. Henvis også gjerne til takst.</span>
-                    <span id="essential_information" class="error-span"></span>
+                    <span class="error-span essential_information"></span>
                 </div>
             </div>
         </div>
@@ -853,7 +853,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <input name="video" type="text" class="dme-form-control">
                     <div class="u-t5">Kopier eller skriv inn linken til en video på Youtube eller Vimeo.</div>
-                    <span id="video" class="error-span"></span>
+                    <span class="error-span video"></span>
                 </div>
             </div>
         </div>
@@ -871,7 +871,7 @@
             <div class="row">
                 <div class="col-md-4 pr-md-0">
                     <input name="deliver_date[]" type="date" class="dme-form-control">
-                    <span id="deliver_date" class="error-span"></span>
+                    <span class="error-span deliver_date"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <div class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</div>
@@ -882,7 +882,7 @@
             <div class="row">
                 <div class="col-md-4 pr-md-0">
                     <input name="from_clock[]" type="text" class="dme-form-control" placeholder="tt.mm">
-                    <span id="from_clock" class="error-span"></span>
+                    <span class="error-span from_clock"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <div class="u-t5">Tid (eksempel 18:00)</div>
@@ -893,7 +893,7 @@
             <div class="row">
                 <div class="col-md-4 pr-md-0">
                     <input name="clockwise[]" type="text" class="dme-form-control" placeholder="tt.mm">
-                    <span id="clockwise" class="error-span"></span>
+                    <span class="error-span clockwise"></span>
                 </div>
                 <div class="col-md-8"></div>
                 <div class="u-t5">Tid (eksempel 19:30)</div>
@@ -905,7 +905,7 @@
                 <div class="col-md-12 pr-md-0">
                     <input name="note1[]" type="text" class="dme-form-control"
                            placeholder="F.eks.: visning etter avtale">
-                    <span id="note1" class="error-span"></span>
+                    <span class="error-span note1"></span>
                 </div>
                 <div class="u-t5">Tid (eksempel 19:30)</div>
             </div>
@@ -934,7 +934,7 @@
                     <span id="error-msg" class="hide"></span>
                     <div class="u-t5">Hvilket telefonnummer ønsker du at interesserte kjøpere skal kontakte deg på?
                     </div>
-                    <span id="phone" class="error-span"></span>
+                    <span class="error-span phone"></span>
                 </div>
             </div>
         </div>
@@ -957,11 +957,11 @@
                 <input id="published-on" name="published-on" type="checkbox" class="pub_validate">Ikke vis profilbilde og lenke til
                 profilsiden før kjøperen tar kontakt med meg.
             </label>
-            <span id="published-on" class="error-span"></span>
+            <span class="error-span published-on"></span>
         </div>
         <hr>
         <div class="notice"></div>
         <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiserannonsen"
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
-      
+
 </form>

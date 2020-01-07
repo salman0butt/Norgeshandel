@@ -1,8 +1,10 @@
 @extends('layouts.landingSite')
     @section('page_content')
 
+
         <?php 
 
+            $facilities = array();
             if(isset($property_data->facilities) && !empty($property_data->facilities))
             {   
 
@@ -14,13 +16,13 @@
             {
                 $name       =    $name->name_unique;
                 $path       =    \App\Helpers\common::getMediaPath($property_data);
-                $full_path  =    $path."".$name; 
+                $full_path  =    $path."".$name;
             }
             else
             {
                 $full_path  = "";
             }
-          
+
 
         ?>
 
@@ -66,7 +68,7 @@
                             <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>{{$property_data->floor}}</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Boligtype </span>&nbsp;<span>{{$property_data->property_type}}</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Leieperiode </span>&nbsp;<span>{{ date("d.m.Y", strtotime($property_data-> rented_from)) }} - {{ date("d.m.Y", strtotime($property_data-> rented_to)) }}</span></div>
-                        
+
 
                             <!-- <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a> -->
 
@@ -75,7 +77,7 @@
                                 <ul>
                                     @foreach($facilities as $key=>$val)
                                         <li>
-                                            <?php 
+                                            <?php
                                                 if($val != "")
                                                 {
                                                     echo $val;
@@ -86,7 +88,7 @@
                                 </ul>
                             </div>
 
-                            
+
                             <div class="col-md-12">
                             <span class="font-weight-bold">Description</span>
                             <p>{{$property_data->description}}</p></div>
@@ -130,15 +132,15 @@
                         <h2 class="u-t3">Visning</h2>
                         @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) || !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) || !empty($property_data->note))
                             <div class="mb-2">
-                                <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span> 
-                                <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?> pm,</span> 
+                                <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
+                                <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?> pm,</span>
                                 <span><?php echo (!empty($property_data->clockwise_clock) ?  $property_data->clockwise_clock : ""); ?> pm</span>
-                                <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?> pm</span> 
+                                <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?> pm</span>
                             </div>
-                        @else   
+                        @else
                             <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
                         @endif
-                       
+
                         <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>
                         <button class="dme-btn-outlined-blue col-12">Gi bud</button>
                         <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a>
