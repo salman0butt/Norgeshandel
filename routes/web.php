@@ -15,13 +15,10 @@ use App\Models\Ad;
 use Zizaco\Entrust\Entrust;
 
 Route::get('tt', function (){
-//    $t = \App\Taxonomy::all();
-    $t = \App\Term::all();
-    echo '[';
-    foreach ($t as $x){
-        echo "['name'=>'$x->name','slug'=>'$x->slug','parent'=>$x->parent,'taxonomy_id'=>$x->taxonomy_id],";
+    $languages = ['Norsk','Svensk','Dansk','Finsk','Engelsk','Tysk','Fransk','Spansk','Italiensk','Portugisisk','Russisk','Japansk','Nederlandsk','Norsk tegnspråk','Britisk tegnspråk','Amerikansk tegnspråk','Albansk','Arabisk','Armensk','Bengali','Bosnisk','Bulgarsk','Burmesisk','Eskimoisk/Inuitisk','Estisk','Filipinsk','Færøysk','Georgisk','Gresk','Grønlandsk','Gælisk','Hebraisk','Hindi','Hviterussisk','Indonesisk','Irsk','Islandsk','Kantonesisk/Yue','Katalansk','Kinesisk','Koreansk','Kroatisk','Kurdisk','Latin','Latvisk','Litauisk','Luxemburgisk','Makedonsk','Mandarin','Mongolsk','Nepalsk','Persiska (Farsi)','Polsk','Rumensk','Samisk','Samoansk','Serbisk','Slovakisk','Slovensk','Somalisk','Swahili','Syrisk/Assyrisk','Tamil','Thai','Tibetansk','Tsjekkisk','Tsjetsjensk','Tyrkisk','Ukrainsk','Ungarsk','Urdu','Vietnamesisk','Walisisk','Zulu','Pashto','Punjabi/Panjabi','Usbekisk'];
+    foreach ($languages as $language){
+        \App\Models\Language::create(['name'=>$language]);
     }
-    echo ']';
 });
 
 
