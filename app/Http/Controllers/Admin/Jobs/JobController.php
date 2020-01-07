@@ -62,8 +62,55 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+                $arr = array(
+            'name' => $request->name,
+            'title' => $request->title,
+            'job_type'=>$request->job_type,
+                'positions' => $request->positions,
+            'commitment_type' => $request->commitment_type,
+            'sector' => $request->sector,
+            'keywords' => $request->keywords,
+            'description' => $request->description,
+            'deadline' => $request->deadline,
+            'accession' => $request->accession,
+            'emp_name' => $request->emp_name,
+            'emp_company_information' => $request->emp_company_information,
+            'emp_website' => $request->emp_website,
+            'emp_facebook' => $request->emp_facebook,
+            'emp_linkedin' => $request->emp_linkedin,
+            'emp_twitter' => $request->emp_twitter,
+            'country' => $request->country,
+            'zip' => $request->zip,
+            'address' => $request->address,
+            'workplace_video' => $request->workplace_video,
+            'app_receive_by' => $request->app_receive_by,
+            'app_link_to_receive' => $request->app_link_to_receive,
+            'app_email_to_receive' => $request->app_email_to_receive,
+            'app_contact' => $request->app_contact,
+            'app_contact_title' => $request->app_contact_title,
+            'app_mobile' => $request->app_mobile,
+            'app_phone' => $request->app_phone,
+            'app_email' => $request->app_email,
+            'app_linkedin' => $request->app_linkedin,
+            'app_twitter' => $request->app_twitter,
+            'user_id'=>Auth::user()->id,
+        );
+
         $ad = Ad::find($request->ad_id);
+        $ad->job->update($arr);
         $ad->update(['status'=>'published']);
+        if ($request->file('company_logo')) {
+            $file = $request->file('company_logo');
+            common::update_media($file, $ad->job->id, 'App\Admin\Jobs\Job', 'company_logo');
+        }
+        if ($request->file('company_gallery')) {
+            $files = $request->file('company_gallery');
+            foreach ($files as $file)
+            {
+                common::update_media($file, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+            }
+        }
+        dd($request->files);
 
 //        dd($request->job_type);
 //        $arr = array(
