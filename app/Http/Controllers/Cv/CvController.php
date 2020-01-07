@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cv;
 use App\Helpers\common;
 use App\Http\Controllers\Controller;
 use App\Models\Cv\Cv;
+use App\Models\Cv\CvEducation;
 use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
 use App\Models\Cv\CvPreference;
@@ -37,20 +38,18 @@ class CvController extends Controller
             if($cvexperiences==null){
                 $cvexperience = new CvExperience(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvexperience->save();
-                $cvexperiences = $cv->experiences;
             }
             $cvpreference = $cv->preference;
             if($cvpreference==null){
                 $cvpreference = new CvPreference(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvpreference->save();
-                $cvpreference = $cv->preference;
             }
-//            $cveducation = $cv->education;;
-//            if($cveducation==null){
-//                $cveducation = new CvPersonal(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
-//                $cveducation->save();
-//            }
-            return view('user-panel.my-business.cv.cv', compact('cv', 'cvexperiences'));
+            $cveducations = $cv->educations;;
+            if($cveducations==null){
+                $cveducation = new CvEducation(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
+                $cveducation->save();
+            }
+            return view('user-panel.my-business.cv.cv', compact('cv'));
         }
     }
 
@@ -151,6 +150,13 @@ class CvController extends Controller
         $cvPreference->update($request->all());
         Session::flash('success', 'Cv er oppdatert');
         return back();
+
+        Session::flash('success', 'Cv er oppdatert');
+        return back();
+    }
+
+    public function update_education(Request $request, $cv_id){
+        dd($request);
 
         Session::flash('success', 'Cv er oppdatert');
         return back();

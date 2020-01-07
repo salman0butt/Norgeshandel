@@ -95,11 +95,8 @@ class CvExperienceController extends Controller
      */
     public function destroy($id)
     {
-//        dd($id);
         CvExperience::where('id', $id)->delete();
-//        $cvExperience->delete();
         Session::flash('success', 'Opplevelsen slettet!');
         return back();
-
     }
 }

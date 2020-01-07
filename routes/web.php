@@ -14,14 +14,6 @@ use App\Media;
 use App\Models\Ad;
 use Zizaco\Entrust\Entrust;
 
-Route::get('tt', function (){
-    $languages = ['Norsk','Svensk','Dansk','Finsk','Engelsk','Tysk','Fransk','Spansk','Italiensk','Portugisisk','Russisk','Japansk','Nederlandsk','Norsk tegnspråk','Britisk tegnspråk','Amerikansk tegnspråk','Albansk','Arabisk','Armensk','Bengali','Bosnisk','Bulgarsk','Burmesisk','Eskimoisk/Inuitisk','Estisk','Filipinsk','Færøysk','Georgisk','Gresk','Grønlandsk','Gælisk','Hebraisk','Hindi','Hviterussisk','Indonesisk','Irsk','Islandsk','Kantonesisk/Yue','Katalansk','Kinesisk','Koreansk','Kroatisk','Kurdisk','Latin','Latvisk','Litauisk','Luxemburgisk','Makedonsk','Mandarin','Mongolsk','Nepalsk','Persiska (Farsi)','Polsk','Rumensk','Samisk','Samoansk','Serbisk','Slovakisk','Slovensk','Somalisk','Swahili','Syrisk/Assyrisk','Tamil','Thai','Tibetansk','Tsjekkisk','Tsjetsjensk','Tyrkisk','Ukrainsk','Ungarsk','Urdu','Vietnamesisk','Walisisk','Zulu','Pashto','Punjabi/Panjabi','Usbekisk'];
-    foreach ($languages as $language){
-        \App\Models\Language::create(['name'=>$language]);
-    }
-});
-
-
 Auth::routes();
 
 //    home routes
@@ -87,7 +79,8 @@ Route::group(['middleware'=>'auth'], function(){
         Route::group(['prefix'=>'cv'], function (){
             Route::resources([
                 'cvpersonal'=>'Cv\CvPersonalController',
-                'cvexperience'=>'Cv\CvExperienceController'
+                'cvexperience'=>'Cv\CvExperienceController',
+                'cveducation'=>'Cv\CvEducationController'
             ]);
             Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
 //            Route::post('update_skills', 'Cv\CvController@update_skills')->name('update_skills');
