@@ -561,7 +561,7 @@
                 <div class="col-md-12 input-toggle">
                     <input name="facilities2" data-selector="" id="facilities-AIRCONDITIONING2" type="checkbox"
                            value="AIRCONDITIONING2" name="facilities2">
-                    <label class="smalltext" for="facilities-AIRCONDITIONING2"> DEiet tomt (valgfritt) </label>
+                    <label class="smalltext" for="facilities-AIRCONDITIONING2"> Eiet tomt (valgfritt) </label>
                     <div class="u-t5">Tomten eies av selger</div>
                     <span class="error-span facilities2"></span>
                 </div>
