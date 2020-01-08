@@ -977,6 +977,15 @@ button.link:hover{
 .error-span{
     color: #ac304a;
 }
+
+.outer-div{
+    width: 100%; 
+    text-align: center;
+    margin-top:12px;
+}
+.inner-div{
+    margin-left: 67%;
+
 .dme-btn-outlined-blue.collapsed{
     opacity: .7;
 }

@@ -50,10 +50,10 @@
                             </a>
                             <hr class="col-6">
                         </li>
-                        <a href="{{url('/add/new/realestate/business/plot')}}">Bolig- og fritidstomt til salgs
+                        <!-- <a href="{{url('/add/new/realestate/business/plot')}}">Bolig- og fritidstomt til salgs
                             <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
-                        </a>
-                        <hr class="col-6">
+                        </a> -->
+                        <!-- <hr class="col-6"> -->
                         </li>
                         <li class="" style="">
                             <a href="{{url('/add/new/commercial/property/for/sale')}}">Næringseiendom til salgs

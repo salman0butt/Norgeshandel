@@ -61,6 +61,7 @@
                     <div class="col-md-12 mt-2">
                         <p>{{$property_data->description}}</p>
                     </div>
+
                     <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
                     <div class="col-md-12 u-t3">{{$property_data->asking_price}} Kr</div>
                     <div class="clearfix"></div>
