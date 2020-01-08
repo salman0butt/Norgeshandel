@@ -38,20 +38,20 @@ class PropertyController extends Controller
 
     public function mapTest()
     {
-        
+
     }
 
     public function list()
     {
         $ads = Ad::where('status','published')
-                    ->where('ad_type','!=','job')
-                    ->orderBy('id', 'desc')->get();
+            ->where('ad_type','!=','job')
+            ->orderBy('id', 'desc')->get();
+
         return view('user-panel.property.property_list',compact('ads'));
     }
 
-
     public function adsPropertyForSale()
-    {   
+    {
         $add_array = DB::table('property_for_sales')->orderBy('id', 'DESC')->get()->toArray();
         return view('user-panel.property.ads_for_property_for_sale')->with(compact('add_array'));
     }
@@ -76,7 +76,7 @@ class PropertyController extends Controller
     }
 
     public function getHomeForSaleAdd(Request $request){
-        
+
         $data = $request->all();
         $searchable = $data['sending'];
 
@@ -104,24 +104,24 @@ class PropertyController extends Controller
             $order_by_thing = "housing_area";
             $order_by = "desc";
         }
-      
+
         $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response =  view('common.partials.property.holiday_home_for_sale_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
-        echo json_encode($data); 
-    
-        
+        echo json_encode($data);
+
+
     }
 
-    
+
     public function sortedAddsPropertyForRent(Request $request)
     {
         $sorted_by = $request->all();
         $searchable = $sorted_by['sending'];
 
         if($searchable == 'priced-low-high')
-        {   
+        {
             $order_by_thing = "monthly_rent";
             $order_by       =  "ASC";
         }
@@ -152,21 +152,22 @@ class PropertyController extends Controller
         }
 
         $add_array = DB::table('property_for_rent')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+
         $response  =  view('common.partials.property.render_ads')->with(compact('add_array'))->render();
 
 
         $data['success'] = $response;
         echo json_encode($data);
-       
+
 
     }
 
-    
+
     public function sortedAddsPropertyForSale(Request $request){
-    
+
         $data = $request->all();
         $searchable = $data['sending'];
-        
+
         if($data['sending'] == 'priced-low-high')
         {
             $order_by_thing = "asking_price";
@@ -200,7 +201,7 @@ class PropertyController extends Controller
         }
 
         $add_array = DB::table('property_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
-    
+
         $response  =  view('common.partials.property.render_ads_for_sale')->with(compact('add_array'))->render();
 
 
@@ -238,7 +239,7 @@ class PropertyController extends Controller
                 $i++;
             }
         }
-   
+
         $property_home_for_sale_data['secondary_from_clock'] = "";
         if(isset($property_home_for_sale_data['from_clock']))
         {
@@ -256,7 +257,7 @@ class PropertyController extends Controller
                 $i++;
             }
         }
-   
+
           $property_home_for_sale_data['secondary_clockwise'] = "";
           if(isset($property_home_for_sale_data['clockwise']))
           {
@@ -274,7 +275,7 @@ class PropertyController extends Controller
                   $i++;
               }
           }
-         
+
           $property_home_for_sale_data['secondary_note'] = "";
           if(isset($property_home_for_sale_data['note']))
           {
@@ -304,7 +305,7 @@ class PropertyController extends Controller
         }
 
         $property_home_for_sale_data['user_id'] = Auth::user()->id;
-       
+
         //add Add to table
         $add = array();
         $add['ad_type'] = 'property_holiday_home_for_sale';
@@ -316,24 +317,24 @@ class PropertyController extends Controller
         unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
         unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
         $response = PropertyHolidaysHomesForSale::create($property_home_for_sale_data);
-       
+
         //upload files
-        if ($request->file('property_home_for_sale_photos') || $request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote')) 
+        if ($request->file('property_home_for_sale_photos') || $request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote'))
         {
             // $files = $request->file('property_photos');
             // $files_pdf = $request->file('property_pdf');
             // $files_quote = $request->file('property_quote');
-            
+
             $files = $request->file();
             $files_builded_arr = array();
             foreach($files as $key=>$val)
             {
                 array_push($files_builded_arr,$val[0]);
             }
-            
+
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
-            {   
+            {
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_photos');
@@ -347,11 +348,11 @@ class PropertyController extends Controller
                     common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
                 }
                 $i++;
-                
-            }
-            
 
-            
+            }
+
+
+
         }
 
         $data['success'] = $response;
@@ -362,7 +363,7 @@ class PropertyController extends Controller
     public function addSaleAdd(AddPropertyForSale $request)
     {
         $property_for_sale_data = $request->all();
-       
+
         if(isset($property_for_sale_data['approved_rental_part']) && $property_for_sale_data['approved_rental_part'] == 'on')
         {
             $property_for_sale_data['approved_rental_part'] = 1;
@@ -390,7 +391,7 @@ class PropertyController extends Controller
                     $i++;
                 }
             }
-     
+
             $property_for_sale_data['secondary_from_clock'] = "";
             if(isset($property_for_sale_data['from_clock']))
             {
@@ -408,7 +409,7 @@ class PropertyController extends Controller
                     $i++;
                 }
             }
-     
+
             $property_for_sale_data['secondary_clockwise'] = "";
             if(isset($property_for_sale_data['clockwise']))
             {
@@ -426,7 +427,7 @@ class PropertyController extends Controller
                     $i++;
                 }
             }
-           
+
             $property_for_sale_data['secondary_note1'] = "";
             if(isset($property_for_sale_data['note1']))
             {
@@ -461,7 +462,7 @@ class PropertyController extends Controller
             }
             $property_for_sale_data['facilities'] = $facilities;
         }
-    
+
         $property_for_sale_data['user_id'] = Auth::user()->id;
 
         //add Add to table
@@ -470,27 +471,27 @@ class PropertyController extends Controller
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-        
+
         $property_for_sale_data['ad_id'] = $add_response->id;
 
         $response = PropertyForSale::create($property_for_sale_data);
 
-        if ($request->file('property_photos') || $request->file('property_pdf') || $request->file('property_quote')) 
+        if ($request->file('property_photos') || $request->file('property_pdf') || $request->file('property_quote'))
         {
             // $files = $request->file('property_photos');
             // $files_pdf = $request->file('property_pdf');
             // $files_quote = $request->file('property_quote');
-            
+
             $files = $request->file();
             $files_builded_arr = array();
             foreach($files as $key=>$val)
             {
                 array_push($files_builded_arr,$val[0]);
             }
-            
+
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
-            {   
+            {
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_photos');
@@ -504,16 +505,16 @@ class PropertyController extends Controller
                     common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_pdf');
                 }
                 $i++;
-                
-            }
-            
 
-            
+            }
+
+
+
         }
 
         $data['success'] = $response;
         echo json_encode($data);
-        
+
     }
 
     public function newPropertyForRentAdd(AddPropertyForRent $request)
@@ -584,7 +585,7 @@ class PropertyController extends Controller
                 $i++;
             }
         }
-      
+
         $property_for_rent_data['secondary_note'] = "";
         if(isset($property_for_rent_data['note']))
         {
@@ -611,25 +612,25 @@ class PropertyController extends Controller
         {
             $property_for_rent_data['published_on'] = 0;
         }
-    
+
         unset($property_for_rent_data['property_photos']);
         $property_for_rent_data['user_id'] = Auth::user()->id;
-       
+
         //add Add to table
         $add = array();
         $add['ad_type'] = 'property_for_rent';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-        
+
         $property_for_rent_data['ad_id'] = $add_response->id;
         $response = PropertyForRent::create($property_for_rent_data);
 
-        if ($request->file('property_photos')) 
+        if ($request->file('property_photos'))
         {
             $file = $request->file('property_photos');
             common::update_media($file, $response->id , 'App\PropertyForRent', 'propert_for_rent');
-        
+
         }
 
         $data['success'] = $response;
@@ -660,7 +661,7 @@ class PropertyController extends Controller
         }
         $flat_wishes_rented_data['property_type'] = $property_types;
 
-    
+
         unset($flat_wishes_rented_data['flat_wishes_rented']);
         $flat_wishes_rented_data['user_id'] = Auth::user()->id;
 
@@ -670,12 +671,12 @@ class PropertyController extends Controller
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-         
+
         $flat_wishes_rented_data['ad_id'] = $add_response->id;
         $response = FlatWishesRented::create($flat_wishes_rented_data);
 
 
-        if ($request->file('flat_wishes_rented')) 
+        if ($request->file('flat_wishes_rented'))
         {
             $files = $request->file('flat_wishes_rented');
             foreach ($files as $file)
@@ -697,15 +698,15 @@ class PropertyController extends Controller
 
     public function addRealEstateBusinessPlot(AddRealEstateBusinessPlot $request)
     {
-            
+
         $realestate_business_plot_data = $request->all();
         unset($realestate_business_plot_data['realestate_business_plot_photos']);
         $realestate_business_plot_data['user_id'] = Auth::user()->id;
 
         $response = RealestateBusinessPlot::create($realestate_business_plot_data);
 
-        
-        if ($request->file('realestate_business_plot_photos')) 
+
+        if ($request->file('realestate_business_plot_photos'))
         {
             $files = $request->file('realestate_business_plot_photos');
             foreach ($files as $file)
@@ -714,7 +715,7 @@ class PropertyController extends Controller
             }
         }
 
-            
+
         $data['success'] = $response;
         echo json_encode($data);
 
@@ -727,7 +728,7 @@ class PropertyController extends Controller
     public function addCommercialPropertyForSale(AddCommercialPropertyForSale $request)
     {
         $commercial_property_for_sale = $request->all();
-    
+
         unset($commercial_property_for_sale['commercial_property_for_sale_photos']);
         unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
         $commercial_property_for_sale['user_id'] = Auth::user()->id;
@@ -738,8 +739,8 @@ class PropertyController extends Controller
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-        $commercial_property_for_sale['ad_id'] = $add_response->id;  
-       
+        $commercial_property_for_sale['ad_id'] = $add_response->id;
+
         if(isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "")
         {
             $property_type = "";
@@ -759,11 +760,11 @@ class PropertyController extends Controller
             $commercial_property_for_sale['facilities'] = $facilities;
 
         }
-    
+
         $response = CommercialPropertyForSale::create($commercial_property_for_sale);
 
 
-        if ($request->file('commercial_property_for_sale_photos') || $request->file('commercial_property_for_sale_pdf')) 
+        if ($request->file('commercial_property_for_sale_photos') || $request->file('commercial_property_for_sale_pdf'))
         {
 
             $files = $request->file();
@@ -772,10 +773,10 @@ class PropertyController extends Controller
             {
                 array_push($files_builded_arr,$val[0]);
             }
-            
+
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
-            {   
+            {
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_propert_for_sale_photos');
@@ -785,16 +786,16 @@ class PropertyController extends Controller
                     common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_property_for_sale_pdf');
                 }
                 $i++;
-                
-            }
-            
 
-            
+            }
+
+
+
         }
 
         $data['success'] = $response;
         echo json_encode($data);
-    
+
     }
 
     public function adsForRent(Request $request)
@@ -817,7 +818,7 @@ class PropertyController extends Controller
     }
 
     public function adsForFlatWishedRented(){
-        
+
         $add_array = DB::table('flat_wishes_renteds')->orderBy('id', 'DESC')->get(['id'])->toArray();
         return view('user-panel.property.ads_for_flat_wishes_rented')->with(compact('add_array'));
 
@@ -833,7 +834,7 @@ class PropertyController extends Controller
         $order_by       =  "ASC";
 
         if($searchable == 'max_rent_low_high')
-        {   
+        {
             $order_by_thing = "max_rent_per_month";
             $order_by       =  "ASC";
         }
@@ -847,7 +848,7 @@ class PropertyController extends Controller
             $order_by_thing = "wanted_from";
             $order_by       =  "DESC";
         }
-   
+
         $add_array = DB::table('flat_wishes_renteds')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response  =  view('common.partials.property.render_flat_wishes_rented_ads')->with(compact('add_array'))->render();
 
@@ -868,7 +869,7 @@ class PropertyController extends Controller
         $add_array = DB::table('property_holidays_homes_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
 
         return view('user-panel.property.ads_for_holiday_home_for_sale')->with(compact('add_array'));
-    } 
+    }
 
     public function holidayHomeForSaleDescription($id)
     {
@@ -901,13 +902,13 @@ class PropertyController extends Controller
             $order_by_thing = "rental_income";
             $order_by = "desc";
         }
-       
-      
+
+
         $add_array = DB::table('commercial_property_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response =  view('common.partials.property.commercial_property_for_sale_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
-        echo json_encode($data); 
+        echo json_encode($data);
     }
     public function commercialForSaleDescription($id)
     {
@@ -918,10 +919,10 @@ class PropertyController extends Controller
     {
         return view('user-panel.property.commercial_property_for_rent');
     }
-    public function addCommercialPropertyForRent(AddCommercialPropertyForRent $request) 
+    public function addCommercialPropertyForRent(AddCommercialPropertyForRent $request)
     {
         $commercial_property_for_rent = $request->all();
-    
+
         unset($commercial_property_for_rent['commercial_property_for_rent_photos']);
         unset($commercial_property_for_rent['commercial_property_for_rent_pdf']);
         $commercial_property_for_rent['user_id'] = Auth::user()->id;
@@ -932,8 +933,8 @@ class PropertyController extends Controller
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-        $commercial_property_for_rent['ad_id'] = $add_response->id;  
-       
+        $commercial_property_for_rent['ad_id'] = $add_response->id;
+
         if(isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "")
         {
             $property_type = "";
@@ -954,11 +955,11 @@ class PropertyController extends Controller
 
         }
 
-    
+
         $response = CommercialPropertyForRent::create($commercial_property_for_rent);
 
 
-        if ($request->file('commercial_property_for_rent_photos') || $request->file('commercial_property_for_rent_pdf')) 
+        if ($request->file('commercial_property_for_rent_photos') || $request->file('commercial_property_for_rent_pdf'))
         {
 
             $files = $request->file();
@@ -967,10 +968,10 @@ class PropertyController extends Controller
             {
                 array_push($files_builded_arr,$val[0]);
             }
-            
+
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
-            {   
+            {
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_photos');
@@ -980,11 +981,11 @@ class PropertyController extends Controller
                     common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_pdf');
                 }
                 $i++;
-                
-            }
-            
 
-            
+            }
+
+
+
         }
 
         $data['success'] = $response;
@@ -1016,13 +1017,13 @@ class PropertyController extends Controller
             $order_by_thing = "use_area";
             $order_by = "desc";
         }
-       
-      
+
+
         $add_array = DB::table('commercial_property_for_rents')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response =  view('common.partials.property.commercial_property_for_rent_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
-        echo json_encode($data); 
+        echo json_encode($data);
     }
 
     public function commercialForRentDescription($id)
@@ -1037,7 +1038,7 @@ class PropertyController extends Controller
     }
     public function addBusinessForSale(AddBusinessForSale $request)
     {
-        
+
         $business_for_sale = $request->all();
 
         unset($business_for_sale['business_for_sale_photos']);
@@ -1050,11 +1051,11 @@ class PropertyController extends Controller
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-        $business_for_sale['ad_id'] = $add_response->id;  
-       
+        $business_for_sale['ad_id'] = $add_response->id;
+
         $response = BusinessForSale::create($business_for_sale);
 
-        if ($request->file('business_for_sale_photos') || $request->file('business_for_sale_pdf')) 
+        if ($request->file('business_for_sale_photos') || $request->file('business_for_sale_pdf'))
         {
 
             $files = $request->file();
@@ -1063,10 +1064,10 @@ class PropertyController extends Controller
             {
                 array_push($files_builded_arr,$val[0]);
             }
-            
+
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
-            {   
+            {
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_photos');
@@ -1076,9 +1077,9 @@ class PropertyController extends Controller
                     common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
                 }
                 $i++;
-                
+
             }
-            
+
         }
 
         $data['success'] = $response;
@@ -1111,14 +1112,14 @@ class PropertyController extends Controller
             $order_by_thing = "price";
             $order_by = "desc";
         }
-       
-      
+
+
         $add_array = DB::table('business_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response =  view('common.partials.property.business_for_sale_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
-        echo json_encode($data); 
-        
+        echo json_encode($data);
+
     }
 
     public function businessForSaleDescription($id)
@@ -1130,11 +1131,11 @@ class PropertyController extends Controller
     public function commercialPlots() 
     {
         return view('user-panel.property.commercial_plots');
-    } 
+    }
 
     public function addcommercialPlotsAd(AddCommercialPlot $request)
     {
-        
+
         $commercial_plot = $request->all();
 
         unset($commercial_plot['commercial_plot_photos']);
@@ -1147,11 +1148,11 @@ class PropertyController extends Controller
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-        $commercial_plot['ad_id'] = $add_response->id;  
-       
+        $commercial_plot['ad_id'] = $add_response->id;
+
         $response = CommercialPlot::create($commercial_plot);
 
-        if ($request->file('commercial_plot_photos') || $request->file('commercial_plot_photos')) 
+        if ($request->file('commercial_plot_photos') || $request->file('commercial_plot_photos'))
         {
 
             $files = $request->file();
@@ -1160,10 +1161,10 @@ class PropertyController extends Controller
             {
                 array_push($files_builded_arr,$val[0]);
             }
-            
+
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
-            {   
+            {
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_photos');
@@ -1173,9 +1174,9 @@ class PropertyController extends Controller
                     common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
                 }
                 $i++;
-                
+
             }
-            
+
         }
 
         $data['success'] = $response;
@@ -1218,14 +1219,14 @@ class PropertyController extends Controller
             $order_by_thing = "plot_size";
             $order_by = "desc";
         }
-       
-    
+
+
         $add_array = DB::table('commercial_plots')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
-        
+
         $response =  view('common.partials.property.commercial_plot_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
-        echo json_encode($data); 
+        echo json_encode($data);
     }
 
     public function commercialPlotDescription($id)
