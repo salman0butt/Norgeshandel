@@ -13,7 +13,10 @@
     <!--    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">-->
     <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
     <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
-    
+
+    <link rel="stylesheet" href="{{asset('public/css/validate-error.css')}}">
+
+
 
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
 
@@ -145,7 +148,7 @@
     }
     $(document).ready(function () {
         @if(Auth::check())
-            getLists();
+        getLists();
         @endif
         $(document).on('click', 'a.not-fav', function () {
             ad_id = $(this).attr('data-id');
@@ -185,11 +188,13 @@
                 success: function (response) {
                 }
             });
+
                 $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
                 $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
                 $('a[data-id="'+ad_id+'"]').addClass('fav');
                 $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
                 $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
+
         });
         $('#new-list').click(function (e) {
             e.preventDefault();

@@ -13,6 +13,7 @@
 use App\Media;
 use App\Models\Ad;
 use Zizaco\Entrust\Entrust;
+
 Auth::routes();
 
 //    home routes
@@ -77,8 +78,15 @@ Route::group(['middleware'=>'auth'], function(){
         Route::resource('cv', 'Cv\CvController');
         Route::group(['prefix'=>'cv'], function (){
             Route::resources([
-                'cvpersonal'=>'Cv\CvPersonalController'
+                'cvpersonal'=>'Cv\CvPersonalController',
+                'cvexperience'=>'Cv\CvExperienceController',
+                'cveducation'=>'Cv\CvEducationController'
             ]);
+            Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
+//            Route::post('update_skills', 'Cv\CvController@update_skills')->name('update_skills');
+            Route::post('update_skills/{cv_id}', 'Cv\CvController@update_skills')->name('update_skills');
+            Route::post('update_languages/{cv_id}', 'Cv\CvController@update_languages')->name('update_languages');
+            Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
         });
         Route::get('cv/extend', 'Cv\CvController@extend');
     });
@@ -154,6 +162,7 @@ Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercia
 Route::get('/property/description/{id}', ['uses' =>'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' =>'PropertyController@propertyForSaleDescription']);
 
+
 //flatwishesrented
 Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
 Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
@@ -196,3 +205,4 @@ Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commerc
 Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
+
