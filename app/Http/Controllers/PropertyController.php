@@ -799,8 +799,8 @@ class PropertyController extends Controller
 
     public function adsForRent(Request $request)
     {
-        $add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->paginate(getenv('PAGINATION'));
-        // $add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->get(['id'])->toArray();
+        //$add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->paginate(5);
+        $add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->get(['id'])->toArray();
         return view('user-panel.property.ads_for_rent')->with(compact('add_array'));
     }
 
