@@ -9,7 +9,7 @@
                 <?php
                         
                         $property_commercial_property_for_sale = App\CommercialPropertyForSale::find($value->id);
-                        $name       = $property_commercial_property_for_sale->media;
+                        $name       = $property_commercial_property_for_sale->media->first();
                         if(!empty($name))
                         {
                             $name = $property_commercial_property_for_sale->media->first()->name_unique;

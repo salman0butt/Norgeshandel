@@ -66,7 +66,6 @@
                             <?php
 
                                 $property_for_rent = App\PropertyForRent::find($value->id);
-
                                 $name       = $property_for_rent->media->first();
                                 if($name != null)
                                 {

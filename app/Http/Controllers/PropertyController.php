@@ -152,7 +152,6 @@ class PropertyController extends Controller
         }
 
         $add_array = DB::table('property_for_rent')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
-    
         $response  =  view('common.partials.property.render_ads')->with(compact('add_array'))->render();
 
 
