@@ -13,7 +13,7 @@
                                 
                                 $commercial_plot = App\CommercialPlot::find($value->id);
                                 $name       = $commercial_plot->media;
-                                if(!empty($name))
+                                if(!$name->isEmpty())
                                 {
                                     $name = $commercial_plot->media->first()->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($commercial_plot);

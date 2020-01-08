@@ -18,9 +18,18 @@
                             <?php 
 
                                 $property_for_rent = App\PropertyForRent::find($value->id);
-                                $name       = $property_for_rent->media->first()->name_unique;
-                                $path       = \App\Helpers\common::getMediaPath($property_for_rent);
-                                $full_path  = $path."".$name; 
+                                $name       = $property_for_rent->media->first();
+                                if(!empty($name))
+                                {
+                                    $name       = $property_for_rent->media->first()->name_unique;
+                                    $path       = \App\Helpers\common::getMediaPath($property_for_rent);
+                                    $full_path  = $path."".$name; 
+                                }
+                                else
+                                {
+                                    $full_path  = "";
+                                }
+
                             ?>
 
 
@@ -32,7 +41,7 @@
                                             </div>
                                         </div>
                                         <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
-                                            <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>-->
+                                            <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>
                                             <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
                                             <div class="location u-t5 text-muted mt-2">{{$property_for_rent->street_address}}</div>
                                             <div class="title color-grey">{{$property_for_rent->heading}}</div>
