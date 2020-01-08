@@ -62,7 +62,7 @@
                             <div class="mt-2 col-md-12"></div>
                             <div class="col-md-12"><span class="font-weight-bold">Omkostninger :</span>&nbsp;<span>{{$property_data->expenses}} m²</span></div>
                             <div class="col-md-12"><span class="font-weight-bold">Totalpris :</span>&nbsp;<span>{{$property_data->total_price}} Kr</span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Kommunale avg :.</span>&nbsp;<span> {{$property_data->Kommunale}} Kr</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Kommunale avg :.</span>&nbsp;<span> {{$property_data->municipality_number}} Kr</span></div>
 
                             <div class="clearfix"></div>
                             <div class="mt-2 col-md-12"></div>
