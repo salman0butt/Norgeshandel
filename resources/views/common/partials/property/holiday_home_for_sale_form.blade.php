@@ -822,10 +822,10 @@
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                 <div class="profile-icon">
-                    <img src="{{asset('public/images/profile-1.jpg')}}" alt="Profile image" style="width:80px;">
+                    <img src="@if(Auth::user()->media!=null){{asset(\App\Helpers\common::getMediaPath(Auth::user()->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="Profile image" style="width:80px;">
                 </div>
                 <div class="profile-name">
-                    <h3 class="text-muted">Ola Nordmann</h3>
+                    <h3 class="text-muted">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h3>
                 </div>
                 <p>Hvis denne profilen ikke er riktig kan du endre den under Min handel deretter Endre profil.</p>
             </div>
