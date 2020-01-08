@@ -36,6 +36,7 @@
             $property = $ad->propertyBusinessForSale;
         }
 
+
         if($property !== null)
         {
             $media = $property->media;

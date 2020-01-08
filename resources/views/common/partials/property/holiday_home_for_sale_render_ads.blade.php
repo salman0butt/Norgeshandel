@@ -21,7 +21,9 @@ if(isset($_GET)){
         <?php
             
             $property_holiday_home_for_sale = App\PropertyHolidaysHomesForSale::find($value->id);
+
             $name       = $property_holiday_home_for_sale->media->first();
+            
             if(!empty($name))
             {
                 $name = $property_holiday_home_for_sale->media->first()->name_unique;
