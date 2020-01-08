@@ -167,6 +167,9 @@ return [
 //        image intervention
         Intervention\Image\ImageServiceProvider::class,
 
+//        migration to sql generator
+//        issue with mkdir("")
+//        \Froiden\SqlGenerator\SqlGeneratorServiceProvider::class,
 //        debug bar
 //        Barryvdh\Debugbar\ServiceProvider::class,
 

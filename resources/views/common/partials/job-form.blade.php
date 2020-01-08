@@ -262,10 +262,11 @@
                                 <label for="country" class="col-md-2 u-t5">{{__('Country')}}</label>
                                 <div class="col-sm-4 ">
                                     <select class="form-control dme-form-control" id="country" name="country">
-                                        <option selected
-                                                value="{{$obj_job->country}}">{{$obj_job->country}}</option>
+                                        @if(!empty($obj_job->country))
+                                        <option selected value="{{$obj_job->country}}">{{$obj_job->country}}</option>
+                                        @endif
                                         @foreach($countries as $ctry)
-                                            <option value="{{$ctry['name']}}">{{$ctry['name']}}</option>
+                                            <option value="{{$ctry['name']}}" @if($ctry['name']=="Norway") selected @endif>{{$ctry['name']}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -368,7 +369,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <label for="app_contact_title"
-                                       class="col-md-2 u-t5">{{__('Contact title  (optional)')}}</label>
+                                       class="col-md-2 u-t5">{{__('Contact person (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="app_contact_title" id="app_contact_title" type="text"
                                            class="form-control dme-form-control">

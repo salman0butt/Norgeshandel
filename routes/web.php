@@ -16,6 +16,7 @@ use Zizaco\Entrust\Entrust;
 
 Auth::routes();
 
+Route::get('lang', 'TranslationController@index');
 //    home routes
 Route::get('/', function () {
     $ads = Ad::where('status','published')->orderBy('id', 'desc')->get();

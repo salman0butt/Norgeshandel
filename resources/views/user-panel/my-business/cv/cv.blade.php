@@ -8,7 +8,7 @@ $cveducations = $cv->educations;
 $cvlanguages = $cv->languages;
 ?>
 @section('page_content')
-    <style type="text/css">
+    <style type="text/css" id="cv_style">
         a.edit-btn {
             font-size: 15px;
             border: 1px solid;
@@ -146,8 +146,7 @@ $cvlanguages = $cv->languages;
                                                 <select class="form-control" id="personal_country" name="country">
                                                     <option value="">Velg..</option>
                                                     @foreach($countries as $ctry)
-                                                        <option value="{{$ctry['name']}}"
-                                                                @if($cvpersonal->country==$ctry['name']) selected @endif>{{$ctry['name']}}</option>
+                                                        <option value="{{$ctry['name']}}" @if($cvpersonal->country==$ctry['name']) selected @elseif($cvpersonal->country=="Norway") selected @endif>{{$ctry['name']}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -243,7 +242,8 @@ $cvlanguages = $cv->languages;
                                 </div>
 
                                 <div class="col-md-6  mb-4">
-                                    <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:22px;">Bilde
+                                    <h3 class="text-dark font-weight-normal pl-4 pr-4" style="font-size:22px;">
+                                            Bilde
                                         <span class="float-right">
 
                                         <a class="edit-btn" data-toggle="collapse" href="#colapsedata" role="button"
@@ -927,7 +927,7 @@ $cvlanguages = $cv->languages;
                                                            @if($cv->preference->disclaimer == "yes") checked @endif>
                                                     <span class="checkmark"></span>
                                                 </label>
-                                                <label for="disclaimer1" class="radio-lbl">Flyttevillighet
+                                                <label for="disclaimer1" class="radio-lbl">Uten betydning
                                                     <input type="radio" id="disclaimer1" class="disclaimer"
                                                            name="disclaimer" value="irrelevant"
                                                            @if($cv->preference->disclaimer == "irrelevant") checked @endif>
@@ -1272,10 +1272,10 @@ $cvlanguages = $cv->languages;
                                 <div class="col-md-4">
                                     <div class="btn-group mt-3">
                                         <a class="dme-btn-outlined-blue float-left" href="#">
-                                            <div class="ml-2">Download as PDF</div>
+                                            Last ned PDF
                                         </a>
-                                        <a class="dme-btn-outlined-blue float-left ml-3" href="#">
-                                            <div class="ml-2">Print CV</div>
+                                        <a class="dme-btn-outlined-blue float-left ml-3" id="print_cv" href="#">
+                                            Skrive ut CV
                                         </a>
 
                                     </div>
@@ -1283,13 +1283,41 @@ $cvlanguages = $cv->languages;
                             </div>
                             <hr>
                             <p class="pt-3">CV-id: {{$cv->id}}</p>
-                            <div class="collapse show" data-toggle="collapse" data-parent="#preview" id="open_cv">
+                            <div class="collapse show printable_cv" data-toggle="collapse" data-parent="#preview" id="open_cv">
+                                <style type="text/css">
+                                    .table-main {
+                                        padding: 25px 20px 72px;
+                                        background-color: rgba(176, 64, 88, 0.07);
+                                        margin-top: 50px;
+                                        border-radius: 4px;
+                                    }
+
+                                    .row-border {
+                                        border-bottom: 1px solid #ccc;
+                                    }
+
+                                    tbody th, tbody tr {
+                                        border-top: 1px solid #dfe4e8;
+                                        vertical-align: top;
+                                        font-weight: 400;
+                                    }
+
+                                    .row.row-border {
+                                        padding-bottom: 30px;
+                                    }
+                                </style>
                                 <div class="table-main-1">
                                     <div class="row personal">
                                         <div class="col-md-8 pr-4">
                                             <h2 class="u-t2">{{$cv->personal->title}}</h2>
                                             <h3 class="text-dark font-weight-normal pt-4 pb-4 u-t3" style="font-size:22px;">
                                                 Personalia</h3>
+                                        </div>
+                                        <div class="col-md-4">
+                                        </div>
+                                    </div>
+                                    <div class="row personal">
+                                        <div class="col-md-8">
                                             <table class="w-100">
                                                 <tbody>
                                                 <tr>
@@ -1342,20 +1370,24 @@ $cvlanguages = $cv->languages;
                                                 </tr>
                                                 </tbody>
                                             </table>
+
                                         </div>
                                         <div class="col-md-4">
-                                            <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">Bilde</h3>
                                             @if(isset($cv) && $cv->media!=null)
                                                 <div class="profile"
                                                      style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
                                                     <img
-                                                        src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
+                                                        src="{{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}"
                                                         id="cv_profile_image"
                                                         style="max-width:180px;max-height: 200px; height:200px;" alt="">
                                                 </div>
                                             @else
+                                                <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">
+                                                    Bilde
+                                                </h3>
                                                 <small class="text-dark">Denne CVen mangler bilde.</small>
                                             @endif
+
                                         </div>
                                     </div>
                                     @if(isset($cv->educations) && is_countable($cv->educations) && !empty($cv->educations->first()->school))
@@ -1437,7 +1469,7 @@ $cvlanguages = $cv->languages;
                                             </div>
                                         </div>
                                     @endif
-                                    <div class="row preferences mt-5">
+                                    <div class="row preferences mt-1">
                                         <div class="col-12">
                                             <h3 class="text-dark font-weight-normal pt-4 pb-4" style="font-size:22px;">
                                                 Ønsker for neste jobb</h3>
@@ -1665,7 +1697,6 @@ $cvlanguages = $cv->languages;
     </main>
     <input type="hidden" id="link_upload_cv_profile" value="{{url('my-business/cv/upload_cv_profile')}}">
     <script type="text/javascript">
-
         function showTab(hash) {
             if (location.hash != "") {
                 $('.tab-pane').removeClass('show');
@@ -1679,6 +1710,15 @@ $cvlanguages = $cv->languages;
 
         $('#selected_languages').html($('#source_languages').children('option:selected'));
         $(document).ready(function () {
+            $('#print_cv').click(function (e) {
+                e.preventDefault();
+                $('.printable_cv').css('padding','0.5in');
+                var cv = $('.printable_cv').html();
+                $('body').html('<div style="padding:0.5in">'+cv+'</div>');
+                window.print();
+                window.location.reload();
+            });
+
             $(document).on('click', '.cancel', function (e) {
                 $(this).closest('.collapse').removeClass('show');
                 console.log($(this).closest('.collapse'));
