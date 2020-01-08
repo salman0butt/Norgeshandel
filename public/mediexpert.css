@@ -958,3 +958,11 @@ a > .alert-warning:hover{
 .error-span{
     color: #ac304a;
 }
+.outer-div{
+    width: 100%; 
+    text-align: center;
+    margin-top:12px;
+}
+.inner-div{
+    margin-left: 67%;
+}
