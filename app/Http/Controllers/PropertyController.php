@@ -1129,7 +1129,7 @@ class PropertyController extends Controller
         return view('common.partials.property.business_for_sale_description')->with(compact('property_data'));
     }
 
-    public function commercialPlots()
+    public function commercialPlots() 
     {
         return view('user-panel.property.commercial_plots');
     }
