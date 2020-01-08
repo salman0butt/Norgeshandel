@@ -16,6 +16,9 @@ use Zizaco\Entrust\Entrust;
 
 Auth::routes();
 
+Route::get('mail', function (){
+    return view('mail.new_user_verification');
+});
 Route::get('lang', 'TranslationController@index');
 //    home routes
 Route::get('/', function () {

@@ -1298,7 +1298,7 @@ $cvlanguages = $cv->languages;
 
                                     tbody th, tbody tr {
                                         border-top: 1px solid #dfe4e8;
-                                        vertical-align: top;
+                                        composer require barryvdh/laravel-snappy vertical-align: top;
                                         font-weight: 400;
                                     }
 
