@@ -167,7 +167,7 @@
                             </div>
                             <p class="mt-3 u-t3">Spørsmål om stillingen</p>
                             <div class="mb-2 contact-name">
-                                <span>Kontakt: </span>
+                                <span>Kontaktperson: </span>
                                 <span> {{$job->app_contact_title}} </span>
                             </div>
                             <div class="mb-2">
@@ -178,7 +178,7 @@
                             <div class="mb-2">
                                 <span class="contact-name">Mobil: </span>
                                 <span class="contact-tel"><a
-                                        href="tel:{{$job->app_mobile}}">  {{$job->app_contact}}</a></span>
+                                        href="tel:{{$job->app_mobile}}">  {{$job->app_mobile}}</a></span>
                             </div>
 
                         </div>

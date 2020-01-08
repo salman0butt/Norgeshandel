@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="" />
+=======
+    <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+>>>>>>> 0b3839aee1119f68178d97c0fda2ba773214ae12
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,7 +347,9 @@
       <workItem from="1578332405034" duration="648000" />
       <workItem from="1578375322347" duration="443000" />
       <workItem from="1578376209726" duration="11599000" />
-      <workItem from="1578402107963" duration="619000" />
+      <workItem from="1578402107963" duration="887000" />
+      <workItem from="1578458924299" duration="21692000" />
+      <workItem from="1578485782807" duration="347000" />
     </task>
     <servers />
   </component>
@@ -360,16 +368,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/resources/views/user-panel/my-business/cv/cv.blade.php</url>
-          <line>1260</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

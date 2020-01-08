@@ -561,7 +561,7 @@
                 <div class="col-md-12 input-toggle">
                     <input name="facilities2" data-selector="" id="facilities-AIRCONDITIONING2" type="checkbox"
                            value="AIRCONDITIONING2" name="facilities2">
-                    <label class="smalltext" for="facilities-AIRCONDITIONING2"> DEiet tomt (valgfritt) </label>
+                    <label class="smalltext" for="facilities-AIRCONDITIONING2"> Eiet tomt (valgfritt) </label>
                     <div class="u-t5">Tomten eies av selger</div>
                     <span class="error-span facilities2"></span>
                 </div>
@@ -943,10 +943,10 @@
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                 <div class="profile-icon">
-                    <img src="{{asset('public/images/profile-1.jpg')}}" alt="Profile image" style="width:80px;">
+                    <img src="@if(Auth::user()->media!=null){{asset(\App\Helpers\common::getMediaPath(Auth::user()->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="Profile image" style="width:80px;">
                 </div>
                 <div class="profile-name">
-                    <h3 class="text-muted">Ola Nordmann</h3>
+                    <h3 class="text-muted">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h3>
                 </div>
                 <p>Hvis denne profilen ikke er riktig kan du endre den under Min handel deretter Endre profil.</p>
             </div>

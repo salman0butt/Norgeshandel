@@ -28,9 +28,9 @@
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href=" {{url('holiday/home/for/sale/ads')}}">Fritidsbolig til salgs <span class="u-stone">(<?php echo App\PropertyHolidaysHomesForSale::get()->count(); ?>)</span></a>
                             </li>
-                            <li class="dme-btn-outlined-blue" style="">
-                                <a href="leisureplots.php?grid">Fritidstomter <span class="u-stone">(12)</span></a>
-                            </li>
+                            <!-- <li class="dme-btn-outlined-blue" style="">
+                                <a href="leisureplots.php?grid">Fritidstomter <span class="u-stone"></span></a>
+                            </li> -->
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('property/for/rent')}}">Bolig til leie <span class="u-stone">(<?php echo App\PropertyForRent::get()->count(); ?>)</span></a>
                             </li>

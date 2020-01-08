@@ -1,9 +1,6 @@
-            
-              <?php 
+<?php 
 
-
-$col='list';
-
+    $col='list';
 
 ?>
 
@@ -17,16 +14,17 @@ $col='list';
 
         <?php 
 
-                $property_for_sale              = App\PropertyForSale::find($value->id);
-                $property_for_sale_collection   =  $property_for_sale->media->toArray();
-                $path                           = \App\Helpers\common::getMediaPath($property_for_sale);
-                foreach($property_for_sale_collection as $key=>$val)
+                $property_for_sale  = App\PropertyForSale::find($value->id);
+                $name               = $property_for_sale->media->first();
+                if(!empty($name))
                 {
-                    if($val['type'] == "propert_for_sale_photos")
-                    {
-                        $name = $val['name_unique'];
-                    }
-                    $full_path_photos = $path."".$name; 
+                    $name       = $property_for_sale->media->first()->name_unique;
+                    $path       = \App\Helpers\common::getMediaPath($property_for_sale);
+                    $full_path_photos  = $path."".$name; 
+                }
+                else
+                {
+                    $full_path_photos  = "";
                 }
 
         ?>
@@ -42,7 +40,7 @@ $col='list';
                         </div>
                     </div>
                     <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
-                        <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>-->
+                        <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>
                         <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
                         <div class="location u-t5 text-muted mt-2">{{$property_for_sale->street_address}}</div>
                         <div class="title color-grey">{{$property_for_sale->heading}}</div>
