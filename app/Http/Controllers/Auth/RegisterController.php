@@ -101,8 +101,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         $user->roles()->attach(5);
-        $email = $data['email'];
-        \Mail::to($email)->send(new NewUserVerification($data, '#'));
+
+//        $email = $data['email'];
+//        \Mail::to($email)->send(new NewUserVerification($data, '#'));
 
         return $user;
     }

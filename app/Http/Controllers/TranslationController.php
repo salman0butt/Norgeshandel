@@ -16,21 +16,20 @@ class TranslationController extends Controller
     public function __construct()
     {
         $this->blades = [
-            'C:\xampp\htdocs\NorgesHandel\resources\views\common\partials\form-job-full-time.blade.php',
-            'C:\xampp\htdocs\NorgesHandel\resources\views\common\partials\form-job-management.blade.php',
-            'C:\xampp\htdocs\NorgesHandel\resources\views\common\partials\form-job-part-time.blade.php',
-            'C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\jobs\jobs.blade.php',
-            'C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\jobs\new_full_time.blade.php',
-            'C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\jobs\new_management.blade.php',
-            'C:\xampp\htdocs\NorgesHandel\resources\views\user-panel\jobs\new_part_time.blade.php',
+//            give path starting after resources\views\
+            'common\partials\job-form.blade.php',
         ];
         $this->content = '';
     }
 
     public function index()
     {
+
+        $path = str_replace('/','\\',$_SERVER['DOCUMENT_ROOT'].'\NorgesHandel\resources\views\\');
         foreach ($this->blades as $blade){
-            $this->content .= file_get_contents($blade);
+            if(file_exists($path.$blade)){
+                $this->content .= file_get_contents($path.$blade);
+            }
         }
         $strings = $this->get_strings($this->content);
         $translated = json_decode(file_get_contents(resource_path('lang\nb.json')), true);
