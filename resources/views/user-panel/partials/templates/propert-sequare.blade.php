@@ -35,23 +35,28 @@
         {
             $property = $ad->propertyBusinessForSale;
         }
-        
-        
-        $media = $property->media;
 
-        if(count($media)>0)
+        if($property !== null)
         {
-            $path = \App\Helpers\common::getMediaPath($media->first());
+            $media = $property->media;
+
+            if(count($media)>0)
+            {
+                $path = \App\Helpers\common::getMediaPath($media->first());
+            }
+            else
+            {
+                $path = "";
+            }
         }
-        else
-        {
-            $path = "";
-        }
-            
     
     }
+        if($property !== null)
+        {
 
 ?>
+
+        
 
         <div class="col-md-4 col-sm-6" style="">
             <div class="realestate-blockk " style="">
@@ -117,3 +122,7 @@
                 </a>
             </div>
         </div>
+
+<?php 
+        }
+?>
