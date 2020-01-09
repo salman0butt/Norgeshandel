@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
 
     <!--    incluedes   -->
-    <script src="{{asset('public/js/tinymce.min.js')}}"></script>
+    <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{asset('public/js/html2canvas.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
