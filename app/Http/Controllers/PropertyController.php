@@ -46,6 +46,7 @@ class PropertyController extends Controller
         $ads = Ad::where('status','published')
             ->where('ad_type','!=','job')
             ->orderBy('id', 'desc')->get();
+
         return view('user-panel.property.property_list',compact('ads'));
     }
 
@@ -799,10 +800,9 @@ class PropertyController extends Controller
 
     public function adsForRent(Request $request)
     {
-
+        //$add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->paginate(5);
         $add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->get(['id'])->toArray();
         return view('user-panel.property.ads_for_rent')->with(compact('add_array'));
-
     }
 
     public function propertyDescription($id)
@@ -1128,7 +1128,7 @@ class PropertyController extends Controller
         return view('common.partials.property.business_for_sale_description')->with(compact('property_data'));
     }
 
-    public function commercialPlots()
+    public function commercialPlots() 
     {
         return view('user-panel.property.commercial_plots');
     }

@@ -103,7 +103,7 @@ class AddPropertyForSale extends FormRequest
             'rent_shared_cost.numeric'  => 'feltet med leiekostnad må være numerisk.',
             'shared_costs_include.required'  => 'de delte kostnadene inkluderer fil er påkrevd.',
             'common_costs_after_interest_free_period.numeric'  => 'felleskostnadene etter rentefri periode må være numeriske.',
-            'asset_value.required'  => 'the asset value filed is required.',
+            'asset_value.required'  => 'verdifeltet er obligatorisk.',
             'asset_value.numeric'  => 'aktiva-feltet må være numerisk.',
             'asking_price.required'  => 'den anmodede prisen er påkrevd.',
             'asking_price.numeric'  => 'spørringsprisfeltet må være numerisk.',

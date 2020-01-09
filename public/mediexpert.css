@@ -203,6 +203,10 @@ header .navbar .dropdown-toggle::after{
     line-height: 16px;
 }
 .u-d1{
+    font-size: 16px;
+    line-height: 16px;
+}
+.u-d2 {
     font-size: 12px;
     line-height: 16px;
 }
@@ -631,7 +635,9 @@ input[type=checkbox]:focus{
     border-radius:10px;;
 }
 .add-to-fav{
-    position: absolute; right: 20px; bottom:60px;
+    position: absolute; 
+    right: 20px;
+     top: 20px;
     font-size: 1.5em;
     cursor: pointer;
 }
@@ -971,6 +977,15 @@ button.link:hover{
 .error-span{
     color: #ac304a;
 }
+
+.outer-div{
+    width: 100%; 
+    text-align: center;
+    margin-top:12px;
+}
+.inner-div{
+    margin-left: 67%;
+
 .dme-btn-outlined-blue.collapsed{
     opacity: .7;
 }
