@@ -12,7 +12,6 @@
             <div class="row">
                 <div class="col-md-10 offset-md-1">
                     @include('common.partials.property.property_for_sale_form')
-
                 </div>
             </div>
         </div>
@@ -33,7 +32,6 @@
                 $(this).removeClass("error-input");
 
             });
-
 
             $(document).on('keyup', '.asking_price,.costs_include,.percentage_of_public_debt', function() {
 
@@ -87,14 +85,22 @@
                     },
                     error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                             var errors = jqXhr.responseJSON;
-                            console.log(errors.errors);
-                            var html="<ul>";
-                            $.each( errors.errors, function( index, value ){
-                               console.log(value);
-                                $("."+index).html(value);
-                                $("input[name='"+index+"'],select[name='"+index+"']").addClass("error-input");
-                            });
-                            html += "</ul>";
+                            if(!isEmpty(errors.errors))
+                            {
+                                $.each( errors.errors, function( index, value ){
+                                
+                                    $("."+index).html(value);
+                                    $("input[name='"+index+"'],select[name='"+index+"']").addClass("error-input");
+                                
+                                });
+                            }
+                            else
+                            {
+                                $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                            }
+                            
+
+
                         },
                 }).always(function() { l.stop(); });
                 return false;
@@ -143,8 +149,8 @@
                         $("#add_more_viewing_times_fields").append(html);
 
             });
-
-
+            
+        
         })
 
     </script>
