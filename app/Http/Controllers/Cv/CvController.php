@@ -13,6 +13,9 @@ use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use niklasravnsborg\LaravelPdf\Pdf;
+//use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 class CvController extends Controller
 {
@@ -168,5 +171,15 @@ class CvController extends Controller
         $cv->languages()->attach($request->langs);
         Session::flash('success', 'Cv er oppdatert');
         return back();
+    }
+
+    public function download_pdf($cv_id){
+        $cv =   Cv::find($cv_id);
+        $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
+        $pdf = new Pdf($html);
+        $pdf->download('NorgesHandel-CV-'.$cv_id.'-'.$cv->user->first_name.' '.$cv->user->last_name.'.pdf');
+        return back();
+//        return $pdf->stream('document.pdf');
+//        return view('user-panel.my-business.cv.download_pdf', compact('cv'));
     }
 }

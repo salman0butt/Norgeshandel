@@ -167,12 +167,8 @@ return [
 //        image intervention
         Intervention\Image\ImageServiceProvider::class,
 
-//        migration to sql generator
-//        issue with mkdir("")
-//        \Froiden\SqlGenerator\SqlGeneratorServiceProvider::class,
-//        debug bar
-//        Barryvdh\Debugbar\ServiceProvider::class,
-
+//        pdf generator
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -238,12 +234,13 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+//        pdf generator
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
 //        entrust
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 //        image intervention
         'Image' => Intervention\Image\Facades\Image::class,
-//        debug bar
-//        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
         'Mapper'         => Cornford\Googlmapper\Facades\MapperFacade::class,
     ],
 

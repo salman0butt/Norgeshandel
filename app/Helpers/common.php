@@ -22,14 +22,14 @@ class common
             $sz = explode('x', $size);
             if (is_array($arr) && count($arr) == 2) {
                 $file = $path . $arr[0] . '-' . $size . '.' . $arr[1];
-                if (!file_exists($file)){
-                    Image::make($path.$obj->name_unique)->widen($sz[0])->heighten($sz[1])->save($path . $arr[0] . '-' . $size . '.' . $arr[1]);
+                if (!file_exists($file)) {
+                    Image::make($path . $obj->name_unique)->widen($sz[0])->heighten($sz[1])->save($path . $arr[0] . '-' . $size . '.' . $arr[1]);
                 }
 //                dd($file);
-                return url('/').'/'.$file;
+                return url('/') . '/' . $file;
             }
         }
-        return url('/').'/'.$path . $file_name;
+        return url('/') . '/' . $path . $file_name;
     }
 
     public static function slug_unique($name, $num = 0, $Model, $collumn)
@@ -85,10 +85,11 @@ class common
 //        }
 //    }
 
-    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar'){
+    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar')
+    {
 
         self::delete_media($mediable_id, $mediable_type, $type);
-        if (!is_array($files)){
+        if (!is_array($files)) {
             $files = array($files);
         }
 
@@ -121,7 +122,8 @@ class common
         }
     }
 
-    public static function delete_media($mediable_id, $mediable_type, $type){
+    public static function delete_media($mediable_id, $mediable_type, $type)
+    {
         $obj_old_media = Media::where('mediable_id', $mediable_id)
             ->where('mediable_type', $mediable_type)
             ->where('type', $type);
@@ -140,3 +142,4 @@ class common
         }
     }
 
+}
