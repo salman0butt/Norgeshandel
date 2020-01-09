@@ -270,6 +270,6 @@
 <script src="{{asset('public/js/utils.js')}}"></script>
 <script src="{{asset('public/js/spin.min.js')}}"></script>
 <script src="{{asset('public/js/ladda.min.js')}}"></script>
-{{-- <script src="{{asset('public/js/validater.js')}}"></script> --}}
+<script src="{{asset('public/js/common-norges.js')}}"></script>
 </body>
 </html>

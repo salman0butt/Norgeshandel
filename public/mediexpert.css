@@ -982,8 +982,9 @@ button.link:hover{
     text-align: center;
     margin-top:12px;
 }
-.inner-div {
-    margin-left: 67%;
+
+.inner-div{
+    margin-left: 69%;
 }
 .dme-btn-outlined-blue.collapsed{
     opacity: .7;
