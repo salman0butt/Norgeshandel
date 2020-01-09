@@ -111,6 +111,11 @@ class JobController extends Controller
             }
         }
 
+        $terms = Term::find([$request->industry, $request->job_function]);
+
+        $ad->job->terms()->detach();
+        $ad->job->terms()->attach($terms);
+
 //        $job = new Job($arr);
 
 //        $job->slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
