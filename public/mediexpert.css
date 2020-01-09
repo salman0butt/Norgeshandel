@@ -635,9 +635,9 @@ input[type=checkbox]:focus{
     border-radius:10px;;
 }
 .add-to-fav{
-    position: absolute; 
+    position: absolute;
     right: 20px;
-     top: 20px;
+    bottom: 20px;
     font-size: 1.5em;
     cursor: pointer;
 }
@@ -979,13 +979,13 @@ button.link:hover{
 }
 
 .outer-div{
-    width: 100%; 
+    width: 100%;
     text-align: center;
     margin-top:12px;
 }
-.inner-div{
+.inner-div {
     margin-left: 67%;
-
+}
 .dme-btn-outlined-blue.collapsed{
     opacity: .7;
 }

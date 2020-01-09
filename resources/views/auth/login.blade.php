@@ -1,8 +1,24 @@
+<html lang="nb">
+<head>
+    <title>NorgesHandel</title>
+    <meta charset="UTF-8">
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/js/bootstrap.bundle.js')}}"></script>
+    <link rel="shortcut icon" href="{{asset('public/images/favicon.ico')}}">
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <!--    <script src="assets/js/fontawesome-all.min.js"></script>-->
+    <!--    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">-->
+    <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
+    <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
+    <!--    incluedes   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+</head>
+<body class="bg-light-grey" cz-shortcut-listen="true">
 
-@extends('layouts.landingSite')
-<main class="" style="margin-top: 100px;margin-bottom: 20px;">
-    <div class="dme-container">
+<main class="" style="margin-top: 60px;margin-bottom: 20px;">
+<div class="dme-container">
         <div class="row shadow">
             <div class="col-md-8 text-center bg-maroon-lighter p-5">
                 <img src="{{asset('public/images/NorgesHondel-logo.png')}}" alt="" class="mb-3 mt-5">
@@ -64,7 +80,7 @@
         </div>
     </div>
 </main>
-@section('content')
-{
-@endsection
+
+
+</body>
 </html>

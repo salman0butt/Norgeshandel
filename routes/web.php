@@ -91,6 +91,7 @@ Route::group(['middleware'=>'auth'], function(){
             Route::post('update_skills/{cv_id}', 'Cv\CvController@update_skills')->name('update_skills');
             Route::post('update_languages/{cv_id}', 'Cv\CvController@update_languages')->name('update_languages');
             Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
+            Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
         });
         Route::get('cv/extend', 'Cv\CvController@extend');
     });

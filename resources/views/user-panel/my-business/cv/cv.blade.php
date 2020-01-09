@@ -1271,7 +1271,7 @@ $cvlanguages = $cv->languages;
                                 </div>
                                 <div class="col-md-4">
                                     <div class="btn-group mt-3">
-                                        <a class="dme-btn-outlined-blue float-left" href="#">
+                                        <a class="dme-btn-outlined-blue float-left" id="download_cv" href="{{url('my-business/cv/download_pdf', $cv->id)}}">
                                             Last ned PDF
                                         </a>
                                         <a class="dme-btn-outlined-blue float-left ml-3" id="print_cv" href="#">
@@ -1282,8 +1282,8 @@ $cvlanguages = $cv->languages;
                                 </div>
                             </div>
                             <hr>
-                            <p class="pt-3">CV-id: {{$cv->id}}</p>
                             <div class="collapse show printable_cv" data-toggle="collapse" data-parent="#preview" id="open_cv">
+                                <p class="pt-3">CV-id: {{$cv->id}}</p>
                                 <style type="text/css">
                                     .table-main {
                                         padding: 25px 20px 72px;
@@ -1298,7 +1298,7 @@ $cvlanguages = $cv->languages;
 
                                     tbody th, tbody tr {
                                         border-top: 1px solid #dfe4e8;
-                                        composer require barryvdh/laravel-snappy vertical-align: top;
+                                        vertical-align: top;
                                         font-weight: 400;
                                     }
 
@@ -1707,9 +1707,20 @@ $cvlanguages = $cv->languages;
                 $('#cv_tabs a[href="' + hash + '"]').addClass('active');
             }
         }
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
 
         $('#selected_languages').html($('#source_languages').children('option:selected'));
         $(document).ready(function () {
+            var htm = $('.printable_cv').html();
+            // console.log(htm);
+            $('#download_cv').click(function (e) {
+            });
+
             $('#print_cv').click(function (e) {
                 e.preventDefault();
                 $('.printable_cv').css('padding','0.5in');

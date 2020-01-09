@@ -5,7 +5,8 @@
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="" />
 =======
     <list default="true" id="eb234d96-7ac9-4e77-9f16-79ec8d5e4746" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Jobs/JobController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Jobs/JobController.php" afterDir="false" />
     </list>
 >>>>>>> 0b3839aee1119f68178d97c0fda2ba773214ae12
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -350,6 +351,9 @@
       <workItem from="1578402107963" duration="887000" />
       <workItem from="1578458924299" duration="21692000" />
       <workItem from="1578485782807" duration="347000" />
+      <workItem from="1578487373358" duration="2125000" />
+      <workItem from="1578493547422" duration="275000" />
+      <workItem from="1578496596284" duration="372000" />
     </task>
     <servers />
   </component>
