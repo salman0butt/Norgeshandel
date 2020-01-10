@@ -989,6 +989,15 @@ button.link:hover{
 .dme-btn-outlined-blue.collapsed{
     opacity: .7;
 }
+ul.pagination .page-item .page-link{
+    color: #ac304a;
+}
+ul.pagination .active .page-link{
+    background-color: #ac304a;
+    border-color: #ac304a;
+    color: white;
+}
+
 .cgrid .add-to-fav {
     top: 20px !important;
 }

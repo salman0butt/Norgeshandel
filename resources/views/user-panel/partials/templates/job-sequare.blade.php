@@ -4,8 +4,7 @@ $gallery='';
 if(!isset($job)){
     $job = $ad->job;
 }
-
-
+$job = \App\Admin\Jobs\Job::find($job->id);
 $media = $job->media;
 if(count($media)>0){
         foreach ($media as $item){
