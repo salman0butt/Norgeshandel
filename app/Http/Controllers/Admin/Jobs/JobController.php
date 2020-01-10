@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Helpers\common;
 use Intervention\Image\AbstractDecoder;
+use function Sodium\compare;
 
 class JobController extends Controller
 {
@@ -326,12 +327,23 @@ class JobController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function search(Request $request){
-        $filters = $request->all();
-        $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+        $filters = $request->except('page', 'view');
+        $view = $request->view;
+        $jobs = DB::table('jobs')
+            ->whereIn('ad_id', DB::table('ads')
+                ->where('status', '=', 'published')
+                ->where('ad_type', '=', 'job')
+                ->select('id'))
+            ->paginate(getenv('PAGINATION'));
         if (is_array($filters) && !empty($filters)) {
-            $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+            $jobs = DB::table('jobs')
+                ->whereIn('ad_id', DB::table('ads')
+                    ->where('status', '=', 'published')
+                    ->select('id'))
+                ->where($filters)
+                ->paginate(getenv('PAGINATION'));
         }
-        return response()->view('user-panel.jobs.jobs_filter_page', compact('ads', 'filters'));
+        return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs','filters', 'view'));
     }
 
     public function sort(Request $request){

@@ -15,7 +15,6 @@ use App\Media;
 use App\Models\Ad;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
-
 Auth::routes(['verify' => true]);
 Route::get('verified', function (){return view('auth.verified');})->middleware('verified');
 Route::get('mail', function () {
@@ -26,6 +25,7 @@ Route::get('mail', function () {
         $message->from('developer@digitalmx.no', 'Developers of NorgesHandel');
     });
 })->middleware('verified');
+
 Route::get('lang', 'TranslationController@index');
 //    home routes
 Route::get('/', function () {
@@ -39,7 +39,7 @@ Route::get('home', function () {
 //--
 
 //    common routes for all users
-Route::get('jobs/search', 'Admin\Jobs\JobController@search')->name('search');
+Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
 Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
 Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');

@@ -16,7 +16,6 @@ class TranslationController extends Controller
     public function __construct()
     {
         $this->blades = [
-//      removing blade will cause remove translation
 //      give path starting after resources\views\
             'common\partials\job-form.blade.php',
             'auth\login.blade.php',
@@ -39,6 +38,7 @@ class TranslationController extends Controller
         }
         $strings = $this->get_strings($this->content);
         $translated = json_decode(file_get_contents(resource_path('lang\nb.json')), true);
+//        dd($translated);
 //        foreach ($json as $key=>$val){
 //            echo $key.'=>'.$val.'<br>';
 //        }
@@ -64,12 +64,20 @@ class TranslationController extends Controller
      */
     public function store(Request $request)
     {
+        $translated = json_decode(file_get_contents(resource_path('lang\nb.json')), true);
         $keys = $request->all()['key'];
         $vals = $request->all()['val'];
         $arr = [];
         for($i=0; $i<count($keys); $i++){
+//            if (array_key_exists($keys[$i], $translated)){
+//                $translated[$keys[$i]]=$vals[$i];
+//            }
+//            else{
+//                array_push($translated, [$keys[$i]=>$vals[$i]]);
+//            }
             $arr[$keys[$i]]=$vals[$i];
         }
+//        dd($translated);
         $file = fopen(resource_path('lang\nb.json'), 'w');
         fwrite($file, json_encode($arr));
         fclose($file);
