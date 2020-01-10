@@ -989,3 +989,9 @@ button.link:hover{
 .dme-btn-outlined-blue.collapsed{
     opacity: .7;
 }
+.cgrid .add-to-fav {
+    top: 20px !important;
+}
+.clist .add-to-fav {
+    top: 20px !important;
+}
