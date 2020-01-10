@@ -14,7 +14,7 @@ class CreateCvPreferencesTable extends Migration
     public function up()
     {
         Schema::create('cv_preferences', function (Blueprint $table) {
-            $table->bigIncrements('id')->nullable();
+            $table->bigIncrements('id');
             $table->string('prospective')->nullable();
             $table->string('job_type')->nullable();
             $table->string('responsibility')->nullable();
