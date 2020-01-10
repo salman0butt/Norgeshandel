@@ -56,7 +56,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row pagination_data">
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">{{ $add_array->links() }}</div>
+                </div>
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?> order_specific_result" id="">
@@ -110,6 +113,9 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">{{ $add_array->links() }}</div>
+                </div>
             </div>
         </div>
         <!--    ended container-->
@@ -138,9 +144,24 @@
                         data: {sending:data},
                         dataType: "json",
                         success: function(data){
-                           $(".order_specific_result").html(data['success']);
+                           $(".pagination_data").html(data['success']);
                         }
                     });
+                });
+
+                //pagination
+                $(document).on('click', '.pagination a',function(event)
+                {
+                    event.preventDefault();
+                    $('li').removeClass('active');
+                    $(this).parent('li').addClass('active');
+        
+                    var myurl = $(this).attr('href');
+                    var page=$(this).attr('href').split('page=')[1];
+                   
+                    var sorting_value = $("#sort_by").val();
+                    var url = '{{url('property/flat/wishes/rented')}}';
+                    getDataPagination(page,sorting_value,url);
                 });
 
             });

@@ -42,16 +42,21 @@
                     <div class="">
                         <label for="sort-by" class="mb-1">Sortér på</label>
                         <select name="sort-by" id="sort_by" class="dme-form-control">
-                            <option value="0">Mest relevant</option>
-                            <option value="1" selected>Publisert</option>
+                            <option value="most_relevant">Mest relevant</option>
+                            <option value="published" selected>Publisert</option>
                             <option value="priced-low-high">Prisant lav-høy</option>
                             <option value="priced-high-low">Prisant høy-lav</option>
-                            <option value="99">Nærmest</option>
+                            <option value="nearest">Nærmest</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="row order_specific_result">
+            <div class="row pagination_data">
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">
+                        {{$add_array->links()}}
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?>">
@@ -99,6 +104,11 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">
+                        {{$add_array->links()}}
+                    </div>
+                </div>
             </div>
         </div>
         <!--    ended container-->
@@ -127,10 +137,26 @@
                         data: {sending:data},
                         dataType: "json",
                         success: function(data){
-                           $(".order_specific_result").html(data['success']);
+                           $(".pagination_data").html(data['success']);
                         }
                     });
                 });
+
+                //pagination
+                $(document).on('click', '.pagination a',function(event)
+                {
+                    event.preventDefault();
+                    $('li').removeClass('active');
+                    $(this).parent('li').addClass('active');
+        
+                    var myurl = $(this).attr('href');
+                    var page=$(this).attr('href').split('page=')[1];
+                   
+                    var sorting_value = $("#sort_by").val();
+                    var url = '{{url('commercial/property/for/sale/ads')}}';
+                    getDataPagination(page,sorting_value,url);
+                });
+
 
             });
     </script>                              
