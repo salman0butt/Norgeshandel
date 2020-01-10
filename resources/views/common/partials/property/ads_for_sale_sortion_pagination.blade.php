@@ -1,13 +1,19 @@
 <?php 
 
-    $col='list';
+    if(isset($_GET['style']))
+    {
+        $col = (strpos($_GET['style'],'grid') !== false ? "grid":"list");
+    }
+    else
+    {
+        $col = 'list';  
+    }
 
 ?>
 
 <div class="col-md-12 outer-div">
     <div class="inner-div">{{ $add_array->links() }}</div>
 </div>
-
 <div class="col-md-12">
 
 <div class="<?php echo $col==='grid'?'row':'' ?>">
@@ -35,7 +41,7 @@
 
                 
 
-            <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
+            <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
                 <a href="{{url('/property/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                         <div class="trailing-border">

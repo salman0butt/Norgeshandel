@@ -50,9 +50,54 @@ class PropertyController extends Controller
         return view('user-panel.property.property_list',compact('ads'));
     }
 
-    public function adsPropertyForSale()
+    public function adsPropertyForSale(Request $request)
     {
-        $add_array = DB::table('property_for_sales')->orderBy('id', 'DESC')->get()->toArray();
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+
+        if($searchable == 'priced-low-high')
+        {
+            $order_by_thing = "asking_price";
+            $order_by       =  "ASC";
+
+        }
+        else if($searchable == "priced-high-low")
+        {
+            $order_by_thing = "asking_price";
+            $order_by       =  "DESC";
+        }
+        elseif($searchable == "p-rom-area-low-high")
+        {
+            $order_by_thing = "primary_room";
+            $order_by = "ASC";
+        }
+        else if($searchable == "p-rom-area-high-low")
+        {
+            $order_by_thing = "primary_room";
+            $order_by = "DESC";
+        }
+        elseif($searchable == "total-price-low-high")
+        {
+            $order_by_thing = "primary_room";
+            $order_by = "ASC";
+        }
+        else if($searchable == "total-price-high-low")
+        {
+            $order_by_thing = "total_price";
+            $order_by = "DESC";
+        }
+
+
+        $add_array = DB::table('property_for_sales')->orderBy($order_by_thing ,$order_by)->paginate(getenv('PAGINATION'));
+        
+        if($request->ajax()) 
+        {
+            return view('common.partials.property.ads_for_sale_sortion_pagination')->with(compact('add_array'))->render();
+        }
+
+        //$add_array = DB::table('property_for_sales')->orderBy('id', 'DESC')->get()->toArray();
         return view('user-panel.property.ads_for_property_for_sale')->with(compact('add_array'));
     }
 
@@ -80,7 +125,7 @@ class PropertyController extends Controller
         $data = $request->all();
         $searchable = $data['sending'];
 
-        $order_by_thing = "priced-low-high";
+        $order_by_thing = "asking_price";
         $order_by = "asc";
 
         if($data['sending'] == 'priced-low-high')
@@ -105,7 +150,8 @@ class PropertyController extends Controller
             $order_by = "desc";
         }
 
-        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing,$order_by)->paginate('5');
+        // $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response =  view('common.partials.property.holiday_home_for_sale_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
@@ -151,8 +197,9 @@ class PropertyController extends Controller
             $order_by       =  "DESC";
         }
 
-        $add_array = DB::table('property_for_rent')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        //$add_array = DB::table('property_for_rent')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
 
+        $add_array  = DB::table('property_for_rent')->orderBy($order_by_thing,$order_by)->paginate(5);
         $response  =  view('common.partials.property.render_ads')->with(compact('add_array'))->render();
 
 
@@ -200,7 +247,8 @@ class PropertyController extends Controller
             $order_by = "DESC";
         }
 
-        $add_array = DB::table('property_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        // $add_array = DB::table('property_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $add_array = DB::table('property_for_sales')->orderBy($order_by_thing,$order_by)->paginate(5);
 
         $response  =  view('common.partials.property.render_ads_for_sale')->with(compact('add_array'))->render();
 
@@ -616,16 +664,16 @@ class PropertyController extends Controller
         unset($property_for_rent_data['property_photos']);
         $property_for_rent_data['user_id'] = Auth::user()->id;
 
-        //add Add to table
+        //add Add to tables 
         $add = array();
         $add['ad_type'] = 'property_for_rent';
         $add['status']  = 'published';
         $add['user_id'] =  Auth::user()->id;
         $add_response   =  Ad::create($add);
-
         $property_for_rent_data['ad_id'] = $add_response->id;
         $response = PropertyForRent::create($property_for_rent_data);
 
+        //add images
         if ($request->file('property_photos'))
         {
             $file = $request->file('property_photos');
@@ -800,8 +848,51 @@ class PropertyController extends Controller
 
     public function adsForRent(Request $request)
     {
-        //$add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->paginate(5);
-        $add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->get(['id'])->toArray();
+
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+    
+        if($searchable == 'priced-low-high')
+        {
+            $order_by_thing = "monthly_rent";
+            $order_by       =  "ASC";
+        }
+        else if($searchable == 'priced-high-low')
+        {
+            $order_by_thing = "monthly_rent";
+            $order_by       =  "DESC";
+        }
+        else if($searchable == 'p-rom-area-low-high')
+        {
+            $order_by_thing = "primary_rom";
+            $order_by       =  "ASC";
+        }
+        else if($searchable == 'p-rom-area-high-low')
+        {
+            $order_by_thing = "primary_rom";
+            $order_by       =  "DESC";
+        }
+        else if($searchable == 'total-price-low-high')
+        {
+            $order_by_thing = "monthly_rent";
+            $order_by       =  "ASC";
+        }
+        else if($searchable == 'total-price-high-low')
+        {
+            $order_by_thing = "monthly_rent";
+            $order_by       =  "DESC";
+        }
+
+    
+        $add_array = DB::table('property_for_rent')->orderBy($order_by_thing, $order_by)->paginate(getenv('PAGINATION'));
+         
+        if ($request->ajax()) 
+        {
+            return view('common.partials.property.ads_for_rent_sortion_pagination')->with(compact('add_array'))->render();
+        }
+        // $add_array = DB::table('property_for_rent')->orderBy('id', 'DESC')->get(['id'])->toArray();
         return view('user-panel.property.ads_for_rent')->with(compact('add_array'));
     }
 
@@ -817,9 +908,35 @@ class PropertyController extends Controller
         return view('common.partials.property.property_for_sale_description')->with(compact('property_data'));
     }
 
-    public function adsForFlatWishedRented(){
+    public function adsForFlatWishedRented(Request $request){
 
-        $add_array = DB::table('flat_wishes_renteds')->orderBy('id', 'DESC')->get(['id'])->toArray();
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+    
+        if($searchable == 'max_rent_low_high')
+        {
+            $order_by_thing = "max_rent_per_month";
+            $order_by       =  "ASC";
+        }
+        else if($searchable == 'max_rent_high_low')
+        {
+            $order_by_thing = "max_rent_per_month";
+            $order_by       =  "DESC";
+        }
+        else if($searchable == 'time_from')
+        {
+            $order_by_thing = "wanted_from";
+            $order_by       =  "DESC";
+        }
+
+        $add_array = DB::table('flat_wishes_renteds')->orderBy($order_by_thing,$order_by)->paginate(getenv('PAGINATION'));
+        if ($request->ajax()) 
+        {
+            return view('common.partials.property.ads_for_flat_wishes_rented_sortion_pagination')->with(compact('add_array'))->render();
+        }
+        // $add_array = DB::table('flat_wishes_renteds')->orderBy('id', 'DESC')->get(['id'])->toArray();
         return view('user-panel.property.ads_for_flat_wishes_rented')->with(compact('add_array'));
 
     }
@@ -849,7 +966,8 @@ class PropertyController extends Controller
             $order_by       =  "DESC";
         }
 
-        $add_array = DB::table('flat_wishes_renteds')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        // $add_array = DB::table('flat_wishes_renteds')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $add_array = DB::table('flat_wishes_renteds')->orderBy($order_by_thing,$order_by)->paginate(getenv('PAGINATION'));
         $response  =  view('common.partials.property.render_flat_wishes_rented_ads')->with(compact('add_array'))->render();
 
 
@@ -864,10 +982,45 @@ class PropertyController extends Controller
         return view('common.partials.property.flat_wishes_rented_description')->with(compact('property_data'));
     }
 
-    public function holidayHomeForSaleAds()
+    public function holidayHomeForSaleAds(Request $request)
     {
-        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
 
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+
+        if($searchable  == 'priced-low-high')
+        {
+            $order_by_thing = "asking_price";
+            $order_by       =  "asc";
+
+        }
+        else if($searchable  == "priced-high-low")
+        {
+            $order_by_thing = "asking_price";
+            $order_by = "desc";
+        }
+        else if($searchable  == "housing_area_low_high")
+        {
+            $order_by_thing = "housing_area";
+            $order_by = "asc";
+        }
+        else if($searchable  == "housing_area_high_low")
+        {
+            $order_by_thing = "housing_area";
+            $order_by = "desc";
+        }
+ 
+
+        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy( $order_by_thing, $order_by)->paginate(getenv('PAGINATION'));
+
+        if ($request->ajax()) 
+        {
+            return view('common.partials.property.ads_for_holiday_home_for_sale_sortion_pagination')->with(compact('add_array'))->render();
+        }
+
+        //$add_array = DB::table('property_holidays_homes_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
         return view('user-panel.property.ads_for_holiday_home_for_sale')->with(compact('add_array'));
     }
 
@@ -877,10 +1030,34 @@ class PropertyController extends Controller
         return view('common.partials.property.holiday_home_for_sale_description')->with(compact('property_data'));
     }
 
-    public function commercialPropertyForSaleAds()
+    public function commercialPropertyForSaleAds(Request $request)
     {
-        $add_array = DB::table('commercial_property_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+    
+        if($searchable  == 'priced-low-high')
+        {
+            $order_by_thing = "rental_income";
+            $order_by       =  "asc";
+
+        }
+        else if($searchable  == "priced-high-low")
+        {
+            $order_by_thing = "rental_income";
+            $order_by = "desc";
+        }
+
+
+        $add_array = DB::table('commercial_property_for_sales')->orderBy('id', 'DESC')->paginate(getenv('PAGINATION'));
+        if ($request->ajax()) 
+        {
+            return view('common.partials.property.ads_for_commercial_property_for_sale_sortion_pagination')->with(compact('add_array'))->render();
+        }
         return view('user-panel.property.ads_for_commercial_property_for_sale')->with(compact('add_array'));
+
     }
 
     public function commercialPropertyForSaleSortedAds(Request $request)
@@ -904,7 +1081,8 @@ class PropertyController extends Controller
         }
 
 
-        $add_array = DB::table('commercial_property_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        //$add_array = DB::table('commercial_property_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $add_array = DB::table('commercial_property_for_sales')->orderBy($order_by_thing,$order_by)->paginate(getenv('PAGINATION'));
         $response =  view('common.partials.property.commercial_property_for_sale_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
@@ -992,9 +1170,34 @@ class PropertyController extends Controller
         echo json_encode($data);
     }
 
-    public function commercialPropertyForRentAds()
+    public function commercialPropertyForRentAds(Request $request)
     {
-        $add_array = DB::table('commercial_property_for_rents')->orderBy('id', 'DESC')->get('id')->toArray();
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+
+        if($searchable == 'sqm-low-high')
+        {
+            $order_by_thing = "use_area";
+            $order_by       =  "asc";
+
+        }
+        else if($searchable == "sqm-high-low")
+        {
+            $order_by_thing = "use_area";
+            $order_by = "desc";
+        }
+
+        $add_array = DB::table('commercial_property_for_rents')->orderBy($order_by_thing , $order_by)->paginate(getenv('PAGINATION'));
+
+        
+        if ($request->ajax()) 
+        {
+            return view('common.partials.property.ads_for_commercial_property_for_rent_sortion_pagination')->with(compact('add_array'))->render();
+        }
+        
+
         return view('user-panel.property.ads_for_commercial_property_for_rent')->with(compact('add_array'));
     }
 
@@ -1018,8 +1221,10 @@ class PropertyController extends Controller
             $order_by = "desc";
         }
 
+ 
 
-        $add_array = DB::table('commercial_property_for_rents')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        //$add_array = DB::table('commercial_property_for_rents')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $add_array = DB::table('commercial_property_for_rents')->orderBy($order_by_thing,$order_by)->paginate(getenv('PAGINATION'));
         $response =  view('common.partials.property.commercial_property_for_rent_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
@@ -1087,9 +1292,31 @@ class PropertyController extends Controller
 
     }
 
-    public function businessForSaleAds()
+    public function businessForSaleAds(Request $request)
     {
-        $add_array = DB::table('business_for_sales')->orderBy('id', 'DESC')->get('id')->toArray();
+        
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+
+        if($searchable == 'priced-low-high')
+        {
+            $order_by_thing = "price";
+            $order_by       =  "asc";
+
+        }
+        else if($searchable == "priced-high-low")
+        {
+            $order_by_thing = "price";
+            $order_by = "desc";
+        }
+
+        $add_array = DB::table('business_for_sales')->orderBy('id', 'DESC')->paginate(getenv('PAGINATION'));
+        if($request->ajax())
+        {
+            return view('common.partials.property.business_for_sale_sortion_pagination')->with(compact('add_array'));
+        }
         return view('user-panel.property.ads_business_for_sale')->with(compact('add_array'));
     }
 
@@ -1114,7 +1341,7 @@ class PropertyController extends Controller
         }
 
 
-        $add_array = DB::table('business_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $add_array = DB::table('business_for_sales')->orderBy($order_by_thing,$order_by)->paginate(getenv('PAGINATION'));
         $response =  view('common.partials.property.business_for_sale_render_ads')->with(compact('add_array'))->render();
 
         $data['success'] = $response;
@@ -1183,9 +1410,44 @@ class PropertyController extends Controller
         echo json_encode($data);
     }
 
-    public function commercialPlotsAds()
+    public function commercialPlotsAds(Request $request)
     {
-        $add_array = DB::table('commercial_plots')->orderBy('id', 'DESC')->get('id')->toArray();
+
+        $data = $request->all();
+        $searchable = (isset($data['filter']) ? $data['filter'] : "");
+        $order_by_thing = 'id';
+        $order_by       = 'DESC';
+
+
+        if($searchable == 'priced-low-high')
+        {
+            $order_by_thing = "asking_price";
+            $order_by       =  "asc";
+
+        }
+        else if($searchable == "priced-high-low")
+        {
+            $order_by_thing = "asking_price";
+            $order_by = "desc";
+        }
+        else if($searchable == "area_low_high")
+        {
+            $order_by_thing = "plot_size";
+            $order_by = "asc";
+        }
+        else if($searchable == "area_high_low")
+        {
+            $order_by_thing = "plot_size";
+            $order_by = "desc";
+        }
+
+        $add_array = DB::table('commercial_plots')->orderBy($order_by_thing ,$order_by)->paginate(getenv('PAGINATION'));
+
+        if($request->ajax())
+        {
+            return view('common.partials.property.commercial_plot_sortion_pagination')->with(compact('add_array'));
+        }
+      
         return view('user-panel.property.ads_for_commercial_plots')->with(compact('add_array'));
     }
 
@@ -1221,7 +1483,7 @@ class PropertyController extends Controller
         }
 
 
-        $add_array = DB::table('commercial_plots')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
+        $add_array = DB::table('commercial_plots')->orderBy($order_by_thing,$order_by)->paginate(getenv('PAGINATION'));
 
         $response =  view('common.partials.property.commercial_plot_render_ads')->with(compact('add_array'))->render();
 

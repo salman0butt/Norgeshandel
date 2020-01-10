@@ -267,9 +267,13 @@
     </div>
 </footer>
 <script src="{{asset('public/mediexpert.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="{{asset('public/js/utils.js')}}"></script>
 <script src="{{asset('public/js/spin.min.js')}}"></script>
 <script src="{{asset('public/js/ladda.min.js')}}"></script>
-{{-- <script src="{{asset('public/js/validater.js')}}"></script> --}}
+<script src="{{asset('public/js/common-norges.js')}}"></script>
+<script src="{{asset('public/js/validater.js')}}"></script>
+<script src="{{asset('public/js/additional-methods.min.js')}}"></script>
+<script src="{{asset('public/js/messages_no.min.js')}}"></script>
 </body>
 </html>

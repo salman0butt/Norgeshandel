@@ -37,7 +37,26 @@
     <div class="dme-container p-3">
         <div class="row">
             <div class="col-md-12">
-                <img src="{{$full_path}}" alt="" class="img-fluid">
+              {{-- //  <img src="{{$full_path}}" alt="" class="img-fluid"> --}}
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{$full_path}}" alt="First slide">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
             <div class="col-md-12 text-center">
                 <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">Pen og koselig
@@ -53,6 +72,7 @@
                 <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
                 <div class="row single-realestate-detail p-3">
                     <div class="col-md-12">
+                 
                         <div class="u-t3 mt-3">{{$property_data->local_area_name}}</div>
                         <h1 class="u-t2">{{$property_data->local_area_name}} | {{$property_data->number_of_bedrooms}}
                             soverom | {{$property_data->property_type}} | </h1>

@@ -1,15 +1,20 @@
-            
-              <?php 
 
+<?php 
 
-$col='list';
-
-
+if(isset($_GET['style']))
+{
+    $col = (strpos($_GET['style'],'grid') !== false ? "grid":"list");
+}
+else
+{
+    $col = 'list';  
+}
 ?>
 
-<div class="col-md-12 outer-div">
+ <div class="col-md-12 outer-div">
     <div class="inner-div">{{ $add_array->links() }}</div>
 </div>
+
 <div class="col-md-12">
 
 <div class="<?php echo $col==='grid'?'row':'' ?>">
