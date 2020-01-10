@@ -1,10 +1,14 @@
-            
-              <?php 
 
+<?php 
 
-$col='list';
-
-
+    if(isset($_GET['style']))
+    {
+        $col = (strpos($_GET['style'],'grid') !== false ? "grid":"list");
+    }
+    else
+    {
+        $col = 'list';  
+    }
 ?>
 
 <div class="col-md-12 outer-div">

@@ -159,7 +159,12 @@
                    
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('commercial/property/for/rent/ads')}}';
-                    getDataPagination(page,sorting_value,url);
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+                    getDataPagination(page,sorting_value,url,stylings);
 
                 });
 

@@ -6,13 +6,13 @@ function isEmpty(obj) {
     return true;
 }
 
-function getDataPagination(page,sorting_value,url)
+function getDataPagination(page,sorting_value,url,stylings)
 {
    
     var url = url;
     $.ajax(
     {
-        url: '?page=' + page+'&filter='+sorting_value,
+        url: '?page=' + page+'&filter='+sorting_value+'&style='+stylings,
         type: "get",
         datatype: "html"
     }).done(function(data){

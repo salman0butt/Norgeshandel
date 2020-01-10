@@ -165,7 +165,12 @@
                    
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('property/for/sale')}}';
-                    getDataPagination(page,sorting_value);
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+                    getDataPagination(page,sorting_value,stylings);
                 });
                 
             });

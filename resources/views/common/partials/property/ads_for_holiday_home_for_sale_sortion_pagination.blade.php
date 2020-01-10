@@ -1,13 +1,14 @@
             
-              <?php 
+<?php 
 
-
-$col='list';
-if(isset($_GET)){
-    if(isset($_GET['grid'])){
-        $col = 'grid';
-}}
-
+    if(isset($_GET['style']))
+    {
+        $col = (strpos($_GET['style'],'grid') !== false ? "grid":"list");
+    }
+    else
+    {
+        $col = 'list';  
+    }
 
 ?>
 

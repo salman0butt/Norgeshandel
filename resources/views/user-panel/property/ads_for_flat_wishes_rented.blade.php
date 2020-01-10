@@ -161,7 +161,12 @@
                    
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('property/flat/wishes/rented')}}';
-                    getDataPagination(page,sorting_value,url);
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+                    getDataPagination(page,sorting_value,url,stylings);
                 });
 
             });

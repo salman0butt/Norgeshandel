@@ -28,7 +28,7 @@ $posts         =   array('img'=>'',
             </div>
             <div class="row mt-4">
                 <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
-                    <h2 class="u-t2 p-2">&nbsp; Fritidsbolig til salgs</h2>
+                    <h2 class="u-t2 p-2">&nbsp; Næringstomter</h2>
                 </div>
                 <div class="col-md-12">
                     <div class="hits fa-pull-right"><span class="font-weight-bold">36 331</span> treff på <span class="font-weight-bold">21 190 </span>annonser</div>
@@ -172,7 +172,12 @@ $posts         =   array('img'=>'',
                    
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('commercial/plots/ads')}}';
-                    getDataPagination(page,sorting_value,url);
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+                    getDataPagination(page,sorting_value,url,stylings);
 
                 });
 
