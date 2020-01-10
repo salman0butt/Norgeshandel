@@ -157,28 +157,10 @@
                     var page=$(this).attr('href').split('page=')[1];
                    
                     var sorting_value = $("#sort_by").val();
-                    getData(page,sorting_value);
+                    var url = '{{url('property/for/rent')}}';
+                    getDataPagination(page,sorting_value,url);
                 });
 
-                function getData(page,sorting_value)
-                {
-                    var url = '{{url('property/for/rent')}}';
-
-                    $.ajax(
-                    {
-                        url: '?page=' + page+'&filter='+sorting_value,
-                        type: "get",
-                        datatype: "html"
-                    }).done(function(data){
-                        
-                        $(".pagination_data").empty().html(data);
-                        location.hash = page;
-
-
-                    }).fail(function(jqXHR, ajaxOptions, thrownError){
-                        alert('No response from server');
-                    });
-                }
 
                 // $(window).on('hashchange', function() {
                 //     if (window.location.hash) {

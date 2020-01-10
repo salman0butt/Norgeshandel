@@ -7,7 +7,7 @@
 <div class="col-md-12 outer-div">
     <div class="inner-div">{{ $add_array->links() }}</div>
 </div>
-<div class="col-md-12">
+
 <div class="col-md-12">
 
 <div class="<?php echo $col==='grid'?'row':'' ?>">
@@ -66,4 +66,3 @@
 <div class="col-md-12 outer-div">
     <div class="inner-div">{{ $add_array->links() }}</div>
 </div>
-<div class="col-md-12">

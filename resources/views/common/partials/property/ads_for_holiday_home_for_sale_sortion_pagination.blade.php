@@ -71,6 +71,7 @@ if(isset($_GET)){
 </div>
 
 </div>
+
 <div class="col-md-12 outer-div">
     <div class="inner-div">{{ $add_array->links() }}</div>
 </div>
