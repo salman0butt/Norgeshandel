@@ -16,8 +16,14 @@ class TranslationController extends Controller
     public function __construct()
     {
         $this->blades = [
-//            give path starting after resources\views\
+//      removing blade will cause remove translation
+//      give path starting after resources\views\
             'common\partials\job-form.blade.php',
+            'auth\login.blade.php',
+            'auth\retister.blade.php',
+            'auth\verified.blade.php',
+            'auth\verify.blade.php',
+            'layouts\app.blade.php',
         ];
         $this->content = '';
     }
@@ -25,7 +31,7 @@ class TranslationController extends Controller
     public function index()
     {
 
-        $path = str_replace('/','\\',$_SERVER['DOCUMENT_ROOT'].'\NorgesHandel\resources\views\\');
+        $path = str_replace('/','\\',$_SERVER['DOCUMENT_ROOT'].'\norgeshandel\resources\views\\');
         foreach ($this->blades as $blade){
             if(file_exists($path.$blade)){
                 $this->content .= file_get_contents($path.$blade);
@@ -117,6 +123,7 @@ class TranslationController extends Controller
     }
     private function get_strings($content){
         preg_match_all("[\{\{__\('.*\'\)\}\}]",$content, $matches);
+//        dd($matches);
         $arr = array();
         foreach ($matches[0] as $match){
             $match = str_replace('\')}}', '', $match);

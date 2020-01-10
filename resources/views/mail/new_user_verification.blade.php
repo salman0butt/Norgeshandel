@@ -1,5 +1,3 @@
-@extends('layouts.landingSite')
-@section('page_content')
     <main class="dme-wrepper">
         <div class="container">
             <div style="min-height: 350px;" class="row">
@@ -13,9 +11,11 @@
                         Du er registrert hos NorgesHandel, vennligst <a href="{{url('login')}}">klikk her for å logge inn</a> eller gå til
                         <a href="{{url('/')}}">hjemmesiden.</a>
                     </p>
+                    <br>
+                    <p>Takk og hilsen</p>
+                    <p><a href="{{ asset('public/images/NorgesHondel-logo.png')}}">NorgesHandel</a></p>
                 </div>
             </div>
             </div>
         </div>
     </main>
-@endsection

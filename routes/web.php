@@ -16,8 +16,8 @@ use App\Models\Ad;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 
-Auth::routes();
-
+Auth::routes(['verify' => true]);
+Route::get('verified', function (){return view('auth.verified');})->middleware('verified');
 Route::get('mail', function () {
     $to_name = 'Zain';
     $to_email = 'zain@digitalmx.no';
@@ -25,7 +25,7 @@ Route::get('mail', function () {
         $message->to($to_email, $to_name)->subject('email subject');
         $message->from('developer@digitalmx.no', 'Developers of NorgesHandel');
     });
-});
+})->middleware('verified');
 Route::get('lang', 'TranslationController@index');
 //    home routes
 Route::get('/', function () {
