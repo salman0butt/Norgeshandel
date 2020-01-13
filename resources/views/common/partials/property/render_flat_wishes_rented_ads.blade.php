@@ -1,9 +1,15 @@
             
-              <?php 
+<?php 
 
 
-$col='list';
-
+if(isset($filtering))
+{
+    $col = (strpos($filtering,'grid') !== false ? "grid":"list");
+}
+else
+{
+    $col = 'list';  
+}
 
 ?>
 

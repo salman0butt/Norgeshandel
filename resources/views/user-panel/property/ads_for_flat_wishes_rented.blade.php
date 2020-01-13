@@ -138,10 +138,17 @@
                     
                     var url  = '{{url('property/flat/wishes/rented/sorted/ad')}}';
                     var data = $(this).val();
+
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+    
                     $.ajax({
                         type: "POST",
                         url: url,
-                        data: {sending:data},
+                        data: {sending:data,stylings:stylings},
                         dataType: "json",
                         success: function(data){
                            $(".pagination_data").html(data['success']);
