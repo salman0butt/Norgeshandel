@@ -8,7 +8,7 @@ function isEmpty(obj) {
 
 function getDataPagination(page,sorting_value,url,stylings)
 {
-   
+
     var url = url;
     $.ajax(
     {
