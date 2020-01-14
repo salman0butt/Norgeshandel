@@ -11,9 +11,12 @@ use App\Media;
 use App\Helpers;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\Null_;
 use Zizaco\Entrust\EntrustRole;
 
 
@@ -111,21 +114,23 @@ class AdminUserController extends Controller
 
         $user = User::where('id', $id);
 
-        $user->update([
-            'first_name' => $user_array['first_name'],
-            'last_name' => $user_array['last_name'],
-            'username' => $user_array['username'],
-            'mobile_number' => $user_array['mobile_number'],
-            'email' => $user_array['email'],
-            'password' => $user_array['password'],
-            'address' => $user_array['address'],
-            'city' => $user_array['city'],
-            'zip' => $user_array['zip'],
-            'gender' => $user_array['gender'],
-            'country' => $user_array['country'],
-            'birthday' => $user_array['birthday'],
-//            'status' => $user_array['status']
-        ]);
+        $user->update($request->except(['_token', '_method', 'file']));
+//        $user->update([
+//            'first_name' => $user_array['first_name'],
+//            'last_name' => $user_array['last_name'],
+//            'username' => $user_array['username'],
+//            'mobile_number' => $user_array['mobile_number'],
+//            'email' => $user_array['email'],
+//            'password' => $user_array['password'],
+//            'address' => $user_array['address'],
+//            'city' => $user_array['city'],
+//            'zip' => $user_array['zip'],
+//            'gender' => $user_array['gender'],
+//            'country' => $user_array['country'],
+//            'birthday' => $user_array['birthday'],
+//            'about_me' => $user_array['about_me'],
+////            'status' => $user_array['status']
+//        ]);
         if ($request->file('file')) {
             $file = $request->file('file');
 
@@ -135,9 +140,10 @@ class AdminUserController extends Controller
 //            User::where('id', $id)->update(['image_path'=>'']);
         }
 
-        $request->session()->flash('success', 'User has been updated successfully');
-        $users = User::all();
-        return response()->view('admin.users.users', compact('users'));
+        $request->session()->flash('success', 'Profile has been updated successfully');
+//        $users = User::all();
+        return redirect()->back();
+//        return response()->view('admin.users.users', compact('users'));
     }
 
     /**
@@ -179,5 +185,19 @@ class AdminUserController extends Controller
         $roles = Role::orderBy('id', 'DESC')->get();
         $users = User::orderBy('id', 'DESC')->get();
         return view('admin.users.users', compact('users', 'roles'));
+    }
+
+
+    public function profile(Request $request = null){
+        if($request==null){
+            $user = Auth::user();
+            return view('user-panel.my-business.profile.profile', compact('user'));
+        }
+    }
+
+    public function public_profile($id){
+        $user = User::find($id);
+        $active_ads = DB::table('ads')->where('status', '=', 'published')->where('user_id','=', $user->id)->paginate(env('PAGINATION'));
+        return view('user-panel.my-business.profile.public', compact('user', 'active_ads'));
     }
 }

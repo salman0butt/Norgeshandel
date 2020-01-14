@@ -98,13 +98,39 @@
 <script>
     $(document).ready(function () {
         var urlParams = new URLSearchParams(location.search);
+        var job_type = urlParams.get('job_type');
+        var view = urlParams.get('view');
+        var page = urlParams.get('page');
+        var str = "";
+        var val = "";
         $.each($('.pagination .page-link'), function () {
-            var val = $(this).attr('href');
-           $(this).attr('href', val+'&job_type='+urlParams.get('job_type')+'&view='+urlParams.get('view'));
+            val = $(this).attr('href');
+            str=val;
+            if(job_type != null && str.indexOf('job_type')<1){
+                str+="&job_type="+job_type
+            }
+            if(view != null && str.indexOf('view')<1){
+                str+="&view="+view
+            }
+            if(page != null && str.indexOf('page')<1){
+                str+="&page="+page
+            }
+           $(this).attr('href', str);
         });
+        str = "";
         $.each($('.change_view'), function () {
-            var val = $(this).attr('href');
-           $(this).attr('href', val+'&job_type='+urlParams.get('job_type')+'&page='+urlParams.get('page'));
+            val = $(this).attr('href');
+            str=val;
+            if(job_type != null && str.indexOf('job_type')<1){
+                str+="&job_type="+job_type
+            }
+            if(view != null && str.indexOf('view')<1){
+                str+="&view="+view
+            }
+            if(page != null && str.indexOf('page')<1){
+                str+="&page="+page
+            }
+           $(this).attr('href', str);
         });
     })
 </script>
