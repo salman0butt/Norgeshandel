@@ -1,4 +1,5 @@
 @extends('layouts.landingSite')
+<?php use \App\Helpers\common; ?>
 <?php $countries = countries(); ?>
 <?php $cv_id = $cv->id; ?>
 <?php $subjects = ['Annet', 'Allmennfag', 'Arkeologi', 'Astronomi', 'Automasjon', 'Bibliotek', 'Billedkunst', 'Biologi', 'Business', 'Bygg og anlegg', 'Dans', 'Data og Internett', 'Design', 'Elektrofag', 'Energiteknikk', 'Entreprenørskap', 'Farmasi', 'Film og TV', 'Filosofi', 'Flyskoler', 'Fysikk', 'Fysioterapi', 'Geofag', 'Havbruk og fiske', 'Helsefag', 'Historie', 'Hotell og restaurant', 'HR og personal', 'Idrett', 'Informatikk', 'Innovasjon', 'Journalistikk', 'Jus', 'Kjemi', 'Kultur', 'Landbruk', 'Litteratur', 'Logistikk', 'Marinteknologi', 'Markedsføring', 'Maskinteknikk', 'Matematikk', 'Mediefag', 'Medisin', 'Militærvesen', 'Molekylærbiologi', 'Musikk', 'Natur- og miljøvern', 'Naturfag', 'Odontologi', 'Organisasjon og ledelse', 'Pedagogikk', 'Politifag', 'PR og kommunikasjon', 'Psykologi', 'Realfag', 'Reiseliv', 'Samfunn og politikk', 'Sjøfart', 'Skogbruk', 'Sosialantropologi', 'Sos-pedagogikk', 'Sosiologi', 'Spes-pedagogikk', 'Språk', 'Strategi og ledelse', 'Svakstrøm', 'Sykepleie', 'Teater', 'Tekniske fag', 'Teologi', 'Veterinærmedisin', 'Yrkesfag', 'Zoologi', 'Økonomi'];
@@ -260,9 +261,8 @@ $cvlanguages = $cv->languages;
                                             <div class="profile"
                                                  style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
                                                 <img
-                                                    src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
-                                                    id="cv_profile_image"
-                                                    style="max-width:180px;max-height: 200px; height:200px;" alt="">
+                                                    src="@if(isset($cv) && $cv->media!=null && common::getMediaPath($cv->media, '180x200')!=null){{asset(common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
+                                                    id="cv_profile_image" style="max-width:180px;max-height: 200px; height:200px;" alt="">
                                             </div>
                                             <div class="custom-file" style="max-width: 205px;">
                                                 <input type="file" class="custom-file-input" name="cv_profile"

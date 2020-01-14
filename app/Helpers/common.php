@@ -22,6 +22,9 @@ class common
             $sz = explode('x', $size);
             if (is_array($arr) && count($arr) == 2) {
                 $file = $path . $arr[0] . '-' . $size . '.' . $arr[1];
+                if(!file_exists($path . $arr[0] . '.' . $arr[1])){
+                    return null;
+                }
                 if (!file_exists($file)) {
                     Image::make($path . $obj->name_unique)->widen($sz[0])->heighten($sz[1])->save($path . $arr[0] . '-' . $size . '.' . $arr[1]);
                 }

@@ -108,9 +108,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
             Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
         });
+        Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
         Route::get('cv/extend', 'Cv\CvController@extend');
     });
-
 
 //    new ad routes
     Route::group(['prefix' => 'new'], function () {
@@ -133,7 +133,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 });
-
+Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager|salesman']], function () {
 //    dashboard
