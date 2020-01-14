@@ -163,7 +163,7 @@ $cvlanguages = $cv->languages;
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_mobile">Mobil</label>
-                                                <input type="text" class="form-control" id="personal_mobile"
+                                                <input type="text" class="form-control" id="phone"
                                                        name="mobile" value="{{$cvpersonal->mobile}}">
                                             </div>
                                             <div class="form-group">
@@ -226,7 +226,7 @@ $cvlanguages = $cv->languages;
                                             <div class="form-group">
                                                 <label for="personal_driving_license">Førerkort</label>
                                                 <input type="text" class="form-control" id="personal_driving_license"
-                                                       name="driving_license" value="{{$cvpersonal->website}}">
+                                                       name="driving_license" value="{{$cvpersonal->driving_license}}">
                                                 <small class="form-text text-muted"> E.g. A, B, C1 or D1E</small>
                                             </div>
 
@@ -291,7 +291,7 @@ $cvlanguages = $cv->languages;
                                 </small>
                                 <div class="collapse" id="new_education" style="margin-top: -40px;">
                                     <div class="table-main">
-                                        <form action="{{route('cveducation.store')}}" name="cveducation-form"
+                                        <form action="{{route('cveducation.store')}}" name="cveducation-form" class="cveducation_form"
                                               id="new_cvexperience-form" method="POST" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <div class="row form-group mt-3">
@@ -423,7 +423,7 @@ $cvlanguages = $cv->languages;
                                                 {{--                                                {{dd($cvexperience)}}--}}
                                                 <form action="{{route('cveducation.update', $cveducation->id)}}"
                                                       name="cveducation-form" id="cveducation-form_{{$i}}"
-                                                      method="POST" enctype="multipart/form-data">
+                                                      method="POST" enctype="multipart/form-data" class="cveducation_form">
                                                     {{method_field('PUT')}}
                                                     {{ csrf_field() }}
                                                     <div class="row form-group mt-3">

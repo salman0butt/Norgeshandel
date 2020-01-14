@@ -56,6 +56,13 @@
                     </div>
                 </div>
             </div>
+
+                <div style="display: block;margin: 0 auto; text-align:center;">
+                 <div id="imageLoader" style="display:none;margin-top:15%; padding-bottom: 15%">
+                   <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader">
+                 </div>
+            </div>
+
             <div class="row pagination_data">
                 <div class="col-md-12 outer-div">
                     <div class="inner-div">{{ $add_array->links() }}</div>
@@ -126,7 +133,17 @@
     
     <script>
             $(document).ready(function(){
+                        //spinner start here
+                  $(document).ajaxStart(function(){
+                        $("#imageLoader").css("display", "block");
+                        $(".pagination_data").css("display", "none");
+                        });
 
+                        $(document).ajaxComplete(function(){
+                        $("#imageLoader").css("display", "none");
+                        $(".pagination_data").css("display", "block");
+                    });
+                //spinner ends here
                 
                 $.ajaxSetup({
                     headers: {
