@@ -27,6 +27,8 @@ Route::get('mail', function () {
 })->middleware('verified');
 
 Route::get('lang', 'TranslationController@index');
+
+Route::get('savedsearches', 'SearchController@index');
 //    home routes
 Route::get('/', function () {
     $ads = Ad::where('status', 'published')->orderBy('id', 'desc')->get();

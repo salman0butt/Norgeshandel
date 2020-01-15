@@ -13,13 +13,13 @@
                 <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8">
                     <h2 class="u-t4">Lagrede søk</h2>
                     <p class="u-d1">Det er ingen lagrede søk</p>
-
+​
                     <h2 class="u-t4">Siste søk</h2>
                     <p class="u-d1">Det er ingen nylig søk</p>
                 </div>
                 <!--            ended col-->
                 <div class="col-md-8">
-                    <div class="input-group search-box ">
+                    <div class="input-group search-box position-relative">
                         <input type="text" name="search" class="form-control search-control"
                                placeholder="Søk her..." autofocus>
                         <label for="search"><span class="input-group-addon">
@@ -33,7 +33,10 @@
                             7.572 2 2 7.571 2 14.444c0 6.873 5.572 12.444 12.444 12.444 3.069 0
                             5.878-1.11 8.048-2.952L28.556 30 30 28.555l-6.064-6.063z"></path>
                         </svg>
-                        </span></label>
+                        </span>
+                        </label>
+                    
+                    @include('user-panel.partials.global-search-inner')
                     </div>
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
@@ -79,4 +82,7 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
+    <script type="text/javascript">
+        // $(document)
+    </script>
 @endsection
