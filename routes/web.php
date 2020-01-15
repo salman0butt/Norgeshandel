@@ -29,6 +29,8 @@ Route::get('mail', function () {
 Route::get('lang', 'TranslationController@index');
 
 Route::get('savedsearches', 'SearchController@index');
+
+Route::get('searching/{search}', 'SearchController@search')->name('searching');
 //    home routes
 Route::get('/', function () {
     $ads = Ad::where('status', 'published')->orderBy('id', 'desc')->get();

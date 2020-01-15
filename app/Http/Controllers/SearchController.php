@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Model\Search;
+use App\Admin\Jobs\Job;
+use App\PropertyForRent;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -37,6 +40,8 @@ class SearchController extends Controller
     public function store(Request $request)
     {
         //
+        Search::create($request->all());
+
     }
 
     /**
@@ -83,4 +88,34 @@ class SearchController extends Controller
     {
         //
     }
+
+    public function search($search)
+    
+    {
+
+       if (!empty($search)) {
+        $data['property'] = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->limit(5)->get();
+        $property_count = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->count();
+       
+
+        $data['jobs'] = Job::where('title', 'LIKE', '%'.$search.'%')->limit(5)->get();
+        $jobs_count = Job::where('title', 'LIKE', '%'.$search.'%')->count();
+
+        $results =  $data;
+
+        $html = "";
+            
+                foreach ($data as $result) {
+
+                $html .= view('user-panel.partials.global-search-inner', compact('result', 'search'))->render();
+             
+               
+                }
+            
+            
+ 
+     
+        exit($html);
+      }
+  }
 }

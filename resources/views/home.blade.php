@@ -20,7 +20,7 @@
                 <!--            ended col-->
                 <div class="col-md-8">
                     <div class="input-group search-box position-relative">
-                        <input type="text" name="search" class="form-control search-control"
+                        <input type="text" name="search" id="search" class="form-control search-control"
                                placeholder="Søk her..." autofocus>
                         <label for="search"><span class="input-group-addon">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32"
@@ -35,9 +35,15 @@
                         </svg>
                         </span>
                         </label>
-                    
+                    <div class="suggestions" id="suggestions" style="position:absolute;top:35px;width:100%;height:auto;z-index: 1;background-color: rgba(236,223,226,0.9)">
+
+                @if (isset($result) )
                     @include('user-panel.partials.global-search-inner')
+
+                    @endif
                     </div>
+                </div>
+                
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
                             <a href="property/realestate" class="category">
@@ -82,7 +88,36 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
-    <script type="text/javascript">
-        // $(document)
-    </script>
+<input type="hidden" id="search_url" value="{{url('searching')}}">
+
+<script>
+    $(document).ready(function (e) {
+         $('#search').on('blur' ,function (e) {
+                 $('#suggestions').css('display','none');
+         });
+
+
+        $('#search').on('keyup keydown' ,function (e) {
+             $('#suggestions').css('display','block');
+      
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+           
+            $.ajax({
+                url: $('#search_url').val()+'/'+$('#search').val(),
+                type: "GET",
+                success: function (response) {
+                    $('#suggestions').html(response);
+                },
+                error: function (error) {
+                      console.log(error);
+                }
+            })
+        });
+    });
+
+</script>
 @endsection
