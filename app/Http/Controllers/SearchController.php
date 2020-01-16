@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Model\Search;
 use App\Admin\Jobs\Job;
 use App\PropertyForRent;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -94,27 +93,29 @@ class SearchController extends Controller
     {
 
        if (!empty($search)) {
-        $data['property'] = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->limit(5)->get();
+        $property = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->limit(5)->get();
         $property_count = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->count();
        
 
-        $data['jobs'] = Job::where('title', 'LIKE', '%'.$search.'%')->limit(5)->get();
+        $jobs = Job::where('title', 'LIKE', '%'.$search.'%')->limit(5)->get();
         $jobs_count = Job::where('title', 'LIKE', '%'.$search.'%')->count();
 
-        $results =  $data;
+        //$results =  $data;
 
         $html = "";
-            
-                foreach ($data as $result) {
+               $i = "";
+               $j = "";
+                foreach ($property as $property) {
 
-                $html .= view('user-panel.partials.global-search-inner', compact('result', 'search'))->render();
-             
-               
+                $html .= view('user-panel.partials.global-search-inner', compact('property', 'property_count','j', 'search'))->render();
+                    $j++;
                 }
-            
-            
- 
-     
+                   foreach ($jobs as $job) {
+
+                $html .= view('user-panel.partials.global-search-inner', compact('job', 'jobs_count','i','search'))->render();
+                    $i++;
+                }
+        
         exit($html);
       }
   }

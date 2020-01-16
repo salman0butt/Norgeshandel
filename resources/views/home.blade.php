@@ -92,9 +92,13 @@
 
 <script>
     $(document).ready(function (e) {
-         $('#search').on('blur' ,function (e) {
+       $('#search').on('blur' ,function (e) {
                  $('#suggestions').css('display','none');
          });
+
+        $("#suggestions").hover(function() {
+           $(this).css('display','block');      
+        });
 
 
         $('#search').on('keyup keydown' ,function (e) {
