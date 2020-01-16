@@ -9,7 +9,8 @@ use App\Role;
 use App\User;
 use App\Media;
 use App\Helpers;
-use Illuminate\Contracts\Session\Session;
+//use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Null_;
 use Zizaco\Entrust\EntrustRole;
+use Illuminate\Support\Facades\Mail;
 
 
 class AdminUserController extends Controller
@@ -199,5 +201,24 @@ class AdminUserController extends Controller
         $user = User::find($id);
         $active_ads = DB::table('ads')->where('status', '=', 'published')->where('user_id','=', $user->id)->paginate(env('PAGINATION'));
         return view('user-panel.my-business.profile.public', compact('user', 'active_ads'));
+    }
+
+    public function request_company_profile(){
+        if (Auth::check()) {
+//            $to_name = "NorgesHandel";
+//            $to_email = env('ADMIN_EMAIL');
+//            $user = Auth::user();
+//            $data = ['username'=>$user->username,'display_name'=>$user->first_name.' '.$user->last_name, 'email'=>$user->email];
+//            Mail::send('mail.request_company_profile',
+//                $data,
+//                function ($message) use ($to_name, $to_email, $user) {
+//                $message->to($to_email, $to_name)->subject('Forespørsel om ny firmaprofil');
+//                $message->from($user->email, $user->first_name.' '.$user->last_name.' ('.$user->username.')');
+//            });
+
+
+            Session::flash('success', 'Forespørselen din har blitt sendt på e-post, snart vil du bli kontaktet.');
+            return redirect()->back();
+        }
     }
 }

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Helpers\common;
 use Intervention\Image\AbstractDecoder;
-use function Sodium\compare;
+//use function Sodium\compare;
 
 class JobController extends Controller
 {

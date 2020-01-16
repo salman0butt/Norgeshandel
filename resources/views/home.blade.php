@@ -109,6 +109,10 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
+    <script type="text/javascript">
+        // $(document)
+    </script>
+@endsection
 <input type="hidden" id="search_url" value="{{url('searching')}}">
 
 <script>

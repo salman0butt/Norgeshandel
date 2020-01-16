@@ -84,11 +84,12 @@
                                         {{ csrf_field() }} {{method_field('DELETE')}}
                                         <input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger">
                                     </form>
+{{--                                    {{dd($user->role)}}--}}
                                 </td>
                                 <td>{{$user->username}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->mobile_number}}</td>
-                                <td>{{$user->roles[0]->display_name}}</td>
+                                <td>{{@$user->roles->first()->display_name}}</td>
                                 <td>0</td>
                             </tr>
                             @endforeach

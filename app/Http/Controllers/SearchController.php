@@ -17,8 +17,6 @@ class SearchController extends Controller
      */
     public function index()
     {
-        //
-        return view('user-panel/my-business/search/saved-search');
     }
 
     /**
@@ -38,8 +36,7 @@ class SearchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-       
+    {       
           $data = [
                 'name' => $request->name,
                 'type' => 'saved',
@@ -75,7 +72,7 @@ class SearchController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Search  $search
+     * @param  \App\Models\Search  $search
      * @return \Illuminate\Http\Response
      */
     public function show(Search $search)
@@ -86,7 +83,7 @@ class SearchController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\Search  $search
+     * @param  \App\Models\Search  $search
      * @return \Illuminate\Http\Response
      */
     public function edit(Search $search)
@@ -98,7 +95,7 @@ class SearchController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Search  $search
+     * @param  \App\Models\Search  $search
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Search $search)
@@ -109,7 +106,7 @@ class SearchController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\Search  $search
+     * @param  \App\Models\Search  $search
      * @return \Illuminate\Http\Response
      */
     public function destroy(Search $search)
