@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Search;
+use App\Admin\Jobs\Job;
+use App\Model\Search;
+use App\Http\Controllers\Auth;
+use App\PropertyForRent;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -14,7 +17,6 @@ class SearchController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -34,8 +36,37 @@ class SearchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {       
+          $data = [
+                'name' => $request->name,
+                'type' => 'saved',
+                'notification_web' => ($request->notify ?? 0),
+                'notification_email' => ($request->notify ?? 0),
+                'notification_sms' => ($request->notify ?? 0),
+                'user_id' => auth()->user()->id
+            ];
+
+     
+        Search::create($data);
+        return back()->with('status', 'Search Saved Successfully');
+
+    }
+    public function recent($value) {
+        $check = Search::where('type','recent')->Where('name','=',$value)->count();
+        if ($check > 0) {
+           return back();
+        }
+        $data = [
+            'name' => $value,
+            'type' => 'recent',
+            'notification_web' => 0,
+            'notification_email' => 0,
+            'notification_sms' => 0,
+            'user_id' => auth()->user()->id
+        ];
+            Search::create($data);
+          return back()->with('status', 'Search Saved Successfully');
+
     }
 
     /**
@@ -81,5 +112,35 @@ class SearchController extends Controller
     public function destroy(Search $search)
     {
         //
+    }
+
+    public function search($search)
+    {
+
+        if (!empty($search)) {
+            $property = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->limit(5)->get();
+            $property_count = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->count();
+
+            $jobs = Job::where('title', 'LIKE', '%' . $search . '%')->limit(5)->get();
+            $jobs_count = Job::where('title', 'LIKE', '%' . $search . '%')->count();
+
+            //$results =  $data;
+
+            $html = "";
+            $i = "";
+            $j = "";
+            foreach ($property as $property) {
+
+                $html .= view('user-panel.partials.global-search-inner', compact('property', 'property_count', 'j', 'search'))->render();
+                $j++;
+            }
+            foreach ($jobs as $job) {
+
+                $html .= view('user-panel.partials.global-search-inner', compact('job', 'jobs_count', 'i', 'search'))->render();
+                $i++;
+            }
+
+            exit($html);
+        }
     }
 }
