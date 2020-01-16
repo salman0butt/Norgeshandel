@@ -1,4 +1,7 @@
 @extends('layouts.landingSite')
+<style>
+    ul {list-style:none;padding-left:5px !important;}
+</style>
 @section('page_content')
     <main class="dme-wrepper">
         <div class="left-ad float-left">
@@ -12,15 +15,33 @@
             <div class="row pl-3">
                 <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8">
                     <h2 class="u-t4">Lagrede søk</h2>
-                    <p class="u-d1">Det er ingen lagrede søk</p>
-
+                    <ul>
+                    
+                  @if (isset($saved_search))
+                      @foreach($saved_search as $search)
+                     <li><a href="#">{{ $search->name }}</a></li>
+                     @endforeach
+                  @else
+                    <li><p class="u-d1">Det er ingen lagrede søk</p></li>
+                  @endif          
+                    </ul>
+​                
                     <h2 class="u-t4">Siste søk</h2>
+                    <ul>
+                      @if (isset($recent_search))
+                      @foreach($recent_search as $recent)
+                     <li><a href="#">{{ $recent->name }}</a></li>
+                     @endforeach
+                     @else 
                     <p class="u-d1">Det er ingen nylig søk</p>
+                     @endif  
+                     </ul>
                 </div>
                 <!--            ended col-->
+                
                 <div class="col-md-8">
-                    <div class="input-group search-box ">
-                        <input type="text" name="search" class="form-control search-control"
+                    <div class="input-group search-box position-relative">
+                        <input type="text" name="search" id="search" class="form-control search-control"
                                placeholder="Søk her..." autofocus>
                         <label for="search"><span class="input-group-addon">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32"
@@ -33,8 +54,17 @@
                             7.572 2 2 7.571 2 14.444c0 6.873 5.572 12.444 12.444 12.444 3.069 0
                             5.878-1.11 8.048-2.952L28.556 30 30 28.555l-6.064-6.063z"></path>
                         </svg>
-                        </span></label>
+                        </span>
+                        </label>
+                    <div class="suggestions" id="suggestions" style="position:absolute;top:35px;width:100%;height:auto;z-index: 1;background-color: rgba(236,223,226,0.9)">
+
+                @if (isset($result) )
+                    @include('user-panel.partials.global-search-inner')
+
+                    @endif
                     </div>
+                </div>
+                
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
                             <a href="property/realestate" class="category">
@@ -79,4 +109,40 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
+<input type="hidden" id="search_url" value="{{url('searching')}}">
+
+<script>
+    $(document).ready(function (e) {
+       $('#search').on('blur' ,function (e) {
+                 $('#suggestions').css('display','none');
+         });
+
+        $("#suggestions").hover(function() {
+           $(this).css('display','block');      
+        });
+
+
+        $('#search').on('keyup keydown' ,function (e) {
+             $('#suggestions').css('display','block');
+      
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+           
+            $.ajax({
+                url: $('#search_url').val()+'/'+$('#search').val(),
+                type: "GET",
+                success: function (response) {
+                    $('#suggestions').html(response);
+                },
+                error: function (error) {
+                      console.log(error);
+                }
+            })
+        });
+    });
+
+</script>
 @endsection
