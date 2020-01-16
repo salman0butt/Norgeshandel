@@ -12,9 +12,11 @@
                 </nav>
             </div>            <!---- end breadcrumb----->
 
+            @include('common.partials.flash-messages')
+
             <div class="profile ">
                 <div class="row">
-                    <div class="col-md-6 mt-4">
+                    <div class="col-md-6 mt-4 ">
                         <div class="inner-profile-section p-4 bg-light ">
                             <form action="{{route('users.update', $user->id)}}" enctype="multipart/form-data" method="post">
                                 {{csrf_field()}}
@@ -51,7 +53,7 @@
                         </div>
 
                     </div>
-                    <div class="col-md-6 mt-4 bg-maroon-lighter radius-8">
+                    <div class="col-md-6 mt-4">
                         <div class="collapse m-3 " id="edit_profile">
                             <h3 class="font-weight-normal mb-3">Endre Profil</h3>
                             <form action="{{route('users.update', $user->id)}}" enctype="multipart/form-data" method="post">
@@ -116,7 +118,7 @@
                                 </p>
                             </form>
                         </div>
-                        <div class="collapse show inner-col p-4" id="view_profile">
+                        <div class="collapse show inner-col p-4 bg-maroon-lighter" id="view_profile">
                             <h3 class="font-weight-normal mb-3"> Profildata</h3>
                             <p><b style="color:#646162" class="mr-3">Visningsnavn :</b> {{$user->username}}</p>
                             <p><b style="color:#646162" class="mr-3">Fornavn :</b> {{$user->first_name}}</p>
@@ -144,6 +146,12 @@
                     <div class="col-md-6 mt-4">
                         <p>Profilen din på FINN.no er bygget opp av informasjon hentet fra FINN.no og Schibsted-konto. Opplysningene vises ikke i annonsene dine uten at du ber om det.</p>
                         <a href="#">Les mer om hvordan endre profil og e-post</a>
+                    </div>
+                </div>
+                <div class="row  mb-5">
+                    <div class="col-md-6 offset-md-3 mt-4 text-center">
+                        <p>Teksten din går her. Teksten din går her. Teksten din går her. Teksten din går her. Teksten din går her. </p>
+                        <a href="{{url('my-business/profile/select_company_profile_type')}}" class="btn bg-maroon color-white">Be om firmaprofil</a>
                     </div>
                 </div>
 

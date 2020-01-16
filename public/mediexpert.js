@@ -47,6 +47,9 @@ $(document).ready(function (e) {
         }
 
     });
+    $(document).click(function (e) {
+        console.log(e.target);
+    });
 
     $('.side-menu-button').click(function (e) {
         if(isOpen){

@@ -109,6 +109,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
         });
         Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
+        Route::get('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
+        Route::get('profile/select_company_profile_type', function (){
+            return view('user-panel.my-business.profile.company_request_1');
+        });
+        Route::get('profile/company_profile_form/{type}', function ($type){
+            return view('user-panel.my-business.profile.company_request_2', compact('type'));
+        });
         Route::get('cv/extend', 'Cv\CvController@extend');
     });
 
@@ -135,7 +142,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager|salesman']], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>['role:admin|manager']], function () {
+
 //    dashboard
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
 //    job custom routes
