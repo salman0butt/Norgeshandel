@@ -1,4 +1,7 @@
 @extends('layouts.landingSite')
+<style>
+    ul {list-style:none;padding-left:5px !important;}
+</style>
 @section('page_content')
     <main class="dme-wrepper">
         <div class="left-ad float-left">
@@ -12,12 +15,30 @@
             <div class="row pl-3">
                 <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8">
                     <h2 class="u-t4">Lagrede søk</h2>
-                    <p class="u-d1">Det er ingen lagrede søk</p>
-​
+                    <ul>
+                    
+                  @if (isset($saved_search))
+                      @foreach($saved_search as $search)
+                     <li><a href="#">{{ $search->name }}</a></li>
+                     @endforeach
+                  @else
+                    <li><p class="u-d1">Det er ingen lagrede søk</p></li>
+                  @endif          
+                    </ul>
+​                
                     <h2 class="u-t4">Siste søk</h2>
+                    <ul>
+                      @if (isset($recent_search))
+                      @foreach($recent_search as $recent)
+                     <li><a href="#">{{ $recent->name }}</a></li>
+                     @endforeach
+                     @else 
                     <p class="u-d1">Det er ingen nylig søk</p>
+                     @endif  
+                     </ul>
                 </div>
                 <!--            ended col-->
+                
                 <div class="col-md-8">
                     <div class="input-group search-box position-relative">
                         <input type="text" name="search" id="search" class="form-control search-control"

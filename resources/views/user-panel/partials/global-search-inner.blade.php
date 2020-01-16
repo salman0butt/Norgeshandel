@@ -28,7 +28,7 @@
 			<ul class="list-unstyled">
 
 				<li class = "p-1">
-					<a href="">    
+					<a href="{{ url('jobs/search?job_type='.$search) }}">    
                     <?php
                        if(isset($job)) {
                            echo $search." in ".str_replace('_',' ',$job->job_type)." (".$jobs_count.")";//accessing id for testing

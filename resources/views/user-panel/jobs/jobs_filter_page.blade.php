@@ -78,12 +78,16 @@
         </div>
 
         {{-- search saved button start --}}
-
+     
         <!-- Button trigger modal -->
         <button type="button" class="btn bg-maroon text-white" data-toggle="modal" data-target="#basicExampleModal" style="margin-top: -3%;position: absolute;z-index: 999;">
             Save Searches
         </button>
-
+   @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
         <!-- Modal -->
         <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
@@ -102,23 +106,24 @@
                                 <h2 class="u-t3 u-strong">Lagre søk</h2>
                             </div>
                             <div>
-                                <form name="save-search">
+                                <form action="{{ url('/savedsearches') }}" name="save-search" method="POST">
+                                @csrf
+                                @method('POST')
                                     <div class="input input--text">
                                         <label>Navn
-                                            <input placeholder="Navn på søk" name="title" size="30"
-                                                value="" required="" class="form-control search-control">
+                                            <input placeholder="Navn på søk" name="name" size="30"
+                                                value="{{ $_GET['job_type'] }}" required="" class="form-control search-control">
                                         </label>
                                     </div>
                                     <div class="input-toggle">
-                                        <input type="checkbox" id="notify" name="notify" checked="">
+                                        <input type="checkbox" id="notify" name="notify" checked="" value="1">
                                         <label for="notify">Ja takk, varsle meg om nye treff!</label>
                                     </div>
                                     <p>
                                         Du blir varslet på e-post, i appen på mobil og her på FINN.no
                                     </p>
-
-
-                                </form>
+                                    
+                            
                             </div>
                         </div>
 
@@ -126,8 +131,10 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn bg-maroon text-white" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn bg-maroon text-white">Save changes</button>
+                        <input type="submit" Value="save changes" class="btn bg-maroon text-white">
+                        <input type="hidden" id="recent-search" value="{{ $_GET['job_type'] }}">
                     </div>
+                      </form>
                 </div>
             </div>
         </div>
@@ -160,6 +167,30 @@
 </main>
 <script>
     $(document).ready(function () {
+    
+      
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+                var value = $('#recent-search').val();
+                console.log(value);
+                var url = "{{url('/recentearches')}}";
+            $.ajax({
+                url: url+'/'+value,
+                type: "POST",
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (error) {
+                      console.log(error);
+                }
+            });
+
+
+
+
         var urlParams = new URLSearchParams(location.search);
         var job_type = urlParams.get('job_type');
         var view = urlParams.get('view');

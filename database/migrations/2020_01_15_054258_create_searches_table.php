@@ -16,12 +16,12 @@ class CreateSearchesTable extends Migration
        Schema::create('searches', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('type');
-            $table->string('table');
-            $table->string('filter');
-            $table->boolean('notification_web')->default(false);
-            $table->boolean('notification_email')->default(false);
-            $table->boolean('notification_sms')->default(false);
+            $table->string('type')->nullable();
+            $table->string('table_name')->nullable();
+            $table->string('filter')->nullable();
+            $table->boolean('notification_web')->default(0);
+            $table->boolean('notification_email')->default(0);
+            $table->boolean('notification_sms')->default(0);
             $table->integer('user_id');
             $table->timestamps();
         });
