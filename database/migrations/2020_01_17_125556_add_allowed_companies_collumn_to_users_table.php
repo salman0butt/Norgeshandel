@@ -14,7 +14,7 @@ class AddAllowedCompaniesCollumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('allowed_companies')->after('statusp')->default(0);
+            $table->integer('allowed_companies')->after('status')->default(0);
         });
     }
 
