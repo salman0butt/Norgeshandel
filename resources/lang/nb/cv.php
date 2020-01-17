@@ -1,0 +1,107 @@
+<?php 
+return [
+    'breadcrumb' => [
+        'main'=>'CVen din',
+        'sub'=>'Min handel'
+    ],
+    'title' => 'CVen din',
+    'nav' => [
+        'item1' =>'Din CV',
+        'item2' =>'CV-innstillinger',
+        'item3' =>'Dine forespørsler',
+        'item4' =>'Forhåndsvis CV',
+    ],
+    'cv-inactive' => [
+        'p1'=> 'CVen din er',
+        'p2'=> 'inaktiv',
+        'p3'=> 'med utløpsdato',
+        'p4'=> 'Personlige detaljer er',
+        'p5'=> 'ikke synlige',
+    ],
+    'notify' => 'CVen din kan bare vises av våre kunder når du har registrert personopplysninger og utdanning eller erfaring.',
+    'publish' => "Publiser CV",
+    "persnol" => "Personalia",
+    'cv-title' => [
+        'title' => 'CV-tittel *',
+        'para' => 'F.eks "Bachelor med 4 års erfaring som regnskapsfører" eller "Anestesisykepleier med betydelig erfaring fra akuttmedisin, ambulansetjeneste og kirurgi utført på polikliniske pasienter"',  
+    ],
+    'fname' => 'Fornavn*',
+    'lname' => 'Etternavn*',
+    'address' => 'Adresse*',
+    'zip' => 'Postnummer*',
+    'city' => 'Poststed*',
+    'country' => 'Land',
+    'select' => 'Velg..',
+    'mail' => 'E-post*',
+    'tel' => 'Telefon',
+    'mobile' => 'Mobil',
+    'bday' => 'Fødselsdato',
+    'gender' => 'Kjønn*',
+    'oc-status' => 'Yrkesstatus',
+    'web' => 'Hjemmeside',
+    'web-p' => 'Fylles bare ut dersom du har egen hjemmeside eller profilside',
+    'license' => 'Førerkort',
+    'submit' => 'Lagre endringer',
+    'cancel' => 'Avbryt',
+    'pic' => 'Bilde',
+    'pic-p' => 'Du har ikke lagret et bilde til din CV.',
+    'change' => 'Endre',
+    'choose' => 'Velg Fil',
+    'edu' => 'Utdanning',
+    'update-edu' => 'Oppdater',
+    'edu-p' => 'Ingen utdanning registrert ennå',
+    'exp-p' => 'Ingen erfaring er registrert',
+    'skill-p' => 'Ingen ferdigheter er registrert',
+    'skol' => 'Skol *',
+    'start' => 'Periode fra',
+    'to' => 'til',    
+    'ex' => 'Er fortsatt i studiet',
+    'subject'=> 'Fag',
+    'e-city' => 'Grad',
+    'e-city-p' => 'Velg det som passer best i nedtrekksfeltet og evt. spesifiser grad',
+    'desc' => 'Beskrivelse',
+    'save' => 'Lagre',
+    'cv-confirm' => 'Vil du slette denne utdannelsen?',
+    'exp' => 'Erfaring',
+    'exp-p' => 'Ingen utdannelse er registrert',
+    'company' => 'Firma',
+    'job-title' => 'jobbtittel',
+    'exp-p-work' => 'Er fortsatt i stillingen',
+    'sub' => 'Bransje/Sektor *',
+    'text-p' => 'Beskriv hva du arbeidet med; verktøy, metoder,teknologi etc.',
+    'skills' => 'Nøkkelkompetanse',
+    'skills-p' => 'Annen erfaring, tillitsverv, interesser etc.',
+    'skills-para' => 'F.eks. "Anestesisykepleier med bred erfaring innen akutt medisin, ambulansetransport, sentraloperasjon og dagkirurgi."',
+    'lang' => 'språk',
+    'lang-p' => 'Du har ikke registrert noen språk ennå.',
+    'lang-select' => 'Velg språk.',
+    'lang-selected' => 'Valgte språk',
+    'lang-add' => 'legg til',
+    'lang-remove' => 'ta bort',
+    'next-job'=> 'Ønsker for neste jobb',
+    'next-job-p'=> 'Du har ikke registrert noen Ønsker ennå.',
+    'next-job-text'=> 'Her legger du inn det du ønsker å jobbe med i fremtiden',
+    'next-job-para'=> 'F.eks "Jeg ønsker å jobbe med IT-drift og backoffice-relaterte oppgaver. Jeg trives med å sette ting i system, utarbeide rutiner og dokumentere."',
+    'next-job-type'=> 'Ønsket Jobbtype',
+    'next-job-stuff'=> 'Personalansvar',
+    'next-job-option1'=> 'Ja',
+    'next-job-option2'=> 'Uten betydning',
+    'next-job-option3'=> 'Nei',
+    'next-job-desclaimer'=> 'Resultatansvar',
+    'next-job-thestuff'=> 'Personalansvar',
+    'next-job-travel'=> 'Reisedøgn inntil pr år',
+    'next-job-salary'=> 'Lønnsvilkår',
+    'next-job-terminate'=> 'Oppsigelsestid i dagens jobb',
+
+
+
+    
+
+
+
+
+
+
+];
+
+?>

@@ -38,6 +38,15 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@home')->name('home');
 //--
 
+//language switch
+Route::get('my-business/cv/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+
+
+
+
 //    common routes for all users
 Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');

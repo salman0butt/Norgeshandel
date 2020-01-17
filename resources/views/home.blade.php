@@ -112,7 +112,7 @@
     <script type="text/javascript">
         // $(document)
     </script>
-@endsection
+
 <input type="hidden" id="search_url" value="{{url('searching')}}">
 
 <script>
