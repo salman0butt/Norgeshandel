@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -30,15 +30,6 @@ class HomeController extends Controller
 
         $ads = Ad::where('status', 'published')->orderBy('id', 'desc')->get();
         return view('home', compact('ads','saved_search','recent_search'));
-        
-    }
-    public function home() {
 
-        $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
-        $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
-
-
-        $ads = Ad::where('status', 'published')->orderBy('id', 'desc')->get();
-       return view('home', compact('ads','saved_search','recent_search'));
     }
 }

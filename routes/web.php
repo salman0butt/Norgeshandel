@@ -35,7 +35,7 @@ Route::post('recentearches/{value}', 'SearchController@recent');
 Route::get('searching/{search}', 'SearchController@search')->name('searching');
 //    home routes
 Route::get('/', 'HomeController@index');
-Route::get('home', 'HomeController@home')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 //--
 
 //    common routes for all users
@@ -109,14 +109,16 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
         });
         Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
-        Route::get('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
+        Route::post('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
         Route::get('profile/select_company_profile_type', function (){
             return view('user-panel.my-business.profile.company_request_1');
         });
         Route::get('profile/company_profile_form/{type}', function ($type){
             return view('user-panel.my-business.profile.company_request_2', compact('type'));
         });
+        Route::resource('company', 'App\Models\Company');
         Route::get('cv/extend', 'Cv\CvController@extend');
+        Route::resource('job-preferences', 'JobPreferenceController');
     });
 
 //    new ad routes

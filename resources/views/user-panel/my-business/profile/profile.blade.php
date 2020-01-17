@@ -13,7 +13,121 @@
             </div>            <!---- end breadcrumb----->
 
             @include('common.partials.flash-messages')
+            <div class="company-profile">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn dme-btn-outlined-blue" data-toggle="collapse" data-target="#company_profile_block">Rediger bedriftsprofilen din</button>
+                    </div>
+                </div>
+                <div class="row collapse" id="company_profile_block">
+                    <div class="col-md-12">
+                        <form action="" id="form_company_profile">
+                            <h4 class="text-muted pt-2">Bedriftsprofilen</h4>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="emp_name" class="col-md-2 u-t5">Arbeidsgiver</label>
+                                    <div class="col-sm-10 ">
+                                        <input name="emp_name" value="" id="emp_name" type="text" class="form-control dme-form-control" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="emp_company_information" class="col-md-2 u-t5">Firmainformasjon (valgfritt)</label>
+                                    <div class="col-sm-10 ">
+                                        <textarea name="emp_company_information" class="form-control dme-form-control emp_company_information" id="emp_company_information" cols="30" rows="10"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="emp_website" class="col-md-2 u-t5">Nettsted (valgfritt)</label>
+                                    <div class="col-sm-10 ">
+                                        <input name="emp_website" value="" id="emp_website" type="text" class="form-control dme-form-control" placeholder="firmanavn.no" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="emp_facebook" class="col-md-2 u-t5">Arbeidsgiver på Facebook (valgfritt)</label>
+                                    <div class="col-sm-10 ">
+                                        <input name="emp_facebook" value="" id="emp_facebook" type="text" class="form-control dme-form-control" placeholder="facebook.com/firmanavn">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="emp_linkedin" class="col-md-2 u-t5">Arbeidsgiver på LinkedIn (valgfritt)</label>
+                                    <div class="col-sm-10 ">
+                                        <input name="emp_linkedin" value="" id="emp_linkedin" type="text" class="form-control dme-form-control" placeholder="linkedin.com/company/firmanavn">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="emp_twitter" class="col-md-2 u-t5">Arbeidsgiver på Twitter (valgfritt)</label>
+                                    <div class="col-sm-10 ">
+                                        <input name="emp_twitter" value="" id="emp_twitter" type="text" class="form-control dme-form-control" placeholder="@firmanavn">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="country" class="col-md-2 u-t5">Country</label>
+                                    <div class="col-sm-4 ">
+                                        <select class="form-control dme-form-control" id="country" name="country">
+                                            @if(!empty($obj_job->country))
+                                                <option selected value="{{$obj_job->country}}">{{$obj_job->country}}</option>
+                                            @endif
+                                            @foreach($countries as $ctry)
+                                                <option value="{{$ctry['name']}}" @if($ctry['name']=="Norway") selected @endif>{{$ctry['name']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <label for="zip" class="col-md-2 u-t5">post kode</label>
+                                    <div class="col-sm-4 ">
+                                        <input name="zip" id="zip" value="" type="text" class="form-control dme-form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="address" class="col-md-2 u-t5">Gateadresse (valgfritt)</label>
+                                    <div class="col-sm-10 ">
+                                        <input name="address" id="address" type="text" class="form-control dme-form-control" required="">
+                                        <span class="u-t5">Forklar kort om tilgangen til boligen og hvordan du finner den, vennligst fortell om nærhet til vei, buss og tog.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="job_gallery" class="col-md-2 u-t5">Bedriftslogo (valgfritt)</label>
+                                    <div class="col-sm-4 ">
 
+                                        <input type="file" name="company_logo" id="company_logo" class="" value="Select logo">
+                                    </div>
+                                    <label for="job_gallery" class="col-md-2 u-t5">Bilder fra arbeidsplassen (valgfritt)</label>
+                                    <div class="col-sm-4 ">
+                                        <input type="file" name="company_gallery[]" id="job_gallery" class="" multiple="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="workplace_video" class="col-md-2 u-t5">Arbeidsplassvideo (valgfritt)</label>
+                                    <div class="col-sm-10 ">
+                                        <input name="workplace_video" id="workplace_video" type="text" class="form-control dme-form-control">
+                                        <span class="u-t5">For eksempel - youtube.com/watch?v=3C4W5zadc4g</span>
+                                    </div>
+                                    <div class="col-md-6 offset-md-3">
+                                        <hr class="p-0 mb-0">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="profile ">
                 <div class="row">
                     <div class="col-md-6 mt-4 ">
@@ -158,12 +272,24 @@
             </div>
         </div>
     </main>
-    <script>
-        $(".custom-file-input").on("change", function () {
-            readFileURL((this), '.profile img');
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#form_company_profile').submit(function (e) {
+                $('#description').text(tinyMCE.get("description").getContent());
+                $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
+            });
+                tinymce.init({
+                selector: 'textarea.emp_company_information',
+                width: $(this).parent().width(),
+                height: 250,
+                menubar: false,
+                statusbar: false
+            });
+            $(".custom-file-input").on("change", function () {
+                readFileURL((this), '.profile img');
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+            });
         });
-
     </script>
 @endsection

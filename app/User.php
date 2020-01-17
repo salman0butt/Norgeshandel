@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Admin\jobs\JobPreference;
+use App\Models\Company;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -71,5 +73,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function cv(){
         return $this->hasOne('App\Models\Cv\Cv');
+    }
+
+    public function preference(){
+        return $this->hasOne(JobPreference::class);
+    }
+
+    public function companies(){
+        return $this->hasMany(Company::class);
     }
 }

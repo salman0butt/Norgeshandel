@@ -203,21 +203,31 @@ class AdminUserController extends Controller
         return view('user-panel.my-business.profile.public', compact('user', 'active_ads'));
     }
 
-    public function request_company_profile(){
+    public function request_company_profile(Request $request){
         if (Auth::check()) {
-//            $to_name = "NorgesHandel";
-//            $to_email = env('ADMIN_EMAIL');
-//            $user = Auth::user();
-//            $data = ['username'=>$user->username,'display_name'=>$user->first_name.' '.$user->last_name, 'email'=>$user->email];
-//            Mail::send('mail.request_company_profile',
-//                $data,
-//                function ($message) use ($to_name, $to_email, $user) {
-//                $message->to($to_email, $to_name)->subject('Forespørsel om ny firmaprofil');
-//                $message->from($user->email, $user->first_name.' '.$user->last_name.' ('.$user->username.')');
-//            });
+            if ((isset($request->org_number) && !empty($request->org_number)) ||
+                (isset($request->org_name) && !empty($request->org_name))){
 
+                $to_name = "NorgesHandel";
+                $to_email = 'zain@digitalmx.no';//env('ADMIN_EMAIL');
+                $user = Auth::user();
+                $data = ['username'=>$user->username,'display_name'=>$user->first_name.' '.$user->last_name, 'email'=>$user->email,
+                    'type'=>$request->type, 'org_name'=>$request->org_name,
+                    'org_number'=>$request->org_number, 'contact_name'=>$request->first_name.' '.$request->last_name,
+                    'contact_email'=>$request->email,'contact_phone'=>$request->phone,
+                    'comment'=>$request->comment, 'form_type'=>$request->form_type];
+                Mail::send('mail.request_company_profile',
+                    $data,
+                    function ($message) use ($to_name, $to_email, $user) {
+                        $message->to($to_email, $to_name)->subject('Forespørsel om ny firmaprofil');
+                        $message->from($user->email, $user->first_name.' '.$user->last_name.' ('.$user->username.')');
+                    });
 
-            Session::flash('success', 'Forespørselen din har blitt sendt på e-post, snart vil du bli kontaktet.');
+                Session::flash('success', 'Forespørselen din har blitt sendt på e-post, snart vil du bli kontaktet.');
+            }
+            else{
+                Session::flash('danger','Vennligst fyll obligatoriske felt!');
+            }
             return redirect()->back();
         }
     }
