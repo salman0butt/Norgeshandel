@@ -244,3 +244,7 @@ Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
 
+//chat 
+Route::get('/messages', 'PropertyController@messages');
+Route::get('/message/{id}', 'PropertyController@getMessage');
+Route::post('message', 'PropertyController@sendMessage');
