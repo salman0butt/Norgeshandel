@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Admin\Jobs\Job;
 use App\Model\Search;
-use App\Http\Controllers\Auth;
+use App\Admin\Jobs\Job;
+use App\CommercialPlot;
+use App\BusinessForSale;
 use App\PropertyForRent;
+use App\PropertyForSale;
+use App\FlatWishesRented;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Auth;
+use App\RealestateBusinessPlot;
+use App\CommercialPropertyForRent;
+use App\CommercialPropertyForSale;
+use App\PropertyHolidaysHomesForSale;
 
 class SearchController extends Controller
 {
@@ -114,33 +122,29 @@ class SearchController extends Controller
         //
     }
 
-    public function search($search)
-    {
+   public function search($search)
+{
+    if (!empty($search)) {
+        $property_for_rent = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->get();
+        $property_for_sale = PropertyForSale::where('headline', 'LIKE', '%' . $search . '%')->get();
+        $property_for_holiday_home_for_Sale = PropertyHolidaysHomesForSale::where('ad_headline', 'LIKE', '%' . $search . '%')->get();
+        $property_realstate_business = RealestateBusinessPlot::where('head_line', 'LIKE', '%' . $search . '%')->get();
+        $property_flat_wishes = FlatWishesRented::where('headline', 'LIKE', '%' . $search . '%')->get();
+        $commercial_property_for_sale = CommercialPropertyForSale::where('headline', 'LIKE', '%' . $search . '%')->get();
+        $commercial_property_for_rent = CommercialPropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->get();
+        $commercial_plot = CommercialPlot::where('headline', 'LIKE', '%' . $search . '%')->get();
+        $Business_for_sale = BusinessForSale::where('headline', 'LIKE', '%' . $search . '%')->get();
 
-        if (!empty($search)) {
-            $property = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->limit(5)->get();
-            $property_count = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->count();
 
-            $jobs = Job::where('title', 'LIKE', '%' . $search . '%')->limit(5)->get();
-            $jobs_count = Job::where('title', 'LIKE', '%' . $search . '%')->count();
+        $job_fulltime = Job::where('job_type', '=', 'full_time')->where('title', 'LIKE', '%'.$search.'%')->get();
+        $job_management = Job::where('job_type', '=', 'management')->where('title', 'LIKE', '%'.$search.'%')->get();
+        $job_parttime = Job::where('job_type', '=', 'parttime')->where('title', 'LIKE', '%'.$search.'%')->get();
 
-            //$results =  $data;
-
-            $html = "";
-            $i = "";
-            $j = "";
-            foreach ($property as $property) {
-
-                $html .= view('user-panel.partials.global-search-inner', compact('property', 'property_count', 'j', 'search'))->render();
-                $j++;
-            }
-            foreach ($jobs as $job) {
-
-                $html .= view('user-panel.partials.global-search-inner', compact('job', 'jobs_count', 'i', 'search'))->render();
-                $i++;
-            }
-
-            exit($html);
-        }
+        $html = "";
+        $html .= view('user-panel.partials.global-search-inner',
+            compact('job_parttime', 'job_fulltime', 'job_management','property_for_rent' ,'property_for_sale' ,'property_for_holiday_home_for_Sale' ,'property_realstate_business' ,'property_flat_wishes' ,'commercial_property_for_sale' ,'commercial_property_for_rent' ,'commercial_plot' ,'Business_for_sale'))->render();
+        exit($html);
     }
+}
+
 }

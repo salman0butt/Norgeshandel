@@ -990,31 +990,31 @@ $cvlanguages = $cv->languages;
                                     <table class="sectioninfo super-condensed border-white w-100">
                                         <tbody>
                                         <tr>
-                                            <th class="th_row size1of4" scope="row">Jobbtype</th>
+                                            <th class="th_row size1of4" scope="row">{{ __('cv.job-type') }}</th>
                                             <td id="float-left">{{$cv->preference->job_type}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="th_row" scope="row">Personalansvar</th>
+                                            <th class="th_row" scope="row">{{ __('cv.job-staff') }}</th>
                                             <td id="future-personnel">{{$cv->preference->responsibility}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="th_row" scope="row">Resultatansvar</th>
+                                            <th class="th_row" scope="row">{{ __('cv.earning') }}</th>
                                             <td id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="th_row" scope="row">Flyttevillighet</th>
+                                            <th class="th_row" scope="row">{{ __('cv.Willing') }}</th>
                                             <td id="future-move">{{$cv->preference->willingness}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="th_row" scope="row">Reisedøgn inntil pr år</th>
+                                            <th class="th_row" scope="row">{{ __('cv.job-travel') }}</th>
                                             <td id="future-travel">{{$cv->preference->travel_days}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="th_row" scope="row">Lønnsvilkår</th>
+                                            <th class="th_row" scope="row">{{ __('cv.job-salary') }}</th>
                                             <td id="future-salary">{{$cv->preference->salary}}</td>
                                         </tr>
                                         <tr>
-                                            <th class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
+                                            <th class="th_row" scope="row">{{ __('cv.job-terminate') }}</th>
                                             <td id="future-period">{{$cv->preference->termination_notice}}</td>
                                         </tr>
                                         </tbody>
@@ -1022,8 +1022,7 @@ $cvlanguages = $cv->languages;
                                 </div>
                             </div>
                         </div>
-                        <p class="pt-5 pb-5 pl-4 pr-4 text-dark">CVen din kan bare vises av våre kunder når du har
-                            registrert personopplysninger og utdanning eller erfaring.</p>
+                        <p class="pt-5 pb-5 pl-4 pr-4 text-dark">{{ __('cv.job-p') }}</p>
                         <p class="text-dark pl-4 pr-4">10670303</p>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
@@ -1031,45 +1030,37 @@ $cvlanguages = $cv->languages;
                             {{ csrf_field() }}
                             {{method_field('PUT')}}
                             <div class="inner-tab">
-                                <p class="text-dark pb-4">Din CV kan først søkes opp av våre kunder når du har
-                                    registrert
-                                    personalia og utdanning eller erfaring.</p>
-                                <h3 class="text-dark font-weight-normal" style="font-size:22px;">CV-innstillinger</h3>
-                                <p class="text-dark pb-4">Her kan du administrere din CV. Husk å alltid holde den
-                                    oppdatert
-                                    med fersk informasjon. Det øker sjansene for å bli kontaktet av potensielle
-                                    arbeidsgivere.</p>
+                                <p class="text-dark pb-4">{{ __('cv.job-setting') }}</p>
+                                <h3 class="text-dark font-weight-normal" style="font-size:22px;">{{ __('cv.CV-innstill') }}</h3>
+                                <p class="text-dark pb-4">{{ __('cv.CV-innstill-p') }}</p>
                             </div>
 
                             <div class="row row-border pb-4" style="border-top:1px solid #ccc">
-                                <div class="col-md-4 pt-4"><p class="text-dark ">Din CV er</p></div>
+                                <div class="col-md-4 pt-4"><p class="text-dark ">{{ __('cv.din-cv') }}</p></div>
                                 <div class="col-md-8"><p class="text-dark ">
                                     </p>
                                     <div class="form-group">
                                         <div class="">
                                             <label class="radio-lbl" for="status1">
                                                 <input type="radio" id="status1" name="status"
-                                                       value="published" @if($cv->status==="published") checked @endif>Publisert
+                                                       value="published" @if($cv->status==="published") checked @endif>{{ __('cv.published') }}
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
                                         <div class="">
                                             <label class="radio-lbl" for="status2">
                                                 <input type="radio" id="status2" name="status"
-                                                       value="inactive" @if($cv->status==="inactive") checked @endif>Inaktiv
+                                                       value="inactive" @if($cv->status==="inactive") checked @endif>{{ __('cv.inactive') }}
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
-                                        <p class="text-dark pt-3">Som publisert vil din CV kunne bli søkt opp av
-                                            FINN.nos
-                                            kunder. Din CV kan først publiseres når du har registrert minst en gyldig
-                                            utdanning eller erfaring.</p>
+                                        <p class="text-dark pt-3">{{ __('cv.pub-p') }}</p>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="row row-border pb-4">
-                                <div class="col-md-4 pt-4"><p class="text-dark ">Vis personalia</p></div>
+                                <div class="col-md-4 pt-4"><p class="text-dark ">{{ __('cv.view-persnol') }}</p></div>
                                 <div class="col-md-8"><p class="text-dark ">
                                     </p>
                                     <div class="form-group">
@@ -1077,8 +1068,7 @@ $cvlanguages = $cv->languages;
                                         <div class="form-check">
                                             <label class="radio-lbl" for="visibility1">
                                                 <input type="radio" class="" id="visibility1" name="visibility"
-                                                       value="visible" @if($cv->visibility==="visible") checked @endif>Personalia
-                                                synlig
+                                                       value="visible" @if($cv->visibility==="visible") checked @endif>{{ __('cv.view-option1') }}
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
@@ -1086,71 +1076,62 @@ $cvlanguages = $cv->languages;
                                             <label class="radio-lbl" for="visibility2">
                                                 <input type="radio" class="" id="visibility2" name="visibility"
                                                        value="anonymous"
-                                                       @if($cv->visibility==="anonymous") checked @endif>Anonym
+                                                       @if($cv->visibility==="anonymous") checked @endif>{{ __('cv.view-option2') }}
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
-                                        <p class="text-dark pt-3">For profesjonelle rekrutteringsbyråer har du mulighet
-                                            til
-                                            å tilgjengeliggjøre din kontaktinformasjon, mens for andre bedrifter vil din
-                                            CV
-                                            fremstå anonymt og bedrifter må forespørre for å få innsyn i din CV. Som
-                                            CV-eier
-                                            vil du selv avgjøre om du ønsker å gi den bedriften som forespør innsyn i
-                                            dine
-                                            personlige data.</p>
+                                        <p class="text-dark pt-3">{{ __('cv.view-para') }}</p>
                                     </div>
 
                                     <p></p></div>
                             </div>
 
                             <div class="row row-border ">
-                                <div class="col-md-4 pt-2"><p class="text-dark ">Registrert første gang</p></div>
+                                <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.register-view') }}</p></div>
                                 <div class="col-md-8 pt-2"><p
                                         class="text-dark ">{{date('d.m.Y', strtotime($cv->user->created_at))}}</p></div>
                             </div>
                             <div class="row row-border ">
-                                <div class="col-md-4 pt-2"><p class="text-dark ">Sist oppdatert</p></div>
+                                <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.register-view') }}</p></div>
                                 <div class="col-md-8 pt-2"><p
                                         class="text-dark ">{{date('d.m.Y', strtotime($cv->created_at))}}</p></div>
                             </div>
                             <div class="row row-border ">
-                                <div class="col-md-4 pt-2"><p class="text-dark ">Din CV-id</p></div>
+                                <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.cv-id') }}</p></div>
                                 <div class="col-md-8 pt-2"><p class="text-dark ">{{$cv->id}}</p></div>
                             </div>
                             <div class="row row-border">
-                                <div class="col-md-4 pt-2"><p class="text-dark ">Utløper</p></div>
+                                <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.expire') }}</p></div>
                                 <div class="col-md-8 pt-2">
                                     <p class="text-dark ">{{date('d.m.Y', strtotime($cv->expiry))}}
-                                        <a class="ml-3" href="{{url('my-business/cv/extend')}}">Nye 6 måneder</a>
+                                        <a class="ml-3" href="{{url('my-business/cv/extend')}}">{{ __('cv.month') }}</a>
                                     </p>
                                 </div>
                             </div>
                             <div class="row row-border ">
-                                <div class="col-md-4 pt-2"><p class="text-dark ">Brukervilkår</p></div>
-                                <div class="col-md-8 pt-2"><p class="text-dark "><a href="#">Les vilkår</a></p></div>
+                                <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.Disclaimer') }}</p></div>
+                                <div class="col-md-8 pt-2"><p class="text-dark "><a href="#">{{ __('cv.readmore') }}</a></p></div>
                             </div>
                             <div class="btn-group mt-3">
-                                <button type="submit" class="dme-btn-outlined-blue float-left"> Lagre</button>
-                                <button class="dme-btn-outlined-blue float-left ml-3"> Slett CV</button>
+                                <button type="submit" class="dme-btn-outlined-blue float-left">{{ __('cv.save') }}</button>
+                                <button class="dme-btn-outlined-blue float-left ml-3">{{ __('cv.delete') }}</button>
                             </div>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="inner-tab">
-                            <h3 class="text-dark font-weight-normal" style="font-size:22px;">Your inquiries</h3>
-                            <p class="text-dark">This is where you manage your inquiries. You may accept or reject
-                                these.</p>
+                            <h3 class="text-dark font-weight-normal" style="font-size:22px;">{{ __('cv.inquiry') }}</h3>
+                            <p class="text-dark">{{ __('cv.inquiry-p') }}</p>
 
 
                             <div class="mt-5 inquiries-table">
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
-                                           href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Unanswered</a>
+                                           href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">{{ __('cv.unanswered') }}</a>
                                         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
                                            href="#nav-profile" role="tab" aria-controls="nav-profile"
-                                           aria-selected="false">Answered</a>
+                                           aria-selected="false">{{ __('cv.answered') }}</a>
 
                                     </div>
                                 </nav>
@@ -1161,11 +1142,11 @@ $cvlanguages = $cv->languages;
                                         <table class="table table-striped">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Requested by</th>
-                                                <th scope="col">On behalf of</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Delete</th>
+                                                <th scope="col">{{ __('cv.date') }}</th>
+                                                <th scope="col">{{ __('cv.request') }}</th>
+                                                <th scope="col">{{ __('cv.behalf') }}</th>
+                                                <th scope="col">{{ __('cv.Status') }}</th>
+                                                <th scope="col">{{ __('cv.delete') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1200,11 +1181,11 @@ $cvlanguages = $cv->languages;
                                         <table class="table table-striped">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Requested by</th>
-                                                <th scope="col">On behalf of</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Delete</th>
+                                               <th scope="col">{{ __('cv.date') }}</th>
+                                               <th scope="col">{{ __('cv.request') }}</th>
+                                               <th scope="col">{{ __('cv.behalf') }}</th>
+                                               <th scope="col">{{ __('cv.Status') }}</th>
+                                               <th scope="col">{{ __('cv.delete') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -1240,28 +1221,28 @@ $cvlanguages = $cv->languages;
                     </div>
                     <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="preview-tab">
                         <div class="inner-tab">
-                            <h3 class="text-dark font-weight-normal" style="font-size:22px;">CV preview</h3>
-                            <p class="text-dark">Denne forhåndsvisningen viser hvordan din CV vil fremstå for rekrutteringsbyråer og bedrifter som benytter seg av FINNs CV-database.</p>
+                            <h3 class="text-dark font-weight-normal" style="font-size:22px;">{{ __('cv.preview') }}</h3>
+                            <p class="text-dark">{{ __('cv.preview-p') }}</p>
                             <div class="row mb-5">
                                 <div class="col-md-8">
                                     <div class="btn-group mt-3">
                                         <a class="m-2 dme-btn-outlined-blue float-left"
                                            data-toggle="collapse" href="#open_cv">
-                                            Forhåndsvis åpen CV
+                                            {{ __('cv.open-cv') }}
                                         </a>
                                         <a class="m-2 dme-btn-outlined-blue float-left collapsed"
                                            data-toggle="collapse" href="#personal_cv">
-                                            Forhåndsvis anonym CV
+                                            {{ __('cv.persnol-cv') }}
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="btn-group mt-3">
                                         <a class="dme-btn-outlined-blue float-left" id="download_cv" href="{{url('my-business/cv/download_pdf', $cv->id)}}">
-                                            Last ned PDF
+                                             {{ __('cv.pdf-download') }}
                                         </a>
                                         <a class="dme-btn-outlined-blue float-left ml-3" id="print_cv" href="#">
-                                            Skrive ut CV
+                                             {{ __('cv.print-resume') }}
                                         </a>
 
                                     </div>
@@ -1297,7 +1278,7 @@ $cvlanguages = $cv->languages;
                                         <div class="col-md-8 pr-4">
                                             <h2 class="u-t2">{{$cv->personal->title}}</h2>
                                             <h3 class="text-dark font-weight-normal pt-4 pb-4 u-t3" style="font-size:22px;">
-                                                Personalia</h3>
+                                                {{ __('cv.persnal') }}</h3>
                                         </div>
                                         <div class="col-md-4">
                                         </div>
@@ -1307,51 +1288,51 @@ $cvlanguages = $cv->languages;
                                             <table class="w-100">
                                                 <tbody>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Navn</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.name') }}</th>
                                                     <td id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Født</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.birthday') }}</th>
                                                     <td id="cvdetails-birthdate">{{$cv->personal->birthday}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row size1of4" scope="row">Addresse</th>
+                                                    <th class="th_row size1of4" scope="row">{{ __('cv.address') }}</th>
                                                     <td id="cvdetails-address">{{$cv->personal->address}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Sted</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.city') }}</th>
                                                     <td id="cvdetails-postcode">{{$cv->personal->city}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Kjønn</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.gender') }}</th>
                                                     <td id="cvdetails-gender">{{$cv->personal->gender}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Land</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.country') }}</th>
                                                     <td id="cvdetails-country">{{$cv->personal->country}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Telefon</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.telephone') }}</th>
                                                     <td id="cvdetails-phone">{{$cv->personal->tell}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Mobil</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.mobile') }}</th>
                                                     <td id="cvdetails-phone2">{{$cv->personal->mobile}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">E-post</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.email') }}</th>
                                                     <td id="cvdetails-email">{{$cv->personal->email}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Hjemmeside</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-website') }}</th>
                                                     <td id="cvdetails-homepage">{{$cv->personal->website}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Yrkesstatus</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-status') }}</th>
                                                     <td id="cvdetails-employmentstatus">{{$cv->personal->occupational_status}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Førerkort</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-license') }}</th>
                                                     <td id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
                                                 </tr>
                                                 </tbody>
@@ -1369,9 +1350,9 @@ $cvlanguages = $cv->languages;
                                                 </div>
                                             @else
                                                 <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">
-                                                    Bilde
+                                                    {{ __('cv.pre-picture') }}
                                                 </h3>
-                                                <small class="text-dark">Denne CVen mangler bilde.</small>
+                                                <small class="text-dark">{{ __('cv.pre-picture-p') }}</small>
                                             @endif
 
                                         </div>
@@ -1380,7 +1361,7 @@ $cvlanguages = $cv->languages;
                                         <div class="row education mt-2">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                    Utdanning
+                                                    {{ __('cv.pre-education') }}
                                                 </h3>
                                             </div>
                                             @foreach($cveducations as $cveducation)
@@ -1404,7 +1385,7 @@ $cvlanguages = $cv->languages;
                                         <div class="row education mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                    Erfaring
+                                                    {{ __('cv.pre-experiance') }}
                                                 </h3>
                                             </div>
                                             @foreach($cvexperiences as $experience)
@@ -1428,7 +1409,7 @@ $cvlanguages = $cv->languages;
                                         <div class="row key_skills mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                    Nøkkelkompetanse
+                                                    {{ __('cv.pre-skills') }}
                                                 </h3>
                                                 <div>{{$cv->key_skills}}</div>
                                                 <div class="font-weight-bold">Annen erfaring, tillitsverv, interesser etc.</div>
@@ -1444,7 +1425,7 @@ $cvlanguages = $cv->languages;
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                    Språk
+                                                    {{ __('cv.pre-lang') }}
                                                 </h3>
                                                 @foreach($cvlanguages as $language)
                                                     <span>{{$language->name}}</span>
@@ -1458,35 +1439,35 @@ $cvlanguages = $cv->languages;
                                     <div class="row preferences mt-1">
                                         <div class="col-12">
                                             <h3 class="text-dark font-weight-normal pt-4 pb-4" style="font-size:22px;">
-                                                Ønsker for neste jobb</h3>
+                                                {{ __('cv.pre-wish-job') }}</h3>
                                             <table class="sectioninfo super-condensed border-white w-100">
                                                 <tbody>
                                                 <tr>
-                                                    <th class="th_row size1of4" scope="row">Jobbtype</th>
+                                                    <th class="th_row size1of4" scope="row">{{ __('cv.pre-job-type') }}</th>
                                                     <td id="float-left">{{$cv->preference->job_type}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Personalansvar</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-response') }}</th>
                                                     <td id="future-personnel">{{$cv->preference->responsibility}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Resultatansvar</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-disclaimer') }}</th>
                                                     <td id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Flyttevillighet</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-willing') }}</th>
                                                     <td id="future-move">{{$cv->preference->willingness}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Reisedøgn inntil pr år</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-travel') }}</th>
                                                     <td id="future-travel">{{$cv->preference->travel_days}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Lønnsvilkår</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-salary') }}</th>
                                                     <td id="future-salary">{{$cv->preference->salary}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-terminate') }}</th>
                                                     <td id="future-period">{{$cv->preference->termination_notice}}</td>
                                                 </tr>
                                                 </tbody>
@@ -1501,39 +1482,39 @@ $cvlanguages = $cv->languages;
                                         <div class="col-md-8 pr-4">
                                             <h2 class="u-t2">{{$cv->personal->title}}</h2>
                                             <h3 class="text-dark font-weight-normal pt-4 pb-4 u-t3" style="font-size:22px;">
-                                                Personalia</h3>
+                                                {{ __('cv.persnal') }}</h3>
                                             <table class="w-100">
                                                 <tbody>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Navn</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.name') }}</th>
                                                     <td id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Født</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.birthday') }}</th>
                                                     <td id="cvdetails-birthdate">{{$cv->personal->birthday}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row size1of4" scope="row">Addresse</th>
+                                                    <th class="th_row size1of4" scope="row">{{ __('cv.address') }}</th>
                                                     <td id="cvdetails-address">{{$cv->personal->address}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Sted</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.city') }}</th>
                                                     <td id="cvdetails-postcode">{{$cv->personal->city}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Kjønn</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.gender') }}</th>
                                                     <td id="cvdetails-gender">{{$cv->personal->gender}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Land</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.country') }}</th>
                                                     <td id="cvdetails-country">{{$cv->personal->country}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Yrkesstatus</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-status') }}</th>
                                                     <td id="cvdetails-employmentstatus">{{$cv->personal->occupational_status}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Førerkort</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-license') }}</th>
                                                     <td id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
                                                 </tr>
                                                 </tbody>
@@ -1550,7 +1531,7 @@ $cvlanguages = $cv->languages;
                                                         style="max-width:180px;max-height: 200px; height:200px;" alt="">
                                                 </div>
                                             @else
-                                                <small class="text-dark">Denne CVen mangler bilde.</small>
+                                                <small class="text-dark">{{ __('cv.pre-picture-p') }}</small>
                                             @endif
                                         </div>
                                     </div>
@@ -1558,7 +1539,7 @@ $cvlanguages = $cv->languages;
                                         <div class="row education mt-2">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                    Utdanning
+                                                    {{ __('cv.pre-education') }}
                                                 </h3>
                                             </div>
                                             @foreach($cveducations as $cveducation)
@@ -1582,7 +1563,7 @@ $cvlanguages = $cv->languages;
                                         <div class="row education mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                    Erfaring
+                                                    {{ __('cv.pre-experiance') }}
                                                 </h3>
                                             </div>
                                             @foreach($cvexperiences as $experience)
@@ -1622,7 +1603,7 @@ $cvlanguages = $cv->languages;
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
-                                                    Språk
+                                                    {{ __('cv.pre-lang') }}
                                                 </h3>
                                                 @foreach($cvlanguages as $language)
                                                     <span>{{$language->name}}</span>
@@ -1636,35 +1617,35 @@ $cvlanguages = $cv->languages;
                                     <div class="row preferences mt-5">
                                         <div class="col-12">
                                             <h3 class="text-dark font-weight-normal pt-4 pb-4" style="font-size:22px;">
-                                                Ønsker for neste jobb</h3>
+                                                {{ __('cv.pre-wish-job') }}</h3>
                                             <table class="sectioninfo super-condensed border-white w-100">
                                                 <tbody>
                                                 <tr>
-                                                    <th class="th_row size1of4" scope="row">Jobbtype</th>
+                                                    <th class="th_row size1of4" scope="row">{{ __('cv.pre-job-type') }}</th>
                                                     <td id="float-left">{{$cv->preference->job_type}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Personalansvar</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-response') }}</th>
                                                     <td id="future-personnel">{{$cv->preference->responsibility}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Resultatansvar</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-disclaimer') }}</th>
                                                     <td id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Flyttevillighet</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-willing') }}</th>
                                                     <td id="future-move">{{$cv->preference->willingness}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Reisedøgn inntil pr år</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-travel') }}</th>
                                                     <td id="future-travel">{{$cv->preference->travel_days}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Lønnsvilkår</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-salary') }}</th>
                                                     <td id="future-salary">{{$cv->preference->salary}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
+                                                    <th class="th_row" scope="row">{{ __('cv.pre-terminate') }}</th>
                                                     <td id="future-period">{{$cv->preference->termination_notice}}</td>
                                                 </tr>
                                                 </tbody>
