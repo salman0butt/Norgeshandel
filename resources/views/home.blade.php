@@ -116,7 +116,9 @@
     <script type="text/javascript">
         // $(document)
     </script>
+
     <input type="hidden" id="search_url" value="{{url('searching')}}">
+
 
     <script>
         $(document).ready(function (e) {
