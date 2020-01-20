@@ -172,7 +172,7 @@
                         <h5 class="text-muted">{{Auth::user()->username}}</h5>
                     </div>
                     <div class="chat-thread-list">
-                        @foreach($users as $user)
+                        @foreach($users as $user) 
                             <a href="#" class="user"  id="{{ $user->id }}">
                                 <div class="row chat-thread-tab">
 
