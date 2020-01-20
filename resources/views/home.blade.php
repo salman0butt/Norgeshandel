@@ -1,8 +1,11 @@
 @extends('layouts.landingSite')
-<style>
-    ul {list-style:none;padding-left:5px !important;}
-</style>
 @section('page_content')
+    <style>
+        ul {
+            list-style: none;
+            padding-left: 5px !important;
+        }
+    </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
@@ -16,29 +19,29 @@
                 <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8">
                     <h2 class="u-t4">Lagrede søk</h2>
                     <ul>
-                    
-                  @if (isset($saved_search))
-                      @foreach($saved_search as $search)
-                     <li><a href="#">{{ $search->name }}</a></li>
-                     @endforeach
-                  @else
-                    <li><p class="u-d1">Det er ingen lagrede søk</p></li>
-                  @endif          
+
+                        @if (isset($saved_search))
+                            @foreach($saved_search as $search)
+                                <li><a href="#">{{ $search->name }}</a></li>
+                            @endforeach
+                        @else
+                            <li><p class="u-d1">Det er ingen lagrede søk</p></li>
+                        @endif
                     </ul>
-​                
+                    ​
                     <h2 class="u-t4">Siste søk</h2>
                     <ul>
-                      @if (isset($recent_search))
-                      @foreach($recent_search as $recent)
-                     <li><a href="#">{{ $recent->name }}</a></li>
-                     @endforeach
-                     @else 
-                    <p class="u-d1">Det er ingen nylig søk</p>
-                     @endif  
-                     </ul>
+                        @if (isset($recent_search))
+                            @foreach($recent_search as $recent)
+                                <li><a href="#">{{ $recent->name }}</a></li>
+                            @endforeach
+                        @else
+                            <p class="u-d1">Det er ingen nylig søk</p>
+                        @endif
+                    </ul>
                 </div>
                 <!--            ended col-->
-                
+
                 <div class="col-md-8">
                     <div class="input-group search-box position-relative">
                         <input type="text" name="search" id="search" class="form-control search-control"
@@ -56,15 +59,16 @@
                         </svg>
                         </span>
                         </label>
-                    <div class="suggestions" id="suggestions" style="position:absolute;top:35px;width:100%;height:auto;z-index: 1;background-color: rgba(236,223,226,0.9)">
+                        <div class="suggestions" id="suggestions"
+                             style="position:absolute;top:35px;width:100%;height:auto;z-index: 1;background-color: rgba(236,223,226,0.9)">
 
-                @if (isset($result) )
-                    @include('user-panel.partials.global-search-inner')
+                            @if (isset($result) )
+                                @include('user-panel.partials.global-search-inner')
 
-                    @endif
+                            @endif
+                        </div>
                     </div>
-                </div>
-                
+
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
                             <a href="property/realestate" class="category">
@@ -113,40 +117,41 @@
         // $(document)
     </script>
 
-<input type="hidden" id="search_url" value="{{url('searching')}}">
-
-<script>
-    $(document).ready(function (e) {
-       $('#search').on('blur' ,function (e) {
-                 $('#suggestions').css('display','none');
-         });
-
-        $("#suggestions").hover(function() {
-           $(this).css('display','block');      
-        });
+    <input type="hidden" id="search_url" value="{{url('searching')}}">
 
 
-        $('#search').on('keyup keydown' ,function (e) {
-             $('#suggestions').css('display','block');
-      
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+    <script>
+        $(document).ready(function (e) {
+            $('#search').on('blur', function (e) {
+                $('#suggestions').css('display', 'none');
             });
-           
-            $.ajax({
-                url: $('#search_url').val()+'/'+$('#search').val(),
-                type: "GET",
-                success: function (response) {
-                    $('#suggestions').html(response);
-                },
-                error: function (error) {
-                      console.log(error);
-                }
-            })
-        });
-    });
 
-</script>
+            $("#suggestions").hover(function () {
+                $(this).css('display', 'block');
+            });
+
+
+            $('#search').on('keyup keydown', function (e) {
+                $('#suggestions').css('display', 'block');
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: $('#search_url').val() + '/' + $('#search').val(),
+                    type: "GET",
+                    success: function (response) {
+                        $('#suggestions').html(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            });
+        });
+
+    </script>
 @endsection
