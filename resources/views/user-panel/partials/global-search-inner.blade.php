@@ -3,6 +3,7 @@
     margin-bottom: 0px;
 }
 </style>
+
 {{--@dd(count($job_fulltime));--}}
 <div class="row m-2 search-result-topic" style="margin-bottom: 0px !important;">
     <div class="col-md-3 p1 offset-1">

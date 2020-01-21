@@ -90,22 +90,16 @@ class common
 
     public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar')
     {
-
         self::delete_media($mediable_id, $mediable_type, $type);
         if (!is_array($files)) {
             $files = array($files);
         }
 
         foreach ($files as $file) {
-
-
             $unique_name = date('ymd') . '-' . time() . '-' . mt_rand(1000000, 9999999);
-
             $name = $file->getClientOriginalName();
             $name_unique = $unique_name . '.' . $file->getClientOriginalExtension();
             $path = 'public/uploads/' . date('Y') . '/' . date('m');
-
-
             if (strtolower($file->getClientOriginalExtension()) == 'jpg' ||
                 strtolower($file->getClientOriginalExtension()) == 'jpeg' ||
                 strtolower($file->getClientOriginalExtension()) == 'png'
@@ -118,7 +112,6 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(570)->widen(570)->save($path . '/' . $unique_name . '-570x570.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(768)->widen(768)->save($path . '/' . $unique_name . '-768x768.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
-                common::delete_media($mediable_id, $mediable_type, $type);
                 $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
                 $media->save();
             }

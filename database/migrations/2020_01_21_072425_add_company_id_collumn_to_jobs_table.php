@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAllowedCompaniesCollumnToUsersTable extends Migration
+class AddCompanyIdCollumnToJobsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddAllowedCompaniesCollumnToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('allowed_companies')->after('status')->default(0);
+        Schema::table('jobs', function (Blueprint $table) {
+            $table->integer('company_id')->after('ad_id')->default(0);
         });
     }
 
@@ -25,7 +25,7 @@ class AddAllowedCompaniesCollumnToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('jobs', function (Blueprint $table) {
             //
         });
     }

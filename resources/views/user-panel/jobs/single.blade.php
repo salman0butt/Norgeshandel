@@ -91,8 +91,8 @@
                             class="far fa-heart text-muted mr-2"
                         @endif
                     ></span>
-                    Legg til favoritt
-                    </button>
+                            Legg til favoritt
+                        </button>
                     </a>
 
                     <a href="#" class=""><i class="hover-zoom fa fa-envelope"
@@ -147,7 +147,11 @@
                         </div>
                         <div class="emp_company_information mt-3 col-md-12">
                             <h2 class="u-t5">Om arbeidsgiveren</h2>
-                            {!! html_entity_decode($job->emp_company_information)!!}
+                            @if(!empty($job->company))
+                                {!! html_entity_decode($job->company->emp_company_information)!!}
+                            @else
+                                {!! html_entity_decode($job->emp_company_information)!!}
+                            @endif
                         </div>
                         <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span>
@@ -156,11 +160,12 @@
                             <span>{{ date('d.m.y',strtotime($job->ad->updated_at))}}</span></div>
                     </div>
                 </div>
-{{----}}
+                {{----}}
                 {{--right detail collumn--}}
                 <div class="col-md-4">
                     <div class=" radius-8 p-3">
-                        <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                        <div
+                            style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                             <div class="text-center">
                                 <img src="{{asset($logo)}}" class="img-fluid emp-logo mt-3" style="max-width: 150px;"
                                      alt="">
@@ -183,11 +188,19 @@
 
                         </div>
                         <button class="dme-btn-maroon col-12 mb-2">Søk her</button>
-                        <button class="dme-btn-outlined-blue col-8 mb-2">Følg firma</button>
-                        <div class="col-4"></div>
-                        <div class="text-muted following-count">643 følger dette firmaet</div>
-                        <div><a href="{{$job->app_website}}" class="emp-website">{{$job->app_website}}</a></div>
-                        <div><a href="#" class="emp-ads">more ads by company</a></div>
+                        @if(!empty($job->company))
+                            <button class="dme-btn-outlined-blue col-8 mb-2">Følg firma</button>
+                            <div class="col-4"></div>
+                            <div class="text-muted following-count">643 følger dette firmaet</div>
+                            @if(!empty($job->company->emp_website))
+                                <div><a href="{{$job->company->emp_website}}" class="emp-website">{{$job->company->emp_website}}</a></div>
+                            @endif
+                            <div><a href="#" class="emp-ads">more ads by company</a></div>
+                        @else
+                            @if(!empty($job->emp_website))
+                                <div><a href="{{$job->emp_website}}" class="emp-website">{{__('Company Homepage')}}</a></div>
+                            @endif
+                        @endif
 
                     </div>
                     <div class="mt-3 location"><h5 class="u-t3">location</h5></div>

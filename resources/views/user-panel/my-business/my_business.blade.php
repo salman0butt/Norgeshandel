@@ -49,7 +49,7 @@
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{url('my-business/following')}}" style="text-decoration: none;">
                     <span class="font-weight-bold">Firmaer jeg følger</span>
                 </a>
             </li>

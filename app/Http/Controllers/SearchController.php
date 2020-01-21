@@ -44,7 +44,7 @@ class SearchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
+    {
           $data = [
                 'name' => $request->name,
                 'type' => 'saved',
@@ -54,7 +54,7 @@ class SearchController extends Controller
                 'user_id' => auth()->user()->id
             ];
 
-     
+
         Search::create($data);
         return back()->with('status', 'Search Saved Successfully');
 
@@ -122,8 +122,8 @@ class SearchController extends Controller
         //
     }
 
-   public function search($search)
-{
+    public function search($search)
+    {
     if (!empty($search)) {
         $property_for_rent = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->get();
         $property_for_sale = PropertyForSale::where('headline', 'LIKE', '%' . $search . '%')->get();
@@ -145,6 +145,6 @@ class SearchController extends Controller
             compact('job_parttime', 'job_fulltime', 'job_management','property_for_rent' ,'property_for_sale' ,'property_for_holiday_home_for_Sale' ,'property_realstate_business' ,'property_flat_wishes' ,'commercial_property_for_sale' ,'commercial_property_for_rent' ,'commercial_plot' ,'Business_for_sale'))->render();
         exit($html);
     }
-}
+    }
 
 }
