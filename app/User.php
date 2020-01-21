@@ -5,6 +5,7 @@ namespace App;
 use App\Admin\jobs\JobPreference;
 use App\Models\AllowedCompanyAd;
 use App\Models\Company;
+use App\Models\Following;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -103,4 +104,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function property_companies(){
         return $this->hasMany(Company::class)->where('company_type', '=', 'property');
     }
+
+    public function followings(){
+        return $this->hasMany(Following::class);
+    }
+//    public function job_followings(){
+//        return $this->hasMany(Following::class)->where('');
+//    }
 }

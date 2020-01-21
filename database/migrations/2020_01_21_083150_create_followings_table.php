@@ -15,6 +15,8 @@ class CreateFollowingsTable extends Migration
     {
         Schema::create('followings', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('company_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

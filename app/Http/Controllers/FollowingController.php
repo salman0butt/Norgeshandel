@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Following;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FollowingController extends Controller
 {
@@ -14,7 +15,8 @@ class FollowingController extends Controller
      */
     public function index()
     {
-        //
+        $followings = Auth::user()->followings;
+        return view('user-panel.my-business.followings.followings', compact('followings'));
     }
 
     /**
@@ -41,7 +43,7 @@ class FollowingController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Following  $following
+     * @param  \App\Models\Following  $following
      * @return \Illuminate\Http\Response
      */
     public function show(Following $following)
@@ -52,7 +54,7 @@ class FollowingController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Following  $following
+     * @param  \App\Models\Following  $following
      * @return \Illuminate\Http\Response
      */
     public function edit(Following $following)
@@ -64,7 +66,7 @@ class FollowingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Following  $following
+     * @param  \App\Models\Following  $following
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Following $following)
@@ -75,7 +77,7 @@ class FollowingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Following  $following
+     * @param  \App\Models\Following  $following
      * @return \Illuminate\Http\Response
      */
     public function destroy(Following $following)

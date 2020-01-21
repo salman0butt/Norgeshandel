@@ -119,9 +119,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('company', 'CompanyController');
         Route::get('cv/extend', 'Cv\CvController@extend');
         Route::resource('job-preferences', 'JobPreferenceController');
+        Route::resource('following', 'FollowingController');
     });
 
-    Route::resource('following', 'FollowController');
 //    new ad routes
     Route::group(['prefix' => 'new'], function () {
         Route::get('/', function () {
