@@ -121,6 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('job-preferences', 'JobPreferenceController');
     });
 
+    Route::resource('following', 'FollowController');
 //    new ad routes
     Route::group(['prefix' => 'new'], function () {
         Route::get('/', function () {
