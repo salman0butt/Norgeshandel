@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\common;
 use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -35,7 +38,19 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = new Company($request->except('company_logo', 'company_gallery'));
+        $company->user_id = Auth::user()->id;
+        $company->save();
+        if ($request->file('company_logo')) {
+            $file = $request->file('company_logo');
+            common::update_media($file, $company->id, 'App\Models\Company', 'company_logo');
+        }
+        if ($request->file('company_gallery')) {
+            $files = $request->file('company_gallery');
+            common::update_media($files, $company->id, 'App\Models\Company', 'company_gallery');
+        }
+        $request->session()->flash('success', 'Selskapet ble lagt til');
+        return back();
     }
 
     /**
@@ -69,7 +84,19 @@ class CompanyController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //
+        $company->update($request->except('company_logo', 'company_gallery'));
+
+        if ($request->file('company_logo')) {
+            $file = $request->file('company_logo');
+            common::update_media($file, $company->id, 'App\Models\Company', 'company_logo');
+        }
+        if ($request->file('company_gallery')) {
+            $files = $request->file('company_gallery');
+            common::update_media($files, $company->id, 'App\Models\Company', 'company_gallery');
+        }
+
+        $request->session()->flash('success', 'Selskapet ble oppdatert!');
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +107,8 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        Session::flash('success', 'Selskapet ble slettet!');
+        return redirect()->back();
     }
 }

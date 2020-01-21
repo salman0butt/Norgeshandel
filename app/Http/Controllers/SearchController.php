@@ -36,7 +36,7 @@ class SearchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
+    {
           $data = [
                 'name' => $request->name,
                 'type' => 'saved',
@@ -46,7 +46,7 @@ class SearchController extends Controller
                 'user_id' => auth()->user()->id
             ];
 
-     
+
         Search::create($data);
         return back()->with('status', 'Search Saved Successfully');
 
@@ -118,27 +118,17 @@ class SearchController extends Controller
     {
 
         if (!empty($search)) {
-            $property = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->limit(5)->get();
-            $property_count = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->count();
+            $property_for_rent = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->get();
 
-            $jobs = Job::where('title', 'LIKE', '%' . $search . '%')->limit(5)->get();
-            $jobs_count = Job::where('title', 'LIKE', '%' . $search . '%')->count();
-
-            //$results =  $data;
+            $job_fulltime = Job::where('job_type', '=', 'full_time')->where('title', 'LIKE', '%'.$search.'%')->get();
+            $job_management = Job::where('job_type', '=', 'management')->where('title', 'LIKE', '%'.$search.'%')->get();
+            $job_parttime = Job::where('job_type', '=', 'parttime')->where('title', 'LIKE', '%'.$search.'%')->get();
 
             $html = "";
-            $i = "";
-            $j = "";
-            foreach ($property as $property) {
 
-                $html .= view('user-panel.partials.global-search-inner', compact('property', 'property_count', 'j', 'search'))->render();
-                $j++;
-            }
-            foreach ($jobs as $job) {
-
-                $html .= view('user-panel.partials.global-search-inner', compact('job', 'jobs_count', 'i', 'search'))->render();
-                $i++;
-            }
+            $html .= view('user-panel.partials.global-search-inner',
+                compact('job_parttime', 'job_fulltime', 'job_management',
+                'property_for_rent'))->render();
 
             exit($html);
         }

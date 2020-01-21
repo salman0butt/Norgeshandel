@@ -15,6 +15,7 @@
     <link href="{{ asset('public/admin/css/fontawesome-all.css') }}" rel="stylesheet">
 {{--    <link href="{{ asset('public/admin/css/themify-icons.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('public/admin/css/multicheck.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/admin/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/datatables.bootstrap4.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom CSS -->
@@ -306,6 +307,8 @@
 <!--Custom JavaScript -->
 <script src="{{ asset('public/admin/js/custom.min.js') }}"></script>
 <!---->
+<script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('public/admin/js/select2.min.js') }}"></script>
 <script src="{{ asset('public/admin/js/jquery.multicheck.js') }}"></script>
 <script src="{{ asset('public/admin/js/datatable-checkbox-init.js') }}"></script>
 

@@ -12,4 +12,12 @@ class Company extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function company_logo(){
+        return $this->morphMany('App\Media', 'mediable')->where('type','=','company_logo');
+    }
+
+    public function company_gallery(){
+        return $this->morphMany('App\Media', 'mediable')->where('type','=','company_gallery');
+    }
 }

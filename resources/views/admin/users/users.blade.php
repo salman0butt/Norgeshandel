@@ -6,8 +6,7 @@
     <a href="#" class="">Users</a>
 @endsection
 @section('page_content')
-{{--    @if(isset($response) && $response)<div class="alert alert-success">User has been added successfully</div>@endif--}}
-
+    {{--    @if(isset($response) && $response)<div class="alert alert-success">User has been added successfully</div>@endif--}}
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -30,7 +29,7 @@
                 {{--</div>--}}
                     <label for="change_role" class="col-sm-2 control-label col-form-label">Change role to</label>
                     <div class="col-sm-2">
-                        <select name="change_role" class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" aria-hidden="true">
+                        <select name="change_role" class="form-control custom-select" style="width: 100%; height:36px;">
                             <option value="">Select</option>
                             @if(isset($roles) && count($roles)>0):
                             @foreach($roles as $role):
@@ -79,8 +78,8 @@
                                 {{--{{getUrl($user->media)}}--}}
                                 <td><img style="height: 70px; width:60px;" src="@if($user->media!=null){{asset(\App\Helpers\common::getMediaPath($user->media))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
                                 <td><div class="display_name mb-2">{{$user->first_name}} {{$user->last_name}}</div>
-                                    <a href="{{route('users.edit', $user->id)}}" class="btn btn-default float-left">Edit</a>
-                                    <form action="{{route('users.destroy', $user->id)}}" method="POST"  onsubmit="jarascript:return confirm('Are you sure to delete the user: {{$user->name}}')">
+                                    <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-default float-left">Edit</a>
+                                    <form action="{{route('admin.users.destroy', $user->id)}}" method="POST"  onsubmit="jarascript:return confirm('Are you sure to delete the user: {{$user->name}}')">
                                         {{ csrf_field() }} {{method_field('DELETE')}}
                                         <input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger">
                                     </form>

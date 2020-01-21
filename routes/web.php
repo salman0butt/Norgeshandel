@@ -116,7 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('profile/company_profile_form/{type}', function ($type){
             return view('user-panel.my-business.profile.company_request_2', compact('type'));
         });
-        Route::resource('company', 'App\Models\Company');
+        Route::resource('company', 'CompanyController');
         Route::get('cv/extend', 'Cv\CvController@extend');
         Route::resource('job-preferences', 'JobPreferenceController');
     });
