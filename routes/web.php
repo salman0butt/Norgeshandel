@@ -38,6 +38,15 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
 //--
 
+//language switch
+Route::get('my-business/cv/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+
+
+
+
 //    common routes for all users
 Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
@@ -245,3 +254,7 @@ Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
 
+//chat 
+Route::get('/messages', 'PropertyController@messages');
+Route::get('/message/{id}', 'PropertyController@getMessage');
+Route::post('message', 'PropertyController@sendMessage');
