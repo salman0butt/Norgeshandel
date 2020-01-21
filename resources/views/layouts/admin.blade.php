@@ -13,6 +13,7 @@
     <link href="{{ asset('public/admin/css/float-chart.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/materialdesignicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/fontawesome-all.css') }}" rel="stylesheet">
+
 {{--    <link href="{{ asset('public/admin/css/themify-icons.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('public/admin/css/multicheck.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/datatables.bootstrap4.css') }}" rel="stylesheet">
@@ -211,6 +212,15 @@
                             <li class="sidebar-item"><a href="{{url('admin/jobs/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
                         </ul>
                     </li>
+                {{-- ads mangment --}}
+                  <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu">{{__('Ads Mangemnet')}}</span></a>
+                        <ul aria-expanded="false" class="collapse  first-level">
+                            <li class="sidebar-item"><a href="{{url('admin/ads')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Ads')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('admin/ads/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
+                        </ul>
+                    </li>
+
+
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="grid.html" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Finance')}}</span></a></li>
 {{--                    @endpermission--}}
 {{--                    @permission('manage_users')--}}
@@ -314,6 +324,8 @@
 <!--This page JavaScript -->
 <!-- <script src="../../dist/js/pages/dashboards/dashboard1.js"></script> -->
 <!-- Charts js Files -->
+
+
 <script src="{{ asset('public/admin/js/excanvas.js') }}"></script>
 <script src="{{ asset('public/admin/js/jquery.flot.js') }}"></script>
 <script src="{{ asset('public/admin/js/jquery.flot.pie.js') }}"></script>

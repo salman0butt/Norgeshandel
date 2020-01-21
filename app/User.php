@@ -2,12 +2,13 @@
 
 namespace App;
 
-use App\Admin\jobs\JobPreference;
 use App\Models\Company;
+use App\Admin\jobs\JobPreference;
+use Illuminate\Support\Facades\App;
 use Illuminate\Notifications\Notifiable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -81,5 +82,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function companies(){
         return $this->hasMany(Company::class);
+    }
+    public function ads() {
+        return $this->hasMany('App\Admin\ads\Banner');
     }
 }
