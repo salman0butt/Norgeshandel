@@ -31,20 +31,20 @@
                         </svg>
                         </span>
                     </div>
-                </div>
+                </div>  
                 <div class="row">
                     <ul class="product-sub-cat-list pl-3 pt-3 col-md-12">
-                        <li class="col-sm-4 pl-0 pr-0 dme-btn-outlined-blue">
+                        <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
 <!--                            --><?php //$filters = [];?>
-                            <a href="{{route('search')}}">Alle stillinger (21 552)</a>
+                            <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger (21 552)</a>
                         </li>
-                        <li class="col-sm-4 pl-0 pr-0 dme-btn-outlined-blue" style="">
+                        <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
                             <?php $array = ['job_type'=>'management'];?>
-                            <a href="{{route('search', $array)}}">Lederstillinger (713)</a>
+                            <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger (713)</a>
                         </li>
                         <?php $filters = ['job_type'=>[]]; ?>
-                        <li class="col-sm-4 pl-0 pr-0 dme-btn-outlined-blue" style="">
-                            <a href="companies.php">Bedriftsprofiler (522)</a>
+                        <li class="col-sm-4 pl-0 pr-0" style="width: 200px;">
+                            <a href="companies.php" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler (522)</a>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +56,9 @@
                 <!--                    <p class="u-d1"><a href="#">Logg inn</a> for å vise dine lagrede søk</p>-->
 
                 <h2 class="u-t4">Siste søk</h2>
+                @if(!Auth::check())
                 <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
+                @endif
                 <!--                <a href="#" class="d-block mt-2 mb-2 u-d1">Bolig til salgs</a>-->
                 <!--                <a href="#" class="d-block mt-2 mb-2 u-d1">Antikviteter og kunst, Torget</a>-->
                 <!--                <a href="#" class="d-block mt-2 mb-2 u-d1">Næringstomter</a>-->
@@ -74,10 +76,14 @@
                                 Legg inn din CV slik at arbeidsgivere kan finne deg.
                             </p>
                             <div class="">
-                                <button id="#" class="dme-btn-outlined-blue">Legg inn CV</button>
+                                <a href="{{ url('/my-business/cv') }}" class="dme-btn-outlined-blue">Legg inn CV</a>
                             </div>
                             <br>
-                            <p>Har du allerede en CV hos oss? <a href="#">Logg inn og se den her.</a></p>
+                            @if(!Auth::check())
+                            <p>Har du allerede en CV hos oss? <a href="{{ url('/login') }}">Logg inn og se den her.</a></p>
+                            @else
+                            <p>Har du allerede en CV hos oss? <a href="{{ url('/my-business/cv#preview') }}">og se den her.</a></p>
+                            @endif
                         </section>
                     </div>
                 </div>

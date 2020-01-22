@@ -47,7 +47,7 @@
             }
             else
             {
-                $path = "";
+                $path = asset('public/images/image-placeholder.jpg');
             }
         }
     
