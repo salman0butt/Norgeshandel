@@ -42,7 +42,7 @@
             <div class="col-md-6">
                 <label class="col-md-4 control-label" for="is_active">Visibilty<span class="red">*</span></label>
                 <div class="col-md-12">
-                    <select class="select2 form-control custom-select select2-hidden-accessible" id="is_active" name="is_active"
+                    <select class="select2 form-control custom-select" id="is_active" name="is_active"
                             style="width: 100%;" data-select2-id="1" aria-hidden="true" required>
                         <option value="">Select</option>
                         <option value="1">Active</option>
@@ -50,7 +50,7 @@
                     </select>
                 </div>
             </div>
-         
+
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -72,7 +72,7 @@
                  <div class="col-md-6">
                 <label class="col-md-4 control-label" for="cat_id">Banner Category<span class="red">*</span></label>
                 <div class="col-md-12">
-                    <select class="select2 form-control custom-select select2-hidden-accessible" id="cat_id" name="cat_id"
+                    <select class="select2 form-control custom-select" id="cat_id" name="cat_id"
                             style="width: 100%;" data-select2-id="1" aria-hidden="true" required>
                         <option value="">Select</option>
                         <option value="1">Category 1</option>
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-      
+
         <hr>
     </div>
     <!--            end col-md-9-->
@@ -105,7 +105,7 @@
             <button type="submit" class="btn btn-primary btn-block">Ad banner</button>
         </div>
     </div>
-    
+
     <!--            end row-->
 </form>
 

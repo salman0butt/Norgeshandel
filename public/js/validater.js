@@ -10,7 +10,7 @@ $(document).ready(function () {
             },
             zip_code: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             property_type: {
                 required: true

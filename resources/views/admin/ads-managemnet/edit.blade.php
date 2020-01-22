@@ -18,7 +18,7 @@
     @csrf
     @method('PATCH')
     <div class="row">
-           
+
            <div class="col-md-3">
             <div class="profile" style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;">
                 <img src="{{ url('public/uploads/banners/'.$banner->image) }}" id="profile_image" style="width:100%; max-height: 250px; height:250px;" alt="">
@@ -29,11 +29,11 @@
                 <div class="invalid-feedback"></div>
             </div>
         </div>
-        
+
 
          <div class="col-md-9">
             <div class="row">
-            
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="title" class="text-right control-label">Title:</label>
@@ -44,7 +44,7 @@
             <div class="col-md-6">
                 <label class="col-md-4 control-label" for="is_active">Visibilty<span class="red">*</span></label>
                 <div class="col-md-12">
-                    <select class="select2 form-control custom-select select2-hidden-accessible" id="is_active" name="is_active"
+                    <select class="select2 form-control custom-select" id="is_active" name="is_active"
                             style="width: 100%;" data-select2-id="1" aria-hidden="true" required>
                         <option value="">Select</option>
                         <option value="1" {{ ($banner->is_active == 1 ? 'selected' : '') }}>Active</option>
@@ -52,7 +52,7 @@
                     </select>
                 </div>
             </div>
-       
+
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -71,11 +71,11 @@
                             autofocus name="url" placeholder="url">
                     </div>
                 </div>
-                
+
                  <div class="col-md-6">
                 <label class="col-md-4 control-label" for="cat_id">Banner Category<span class="red">*</span></label>
                 <div class="col-md-12">
-                    <select class="select2 form-control custom-select select2-hidden-accessible" id="cat_id" name="cat_id"
+                    <select class="select2 form-control custom-select" id="cat_id" name="cat_id"
                             style="width: 100%;" data-select2-id="1" aria-hidden="true" required>
                         <option value="">Select</option>
                         <option value="1" value="{{ ($banner->category_id == 1 ? 'selected' : '') }}">Category 1</option>
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-      
+
         <hr>
     </div>
     <!--            end col-md-9-->

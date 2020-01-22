@@ -108,7 +108,7 @@
                     <h4>Annonsere som bedrift eller forhandler?</h4>
                     <p>Har du et organisasjonsnummer og annonserer jevnlig på Handel?</p>
                     <p>Da gir en bedriftsavtale deg flere fordeler.</p>
-                    <button class="dme-btn-outlined-blue mt-2">Bli bedriftskunde </button>
+                    <a href="{{ url('my-business/profile/select_company_profile_type') }}" class="dme-btn-outlined-blue mt-2">Bli bedriftskunde </a>
                 </div>
             </div>
         </div>
