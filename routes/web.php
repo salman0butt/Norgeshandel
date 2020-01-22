@@ -38,6 +38,14 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
 //--
 
+//Banner ads mangment 
+Route::get('/admin/ads', 'Admin\ads\BannerController@index')->middleware(['role:admin|manager']);
+Route::get('/admin/ads/{id}/edit', 'Admin\ads\BannerController@edit')->middleware(['role:admin|manager']);
+Route::patch('/admin/ads/{id}/', 'Admin\ads\BannerController@update')->middleware(['role:admin|manager']);
+Route::delete('/admin/ads/{id}/', 'Admin\ads\BannerController@destroy')->middleware(['role:admin|manager']);
+Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
+Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
+
 //language switch
 Route::get('my-business/cv/{locale}', function ($locale) {
     Session::put('locale', $locale);

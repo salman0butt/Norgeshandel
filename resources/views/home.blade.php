@@ -19,7 +19,8 @@
                 <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8">
                     <h2 class="u-t4">Lagrede søk</h2>
                     <ul>
-
+                        @if (Auth::check())
+                            
                         @if (isset($saved_search))
                             @foreach($saved_search as $search)
                                 <li><a href="#">{{ $search->name }}</a></li>
@@ -27,17 +28,24 @@
                         @else
                             <li><p class="u-d1">Det er ingen lagrede søk</p></li>
                         @endif
+                        @else 
+                      <p class="u-d1"><a href="#">Logg inn</a> for å vise dine lagrede søk</p>
+                         @endif
                     </ul>
                     ​
                     <h2 class="u-t4">Siste søk</h2>
                     <ul>
+                     @if (Auth::check())
                         @if (isset($recent_search))
                             @foreach($recent_search as $recent)
-                                <li><a href="#">{{ $recent->name }}</a></li>
+                                <li><a href="{{ url('/login') }}">{{ $recent->name }}</a></li>
                             @endforeach
                         @else
                             <p class="u-d1">Det er ingen nylig søk</p>
                         @endif
+                         @else 
+                        <p class="u-d1"><a href=""{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
+                         @endif
                     </ul>
                 </div>
                 <!--            ended col-->
