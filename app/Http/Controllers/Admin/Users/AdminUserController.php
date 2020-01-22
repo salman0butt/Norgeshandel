@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Helpers\common;
 use App\Http\Controllers\Controller;
+use App\Models\AllowedCompanyAd;
 use App\Role;
 use App\User;
 use App\Media;
@@ -56,13 +57,24 @@ class AdminUserController extends Controller
      */
     public function store(Request $request)
     {
-
         $role = Role::findOrFail($request->role_id);
-        $user_array = $request->all();
+        $user_array = $request->except(['_token', '_method', 'file',
+        'confirm_passowrd', 'role_id', 'password',
+        'allowed_properties', 'allowed_jobs']);
         $user_array['password'] = Hash::make($user_array['password']);
 
         $user = new User($user_array);
         $role->users()->save($user);
+
+        $user->allowed_ads()->delete();
+        $allowed_jobs = new AllowedCompanyAd(['key'=>'jobs', 'value'=>$request->allowed_jobs]);
+        $user->allowed_ads()->save($allowed_jobs);
+        $allowed_property = new AllowedCompanyAd(['key'=>'properties', 'value'=>$request->allowed_properties]);
+        $user->allowed_ads()->save($allowed_property);
+
+        if (!empty($request->password)){
+            $user->update(['password'=>Hash::make($request->password)]);
+        }
 
         if ($request->file('file')) {
             $file = $request->file('file');
@@ -113,39 +125,34 @@ class AdminUserController extends Controller
         if (isset($user_array['password']) && $user_array['password'] != ""){
             $user_array['password'] = Hash::make($user_array['password']);
         }
+        $user = User::find($id);
+        $user->update($request->except(['_token', '_method', 'file',
+            'confirm_passowrd', 'role_id', 'password',
+            'allowed_properties', 'allowed_jobs']));
+        if (!empty($request->password)){
+            $user->update(['password'=>Hash::make($request->password)]);
+        }
 
-        $user = User::where('id', $id);
+        $user->allowed_ads()->delete();
+        $allowed_jobs = new AllowedCompanyAd(['key'=>'jobs', 'value'=>$request->allowed_jobs]);
+        $user->allowed_ads()->save($allowed_jobs);
+        $allowed_property = new AllowedCompanyAd(['key'=>'properties', 'value'=>$request->allowed_properties]);
+        $user->allowed_ads()->save($allowed_property);
 
-        $user->update($request->except(['_token', '_method', 'file']));
-//        $user->update([
-//            'first_name' => $user_array['first_name'],
-//            'last_name' => $user_array['last_name'],
-//            'username' => $user_array['username'],
-//            'mobile_number' => $user_array['mobile_number'],
-//            'email' => $user_array['email'],
-//            'password' => $user_array['password'],
-//            'address' => $user_array['address'],
-//            'city' => $user_array['city'],
-//            'zip' => $user_array['zip'],
-//            'gender' => $user_array['gender'],
-//            'country' => $user_array['country'],
-//            'birthday' => $user_array['birthday'],
-//            'about_me' => $user_array['about_me'],
-////            'status' => $user_array['status']
-//        ]);
+        $user->roles()->detach();
+        $user->roles()->attach($request->role_id);
+
+        if (isset($request->allowed_ad_types)){
+
+        }
+
         if ($request->file('file')) {
             $file = $request->file('file');
-
             common::update_media($file, $id, 'App\User');
-        }
-        else{
-//            User::where('id', $id)->update(['image_path'=>'']);
         }
 
         $request->session()->flash('success', 'Profile has been updated successfully');
-//        $users = User::all();
         return redirect()->back();
-//        return response()->view('admin.users.users', compact('users'));
     }
 
     /**
@@ -186,7 +193,7 @@ class AdminUserController extends Controller
         }
         $roles = Role::orderBy('id', 'DESC')->get();
         $users = User::orderBy('id', 'DESC')->get();
-        return view('admin.users.users', compact('users', 'roles'));
+        return redirect()->back();
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Jobs;
 
+use App\Models\Company;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
@@ -43,6 +44,7 @@ class Job extends Model
         'created_at',
         'updated_at',
         'user_id',
+        'company_id',
         'slug'
     ];
 
@@ -68,6 +70,10 @@ class Job extends Model
 
     public function ad(){
         return $this->belongsTo('App\Models\Ad');
+    }
+
+    public function company(){
+        return $this->belongsTo(Company::class);
     }
 //    public function meta(){
 //        return $this->hasMany('App\Admin\Jobs\JobMeta');

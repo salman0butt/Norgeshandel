@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="messages.php">
+                        <a class="nav-link" href="{{url('/messages')}}">
                             <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
                             <div class="mt-2 ml-2">Meldinger</div>
                         </a>

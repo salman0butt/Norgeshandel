@@ -64,7 +64,7 @@
                     @endif
 
                     <br>
-                    <p><a href="{{url('admin/users')}}">Klikk her for å fortsette</a></p>
+                    <p><a href="{{url('admin.users.edit')}}">Klikk her for å fortsette</a></p>
                     <p><a href="{{ url('/')}}">NorgesHandel</a></p>
                 </div>
             </div>

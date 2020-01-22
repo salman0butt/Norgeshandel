@@ -185,8 +185,25 @@
                             </div>
                         </div>
                         <!--                            full input-->
-
+{{--employer part--}}
                         <h4 class="text-muted pt-2">{{__('About the employer')}}</h4>
+                        @if(Auth::user()->roles->first()->name=="company")
+                            <div class="form-group">
+                                <div class="row">
+                                    <label for="company_id" class="col-md-2 u-t5">{{__('Select Your Company')}}</label>
+                                    <div class="col-sm-10 ">
+                                        <select name="company_id" id="company_id" class="form-control dme-form-control">
+                                            <option value="">{{__('Select')}}</option>
+                                            @if(is_countable(Auth::user()->job_companies) && count(Auth::user()->job_companies)>0)
+                                                @foreach(Auth::user()->job_companies as $company)
+                                                    <option value="{{$company->id}}">{{$company->emp_name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
                         <div class="form-group">
                             <div class="row">
                                 <label for="emp_name" class="col-md-2 u-t5">{{__('Employer')}}</label>
@@ -322,7 +339,8 @@
                                 </div>
                             </div>
                         </div>
-
+                        @endif
+{{--end employer part--}}
 
                         <h4 class="text-muted pt-3">{{__('Application Management')}}</h4>
                         <!--                            selection-->

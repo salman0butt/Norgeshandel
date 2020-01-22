@@ -46,6 +46,13 @@ Route::delete('/admin/ads/{id}/', 'Admin\ads\BannerController@destroy')->middlew
 Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
 Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
 
+//language switch
+Route::get('my-business/cv/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+
+
 
 
 //    common routes for all users
@@ -126,9 +133,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('profile/company_profile_form/{type}', function ($type){
             return view('user-panel.my-business.profile.company_request_2', compact('type'));
         });
-        Route::resource('company', 'App\Models\Company');
+        Route::resource('company', 'CompanyController');
         Route::get('cv/extend', 'Cv\CvController@extend');
         Route::resource('job-preferences', 'JobPreferenceController');
+        Route::resource('following', 'FollowingController');
     });
 
 //    new ad routes
@@ -254,3 +262,7 @@ Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
 
+//chat 
+Route::get('/messages', 'PropertyController@messages');
+Route::get('/message/{id}', 'PropertyController@getMessage');
+Route::post('message', 'PropertyController@sendMessage');

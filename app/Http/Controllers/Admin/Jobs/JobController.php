@@ -106,10 +106,7 @@ class JobController extends Controller
         }
         if ($request->file('company_gallery')) {
             $files = $request->file('company_gallery');
-            foreach ($files as $file)
-            {
-                common::update_media($file, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-            }
+            common::update_media($files, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
         }
 
         $terms = Term::find([$request->industry, $request->job_function]);
