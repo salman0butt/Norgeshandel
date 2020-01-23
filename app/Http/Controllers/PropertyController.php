@@ -30,6 +30,9 @@ use Mapper;
 use App\User;
 use App\Message;
 use Pusher\Pusher;
+use App\Events\PropertyForRent as PropertyForRentEvent;
+use App\Http\Controllers\NotificationController;
+
 
 class PropertyController extends Controller
 {
@@ -684,6 +687,14 @@ class PropertyController extends Controller
             common::update_media($file, $response->id , 'App\PropertyForRent', 'propert_for_rent');
 
         }
+
+        //Notification data
+        $notifiable_id = $response -> id;
+        $notification_obj = new NotificationController();
+        $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForRent','property have been added');
+        
+        //trigger event
+        event(new PropertyForRentEvent($notifiable_id));
 
         $data['success'] = $response;
         echo json_encode($data);
