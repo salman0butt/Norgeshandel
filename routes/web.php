@@ -266,3 +266,17 @@ Route::get('general/property/description/{id}/{type}', 'PropertyController@gener
 Route::get('/messages', 'PropertyController@messages');
 Route::get('/message/{id}', 'PropertyController@getMessage');
 Route::post('message', 'PropertyController@sendMessage');
+
+//notifications
+Route::post('notifications/all', 'NotificationController@getAllNotifications');
+
+Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+
+Route::get('test', function () {
+    event(new App\Events\PropertyForRent('Guest'));
+    return "Event has been sent!";
+});
+
+
+
+
