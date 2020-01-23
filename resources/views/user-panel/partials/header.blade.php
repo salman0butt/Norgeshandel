@@ -5,13 +5,16 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon fa fa-bars pt-2"></span>
             </button>
+            <div id="notifications">
+            </div>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto" style="">
                     @if(\Illuminate\Support\Facades\Request::is('jobs/search'))
                         @include('user-panel.partials.templates.job-filter')
                     @endif
-                    <li class="nav-item">
+                    <li class="nav-item" id="move_to_notifications">
                         <a class="nav-link" href="#">
+                            <span class="label" id="notification_count_pro">0</span>
                             <i class="far fa-bell nav-icons"></i>
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>
