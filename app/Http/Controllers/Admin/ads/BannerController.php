@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\ads;
 use App\Admin\ads\Banner;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use  App\Helpers\common;
 
 class BannerController extends Controller
 {
@@ -42,25 +44,30 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         //
-            
         $data = [
             'title' => $request->title,
             'description' => $request->description,
             'link' => $request->url,
-            'image' => '',
             'is_active' => $request->is_active,
-            'category_id' => $request->cat_id,
-            'start_at' => $request->start_at,
-            'end_at' => $request->end_at
+            'banner_group' => $request->banner_group,
+            'display_time_type' => $request->display_time_type,
+            'display_time_duration' => $request->display_time_duration,
         ];
-        $file = $request->banner_image;
-        $data['image'] = $file->getClientOriginalName();
-         
-     
-        
-          $file->move('public/uploads/banners', $data['image']);
+
+        if (!empty($request->banner_image)) {
+           $file = $request->banner_image;
+            common::update_media($file, $banner->id, Banner::class, 'banner');
+
+        }
     
-        Banner::create($data);
+
+        $banner = new Banner($data);
+        $banner->save();
+
+      
+
+        // dd(App\Helpers\common::getMediaPath($banner->media))
+
         return redirect()->back() ->with('success','Banner Created Successfully');
 
     }
@@ -74,8 +81,9 @@ class BannerController extends Controller
     public function show($id)
     {
         //
-    }
 
+    }
+  
     /**
      * Show the form for editing the specified resource.
      *
@@ -105,17 +113,19 @@ class BannerController extends Controller
             'description' => $request->description,
             'link' => $request->url,
             'is_active' => $request->is_active,
-            'category_id' => $request->cat_id,
-            'start_at' => $request->start_at,
-            'end_at' => $request->end_at
+            'banner_group' => $request->banner_group,
+            'display_time_type' => $request->display_time_type,
+            'display_time_duration' => $request->display_time_duration
         ];
         $file = $request->banner_image;
         if(isset($request->banner_image)){
-            $data['image'] = $file->getClientOriginalName();
-            $file->move('public/uploads/banners', $data['image']);
+           common::update_media($file, $id, Banner::class, 'banner');
+
+            // $data['image'] = $file->getClientOriginalName();
+            // $file->move('public/uploads/banners', $data['image']);
         }
-        
-     Banner::where('id', $id)->update($data);
+
+        Banner::where('id', $id)->update($data);
         return redirect()->back()->with('success','Banner Updated Successfully');
 
     }
@@ -130,7 +140,7 @@ class BannerController extends Controller
     {
         //
         $banner = Banner::findOrFail($id);
-        unlink('public/uploads/banners/'.$banner->image);
+        common::delete_media($banner->id, Banner::class, 'banner');
 
         $banner->delete();
         return redirect()->back()->with('danger','Ad Deleted Successfully');

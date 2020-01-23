@@ -12,9 +12,36 @@
                     @if(\Illuminate\Support\Facades\Request::is('jobs/search'))
                         @include('user-panel.partials.templates.job-filter')
                     @endif
-                    <li class="nav-item" id="move_to_notifications">
+
+                    <style>
+                    #collapsibleNavbar > ul > li:nth-child(2) > a > span {
+                        -webkit-tap-highlight-color: rgba(0,0,0,0);
+                            font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+                            list-style: none;
+                            box-sizing: border-box;
+                            text-align: center;
+                            white-space: nowrap;
+                            vertical-align: baseline;
+                            border-radius: 1em;
+                            color: #fff;
+                            text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+                            font-weight: 600;
+                            top: 10px;
+                            font-size: 10px;
+                            padding: 0 2px;
+                            line-height: 12px;
+                            position: absolute;
+                            display: block;
+                            background: red;
+                            padding:1px
+                                padding-left: 2px;
+                        padding-right: 2px;
+                    }
+                    </style>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <span class="label" id="notification_count_pro">0</span>
+                        <span class="label">5</span>
+
                             <i class="far fa-bell nav-icons"></i>
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>

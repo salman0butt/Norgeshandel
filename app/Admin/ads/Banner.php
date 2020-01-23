@@ -13,5 +13,8 @@ class Banner extends Model
         
         return $this->belognsTo('App\User');
     }
+    public function media(){
+        return $this->morphOne('App\Media', 'mediable');
+    }
 
 }
