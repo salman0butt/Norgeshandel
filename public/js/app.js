@@ -58980,11 +58980,14 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 var channel = window.Echo.channel('property-for-rent');
 var html = "";
 channel.listen('.property-for-rent', function (data) {
-  html += "<input type='hidden' name='notids[]' value='" + data.notification_id + "'>";
-  $("#notifications").append(html);
-  var notification_count = $(":input[name='notids[]']").length;
-  $("#notification_count_pro").html(notification_count);
-  console.log(data.notification_id);
+  var user_id = data.user_id;
+
+  if ($("#user_id_notfy").val() != user_id) {
+    html += "<input type='hidden' name='notids[]' value='" + data.notification_id + "'>";
+    $("#notifications").append(html);
+    var notification_count = $(":input[name='notids[]']").length;
+    $("#notification_count_pro").html(notification_count);
+  }
 });
 
 /***/ }),

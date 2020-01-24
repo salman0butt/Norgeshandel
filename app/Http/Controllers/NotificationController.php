@@ -28,7 +28,7 @@ class NotificationController extends Controller
 
     public function getAllNotifications(){
         
-        $notifications = Notification::where('read_at','=',null)->get()->toArray();
+        $notifications = Notification::where('user_id','!=',Auth::user()->id)->where('read_at','=',null)->get()->toArray();
         $count = count($notifications);
         $html = "";
         foreach($notifications as $key=>$val)
@@ -44,7 +44,7 @@ class NotificationController extends Controller
 
     public function showAllNotifications(Request $request)
     {
-        $ids = Notification::get(['notifiable_id'])->toArray();
+        $ids = Notification::where('user_id','!=',Auth::user()->id)->get(['notifiable_id','id'])->toArray();
         return view('common.partials.notifications.all_notifications', ['ids' => $ids]);
 
     }
