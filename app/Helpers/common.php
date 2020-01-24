@@ -12,6 +12,26 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class common
 {
+    public static function map_nav($terms)
+    {
+        $html = '<ul class="list list-unstyled">';
+        foreach ($terms as $term) {
+            $html .= '
+            <li>
+                <div class="input-toggle">
+                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="'.$term->name.'" id="'.$term->taxonomy->id.'-'.$term->id.'">
+                    <label for="'.$term->taxonomy->id.'-'.$term->id.'" class="">'.$term->name . '</label>
+                </div>
+                ';
+            if (!empty($terms = $term->getChildren)) {
+                $html.= common::map_nav($terms);
+            }
+            $html .= '</li>';
+        }
+        $html.='</ul>';
+        return $html;
+    }
+
     public static function getMediaPath($obj, $size = 'full')
     {
         $file_name = $obj->name_unique;

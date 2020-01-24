@@ -39,8 +39,8 @@
                             <a href="{{route('search')}}">Alle stillinger (21 552)</a>
                         </li>
                         <li class="col-sm-4 pl-0 pr-0 dme-btn-outlined-blue" style="">
-                            <?php $array = ['job_type'=>'management'];?>
-                            <a href="{{route('search', $array)}}">Lederstillinger (713)</a>
+                            <?php $filters = ['job_type'=>'management'];?>
+                            <a href="{{route('search', $filters)}}">Lederstillinger (713)</a>
                         </li>
                         <?php $filters = ['job_type'=>[]]; ?>
                         <li class="col-sm-4 pl-0 pr-0 dme-btn-outlined-blue" style="">

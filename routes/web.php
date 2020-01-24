@@ -43,6 +43,9 @@ Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
 Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
 Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
+Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
+
+
 
 Route::get('shared-lists/{link_id}', function ($link_id) {
     $list = \App\fav_list::where('share_link', $link_id)->get()->first();
@@ -59,6 +62,9 @@ Route::resources([
     'media' => 'MediaController',
     'trans' => 'TranslationController'
 ]);
+Route::get('dummy', function (){
+    return view('user-panel.nav');
+});
 Route::get('single', function () {
     return view('user-panel/jobs/single');
 });
