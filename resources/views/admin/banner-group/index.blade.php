@@ -1,5 +1,9 @@
 @extends('layouts/admin')
-
+<style>
+    ul li {
+        list-style:none;
+    }
+</style>
 @section('main_title')Banners Ads @endsection
 @section('breadcrumb')
     <a href="#" class="text-muted">Home</a> /
@@ -44,7 +48,16 @@
                                 <td>{{ $banner_group->location }}</td>
                                 <td>{{ $banner_group->post_category }}</td>
                                   <td>{{ $banner_group->page_url }}</td>
-                                  <td>{{ $banner_group->banners }}</td>
+                                  <td>
+                                  <ul class="p-0 mb-0">
+                                  <?php $banners = $banner_group->banners; ?>
+                                  @foreach($banners as $banner)
+
+                                   <li> {{ $banner->title }}</li>
+
+                                     @endforeach
+                                     </ul>
+                                  </td>
                                   <td>{{ $banner_group->time_start }}</td>
                                  <td>{{ $banner_group->time_end }}</td>
                                  

@@ -8,11 +8,11 @@
     </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
-            <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
+             {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
         </div>
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
-                <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+            {{(\App\Helpers\common::display_ad('top')) ? \App\Helpers\common::display_ad('top') : ''}} 
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">
@@ -118,7 +118,7 @@
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
-            <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
+            {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
         </div>
     </main>
     <script type="text/javascript">

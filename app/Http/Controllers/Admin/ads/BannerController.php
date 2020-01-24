@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin\ads;
 
+use  App\Helpers\common;
 use App\Admin\ads\Banner;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Admin\Banners\BannerGroup;
 use Illuminate\Support\Facades\DB;
-use  App\Helpers\common;
+use App\Http\Controllers\Controller;
 
 class BannerController extends Controller
 {
@@ -31,7 +32,8 @@ class BannerController extends Controller
     public function create()
     {
         //
-        return view('admin.ads-managemnet.create');
+        $banner_groups = BannerGroup::all();
+        return view('admin.ads-managemnet.create', compact('banner_groups'));
 
     }
 
@@ -49,22 +51,20 @@ class BannerController extends Controller
             'description' => $request->description,
             'link' => $request->url,
             'is_active' => $request->is_active,
-            'banner_group' => $request->banner_group,
             'display_time_type' => $request->display_time_type,
-            'display_time_duration' => $request->display_time_duration,
+            'display_time_duration' => $request->display_time_duration
         ];
+        
+        $banner = new Banner($data);
+        $banner->save();
+        $banner->groups()->detach();
+        $banner->groups()->attach($request->banner_group);
 
         if (!empty($request->banner_image)) {
            $file = $request->banner_image;
             common::update_media($file, $banner->id, Banner::class, 'banner');
-
         }
-    
 
-        $banner = new Banner($data);
-        $banner->save();
-
-      
 
         // dd(App\Helpers\common::getMediaPath($banner->media))
 
@@ -94,7 +94,8 @@ class BannerController extends Controller
     {
         //
         $banner = Banner::findOrFail($id);
-        return view('admin.ads-managemnet.edit', compact('banner'));
+        $groups = BannerGroup::all();
+        return view('admin.ads-managemnet.edit', compact('banner', 'groups'));
 
     }
 
@@ -113,10 +114,14 @@ class BannerController extends Controller
             'description' => $request->description,
             'link' => $request->url,
             'is_active' => $request->is_active,
-            'banner_group' => $request->banner_group,
             'display_time_type' => $request->display_time_type,
             'display_time_duration' => $request->display_time_duration
         ];
+
+
+
+
+
         $file = $request->banner_image;
         if(isset($request->banner_image)){
            common::update_media($file, $id, Banner::class, 'banner');
@@ -125,7 +130,12 @@ class BannerController extends Controller
             // $file->move('public/uploads/banners', $data['image']);
         }
 
-        Banner::where('id', $id)->update($data);
+        $banner = Banner::find($id);
+        $banner->update($data);
+        $banner->groups()->detach();
+        $banner->groups()->attach($request->banner_group);
+
+        //Banner::where('id', $id)->update($data);
         return redirect()->back()->with('success','Banner Updated Successfully');
 
     }

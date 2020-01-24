@@ -46,7 +46,6 @@ class BannerGroupController extends Controller
         //
         $data = [
             'title' => $request->title,
-            'banners' => $request->banners,
             'location' => $request->location,
             'post_category' => $request->post_category,
             'page_url' => $request->page_url,
@@ -54,11 +53,15 @@ class BannerGroupController extends Controller
             'time_end' => $request->time_end   
         ];
 //   dd($data);
+    $bannerGroup = new BannerGroup($data);
+    $bannerGroup->save();
+    $bannerGroup->banners()->detach();
+    $bannerGroup->banners()->attach($request->banners);
+
      
-        $status = BannerGroup::create($data);
-        if ($status) {
-            return back()->with('success', 'Banner Created Successfully');
-        }
+     
+    return back()->with('success', 'Banner Created Successfully');
+ 
 
     }
 
@@ -102,7 +105,6 @@ class BannerGroupController extends Controller
         //
            $data = [
             'title' => $request->title,
-            'banners' => $request->banners,
             'location' => $request->location,
             'post_category' => $request->post_category,
             'page_url' => $request->page_url,
@@ -110,11 +112,16 @@ class BannerGroupController extends Controller
             'time_end' => $request->time_end   
         ];
 //   dd($data);
+    $bannerGroup = BannerGroup::find($id);
+    $bannerGroup->update($data);
+    $bannerGroup->banners()->detach();
+    $bannerGroup->banners()->attach($request->banners);
      
-        $status = BannerGroup::where('id',$id)->update($data);
-        if ($status) {
+        // $status = BannerGroup::where('id',$id)->update($data);
+        // $
+        // if ($status) {
             return back()->with('success', 'Banner Updated Successfully');
-        }
+        // }
     }
 
     /**

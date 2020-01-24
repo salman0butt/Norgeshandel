@@ -18,7 +18,6 @@ class CreateBannersTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('link')->nullable();
-            $table->string('banner_group')->nullable();
             $table->integer('is_active')->default(0);
             $table->string('display_time_type')->nullable();
             $table->string('display_time_duration')->nullable();

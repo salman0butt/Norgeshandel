@@ -2,12 +2,14 @@
 namespace App\Helpers;
 
 use App\Media;
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Database\Eloquent\Model;
+use App\Admin\ads\Banner;
 use Illuminate\Support\Str;
+use App\Admin\Banners\BannerGroup;
 
 require 'vendor/autoload.php';
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Session\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class common
@@ -136,6 +138,18 @@ class common
             }
             $obj_old_media->delete();
         }
+    }
+    public static function display_ad($location){
+            $banner_group = BannerGroup::where('location','=',$location)->get()->first();
+        
+            foreach($banner_group->banners as $banner):
+                
+                 if ($banner->is_active) {  
+                    if ($banner->display_time_type == 's' && $banner->display_time_duration < 20) {
+                        echo "<img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''>";     
+                    }
+                 }
+            endforeach;
     }
 
 }
