@@ -1,5 +1,9 @@
 @extends('layouts/admin')
-
+<style>
+    ul li {
+        list-style:none;
+    }
+</style>
 @section('main_title')Banners Ads @endsection
 @section('breadcrumb')
     <a href="#" class="text-muted">Home</a> /
@@ -28,8 +32,9 @@
                             <th scope="col">Description</th>
                             <th scope="col">Link</th>
                             <th scope="col">Banner Group</th>
-                            <th scope="col">Display Time Type</th>
-                            <th scope="col">Display Time Duration</th>
+                            <th scope="col">Clicks</th>
+                            <th scope="col">Time Type</th>
+                            <th scope="col">Time Duration</th>
                             <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -45,7 +50,16 @@
                                 <td><img style="height: 70px; width:60px;" src=" @if($banner->media!=null) {{asset(\App\Helpers\common::getMediaPath($banner->media))}} @else {{asset('public/admin/images/banners/1280x720.png')}} @endif" alt="" class="mr-2"></td>
                                 <td>{{ $banner->description }}</td>
                                 <td>{{ $banner->link }}</td>
-                                  <td>{{ $banner->banner_group }}</td>
+                                  <td>
+                                  <ul class="p-0 mb-0">
+                                   @foreach($banner->groups as $group)
+
+                                   <li>{{ $group->title }}</li>
+
+                                    @endforeach
+                                    </ul>
+                                  </td>
+                                  <td>{{ count($banner->clicks) }}</td>
                                   <td>{{ $banner->display_time_type }}</td>
                                  <td>{{ $banner->display_time_duration }}</td>
                                   <td>{{ ($banner->is_active ==1 ? 'Active':'Inactive') }}</td>
@@ -62,7 +76,7 @@
                             @else
                             <tr>
                                 <td colspan="8">
-                                    <h4 class="m-2 text-center">There is no user to display!</h4>
+                                    <h4 class="m-2 text-center">There is no Banner to display!</h4>
                                 </td>
                             </tr>
                         @endif

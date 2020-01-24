@@ -46,6 +46,8 @@ Route::delete('/admin/ads/{id}/', 'Admin\ads\BannerController@destroy')->middlew
 Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
 Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
 
+Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+
 //Banner Group   /admin/banner-group/
 
 // Route::resource('bannerGroup', 'Admin\ads\BannerGroupController');

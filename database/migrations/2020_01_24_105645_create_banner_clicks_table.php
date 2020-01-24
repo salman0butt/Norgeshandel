@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBannerGroupsTable extends Migration
+class CreateBannerClicksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateBannerGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('banner_groups', function (Blueprint $table) {
+        Schema::create('banner_clicks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('location');
-            $table->string('post_category');
-            $table->string('page_url')->nullable();
-            $table->string('time_start')->nullable();
-            $table->string('time_end')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('banner_id');
+            $table->string('ip');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateBannerGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banner_groups');
+        Schema::dropIfExists('banner_clicks');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Admin\ads;
 
+use App\BannerClick;
+use App\Admin\Banners\BannerGroup;
 use Illuminate\Database\Eloquent\Model;
 
 class Banner extends Model
@@ -15,6 +17,12 @@ class Banner extends Model
     }
     public function media(){
         return $this->morphOne('App\Media', 'mediable');
+    }
+    public function groups() {
+        return $this->belongsToMany(BannerGroup::class, 'banners_banner_groups');
+    }
+    public function clicks() {
+        return $this->hasMany(BannerClick::class);
     }
 
 }

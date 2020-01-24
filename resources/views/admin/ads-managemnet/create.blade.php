@@ -68,12 +68,13 @@ Add new Banner Ad
                     <label class="col-md-12">Banner Group Select</label>
                     <div class="form-group row" data-select2-id="12">
                         <div class="col-md-12" data-select2-id="11">
-                            <select class="select2 form-control m-t-15 select2-hidden-accessible" name="banner_group" multiple=""
+                            <select class="select2 form-control m-t-15 select2-hidden-accessible" name="banner_group[]" multiple=""
                                 style="height: 36px;width: 100%;" data-select2-id="4" tabindex="-1" aria-hidden="true">
-                                <optgroup label="Banner Groups" data-select2-id="16">
-                                    <option value="G1" data-select2-id="17">Group 1</option>
-                                    <option value="G2" data-select2-id="18">Group 2</option>
-                                </optgroup>
+                                
+                                    @foreach($banner_groups as $group)
+                                    <option value="{{ $group->id }}">{{ $group->title }}</option>
+                                   @endforeach
+                           
                             </select>
                             {{-- <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="5" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" style="display:none !important;"  role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="Nebraska" data-select2-id="74"><span class="select2-selection__choice__remove" role="presentation">×</span>Nebraska</li><li class="select2-selection__choice" title="New Mexico" data-select2-id="75"><span class="select2-selection__choice__remove" role="presentation">×</span>New Mexico</li><li class="select2-selection__choice" title="South Dakota" data-select2-id="76"><span class="select2-selection__choice__remove" role="presentation">×</span>South Dakota</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> --}}
                         </div>

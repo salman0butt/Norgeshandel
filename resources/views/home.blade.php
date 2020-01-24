@@ -8,11 +8,11 @@
     </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
-            <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
+             {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
         </div>
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
-                <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+            {{(\App\Helpers\common::display_ad('top')) ? \App\Helpers\common::display_ad('top') : ''}} 
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">
@@ -76,7 +76,7 @@
                             @endif
                         </div>
                     </div>
-
+                    <input type="hidden" value="{{ (auth()->user()->id ? auth()->user()->id : '') }}" id="userId">
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
                             <a href="property/realestate" class="category">
@@ -118,7 +118,7 @@
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
-            <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
+            {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
         </div>
     </main>
     <script type="text/javascript">
@@ -160,6 +160,37 @@
                 })
             });
         });
+
+      $(document).ready(function (e) {
+            $('.ad_clicked').on('click', function (e) {
+             //  e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+              
+            
+                var url = 'banner/ad/click';
+               var banner_id = $(this).attr("data-banner-id");
+               var user_id = $('#userId').val();
+               
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {banner_id: banner_id,user_id: user_id },
+                    success: function (response) {
+                       console.log(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            });
+        });
+
+
 
     </script>
 @endsection
