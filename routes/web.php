@@ -38,6 +38,40 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
 //--
 
+//Banner ads mangment
+Route::get('/admin/ads', 'Admin\ads\BannerController@index')->middleware(['role:admin|manager']);
+Route::get('/admin/ads/{id}/edit', 'Admin\ads\BannerController@edit')->middleware(['role:admin|manager']);
+Route::patch('/admin/ads/{id}/', 'Admin\ads\BannerController@update')->middleware(['role:admin|manager']);
+Route::delete('/admin/ads/{id}/', 'Admin\ads\BannerController@destroy')->middleware(['role:admin|manager']);
+Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
+Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
+
+Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+
+//Banner Group   /admin/banner-group/
+
+// Route::resource('bannerGroup', 'Admin\ads\BannerGroupController');
+
+Route::get('/admin/banner-group/create', 'Admin\ads\BannerGroupController@create')->middleware(['role:admin|manager']);
+Route::post('/admin/banner-group/store', 'Admin\ads\BannerGroupController@store')
+->middleware(['role:admin|manager'])->name('banner-group-new');
+Route::get('/admin/banner-group/index', 'Admin\ads\BannerGroupController@index')->middleware(['role:admin|manager']);
+Route::delete('/admin/banner-group/{id}', 'Admin\ads\BannerGroupController@destroy')->middleware(['role:admin|manager']);
+Route::get('/admin/banner-group/{id}/edit', 'Admin\ads\BannerGroupController@edit')->middleware(['role:admin|manager']);
+Route::patch('/admin/banner-group/{id}', 'Admin\ads\BannerGroupController@update')->middleware(['role:admin|manager']);
+
+
+
+
+//language switch
+Route::get('my-business/cv/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+
+
+
+
 //    common routes for all users
 Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
@@ -250,4 +284,22 @@ Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commerc
 Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
+
+//chat
+Route::get('/messages', 'PropertyController@messages');
+Route::get('/message/{id}', 'PropertyController@getMessage');
+Route::post('message', 'PropertyController@sendMessage');
+
+
+//notifications
+Route::post('notifications/all', 'NotificationController@getAllNotifications');
+
+Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+
+Route::get('test', function () {
+    event(new App\Events\PropertyForRent('Guest'));
+    return "Event has been sent!";
+});
+
+
 

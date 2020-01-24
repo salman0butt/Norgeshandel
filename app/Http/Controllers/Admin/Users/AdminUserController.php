@@ -151,7 +151,7 @@ class AdminUserController extends Controller
             common::update_media($file, $id, 'App\User');
         }
 
-        $request->session()->flash('success', 'Profile has been updated successfully');
+        $request->session()->flash('success', 'Profilen din har blitt oppdatert');
         return redirect()->back();
     }
 

@@ -548,7 +548,7 @@
                                     </select>
                                 </div>
                                 <p class="mr-3">
-                                    <button class="btn bg-white color-maroon" data-toggle="collapse"
+                                    <button type="button" class="btn bg-white color-maroon" data-toggle="collapse"
                                             data-target="#view_profile"
                                             onclick="javascript:$('#edit_profile').removeClass('show');">Avbyrt
                                     </button>

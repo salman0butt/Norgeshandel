@@ -27,6 +27,12 @@ use App\CommercialPropertyForRent;
 use App\BusinessForSale;
 use App\CommercialPlot;
 use Mapper;
+use App\User;
+use App\Message;
+use Pusher\Pusher;
+use App\Events\PropertyForRent as PropertyForRentEvent;
+use App\Http\Controllers\NotificationController;
+
 
 class PropertyController extends Controller
 {
@@ -681,6 +687,14 @@ class PropertyController extends Controller
             common::update_media($file, $response->id , 'App\PropertyForRent', 'propert_for_rent');
 
         }
+
+        //Notification data
+        $notifiable_id = $response -> id;
+        $notification_obj = new NotificationController();
+        $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForRent','property have been added');
+        
+        //trigger event
+        event(new PropertyForRentEvent($notifiable_id));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -1549,5 +1563,66 @@ class PropertyController extends Controller
         
     }
 
+    public function messages(Request $request)
+    {   
+        //select all users except logged in user
+        //$users = User::where('id', '!=', Auth::id())->get();
+
+        $users = DB::select("select users.id, users.username, users.email, count(is_read) as unread 
+        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
+        where users.id != " . Auth::id() . " 
+        group by users.id, users.username, users.email");
+
+        return view('user-panel.chat.messages',['users' => $users]);
+    }
+
+    public function getMessage($user_id)
+    {
+        $my_id = Auth::id();
+
+        // Make read all unread message
+        Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
+
+        // Get all message from selected user
+        $messages = Message::where(function ($query) use ($user_id, $my_id) {
+            $query->where('from', $user_id)->where('to', $my_id);
+        })->oRwhere(function ($query) use ($user_id, $my_id) {
+            $query->where('from', $my_id)->where('to', $user_id);
+        })->get();
+
+        return view('common.partials.messages.index', ['messages' => $messages]);
+    }
+
+
+    public function sendMessage(Request $request)
+    {
+        $from = Auth::id();
+        $to = $request->receiver_id;
+        $message = $request->message;
+
+        $data = new Message();
+        $data->from = $from;
+        $data->to = $to;
+        $data->message = $message;
+        $data->is_read = 0; // message will be unread when sending message
+        $data->save();
+
+        // pusher
+        $options = array(
+            'cluster' => 'ap2',
+            'useTLS' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $data = ['from' => $from, 'to' => $to]; // sending from and to user id when pressed enter
+        $pusher->trigger('my-channel', 'my-event', $data);
+
+    }
 
 }

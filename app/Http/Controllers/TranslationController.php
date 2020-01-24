@@ -23,6 +23,7 @@ class TranslationController extends Controller
             'auth\verified.blade.php',
             'auth\verify.blade.php',
             'layouts\app.blade.php',
+            'user-panel\my-business\cv\cv.blade.php',
         ];
         $this->content = '';
     }

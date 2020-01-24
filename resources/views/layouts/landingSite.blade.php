@@ -26,6 +26,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        #collapsibleNavbar > ul > li:nth-child(1) > a > span
+        {
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+                list-style: none;
+                box-sizing: border-box;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: 1em;
+                color: #fff;
+                text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+                font-weight: 600;
+                top: 10px;
+                font-size: 10px;
+                padding: 0 2px;
+                line-height: 12px;
+                position: absolute;
+                display: block;
+                background: red;
+                padding:1px;
+                padding-left: 2px;
+                padding-right: 2px;
+        }
+    </style>
 
 </head>
 <body>
@@ -151,8 +177,11 @@
 
     $(document).ready(function () {
         @if(Auth::check())
-        getLists();
+            getLists();
         @endif
+
+      
+
 
         $(document).on('blur', 'input[type=url]', function () {
             var string = $(this).val();
@@ -266,6 +295,8 @@
         </div>
     </div>
 </footer>
+<script src="https://js.pusher.com/3.1/pusher.min.js"></script>
+<script src="{{asset('public/js/app.js')}}"></script>
 <script src="{{asset('public/mediexpert.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
@@ -277,5 +308,22 @@
 <script src="{{asset('public/js/validater.js')}}"></script>
 <script src="{{asset('public/js/additional-methods.min.js')}}"></script>
 <script src="{{asset('public/js/messages_no.min.js')}}"></script>
+<script>
+    $(document).ready(function(){
+        @if(Auth::check())
+            var url = '{{url("notifications/all")}}'; 
+            getNotifications(url);
+        @endif
+
+        $(document).on('click',"#move_to_notifications",function(){
+
+            var ids = {};
+            window.location.href = '{{url("show/notifications/all")}}'; 
+            console.log($.param(ids));
+
+        });
+
+    });
+</script>
 </body>
 </html>
