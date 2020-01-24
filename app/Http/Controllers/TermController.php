@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\common;
 use App\Term;
+use Illuminate\Support\Arr;
 use App\Taxonomy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -10,37 +12,49 @@ use Illuminate\Support\Str;
 
 class TermController extends Controller
 {
+//    do not remove these commented arrays
+//    private $country = array( "Norge", array( "Akershus", array( "Asker", "Aurskog-Høland", "Bærum", "Eidsvoll", "Enebakk", "Fet", "Frogn - Drøbak", "Gjerdrum", "Hole", "Lørenskog", "Nannestad", "Nesodden", "Nes (Akershus)", "Nittedal", "Oppegård", "Rælingen", "Skedsmo", "Ski", "Sørum", "Ullensaker", "Vestby - Son", "Ås", ), "Aust-Agder", array( "Arendal", "Birkenes", "Bykle", "Evje og Hornnes", "Froland", "Grimstad", "Lillesand", "Risør", "Tvedestrand", "Valle", "Åmli", ), "Buskerud", array( "Bærum", "Drammen", "Flesberg", "Flå", "Gol", "Hemsedal", "Hol", "Hole", "Hurum", "Kongsberg", "Krødsherad", "Lier", "Modum", "Nedre Eiker", "Nes (Buskerud)", "Nore og Uvdal", "Ringerike", "Røyken", "Øvre Eiker", "Ål i Hallingdal", ), "Finnmark", array( "Alta", "Berlevåg", "Hammerfest", "Måsøy", "Nesseby", "Porsanger", "Sør-Varanger", "Vadsø", ), "Hedmark", array( "Alvdal", "Elverum", "Grue", "Hamar", "Kongsvinger", "Løten", "Ringsaker", "Stange", "Stor-Elvdal", "Sør-Odal", "Tolga", "Trysil", "Tynset", "Våler (Hedmark)", "Åmot", ), "Hordaland", array( "Askøy", "Austevoll", "Bergen", "Bømlo", "Etne", "Fjell", "Fusa", "Jondal", "Kvam", "Kvinnherad", "Lindås", "Meland", "Odda", "Osterøy", "Os (Hordaland)", "Radøy", "Samnanger", "Stord", "Tysnes", "Ullensvang", "Ulvik", "Vaksdal", "Voss", "Øygarden", ), "Møre og Romsdal", array( "Aukra", "Aure", "Fræna", "Giske", "Haram", "Hareid", "Herøy (M.R.)", "Kristiansund", "Molde", "Skodje", "Stranda", "Sula", "Sunndal", "Sykkylven", "Ulstein", "Vestnes", "Volda", "Ørsta", "Ålesund", ), "Nordland", array( "Alstahaug", "Andøy", "Bindal", "Bodø", "Brønnøy", "Evenes", "Fauske", "Flakstad", "Hadsel", "Hamarøy", "Lurøy", "Meløy", "Narvik", "Rana", "Saltdal", "Sortland", "Steigen", "Tysfjord", "Vefsn", "Vestvågøy", "Vågan", ), "Oppland", array( "Gausdal", "Gjøvik", "Gran", "Jevnaker", "Lillehammer", "Lunner", "Nord-Aurdal", "Nord-Fron", "Ringebu", "Sel", "Skjåk", "Søndre Land", "Vestre Toten", "Vågå", "Østre Toten", "Øyer", "Øystre Slidre", ), "Oslo", array( "Bjerke", "Bygdøy - Frogner", "Bøler", "Ekeberg - Bekkelaget", "Furuset", "Gamle Oslo", "Grefsen - Kjelsås", "Grorud", "Grünerløkka - Sofienberg", "Hellerud", "Helsfyr - Sinsen", "Lambertseter", "Manglerud", "Nordstrand", "Romsås", "Røa", "Sagene - Torshov", "Sentrum", "Sogn", "Stovner", "St.Hanshaugen - Ullevål", "Søndre Nordstrand", "Ullern", "Uranienborg - Majorstuen", "Vinderen", "Østensjø", ), "Rogaland", array( "Bjerkreim", "Eigersund", "Finnøy", "Gjesdal", "Haugesund", "Hå", "Karmøy", "Klepp", "Randaberg", "Rennesøy", "Sandnes", "Sola", "Stavanger", "Strand", "Suldal", "Time", "Tysvær", "Vindafjord", ), "Sogn og Fjordane", array( "Aurland", "Bremanger", "Eid", "Fjaler", "Flora", "Førde", "Gloppen", "Hyllestad", "Høyanger", "Jølster", "Leikanger", "Sogndal", "Vik", "Vågsøy", "Årdal", ), "Svalbard", "Telemark", array( "Bamble", "Bø (Telemark)", "Hjartdal", "Kragerø", "Kviteseid", "Nissedal", "Nome", "Notodden", "Porsgrunn", "Seljord", "Siljan", "Skien", "Tinn", ), "Troms", array( "Balsfjord", "Bardu", "Harstad", "Ibestad", "Kvæfjord", "Kåfjord", "Lenvik", "Målselv", "Nordreisa", "Tromsø", ), "Trøndelag", array( "Flatanger", "Frosta", "Grong", "Hemne", "Hitra", "Indre Fosen", "Klæbu", "Levanger", "Malvik", "Meldal", "Melhus", "Midtre Gauldal", "Namsos", "Nærøy", "Oppdal", "Orkdal", "Overhalla", "Rennebu", "Røros", "Selbu", "Skaun", "Snåsa", "Steinkjer", "Stjørdal", "Trondheim", "Verdal", "Vikna", "Ørland", "Åfjord", ), "Vestfold", array( "Færder", "Holmestrand", "Horten", "Larvik", "Re", "Sandefjord", "Sande (Vestfold)", "Svelvik", "Tønsberg", ), "Vest-Agder", array( "Farsund", "Flekkefjord", "Kristiansand", "Lindesnes", "Lyngdal", "Mandal", "Marnardal", "Songdalen", "Søgne", "Vennesla", ), "Østfold", array( "Askim", "Eidsberg", "Fredrikstad", "Halden", "Hobøl", "Moss", "Rakkestad", "Rygge", "Råde", "Sarpsborg", "Skiptvet", "Spydeberg", "Våler (Østfold)", ), ), "Utlandet", );
+//    private $sector = array( "Franchise/Selvstendig næringsdrivende", "Offentlig", "Organisasjoner","Privat","Samvirke");
+//    private $commitment_type = array("Engasjement","Fast","Prosjekt","Lærling","Selvstendig næringsdrivende","Sommer/Sesong","Trainee","Vikariat");
+//    private $leadership_category = array("Direktør","Fagleder","Leder");
+//    private $industry = array( "Bank, finans og forsikring", "Bil, kjøretøy og verksted", "Butikk og varehandel", "Bygg og anlegg", "Helse og omsorg", "Håndverkstjenester", "Industri og produksjon", "IT", "IT - programvare", "Konsulent og rådgivning", "Offentlig administrasjon", "Olje og gass", "Transport og logistikk", "Økonomi og regnskap", "Annet", );
+//    private $job_function = array("Butikkansatt", "Helsepersonell", array("Alternativ medisin", "Bioingeniør", "Ergoterapeut", "Ernæringsfysiolog", "Farmasøyt", "Fysioterapeut", "Helsefagarbeider/hjelpepleier", "Helsesekretær", "Kiropraktor", "Optiker", "Psykolog", "Radiograf", "Tannhelse", "Vernepleier/miljøterapeut",), "Håndverker", array("Andre montører", "Asfaltarbeid", "Betongarbeider", "Blikkenslager/tak", "Bygg/Anleggsleder", "Elektriker", "Elektronikkmontør", "Forskalingssnekker", "Grunnarbeid", "Hjelpearbeider", "Maler/Tapeserer", "Mekaniker", "Murer/Flislegger", "Murmester", "Rørlegger", "Snekker/Tømrer", "Stillasmontør", "Sveiser", "Ventilasjonstekniker",), "Ingeniør", array("Akustikk", "Asfaltingeniør", "Automasjon og instrument", "Boreteknikk/drilling", "Brannsikkerhet", "Bygge- og anleggsteknikk", "Bygningsfysikk", "Elektronikk", "Geomatikk", "Geoteknikk og ingeniørgeologi", "HVAC", "Kjemiingeniør", "Kybernetikk", "Marinteknikk / Naval architecture", "Materialteknologi", "Mekanisk", "Oppmåling og kartlegging", "Rør/struktur", "Samferdselsteknikk og arealplanlegging", "Strukturingeniør", "Subsea", "Taksering", "Teknisk sikkerhet/QHSE", "Vann- og miljøteknikk", "VAR-teknikk", "Vassdrag", "VVS- og klimateknikk",), "IT utvikling", array("Database", "Front-end", "IT-sikkerhet", "QA/Testing", "Systemarkitekt", "Utvikler (generell)",), "Konsulent", "Kontor og administrasjon", array("Kontorarbeid", "Personlig assistent", "Resepsjon", "Sekretær", "Sentralbord",), "Kundeservice", "Ledelse", "Mekanikk og installasjon", "Prosjektledelse", "Rådgivning", "Salg", array("Løsningssalg", "Produktsalg", "Stands- og dørsalg", "Teknisk salg", "Telefonsalg",), "Økonomi og regnskap", array("Controller", "Lønn", "Regnskap", "Revisjon", "Samfunnsøkonomi", "Økonomistyring og budsjettering",), "Annet",);
+//        private $deadline = array("Siste frist","Under en uke", "Under tre døgn");
+
+//    private $job_function
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    private function insert_term_array($arr, $taxonomy, $parent = 0){
+        $Parent = $parent;
+        foreach ($arr as $value) {
+            if (!is_array($value)) {
+                $term = new Term(['name' => $value, 'slug' => Str::slug($value),
+                    'taxonomy_id'=>$taxonomy,'parent' => $parent]);
+                $term->save();
+                $Parent = $term->id;
+            } else {
+                $this->insert_term_array($value, $taxonomy, $Parent);
+            }
+        }
+    }
+
     public function index()
     {
-//        $taxonomy = Taxonomy::where('slug', 'job-function')->first();
-//        $job_functions = array('Architect', 'Librarian', 'Art Director', 'Child care', 'Biologist', 'FIREPROTECTION', 'SUPPORT', 'CASHIER', 'STORE_MANAGER', 'DESIGN', 'DOCUMENTATION', 'MAINTENANCE', 'NEGOTIATOR', 'BUSINESS DEVELOPMENT', 'FELLOW', 'PHOTO', 'FRANCHISE', 'POLY', 'BARBER', 'HEALTH', 'ACCOMMODATION', 'HR', 'SKIN_CARE', 'HANDYMAN', 'ENGINEER', 'PURCHASING', 'ITSUPP', 'ITDEVELOP', 'JOURNALIST', 'LAW', 'CONSULTANT', 'OFFICE', 'COORDINATION', 'CUSTOMER_SERVICE', 'COURSES', 'QA', 'MANAGEMENT', 'DOCTOR', 'WAREHOUSING', 'MARKETER', 'OPERATOR', 'WAITER', 'BROKER', 'MECHANIC', 'CHURCH_WORK', 'MILITARY', 'SOCIAL_WORKER', 'FLIGHTCREW', 'PLANNING', 'POLICE', 'PR', 'PRIEST', 'PRODUCTION', 'PRODUCT_MANAGEMENT', 'PROJECT', 'CLEANING', 'AUDIT', 'COUNSELLING', 'CASE OFFICER', 'SALES', 'SECURITY', 'SHIPPING', 'SOCIONOM', 'NURSE', 'TECHSTAFF', '', '', '', '', '', '', '', '');
-//        $job_functions = array('Arkitekt og planleggin', 'Arkivar og biblioteka', 'Art director', 'Barnehage', 'Barnevernspedago', 'Biolog', 'Brannver', 'Brukerstøtte/support', 'Butikkansat', 'Butikksjef', 'Design', 'Dokumentasjon', 'Driftsoperatør/vaktmeste', 'Forhandling', 'Forretningsutvikling og strateg', 'Forskning/Stipendiat', 'Foto, lyd og ly', 'Franchise', 'Frisø', 'Geologi/Fysikk/Kjemi', 'Helsepersonell', 'HM', 'HR, personal og rekrutterin', 'Hudpleie', 'Håndverker', 'Ingeniør', 'Innkjøp/forhandlin', 'IT drift og vedlikehold', 'IT utvikling', 'Journalist', 'Jurist', 'Konsulen', 'Kontor og administrasjon', 'Koordinering', 'Kundeservic', 'Kurs og opplæring', 'Kvalitetssikrin', 'Ledelse', 'Lege', 'Logistikk og lage', 'Markedsfører', 'Maskinfører og', 'Mat og servering', 'Megle', 'Mekanikk og installasjon', 'Menighetsarbei', 'Militært personell', 'Omsorg og sosialt arbei', 'Pilot og flypersonell', 'Planlegge', 'Politi', 'PR og informasjo', 'Prest', 'Produksjon', 'Produktledels', 'Prosjektledelse', 'Renhol', 'Revisjon og kontroll', 'Rådgivnin', 'Saksbehandler', 'Sal', 'Salgsledels', 'Samfunnsviter', 'Sikkerhe', 'Sjøfart', 'Sosiono', 'Sykepleier', 'Teknisk personell', 'Teknisk servic', 'Teknisk tegner', 'Tekstforfatte', 'Tolk/oversetter', 'Transport og sjåfø', 'Trener / Personlig trener', 'Undervisning og pedagogik', 'Utøvende kuns', 'Vakt og sikkerhet', 'Veterinær og dyrepleie', 'Økonomi og regnskap', 'Anne');
-//        $parent = Term::where('slug', str::slug('Økonomi og regnskap'))->first();
-//        foreach ($job_functions as $job_function){
-//            $term = new Term([
-//                'name'=>$job_function,
-//                'slug'=>str::slug($job_function),
-//                'parent'=>$parent->id
-//            ]);
-//            $taxonomy->terms()->save($term);
-//        }
-//
+//        $this->insert_term_array($this->industry, 1, 0);
+//        $this->insert_term_array($this->job_function, 2, 0);
+//        $this->insert_term_array($this->sector, 3, 0);
+//        $this->insert_term_array($this->commitment_type, 4, 0);
+//        $this->insert_term_array($this->leadership_category, 5, 0);
+//        $this->insert_term_array($this->deadline, 6, 0);
+//        $this->insert_term_array($this->country, 7, 0);
 
-
-
-
-//        $taxonomy = Taxonomy::where('slug', 'industry')->first();
-//        $industries = array('Arbeidstaker- og arbeidsgiverorganisasjone', 'Arkitektur, areal og interiø', 'Arkiv og bibliotek', 'Bank, finans og forsikrin', 'Barn, skole og undervisnin', 'Bil, kjøretøy og verksted', 'Bil- og bildelproduksjo', 'Butikk og varehande', 'Bygg og anlegg', 'Drift og vedlikeholdstjeneste', 'Dyr og dyrehels', 'Eiendom', 'Elektronik', 'Event og arrangemente', 'Farmasi og legemiddel', 'Fiskeri og oppdret', 'Forlag og trykker', 'Forskning, utdanning og vitenskap', 'Forsvar og militæ', 'Grossisthandel import/ekspor', 'Helse og omsorg', 'Hotell og overnattin', 'HR, organisasjonsutvikling og rekrutterin', 'Håndverkstjenester', 'Ideelle organisasjone', 'Idrett og trenin', 'Industri og produksjon', 'Internettbaserte tjeneste', 'IT - maskinvare', 'IT - programvar', 'Jordbruk og skogbru', 'Juridiske tjenester', 'Kirke og menighe', 'Kjemisk industr', 'Konsulent og rådgivning', 'Kraft og energ', 'Kunst og kultu', 'Luftfart', 'Maritim og offshor', 'Markedsanalys', 'Markedsføring og annonsering', 'Matvareproduksjon og -industr', 'Medie- og innholdsproduksjo', 'Medisinsk utstyr og rekvisita', 'Metaller og minerale', 'Miljøtjeneste', 'Museer, gallerier og kulturminne', 'Musik', 'Offentlig administrasjo', 'Olje og gass', 'Organisasjone', 'Politi og sikkerhe', 'PR, informasjon og kommunikasjon', 'Reise og turism', 'Renovasjon og renhol', 'Restaurant, mat og uteliv', 'Shippin', 'Storhusholdning og caterin', 'Tekstil', 'Telekommunikasjo', 'Transport og logistik', 'Trevareindustri', 'Underholdnin', 'Velvær', 'Verksindustri', 'Økonomi og regnska', 'Annet');
-//
-//        foreach ($industries as $industry){
-//            $term = new Term(['name'=>$industry, 'slug'=>str::slug($industry)]);
-//            $taxonomy->terms()->save($term);
-//        }
+        $terms = Term::orderBy('id', 'desc')->get();
+        $taxonomies = Taxonomy::orderBy('id', 'desc')->get();
+        return view('admin.categories.terms', compact('taxonomies', 'terms'));
     }
 
     /**
@@ -61,7 +75,7 @@ class TermController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        $term = new Term(['name'=>$request->name,'slug'=>Str::slug($request->name)])
     }
 
     /**

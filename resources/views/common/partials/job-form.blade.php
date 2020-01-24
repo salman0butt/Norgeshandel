@@ -6,8 +6,10 @@
     $countries = countries();
     $industry = \App\Taxonomy::where('slug', 'industry')->first();
     $industries = $industry->terms;
-    $job_function = \App\Taxonomy::where('slug', 'job-function')->first();
+    $job_function = \App\Taxonomy::where('slug', 'job_function')->first();
     $job_functions = $job_function->terms;
+    $sector = \App\Taxonomy::where('slug', 'sector')->first();
+    $sectors = $sector->terms;
     //    $arr = ["id" => null,"name" => null,"title" => null,"job_type" => null,"slug" => null,"positions" => null,"commitment_type" => null,"sector" => null,"keywords" => null,"description" => null,"deadline" => null,"accession" => null,"emp_name" => null,"emp_company_information" => null,"emp_website" => null,"emp_facebook" => null,"emp_linkedin" => null,"emp_twitter" => null,"country" => null,"zip" => null,"address" => null,"workplace_video" => null,"app_receive_by" => null,"app_link_to_receive" => null,"app_email_to_receive" => null,"app_contact" => null,"app_contact_title" => null,"app_mobile" => null,"app_phone" => null,"app_email" => null,"app_linkedin" => null,"app_twitter" => null,"ad_id" => null,"user_id" => null,"created_at" => null,"updated_at" => null]
     $obj_job = new \App\Admin\Jobs\Job();
     ?>
@@ -95,14 +97,9 @@
                                 <div class="col-sm-4 ">
                                     <select id="sector" name="sector" class="form-control dme-form-control"
                                             data-selector="" required>
-                                        <option value="{{$obj_job->sector}}">{{$obj_job->sector}}</option>
-                                        <option value="Franchise/Selvstendig næringsdrivende">Franchise/Selvstendig
-                                            næringsdrivende
-                                        </option>
-                                        <option value="Offentlig">Offentlig</option>
-                                        <option value="Organisasjoner">Organisasjoner</option>
-                                        <option value="Privat">Privat</option>
-                                        <option value="Samvirke">Samvirke</option>
+                                        @foreach($sectors as $sect)
+                                            <option value="{{$sect->name}}" {{$sect->name==$obj_job->sector?"selected":""}}>{{$sect->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -116,7 +113,7 @@
                                             class="form-control dme-form-control" data-max-selections="3" required>
                                         <option value="{{$ind}}">{{$ind}}</option>
                                         @foreach($industries as $industry)
-                                            <option value="{{$industry->id}}">{{$industry->name}}</option>
+                                            <option value="{{$industry->name}}">{{$industry->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -126,7 +123,7 @@
                                             class="form-control dme-form-control" data-max-selections="3" required>
                                         <option value="{{$job_fun}}">{{$job_fun}}</option>
                                         @foreach($job_functions as $job_function)
-                                            <option value="{{$job_function->id}}">{{$job_function->name}}</option>
+                                            <option value="{{$job_function->name}}">{{$job_function->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
