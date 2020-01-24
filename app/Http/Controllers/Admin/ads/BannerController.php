@@ -156,4 +156,9 @@ class BannerController extends Controller
         return redirect()->back()->with('danger','Ad Deleted Successfully');
 
     }
+
+
+
+
+
 }

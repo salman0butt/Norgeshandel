@@ -32,6 +32,7 @@
                             <th scope="col">Description</th>
                             <th scope="col">Link</th>
                             <th scope="col">Banner Group</th>
+                            <th scope="col">Clicks</th>
                             <th scope="col">Time Type</th>
                             <th scope="col">Time Duration</th>
                             <th scope="col">Status</th>
@@ -58,6 +59,7 @@
                                     @endforeach
                                     </ul>
                                   </td>
+                                  <td>{{ count($banner->clicks) }}</td>
                                   <td>{{ $banner->display_time_type }}</td>
                                  <td>{{ $banner->display_time_duration }}</td>
                                   <td>{{ ($banner->is_active ==1 ? 'Active':'Inactive') }}</td>

@@ -76,7 +76,7 @@
                             @endif
                         </div>
                     </div>
-
+                    <input type="hidden" value="{{ (auth()->user()->id ? auth()->user()->id : '') }}" id="userId">
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
                             <a href="property/realestate" class="category">
@@ -160,6 +160,37 @@
                 })
             });
         });
+
+      $(document).ready(function (e) {
+            $('.ad_clicked').on('click', function (e) {
+             //  e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+              
+            
+                var url = 'banner/ad/click';
+               var banner_id = $(this).attr("data-banner-id");
+               var user_id = $('#userId').val();
+               
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {banner_id: banner_id,user_id: user_id },
+                    success: function (response) {
+                       console.log(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            });
+        });
+
+
 
     </script>
 @endsection
