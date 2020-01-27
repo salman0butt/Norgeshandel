@@ -19,8 +19,8 @@ class CreateBannerGroupsTable extends Migration
             $table->string('location');
             $table->string('post_category');
             $table->string('page_url')->nullable();
-            $table->string('time_start')->nullable();
-            $table->string('time_end')->nullable();
+            $table->timestamp('time_start')->nullable();
+            $table->timestamp('time_end')->nullable();
             $table->timestamps();
         });
     }

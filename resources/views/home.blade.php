@@ -8,11 +8,32 @@
     </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
-             {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
+        <div id="slideshow">
+                {{-- {{(\App\Helpers\common::display_ad('left') ? \App\Helpers\common::display_ad('left') : '')}} --}}
+  
+        </div>
+              
         </div>
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
-            {{(\App\Helpers\common::display_ad('top')) ? \App\Helpers\common::display_ad('top') : ''}} 
+      
+
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+  {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}} 
+    </div>
+</div>
+</div>
+
+
+          
+
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">
@@ -76,7 +97,7 @@
                             @endif
                         </div>
                     </div>
-                    <input type="hidden" value="{{ (auth()->user()->id ? auth()->user()->id : '') }}" id="userId">
+                    <input type="hidden" value="{{ (isset(auth()->user()->id) ? auth()->user()->id : '') }}" id="userId">
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
                             <a href="property/realestate" class="category">
@@ -118,7 +139,9 @@
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
-            {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
+         <div id="slideshow">
+            {{-- {{(\App\Helpers\common::display_ad('right') ? \App\Helpers\common::display_ad('right') : '')}}  --}}
+        </div>
         </div>
     </main>
     <script type="text/javascript">
@@ -130,6 +153,16 @@
 
     <script>
         $(document).ready(function (e) {
+               function delay(callback, ms) {
+                var timer = 0;
+                return function() {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                    callback.apply(context, args);
+                    }, ms || 0);
+                };
+            }
             $('#search').on('blur', function (e) {
                 $('#suggestions').css('display', 'none');
             });
@@ -138,8 +171,8 @@
                 $(this).css('display', 'block');
             });
 
-
-            $('#search').on('keyup keydown', function (e) {
+ 
+            $('#search').keyup(delay(function (e) {
                 $('#suggestions').css('display', 'block');
 
                 $.ajaxSetup({
@@ -158,10 +191,26 @@
                         console.log(error);
                     }
                 })
-            });
+            },500));
+         
+
         });
 
       $(document).ready(function (e) {
+
+
+          var x = setTimeout(function() {
+         for(i=0 ;i<3;i++)
+         {
+            //$('.ad_clicked[data-id="'+i+'"]').css('display','none');
+             
+            $('a[data-id="'+i+'"]').css('display','block');
+       //     if(i>0)
+         //   $('a[data-id="'+i-1+'"]').css('display','none');
+
+          }
+            }, 5000);    
+
             $('.ad_clicked').on('click', function (e) {
              //  e.preventDefault();
                 $.ajaxSetup({

@@ -2,12 +2,13 @@
 namespace App\Helpers;
 
 use App\Media;
+use Carbon\Carbon;
 use App\Admin\ads\Banner;
 use Illuminate\Support\Str;
-use App\Admin\Banners\BannerGroup;
 
 require 'vendor/autoload.php';
 
+use App\Admin\Banners\BannerGroup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Session\Session;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -140,19 +141,23 @@ class common
         }
     }
     public static function display_ad($location){
-            $banner_group = BannerGroup::where('location','=',$location)->get()->first();
-        
+        $id = 0;
+        $banner_group = BannerGroup::where('location','=',$location)->get()->first();
+        if (isset($banner_group->banners)) {
+
+                $satrt = Carbon::createFromDate($banner_group->time_start);
+                $end = Carbon::createFromDate($banner_group->time_end);
+                $testdate = $satrt->diff($end);
+                // dump($testdate);
+
             foreach($banner_group->banners as $banner):
                 // dd($banner->display_time_duration);
-                 if ($banner->is_active) {  
-
-                    // if ($banner->display_time_duration > '20') {
-                        echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";     
-                    // }
-                 }
-               
-
+              
+                // echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked  d-block w-100' data-id='".$id."' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media,'300x200'))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";     
+                echo "<img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''>";     
+                $id++;
             endforeach;
+            }
     }
 
 }
