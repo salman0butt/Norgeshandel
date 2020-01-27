@@ -40,7 +40,9 @@
                         <div class="col-md-12">                            
                             
                                 <?php 
-
+                                    $t=time();
+                                    App\Notification::where('id', $value['id'])
+                                    ->update(['read_at' => date("Y-m-d h:m:i",$t)]);
                                     $notification_type = App\Notification::where('notifiable_id',$value['notifiable_id'])->first(['type'])->type;
                                     $notification      = $notification_type::find($value['notifiable_id']);
                                     $name              = $notification->media->first();

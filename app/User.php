@@ -114,4 +114,17 @@ class User extends Authenticatable implements MustVerifyEmail
 //    public function job_followings(){
 //        return $this->hasMany(Following::class)->where('');
 //    }
+
+    public function is($roleName)
+    {
+        foreach ($this->roles()->get() as $role)
+        {
+            if ($role->name == $roleName)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

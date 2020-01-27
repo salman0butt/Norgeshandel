@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Notification;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 
 class NotificationController extends Controller
@@ -28,15 +29,24 @@ class NotificationController extends Controller
 
     public function getAllNotifications(){
         
-        $notifications = Notification::where('read_at','=',null)->get()->toArray();
-        $count = count($notifications);
-        $html = "";
-        foreach($notifications as $key=>$val)
+        if(User::find(Auth::user()->id)->is('admin'))
         {
-            $html .= "<input type='hidden' name='notids[]' value='".$val['notifiable_id']."'>";
+            $notifications = Notification::where('user_id','!=',Auth::user()->id)->where('read_at','=',null)->get()->toArray();
+            $count = count($notifications);
+            $html = "";
+            foreach($notifications as $key=>$val)
+            {
+                $html .= "<input type='hidden' name='notids[]' value='".$val['notifiable_id']."'>";
+            }
+            $data['count'] = $count;
+            $data['html']  = $html;
         }
-        $data['count'] = $count;
-        $data['html']  = $html;
+        else
+        {
+            $data['count'] = "";
+            $data['html']  = "";
+        }
+        
 
         echo json_encode($data);
     }
@@ -44,7 +54,7 @@ class NotificationController extends Controller
 
     public function showAllNotifications(Request $request)
     {
-        $ids = Notification::get(['notifiable_id'])->toArray();
+        $ids = Notification::where('user_id','!=',Auth::user()->id)->get(['notifiable_id','id'])->toArray();
         return view('common.partials.notifications.all_notifications', ['ids' => $ids]);
 
     }

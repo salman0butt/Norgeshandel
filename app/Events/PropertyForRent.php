@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyForRent implements ShouldBroadcast
 {
@@ -20,11 +21,13 @@ class PropertyForRent implements ShouldBroadcast
      * @return void
      */
     public $notification_id = "";
+    public $user_id = "";
 
     public function __construct($notification_id)
     {
         //
         $this->notification_id = $notification_id;
+        $this->user_id = Auth::user()->id;
     }
 
     /**
