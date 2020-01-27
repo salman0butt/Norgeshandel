@@ -289,82 +289,9 @@ class JobController extends Controller
      * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request)
+    public function search()
     {
-//        $filters = $request->except('page', 'view', 'search');
-        $view = "grid";
-
-        $view = 'grid';
-        $filters = '';
-        $query = DB::table('ads')
-            ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
-            ->where('ads.status', '=', 'published');
-
-//        if (isset($request->search) && !empty($request->search)){
-//            $query = $query->where('jobs.name', 'like', "%".$request->search."%")
-//            ->orWhere('jobs.title', 'like', "%".$request->search."%")
-//            ->orWhere('jobs.job_type', 'like', "%".$request->job_type."%")
-//            ->orWhere('jobs.keywords', 'like', "%".$request->keywords."%")
-//            ;
-//        }
-        if (isset($request->job_function)) {
-            $query = $query->whereIn('jobs.job_function', $request->job_function);
-        }
-        if (isset($request->industry)) {
-            $query = $query->whereIn('jobs.industry', $request->industry);
-        }
-        if (isset($request->country)) {
-            $query = $query->whereIn('jobs.country', $request->country);
-        }
-        if (isset($request->commitment_type)) {
-            $query = $query->whereIn('jobs.commitment_type', $request->commitment_type);
-        }
-        if (isset($request->deadline)) {
-            if (in_array("today", $request->deadline)) {
-                $query = $query->whereNull('jobs.deadline')
-                    ->orWhereDate('jobs.deadline', today());
-            }
-            elseif(in_array("three_days", $request->deadline)) {
-                $query = $query->whereNull('jobs.deadline')
-                    ->orWhereDate('jobs.deadline', '<', today()->addDays(3));
-            }
-            elseif(in_array("this_week", $request->deadline)) {
-                $query = $query->whereNull('jobs.deadline')
-                    ->orWhereDate('jobs.deadline', '<', today()->addDays(7));
-            }
-        }
-//        dd($request->job_type);
-        if (isset($request->job_type)) {
-            $query = $query->whereIn('jobs.job_type', $request->job_type);
-        }
-        if (isset($request->sector)) {
-            $query = $query->whereIn('jobs.sector', $request->sector);
-        }
-        if (isset($request->leadership_category)) {
-            $query = $query->whereIn('jobs.sector', $request->sector);
-        }
-        if(isset($request->created_at)){
-            $query = $query->whereDate('jobs.created_at', today());
-        }
-
-        $jobs = $query->get();
-
-
-//        $jobs = DB::table('jobs')
-//            ->whereIn('ad_id', DB::table('ads')
-//                ->where('status', '=', 'published')
-//                ->where('ad_type', '=', 'job')
-//                ->select('id'))
-//            ->paginate(getenv('PAGINATION'));
-//        if (is_array($filters) && !empty($filters)) {
-//            $jobs = DB::table('jobs')
-//                ->whereIn('ad_id', DB::table('ads')
-//                    ->where('status', '=', 'published')
-//                    ->select('id'))
-//                ->where($filters)
-//                ->paginate(getenv('PAGINATION'));
-//        }
-        return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs', 'view'));
+        return response()->view('user-panel.jobs.jobs_filter_page');
     }
 
     public function mega_menu_search(Request $request)
@@ -375,13 +302,16 @@ class JobController extends Controller
             ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
             ->where('ads.status', '=', 'published');
 
-//        if (isset($request->search) && !empty($request->search)){
-//            $query = $query->where('jobs.name', 'like', "%".$request->search."%")
-//            ->orWhere('jobs.title', 'like', "%".$request->search."%")
-//            ->orWhere('jobs.job_type', 'like', "%".$request->job_type."%")
-//            ->orWhere('jobs.keywords', 'like', "%".$request->keywords."%")
-//            ;
-//        }
+        if (isset($request->search) && !empty($request->search)){
+            $query->where(function ($query) use ($request){
+                $query->where('jobs.name', 'like', "%".$request->search."%");
+                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
+                $query->orWhere('jobs.job_type', 'like', "%".$request->search."%");
+                $query->orWhere('jobs.keywords', 'like', "%".$request->search."%");
+            });
+        }
+
+//        dd($query);
         if (isset($request->job_function)) {
             $query = $query->whereIn('jobs.job_function', $request->job_function);
         }

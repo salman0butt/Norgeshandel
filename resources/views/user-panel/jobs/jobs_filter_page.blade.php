@@ -1,37 +1,39 @@
 @extends('layouts.landingSite')
 @section('page_content')
     <main class="dme-wrapper" id="dme-wrapper">
-        @include('user-panel.jobs.jobs_filter_page_inner')
+{{--        @include('user-panel.jobs.jobs_filter_page_inner')--}}
     </main>
     <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
     <script>
+        function search(data){
+            var urlParams = new URLSearchParams(location.search);
+            var view = urlParams.get('view');
+            var url = $('#mega_menu_search_url').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                data:data,
+                url: url,
+                type: "GET",
+                success: function (response) {
+                    $('#dme-wrapper').html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
         $(document).ready(function () {
             var urlParams = new URLSearchParams(location.search);
-
+            search(urlParams.toString());
             $('.mega-menu input').change(function (e) {
-                var newUrl = "?"+$('#mega_menu_form').serialize();
-                // newUrl+="&view="+urlParams.get("view");
-
-                history.pushState('data', 'NorgesHandel', newUrl);
-                var view = urlParams.get('view');
-                var url = $('#mega_menu_search_url').val();
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    data:$('#mega_menu_form').serialize(),
-                    url: url,
-                    type: "GET",
-                    success: function (response) {
-                        $('#dme-wrapper').html(response);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
+                var newUrl = $('#mega_menu_form').serialize();
+                search(newUrl);
+                history.pushState('data', 'NorgesHandel', "?"+newUrl);
             });
 
             $.ajaxSetup({
