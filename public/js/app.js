@@ -58978,11 +58978,11 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   forceTLS: true
 });
 var channel = window.Echo.channel('property-for-rent');
-var html = "";
 channel.listen('.property-for-rent', function (data) {
   var user_id = data.user_id;
 
   if ($("#user_id_notfy").val() != user_id && $("#user_role_admin").val() == 1) {
+    var html = "";
     html += "<input type='hidden' name='notids[]' value='" + data.notification_id + "'>";
     $("#notifications").append(html);
     var notification_count = $(":input[name='notids[]']").length;

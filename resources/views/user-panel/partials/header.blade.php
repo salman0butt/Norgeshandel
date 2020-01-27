@@ -6,7 +6,7 @@
                 <span class="navbar-toggler-icon fa fa-bars pt-2"></span>
             </button>
             <input type="hidden" value="@if(Auth::check()){{Auth::user()->id}}@endif" id="user_id_notfy">
-            <input type="hidden" value="{{App\User::find(Auth::user()->id)->is('admin')}}" id="user_role_admin">
+            <input type="hidden" value="@if(Auth::check()){{App\User::find(Auth::user()->id)->is('admin')}}@endif" id="user_role_admin">
             @if(Auth::check())
             <div id="notifications">
             </div>

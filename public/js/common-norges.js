@@ -36,12 +36,13 @@ function getNotifications(url)
         }).done(function(data){
             if(data.count > 0)
             {
+                // $("#notification_count_pro").show();
                 $("#notification_count_pro").html(data.count);
                 $("#notifications").html(data.html);
             }
             else
             {
-                $("#notification_count_pro").hide();
+                // $("#notification_count_pro").hide();
             }
           
         }).fail(function(jqXHR, ajaxOptions, thrownError){
