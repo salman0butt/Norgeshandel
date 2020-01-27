@@ -38,13 +38,30 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
 //--
 
-//Banner ads mangment 
+//Banner ads mangment
 Route::get('/admin/ads', 'Admin\ads\BannerController@index')->middleware(['role:admin|manager']);
 Route::get('/admin/ads/{id}/edit', 'Admin\ads\BannerController@edit')->middleware(['role:admin|manager']);
 Route::patch('/admin/ads/{id}/', 'Admin\ads\BannerController@update')->middleware(['role:admin|manager']);
 Route::delete('/admin/ads/{id}/', 'Admin\ads\BannerController@destroy')->middleware(['role:admin|manager']);
 Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
 Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
+
+Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+
+//Banner Group   /admin/banner-group/
+
+// Route::resource('bannerGroup', 'Admin\ads\BannerGroupController');
+
+Route::get('/admin/banner-group/create', 'Admin\ads\BannerGroupController@create')->middleware(['role:admin|manager']);
+Route::post('/admin/banner-group/store', 'Admin\ads\BannerGroupController@store')
+->middleware(['role:admin|manager'])->name('banner-group-new');
+Route::get('/admin/banner-group/index', 'Admin\ads\BannerGroupController@index')->middleware(['role:admin|manager']);
+Route::delete('/admin/banner-group/{id}', 'Admin\ads\BannerGroupController@destroy')->middleware(['role:admin|manager']);
+Route::get('/admin/banner-group/{id}/edit', 'Admin\ads\BannerGroupController@edit')->middleware(['role:admin|manager']);
+Route::patch('/admin/banner-group/{id}', 'Admin\ads\BannerGroupController@update')->middleware(['role:admin|manager']);
+
+
+
 
 //language switch
 Route::get('my-business/cv/{locale}', function ($locale) {
@@ -60,6 +77,9 @@ Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
 Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
 Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
+Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
+
+
 
 Route::get('shared-lists/{link_id}', function ($link_id) {
     $list = \App\fav_list::where('share_link', $link_id)->get()->first();
@@ -76,6 +96,9 @@ Route::resources([
     'media' => 'MediaController',
     'trans' => 'TranslationController'
 ]);
+Route::get('dummy', function (){
+    return view('user-panel.nav');
+});
 Route::get('single', function () {
     return view('user-panel/jobs/single');
 });
@@ -262,10 +285,11 @@ Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
 
-//chat 
+//chat
 Route::get('/messages', 'PropertyController@messages');
 Route::get('/message/{id}', 'PropertyController@getMessage');
 Route::post('message', 'PropertyController@sendMessage');
+
 
 //notifications
 Route::post('notifications/all', 'NotificationController@getAllNotifications');
@@ -276,7 +300,6 @@ Route::get('test', function () {
     event(new App\Events\PropertyForRent('Guest'));
     return "Event has been sent!";
 });
-
 
 
 

@@ -326,8 +326,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description" id="beskrivelse" cols="30" rows="10"></textarea>
-                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.<a
-                            href="#" target="_blank">Les mer om FINN hjerterom</a></span>
+                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>
         </div>
