@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Helpers\common;
 use Intervention\Image\AbstractDecoder;
+
 //use function Sodium\compare;
 
 class JobController extends Controller
@@ -29,7 +30,7 @@ class JobController extends Controller
 
     public function index()
     {
-        if(request()->route()->getPrefix() == '/admin'){
+        if (request()->route()->getPrefix() == '/admin') {
             $ads = Ad::all();
             return response()->view('admin.jobs.jobs', compact('ads'));
         }
@@ -45,12 +46,11 @@ class JobController extends Controller
     public function create($type = '')
     {
         $view = 'new_';
-        if ($type=='full_time' ||
-            $type=='part_time' ||
-            $type=='management'){
-            return view('admin.jobs.new_'.$type);
-        }
-        else{
+        if ($type == 'full_time' ||
+            $type == 'part_time' ||
+            $type == 'management') {
+            return view('admin.jobs.new_' . $type);
+        } else {
             return view('admin.jobs.jobs_select_category');
         }
     }
@@ -58,18 +58,20 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-                $arr = array(
+        $arr = array(
             'name' => $request->name,
             'title' => $request->title,
-            'job_type'=>$request->job_type,
-                'positions' => $request->positions,
+            'job_type' => $request->job_type,
+            'positions' => $request->positions,
             'commitment_type' => $request->commitment_type,
             'sector' => $request->sector,
+            'job_function' => $request->job_function,
+            'industry' => $request->industry,
             'keywords' => $request->keywords,
             'description' => $request->description,
             'deadline' => $request->deadline,
@@ -94,12 +96,12 @@ class JobController extends Controller
             'app_email' => $request->app_email,
             'app_linkedin' => $request->app_linkedin,
             'app_twitter' => $request->app_twitter,
-            'user_id'=>Auth::user()->id,
+            'user_id' => Auth::user()->id,
         );
 
         $ad = Ad::find($request->ad_id);
         $ad->job->update($arr);
-        $ad->update(['status'=>'published']);
+        $ad->update(['status' => 'published']);
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
             common::update_media($file, $ad->job->id, 'App\Admin\Jobs\Job', 'company_logo');
@@ -109,37 +111,6 @@ class JobController extends Controller
             common::update_media($files, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
         }
 
-        $terms = Term::find([$request->industry, $request->job_function]);
-
-        $ad->job->terms()->detach();
-        $ad->job->terms()->attach($terms);
-
-//        $job = new Job($arr);
-
-//        $job->slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
-
-//        $terms = Term::find([$request->industry, $request->job_function]);
-
-//        $ad = new Ad(['ad_type'=>'job', 'status'=>'published', 'user_id'=>Auth::user()->id]);
-//        $ad->save();
-//        $ad->job()->save($job);
-
-//        $job->save();
-//        $job->terms()->attach($terms);
-
-//        if ($request->file('company_logo')) {
-//            $file = $request->file('company_logo');
-//            common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_logo');
-//        }
-//        if ($request->file('company_gallery')) {
-//            $files = $request->file('company_gallery');
-//            foreach ($files as $file)
-//            {
-//                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-//            }
-//        }
-
-        //$jobs = Job::all();
         $request->session()->flash('success', 'Jobben er lagt til');
         return back();
     }
@@ -147,35 +118,39 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store_dummy(Request $request){
-        $ad = new Ad(['ad_type'=>'job', 'status'=>'saved', 'user_id'=>Auth::user()->id]);
+    public function store_dummy(Request $request)
+    {
+        $ad = new Ad(['ad_type' => 'job', 'status' => 'saved', 'user_id' => Auth::user()->id]);
         $ad->save();
-        $job = new Job(['job_type'=>$request->job_type, 'user_id'=>Auth::user()->id]);
+        $job = new Job(['job_type' => $request->job_type, 'user_id' => Auth::user()->id]);
         $ad->job()->save($job);
-        $ids = ['ad_id'=>$ad->id, 'job_id'=>$ad->job->id];
+        $ids = ['ad_id' => $ad->id, 'job_id' => $ad->job->id];
         return response(json_encode($ids));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Admin\Jobs\Job $job->id
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Admin\Jobs\Job $job ->id
      * @return \Illuminate\Http\Response
      */
-    public function update_dummy(Request $request){
+    public function update_dummy(Request $request)
+    {
         $job_id = $request->job_id;
-        $job = Job::where('id',$job_id)->first();
+        $job = Job::where('id', $job_id)->first();
         $arr = array(
             'name' => $request->name,
             'title' => $request->title,
-            'job_type'=>$request->job_type,
+            'job_type' => $request->job_type,
             'positions' => $request->positions,
             'commitment_type' => $request->commitment_type,
             'sector' => $request->sector,
+            'job_function' => $request->job_function,
+            'industry' => $request->industry,
             'keywords' => $request->keywords,
             'description' => htmlentities($request->description),
             'deadline' => $request->deadline,
@@ -200,20 +175,15 @@ class JobController extends Controller
             'app_email' => $request->app_email,
             'app_linkedin' => $request->app_linkedin,
             'app_twitter' => $request->app_twitter,
-            'user_id'=>Auth::user()->id,
+            'user_id' => Auth::user()->id,
         );
 
         $job->update($arr);
 
-        if(empty($job->slug)){
+        if (empty($job->slug)) {
             $slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
-            $job->update(['slug'=>$slug]);
+            $job->update(['slug' => $slug]);
         }
-
-        $terms = Term::find([$request->industry, $request->job_function]);
-
-        $job->terms()->detach();
-        $job->terms()->attach($terms);
 
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
@@ -221,51 +191,47 @@ class JobController extends Controller
         }
         if ($request->file('company_gallery')) {
             $files = $request->file('company_gallery');
-            foreach ($files as $file)
-            {
+            foreach ($files as $file) {
                 common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
             }
         }
 
-        $ids = ['ad_id'=>$request->ad_id, 'job_id'=>$request->job_id];
+        $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id];
         return response(json_encode($ids));
-        //$jobs = Job::all();
-//        $request->session()->flash('success', 'Job has been added successfully');
-//        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Job  $job
+     * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
     public function show(Job $job)
     {
-        $prev = Job::where('id','<',$job->id)->orderBy('id','desc')->first();
-        $next = Job::where('id','>',$job->id)->orderBy('id','asc')->first();
+        $prev = Job::where('id', '<', $job->id)->orderBy('id', 'desc')->first();
+        $next = Job::where('id', '>', $job->id)->orderBy('id', 'asc')->first();
         return view('user-panel/jobs/single', compact('job', 'prev', 'next'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Job  $job
+     * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
     public function edit(Job $job)
     {
-        if(request()->route()->getPrefix() == '/admin'){
-            return view('admin.jobs.new_'.$job->job_type, compact('job'));
+        if (request()->route()->getPrefix() == '/admin') {
+            return view('admin.jobs.new_' . $job->job_type, compact('job'));
         }
-        return view('user-panel.jobs.new_'.$job->job_type, compact('job'));
+        return view('user-panel.jobs.new_' . $job->job_type, compact('job'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Job  $job
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Job $job)
@@ -278,14 +244,13 @@ class JobController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Job  $job
+     * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
     public function destroy(Job $job)
     {
         common::delete_media($job->id, 'App\Admin\Jobs\Job', 'company_logo');
         common::delete_media($job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-        $job->terms()->detach();
         $job->ad()->delete();
         $job->delete();
 
@@ -299,110 +264,239 @@ class JobController extends Controller
     /**
      * Change status of Ad.
      *
-     * @param  \App\Admin\Jobs\Job  $job
+     * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function status_change(Ad $ad, $status){
+    public function status_change(Ad $ad, $status)
+    {
 //        $status = '';
-        if ($status=='draft' ||
-            $status=='pending' ||
-            $status=='published'){
+        if ($status == 'draft' ||
+            $status == 'pending' ||
+            $status == 'published') {
             $ad = Ad::where('id', $ad->id)->first();
             $ad->status = $status;
             $ad->update();
             session()->flash('success', 'Status er oppdatert');
-        }
-        else{
+        } else {
             session()->flash('danger', 'Ikke gyldig status!');
         }
         return back();
     }
+
     /**
      * Change status of Ad.
      *
-     * @param  \App\Admin\Jobs\Job  $job
+     * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function search(Request $request){
-        $filters = $request->except('page', 'view');
-        $view = $request->view;
-        $jobs = DB::table('jobs')
-            ->whereIn('ad_id', DB::table('ads')
-                ->where('status', '=', 'published')
-                ->where('ad_type', '=', 'job')
-                ->select('id'))
-            ->paginate(getenv('PAGINATION'));
-        if (is_array($filters) && !empty($filters)) {
-            $jobs = DB::table('jobs')
-                ->whereIn('ad_id', DB::table('ads')
-                    ->where('status', '=', 'published')
-                    ->select('id'))
-                ->where($filters)
-                ->paginate(getenv('PAGINATION'));
+    public function search(Request $request)
+    {
+//        $filters = $request->except('page', 'view', 'search');
+        $view = "grid";
+
+        $view = 'grid';
+        $filters = '';
+        $query = DB::table('ads')
+            ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
+            ->where('ads.status', '=', 'published');
+
+//        if (isset($request->search) && !empty($request->search)){
+//            $query = $query->where('jobs.name', 'like', "%".$request->search."%")
+//            ->orWhere('jobs.title', 'like', "%".$request->search."%")
+//            ->orWhere('jobs.job_type', 'like', "%".$request->job_type."%")
+//            ->orWhere('jobs.keywords', 'like', "%".$request->keywords."%")
+//            ;
+//        }
+        if (isset($request->job_function)) {
+            $query = $query->whereIn('jobs.job_function', $request->job_function);
         }
-        return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs','filters', 'view'));
+        if (isset($request->industry)) {
+            $query = $query->whereIn('jobs.industry', $request->industry);
+        }
+        if (isset($request->country)) {
+            $query = $query->whereIn('jobs.country', $request->country);
+        }
+        if (isset($request->commitment_type)) {
+            $query = $query->whereIn('jobs.commitment_type', $request->commitment_type);
+        }
+        if (isset($request->deadline)) {
+            if (in_array("today", $request->deadline)) {
+                $query = $query->whereNull('jobs.deadline')
+                    ->orWhereDate('jobs.deadline', today());
+            }
+            elseif(in_array("three_days", $request->deadline)) {
+                $query = $query->whereNull('jobs.deadline')
+                    ->orWhereDate('jobs.deadline', '<', today()->addDays(3));
+            }
+            elseif(in_array("this_week", $request->deadline)) {
+                $query = $query->whereNull('jobs.deadline')
+                    ->orWhereDate('jobs.deadline', '<', today()->addDays(7));
+            }
+        }
+//        dd($request->job_type);
+        if (isset($request->job_type)) {
+            $query = $query->whereIn('jobs.job_type', $request->job_type);
+        }
+        if (isset($request->sector)) {
+            $query = $query->whereIn('jobs.sector', $request->sector);
+        }
+        if (isset($request->leadership_category)) {
+            $query = $query->whereIn('jobs.sector', $request->sector);
+        }
+        if(isset($request->created_at)){
+            $query = $query->whereDate('jobs.created_at', today());
+        }
+
+        $jobs = $query->get();
+
+
+//        $jobs = DB::table('jobs')
+//            ->whereIn('ad_id', DB::table('ads')
+//                ->where('status', '=', 'published')
+//                ->where('ad_type', '=', 'job')
+//                ->select('id'))
+//            ->paginate(getenv('PAGINATION'));
+//        if (is_array($filters) && !empty($filters)) {
+//            $jobs = DB::table('jobs')
+//                ->whereIn('ad_id', DB::table('ads')
+//                    ->where('status', '=', 'published')
+//                    ->select('id'))
+//                ->where($filters)
+//                ->paginate(getenv('PAGINATION'));
+//        }
+        return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs', 'view'));
     }
 
-    public function sort(Request $request){
+    public function mega_menu_search(Request $request)
+    {
+        $view = 'grid';
+        $filters = '';
+        $query = DB::table('ads')
+            ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
+            ->where('ads.status', '=', 'published');
+
+//        if (isset($request->search) && !empty($request->search)){
+//            $query = $query->where('jobs.name', 'like', "%".$request->search."%")
+//            ->orWhere('jobs.title', 'like', "%".$request->search."%")
+//            ->orWhere('jobs.job_type', 'like', "%".$request->job_type."%")
+//            ->orWhere('jobs.keywords', 'like', "%".$request->keywords."%")
+//            ;
+//        }
+        if (isset($request->job_function)) {
+            $query = $query->whereIn('jobs.job_function', $request->job_function);
+        }
+        if (isset($request->industry)) {
+            $query = $query->whereIn('jobs.industry', $request->industry);
+        }
+        if (isset($request->country)) {
+            $query = $query->whereIn('jobs.country', $request->country);
+        }
+        if (isset($request->commitment_type)) {
+            $query = $query->whereIn('jobs.commitment_type', $request->commitment_type);
+        }
+        if (isset($request->deadline)) {
+            if (in_array("today", $request->deadline)) {
+                $query = $query->whereNull('jobs.deadline')
+                    ->orWhereDate('jobs.deadline', today());
+            }
+            elseif(in_array("three_days", $request->deadline)) {
+                $query = $query->whereNull('jobs.deadline')
+                    ->orWhereDate('jobs.deadline', '<', today()->addDays(3));
+            }
+            elseif(in_array("this_week", $request->deadline)) {
+                $query = $query->whereNull('jobs.deadline')
+                    ->orWhereDate('jobs.deadline', '<', today()->addDays(7));
+            }
+        }
+//        dd($request->job_type);
+        if (isset($request->job_type)) {
+            $query = $query->whereIn('jobs.job_type', $request->job_type);
+        }
+        if (isset($request->sector)) {
+            $query = $query->whereIn('jobs.sector', $request->sector);
+        }
+        if (isset($request->leadership_category)) {
+            $query = $query->whereIn('jobs.sector', $request->sector);
+        }
+        if(isset($request->created_at)){
+            $query = $query->whereDate('jobs.created_at', today());
+        }
+
+        $jobs = $query->get();
+        $html = view('user-panel.jobs.jobs_filter_page_inner', compact('jobs', 'filters', 'view'))->render();
+
+        exit($html);
+//        dd($query->get());
+    }
+
+    public function sort(Request $request)
+    {
         $sortings = [
-            "0"=>'Most relevent',
-            "1"=>"Published",
-            "2"=>"Employer",
-            "3"=>"Place",
-            "4"=>"Closest",
+            "0" => 'Most relevent',
+            "1" => "Published",
+            "2" => "Employer",
+            "3" => "Place",
+            "4" => "Closest",
         ];
         $filters = $request->all();
-        $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+        $ads = Ad::where(['status' => 'published', 'ad_type' => 'job'])->get();
         if (is_array($filters) && !empty($filters)) {
-            $ads = Ad::where(['status'=>'published','ad_type'=>'job'])->get();
+            $ads = Ad::where(['status' => 'published', 'ad_type' => 'job'])->get();
         }
         return response()->view('user-panel.jobs.jobs_filter_page', compact('ads', 'filters'));
     }
 
-    public function sort_jobs($job_type, $orderBy = 0){
+    public function sort_jobs($job_type, $orderBy = 0)
+    {
         $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
             ->where('ads.status', 'published')
             ->orderByDesc('ads.updated_at')->get();
 
 
         $jobs = Job::where('job_type', $job_type)->orderBy('name', 'asc')->get();
-        if ($job_type==='all'){
-            switch ($orderBy){
-                case 1: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->orderBy('jobs.updated_at', 'desc')->get();
+        if ($job_type === 'all') {
+            switch ($orderBy) {
+                case 1:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->orderBy('jobs.updated_at', 'desc')->get();
                     break;
-                case 2: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->orderBy('jobs.emp_name', 'asc')->get();
+                case 2:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->orderBy('jobs.emp_name', 'asc')->get();
                     break;
-                case 3: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->orderBy('jobs.country', 'asc')->get();
+                case 3:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->orderBy('jobs.country', 'asc')->get();
                     break;
-                default: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->orderBy('jobs.name', 'asc')->get();
+                default:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->orderBy('jobs.name', 'asc')->get();
             }
-        }
-        else{
-            switch ($orderBy){
-                case 1: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.updated_at', 'desc')->get();
+        } else {
+            switch ($orderBy) {
+                case 1:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.updated_at', 'desc')->get();
                     break;
-                case 2: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.emp_name', 'asc')->get();
+                case 2:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.emp_name', 'asc')->get();
                     break;
-                case 3: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.country', 'asc')->get();
+                case 3:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.country', 'asc')->get();
                     break;
-                default: $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
-                    ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.name', 'asc')->get();
+                default:
+                    $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
+                        ->where('ads.status', 'published')->where('jobs.job_type', $job_type)->orderBy('jobs.name', 'asc')->get();
             }
         }
         $html = "";
-        if(count($jobs)>0) {
+        if (count($jobs) > 0) {
             foreach ($jobs as $filtered_ad) {
                 $html .= view('user-panel.partials.templates.job-sequare', compact('filtered_ad'))->render();
             }
-        }
-        else{
+        } else {
             $html = '<div class="col-md-12 ml-3 alert alert-warning no-ads dme-tab-content" style="" data-id="no-ads">
                         <h3 class=" text-center">Ingen annonser funnet.</h3>
                     </div>';

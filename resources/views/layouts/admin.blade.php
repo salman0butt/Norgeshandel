@@ -25,10 +25,16 @@
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <link href="{{ asset('public/admin/mediexpert.css') }}" rel="stylesheet">
 
+
+    <script src="{{ asset('public/admin/js/select2.min.js') }}"></script>
+    <script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>
+
+
     <script src="{{asset('public/js/tinymce.min.js')}}"></script>
     <!--[if lt IE 9]>
     <script src="{{ asset('public/admin/js/html5shiv.js') }}"></script>
     <script src="{{ asset('public/admin/js/respond.min.js') }}"></script>
+
     <![endif]--><style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
 
 <body cz-shortcut-listen="true">
@@ -216,8 +222,10 @@
                 {{-- ads mangment --}}
                   <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu">{{__('Ads Mangemnet')}}</span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="{{url('admin/ads')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Ads')}} </span></a></li>
-                            <li class="sidebar-item"><a href="{{url('admin/ads/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('admin/ads')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Banner Ads')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('admin/ads/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Banner')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/banner-group/index')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Banner Group')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/banner-group/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Banner Group')}} </span></a></li>
                         </ul>
                     </li>
 
