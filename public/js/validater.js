@@ -207,160 +207,160 @@ $(document).ready(function () {
 
     //Holiday homes for sale
 
-    // $("#property_holiday_home_for_sale_form").validate({
-    //     lang: 'no',
-    //     rules: {
-    //         ad_headline: {
-    //             required: true,
-    //             minlength: 2,
-    //             maxlength: 120
-    //         },
-    //         zip_code: {
-    //             required: true,
-    //             zipcodeUS: true
-    //         },
-    //         location: {
-    //             required: true
-    //         },
-    //         property_type: {
-    //             required: true
-    //         },
-    //         ownership_type: {
-    //             required: true
-    //         },
-    //         muncipal_number: {
-    //             required: true,
-    //             minlength: 4,
-    //             number: true
-    //         },
-    //         farm_number: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         usage_number: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         party_number: {
-    //             number: true
-    //         },
-    //         section_number: {
-    //             number: true
-    //         },
-    //         use_area: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         primary_room: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         gross_area: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         Base: {
-    //             number: true
-    //         },
-    //         housing_area: {
-    //             number: true
-    //         },
-    //         year_of_construction: {
-    //             required: true,
-    //             number: true,
-    //             date: true
-    //         },
-    //         renovated_year: {
-    //             number: true,
-    //             date: true
-    //         },
-    //         number_of_bedrooms: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         number_of_beds: {
-    //             number: true
-    //         },
-    //         number_of_parking_spaces: {
-    //             number: true
-    //         },
-    //         state_report_link: {
-    //             url: true
-    //         },
-    //         meter_above_sea_level: {
-    //             number: true
-    //         },
-    //         land: {
-    //             number: true
-    //         },
-    //         number_of_tenants: {
-    //             number: true
-    //         },
-    //         holiday_year: {
-    //             number: true,
-    //             date: true
-    //         },
-    //         party_fee: {
-    //             number: true
-    //         },
-    //         common_costs: {
-    //             number: true
-    //         },
-    //         joint_board_after_interest_fee_period: {
-    //             number: true
-    //         },
-    //         common_costs_after_interest_free_period: {
-    //             number: true
-    //         },
-    //         asset_value: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         asking_price: {
-    //             required: true,
-    //             number: true
-    //         },
-    //         cost: {
-    //             number: true
-    //         },
-    //         cost_includes: {
-    //             number: true
-    //         },
-    //         prcentage_of_joint_debt: {
-    //             number: true
-    //         },
-    //         value_rate: {
-    //             number: true
-    //         },
-    //         loan_rate: {
-    //             number: true
-    //         },
-    //         percentage_of_common_health: {
-    //             number: true
-    //         },
-    //         link_to_terif_documents: {
-    //             url: true
-    //         },
-    //         task_link: {
-    //             url: true
-    //         },
-    //         video: {
-    //             url: true
-    //         },
-    //         delivery_date: {
-    //             date: true
-    //         },
-    //         from_clock: {
-    //             number: true
-    //         },
-    //         clockwise: {
-    //             number: true
-    //         },
-    //         apartment_number: {
-    //             number: true
-    //         }
-    //     }
-    // });
+    $("#property_holiday_home_for_sale_form").validate({
+        lang: 'no',
+        rules: {
+            ad_headline: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            zip_code: {
+                required: true,
+                zipcodeUS: true
+            },
+            location: {
+                required: true
+            },
+            property_type: {
+                required: true
+            },
+            ownership_type: {
+                required: true
+            },
+            muncipal_number: {
+                required: true,
+                minlength: 4,
+                number: true
+            },
+            farm_number: {
+                required: true,
+                number: true
+            },
+            usage_number: {
+                required: true,
+                number: true
+            },
+            party_number: {
+                number: true
+            },
+            section_number: {
+                number: true
+            },
+            use_area: {
+                required: true,
+                number: true
+            },
+            primary_room: {
+                required: true,
+                number: true
+            },
+            gross_area: {
+                required: true,
+                number: true
+            },
+            Base: {
+                number: true
+            },
+            housing_area: {
+                number: true
+            },
+            year_of_construction: {
+                required: true,
+                number: true,
+                date: true
+            },
+            renovated_year: {
+                number: true,
+                date: true
+            },
+            number_of_bedrooms: {
+                required: true,
+                number: true
+            },
+            number_of_beds: {
+                number: true
+            },
+            number_of_parking_spaces: {
+                number: true
+            },
+            state_report_link: {
+                url: true
+            },
+            meter_above_sea_level: {
+                number: true
+            },
+            land: {
+                number: true
+            },
+            number_of_tenants: {
+                number: true
+            },
+            holiday_year: {
+                number: true,
+                date: true
+            },
+            party_fee: {
+                number: true
+            },
+            common_costs: {
+                number: true
+            },
+            joint_board_after_interest_fee_period: {
+                number: true
+            },
+            common_costs_after_interest_free_period: {
+                number: true
+            },
+            asset_value: {
+                required: true,
+                number: true
+            },
+            asking_price: {
+                required: true,
+                number: true
+            },
+            cost: {
+                number: true
+            },
+            cost_includes: {
+                number: true
+            },
+            prcentage_of_joint_debt: {
+                number: true
+            },
+            value_rate: {
+                number: true
+            },
+            loan_rate: {
+                number: true
+            },
+            percentage_of_common_health: {
+                number: true
+            },
+            link_to_terif_documents: {
+                url: true
+            },
+            task_link: {
+                url: true
+            },
+            video: {
+                url: true
+            },
+            delivery_date: {
+                date: true
+            },
+            from_clock: {
+                number: true
+            },
+            clockwise: {
+                number: true
+            },
+            apartment_number: {
+                number: true
+            }
+        }
+    });
 
 
     //Næringstomt form validation

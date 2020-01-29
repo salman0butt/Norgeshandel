@@ -71,7 +71,24 @@ var channel = window.Echo.channel('property-for-rent');
 channel.listen('.property-for-rent', function(data) 
 {   
     var user_id = data.user_id;
-    if($("#user_id_notfy").val() != user_id && $("#user_role_admin").val() == 1)
+    var url = data.path;
+    var notify_user = "";
+    $.ajax({
+        type: "POST",
+        url: url,
+        data:  {'ma': data.notification_id_search},
+        dataType: "json",
+        async:false,
+        success: function(data){
+            notify_user = data.res;
+           
+        }
+    });
+
+    
+    
+
+    if(($("#user_id_notfy").val() != user_id && $("#user_role_admin").val() == 1) || notify_user == true)
     {
         var html = ""
         html += "<input type='hidden' name='notids[]' value='"+data.notification_id+"'>"

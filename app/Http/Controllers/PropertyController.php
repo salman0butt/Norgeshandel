@@ -705,9 +705,9 @@ class PropertyController extends Controller
         $notifiable_id = $response -> id;
         $notification_obj = new NotificationController();
         $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForRent','property have been added');
-        
+        $notification_id_search = $notification_response->id;
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id));
+        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -1349,6 +1349,14 @@ class PropertyController extends Controller
             }
 
         }
+
+        //Notification data
+        $notifiable_id = $response -> id;
+        $notification_obj = new NotificationController();
+        $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
+            
+        //trigger event
+        event(new PropertyForRentEvent($notifiable_id));
 
         $data['success'] = $response;
         echo json_encode($data);
