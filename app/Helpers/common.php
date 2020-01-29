@@ -20,7 +20,7 @@ class common
             <li>
                 <div class="input-toggle">
                     <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="'.$term->name.'" id="'.$term->taxonomy->id.'-'.$term->id.'">
-                    <label for="'.$term->taxonomy->id.'-'.$term->id.'" class="">'.$term->name . ' <span class="count"></span></label>
+                    <label for="'.$term->taxonomy->id.'-'.$term->id.'" class="">'.$term->name . ' <span data-name="'.$term->name.'" data-title="'.$term->taxonomy->slug.'" class="count"></span></label>
                 </div>
                 ';
             if (!empty($terms = $term->getChildren)) {

@@ -9,6 +9,7 @@ use App\Term;
 use App\User;
 use App\Models\Ad;
 use App\Media;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -70,6 +71,7 @@ class JobController extends Controller
             'positions' => $request->positions,
             'commitment_type' => $request->commitment_type,
             'sector' => $request->sector,
+            'leadership_category' => $request->leadership_category,
             'job_function' => $request->job_function,
             'industry' => $request->industry,
             'keywords' => $request->keywords,
@@ -149,6 +151,7 @@ class JobController extends Controller
             'positions' => $request->positions,
             'commitment_type' => $request->commitment_type,
             'sector' => $request->sector,
+            'leadership_category' => $request->leadership_category,
             'job_function' => $request->job_function,
             'industry' => $request->industry,
             'keywords' => $request->keywords,
@@ -249,8 +252,8 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        common::delete_media($job->id, 'App\Admin\Jobs\Job', 'company_logo');
-        common::delete_media($job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+        common::delete_media($job->id, Job::class, 'company_logo');
+        common::delete_media($job->id, Job::class, 'company_gallery');
         $job->ad()->delete();
         $job->delete();
 
@@ -294,14 +297,27 @@ class JobController extends Controller
         return response()->view('user-panel.jobs.jobs_filter_page');
     }
 
+    public function count(){
+
+    }
+
     public function mega_menu_search(Request $request)
     {
-        $view = 'grid';
-        $filters = '';
+        $view = $request->view;
+        $sort = $request->sort;
+        $req = $request->all();
+        $arr = Arr::only($request->all(), ['job_function', 'industry', 'country', 'commitment_type', 'job_type',
+            'sector', 'leadership_category']);
+//        dd($arr);
         $query = DB::table('ads')
             ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
+            ->join('users', 'jobs.user_id', '=','users.id')
             ->where('ads.status', '=', 'published');
 
+        $query->where($arr);
+        if(isset($request->created_at)){
+            $query->whereDate('jobs.created_at', $request->created_at);
+        }
         if (isset($request->search) && !empty($request->search)){
             $query->where(function ($query) use ($request){
                 $query->where('jobs.name', 'like', "%".$request->search."%");
@@ -311,19 +327,6 @@ class JobController extends Controller
             });
         }
 
-//        dd($query);
-        if (isset($request->job_function)) {
-            $query = $query->whereIn('jobs.job_function', $request->job_function);
-        }
-        if (isset($request->industry)) {
-            $query = $query->whereIn('jobs.industry', $request->industry);
-        }
-        if (isset($request->country)) {
-            $query = $query->whereIn('jobs.country', $request->country);
-        }
-        if (isset($request->commitment_type)) {
-            $query = $query->whereIn('jobs.commitment_type', $request->commitment_type);
-        }
         if (isset($request->deadline)) {
             if (in_array("today", $request->deadline)) {
                 $query = $query->whereNull('jobs.deadline')
@@ -338,25 +341,23 @@ class JobController extends Controller
                     ->orWhereDate('jobs.deadline', '<', today()->addDays(7));
             }
         }
-//        dd($request->job_type);
-        if (isset($request->job_type)) {
-            $query = $query->whereIn('jobs.job_type', $request->job_type);
-        }
-        if (isset($request->sector)) {
-            $query = $query->whereIn('jobs.sector', $request->sector);
-        }
-        if (isset($request->leadership_category)) {
-            $query = $query->whereIn('jobs.sector', $request->sector);
-        }
-        if(isset($request->created_at)){
-            $query = $query->whereDate('jobs.created_at', today());
-        }
 
+
+        if(isset($sort) && !empty($sort)) {
+            switch ($sort){
+                case 1:
+                    $query->orderBy('jobs.created_at', 'desc');
+                    break;
+                case 2:
+                    $query->orderBy('users.first_name', 'asc');
+                    break;
+                default:
+                    break;
+            }
+        }
         $jobs = $query->get();
-        $html = view('user-panel.jobs.jobs_filter_page_inner', compact('jobs', 'filters', 'view'))->render();
-
+        $html = view('user-panel.jobs.jobs_filter_page_inner', compact('jobs', 'view', 'sort'))->render();
         exit($html);
-//        dd($query->get());
     }
 
     public function sort(Request $request)
