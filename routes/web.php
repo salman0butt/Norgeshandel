@@ -301,5 +301,5 @@ Route::get('test', function () {
     return "Event has been sent!";
 });
 
-
+Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
 
