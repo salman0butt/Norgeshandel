@@ -3,11 +3,19 @@
     $job_fun = "";
     $ind = "";
 
-    $countries = countries();
+//    $countries = countries();
+    $leadership_category = \App\Taxonomy::where('slug', 'leadership_category')->first();
+    $leadership_categories = $leadership_category->terms;
+    $commitment_type = \App\Taxonomy::where('slug', 'commitment_type')->first();
+    $commitment_types = $commitment_type->terms;
+    $country = \App\Taxonomy::where('slug', 'country')->first();
+    $countries = $country->terms;
     $industry = \App\Taxonomy::where('slug', 'industry')->first();
     $industries = $industry->terms;
-    $job_function = \App\Taxonomy::where('slug', 'job-function')->first();
+    $job_function = \App\Taxonomy::where('slug', 'job_function')->first();
     $job_functions = $job_function->terms;
+    $sector = \App\Taxonomy::where('slug', 'sector')->first();
+    $sectors = $sector->terms;
     //    $arr = ["id" => null,"name" => null,"title" => null,"job_type" => null,"slug" => null,"positions" => null,"commitment_type" => null,"sector" => null,"keywords" => null,"description" => null,"deadline" => null,"accession" => null,"emp_name" => null,"emp_company_information" => null,"emp_website" => null,"emp_facebook" => null,"emp_linkedin" => null,"emp_twitter" => null,"country" => null,"zip" => null,"address" => null,"workplace_video" => null,"app_receive_by" => null,"app_link_to_receive" => null,"app_email_to_receive" => null,"app_contact" => null,"app_contact_title" => null,"app_mobile" => null,"app_phone" => null,"app_email" => null,"app_linkedin" => null,"app_twitter" => null,"ad_id" => null,"user_id" => null,"created_at" => null,"updated_at" => null]
     $obj_job = new \App\Admin\Jobs\Job();
     ?>
@@ -15,18 +23,6 @@
     @else {{route('jobs.store')}} @endif" name="job-form" id="job-form" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
         @if(Request::is('*/jobs/*/edit')) {{method_field('PUT')}} @endif
-        @if(isset($job))
-            <?php
-            $obj_job = $job;
-            foreach ($job->terms as $term):
-                if ($term->taxonomy->slug == 'job-function'):
-                    $job_fun = $term->name;
-                elseif ($term->taxonomy->slug == 'industry'):
-                    $ind = $term->name;
-                endif;
-            endforeach;
-            ?>
-        @endif
         <input type="hidden" name="ad_id" id="ad_id">
         <input type="hidden" name="job_id" id="job_id">
         <div class="container p-3 pt-4 bg-white mt-5 shadow-10">
@@ -78,31 +74,21 @@
                                 <div class="col-sm-4 ">
                                     <select id="commitment_type" name="commitment_type"
                                             class="form-control dme-form-control" data-selector="" required>
-                                        <option value="{{$obj_job->commitment_type}}"
-                                                selected>{{$obj_job->commitment_type}}</option>
-                                        <option value="Engasjement">Engasjement</option>
-                                        <option value="Fast">Fast</option>
-                                        <option value="Lærling">Lærling</option>
-                                        <option value="Prosjekt">Prosjekt</option>
-                                        <option value="Selvstendig næringsdrivende">Selvstendig næringsdrivende
-                                        </option>
-                                        <option value="Sommer/Sesong">Sommer/Sesong</option>
-                                        <option value="Trainee">Trainee</option>
-                                        <option value="Vikariat">Vikariat</option>
+                                        @if(!empty($obj_job->commitment_type))
+                                            <option selected value="{{$obj_job->commitment_type}}">{{$obj_job->commitment_type}}</option>
+                                        @endif
+                                        @foreach($commitment_types as $commitment_type)
+                                            <option value="{{$commitment_type['name']}}">{{$commitment_type['name']}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <label for="sector" class="col-md-2 u-t5">{{__('Sector')}}</label>
                                 <div class="col-sm-4 ">
                                     <select id="sector" name="sector" class="form-control dme-form-control"
                                             data-selector="" required>
-                                        <option value="{{$obj_job->sector}}">{{$obj_job->sector}}</option>
-                                        <option value="Franchise/Selvstendig næringsdrivende">Franchise/Selvstendig
-                                            næringsdrivende
-                                        </option>
-                                        <option value="Offentlig">Offentlig</option>
-                                        <option value="Organisasjoner">Organisasjoner</option>
-                                        <option value="Privat">Privat</option>
-                                        <option value="Samvirke">Samvirke</option>
+                                        @foreach($sectors as $sect)
+                                            <option value="{{$sect->name}}" {{$sect->name==$obj_job->sector?"selected":""}}>{{$sect->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -114,9 +100,9 @@
                                 <div class="col-sm-4 ">
                                     <select name="industry" id="industry" data-input-name="industry"
                                             class="form-control dme-form-control" data-max-selections="3" required>
-                                        <option value="{{$ind}}">{{$ind}}</option>
-                                        @foreach($industries as $industry)
-                                            <option value="{{$industry->id}}">{{$industry->name}}</option>
+                                        <option value="{{$obj_job->industry}}">{{$obj_job->industry}}</option>
+                                    @foreach($industries as $industry)
+                                            <option value="{{$industry->name}}">{{$industry->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -124,14 +110,31 @@
                                 <div class="col-sm-4 ">
                                     <select name="job_function" id="job_function" data-input-name="occupation"
                                             class="form-control dme-form-control" data-max-selections="3" required>
-                                        <option value="{{$job_fun}}">{{$job_fun}}</option>
-                                        @foreach($job_functions as $job_function)
-                                            <option value="{{$job_function->id}}">{{$job_function->name}}</option>
+                                        <option value="{{$obj_job->job_function}}">{{$obj_job->job_function}}</option>
+                                    @foreach($job_functions as $job_function)
+                                            <option value="{{$job_function->name}}">{{$job_function->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
+                        <!--                            full input-->
+                        @if(isset($job_type) && $job_type=="management")
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="leadership_category" class="col-md-2 u-t5">{{__('Leadership Category')}}</label>
+                                <div class="col-sm-10 ">
+                                    <select name="leadership_category" id="leadership_category" data-input-name="leadership_category"
+                                            class="form-control dme-form-control">
+                                        <option value="{{$obj_job->leadership_category}}">{{$obj_job->leadership_category}}</option>
+                                    @foreach($leadership_categories as $leadership_category)
+                                            <option value="{{$leadership_category->name}}">{{$leadership_category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <!--                            full input-->
                         <div class="form-group">
                             <div class="row">

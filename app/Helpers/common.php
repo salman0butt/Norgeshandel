@@ -2,16 +2,38 @@
 namespace App\Helpers;
 
 use App\Media;
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Database\Eloquent\Model;
+use App\Admin\ads\Banner;
 use Illuminate\Support\Str;
+use App\Admin\Banners\BannerGroup;
 
 require 'vendor/autoload.php';
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Session\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class common
 {
+    public static function map_nav($terms)
+    {
+        $html = '<ul class="list list-unstyled">';
+        foreach ($terms as $term) {
+            $html .= '
+            <li>
+                <div class="input-toggle">
+                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="'.$term->name.'" id="'.$term->taxonomy->id.'-'.$term->id.'">
+                    <label for="'.$term->taxonomy->id.'-'.$term->id.'" class="">'.$term->name . ' <span data-name="'.$term->name.'" data-title="'.$term->taxonomy->slug.'" class="count"></span></label>
+                </div>
+                ';
+            if (!empty($terms = $term->getChildren)) {
+                $html.= common::map_nav($terms);
+            }
+            $html .= '</li>';
+        }
+        $html.='</ul>';
+        return $html;
+    }
+
     public static function getMediaPath($obj, $size = 'full')
     {
         $file_name = $obj->name_unique;
@@ -135,6 +157,21 @@ class common
                 }
             }
             $obj_old_media->delete();
+        }
+    }
+    public static function display_ad($location){
+        $banner_group = BannerGroup::where('location','=',$location)->get()->first();
+
+        if(!empty($banner_group)) {
+            foreach ($banner_group->banners as $banner):
+                // dd($banner->display_time_duration);
+                if ($banner->is_active) {
+
+                    // if ($banner->display_time_duration > '20') {
+                    echo "<a href='" . $banner->link . "' data-banner-id='" . $banner->id . "' class='ad_clicked' target='_blank'><img src='" . asset(\App\Helpers\common::getMediaPath($banner->media)) . "' class='img-fluid m-auto' style='height:100%' alt=''></a>";
+                    // }
+                }
+            endforeach;
         }
     }
 

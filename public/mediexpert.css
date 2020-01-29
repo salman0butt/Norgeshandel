@@ -1004,3 +1004,6 @@ ul.pagination .active .page-link{
 .clist .add-to-fav {
     top: 20px !important;
 }
+label span.count{
+    color: #888888;
+}

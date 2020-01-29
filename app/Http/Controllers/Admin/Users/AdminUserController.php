@@ -139,8 +139,10 @@ class AdminUserController extends Controller
         $allowed_property = new AllowedCompanyAd(['key'=>'properties', 'value'=>$request->allowed_properties]);
         $user->allowed_ads()->save($allowed_property);
 
-        $user->roles()->detach();
-        $user->roles()->attach($request->role_id);
+        if(isset($request->role_id) && !empty($request->role_id)) {
+            $user->roles()->detach();
+            $user->roles()->attach($request->role_id);
+        }
 
         if (isset($request->allowed_ad_types)){
 
