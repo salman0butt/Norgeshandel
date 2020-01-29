@@ -52,7 +52,7 @@ $(document).ready(function () {
     });
     //Property for sale
 
-    $("#property_for_sale_form").validate({
+    $("#property_for_sale_form,#commercial_property_for_rent").validate({
         lang: 'no',
         rules: {
             headline: {
@@ -62,7 +62,7 @@ $(document).ready(function () {
             },
             zip_code: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             property_type: {
                 required: true
@@ -217,7 +217,7 @@ $(document).ready(function () {
             },
             zip_code: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             location: {
                 required: true
@@ -379,7 +379,7 @@ $(document).ready(function () {
             },
             zip_code: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             head_line: {
                 required: true,
@@ -436,7 +436,7 @@ $(document).ready(function () {
             },
             zip_code: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             municipal_number: {
                 required: true,
@@ -618,8 +618,7 @@ $(document).ready(function () {
             },
             zip: {
                 required: true,
-                zipcodeUS: true
-
+                zipcode: true
             },
             workplace_video: {
                 url: true
@@ -671,7 +670,7 @@ $(document).ready(function () {
             },
             zip: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             city: {
                 required: true,
@@ -719,7 +718,7 @@ $(document).ready(function () {
             },
             zip: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             period_from: {
                 required: true,
@@ -842,8 +841,8 @@ $(document).ready(function () {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
-    $('#commercial_property_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#commercial_property_for_sale').validate().checkForm()) { // checks form for validity
+    $('#commercial_property_for_sale input,#commercial_property_for_rent input').bind('keyup blur click', function () { // fires on every keyup & blur
+        if ($('#commercial_property_for_sale, #commercial_property_for_rent').validate().checkForm()) { // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button

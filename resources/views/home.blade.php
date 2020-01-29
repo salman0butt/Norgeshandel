@@ -26,7 +26,7 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-  {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}} 
+  {{-- {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}}  --}}
     </div>
 </div>
 </div>
@@ -50,7 +50,7 @@
                             <li><p class="u-d1">Det er ingen lagrede søk</p></li>
                         @endif
                         @else 
-                      <p class="u-d1"><a href="#">Logg inn</a> for å vise dine lagrede søk</p>
+                      <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine lagrede søk</p>
                          @endif
                     </ul>
                     ​
@@ -59,13 +59,13 @@
                      @if (Auth::check())
                         @if (isset($recent_search))
                             @foreach($recent_search as $recent)
-                                <li><a href="{{ url('/login') }}">{{ $recent->name }}</a></li>
+                                <li><a href="{{ url('/login') }}"> {{ $recent->name }} </a></li>
                             @endforeach
                         @else
                             <p class="u-d1">Det er ingen nylig søk</p>
                         @endif
                          @else 
-                        <p class="u-d1"><a href=""{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
+                        <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
                          @endif
                     </ul>
                 </div>
@@ -93,7 +93,6 @@
 
                             @if (isset($result) )
                                 @include('user-panel.partials.global-search-inner')
-
                             @endif
                         </div>
                     </div>

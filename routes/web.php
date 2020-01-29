@@ -36,6 +36,10 @@ Route::get('searching/{search}', 'SearchController@search')->name('searching');
 //    home routes
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
+Route::get('/notification', function() {
+
+    return view('notification');
+});
 //--
 
 //Banner ads mangment
