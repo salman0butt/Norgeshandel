@@ -105,6 +105,7 @@
                                                value="" required=""
                                                class="form-control search-control">
                                     </label>
+                                    <input type="hidden" name="filter">
                                 </div>
                                 <div class="input-toggle">
                                     <input type="checkbox" id="notify" name="notify" checked="" value="1">

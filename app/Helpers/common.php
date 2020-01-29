@@ -160,19 +160,19 @@ class common
         }
     }
     public static function display_ad($location){
-            $banner_group = BannerGroup::where('location','=',$location)->get()->first();
-        
-            foreach($banner_group->banners as $banner):
+        $banner_group = BannerGroup::where('location','=',$location)->get()->first();
+
+        if(!empty($banner_group)) {
+            foreach ($banner_group->banners as $banner):
                 // dd($banner->display_time_duration);
-                 if ($banner->is_active) {  
+                if ($banner->is_active) {
 
                     // if ($banner->display_time_duration > '20') {
-                        echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";     
+                    echo "<a href='" . $banner->link . "' data-banner-id='" . $banner->id . "' class='ad_clicked' target='_blank'><img src='" . asset(\App\Helpers\common::getMediaPath($banner->media)) . "' class='img-fluid m-auto' style='height:100%' alt=''></a>";
                     // }
-                 }
-               
-
+                }
             endforeach;
+        }
     }
 
 }

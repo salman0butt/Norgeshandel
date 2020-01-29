@@ -30,9 +30,9 @@ Route::get('lang', 'TranslationController@index');
 
 Route::get('savedsearches', 'SearchController@index');
 Route::post('savedsearches/', 'SearchController@store');
-Route::post('recentearches/{value}', 'SearchController@recent');
+Route::post('recentearches/{value}/{name}/{ad_type}', 'SearchController@recent');
 
-Route::get('searching/{search}', 'SearchController@search')->name('searching');
+Route::get('searching/{search?}', 'SearchController@search')->name('searching');
 //    home routes
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');

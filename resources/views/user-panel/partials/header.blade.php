@@ -5,8 +5,10 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon fa fa-bars pt-2"></span>
             </button>
-            <input type="hidden" value="@if(Auth::check()){{Auth::user()->id}}@endif" id="user_id_notfy">
+            @if(Auth::check())
+            <input type="hidden" value="{{Auth::user()->id}}" id="user_id_notfy">
             <input type="hidden" value="{{App\User::find(Auth::user()->id)->is('admin')}}" id="user_role_admin">
+            @endif
             @if(Auth::check())
             <div id="notifications">
             </div>
@@ -25,7 +27,7 @@
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>
                     </li>
-         
+
                     @endif
                     <style>
                     #collapsibleNavbar > ul > li:nth-child(2) > a > span {

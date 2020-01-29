@@ -294,7 +294,9 @@ class JobController extends Controller
      */
     public function search()
     {
-        return response()->view('user-panel.jobs.jobs_filter_page');
+        $jobs = DB::table('ads')->join('jobs', 'ads.id', '=', 'jobs.ad_id')
+            ->where('ads.status', '=', 'published')->get();
+        return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
     public function count(){
