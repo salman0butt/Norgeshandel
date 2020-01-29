@@ -414,9 +414,10 @@ class PropertyController extends Controller
         $notifiable_id = $response -> id;
         $notification_obj = new NotificationController();
         $notification_response = $notification_obj->create($notifiable_id,'App\PropertyHolidaysHomesForSale','property have been added');
+        $notification_id_search = $notification_response->id;
           
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id));
+        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -576,9 +577,10 @@ class PropertyController extends Controller
         $notifiable_id = $response -> id;
         $notification_obj = new NotificationController();
         $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForSale','property have been added');
-         
+        $notification_id_search = $notification_response->id;
+
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id));
+        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -765,9 +767,10 @@ class PropertyController extends Controller
         $notifiable_id = $response -> id;
         $notification_obj = new NotificationController();
         $notification_response = $notification_obj->create($notifiable_id,'App\FlatWishesRented','property have been added');
-            
+        $notification_id_search = $notification_response->id;
+
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id));
+        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
    
 
         $data['success'] = $response;
@@ -804,9 +807,9 @@ class PropertyController extends Controller
           $notifiable_id = $response -> id;
           $notification_obj = new NotificationController();
           $notification_response = $notification_obj->create($notifiable_id,'App\RealestateBusinessPlot','property have been added');
-              
+          $notification_id_search = $notification_response->id;
           //trigger event
-          event(new PropertyForRentEvent($notifiable_id));
+          event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -889,9 +892,9 @@ class PropertyController extends Controller
         $notifiable_id = $response -> id;
         $notification_obj = new NotificationController();
         $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPropertyForSale','property have been added');
-            
+        $notification_id_search = $notification_response->id;
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id));
+        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -1224,9 +1227,10 @@ class PropertyController extends Controller
         $notifiable_id = $response -> id;
         $notification_obj = new NotificationController();
         $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPropertyForRent','property have been added');
-            
+        $notification_id_search = $notification_response->id;
+
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id));
+        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -1354,9 +1358,9 @@ class PropertyController extends Controller
         $notifiable_id = $response -> id;
         $notification_obj = new NotificationController();
         $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
-            
+        $notification_id_search = $notification_response->id;
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id));
+        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);

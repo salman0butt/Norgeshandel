@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Helpers\common;
 use Intervention\Image\AbstractDecoder;
+
 //use function Sodium\compare;
 
 class JobController extends Controller
@@ -63,6 +64,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+          
                 $arr = array(
             'name' => $request->name,
             'title' => $request->title,
@@ -98,6 +100,17 @@ class JobController extends Controller
         );
 
         $ad = Ad::find($request->ad_id);
+        
+        $response = $ad->job->id;
+        $notifiable_id = $response;
+        $notification_obj = new \App\Http\Controllers\NotificationController();
+        $notification_response = $notification_obj->create($notifiable_id,'App\Admin\Jobs\Job','property have been added');
+        $notification_id_search = $notification_response->id;
+        //trigger event
+        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
+
+       
+
         $ad->job->update($arr);
         $ad->update(['status'=>'published']);
         if ($request->file('company_logo')) {
@@ -138,6 +151,7 @@ class JobController extends Controller
 //                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
 //            }
 //        }
+
 
         //$jobs = Job::all();
         $request->session()->flash('success', 'Jobben er lagt til');

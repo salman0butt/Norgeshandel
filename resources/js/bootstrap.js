@@ -69,7 +69,11 @@ window.Echo = new Echo({
 var channel = window.Echo.channel('property-for-rent');
 
 channel.listen('.property-for-rent', function(data) 
-{   
+{    
+ 
+    // console.log(data);
+    // return false;
+
     var user_id = data.user_id;
     var url = data.path;
     var notify_user = "";
@@ -84,9 +88,6 @@ channel.listen('.property-for-rent', function(data)
            
         }
     });
-
-    
-    
 
     if(($("#user_id_notfy").val() != user_id && $("#user_role_admin").val() == 1) || notify_user == true)
     {
