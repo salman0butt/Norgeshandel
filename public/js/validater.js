@@ -10,16 +10,15 @@ $(document).ready(function () {
             },
             zip_code: {
                 required: true,
-                zipcodeUS: true
+                zipcode: true
             },
             property_type: {
                 required: true
             },
-            primary_rom:
-                {
-                    required: true,
-                    number: true
-                },
+            primary_rom: {
+                required: true,
+                number: true
+            },
             gross_area: {
                 number: true
             },
@@ -49,7 +48,7 @@ $(document).ready(function () {
             rented_to: {
                 date: true
             }
-        },
+        }
     });
     //Property for sale
 
@@ -94,11 +93,10 @@ $(document).ready(function () {
                 required: true,
                 number: true
             },
-            primary_room:
-                {
-                    required: true,
-                    number: true
-                },
+            primary_room: {
+                required: true,
+                number: true
+            },
             Base: {
                 number: true
             },
@@ -253,11 +251,10 @@ $(document).ready(function () {
                 required: true,
                 number: true
             },
-            primary_room:
-                {
-                    required: true,
-                    number: true
-                },
+            primary_room: {
+                required: true,
+                number: true
+            },
             gross_area: {
                 required: true,
                 number: true
@@ -366,7 +363,7 @@ $(document).ready(function () {
     });
 
 
-//Næringstomt form validation
+    //Næringstomt form validation
 
     $("#realestate_business_plot").validate({
         lang: 'no',
@@ -649,56 +646,215 @@ $(document).ready(function () {
         }
     });
 
+    // CV PAGE VALIDATION
+    $("#cvpersonal-form").validate({
+        lang: 'no',
+        rules: {
+            title: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            first_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            last_name: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            address: {
+                required: true,
+                maxlength: 120
+            },
+            zip: {
+                required: true,
+                zipcodeUS: true
+            },
+            city: {
+                required: true,
+                maxlength: 120
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            tell: {
+                number: true
+            },
+            mobile: {
+                number: true
+            },
+            birthday: {
+                date: true
+            },
+            gender: {
+                required: true
+            },
+            occupational_status: {
+                required: true
+            },
+            website: {
+                url: true
+            },
+            driving_license: {
+                number: true,
+                minlength: 2,
+                maxlength: 20
+            }
+        }
+    });
+
+    // CV education part VALIDATION
+
+    $("#new_cvexperience-form").validate({
+        lang: 'no',
+        rules: {
+            school: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            zip: {
+                required: true,
+                zipcodeUS: true
+            },
+            period_from: {
+                required: true,
+                date: true
+            },
+            period_to: {
+                required: true,
+                date: true
+            },
+            subject: {
+                required: true
+            },
+            education_level: {
+                required: true
+            }
+
+        }
+    });
+
+    // CV experiance part VALIDATION
+    $("#cvexperience-form").validate({
+        lang: ' no',
+        rules: {
+            company: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            period_from: {
+                required: true,
+                date: true
+            },
+            period_to: {
+                required: true,
+                date: true
+            },
+            job_title: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            }
+        }
+    });
+
+    // CV experiance part VALIDATION
+    $("#form_languages").validate({
+        lang: ' no',
+        rules: {
+            langs: {
+                required: true
+            }
+        }
+    });
+
+    // CV form prefrences part VALIDATION
+    $("#form_preferences").validate({
+        lang: ' no',
+        rules: {
+            job_type: {
+                required: true
+            },
+            responsibility: {
+                required: true
+            },
+            disclaimer: {
+                required: true
+            },
+            willingness: {
+                required: true
+            },
+            travel_days: {
+                number: true
+            },
+            salary: {
+                number: true
+            },
+            termination_notice: {
+                required: true
+            }
+        }
+    });
+
+
+
+
 
     //submit button checks
     $('#flat_wishes_rented_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#flat_wishes_rented_form').validate().checkForm()) {                   // checks form for validity
+        if ($('#flat_wishes_rented_form').validate().checkForm()) { // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
     $('#property_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#property_for_sale_form').validate().checkForm()) {                   // checks form for validity
+        if ($('#property_for_sale_form').validate().checkForm()) { // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
     $('#property_for_rent_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#property_for_rent_form').validate().checkForm()) {                   // checks form for validity
+        if ($('#property_for_rent_form').validate().checkForm()) { // checks form for validity
             $('#publiser_annonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
-            $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+            $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
     $('#realestate_business_plot input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#realestate_business_plot').validate().checkForm()) {                   // checks form for validity
+        if ($('#realestate_business_plot').validate().checkForm()) { // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
     $('#property_holiday_home_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#property_holiday_home_for_sale_form').validate().checkForm()) {                   // checks form for validity
+        if ($('#property_holiday_home_for_sale_form').validate().checkForm()) { // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
     $('#commercial_property_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#commercial_property_for_sale').validate().checkForm()) {                   // checks form for validity
+        if ($('#commercial_property_for_sale').validate().checkForm()) { // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
     $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
         if ($('#job-form').validate().checkForm()) {
-           // checks form for validity
+            // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true);   // disables button
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
     $('select').on('change', function () {

@@ -2,12 +2,17 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\App;
+use App\Admin\jobs\JobPreference;
+use App\Models\AllowedCompanyAd;
+use App\Models\Company;
+use App\Models\Following;
 use Illuminate\Notifications\Notifiable;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use EntrustUserTrait;
@@ -71,5 +76,55 @@ class User extends Authenticatable
 
     public function cv(){
         return $this->hasOne('App\Models\Cv\Cv');
+    }
+
+    public function preference(){
+        return $this->hasOne(JobPreference::class);
+    }
+
+    public function companies(){
+        return $this->hasMany(Company::class);
+    }
+    public function banner_ads() {
+        return $this->hasMany('App\Admin\ads\Banner');
+    }
+    public function allowed_ads(){
+        return $this->hasMany(AllowedCompanyAd::class);
+    }
+
+    public function allowed_job_companies(){
+        return $this->hasMany(AllowedCompanyAd::class)->where('key', '=', 'jobs');
+    }
+
+    public function allowed_property_companies(){
+        return $this->hasMany(AllowedCompanyAd::class)->where('key', '=', 'properties');
+    }
+
+    public function job_companies(){
+        return $this->hasMany(Company::class)->where('company_type', '=', 'job');
+    }
+
+    public function property_companies(){
+        return $this->hasMany(Company::class)->where('company_type', '=', 'property');
+    }
+
+    public function followings(){
+        return $this->hasMany(Following::class);
+    }
+//    public function job_followings(){
+//        return $this->hasMany(Following::class)->where('');
+//    }
+
+    public function is($roleName)
+    {
+        foreach ($this->roles()->get() as $role)
+        {
+            if ($role->name == $roleName)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

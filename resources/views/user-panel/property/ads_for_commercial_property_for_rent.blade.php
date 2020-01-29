@@ -52,7 +52,18 @@
                     </div>
                 </div>
             </div>
-            <div class="row order_specific_result">
+             <div style="display: block;margin: 0 auto; text-align:center;">
+                 <div id="imageLoader" style="display:none;margin-top:15%; padding-bottom: 15%">
+                   <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader">
+                 </div>
+            </div>
+           
+            <div class="row pagination_data">
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">
+                        {{$add_array->links()}}
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?>">
@@ -76,7 +87,7 @@
                                     
                             ?>
 
-                            <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
+                            <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
                                 <a href="{{url('/commercial/property/for/rent/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                         <div class="trailing-border">
@@ -89,7 +100,8 @@
                                         <div class="location u-t5 text-muted mt-2">{{$property_commercial_property_for_rent->street_address}}</div>
                                         <div class="title color-grey">{{$property_commercial_property_for_rent->heading}}</div>
                                         <div class="mt-2">
-                                            <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->gross_area_from}} - {{$property_commercial_property_for_rent -> gross_area_to}} m²</div>
+                                            <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->gross_area_from}} - {{$property_commercial_property_for_rent -> gross_area_to}} m²</div></br>
+                                            <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->use_area}} m²</div>
                                             <div class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_rent->rent_per_meter_per_year}} kr</div>
                                         </div>
                                         <br>
@@ -102,7 +114,13 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">
+                        {{$add_array->links()}}
+                    </div>
+                </div>
             </div>
+          
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
@@ -112,7 +130,17 @@
 
     <script>
             $(document).ready(function(){
+                     //spinner start here
+                  $(document).ajaxStart(function(){
+                        $("#imageLoader").css("display", "block");
+                        $(".pagination_data").css("display", "none");
+                        });
 
+                        $(document).ajaxComplete(function(){
+                        $("#imageLoader").css("display", "none");
+                        $(".pagination_data").css("display", "block");
+                    });
+                //spinner ends here
                 
                 $.ajaxSetup({
                     headers: {
@@ -124,16 +152,46 @@
                     
                     var url  = '{{url('property/commercial/for/rent/sorted/ad')}}';
                     var data = $(this).val();
+
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+
+
                     $.ajax({
                         type: "POST",
                         url: url,
-                        data: {sending:data},
+                        data: {sending:data,stylings:stylings},
                         dataType: "json",
                         success: function(data){
-                           $(".order_specific_result").html(data['success']);
+                           $(".pagination_data").html(data['success']);
                         }
                     });
                 });
+
+                //pagination
+                $(document).on('click', '.pagination a',function(event)
+                {
+                    event.preventDefault();
+                    $('li').removeClass('active');
+                    $(this).parent('li').addClass('active');
+        
+                    var myurl = $(this).attr('href');
+                    var page=$(this).attr('href').split('page=')[1];
+                   
+                    var sorting_value = $("#sort_by").val();
+                    var url = '{{url('commercial/property/for/rent/ads')}}';
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+                    getDataPagination(page,sorting_value,url,stylings);
+
+                });
+
 
             });
 

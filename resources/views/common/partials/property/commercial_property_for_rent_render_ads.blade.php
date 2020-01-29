@@ -1,7 +1,22 @@
 <?php 
-    $col='list';
+
+    if(isset($filtering))
+    {
+        $col = (strpos($filtering,'grid') !== false ? "grid":"list");
+    }
+    else
+    {
+        $col = 'list';  
+    }
+
 ?>
 
+
+   <div class="col-md-12 outer-div">
+        <div class="inner-div">
+            {{$add_array->links()}}
+        </div>
+    </div>
     <div class="col-md-12">
         <div class="<?php
         echo $col==='grid'?'row':'' ?>">
@@ -37,6 +52,7 @@
                             <div class="title color-grey">{{$property_commercial_property_for_rent->heading}}</div>
                             <div class="mt-2">
                                 <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->gross_area_from}} - {{$property_commercial_property_for_rent -> gross_area_to}} m²</div>
+                                </br><div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->use_area}} m²</div>
                                 <div class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_rent->rent_per_meter_per_year}} kr</div>
                             </div>
                             <br>
@@ -47,5 +63,10 @@
                     </a>
                 </div>
             @endforeach
+        </div>
+    </div>
+    <div class="col-md-12 outer-div">
+        <div class="inner-div">
+            {{$add_array->links()}}
         </div>
     </div>

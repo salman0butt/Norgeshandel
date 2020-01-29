@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
 .left-ad, .right-ad, .top-ad {
     /*background-color: red;*/
 }
@@ -203,6 +202,10 @@ header .navbar .dropdown-toggle::after{
     line-height: 16px;
 }
 .u-d1{
+    font-size: 16px;
+    line-height: 16px;
+}
+.u-d2 {
     font-size: 12px;
     line-height: 16px;
 }
@@ -631,7 +634,9 @@ input[type=checkbox]:focus{
     border-radius:10px;;
 }
 .add-to-fav{
-    position: absolute; right: 20px; bottom:60px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
     font-size: 1.5em;
     cursor: pointer;
 }
@@ -952,12 +957,54 @@ a > .alert-warning:hover{
 .invalid-feedback{
     display: block !important;
 }
+
+button.link{
+    background-color: transparent;
+    display: inline;
+    color: #ac304a;
+    outline: none;
+    border: none;
+}
+button.link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
 .hide{
     display: none;
 }
+
 .error-span{
     color: #ac304a;
 }
+
+.outer-div{
+    width: 100%;
+    text-align: center;
+    margin-top:12px;
+}
+
+.inner-div{
+    margin-left: 69%;
+}
+.dme-btn-outlined-blue.collapsed{
+    opacity: .7;
+}
+ul.pagination .page-item .page-link{
+    color: #ac304a;
+}
+ul.pagination .active .page-link{
+    background-color: #ac304a;
+    border-color: #ac304a;
+    color: white;
+}
+
+.cgrid .add-to-fav {
+    top: 20px !important;
+}
+.clist .add-to-fav {
+    top: 20px !important;
+}
+
 /*bootstrap overridden style*/
 @media (min-width: 992px){
     .navbar-expand-lg .navbar-nav .nav-link {

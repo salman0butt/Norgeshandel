@@ -2,16 +2,38 @@
 namespace App\Helpers;
 
 use App\Media;
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Database\Eloquent\Model;
+use App\Admin\ads\Banner;
 use Illuminate\Support\Str;
+use App\Admin\Banners\BannerGroup;
 
 require 'vendor/autoload.php';
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Session\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class common
 {
+    public static function map_nav($terms)
+    {
+        $html = '<ul class="list list-unstyled">';
+        foreach ($terms as $term) {
+            $html .= '
+            <li>
+                <div class="input-toggle">
+                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="'.$term->name.'" id="'.$term->taxonomy->id.'-'.$term->id.'">
+                    <label for="'.$term->taxonomy->id.'-'.$term->id.'" class="">'.$term->name . ' <span data-name="'.$term->name.'" data-title="'.$term->taxonomy->slug.'" class="count"></span></label>
+                </div>
+                ';
+            if (!empty($terms = $term->getChildren)) {
+                $html.= common::map_nav($terms);
+            }
+            $html .= '</li>';
+        }
+        $html.='</ul>';
+        return $html;
+    }
+
     public static function getMediaPath($obj, $size = 'full')
     {
         $file_name = $obj->name_unique;
@@ -22,6 +44,9 @@ class common
             $sz = explode('x', $size);
             if (is_array($arr) && count($arr) == 2) {
                 $file = $path . $arr[0] . '-' . $size . '.' . $arr[1];
+                if(!file_exists($path . $arr[0] . '.' . $arr[1])){
+                    return null;
+                }
                 if (!file_exists($file)) {
                     Image::make($path . $obj->name_unique)->widen($sz[0])->heighten($sz[1])->save($path . $arr[0] . '-' . $size . '.' . $arr[1]);
                 }
@@ -87,22 +112,16 @@ class common
 
     public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar')
     {
-
         self::delete_media($mediable_id, $mediable_type, $type);
         if (!is_array($files)) {
             $files = array($files);
         }
 
         foreach ($files as $file) {
-
-
             $unique_name = date('ymd') . '-' . time() . '-' . mt_rand(1000000, 9999999);
-
             $name = $file->getClientOriginalName();
             $name_unique = $unique_name . '.' . $file->getClientOriginalExtension();
             $path = 'public/uploads/' . date('Y') . '/' . date('m');
-
-
             if (strtolower($file->getClientOriginalExtension()) == 'jpg' ||
                 strtolower($file->getClientOriginalExtension()) == 'jpeg' ||
                 strtolower($file->getClientOriginalExtension()) == 'png'
@@ -115,7 +134,6 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(570)->widen(570)->save($path . '/' . $unique_name . '-570x570.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(768)->widen(768)->save($path . '/' . $unique_name . '-768x768.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
-                common::delete_media($mediable_id, $mediable_type, $type);
                 $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
                 $media->save();
             }
@@ -140,6 +158,21 @@ class common
             }
             $obj_old_media->delete();
         }
+    }
+    public static function display_ad($location){
+            $banner_group = BannerGroup::where('location','=',$location)->get()->first();
+        
+            foreach($banner_group->banners as $banner):
+                // dd($banner->display_time_duration);
+                 if ($banner->is_active) {  
+
+                    // if ($banner->display_time_duration > '20') {
+                        echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";     
+                    // }
+                 }
+               
+
+            endforeach;
     }
 
 }

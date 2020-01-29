@@ -16,8 +16,14 @@ class TranslationController extends Controller
     public function __construct()
     {
         $this->blades = [
-//            give path starting after resources\views\
+//      give path starting after resources\views\
             'common\partials\job-form.blade.php',
+            'auth\login.blade.php',
+            'auth\retister.blade.php',
+            'auth\verified.blade.php',
+            'auth\verify.blade.php',
+            'layouts\app.blade.php',
+            'user-panel\my-business\cv\cv.blade.php',
         ];
         $this->content = '';
     }
@@ -25,7 +31,7 @@ class TranslationController extends Controller
     public function index()
     {
 
-        $path = str_replace('/','\\',$_SERVER['DOCUMENT_ROOT'].'\NorgesHandel\resources\views\\');
+        $path = str_replace('/','\\',$_SERVER['DOCUMENT_ROOT'].'\norgeshandel\resources\views\\');
         foreach ($this->blades as $blade){
             if(file_exists($path.$blade)){
                 $this->content .= file_get_contents($path.$blade);
@@ -33,6 +39,7 @@ class TranslationController extends Controller
         }
         $strings = $this->get_strings($this->content);
         $translated = json_decode(file_get_contents(resource_path('lang\nb.json')), true);
+//        dd($translated);
 //        foreach ($json as $key=>$val){
 //            echo $key.'=>'.$val.'<br>';
 //        }
@@ -58,12 +65,20 @@ class TranslationController extends Controller
      */
     public function store(Request $request)
     {
+        $translated = json_decode(file_get_contents(resource_path('lang\nb.json')), true);
         $keys = $request->all()['key'];
         $vals = $request->all()['val'];
         $arr = [];
         for($i=0; $i<count($keys); $i++){
+//            if (array_key_exists($keys[$i], $translated)){
+//                $translated[$keys[$i]]=$vals[$i];
+//            }
+//            else{
+//                array_push($translated, [$keys[$i]=>$vals[$i]]);
+//            }
             $arr[$keys[$i]]=$vals[$i];
         }
+//        dd($translated);
         $file = fopen(resource_path('lang\nb.json'), 'w');
         fwrite($file, json_encode($arr));
         fclose($file);
@@ -117,6 +132,7 @@ class TranslationController extends Controller
     }
     private function get_strings($content){
         preg_match_all("[\{\{__\('.*\'\)\}\}]",$content, $matches);
+//        dd($matches);
         $arr = array();
         foreach ($matches[0] as $match){
             $match = str_replace('\')}}', '', $match);

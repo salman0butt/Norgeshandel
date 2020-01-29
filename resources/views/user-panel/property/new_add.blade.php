@@ -69,16 +69,20 @@
                         $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
                     },
                     error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
+                        
                         var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
-                        var html = "<ul>";
-                        $.each(errors.errors, function (index, value) {
-                            console.log(index);
-                            $("." + index).html(value);
-                            $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
-                        });
-                        // html += "</ul>";
-                        // $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
+                        if(!isEmpty(errors.errors))
+                        {
+                            $.each(errors.errors, function (index, value) 
+                            {
+                                $("." + index).html(value);
+                                $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
+                            });
+                        }
+                        else
+                        {
+                            $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                        }
                     },
 
                 }).always(function () {
@@ -134,15 +138,9 @@
 
 
             });
+
         });
 
-        function isEmpty(obj) {
-            for (var key in obj) {
-                if (obj.hasOwnProperty(key))
-                    return false;
-            }
-            return true;
-        }
     </script>
 
 @endsection

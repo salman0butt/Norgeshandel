@@ -1,16 +1,21 @@
             
-              <?php 
+<?php 
 
 
-$col='list';
-if(isset($_GET)){
-    if(isset($_GET['grid'])){
-        $col = 'grid';
-}}
-
+if(isset($filtering))
+{
+    $col = (strpos($filtering,'grid') !== false ? "grid":"list");
+}
+else
+{
+    $col = 'list';  
+}
 
 ?>
 
+<div class="col-md-12 outer-div">
+    <div class="inner-div">{{ $add_array->links() }}</div>
+</div>
 
 <div class="col-md-12">
 
@@ -67,4 +72,7 @@ if(isset($_GET)){
 
 </div>
 
+</div>
+<div class="col-md-12 outer-div">
+    <div class="inner-div">{{ $add_array->links() }}</div>
 </div>

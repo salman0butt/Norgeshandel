@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12 text-center mt-5 mb-5">
             <div class="profile-icon">
-                <img src="@if(Auth::user()->media!=null){{asset(\App\Helpers\common::getMediaPath(Auth::user()->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="Profile image" style="width:80px;">
+                <img src="@if(Auth::user()->media!=null){{asset(\App\Helpers\common::getMediaPath(Auth::user()->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="Profile image" style="width:100px;height: 100px;border-radius: 50%;">
             </div>
             <div class="profile-name">
                 <h2 class="text-muted">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h2>
@@ -49,7 +49,7 @@
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{url('my-business/following')}}" style="text-decoration: none;">
                     <span class="font-weight-bold">Firmaer jeg følger</span>
                 </a>
             </li>
@@ -61,11 +61,12 @@
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{url('my-business/profile')}}" style="text-decoration: none;">
                     <span class="font-weight-bold">Endre profil</span>
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
+{{--                <a href="{{url('my-business/job-preferences')}}" style="text-decoration: none;">--}}
                 <a href="#" style="text-decoration: none;">
                     <span class="font-weight-bold">Mine jobb-preferanser</span>
                 </a>

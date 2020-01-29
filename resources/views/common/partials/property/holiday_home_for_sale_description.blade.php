@@ -10,17 +10,17 @@
 
             }
 
-            $name       =    $property_data->media->first();
-            if($name != null)
-            {
-                $name       =    $name->name_unique;
-                $path       = \App\Helpers\common::getMediaPath($property_data);
-                $full_path  = $path."".$name; 
-            }
-            else
-            {
-                $full_path  = "";
-            }
+            $name       =    $property_data->media;
+            // if($name != null)
+            // {
+            //     $name       =    $name->name_unique;
+            //     $path       = \App\Helpers\common::getMediaPath($property_data);
+            //     $full_path  = $path."".$name; 
+            // }
+            // else
+            // {
+            //     $full_path  = "";
+            // }
     
         ?>
 
@@ -36,7 +36,41 @@
     <div class="dme-container p-3">
         <div class="row">
             <div class="col-md-12">
-                <img src="{{$full_path}}" alt="" class="img-fluid">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <!-- <div class="carousel-item active">
+                    
+                        </div> -->
+                        <?php $i = 0; ?>
+                        @if($name->count() > 0)
+                            @foreach($name as $key=>$val)
+                                <?php 
+                                    $unique_name  =  $val->name_unique;
+                                    $path  =    \App\Helpers\common::getMediaPath($property_data);
+                                    $full_path  = $path."". $unique_name; 
+                                ?>
+                        
+                                    <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
+                                    <img class="d-block w-100" src="{{$full_path}}" alt="First slide">
+                                    </div>
+                                
+                            <?php $i++ ?>
+                            @endforeach
+                        @endif 
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
             </div>
             <div class="col-md-12 text-center">
                 <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">Pen og koselig

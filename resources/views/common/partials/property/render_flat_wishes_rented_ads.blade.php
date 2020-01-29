@@ -1,13 +1,21 @@
             
-              <?php 
+<?php 
 
 
-$col='list';
-
+if(isset($filtering))
+{
+    $col = (strpos($filtering,'grid') !== false ? "grid":"list");
+}
+else
+{
+    $col = 'list';  
+}
 
 ?>
 
-
+<div class="col-md-12 outer-div">
+    <div class="inner-div">{{ $add_array->links() }}</div>
+</div>
 <div class="col-md-12">
 
 <div class="<?php echo $col==='grid'?'row':'' ?>">
@@ -61,4 +69,7 @@ $col='list';
     @endforeach
 </div>
 
+</div>
+<div class="col-md-12 outer-div">
+    <div class="inner-div">{{ $add_array->links() }}</div>
 </div>

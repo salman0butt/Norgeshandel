@@ -10,61 +10,116 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use App\Media;
 use App\Models\Ad;
+use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
+Auth::routes(['verify' => true]);
+Route::get('verified', function (){return view('auth.verified');})->middleware('verified');
+Route::get('mail', function () {
+    $to_name = 'Zain';
+    $to_email = 'zain@digitalmx.no';
+    Mail::send('mail.new_user_verification', [], function ($message) use ($to_name, $to_email) {
+        $message->to($to_email, $to_name)->subject('email subject');
+        $message->from('developer@digitalmx.no', 'Developers of NorgesHandel');
+    });
+})->middleware('verified');
 
-Auth::routes();
-
-Route::get('mail', function (){
-    return view('mail.new_user_verification');
-});
 Route::get('lang', 'TranslationController@index');
+
+Route::get('savedsearches', 'SearchController@index');
+Route::post('savedsearches/', 'SearchController@store');
+Route::post('recentearches/{value}', 'SearchController@recent');
+
+Route::get('searching/{search}', 'SearchController@search')->name('searching');
 //    home routes
-Route::get('/', function () {
-    $ads = Ad::where('status','published')->orderBy('id', 'desc')->get();
-    return view('home', compact('ads')); });
-Route::get('home', function () {
-    $ads = Ad::where('status','published')->orderBy('id', 'desc')->get();
-    return view('home', compact('ads')); })->name('home');
+Route::get('/', 'HomeController@index');
+Route::get('home', 'HomeController@index')->name('home');
 //--
 
+//Banner ads mangment
+Route::get('/admin/ads', 'Admin\ads\BannerController@index')->middleware(['role:admin|manager']);
+Route::get('/admin/ads/{id}/edit', 'Admin\ads\BannerController@edit')->middleware(['role:admin|manager']);
+Route::patch('/admin/ads/{id}/', 'Admin\ads\BannerController@update')->middleware(['role:admin|manager']);
+Route::delete('/admin/ads/{id}/', 'Admin\ads\BannerController@destroy')->middleware(['role:admin|manager']);
+Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
+Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
+
+Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+
+//Banner Group   /admin/banner-group/
+
+// Route::resource('bannerGroup', 'Admin\ads\BannerGroupController');
+
+Route::get('/admin/banner-group/create', 'Admin\ads\BannerGroupController@create')->middleware(['role:admin|manager']);
+Route::post('/admin/banner-group/store', 'Admin\ads\BannerGroupController@store')
+->middleware(['role:admin|manager'])->name('banner-group-new');
+Route::get('/admin/banner-group/index', 'Admin\ads\BannerGroupController@index')->middleware(['role:admin|manager']);
+Route::delete('/admin/banner-group/{id}', 'Admin\ads\BannerGroupController@destroy')->middleware(['role:admin|manager']);
+Route::get('/admin/banner-group/{id}/edit', 'Admin\ads\BannerGroupController@edit')->middleware(['role:admin|manager']);
+Route::patch('/admin/banner-group/{id}', 'Admin\ads\BannerGroupController@update')->middleware(['role:admin|manager']);
+
+
+
+
+//language switch
+Route::get('my-business/cv/{locale}', function ($locale) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+});
+
+
+
+
 //    common routes for all users
-Route::get('jobs/search', 'Admin\Jobs\JobController@search')->name('search');
+Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
 Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
 Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
+Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
 
-Route::get('shared-lists/{link_id}', function ($link_id){
+
+
+Route::get('shared-lists/{link_id}', function ($link_id) {
     $list = \App\fav_list::where('share_link', $link_id)->get()->first();
     return view('user-panel.my-business.favorites.my_favorites_list', compact('list'));
 });
 
 Route::resources([
-    'users'           => 'Admin\Users\AdminUserController',
-    'roles'           => 'Admin\Users\RoleController',
-    'jobs'            => 'Admin\Jobs\JobController',
+    'users' => 'Admin\Users\AdminUserController',
+    'roles' => 'Admin\Users\RoleController',
+    'jobs' => 'Admin\Jobs\JobController',
 
-    'term'       => 'TermController',
-    'tax'       => 'TaxonomyController',
-    'media'       => 'MediaController',
-    'trans'     => 'TranslationController'
+    'term' => 'TermController',
+    'tax' => 'TaxonomyController',
+    'media' => 'MediaController',
+    'trans' => 'TranslationController'
 ]);
-Route::get('single', function (){return view('user-panel/jobs/single');});
+Route::get('dummy', function (){
+    return view('user-panel.nav');
+});
+Route::get('single', function () {
+    return view('user-panel/jobs/single');
+});
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
-Route::get('forbidden', function (){ return view('admin.users.forbidden'); })->name('forbidden');
+Route::get('forbidden', function () {
+    return view('admin.users.forbidden');
+})->name('forbidden');
 //--
-Route::get('us/{p}', function (){
+Route::get('us/{p}', function () {
     echo 'hello';
 });
 
 //    routes for all non guest users
-Route::group(['middleware'=>'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
 //    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 
 //    my business/min handel page routes
-    Route::group(['prefix'=>'my-business'], function () {
-        Route::get('/', function () {return view('user-panel.my-business.my_business');});
+    Route::group(['prefix' => 'my-business'], function () {
+        Route::get('/', function () {
+            return view('user-panel.my-business.my_business');
+        });
         Route::get('my-ads/{status?}', 'AdController@my_ads');
 
 //      favorites routes
@@ -75,16 +130,16 @@ Route::group(['middleware'=>'auth'], function(){
         Route::get('remove-fav/{ad_id}', 'FavoriteController@remove_fav');
         Route::get('rename-list/{list_id}/{name}', 'FavoriteController@rename_list');
         Route::get('delete-list/{list_id}', 'FavoriteController@delete_list');
-        Route::get('favorite-list/{list_id}', function ($list_id){
+        Route::get('favorite-list/{list_id}', function ($list_id) {
             $list = \App\fav_list::where('id', $list_id)->get()->first();
             return view('user-panel.my-business.favorites.my_favorites_list', compact('list'));
         });
         Route::resource('cv', 'Cv\CvController');
-        Route::group(['prefix'=>'cv'], function (){
+        Route::group(['prefix' => 'cv'], function () {
             Route::resources([
-                'cvpersonal'=>'Cv\CvPersonalController',
-                'cvexperience'=>'Cv\CvExperienceController',
-                'cveducation'=>'Cv\CvEducationController'
+                'cvpersonal' => 'Cv\CvPersonalController',
+                'cvexperience' => 'Cv\CvExperienceController',
+                'cveducation' => 'Cv\CvEducationController'
             ]);
             Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
 //            Route::post('update_skills', 'Cv\CvController@update_skills')->name('update_skills');
@@ -93,32 +148,51 @@ Route::group(['middleware'=>'auth'], function(){
             Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
             Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
         });
+        Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
+        Route::post('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
+        Route::get('profile/select_company_profile_type', function (){
+            return view('user-panel.my-business.profile.company_request_1');
+        });
+        Route::get('profile/company_profile_form/{type}', function ($type){
+            return view('user-panel.my-business.profile.company_request_2', compact('type'));
+        });
+        Route::resource('company', 'CompanyController');
         Route::get('cv/extend', 'Cv\CvController@extend');
+        Route::resource('job-preferences', 'JobPreferenceController');
+        Route::resource('following', 'FollowingController');
     });
 
-
-
 //    new ad routes
-    Route::group(['prefix'=>'new'], function(){
-        Route::get('/', function (){return view('user-panel.select-ad-category');});
+    Route::group(['prefix' => 'new'], function () {
+        Route::get('/', function () {
+            return view('user-panel.select-ad-category');
+        });
 
 //        new job routes
-        Route::group(['prefix'=>'job', 'middleware'=>'auth'], function(){
-            Route::get('full_time', function (){return view('user-panel.jobs.new_full_time');});
-            Route::get('part_time', function (){return view('user-panel.jobs.new_part_time');});
-            Route::get('management', function (){return view('user-panel.jobs.new_management');});
+        Route::group(['prefix' => 'job', 'middleware' => 'auth'], function () {
+            Route::get('full_time', function () {
+                return view('user-panel.jobs.new_full_time');
+            });
+            Route::get('part_time', function () {
+                return view('user-panel.jobs.new_part_time');
+            });
+            Route::get('management', function () {
+                return view('user-panel.jobs.new_management');
+            });
         });
     });
 
 });
+Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>['role:admin|manager']], function () {
 
-
-Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => ['role:admin|manager|salesman']], function (){
 //    dashboard
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
 //    job custom routes
-    Route::get('/jobs/select_category', function (){ return view('admin.jobs.jobs_select_category'); });
+    Route::get('/jobs/select_category', function () {
+        return view('admin.jobs.jobs_select_category');
+    });
     Route::get('/jobs/create/{type}', 'Admin\Jobs\JobController@create')->name('jobs.create');
     Route::get('/jobs/status_change/{ad}/status/{status}', 'Admin\Jobs\JobController@status_change')->name('jobs.status_change');
 //    edit user role
@@ -127,19 +201,19 @@ Route::group(['prefix'=>'admin', 'as'=>'admin.', 'middleware' => ['role:admin|ma
     Route::POST('/users/change_role', 'Admin\Users\AdminUserController@change_role')->name('users.change_role');
 //    all general resources
     Route::resources([
-        'dashboard'       => 'Admin\DashboardController',
-        'users'           => 'Admin\Users\AdminUserController',
-        'roles'           => 'Admin\Users\RoleController',
-        'jobs'            => 'Admin\Jobs\JobController',
+        'dashboard' => 'Admin\DashboardController',
+        'users' => 'Admin\Users\AdminUserController',
+        'roles' => 'Admin\Users\RoleController',
+        'jobs' => 'Admin\Jobs\JobController',
 
-        'term'            => 'TermController',
-        'tax'             => 'TaxonomyController',
-        'media'           => 'MediaController',
+        'term' => 'TermController',
+        'tax' => 'TaxonomyController',
+        'media' => 'MediaController',
     ]);
 });
 
-Route::get('reset', function (){
-    \App\User::all()->first()->update(['password'=>\Illuminate\Support\Facades\Hash::make('gujrat786')]);
+Route::get('reset', function () {
+    \App\User::all()->first()->update(['password' => \Illuminate\Support\Facades\Hash::make('gujrat786')]);
 
 });
 
@@ -164,23 +238,23 @@ Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEst
 Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
 Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
 Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
-Route::get('/property/description/{id}', ['uses' =>'PropertyController@propertyDescription']);
-Route::get('/property/for/sale/description/{id}', ['uses' =>'PropertyController@propertyForSaleDescription']);
+Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
+Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
 
 
 //flatwishesrented
 Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
 Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
-Route::get('/flat/wishes/rented/description/{id}', ['uses' =>'PropertyController@flatWishesRentedDescription']);
+Route::get('/flat/wishes/rented/description/{id}', ['uses' => 'PropertyController@flatWishesRentedDescription']);
 
 //holidayhomeforsale
 Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');
-Route::get('/holiday/home/for/sale/description/{id}', ['uses' =>'PropertyController@holidayHomeForSaleDescription']);
+Route::get('/holiday/home/for/sale/description/{id}', ['uses' => 'PropertyController@holidayHomeForSaleDescription']);
 
 //commercialpropertyforsale
 Route::get('/commercial/property/for/sale/ads', 'PropertyController@commercialPropertyForSaleAds');
 Route::post('/property/commercial/for/sale/sorted/ad', 'PropertyController@commercialPropertyForSaleSortedAds');
-Route::get('/commercial/property/for/sale/description/{id}', ['uses' =>'PropertyController@commercialForSaleDescription']);
+Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'PropertyController@commercialForSaleDescription']);
 
 //commercialpropertyforrent
 Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
@@ -210,4 +284,22 @@ Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commerc
 Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
+
+//chat
+Route::get('/messages', 'PropertyController@messages');
+Route::get('/message/{id}', 'PropertyController@getMessage');
+Route::post('message', 'PropertyController@sendMessage');
+
+
+//notifications
+Route::post('notifications/all', 'NotificationController@getAllNotifications');
+
+Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+
+Route::get('test', function () {
+    event(new App\Events\PropertyForRent('Guest'));
+    return "Event has been sent!";
+});
+
+
 

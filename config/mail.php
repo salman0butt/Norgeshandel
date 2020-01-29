@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'mail.demodesign.no'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 26),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => 'developer@digitalmx.no',
-        'name' => 'NorgesHandel',
+        'address' => env('MAIL_FROM_ADDRESS', 'developer@digitalmx.no'),
+        'name' => env('MAIL_FROM_NAME', 'NorgesHandel'),
     ],
 
 //    'from' => [

@@ -8,10 +8,40 @@ function readFileURL(input, img) {
         reader.readAsDataURL(input.files[0]);
     }
 }
-
+function dme_nav_collapse(){
+    $.each($('.nav-dynamic-checks'), function (index) {
+        var should_visible = true;
+        if($(this).find('>ul>li').length>12){
+            $.each($(this).find('>ul>li'), function(x){
+                if($(this).index()>12){
+                    $(this).slideUp();
+                    should_visible = false;
+                }
+            });
+        }
+        if(!should_visible){
+            $(this).find('.shrink').remove();
+            $(this).find('.expand').remove();
+            $(this).append('<a href="#" class="dynamic-check-view-all expand">Vis all</a>');
+        }
+    });
+}
 $(document).ready(function (e) {
+    dme_nav_collapse();
 
-    $('.mega-menu input[type=checkbox]').click(function (e) {
+    $(document).on('click', '.dynamic-check-view-all.expand', function (e) {
+        e.preventDefault();
+        $(this).parent().find('>ul>li').slideDown();
+        $(this).parent().append('<a href="#" class="dynamic-check-view-all shrink">Vis mindre</a>');
+        $(this).remove();
+        // $(this).html('Vis mindre');
+        // $(this).removeClass('expand');
+        // $(this).addClass('shrink');
+    });
+    $(document).on('click', '.dynamic-check-view-all.shrink', function (e) {
+        dme_nav_collapse();
+    });
+    $('.dme-collapse-nav input[type=checkbox], .mega-menu input[type=checkbox]').click(function (e) {
         if($(this).prop("checked") == true) {
             if ($(this).parent().next().length > 0) {
                 if ($(this).parent().next()[0].tagName == 'UL') {
@@ -23,6 +53,7 @@ $(document).ready(function (e) {
             if ($(this).parent().next().length > 0) {
                 if ($(this).parent().next()[0].tagName == 'UL') {
                     $(this).parent().next().slideUp();
+                    $(this).parent().next().find('input[type=checkbox]').prop("checked", false);
                 }
             }
         }
@@ -46,6 +77,9 @@ $(document).ready(function (e) {
             $(this).find('span').addClass('fa-times');
         }
 
+    });
+    $(document).click(function (e) {
+        // console.log(e.target);
     });
 
     $('.side-menu-button').click(function (e) {

@@ -51,21 +51,29 @@
                 <div class="col-md-4">
                     <div class="">
                         <label for="sort-by" class="mb-1">Sortér på</label>
-                        <select name="sort-by" id="sort-by" class="dme-form-control">
+                        <select name="sort-by" id="sort_by" class="dme-form-control">
 
                             <option value="most-relevant">Mest relevant</option>
-                            <option value="1" selected="">Publisert</option>
+                            <option value="published" selected="">Publisert</option>
                             <option value="priced-low-high">Prisant lav-høy</option>
                             <option value="priced-high-low">Prisant høy-lav</option>
                             <option value="housing_area_low_high">Boa lav-høy</option>
                             <option value="housing_area_high_low">Boa høy-lav</option>
-                            <option value="99">Nærmest</option>
+                            <option value="nearest">Nærmest</option>
 
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="row">
+                <div style="display: block;margin: 0 auto; text-align:center;">
+                 <div id="imageLoader" style="display:none;margin-top:15%; padding-bottom: 15%">
+                   <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader">
+                 </div>
+               </div>
+            <div class="row pagination_data">
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">{{ $add_array->links() }}</div>
+                </div>
                 <div class="col-md-12" id="order_specific_result">
                     <div class="<?php
                     echo $col === 'grid' ? 'row' : '' ?>">
@@ -135,6 +143,9 @@
                         @endforeach
                     </div>
                 </div>
+                <div class="col-md-12 outer-div">
+                    <div class="inner-div">{{ $add_array->links() }}</div>
+                </div>
             </div>
             <!--    ended container-->
             <div class="right-ad pull-right">
@@ -142,10 +153,20 @@
             </div>
     </main>
 
-
     <script>
         $(document).ready(function () {
 
+                //spinner start here
+                  $(document).ajaxStart(function(){
+                        $("#imageLoader").css("display", "block");
+                        $(".pagination_data").css("display", "none");
+                        });
+
+                        $(document).ajaxComplete(function(){
+                        $("#imageLoader").css("display", "none");
+                        $(".pagination_data").css("display", "block");
+                    });
+                //spinner ends here
 
             $.ajaxSetup({
                 headers: {
@@ -153,21 +174,51 @@
                 }
             });
 
-            $(document).on('change', '#sort-by', function () {
+            $(document).on('change', '#sort_by', function () {
 
                 var url = '{{url('get/property/holiday/home/for/sale/ad')}}';
                 var data = $(this).val();
+
+                var stylings = window.location.href.split('?', 2)[1];
+                if (typeof stylings == 'undefined')
+                {
+                    stylings = "";
+                }
+        
                 $.ajax({
                     type: "POST",
                     url: url,
-                    data: {sending: data},
+                    data: {sending: data , stylings:stylings},
                     dataType: "json",
-                    success: function (data) {
-                        $("#order_specific_result").html(data['success']);
+                    success: function (data) 
+                    {
+                        $(".pagination_data").html(data['success']);
                     }
 
                 });
             });
+
+            
+                //pagination
+                $(document).on('click', '.pagination a',function(event)
+                {
+                    event.preventDefault();
+                    $('li').removeClass('active');
+                    $(this).parent('li').addClass('active');
+        
+                    var myurl = $(this).attr('href');
+                    var page=$(this).attr('href').split('page=')[1];
+                   
+                    var sorting_value = $("#sort_by").val();
+                    var url = '{{url('holiday/home/for/sale/ads')}}';
+                    var stylings = window.location.href.split('?', 2)[1];
+                    if (typeof stylings == 'undefined')
+                    {
+                        stylings = "";
+                    }
+                    getDataPagination(page,sorting_value,url,stylings);
+                    
+                });
 
         });
     </script>

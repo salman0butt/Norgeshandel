@@ -54,3 +54,31 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+import Echo from "laravel-echo"
+Pusher.logToConsole = true;
+
+window.Pusher = require('pusher-js');
+window.Echo = new Echo({
+  broadcaster: 'pusher',
+  key: 'd4efdc4a073f0521f41e',
+  cluster: 'ap2',
+  forceTLS: true
+});
+
+var channel = window.Echo.channel('property-for-rent');
+var html = "";
+channel.listen('.property-for-rent', function(data) 
+{   
+    var user_id = data.user_id;
+    
+    if($("#user_id_notfy").val() != user_id && $("#user_role_admin").val() == 1)
+    {
+        html += "<input type='hidden' name='notids[]' value='"+data.notification_id+"'>"
+        $("#notifications").append(html);
+        var notification_count =  $(":input[name='notids[]']").length;
+        $("#notification_count_pro").html(notification_count);
+    }
+
+});
+ 

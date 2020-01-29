@@ -13,8 +13,10 @@
     <link href="{{ asset('public/admin/css/float-chart.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/materialdesignicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/fontawesome-all.css') }}" rel="stylesheet">
+
 {{--    <link href="{{ asset('public/admin/css/themify-icons.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('public/admin/css/multicheck.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/admin/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/datatables.bootstrap4.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Custom CSS -->
@@ -23,10 +25,16 @@
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <link href="{{ asset('public/admin/mediexpert.css') }}" rel="stylesheet">
 
+
+    <script src="{{ asset('public/admin/js/select2.min.js') }}"></script>
+    <script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>
+
+
     <script src="{{asset('public/js/tinymce.min.js')}}"></script>
     <!--[if lt IE 9]>
     <script src="{{ asset('public/admin/js/html5shiv.js') }}"></script>
     <script src="{{ asset('public/admin/js/respond.min.js') }}"></script>
+
     <![endif]--><style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
 
 <body cz-shortcut-listen="true">
@@ -211,6 +219,17 @@
                             <li class="sidebar-item"><a href="{{url('admin/jobs/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
                         </ul>
                     </li>
+                {{-- ads mangment --}}
+                  <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu">{{__('Ads Mangemnet')}}</span></a>
+                        <ul aria-expanded="false" class="collapse  first-level">
+                            <li class="sidebar-item"><a href="{{url('admin/ads')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Banner Ads')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('admin/ads/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Banner')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/banner-group/index')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Banner Group')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('/admin/banner-group/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Banner Group')}} </span></a></li>
+                        </ul>
+                    </li>
+
+
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="grid.html" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Finance')}}</span></a></li>
 {{--                    @endpermission--}}
 {{--                    @permission('manage_users')--}}
@@ -306,6 +325,8 @@
 <!--Custom JavaScript -->
 <script src="{{ asset('public/admin/js/custom.min.js') }}"></script>
 <!---->
+<script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('public/admin/js/select2.min.js') }}"></script>
 <script src="{{ asset('public/admin/js/jquery.multicheck.js') }}"></script>
 <script src="{{ asset('public/admin/js/datatable-checkbox-init.js') }}"></script>
 
@@ -314,6 +335,8 @@
 <!--This page JavaScript -->
 <!-- <script src="../../dist/js/pages/dashboards/dashboard1.js"></script> -->
 <!-- Charts js Files -->
+
+
 <script src="{{ asset('public/admin/js/excanvas.js') }}"></script>
 <script src="{{ asset('public/admin/js/jquery.flot.js') }}"></script>
 <script src="{{ asset('public/admin/js/jquery.flot.pie.js') }}"></script>
