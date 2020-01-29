@@ -29,6 +29,8 @@ class NotificationController extends Controller
 
     public function getAllNotifications(){
         
+        $data['count'] = "";
+        $data['html']  = "";
         if(User::find(Auth::user()->id)->is('admin'))
         {
             $notifications = Notification::where('user_id','!=',Auth::user()->id)->where('read_at','=',null)->get()->toArray();
@@ -43,8 +45,23 @@ class NotificationController extends Controller
         }
         else
         {
-            $data['count'] = "";
-            $data['html']  = "";
+            $notifications = Notification::join('searches', 'notifications.type', '=', 'searches.ad_type')
+                                ->where('notifications.user_id','!=',Auth::user()->id)
+                                ->where('searches.user_id','=',Auth::user()->id)
+                                ->where('notifications.read_at','=',null)
+                                ->groupBy('notifications.id')
+                                ->get([
+                                    'notifications.notifiable_id'
+                                ])->toArray();
+            $count = count($notifications);
+            $html = "";
+            foreach($notifications as $key=>$val)
+            {
+                $html .= "<input type='hidden' name='notids[]' value='".$val['notifiable_id']."'>";
+            }
+            $data['count'] = $count;
+            $data['html']  = $html;
+            
         }
         
 
@@ -54,9 +71,49 @@ class NotificationController extends Controller
 
     public function showAllNotifications(Request $request)
     {
-        $ids = Notification::where('user_id','!=',Auth::user()->id)->get(['notifiable_id','id'])->toArray();
+        if(User::find(Auth::user()->id)->is('admin'))
+        {
+            $ids = Notification::where('user_id','!=',Auth::user()->id)->get(['notifiable_id','id'])->toArray();
+        }
+        else
+        {
+            $ids = Notification::join('searches', 'notifications.type', '=', 'searches.ad_type')
+            ->where('notifications.user_id','!=',Auth::user()->id)
+            ->where('searches.user_id','=',Auth::user()->id)
+            ->where('notifications.read_at','=',null)
+            ->groupBy('notifications.id')
+            ->get([
+                'notifications.id as id',
+                'notifications.notifiable_id as notifiable_id'
+            ])->toArray();
+        }
         return view('common.partials.notifications.all_notifications', ['ids' => $ids]);
 
     }
+
+    public function searchNotificationExists(Request $request)
+    {
+        $data = $request->all();
+        $notification_id = $data['ma'];
+        $ids = Notification::join('searches', 'notifications.type', '=', 'searches.ad_type')
+            ->where('notifications.id','=',$data['ma'])
+            ->where('searches.user_id','=',Auth::user()->id)
+            ->where('notifications.read_at','=',null)
+            ->groupBy('notifications.id')
+            ->get([
+                'notifications.id as id',
+                'notifications.notifiable_id as notifiable_id'
+            ])->toArray();
+        if(count($ids)>0)
+        {
+            $data["res"] = true;
+        }
+        else{
+            $data["res"] = false;
+        }
+
+        echo json_encode($data);
+    }
+
 
 }
