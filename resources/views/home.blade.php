@@ -8,11 +8,11 @@
     </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
-             {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
+            <img src="http://localhost/norgeshandel/public/images/left-ad.png" class="img-fluid" alt="">
         </div>
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
-            {{(\App\Helpers\common::display_ad('top')) ? \App\Helpers\common::display_ad('top') : ''}} 
+                <img src="http://localhost/norgeshandel/public/images/top-ad.png" class="img-fluid m-auto" alt="">
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">
@@ -20,32 +20,32 @@
                     <h2 class="u-t4">Lagrede søk</h2>
                     <ul>
                         @if (Auth::check())
-                            
-                        @if (isset($saved_search))
-                            @foreach($saved_search as $search)
-                                <li><a href="#">{{ $search->name }}</a></li>
-                            @endforeach
+
+                            @if (isset($saved_search))
+                                @foreach($saved_search as $search)
+                                    <li><a href="{{url(htmlspecialchars($search->filter))}}">{{ $search->name }}</a></li>
+                                @endforeach
+                            @else
+                                <li><p class="u-d1">Det er ingen lagrede søk</p></li>
+                            @endif
                         @else
-                            <li><p class="u-d1">Det er ingen lagrede søk</p></li>
+                            <p class="u-d1"><a href="{{url('/login')}}">Logg inn</a> for å vise dine lagrede søk</p>
                         @endif
-                        @else 
-                      <p class="u-d1"><a href="#">Logg inn</a> for å vise dine lagrede søk</p>
-                         @endif
                     </ul>
-                    ​
+
                     <h2 class="u-t4">Siste søk</h2>
                     <ul>
-                     @if (Auth::check())
-                        @if (isset($recent_search))
-                            @foreach($recent_search as $recent)
-                                <li><a href="{{ url('/login') }}">{{ $recent->name }}</a></li>
-                            @endforeach
+                        @if (Auth::check())
+                            @if (isset($recent_search))
+                                @foreach($recent_search as $recent)
+                                    <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ $recent->name }}</a></li>
+                                @endforeach
+                            @else
+                                <p class="u-d1">Det er ingen nylig søk</p>
+                            @endif
                         @else
-                            <p class="u-d1">Det er ingen nylig søk</p>
+                            <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
                         @endif
-                         @else 
-                        <p class="u-d1"><a href=""{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
-                         @endif
                     </ul>
                 </div>
                 <!--            ended col-->
@@ -76,7 +76,8 @@
                             @endif
                         </div>
                     </div>
-                    <input type="hidden" value="{{ (auth()->user()->id ? auth()->user()->id : '') }}" id="userId">
+
+                    <input type="hidden" value="{{ Auth::check() ? Auth::user()->id : '' }}" id="userId">
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
                             <a href="property/realestate" class="category">
@@ -118,7 +119,7 @@
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
-            {{(\App\Helpers\common::display_ad('right')) ? \App\Helpers\common::display_ad('right') : ''}} 
+            <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
         </div>
     </main>
     <script type="text/javascript">
@@ -139,49 +140,52 @@
             });
 
 
-            $('#search').on('keyup keydown', function (e) {
-                $('#suggestions').css('display', 'block');
-
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    url: $('#search_url').val() + '/' + $('#search').val(),
-                    type: "GET",
-                    success: function (response) {
-                        $('#suggestions').html(response);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                })
+            $('#search').on('keyup', function (e) {
+                if(!isEmpty($('#search_url').val())) {
+                    $('#suggestions').css('display', 'block');
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: $('#search_url').val() + '/' + $('#search').val(),
+                        type: "GET",
+                        success: function (response) {
+                            $('#suggestions').html(response);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                }
+                else{
+                    $('#suggestions').html("");
+                }
             });
         });
 
-      $(document).ready(function (e) {
+        $(document).ready(function (e) {
             $('.ad_clicked').on('click', function (e) {
-             //  e.preventDefault();
+                //  e.preventDefault();
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-              
-            
+
+
                 var url = 'banner/ad/click';
-               var banner_id = $(this).attr("data-banner-id");
-               var user_id = $('#userId').val();
-               
+                var banner_id = $(this).attr("data-banner-id");
+                var user_id = $('#userId').val();
+
 
                 $.ajax({
                     url: url,
                     type: "POST",
                     data: {banner_id: banner_id,user_id: user_id },
                     success: function (response) {
-                       console.log(response);
+                        console.log(response);
                     },
                     error: function (error) {
                         console.log(error);
