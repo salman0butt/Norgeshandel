@@ -58979,6 +58979,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 });
 var channel = window.Echo.channel('property-for-rent');
 channel.listen('.property-for-rent', function (data) {
+  // console.log(data);
+  // return false;
   var user_id = data.user_id;
   var url = data.path;
   var notify_user = "";

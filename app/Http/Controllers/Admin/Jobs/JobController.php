@@ -64,7 +64,9 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+
         $arr = array(
+
             'name' => $request->name,
             'title' => $request->title,
             'job_type' => $request->job_type,
@@ -102,6 +104,17 @@ class JobController extends Controller
         );
 
         $ad = Ad::find($request->ad_id);
+        
+        $response = $ad->job->id;
+        $notifiable_id = $response;
+        $notification_obj = new \App\Http\Controllers\NotificationController();
+        $notification_response = $notification_obj->create($notifiable_id,'App\Admin\Jobs\Job','property have been added');
+        $notification_id_search = $notification_response->id;
+        //trigger event
+        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
+
+       
+
         $ad->job->update($arr);
         $ad->update(['status' => 'published']);
         if ($request->file('company_logo')) {
@@ -112,6 +125,40 @@ class JobController extends Controller
             $files = $request->file('company_gallery');
             common::update_media($files, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
         }
+
+
+        $terms = Term::find([$request->industry, $request->job_function]);
+
+        $ad->job->terms()->detach();
+        $ad->job->terms()->attach($terms);
+
+//        $job = new Job($arr);
+
+//        $job->slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
+
+//        $terms = Term::find([$request->industry, $request->job_function]);
+
+//        $ad = new Ad(['ad_type'=>'job', 'status'=>'published', 'user_id'=>Auth::user()->id]);
+//        $ad->save();
+//        $ad->job()->save($job);
+
+//        $job->save();
+//        $job->terms()->attach($terms);
+
+//        if ($request->file('company_logo')) {
+//            $file = $request->file('company_logo');
+//            common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_logo');
+//        }
+//        if ($request->file('company_gallery')) {
+//            $files = $request->file('company_gallery');
+//            foreach ($files as $file)
+//            {
+//                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+//            }
+//        }
+
+
+        //$jobs = Job::all();
 
         $request->session()->flash('success', 'Jobben er lagt til');
         return back();

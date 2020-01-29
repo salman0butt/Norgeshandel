@@ -561,90 +561,90 @@ $(document).ready(function () {
 
 
     // LOGIN PAGE VALIDATION
-    $("#job-form").validate({
-        lang: 'no',
-        rules: {
-            name: {
-                required: true,
-                minlength: 2,
-                maxlength: 120
-            },
-            title: {
-                required: true,
-                minlength: 2,
-                maxlength: 120
-            },
-            positions: {
-                required: true,
-                number: true
-            },
-            commitment_type: {
-                required: true
-            },
-            sector: {
-                required: true
-            },
-            industry: {
-                required: true
-            },
-            job_function: {
-                required: true
-            },
-            deadline_type: {
-                required: true
-            },
-            deadline: {
-                required: true
-            },
-            emp_name: {
-                required: true,
-                minlength: 2,
-                maxlength: 120
-            },
-            emp_website: {
-                url: true
-            },
-            emp_facebook: {
-                url: true
-            },
-            emp_linkedin: {
-                url: true
-            },
-            emp_twitter: {
-                url: true
-            },
-            country: {
-                required: true
-            },
-            zip: {
-                required: true,
-                zipcodeUS: true
+    // $("#job-form").validate({
+    //     lang: 'no',
+    //     rules: {
+    //         name: {
+    //             required: true,
+    //             minlength: 2,
+    //             maxlength: 120
+    //         },
+    //         title: {
+    //             required: true,
+    //             minlength: 2,
+    //             maxlength: 120
+    //         },
+    //         positions: {
+    //             required: true,
+    //             number: true
+    //         },
+    //         commitment_type: {
+    //             required: true
+    //         },
+    //         sector: {
+    //             required: true
+    //         },
+    //         industry: {
+    //             required: true
+    //         },
+    //         job_function: {
+    //             required: true
+    //         },
+    //         deadline_type: {
+    //             required: true
+    //         },
+    //         deadline: {
+    //             required: true
+    //         },
+    //         emp_name: {
+    //             required: true,
+    //             minlength: 2,
+    //             maxlength: 120
+    //         },
+    //         emp_website: {
+    //             url: true
+    //         },
+    //         emp_facebook: {
+    //             url: true
+    //         },
+    //         emp_linkedin: {
+    //             url: true
+    //         },
+    //         emp_twitter: {
+    //             url: true
+    //         },
+    //         country: {
+    //             required: true
+    //         },
+    //         zip: {
+    //             required: true,
+    //             zipcodeUS: true
 
-            },
-            workplace_video: {
-                url: true
-            },
-            app_receive_by: {
-                required: true
-            },
-            app_link_to_receive: {
-                url: true
-            },
-            app_email_to_receive: {
-                required: true,
-                email: true
-            },
-            app_email: {
-                email: true
-            },
-            app_linkedin: {
-                url: true
-            },
-            app_twitter: {
-                url: true
-            }
-        }
-    });
+    //         },
+    //         workplace_video: {
+    //             url: true
+    //         },
+    //         app_receive_by: {
+    //             required: true
+    //         },
+    //         app_link_to_receive: {
+    //             url: true
+    //         },
+    //         app_email_to_receive: {
+    //             required: true,
+    //             email: true
+    //         },
+    //         app_email: {
+    //             email: true
+    //         },
+    //         app_linkedin: {
+    //             url: true
+    //         },
+    //         app_twitter: {
+    //             url: true
+    //         }
+    //     }
+    // });
 
     // CV PAGE VALIDATION
     $("#cvpersonal-form").validate({
@@ -849,14 +849,14 @@ $(document).ready(function () {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
-    $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#job-form').validate().checkForm()) {
-            // checks form for validity
-            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
+    // $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#job-form').validate().checkForm()) {
+    //         // checks form for validity
+    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
     $('select').on('change', function () {
         $("form").validate().element('select', '#furnishing');
     });

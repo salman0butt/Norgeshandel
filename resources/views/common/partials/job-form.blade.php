@@ -484,7 +484,7 @@
 
             $('#job-form input, #job-form select').blur(function (e) {
                 $('#description').text(tinyMCE.get("description").getContent());
-                $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
+                //$('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
                 var link = $('#ad_id').val().length > 0 ? '{{url('jobs/update_dummy')}}' : '{{url('jobs/store_dummy')}}';
                 $.ajaxSetup({
                     headers: {

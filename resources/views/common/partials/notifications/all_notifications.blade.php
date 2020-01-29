@@ -46,7 +46,7 @@
                             <div class="ads__unit__img__ratio">
                                 <span><a href="{{url('/property/description', $value['notifiable_id'])}}">
                                     <img class="img-thumbnail w-100" style="border-radius:10px;"
-                                    src="{{$full_path}}"
+                                    src="@if(!empty($full_path)){{$full_path}}@else{{'http://localhost/norgeshandel/public/images/image-placeholder.jpg'}}@endif"
                                     alt="">
                                 </span>
                             </div>
@@ -97,6 +97,10 @@
                                         {
                                             echo $notification -> headline;
                                         }
+                                        else if($notification_type->type  == "App\Admin\Jobs\Job")
+                                        {
+                                            echo $notification -> title; 
+                                        } 
                                         else
                                         {
                                             echo $notification_type -> headline;
