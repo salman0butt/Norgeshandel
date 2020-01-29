@@ -66,7 +66,7 @@
                         <div href="#" class="favorite-icon-outer">
                             <div class="favorite-icon fa fa-heart"></div>
                         </div>
-                        <img src="{{$path}}" style="max-height: 200px;" class="img-fluid product-img" alt="">
+                        <img src="{{$path}}" style="max-height: 302px;min-height:302px;width:100%;" class="img-fluid product-img" alt="">
                         <div class="product-total-price">
                             Totalpris:
                             <?php 

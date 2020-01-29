@@ -17,6 +17,14 @@
         'price' => '',
         'detail' => '');
     ?>
+    <style>
+    .clist .add-to-fav {
+        top:0px !important;
+    }
+    .location {
+        top: -250px !important;
+    }
+    </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
@@ -97,12 +105,12 @@
 
                             ?>  
 
-                            <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
+                            <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
                                 <a href="{{url('/holiday/home/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
 
                                         <div class="trailing-border">
-                                            <img src="{{$full_path}}" alt="" class="img-fluid radius-8">
+                                            <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/image-placeholder.jpg')}}@endif" alt="" class="img-fluid radius-8" style="min-height:207px;max-height:207px;width:100%;">
                                         </div>
                                     </div>
                                     <div
@@ -125,11 +133,11 @@
                                         </div>
                                         <br>
                                         <div
-                                            class="location u-t5 text-muted">{{  $property_holiday_home_for_sale ->  local_area_name  }}</div>
-                                        <div class="location u-t5 text-muted">
+                                            class="loca u-t5 text-muted">{{  $property_holiday_home_for_sale ->  local_area_name  }}</div>
+                                        <div class="loca u-t5 text-muted">
                                             <span>TotalPris:</span><span>{{  $property_holiday_home_for_sale ->  total_price  }}</span>
                                         </div>
-                                        <div class="location u-t5 text-muted">
+                                        <div class="loca u-t5 text-muted">
                                             <span>{{  $property_holiday_home_for_sale ->  ownership_type  }}</span> •
                                             <span>{{  $property_holiday_home_for_sale ->  property_type  }}</span></div>
                                         <div class="dealer-logo float-right mt-3"><img

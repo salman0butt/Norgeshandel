@@ -205,6 +205,114 @@ $(document).ready(function () {
     });
 
 
+    // Commercial Lot
+
+    $("#commercial_plot_form").validate({
+        lang: 'no',
+        rules: {
+            plot_type: {
+                required: true
+            },
+            country: {
+                required: true
+            },
+            zip_code: {
+                required: true,
+                zipcode: true
+            },
+            municipal_number: {
+                required: true,
+                number: true
+            },
+            usage_number: {
+                required: true,
+                number: true
+            },
+             farm_number: {
+                 required: true,
+                 number: true
+             },
+            plot_size: {
+                required: true,
+                number: true
+            },
+            asking_price: {
+                required: true,
+                number: true
+            },
+            verditakst: {
+                required: true,
+                number: true
+            },
+            headline: {
+                required: true,
+                minlenght: 2,
+                maxlength: 120
+            },
+            link: {
+                url: true
+            },
+            phone: {
+                number: true
+            },
+            contact: {
+                number: true
+            },
+            e_post: {
+                email: true
+            }
+        }
+
+    });
+
+
+    // Businesses for sale
+
+    $("#business_for_sale").validate({
+        lang: 'no',
+        rules: {
+            industry: {
+                required: true
+            },
+            alternative_industry: {
+                required: true
+            },
+            zip_code: {
+                required: true,
+                zipcode: true
+            },
+            company_name: {
+                 required: true
+            },
+            organiztion_number: {
+                number: true,
+                required: true
+            },
+            price: {
+                required: true,
+                number: true
+            },
+            headline: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            link: {
+                url: true
+            },
+            link_for_information: {
+                url: true
+            },
+            phone: {
+                number: true
+            }
+        }
+
+    });
+
+
+
+
     //Holiday homes for sale
 
     $("#property_holiday_home_for_sale_form").validate({
@@ -856,6 +964,16 @@ $(document).ready(function () {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
+
+      $('#business_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
+          if ($('#business_for_sale').validate().checkForm()) {
+              // checks form for validity
+              $('#publiser_annonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+          } else {
+              $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true); // disables button
+          }
+      });
+
     $('select').on('change', function () {
         $("form").validate().element('select', '#furnishing');
     });

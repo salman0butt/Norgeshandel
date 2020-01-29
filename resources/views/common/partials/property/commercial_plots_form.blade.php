@@ -262,7 +262,7 @@
                             </div>
                             <!--                            small input-->
                             <div class="form-group">
-                                <h3 class="u-t5">Postnummer</h3>
+                                <h3 class="u-t5">Postnummerss</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
                                         <input name="zip_code" type="text" class="dme-form-control">

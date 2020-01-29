@@ -24,7 +24,7 @@ if(count($media)>0){
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
         <div class="image-section col-sm-12  p-2">
             <div class="trailing-border">
-                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/image-placeholder.jpg')}}@endif" style="max-height: 200px;" alt="" class="img-fluid radius-8">
+                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/image-placeholder.jpg')}}@endif" style="max-height: 302px; width:100%;" alt="" class="img-fluid radius-8">
                 <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;"></div>
             </div>
         </div>
