@@ -310,6 +310,71 @@ $(document).ready(function () {
 
     });
 
+    // residential_and_recreational_land_for_sale
+    $("#residential_and_recreational_land_for_sale").validate({
+        lang: 'no',
+        rules: {
+            property_type: {
+                required: true
+            },
+            countryCode: {
+                required: true
+            },
+            areaId: {
+                required: true
+            },
+            postal_code: {
+                zipcode: true,
+                required: true,
+                number: true
+            },
+            county_number: {
+                number: true
+            },
+            cadastral_unit_number: {
+                number: true
+            },
+            cadastral_unit_number: {
+                number: true
+            },
+            property_unit_number: {
+                number: true
+            },
+            section_number: {
+                 number: true
+            },
+            leasehold_unit_number: {
+                number: true
+            },
+            plot_area_size:{
+                number: true
+            },
+            price_suggestion: {
+                number: true
+            },
+            sales_cost_sum: {
+                number: true
+            },
+            date0: {
+                date: true
+            },
+            time_from0: {
+                number: true
+            },
+            time_to0: {
+               number: true
+            },
+            title: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            contact_mobile: {
+                number: true
+            }
+
+        }
+    });
 
 
 

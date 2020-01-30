@@ -8,17 +8,18 @@
     </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
-        <div id="slideshow">
-                {{-- {{(\App\Helpers\common::display_ad('left') ? \App\Helpers\common::display_ad('left') : '')}} --}}
+        <img src="http://localhost/norgeshandel/public/images/left-ad.png" class="img-fluid" alt="">
+        {{-- <div id="slideshow">
+                {{(\App\Helpers\common::display_ad('left') ? \App\Helpers\common::display_ad('left') : '')}}
   
-        </div>
+        </div> --}}
               
         </div>
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
       
-
-
+<img src="http://localhost/norgeshandel/public/images/top-ad.png" class="img-fluid m-auto" alt="">
+{{-- 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -26,13 +27,10 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-  {{-- {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}}  --}}
+  {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}} 
     </div>
 </div>
-</div>
-
-
-          
+</div> --}}
 
             </div>
             <div class="row pt-4"></div>
@@ -138,9 +136,11 @@
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
-         <div id="slideshow">
-            {{-- {{(\App\Helpers\common::display_ad('right') ? \App\Helpers\common::display_ad('right') : '')}}  --}}
-        </div>
+        <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
+         {{-- <div id="slideshow">
+            {{(\App\Helpers\common::display_ad('right') ? \App\Helpers\common::display_ad('right') : '')}} 
+        </div> --}}
+       
         </div>
     </main>
     <script type="text/javascript">

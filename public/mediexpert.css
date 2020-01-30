@@ -1078,3 +1078,7 @@ ul.pagination .active .page-link{
 /* .clist .list-h {
     min-height: 300px !important;
 } */
+.grid__unit.input-toggle {
+    width: 25% !important;
+    float: left !important;
+}
