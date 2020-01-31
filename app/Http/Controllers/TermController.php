@@ -28,30 +28,9 @@ class TermController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private function insert_term_array($arr, $taxonomy, $parent = 0){
-        $Parent = $parent;
-        foreach ($arr as $value) {
-            if (!is_array($value)) {
-                $term = new Term(['name' => $value, 'slug' => Str::slug($value),
-                    'taxonomy_id'=>$taxonomy,'parent' => $parent]);
-                $term->save();
-                $Parent = $term->id;
-            } else {
-                $this->insert_term_array($value, $taxonomy, $Parent);
-            }
-        }
-    }
 
     public function index()
     {
-//        $this->insert_term_array($this->industry, 1, 0);
-//        $this->insert_term_array($this->job_function, 2, 0);
-//        $this->insert_term_array($this->sector, 3, 0);
-//        $this->insert_term_array($this->commitment_type, 4, 0);
-//        $this->insert_term_array($this->leadership_category, 5, 0);
-//        $this->insert_term_array($this->deadline, 6, 0);
-//        $this->insert_term_array($this->country, 7, 0);
-
         $terms = Term::orderBy('id', 'desc')->get();
         $taxonomies = Taxonomy::orderBy('id', 'desc')->get();
         return view('admin.categories.terms', compact('taxonomies', 'terms'));

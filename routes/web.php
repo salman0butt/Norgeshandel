@@ -38,6 +38,11 @@ Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
 //--
 
+//property search and filters
+Route::get('property/property-for-sale/search', 'PropertyController@search_property_for_sale');
+
+
+
 //Banner ads mangment
 Route::get('/admin/ads', 'Admin\ads\BannerController@index')->middleware(['role:admin|manager']);
 Route::get('/admin/ads/{id}/edit', 'Admin\ads\BannerController@edit')->middleware(['role:admin|manager']);

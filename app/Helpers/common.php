@@ -3,17 +3,31 @@ namespace App\Helpers;
 
 use App\Media;
 use App\Admin\ads\Banner;
+use App\Term;
 use Illuminate\Support\Str;
 use App\Admin\Banners\BannerGroup;
-
-require 'vendor/autoload.php';
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Session\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
+require 'vendor/autoload.php';
+
 class common
 {
+    public static function insert_term_array($arr, $taxonomy, $parent = 0){
+        $Parent = $parent;
+        foreach ($arr as $value) {
+            if (!is_array($value)) {
+                $term = new Term(['name' => $value, 'slug' => Str::slug($value),
+                    'taxonomy_id'=>$taxonomy,'parent' => $parent]);
+                $term->save();
+                $Parent = $term->id;
+            } else {
+                common::insert_term_array($value, $taxonomy, $Parent);
+            }
+        }
+    }
+
     public static function map_nav($terms)
     {
         $html = '<ul class="list list-unstyled">';
