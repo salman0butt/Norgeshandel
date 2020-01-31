@@ -38,7 +38,7 @@ class CreatePropertyHolidaysHomesForSalesTable extends Migration
 
             $table->string('base')->nullable();
             $table->string('housing_area')->nullable();
-            $table->string('area_description')->nullable();
+            $table->text('area_description')->nullable();
             $table->string('year_of_construction')->nullable();
 
             $table->string('renovated_year')->nullable();
@@ -59,7 +59,7 @@ class CreatePropertyHolidaysHomesForSalesTable extends Migration
             $table->string('party_fee')->nullable();
             $table->string('amenities')->nullable();
             $table->integer('number_of_tenants')->nullable();
-            $table->string('character_description')->nullable();
+            $table->text('character_description')->nullable();
 
             $table->string('common_costs')->nullable();
             $table->string('joint_board_after_interest_fee_period')->nullable();
@@ -79,8 +79,8 @@ class CreatePropertyHolidaysHomesForSalesTable extends Migration
 
             $table->string('link_to_terif_documents')->nullable();
             $table->string('task_link')->nullable();
-            $table->string('description')->nullable();
-            $table->string('essential_information')->nullable();
+            $table->text('description')->nullable();
+            $table->longText('essential_information')->nullable();
             $table->string('sales_quote')->nullable();
 
             $table->string('video')->nullable();
