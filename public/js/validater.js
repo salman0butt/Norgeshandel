@@ -67,6 +67,9 @@ $(document).ready(function () {
             property_type: {
                 required: true
             },
+            floor: {
+                number: true
+            },
             tenure: {
                 required: true
             },
@@ -162,7 +165,7 @@ $(document).ready(function () {
                 number: true
             },
             video: {
-                url: true
+                validUrl: true
             },
             apartment_number: {
                 number: true
@@ -246,7 +249,7 @@ $(document).ready(function () {
                 maxlength: 120
             },
             link: {
-                url: true
+                validvalidUrl: true
             },
             phone: {
                 number: true
@@ -294,10 +297,10 @@ $(document).ready(function () {
                 maxlength: 120
             },
             link: {
-                url: true
+                validUrl: true
             },
             link_for_information: {
-                url: true
+                validUrl: true
             },
             phone: {
                 number: true
@@ -454,7 +457,7 @@ $(document).ready(function () {
                 number: true
             },
             state_report_link: {
-                url: true
+                validUrl: true
             },
             meter_above_sea_level: {
                 number: true
@@ -505,13 +508,13 @@ $(document).ready(function () {
                 number: true
             },
             link_to_terif_documents: {
-                url: true
+                validUrl: true
             },
             task_link: {
-                url: true
+                validUrl: true
             },
             video: {
-                url: true
+                validUrl: true
             },
             delivery_date: {
                 date: true
@@ -576,10 +579,10 @@ $(document).ready(function () {
                 number: true
             },
             text_on_link: {
-                url: true
+                validUrl: true
             },
             link_for_information: {
-                url: true
+                validUrl: true
             },
             email: {
                 required: true,
@@ -668,7 +671,7 @@ $(document).ready(function () {
                 maxlength: 120
             },
             link_for_information: {
-                url: true
+                validUrl: true
             }
         }
 
@@ -756,28 +759,22 @@ $(document).ready(function () {
             job_function: {
                 required: true
             },
-            deadline_type: {
-                required: true
-            },
-            deadline: {
-                required: true
-            },
             emp_name: {
                 required: true,
                 minlength: 2,
                 maxlength: 120
             },
             emp_website: {
-                url: true
+                validUrl: true
             },
             emp_facebook: {
-                url: true
+                validUrl: true
             },
             emp_linkedin: {
-                url: true
+                validUrl: true
             },
             emp_twitter: {
-                url: true
+                validUrl: true
             },
             country: {
                 required: true
@@ -787,13 +784,13 @@ $(document).ready(function () {
                 zipcode: true
             },
             workplace_video: {
-                url: true
+                validUrl: true
             },
             app_receive_by: {
                 required: true
             },
             app_link_to_receive: {
-                url: true
+                validUrl: true
             },
             app_email_to_receive: {
                 required: true,
@@ -803,10 +800,10 @@ $(document).ready(function () {
                 email: true
             },
             app_linkedin: {
-                url: true
+                validUrl: true
             },
             app_twitter: {
-                url: true
+                validUrl: true
             }
         }
     });
@@ -862,7 +859,7 @@ $(document).ready(function () {
                 required: true
             },
             website: {
-                url: true
+                validUrl: true
             },
             driving_license: {
                 number: true,
@@ -972,65 +969,65 @@ $(document).ready(function () {
 
 
     //submit button checks
-    $('#flat_wishes_rented_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#flat_wishes_rented_form').validate().checkForm()) { // checks form for validity
-            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
-    $('#property_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#property_for_sale_form').validate().checkForm()) { // checks form for validity
-            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
-    $('#property_for_rent_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#property_for_rent_form').validate().checkForm()) { // checks form for validity
-            $('#publiser_annonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
-    $('#realestate_business_plot input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#realestate_business_plot').validate().checkForm()) { // checks form for validity
-            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
-    $('#property_holiday_home_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#property_holiday_home_for_sale_form').validate().checkForm()) { // checks form for validity
-            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
-    $('#commercial_property_for_sale input,#commercial_property_for_rent input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#commercial_property_for_sale, #commercial_property_for_rent').validate().checkForm()) { // checks form for validity
-            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
-    $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#job-form').validate().checkForm()) {
-            // checks form for validity
-            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-        } else {
-            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-        }
-    });
+    // $('#flat_wishes_rented_form input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#flat_wishes_rented_form').validate().checkForm()) { // checks form for validity
+    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
+    // $('#property_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#property_for_sale_form').validate().checkForm()) { // checks form for validity
+    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
+    // $('#property_for_rent_form input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#property_for_rent_form').validate().checkForm()) { // checks form for validity
+    //         $('#publiser_annonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
+    // $('#realestate_business_plot input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#realestate_business_plot').validate().checkForm()) { // checks form for validity
+    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
+    // $('#property_holiday_home_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#property_holiday_home_for_sale_form').validate().checkForm()) { // checks form for validity
+    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
+    // $('#commercial_property_for_sale input,#commercial_property_for_rent input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#commercial_property_for_sale, #commercial_property_for_rent').validate().checkForm()) { // checks form for validity
+    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
+    // $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //     if ($('#job-form').validate().checkForm()) {
+    //         // checks form for validity
+    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //     } else {
+    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //     }
+    // });
 
-      $('#business_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
-          if ($('#business_for_sale').validate().checkForm()) {
-              // checks form for validity
-              $('#publiser_annonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-          } else {
-              $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true); // disables button
-          }
-      });
+    //   $('#business_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
+    //       if ($('#business_for_sale').validate().checkForm()) {
+    //           // checks form for validity
+    //           $('#publiser_annonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //       } else {
+    //           $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //       }
+    //   });
 
     $('select').on('change', function () {
         $("form").validate().element('select', '#furnishing');
