@@ -13,13 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                
+
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
                             <label for="email" class="col-md-6 col-form-label">{{ __('E-post') }}</label>
                         <div class="form-group row">
-                 
+
 
                             <div class="col-md-12">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -57,7 +57,7 @@
         <a href="#" class="nowrap subtle mls" target="_blank">Hjelp</a>&nbsp;
         <a href="#" class="nowrap subtle mls">Betingelser</a>&nbsp;
         <a href="#" class="nowrap subtle mls">Personvernerklæring</a>&nbsp;
-        <a href="#" class="nowrap subtle mls" target="_blank">Om Schibsted-konto</a>
+        <a href="#" class="nowrap subtle mls" target="_blank">Om Norges Handel</a>
     </div>
 </footer>
 <style>
@@ -72,7 +72,7 @@
 
     </div><!-- / .c-layout__container -->
 </div>
-            
+
         </div>
     </div>
 </div>

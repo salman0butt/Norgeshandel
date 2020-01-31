@@ -1005,6 +1005,84 @@ ul.pagination .active .page-link{
 .clist .add-to-fav {
     top: 20px !important;
 }
+
+.cgrid .location {
+    position: absolute;
+    top: -275px;
+    left: 15px;
+    font-size: 16px !important;
+}
+
+.cgrid>a {
+    padding-top: 25px !important;
+}
+
+.cgrid .week-status {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.cgrid .title {
+    display: block;
+    margin: 15px;
+    text-align: left;
+    margin-left: 0px !important;
+}
+
+.cgrid .tst {
+    border-right: 1px solid #AC304A;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.cgrid .ttt {
+    text-align: left;
+    padding-left: 0px !important;
+}
+
+.clist .location {
+    position: absolute;
+    top: -280px;
+
+    font-size: 16px !important;
+}
+
+/* .clist>a {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+} */
+
+.clist .week-status {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.clist .title {
+    display: block;
+    margin: 15px;
+    text-align: left;
+    margin-left: 0px !important;
+}
+
+.clist .tst {
+    border-right: 1px solid #AC304A;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.clist .ttt {
+    text-align: left;
+    padding-left: 0px !important;
+}
+/* .clist .list-h {
+    min-height: 300px !important;
+} */
+.grid__unit.input-toggle {
+    width: 25% !important;
+    float: left !important;
+}
 label span.count{
     color: #888888;
 }

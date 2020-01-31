@@ -85,13 +85,13 @@ Edit Banner Group
                  <div class="col-md-3">
                     <label class="col-md-12 control-label" for="time-start">Start Time<span class="red">*</span></label>
                     <div class="col-md-12">
-                  <input type="time" name="time_start" value="{{ $banner_group->time_start }}" placeholder="Start time" class="form-control">
+                  <input type="datetime-local" name="time_start" value="{{ $banner_group->time_start }}" placeholder="Start time" class="form-control">
                     </div>
                 </div>
                   <div class="col-md-3">
                     <label class="col-md-12 control-label" for="time-end">End Time<span class="red">*</span></label>
                     <div class="col-md-12">
-                  <input type="time" name="time_end" placeholder="End Time" value="{{ $banner_group->time_start }}" class="form-control">
+                  <input type="datetime-local" name="time_end" placeholder="End Time" value="{{ $banner_group->time_start }}" class="form-control">
                     </div>
                 </div>
       </div>

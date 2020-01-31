@@ -12,6 +12,7 @@
 
     ?>
 
+
 <main class="dme-wrepper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
@@ -98,7 +99,7 @@
                                 <a href="{{url('/property/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                         <div class="trailing-border">
-                                            <img src="{{$full_path_photos}}" alt="" class="img-fluid radius-8">
+                                            <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/image-placeholder.jpg')}}@endif" alt="" class="img-fluid radius-8 w-100 list-h">
                                         </div>
                                     </div>
                                     <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
@@ -112,8 +113,8 @@
                                         </div>
                                         <br>
 
-                                        <div class="detail u-t5 mt-3 float-left text-muted"> <span>  {{$property_for_sale->tenure}} •  {{$property_for_sale->property_type}} • {{$property_for_sale-> number_of_bedrooms}} soverom </span>  <br> Privat</div>
-                                        <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
+                                        <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt"> <p> <span class="tst"> {{$property_for_sale->tenure}} </span> <span class="tst"> {{$property_for_sale->property_type}} </span> <span style="padding-left:10px;"> {{$property_for_sale-> number_of_bedrooms}} </span> soverom </p></div>
+                                        <div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
                                         
                                     </div>
                                 </a>

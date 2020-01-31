@@ -664,8 +664,7 @@
             <h3 class="u-t5">Omkostninger inkluderer</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="costs_include" type="text" class="dme-form-control total_price_constants costs_include"
-                           placeholder="Kr">
+                    <input name="costs_include" type="text" class="dme-form-control total_price_constants costs_include">
                     <span class="error-span costs_include"></span>
                 </div>
                 <div class="col-sm-8">

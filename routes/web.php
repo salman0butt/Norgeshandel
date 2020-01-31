@@ -32,10 +32,18 @@ Route::get('savedsearches', 'SearchController@index');
 Route::post('savedsearches/', 'SearchController@store');
 Route::post('recentearches/{value}/{name}/{ad_type}', 'SearchController@recent');
 
+Route::get('/residential/and/recreational/land/for/sale', function(){
+    return view('user-panel.property.residential_and_recreational_land_for_sale');
+});
+
 Route::get('searching/{search?}', 'SearchController@search')->name('searching');
 //    home routes
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
+Route::get('/notification', function() {
+
+    return view('notification');
+});
 //--
 
 //property search and filters
