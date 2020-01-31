@@ -96,7 +96,7 @@ $(document).ready(function () {
             primary_room: {
                 required: true,
                 number: true
-            },
+            },   
             Base: {
                 number: true
             },
