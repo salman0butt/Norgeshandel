@@ -1082,3 +1082,6 @@ ul.pagination .active .page-link{
     width: 25% !important;
     float: left !important;
 }
+label span.count{
+    color: #888888;
+}

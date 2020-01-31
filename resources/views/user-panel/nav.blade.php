@@ -1,0 +1,11 @@
+@extends('layouts.landingSite')@section('page_content')
+<?php
+array("Butikkansatt ", "Helsepersonell ", array("Alternativ medisin ", "Bioingeniør ", "Ergoterapeut ", "Ernæringsfysiolog ", "Farmasøyt ", "Fysioterapeut ", "Helsefagarbeider/hjelpepleier ", "Helsesekretær ", "Kiropraktor ", "Optiker ", "Psykolog ", "Radiograf ", "Tannhelse ", "Vernepleier/miljøterapeut ",), "Håndverker ", array("Andre montører ", "Asfaltarbeid ", "Betongarbeider ", "Blikkenslager/tak ", "Bygg/Anleggsleder ", "Elektriker ", "Elektronikkmontør ", "Forskalingssnekker ", "Grunnarbeid ", "Hjelpearbeider ", "Maler/Tapeserer ", "Mekaniker ", "Murer/Flislegger ", "Murmester ", "Rørlegger ", "Snekker/Tømrer ", "Stillasmontør ", "Sveiser ", "Ventilasjonstekniker ",), "Ingeniør ", array("Akustikk ", "Asfaltingeniør ", "Automasjon og instrument ", "Boreteknikk/drilling ", "Brannsikkerhet ", "Bygge- og anleggsteknikk ", "Bygningsfysikk ", "Elektronikk ", "Geomatikk ", "Geoteknikk og ingeniørgeologi ", "HVAC ", "Kjemiingeniør ", "Kybernetikk ", "Marinteknikk / Naval architecture ", "Materialteknologi ", "Mekanisk ", "Oppmåling og kartlegging ", "Rør/struktur ", "Samferdselsteknikk og arealplanlegging ", "Strukturingeniør ", "Subsea ", "Taksering ", "Teknisk sikkerhet/QHSE ", "Vann- og miljøteknikk ", "VAR-teknikk ", "Vassdrag ", "VVS- og klimateknikk ",), "IT utvikling ", array("Database ", "Front-end ", "IT-sikkerhet ", "QA/Testing ", "Systemarkitekt ", "Utvikler (generell) ",), "Konsulent ", "Kontor og administrasjon ", array("Kontorarbeid ", "Personlig assistent ", "Resepsjon ", "Sekretær ", "Sentralbord ",), "Kundeservice ", "Ledelse ", "Mekanikk og installasjon ", "Prosjektledelse ", "Rådgivning ", "Salg ", array("Løsningssalg ", "Produktsalg ", "Stands- og dørsalg ", "Teknisk salg ", "Telefonsalg ",), "Økonomi og regnskap ", array("Controller ", "Lønn ", "Regnskap ", "Revisjon ", "Samfunnsøkonomi ", "Økonomistyring og budsjettering ",), "Annet ",);
+?>
+<script> $(document).ready(function () {$('#listt div').removeAttr('class');$('#listt input').remove();
+$('#listt .u-stone').remove();
+$('#listt ul').removeAttr('class');
+$('#listt ul').removeAttr('id');
+$('#listt label').removeAttr('for');
+$('#listt label').removeAttr('class');
+}) </script>@endsection

@@ -326,8 +326,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description" id="beskrivelse" cols="30" rows="10"></textarea>
-                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.<a
-                            href="#" target="_blank">Les mer om FINN hjerterom</a></span>
+                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>
         </div>
@@ -396,8 +395,8 @@
         <div class="form-group ">
             <h3 class="u-t5">Publisert</h3>
             <label class="mb-2 form-check-label" for="published-on">
-                <input id="published-on" name="published_on" type="checkbox" class="pub_validate">Ikke vis profilbilde og lenke til
-                profilsiden før kjøperen tar kontakt med meg.
+                <input id="published-on" name="published_on" type="checkbox" class="pub_validate">Ikke vis profilbilde og
+ lenke til profilsiden
             </label><br>
             <span class="error-span published_on"></span>
         </div>

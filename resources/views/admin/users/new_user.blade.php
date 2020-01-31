@@ -246,8 +246,8 @@ $countries_list = countries();
             </div>
         </div>
 {{--        @dd($user->allowed_jobs->first()->value)--}}
-    @if(isset($user->roles) && is_countable($user->roles) && count($user->roles)>0)
-        @if($user->roles->first()->name=='company')
+{{--    @if(isset($user->roles) && is_countable($user->roles) && count($user->roles)>0)--}}
+{{--        @if($user->roles->first()->name=='company')--}}
 {{--                @dd($user->allowed_job_companies)--}}
                 <div class="row" id="allocation_row">
                     <div class="col-md-12">
@@ -264,8 +264,8 @@ $countries_list = countries();
                         </div>
                     </div>
                 </div>
-            @endif
-        @endif
+{{--            @endif--}}
+{{--        @endif--}}
 
         <div class="row">
             <div class="col-md-12">
@@ -288,6 +288,9 @@ $countries_list = countries();
         }
 
         $(document).ready(function (e) {
+            if($('#select_role').val()!="4"){
+                $('#allocation_row').slideUp();
+            }
             $('#select_role').change(function () {
                 if($(this).val()=='4'){
                     $('#allocation_row').slideDown();

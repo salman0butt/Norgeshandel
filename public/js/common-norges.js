@@ -25,3 +25,27 @@ function getDataPagination(page,sorting_value,url,stylings)
     });
   
 }
+
+function getNotifications(url)
+{
+    $.ajax(
+        {
+            url: url,
+            type: "post",
+            dataType: "json",
+        }).done(function(data){
+            if(data.count > 0)
+            {
+                // $("#notification_count_pro").show();
+                $("#notification_count_pro").html(data.count);
+                $("#notifications").html(data.html);
+            }
+            else
+            {
+                // $("#notification_count_pro").hide();
+            }
+          
+        }).fail(function(jqXHR, ajaxOptions, thrownError){
+            alert('No response from server');
+        });
+}

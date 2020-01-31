@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('main_title')
     Jobs
 @endsection

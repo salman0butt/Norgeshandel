@@ -37,7 +37,7 @@ class CreatePropertyForSalesTable extends Migration
             $table->integer('primary_room')->nullable();
 
             $table->integer('Base')->nullable();
-            $table->string('area_description')->nullable();
+            $table->text('area_description')->nullable();
             $table->string('year')->nullable();
             $table->string('renovated_year')->nullable();
 
@@ -76,28 +76,21 @@ class CreatePropertyForSalesTable extends Migration
             $table->string('percentage_of_common_wealth')->nullable();
             $table->string('muncipal_fees_per_year')->nullable();
             
-
             $table->string('facilities3')->nullable();
             $table->string('joint_debt_costs')->nullable();
             $table->string('pre_empt_right')->nullable();
             $table->string('facilities4')->nullable();
-            $table->string('description2')->nullable();
-
-            $table->string('essential_information')->nullable();
+            $table->text('description2')->nullable();
+            $table->longText('essential_information')->nullable();
             $table->string('video')->nullable();
             $table->date('deliver_date')->nullable();
             $table->string('from_clock')->nullable();
             $table->string('clockwise')->nullable();
-
             $table->string('note1')->nullable();
             $table->string('phone')->nullable();
             $table->string('published-on')->nullable();
-
             $table->string('user_id')->nullable();
             $table->string('ad_id')->nullable();
-
-
-
             $table->timestamps();
         });
     }

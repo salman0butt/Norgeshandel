@@ -50,7 +50,7 @@ $(document).ready(function () {
             }
         }
     });
-    //Property for sale
+  //  Property for sale
 
     $("#property_for_sale_form,#commercial_property_for_rent").validate({
         lang: 'no',
@@ -145,10 +145,6 @@ $(document).ready(function () {
                 number: true
             },
             expenses: {
-                required: true,
-                number: true
-            },
-            costs_include: {
                 required: true,
                 number: true
             },
@@ -496,9 +492,6 @@ $(document).ready(function () {
             cost: {
                 number: true
             },
-            cost_includes: {
-                number: true
-            },
             prcentage_of_joint_debt: {
                 number: true
             },
@@ -733,7 +726,7 @@ $(document).ready(function () {
     });
 
 
-    // LOGIN PAGE VALIDATION
+  //  LOGIN PAGE VALIDATION
     $("#job-form").validate({
         lang: 'no',
         rules: {

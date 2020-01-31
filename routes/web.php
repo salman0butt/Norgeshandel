@@ -30,14 +30,13 @@ Route::get('lang', 'TranslationController@index');
 
 Route::get('savedsearches', 'SearchController@index');
 Route::post('savedsearches/', 'SearchController@store');
-Route::post('recentearches/{value}', 'SearchController@recent');
+Route::post('recentearches/{value}/{name}/{ad_type}', 'SearchController@recent');
 
 Route::get('/residential/and/recreational/land/for/sale', function(){
     return view('user-panel.property.residential_and_recreational_land_for_sale');
 });
 
-
-Route::get('searching/{search}', 'SearchController@search')->name('searching');
+Route::get('searching/{search?}', 'SearchController@search')->name('searching');
 //    home routes
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
@@ -86,6 +85,9 @@ Route::get('jobs/search/', 'Admin\Jobs\JobController@search')->name('search');
 Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
 Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
 Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
+Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
+
+
 
 Route::get('shared-lists/{link_id}', function ($link_id) {
     $list = \App\fav_list::where('share_link', $link_id)->get()->first();
@@ -102,6 +104,9 @@ Route::resources([
     'media' => 'MediaController',
     'trans' => 'TranslationController'
 ]);
+Route::get('dummy', function (){
+    return view('user-panel.nav');
+});
 Route::get('single', function () {
     return view('user-panel/jobs/single');
 });
@@ -292,3 +297,17 @@ Route::get('general/property/description/{id}/{type}', 'PropertyController@gener
 Route::get('/messages', 'PropertyController@messages');
 Route::get('/message/{id}', 'PropertyController@getMessage');
 Route::post('message', 'PropertyController@sendMessage');
+
+
+//notifications
+Route::post('notifications/all', 'NotificationController@getAllNotifications');
+
+Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+
+Route::get('test', function () {
+    event(new App\Events\PropertyForRent('Guest'));
+    return "Event has been sent!";
+});
+
+Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
+
