@@ -18,6 +18,9 @@
                     @if(\Illuminate\Support\Facades\Request::is('jobs/search'))
                         @include('user-panel.partials.templates.job-filter')
                     @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search'))
+                        @include('user-panel.partials.templates.filter-property-for-sale')
+                    @endif
                     @if(Auth::check())
 
                     <li class="nav-item" id="move_to_notifications">

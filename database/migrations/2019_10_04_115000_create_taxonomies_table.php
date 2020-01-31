@@ -1,5 +1,6 @@
 <?php
 
+use App\Taxonomy;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,7 +14,17 @@ class CreateTaxonomiesTable extends Migration
      * @return void
      */
 
-    private $taxes = [['name'=>'industry','slug'=>'industry'],['name'=>'Job Function','slug'=>'job-function'],['name'=>'Sector','slug'=>'sector'],['name'=>'Commitment type','slug'=>'commitment-type'],['name'=>'Leadership category','slug'=>'leadership-category'],];
+    private $taxes = [
+        ['name'=>'industry','slug'=>'industry'],
+        ['name'=>'Job Function','slug'=>'job_function'],
+        ['name'=>'Sector','slug'=>'sector'],
+        ['name'=>'Commitment type','slug'=>'commitment_type'],
+        ['name'=>'Leadership category','slug'=>'leadership_category'],
+        ['name'=>'Deadline','slug'=>'deadline'],
+        ['name'=>'Country','slug'=>'country'],
+        ['name'=>'Property type', 'slug'=>'pfs_property_type'],
+        ['name'=>'Ownership Type', 'slug'=>'pfs_ownership_type']];
+
     public function up()
     {
         Schema::create('taxonomies', function (Blueprint $table) {

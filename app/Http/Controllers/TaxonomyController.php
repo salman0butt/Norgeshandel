@@ -19,16 +19,6 @@ class TaxonomyController extends Controller
     {
         $taxonomies = Taxonomy::orderBy('id', 'desc')->get();
         return view('admin.categories.taxonomies', compact('taxonomies'));
-
-
-//        make sure commented taxonomies are added
-//        $taxonomy = new Taxonomy(['name'=>'industry', 'slug'=>str::slug('industry')]);
-//        $taxonomy = new Taxonomy(['name'=>'Job Function', 'slug'=>str::slug('Job Function')]);
-//        $taxonomy = new Taxonomy(['name'=>'Sector', 'slug'=>str::slug('Sector')]);
-//        $taxonomy = new Taxonomy(['name'=>'Commitment type', 'slug'=>str::slug('Commitment type')]);
-//        $taxonomy = new Taxonomy(['name'=>'Leadership category', 'slug'=>str::slug('Leadership category')]);
-//        $taxonomy = new Taxonomy(['name'=>'Deadline', 'slug'=>str::slug('Deadline')]);
-//        $taxonomy->save();
     }
 
     /**

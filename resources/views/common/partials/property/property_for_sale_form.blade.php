@@ -67,7 +67,7 @@
             <h3 class="u-t5">Boligtype</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <select name="property_type" class="dme-form-control">
+                    <select class="dme-form-control">
                         <option value=""></option>
                         <option value="Andre">Andre</option>
                         <option value="Enebolig">Enebolig</option>
