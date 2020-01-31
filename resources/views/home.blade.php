@@ -8,11 +8,30 @@
     </style>
     <main class="dme-wrepper">
         <div class="left-ad float-left">
-            <img src="http://localhost/norgeshandel/public/images/left-ad.png" class="img-fluid" alt="">
+        <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
+        {{-- <div id="slideshow">
+                {{(\App\Helpers\common::display_ad('left') ? \App\Helpers\common::display_ad('left') : '')}}
+  
+        </div> --}}
+              
         </div>
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
-                <img src="http://localhost/norgeshandel/public/images/top-ad.png" class="img-fluid m-auto" alt="">
+      
+<img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+{{-- 
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+  {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}} 
+    </div>
+</div>
+</div> --}}
+
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">
@@ -72,11 +91,9 @@
 
                             @if (isset($result) )
                                 @include('user-panel.partials.global-search-inner')
-
                             @endif
                         </div>
                     </div>
-
                     <input type="hidden" value="{{ Auth::check() ? Auth::user()->id : '' }}" id="userId">
                     <div class="row">
                         <div class="col-sm-4 offset-sm-2 pt-3 text-center">
@@ -119,7 +136,11 @@
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
-            <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
+        <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
+         {{-- <div id="slideshow">
+            {{(\App\Helpers\common::display_ad('right') ? \App\Helpers\common::display_ad('right') : '')}} 
+        </div> --}}
+       
         </div>
     </main>
     <script type="text/javascript">
@@ -131,6 +152,16 @@
 
     <script>
         $(document).ready(function (e) {
+               function delay(callback, ms) {
+                var timer = 0;
+                return function() {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                    callback.apply(context, args);
+                    }, ms || 0);
+                };
+            }
             $('#search').on('blur', function (e) {
                 $('#suggestions').css('display', 'none');
             });
@@ -138,7 +169,6 @@
             $("#suggestions").hover(function () {
                 $(this).css('display', 'block');
             });
-
 
             $('#search').on('keyup', function (e) {
                 if(!isEmpty($('#search_url').val())) {

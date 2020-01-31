@@ -52,7 +52,7 @@ $(document).ready(function () {
     });
   //  Property for sale
 
-    $("#property_for_sale_form").validate({
+    $("#property_for_sale_form,#commercial_property_for_rent").validate({
         lang: 'no',
         rules: {
             headline: {
@@ -96,7 +96,7 @@ $(document).ready(function () {
             primary_room: {
                 required: true,
                 number: true
-            },
+            },   
             Base: {
                 number: true
             },
@@ -199,6 +199,179 @@ $(document).ready(function () {
         }
 
     });
+
+
+    // Commercial Lot
+
+    $("#commercial_plot_form").validate({
+        lang: 'no',
+        rules: {
+            plot_type: {
+                required: true
+            },
+            country: {
+                required: true
+            },
+            zip_code: {
+                required: true,
+                zipcode: true
+            },
+            municipal_number: {
+                required: true,
+                number: true
+            },
+            usage_number: {
+                required: true,
+                number: true
+            },
+             farm_number: {
+                 required: true,
+                 number: true
+             },
+            plot_size: {
+                required: true,
+                number: true
+            },
+            asking_price: {
+                required: true,
+                number: true
+            },
+            verditakst: {
+                required: true,
+                number: true
+            },
+            headline: {
+                required: true,
+                minlenght: 2,
+                maxlength: 120
+            },
+            link: {
+                url: true
+            },
+            phone: {
+                number: true
+            },
+            contact: {
+                number: true
+            },
+            e_post: {
+                email: true
+            }
+        }
+
+    });
+
+
+    // Businesses for sale
+
+    $("#business_for_sale").validate({
+        lang: 'no',
+        rules: {
+            industry: {
+                required: true
+            },
+            alternative_industry: {
+                required: true
+            },
+            zip_code: {
+                required: true,
+                zipcode: true
+            },
+            company_name: {
+                 required: true
+            },
+            organiztion_number: {
+                number: true,
+                required: true
+            },
+            price: {
+                required: true,
+                number: true
+            },
+            headline: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            link: {
+                url: true
+            },
+            link_for_information: {
+                url: true
+            },
+            phone: {
+                number: true
+            }
+        }
+
+    });
+
+    // residential_and_recreational_land_for_sale
+    $("#residential_and_recreational_land_for_sale").validate({
+        lang: 'no',
+        rules: {
+            property_type: {
+                required: true
+            },
+            countryCode: {
+                required: true
+            },
+            areaId: {
+                required: true
+            },
+            postal_code: {
+                zipcode: true,
+                required: true,
+                number: true
+            },
+            county_number: {
+                number: true
+            },
+            cadastral_unit_number: {
+                number: true
+            },
+            cadastral_unit_number: {
+                number: true
+            },
+            property_unit_number: {
+                number: true
+            },
+            section_number: {
+                 number: true
+            },
+            leasehold_unit_number: {
+                number: true
+            },
+            plot_area_size:{
+                number: true
+            },
+            price_suggestion: {
+                number: true
+            },
+            sales_cost_sum: {
+                number: true
+            },
+            date0: {
+                date: true
+            },
+            time_from0: {
+                number: true
+            },
+            time_to0: {
+               number: true
+            },
+            title: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            contact_mobile: {
+                number: true
+            }
+
+        }
+    });
+
 
 
     //Holiday homes for sale
@@ -612,7 +785,6 @@ $(document).ready(function () {
             zip: {
                 required: true,
                 zipcode: true
-
             },
             workplace_video: {
                 url: true
@@ -835,21 +1007,31 @@ $(document).ready(function () {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
-    $('#commercial_property_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
-        if ($('#commercial_property_for_sale').validate().checkForm()) { // checks form for validity
+    $('#commercial_property_for_sale input,#commercial_property_for_rent input').bind('keyup blur click', function () { // fires on every keyup & blur
+        if ($('#commercial_property_for_sale, #commercial_property_for_rent').validate().checkForm()) { // checks form for validity
             $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
         } else {
             $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
         }
     });
-    // $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
-    //     if ($('#job-form').validate().checkForm()) {
-    //         // checks form for validity
-    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
-    //     } else {
-    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
-    //     }
-    // });
+    $('#job-form input').bind('keyup blur click', function () { // fires on every keyup & blur
+        if ($('#job-form').validate().checkForm()) {
+            // checks form for validity
+            $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+        } else {
+            $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+        }
+    });
+
+      $('#business_for_sale input').bind('keyup blur click', function () { // fires on every keyup & blur
+          if ($('#business_for_sale').validate().checkForm()) {
+              // checks form for validity
+              $('#publiser_annonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+          } else {
+              $('#publiser_annonsen').addClass('button_disabled').prop('disabled', true); // disables button
+          }
+      });
+
     $('select').on('change', function () {
         $("form").validate().element('select', '#furnishing');
     });

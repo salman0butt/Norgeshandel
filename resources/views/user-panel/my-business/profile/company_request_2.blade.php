@@ -14,7 +14,7 @@
             @include('common.partials.flash-messages')
             <div class="row">
                 <div class="col-md-12 mt-4">
-                    <h3 class="font-weight-normal">Bli bedriftskunde på FINN jobb</h3>
+                    <h3 class="font-weight-normal">Bli bedriftskunde hos Norges Handel</h3>
                 </div>
                 <div class="col-md-12 collapse show" id="form_org_number">
                     <p>Det koster ingenting å bli bedriftskunde, alt vi trenger er ditt organisasjonsnummer</p>

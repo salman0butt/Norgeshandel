@@ -8,7 +8,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel </a></li>
-                        <li class="breadcrumb-item"><a href="{{url('my-business/profile')}}">Min prifil </a></li>
+                        <li class="breadcrumb-item"><a href="{{url('my-business/profile')}}">Min profi </a></li>
                         <li class="breadcrumb-item active" aria-current="page">Be om firmaprofil</li>
                     </ol>
                 </nav>
@@ -17,7 +17,7 @@
                 <div class="col-md-12 pb-3">
                     <h3 class="font-weight-normal mt-3">Bli bedriftskunde hos NorgesHandel</h3>
                     <p class="u-mb16">
-                        Annonserer du jevnlig på FINN på vegne av en bedrift ?<br>
+                        Annonserer du jevnlig på Norges Handel på vegne av en bedrift ?<br>
                         Da lønner det seg å være bedriftskunde.
                     </p>
                     <p>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="media__body">
-                        <h3 class="u-strong u-t4 u-mb0"><span class="fa fa-check"></span>&nbsp; Dedikert kontaktperson i FINN</h3>
+                        <h3 class="u-strong u-t4 u-mb0"><span class="fa fa-check"></span>&nbsp; Dedikert kontaktperson i Norges Handel</h3>
                         <p class="u-caption">Optimaliser annonseringen sammen med en som kjenner din bedrift</p>
                     </div>
                 </div>

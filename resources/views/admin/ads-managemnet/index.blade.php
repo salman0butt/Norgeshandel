@@ -60,7 +60,7 @@
                                     </ul>
                                   </td>
                                   <td>{{ count($banner->clicks) }}</td>
-                                  <td>{{ $banner->display_time_type }}</td>
+                                  <td>{{ ($banner->display_time_type == 'm' ? 'Minutes' : 'Seconds') }}</td>
                                  <td>{{ $banner->display_time_duration }}</td>
                                   <td>{{ ($banner->is_active ==1 ? 'Active':'Inactive') }}</td>
                                 <td><div class="display_name mb-2"></div>

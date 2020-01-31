@@ -11,7 +11,11 @@
 
 
     ?>
-
+<style>
+.location {
+    top: -250px !important;
+}
+</style>
 <main class="dme-wrepper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
@@ -94,7 +98,7 @@
                                 <a href="{{url('/property/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                         <div class="trailing-border">
-                                            <img src="{{$full_path}}" alt="" class="img-fluid radius-8">
+                                            <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/image-placeholder.jpg')}}@endif" alt="" class="img-fluid radius-8" style="min-height:207px;">
                                         </div>
                                     </div>
                                     <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
@@ -107,7 +111,7 @@
                                             <div class="price font-weight-bold float-right color-grey">{{$property_for_rent->monthly_rent}} kr</div>
                                         </div>
                                         <br>
-                                        <div class="detail u-t5 mt-3 float-left text-muted">Privat <br> <span>{{$property_for_rent->property_type}}</span></div>
+                                        <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt"> <span>{{$property_for_rent->property_type}}</span></div>
                                         <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
                                         
                                     </div>
