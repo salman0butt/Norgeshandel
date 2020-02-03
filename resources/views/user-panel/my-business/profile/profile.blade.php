@@ -587,9 +587,8 @@
                         <a href="{{route('public_profile', $user->id)}}">Se profilen slik andre ser den</a>
                     </div>
                     <div class="col-md-6 mt-4">
-                        <p>Profilen din på FINN.no er bygget opp av informasjon hentet fra FINN.no og Schibsted-konto.
-                            Opplysningene vises ikke i annonsene dine uten at du ber om det.</p>
-                        <a href="#">Les mer om hvordan endre profil og e-post</a>
+                        <p>Profilen din er bygget opp av informasjonen du har oppgitt. Opplysningene vises ikke i annonsene dine uten at du ber om det.</p>
+                        {{-- <a href="#">Les mer om hvordan endre profil og e-post</a> --}}
                     </div>
                 </div>
                 @if($user->roles->first()->name!="company")

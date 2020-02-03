@@ -227,9 +227,9 @@
                 !empty($property_data->note))
                 <div class="mb-2">
                     <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
-                    <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock ."pm,": ""); ?>
+                    <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?>
                     </span>
-                    <span><?php echo (!empty($property_data->clockwise_clock) ?  $property_data->clockwise_clock. "pm" : ""); ?>
+                    <span><?php echo (!empty($property_data->clockwise) ?  $property_data->clockwise : ""); ?>
                     </span>
                     <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?></span>
                 </div>
@@ -239,8 +239,8 @@
                 <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
                 </div>
                 <button class="dme-btn-outlined-blue col-12">Gi bud</button>
-                <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a>
+                {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
+                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}   
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

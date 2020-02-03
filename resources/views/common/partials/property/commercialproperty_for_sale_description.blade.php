@@ -201,8 +201,8 @@
                 </div>
                 <button class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Se komplett salgsoppgave</font></font></button>
                 <button class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gi bud</font></font></button>
-                <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a>
+                {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
+                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

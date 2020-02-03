@@ -74,7 +74,7 @@
 <!-- Button trigger modal -->
     <button type="button" class="btn bg-maroon text-white" data-toggle="modal" data-target="#basicExampleModal"
             style="margin-top: -3%;position: absolute;z-index: 999;">
-        Save Searches
+        Lagrede søk
     </button>
 {{--        @include('common.partials.flash-messages)--}}
 <!-- Modal -->
@@ -122,9 +122,9 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn bg-maroon text-white" data-dismiss="modal">Close
+                        <button type="button" class="btn bg-maroon text-white" data-dismiss="modal">Lukk
                         </button>
-                        <input type="submit" Value="save changes" class="btn bg-maroon text-white">
+                        <input type="submit" Value="Lagre endringer" class="btn bg-maroon text-white">
                         <input type="hidden" id="recent-search" value="">
                     </div>
                 </form>
