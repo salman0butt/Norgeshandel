@@ -249,7 +249,7 @@ $(document).ready(function () {
                 maxlength: 120
             },
             link: {
-                validvalidUrl: true
+                validUrl: true
             },
             phone: {
                 number: true

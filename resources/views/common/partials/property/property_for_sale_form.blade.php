@@ -67,7 +67,7 @@
             <h3 class="u-t5">Boligtype</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <select class="dme-form-control">
+                    <select class="dme-form-control" name="property_type" id="property_type">
                         <option value=""></option>
                         <option value="Andre">Andre</option>
                         <option value="Enebolig">Enebolig</option>
@@ -953,8 +953,8 @@
         <div class="form-group ">
             <h3 class="u-t5">Publisert</h3>
             <label class="mb-2 form-check-label" for="published-on">
-                <input id="published-on" name="published-on" type="checkbox" class="pub_validate">Ikke vis profilbilde og lenke til
-                profilsiden før kjøperen tar kontakt med meg.
+                <input id="published-on" name="published-on" type="checkbox" class="pub_validate">Ikke vis profilbilde og
+ lenke til profilsiden.
             </label>
             <span class="error-span published-on"></span>
         </div>

@@ -117,8 +117,8 @@
                 <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
                 </div>
                 <button class="dme-btn-outlined-blue col-12">Gi bud</button>
-                <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a>
+                {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
+                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                     <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

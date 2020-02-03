@@ -30,6 +30,7 @@ class PropertyForRent implements ShouldBroadcast
     {
         //
         $this->notification_id = $notification_id;
+        
         $this->user_id = Auth::user()->id;
         $this->notification_id_search = $notification_id_search;
         $this->path =  url('search/notification/exists');

@@ -229,14 +229,14 @@
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                 <h2 class="u-t3">Visning</h2>
-                @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
-                !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
+                @if(!empty($property_data->deliver_date) || !empty($property_data->from_clock) ||
+                !empty($property_data->clockwise) || !empty($property_data->clockwise) ||
                 !empty($property_data->note))
                 <div class="mb-2">
-                    <span style="font-weight:500"><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
+                    <span style="font-weight:500"><?php echo (!empty($property_data->deliver_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
                     <span style="font-weight:500"><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?>
                     </span>
-                    <span style="font-weight:500"><?php echo (!empty($property_data->clockwise_clock) ?  $property_data->clockwise_clock : ""); ?>
+                    <span style="font-weight:500"><?php echo (!empty($property_data->clockwise) ?  $property_data->clockwise : ""); ?>
                     </span>
                     <span style="font-weight:500"><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?></span>
                 </div>
@@ -248,8 +248,8 @@
                 <button class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Se komplett salgsoppgave</font></font></button>
                 <button class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gi bud</font></font></button>
                 {{-- <button class="dme-btn-outlined-blue col-12">Gi bud</button> --}}
-                <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a>
+                {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
+                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

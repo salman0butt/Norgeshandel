@@ -236,7 +236,7 @@
                                 <div class="col-sm-10 ">
                                     <input name="emp_website" value="{{$obj_job->emp_website}}" id="emp_website"
                                            type="text" class="form-control dme-form-control"
-                                           placeholder="firmanavn.no" required>
+                                           placeholder="firmanavn.no">
                                 </div>
                             </div>
                         </div>
