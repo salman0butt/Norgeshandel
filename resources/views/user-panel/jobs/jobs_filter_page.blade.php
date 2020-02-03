@@ -5,27 +5,6 @@
     </main>
     <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
     <script>
-        function search(data){
-            var urlParams = new URLSearchParams(location.search);
-            var url = $('#mega_menu_search_url').val();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                data:data,
-                url: url,
-                type: "GET",
-                success: function (response) {
-                    $('#dme-wrapper').html(response);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        }
         $(document).ready(function () {
             var urlParams = new URLSearchParams(location.search);
             var type = urlParams.get('job_type');

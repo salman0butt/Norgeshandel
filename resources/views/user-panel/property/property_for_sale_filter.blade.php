@@ -1,6 +1,6 @@
 @extends('layouts.landingSite')
 @section('page_content')
-    <?php 
+    <?php
 
 
         $col='list';
@@ -46,7 +46,7 @@
                     <div class="">
                         <label for="sort-by" class="mb-1">Sortér på</label>
                         <select name="sort-by" id="sort-by" class="dme-form-control">
-            
+
                             <option value="0">Mest relevant</option>
                             <option value="published" selected>Publisert</option>
                             <option value="priced-low-high">Prisant lav-høy</option>
@@ -104,7 +104,7 @@
     <script>
             $(document).ready(function(){
 
-                
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -112,7 +112,7 @@
                 });
 
                 $(document).on('change', '#sort-by', function() {
-                    
+
                     var url  = '{{url('get/property/sale/ad')}}';
                     var data = $(this).val();
                     $.ajax({

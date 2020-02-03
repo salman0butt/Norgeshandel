@@ -1,6 +1,6 @@
 @extends('layouts.landingSite')
 @section('page_content')
-    <?php 
+    <?php
 
 
         $col='list';
@@ -31,7 +31,7 @@
             </div>
             <div class="row mt-1">
                 <div class="col-md-4 pt-4">
-                    <!--                    <button class="dme-btn-outlined-blue">Lagre søk</button>-->
+{{--                    <button class="dme-btn-outlined-blue">Lagre søk</button>--}}
                 </div>
                 <div class="col-md-4 pt-4">
                     <div class="pt-3 float-left" style="min-width: 53px;">
@@ -69,15 +69,15 @@
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?> order_specific_result" id="">
-                        
+
                         @foreach ($add_array as $key => $value)
                             <?php
 
-                                
+
                                 $property_for_sale              = App\PropertyForSale::find($value->id);
                                 $property_for_sale_collection   =  $property_for_sale->media->toArray();
                                 if(!empty($property_for_sale_collection))
-                                {                                
+                                {
                                     $path                           = \App\Helpers\common::getMediaPath($property_for_sale);
                                     foreach($property_for_sale_collection as $key=>$val)
                                     {
@@ -85,7 +85,7 @@
                                         {
                                             $name = $val['name_unique'];
                                         }
-                                        $full_path_photos = $path."".$name; 
+                                        $full_path_photos = $path."".$name;
                                     }
                                 }
                                 else
@@ -115,7 +115,7 @@
 
                                         <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt"> <p> <span class="tst"> {{$property_for_sale->tenure}} </span> <span class="tst"> {{$property_for_sale->property_type}} </span> <span style="padding-left:10px;"> {{$property_for_sale-> number_of_bedrooms}} </span> soverom </p></div>
                                         <div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
-                                        
+
                                     </div>
                                 </a>
                             </div>
@@ -132,7 +132,7 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
-    
+
     <script>
             $(document).ready(function(){
 
@@ -155,7 +155,7 @@
                 });
 
                 $(document).on('change', '#sort_by', function() {
-                    
+
                     var url  = '{{url('property/for/sale/sorted/ad')}}';
                     var data = $(this).val();
                     var stylings = window.location.href.split('?', 2)[1];
@@ -180,10 +180,10 @@
                     event.preventDefault();
                     $('li').removeClass('active');
                     $(this).parent('li').addClass('active');
-        
+
                     var myurl = $(this).attr('href');
                     var page=$(this).attr('href').split('page=')[1];
-                   
+
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('property/for/sale')}}';
                     var stylings = window.location.href.split('?', 2)[1];
@@ -193,7 +193,7 @@
                     }
                     getDataPagination(page,sorting_value,url,stylings);
                 });
-                
+
             });
     </script>
 
