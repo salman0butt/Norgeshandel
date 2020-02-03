@@ -180,7 +180,7 @@
             getLists();
         @endif
 
-      
+
 
 
         $(document).on('blur', 'input[type=url]', function () {
@@ -309,16 +309,62 @@
 <script src="{{asset('public/js/additional-methods.min.js')}}"></script>
 <script src="{{asset('public/js/messages_no.min.js')}}"></script>
 <script>
+    var urlParams = new URLSearchParams(location.search);
+
+    function search(data){
+        var urlParams = new URLSearchParams(location.search);
+        var url = $('#mega_menu_search_url').val();
+
+        $.ajax({
+            data:data,
+            url: url,
+            type: "GET",
+            success: function (response) {
+                $('#dme-wrapper').html(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function fix_page_links(){
+        $('.pagination a').each(function (i) {
+            var par = urlParams;
+            par.delete('page');
+            var page_arr = $(this).attr('href').split('=');
+            par.set('page', page_arr[1]);
+            $(this).attr('href', "?"+par.toString());
+        });
+    }
     $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        //spinner start here
+        $(document).ajaxStart(function(){
+            $("#imageLoader").css("display", "block");
+            $(".pagination_data").css("display", "none");
+        });
+
+        $(document).ajaxComplete(function(){
+            $("#imageLoader").css("display", "none");
+            $(".pagination_data").css("display", "block");
+        });
+        //spinner ends here
+
         @if(Auth::check())
-            var url = '{{url("notifications/all")}}'; 
+            var url = '{{url("notifications/all")}}';
             getNotifications(url);
         @endif
 
         $(document).on('click',"#move_to_notifications",function(){
 
             var ids = {};
-            window.location.href = '{{url("show/notifications/all")}}'; 
+            window.location.href = '{{url("show/notifications/all")}}';
             console.log($.param(ids));
 
         });

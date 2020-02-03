@@ -104,7 +104,7 @@ class JobController extends Controller
         );
 
         $ad = Ad::find($request->ad_id);
-        
+
         $response = $ad->job->id;
         $notifiable_id = $response;
         $notification_obj = new \App\Http\Controllers\NotificationController();
@@ -113,7 +113,7 @@ class JobController extends Controller
         //trigger event
         event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
 
-       
+
 
         $ad->job->update($arr);
         $ad->update(['status' => 'published']);
@@ -306,9 +306,6 @@ class JobController extends Controller
 
         Session::flash('success', 'Jobben er slettet');
         return back();
-//        $jobs = Job::all();
-//        return response()->view('admin.jobs.jobs', compact('jobs'));
-//        return redirect()->back();
     }
 
     /**
