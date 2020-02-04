@@ -20,7 +20,7 @@ class CreateTermsTable extends Migration
     private $job_function = array("Butikkansatt", "Helsepersonell", array("Alternativ medisin", "Bioingeniør", "Ergoterapeut", "Ernæringsfysiolog", "Farmasøyt", "Fysioterapeut", "Helsefagarbeider/hjelpepleier", "Helsesekretær", "Kiropraktor", "Optiker", "Psykolog", "Radiograf", "Tannhelse", "Vernepleier/miljøterapeut",), "Håndverker", array("Andre montører", "Asfaltarbeid", "Betongarbeider", "Blikkenslager/tak", "Bygg/Anleggsleder", "Elektriker", "Elektronikkmontør", "Forskalingssnekker", "Grunnarbeid", "Hjelpearbeider", "Maler/Tapeserer", "Mekaniker", "Murer/Flislegger", "Murmester", "Rørlegger", "Snekker/Tømrer", "Stillasmontør", "Sveiser", "Ventilasjonstekniker",), "Ingeniør", array("Akustikk", "Asfaltingeniør", "Automasjon og instrument", "Boreteknikk/drilling", "Brannsikkerhet", "Bygge- og anleggsteknikk", "Bygningsfysikk", "Elektronikk", "Geomatikk", "Geoteknikk og ingeniørgeologi", "HVAC", "Kjemiingeniør", "Kybernetikk", "Marinteknikk / Naval architecture", "Materialteknologi", "Mekanisk", "Oppmåling og kartlegging", "Rør/struktur", "Samferdselsteknikk og arealplanlegging", "Strukturingeniør", "Subsea", "Taksering", "Teknisk sikkerhet/QHSE", "Vann- og miljøteknikk", "VAR-teknikk", "Vassdrag", "VVS- og klimateknikk",), "IT utvikling", array("Database", "Front-end", "IT-sikkerhet", "QA/Testing", "Systemarkitekt", "Utvikler (generell)",), "Konsulent", "Kontor og administrasjon", array("Kontorarbeid", "Personlig assistent", "Resepsjon", "Sekretær", "Sentralbord",), "Kundeservice", "Ledelse", "Mekanikk og installasjon", "Prosjektledelse", "Rådgivning", "Salg", array("Løsningssalg", "Produktsalg", "Stands- og dørsalg", "Teknisk salg", "Telefonsalg",), "Økonomi og regnskap", array("Controller", "Lønn", "Regnskap", "Revisjon", "Samfunnsøkonomi", "Økonomistyring og budsjettering",), "Annet",);
     private $deadline = array("Siste frist","Under en uke", "Under tre døgn");
     private $pfs_property_type = array('Leilighet', 'Enebolig', 'Tomannsbolig', 'Rekkehus', 'Gårdsbruk/Småbruk', 'Prosjekt', 'Hytte', 'Garasje/Parkering', 'Tomter', 'Annet fritid', 'Produksjon/Industri', 'Hyttetomt', 'Bygård/Flermannsbolig', 'Kontor', 'Andre');
-    private $pfs_ownership_type = array('Aksje','Andel','Annet','Eier Selveier','Obligasjon');
+    private $pfs_tenure = array('Aksje','Andel','Annet','Eier Selveier','Obligasjon');
 
     public function up()
     {
@@ -42,7 +42,7 @@ class CreateTermsTable extends Migration
         common::insert_term_array($this->deadline, \App\Taxonomy::where('slug', 'deadline')->get()->first()->id, 0);
         common::insert_term_array($this->country, \App\Taxonomy::where('slug', 'country')->get()->first()->id, 0);
         common::insert_term_array($this->pfs_property_type, \App\Taxonomy::where('slug', 'pfs_property_type')->get()->first()->id, 0);
-        common::insert_term_array($this->pfs_ownership_type, \App\Taxonomy::where('slug', 'pfs_ownership_type')->get()->first()->id, 0);
+        common::insert_term_array($this->pfs_tenure, \App\Taxonomy::where('slug', 'pfs_tenure')->get()->first()->id, 0);
 
 
     }

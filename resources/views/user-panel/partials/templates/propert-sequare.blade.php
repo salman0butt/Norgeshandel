@@ -59,9 +59,10 @@
 
 
 
-        <div class="col-md-4 col-sm-6" style="">
+        <div class="col-md-4 col-sm-6
+" style="">
             <div class="realestate-blockk " style="">
-                <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="grid-box-ancor">
+                <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="grid-box-ancor product-list-item">
                     <div class="home-grid-box trailing-border" style="text-align:center;">
                         <div href="#" class="favorite-icon-outer">
                             <div class="favorite-icon fa fa-heart"></div>
@@ -82,7 +83,7 @@
                             KR
                             <!-- Totalpris: 2011 111 KR -->
                         </div>
-                        <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;">
+                        <div class="product-price"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}" width="23px;">
                             <?php
                                 echo($ad->ad_type == 'property_for_rent' ? $property->monthly_rent : "");
                                 echo($ad->ad_type == 'property_for_sale' ? $property->total_price : "");

@@ -23,7 +23,7 @@ class CreateTaxonomiesTable extends Migration
         ['name'=>'Deadline','slug'=>'deadline'],
         ['name'=>'Country','slug'=>'country'],
         ['name'=>'Property type', 'slug'=>'pfs_property_type'],
-        ['name'=>'Ownership Type', 'slug'=>'pfs_ownership_type']];
+        ['name'=>'Ownership Type', 'slug'=>'pfs_tenure']];
 
     public function up()
     {

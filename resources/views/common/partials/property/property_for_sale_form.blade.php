@@ -1,5 +1,10 @@
 <form action="#" method="post" id="property_for_sale_form" enctype="multipart/form-data">
-
+<?php
+    $property_type = \App\Taxonomy::where('slug', 'pfs_property_type')->first();
+    $property_types = $property_type->terms;
+    $tenure = \App\Taxonomy::where('slug', 'pfs_tenure')->first();
+    $tenures = $tenure->terms;
+?>
     <input type="hidden" id="total_price" name="total_price" value="">
     <div class="pl-3 pr-3">
         <div class="form-group">
@@ -69,13 +74,9 @@
                 <div class="col-sm-12 pr-md-0">
                     <select class="dme-form-control" name="property_type" id="property_type">
                         <option value=""></option>
-                        <option value="Andre">Andre</option>
-                        <option value="Enebolig">Enebolig</option>
-                        <option value="Garasje Parkering">Garasje/Parkering</option>
-                        <option value="Gårdsbruk Småbruk">Gårdsbruk/Småbruk</option>
-                        <option value="Leilighet">Leilighet</option>
-                        <option value="Rekkehus">Rekkehus</option>
-                        <option value="Tomannsbolig">Tomannsbolig</option>
+                        @foreach($property_types as $type)
+                            <option value="{{$type->name}}">{{$type->name}}</option>
+                        @endforeach
                     </select>
                     <span class="error-span property_type"></span>
                 </div>
@@ -87,11 +88,9 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="tenure" class="dme-form-control">
                         <option value=""></option>
-                        <option value="Aksje">Aksje</option>
-                        <option value="Andel">Andel</option>
-                        <option value="Annet">Annet</option>
-                        <option value="Eier Selveier">Eier (Selveier)</option>
-                        <option value="Obligasjon">Obligasjon</option>
+                        @foreach($tenures as $type)
+                            <option value="{{$type->name}}">{{$type->name}}</option>
+                        @endforeach
                     </select>
                     <span class="u-t5">Beskriv varen kort. Denne beskrivelsen brukes til å finne riktig kategori i feltene under.</span>
                     <br><span  class="error-span tenure"></span>
