@@ -30,6 +30,14 @@
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>
                     </li>
+                    @else
+                     <li class="nav-item" id="move_to_notifications">
+                        <a class="nav-link" href="{{ url('/login') }}">
+                            <span class="label" id="notification_count_pro">0</span>
+                            <i class="far fa-bell nav-icons"></i>
+                            <div class="mt-2 ml-2">Varslinger</div>
+                        </a>
+                    </li>
 
                     @endif
                     <style>
