@@ -17,7 +17,7 @@
                     <div class="row">
                         <ul class="product-sub-cat-list pl-3">
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/for/sale')}}">Bolig til salgs <span class="u-stone">(<?php echo App\PropertyForSale::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/property-for-sale/search')}}">Bolig til salgs <span class="u-stone">(<?php echo App\PropertyForSale::get()->count(); ?>)</span></a>
                             </li>
                             <!-- <li class="dme-btn-outlined-blue" style="">
                                 <a href="new-buildings.php?grid">Nye boliger <span class="u-stone">(19 416)</span></a>
@@ -74,9 +74,9 @@
                         <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
                     </div>
                     @foreach($ads as $ad)
-                      
+
                         @include('user-panel.partials.templates.propert-sequare')
-                        
+
                     @endforeach
                 @endif
             </div>

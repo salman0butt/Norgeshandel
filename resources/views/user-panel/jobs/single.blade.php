@@ -8,7 +8,7 @@
     $job_function = "";
     $industry = "";
     foreach ($job->terms as $term):
-        if ($term->taxonomy->slug == 'job-function'):
+        if ($term->taxonomy->slug == 'job_function'):
             $job_function = $term->name;
         elseif ($term->taxonomy->slug == 'industry'):
             $industry = $term->name;

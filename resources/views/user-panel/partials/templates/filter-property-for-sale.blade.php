@@ -248,8 +248,7 @@
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Eierform</h3>
                             <?php
-    //                        dd(App\Taxonomy::where('slug', 'pfs_ownership_type')->get()->first());
-                            if (!empty($tax = App\Taxonomy::where('slug', 'pfs_ownership_type')->first())) {
+                            if (!empty($tax = App\Taxonomy::where('slug', 'pfs_tenure')->first())) {
                                 echo App\Helpers\common::map_nav($tax->parent_terms());
                             }
                             ?>
@@ -441,7 +440,7 @@
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="over 6" id="navFloor-6">
+                                        <input type="checkbox" name="floor[]" value="over_6" id="navFloor-6">
                                         <label for="navFloor-6" class="">Over 6 etasje<span data-name="over 6" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>

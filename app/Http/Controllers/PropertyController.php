@@ -53,7 +53,8 @@ class PropertyController extends Controller
         if (isset($request->view) && !empty($request->view)){
             $col = $request->view;
         }
-        $query = DB::table('ads')->join('property_for_sales', 'property_for_sales.ad_id', 'ads.id')
+        $query = DB::table('ads')
+            ->join('property_for_sales', 'property_for_sales.ad_id', 'ads.id')
             ->where('ads.status', 'published');
 
 
@@ -112,10 +113,53 @@ class PropertyController extends Controller
         if (isset($request->year_from) && !empty($request->year_from)) {
             $query->where('property_for_sales.year', '>=', (int)$request->year_from);
         }
+
         if (isset($request->year_to) && !empty($request->year_to)) {
             $query->where('property_for_sales.year', '<=', (int)$request->year_to);
         }
 
+        if (isset($request->condition) && !empty($request->condition)) {
+            if(in_array("new", $request->condition)){
+                $query->where('property_for_sales.year', '>=', today()->addMonths(-6)->year);
+            }
+            if(in_array("used", $request->condition)){
+                $query->where('property_for_sales.year', '<', today()->addMonths(-6)->year);
+            }
+        }
+
+        if (isset($request->display_date) && !empty($request->display_date)) {
+            $query->whereDate('property_for_sales.deliver_date', '=', $request->display_date[0]);
+            for($i=1; $i<count($request->display_date); $i++){
+                $query->orWhereDate('property_for_sales.deliver_date', '=', $request->display_date[$i]);
+            }
+        }
+
+        if (isset($request->pfs_property_type) && !empty($request->pfs_property_type)) {
+            $query->whereIn('property_for_sales.property_type', $request->pfs_property_type);
+        }
+
+        if (isset($request->pfs_tenure) && !empty($request->pfs_tenure)) {
+            $query->whereIn('property_for_sales.tenure', $request->pfs_tenure);
+        }
+
+        if (isset($request->facilities) && !empty($request->facilities)) {
+            $query->where('property_for_sales.facilities', 'like', '%'.$request->facilities[0].'%');
+            for($i=1; $i<count($request->facilities); $i++){
+                $query->orWhere('property_for_sales.facilities', 'like', '%'.$request->facilities[$i].'%');
+            }
+        }
+
+        if (isset($request->floor) && !empty($request->floor)) {
+            $query->whereIn('property_for_sales.floor', $request->floor);
+            if (in_array('over 6', $request->floor)){
+//                dd($request->floor);
+                $query->orwhere('property_for_sales.floor', '>', 6);
+            }
+        }
+
+        if (isset($request->energy_unit) && !empty($request->energy_unit)) {
+            $query->whereIn('property_for_sales.energy_grade', $request->energy_unit);
+        }
 
 
 
@@ -628,12 +672,14 @@ class PropertyController extends Controller
         //Manage Facilities
         if(isset($property_for_sale_data['facilities']))
         {
-            $facilities = "";
-            foreach($property_for_sale_data['facilities'] as $key=>$val)
-            {
-                $facilities .= $val . ",";
-            }
-            $property_for_sale_data['facilities'] = $facilities;
+            $property_for_sale_data['facilities'] = json_encode($property_for_sale_data['facilities']);
+//            following code converted to json
+//            $facilities = "";
+//            foreach($property_for_sale_data['facilities'] as $key=>$val)
+//            {
+//                $facilities .= $val . ",";
+//            }
+//            $property_for_sale_data['facilities'] = $facilities;
         }
 
         $property_for_sale_data['user_id'] = Auth::user()->id;

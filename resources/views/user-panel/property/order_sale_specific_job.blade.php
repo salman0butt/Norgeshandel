@@ -1,5 +1,4 @@
-            
-              <?php 
+<?php
 
 
 $col='list';
@@ -15,14 +14,14 @@ if(isset($_GET)){
 <div class="col-md-12">
 
 <div class="<?php echo $col==='grid'?'row':'' ?>">
-      
+
       @foreach ($add_array as $key => $value)
 
           <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
               <a href="#" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                   <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                       <div class="trailing-border">
-                      
+
                           <img src="{{ url('public/uploads/2019/11', [$value->name_unique]) }}" alt="" class="img-fluid radius-8">
                       </div>
                   </div>

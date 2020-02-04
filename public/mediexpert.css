@@ -63,6 +63,9 @@ a:hover{
 .bg-maroon-lighter{
     background-color: #ecdfe2 !important;
 }
+.bg-hover-maroon-lighter:hover{
+    background-color: #ecdfe2 !important;
+}
 .color-blue{
     color: #2946FF !important;
 }
@@ -618,7 +621,7 @@ input[type=checkbox]:focus{
 /**/
 
 .image-section, .image-section div{
-    max-height:250px;
+    /*max-height:302px;*/
     text-align: center;
 }
 .product-list-item{
