@@ -1,6 +1,5 @@
 @extends('layouts.landingSite')
-​
-​
+
 @section('page_content')
 <style>
     article.col-md-12.pl-0.pr-0.list-ad:hover {
@@ -17,6 +16,7 @@
                 <a class="m-2" href="#">Innstillinger</a>
             </div>
             <div class="row">
+            @if(count($ids) > 0)
                 @foreach ($ids as $key => $value)
 
                         <?php 
@@ -114,6 +114,11 @@
                         </div>
                     </article>
                 @endforeach
+                @else
+                <div style="display:block;text-align:center;margin:0 auto;margin-top:50px;">
+              <h1 class="text-center text-muted">Ingen varsler å vise</h1>
+                </div>
+                @endif
             </div>
             <div data-controller="newnotificationscountreset"></div>
         </div>
@@ -121,10 +126,10 @@
 ​
 </div>
 ​
-    <script>
+    {{-- <script>
         $(document).ready(function(){
             $(".nav-container").hide();
         })
-    </script>
+    </script> --}}
 
 @endsection

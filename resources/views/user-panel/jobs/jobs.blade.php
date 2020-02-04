@@ -1,4 +1,10 @@
 @extends('layouts.landingSite')
+   <style>
+        ul {
+            list-style: none;
+            padding-left: 5px !important;
+        }
+    </style>
 @section('page_content')
 <main class="dme-wrepper">
     <div class="left-ad float-left">
@@ -52,17 +58,20 @@
             </div>
             <!--            ended col-->
             <div class="col-md-4 pr-5">
-                <!--                    <h2 class="u-t4 font-weight-bold">Lagrede søk</h2>-->
-                <!--                    <p class="u-d1"><a href="#">Logg inn</a> for å vise dine lagrede søk</p>-->
-
-                <h2 class="u-t4">Siste søk</h2>
-                @if(!Auth::check())
-                <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
-                @endif
-                <!--                <a href="#" class="d-block mt-2 mb-2 u-d1">Bolig til salgs</a>-->
-                <!--                <a href="#" class="d-block mt-2 mb-2 u-d1">Antikviteter og kunst, Torget</a>-->
-                <!--                <a href="#" class="d-block mt-2 mb-2 u-d1">Næringstomter</a>-->
-                <!--                <a href="#" class="d-block mt-2 mb-2 u-d1 font-weight-bold">Tøm lista</a>-->
+               <h2 class="u-t4">Siste søk</h2>
+                    <ul>
+                        @if (Auth::check())
+                            @if (isset($recent_search))
+                                @foreach($recent_search as $recent)
+                                    <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ $recent->name }}</a></li>
+                                @endforeach
+                            @else
+                                <p class="u-d1">Det er ingen nylig søk</p>
+                            @endif
+                        @else
+                            <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
+                        @endif
+                    </ul>
             </div>
             <!--            ended col-->
         </div>

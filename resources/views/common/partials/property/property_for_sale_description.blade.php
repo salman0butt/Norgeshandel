@@ -1,5 +1,9 @@
 @extends('layouts.landingSite')
+
 @section('page_content')
+@section('main_title')
+    NorgesHandel - Property For Sale
+@endsection
 
 <?php
          
@@ -35,6 +39,33 @@
         </div>
     </div>
     <div class="dme-container p-3">
+     <div class="breade-crumb">
+                <nav aria-label="breadcrumb">
+                    <div class="row pl-3 pr-3">
+                        <div class="col-md-6 p-0">
+                            <ol class="breadcrumb w-100"
+                                style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
+                                <li class="breadcrumb-item active"><a href="#">Property</a></li>
+                                <li class="breadcrumb-item active"><a href="#">Property For Sale</a></li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6 p-0">
+                            <ul class="breadcrumb w-100   text-right d-block"
+                                style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
+                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
+                                        href="#"> &lt; Forrige </a> @else <span
+                                        class="text-muted">Forrige</span>@endif</li>
+                                <li class="breadcrumb-item active d-inline-block"><a href="#">Til
+                                        søket</a></li>
+                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a
+                                        href="#"> Neste ></a> @else <span
+                                        class="text-muted">Neste</span>@endif</li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
         <div class="row">
             <div class="col-md-12">
              
@@ -53,13 +84,17 @@
                                     $path  =    \App\Helpers\common::getMediaPath($property_data);
                                     $full_path  = $path."". $unique_name; 
                                 ?>
-                        
+                                
                                     <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
-                                    <img class="d-block w-100" src="{{$full_path}}" alt="First slide">
+                                    <img class="d-block w-100" src="{{ $full_path }}" alt="First slide">
                                     </div>
                                 
                             <?php $i++ ?>
                             @endforeach
+                            @else
+                             <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
+                                    <img class="d-block w-100" src="{{ asset('/public/uploads/banners/1280x720.png') }}" alt="First slide">
+                            </div>
                         @endif 
 
                     </div>
