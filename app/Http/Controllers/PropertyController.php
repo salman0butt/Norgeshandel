@@ -2,37 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\AddPropertyForRent;
-use App\Http\Requests\AddPropertyForSale;
-use App\Http\Requests\AddFlatWishesRented;
-use App\Http\Requests\AddRealEstateBusinessPlot;
-use App\Http\Requests\AddCommercialPropertyForSale;
-use App\Http\Requests\AddCommercialPropertyForRent;
-use App\Http\Requests\AddPropertyHolidayHomeForSale;
-use App\Http\Requests\AddBusinessForSale;
-use App\Http\Requests\AddCommercialPlot;
-use App\PropertyForRent;
-use App\Models\Ad;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Helpers\common;
-use App\PropertyForSale;
-use App\PropertyHolidaysHomesForSale;
-use App\FlatWishesRented;
-use App\RealestateBusinessPlot;
-use App\CommercialPropertyForSale;
-use App\PropertyForRentMoreTimes;
-use App\CommercialPropertyForRent;
-use App\BusinessForSale;
-use App\CommercialPlot;
 use Mapper;
 use App\User;
 use App\Message;
+use App\Models\Ad;
 use Pusher\Pusher;
-use App\Events\PropertyForRent as PropertyForRentEvent;
+use App\Model\Search;
+use App\CommercialPlot;
+use App\Helpers\common;
+use App\BusinessForSale;
+use App\PropertyForRent;
+use App\PropertyForSale;
+use App\FlatWishesRented;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use App\RealestateBusinessPlot;
+use App\PropertyForRentMoreTimes;
+use App\CommercialPropertyForRent;
+use App\CommercialPropertyForSale;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\PropertyHolidaysHomesForSale;
+use App\Http\Requests\AddCommercialPlot;
+use App\Http\Requests\AddBusinessForSale;
+use App\Http\Requests\AddPropertyForRent;
+use App\Http\Requests\AddPropertyForSale;
+use App\Http\Requests\AddFlatWishesRented;
 use App\Http\Controllers\NotificationController;
+use App\Http\Requests\AddRealEstateBusinessPlot;
+use App\Http\Requests\AddCommercialPropertyForRent;
+use App\Http\Requests\AddCommercialPropertyForSale;
+use App\Http\Requests\AddPropertyHolidayHomeForSale;
+use App\Events\PropertyForRent as PropertyForRentEvent;
 
 
 class PropertyController extends Controller
@@ -202,11 +203,13 @@ class PropertyController extends Controller
 
     public function list()
     {
+         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
+        $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
         $ads = Ad::where('status','published')
             ->where('ad_type','!=','job')
             ->orderBy('id', 'desc')->get();
 
-        return view('user-panel.property.property_list',compact('ads'));
+        return view('user-panel.property.property_list',compact('ads','saved_search','recent_search'));
     }
 
     public function adsPropertyForSale(Request $request)

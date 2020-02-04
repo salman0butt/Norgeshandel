@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Admin\Jobs;
 
-use App\Admin\Jobs\Job;
-use App\Http\Controllers\Admin\Users\AdminUserController;
-use App\Http\Controllers\Controller;
 use App\Term;
 use App\User;
-use App\Models\Ad;
 use App\Media;
+use App\Models\Ad;
+use App\Models\Search;
+use App\Admin\Jobs\Job;
+use App\Helpers\common;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use App\Helpers\common;
 use Intervention\Image\AbstractDecoder;
+use App\Http\Controllers\Admin\Users\AdminUserController;
 
 //use function Sodium\compare;
 
@@ -35,8 +36,10 @@ class JobController extends Controller
             $ads = Ad::all();
             return response()->view('admin.jobs.jobs', compact('ads'));
         }
+        $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
+
         $ads = Ad::where('status', 'published')->where('ad_type', 'job')->get();
-        return response()->view('user-panel.jobs.jobs', compact('ads'));
+        return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search'));
     }
 
     /**
