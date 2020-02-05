@@ -13,7 +13,7 @@
             <h1 class="u-screen-reader-only">Varslinger</h1>
             <div class="panel text-right pb-5">
                 <a href="#" class="m-2">Merk alt som lest</a>
-                <a class="m-2" href="#">Innstillinger</a>
+                <a class="m-2" href="{{ url('/setting') }}">Innstillinger</a>
             </div>
             <div class="row">
             @if(count($ids) > 0)
