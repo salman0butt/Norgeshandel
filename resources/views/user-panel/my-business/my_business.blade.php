@@ -67,17 +67,17 @@
             </li>
             <li class="dme-btn-outlined-blue mb-1">
 {{--                <a href="{{url('my-business/job-preferences')}}" style="text-decoration: none;">--}}
-                <a href="#" style="text-decoration: none;">
+                <a href="{{ url('/job-pref') }}" style="text-decoration: none;">
                     <span class="font-weight-bold">Mine jobb-preferanser</span>
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{ url('/personvern') }}" style="text-decoration: none;">
                     <span class="font-weight-bold">Innstillinger for personvern</span>
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{ url('/setting') }}" style="text-decoration: none;">
                     <span class="font-weight-bold">Innstillinger</span>
                 </a>
             </li>
