@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Search;
+use App\Models\Search;
 use App\Admin\Jobs\Job;
 use App\CommercialPlot;
 use App\BusinessForSale;
@@ -10,12 +10,13 @@ use App\PropertyForRent;
 use App\PropertyForSale;
 use App\FlatWishesRented;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Auth;
 use App\RealestateBusinessPlot;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\PropertyHolidaysHomesForSale;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class SearchController extends Controller
 {
@@ -26,6 +27,8 @@ class SearchController extends Controller
      */
     public function index()
     {
+        $searches = Auth::user()->saved_searches;
+        return view('user-panel.my-business.search.saved-search', compact('searches'));
     }
 
     /**
@@ -62,6 +65,13 @@ class SearchController extends Controller
 
     }
 
+    public function checksearch(Request $request){
+        $search = Search::where('filter', $request->filter)->where('type', 'saved')->get();
+        if(count($search)>0)
+            exit(true);
+        else
+            exit(false);
+    }
     public function recent($value, $name, $ad_type)
     {
         if (\Illuminate\Support\Facades\Auth::check()) {
@@ -118,7 +128,10 @@ class SearchController extends Controller
      */
     public function update(Request $request, Search $search)
     {
-        //
+        $search->update(['notification_web'=>0,'notification_sms'=>0,'notification_email'=>0]);
+        $search->update($request->all());
+        Session::flash('success', 'Søk oppdatert');
+        return redirect()->back();
     }
 
     /**
@@ -129,7 +142,9 @@ class SearchController extends Controller
      */
     public function destroy(Search $search)
     {
-        //
+        $search->delete();
+        Session::flash('success', 'Søk slettet');
+        return redirect()->back();
     }
 
     public function search($search = "")

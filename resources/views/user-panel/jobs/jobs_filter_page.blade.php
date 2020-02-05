@@ -48,7 +48,6 @@
 
             var strsearch = urlParams;
             strsearch.delete('page');
-            strsearch.delete('view');
             var value = strsearch.toString();
             if (!isEmpty(value)) {
                 var url = "{{url('/recentearches')}}";
