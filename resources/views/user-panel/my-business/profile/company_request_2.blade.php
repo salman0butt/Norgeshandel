@@ -128,7 +128,7 @@
                             <h4 class="u-t4">
                                 <span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span> Rabatterte priser</h4>
                             <p class="u-mb0">Basert på antall annonser du legger ut.</p>
-                            <a href="/prisoversikt">Se prisoversikt
+                            <a href="{{url('price-chart')}}">Se prisoversikt
                                 her</a>
                         </div>
                         <div class="col-md-4">
