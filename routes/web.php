@@ -45,6 +45,23 @@ Route::get('/notification', function() {
 
     return view('notification');
 });
+Route::get('/setting', function() {
+
+    return view('user-panel.my-business.settings');
+});
+Route::get('/price-chart', function () {
+
+    return view('user-panel.my-business.price_chart');
+});
+Route::get('/job-pref', function () {
+
+    return view('user-panel.my-business.job_preferences');
+});
+Route::get('/personvern', function () {
+
+    return view('user-panel.my-business.privacy_setting');
+});
+
 //--
 
 //property search and filters

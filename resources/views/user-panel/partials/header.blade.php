@@ -60,9 +60,9 @@
                             position: absolute;
                             display: block;
                             background: red;
-                            padding:1px
-                                padding-left: 2px;
-                        padding-right: 2px;
+                            padding:1px;
+                            padding-left: 2px;
+                            padding-right: 2px;
                     }
                     </style>
 
