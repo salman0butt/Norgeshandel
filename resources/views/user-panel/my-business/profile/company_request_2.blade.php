@@ -24,10 +24,10 @@
                         <input type="hidden" name="form_type" value="org_number">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label for="">Org.Nr.</label>
+                                <label for="org_number">Org.Nr.</label>
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control" placeholder="9 siffer" name="org_number">
+                                <input type="number" class="form-control" placeholder="9 siffer" id="org_number" name="org_number">
                             </div>
                             <div class="col-md-3">
                                 <button type="submit" class="btn dme-btn-outlined-blue">Gå videre </button>
@@ -145,6 +145,15 @@
         $(document).ready(function () {
             $('#btn_manual_entry, #btn_org_number').click(function (e) {
                 $('.collapse').removeClass('show');
+            });
+            var num = $('#org_number').val();
+            $('#org_number').keyup(function (e) {
+                if ($(this).val().length<=9){
+                    num = $('#org_number').val();
+                }
+                else{
+                    $(this).val(num);
+                }
             })
         })
     </script>

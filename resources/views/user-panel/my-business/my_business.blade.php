@@ -44,7 +44,7 @@
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="#" style="text-decoration: none;">
+                <a href="{{url('my-business/savedsearches')}}" style="text-decoration: none;">
                     <span class="font-weight-bold">Lagrede søk</span>
                 </a>
             </li>

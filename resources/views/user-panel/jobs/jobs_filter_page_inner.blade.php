@@ -72,7 +72,7 @@
 {{-- search saved button start --}}
 
 <!-- Button trigger modal -->
-    <button type="button" class="btn bg-maroon text-white" data-toggle="modal" data-target="#basicExampleModal"
+    <button type="button" id="save_search_dialog_btn" class="btn bg-maroon text-white" data-toggle="modal" data-target="#basicExampleModal"
             style="margin-top: -3%;position: absolute;z-index: 999;">
         Lagrede søk
     </button>
@@ -83,7 +83,7 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document" style="margin-top:10%">
             <div class="modal-content">
-                <form action="{{ url('/savedsearches') }}" name="save-search" method="POST">
+                <form action="{{ url('/savedsearches') }}" id="save_search" name="save-search" method="POST">
                     {{csrf_field()}}
                     {{method_field('POST')}}
                     <div class="modal-header">
@@ -105,7 +105,7 @@
                                                value="" required=""
                                                class="form-control search-control">
                                     </label>
-                                    <input type="hidden" name="filter">
+                                    <input type="hidden" name="filter" id="filter">
                                 </div>
                                 <div class="input-toggle">
                                     <input type="checkbox" id="notify" name="notify" checked="" value="1">
@@ -223,6 +223,36 @@
         }
     }
     $(document).ready(function () {
+        var urlParams = new URLSearchParams(location.search);
+
+        $('#save_search').submit(function () {
+            var param = urlParams;
+            param.delete('page');
+            $('#filter').val(param.toString());
+        });
+
+        var param = urlParams;
+        param.delete('page');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '{{url('checksearch')}}',
+            data: {filter: param.toString()},
+            type: "GET",
+            success: function (response) {
+                if (response){
+                    $('#save_search_dialog_btn').attr('disabled', "disabled");
+                }
+            },
+            error: function (error) {
+                // console.log(error);
+            }
+        });
+
+
 
         $.each($('.pagination .page-link'), function () {
             var link = $(this).attr('href');

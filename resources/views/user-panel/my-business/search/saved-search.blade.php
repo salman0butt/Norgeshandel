@@ -1,158 +1,136 @@
 @extends('layouts.landingSite')
 
 @section('page_content')
-
-<div id="search-mysavedsearch-root">
-    <main class="profile">
-        <div class="dme-container">
+{{--    @dd($searches)--}}
+    <main class="saved-searches">
+        <div class="dme-container mb-3">
             <div class="breade-crumb">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel </a></li>
+                        <li class="breadcrumb-item">
+                            <a href="{{url('my-business')}}">Min handel </a>
+                        </li>
                         <li class="breadcrumb-item active" aria-current="page">Endre profil</li>
                     </ol>
                 </nav>
             </div>
             <!---- end breadcrumb----->
-            <section class="u-r-size3of5" id="saved-search-editor">
-                <h2 class="u-mt32 panel">
-                    <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Square</font>
-                    </font>
-                </h2>
-                <div class="saved-search-panel panel panel--info inputs-white p-4">
-                    <div class="grid">
-                        <div class="grid__unit u-size2of3">
-                            <h3 class="u-t4"><a href="https://www.finn.no/user/search.html?alertId=38105410">
-                                    <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">'bike', Clothing, cosmetics and
-                                            accessories,
-                                            Torget</font>
-                                    </font>
-                                </a></h3>
-                            <p><span class="u-truncate u-display-block">
-                                    <font style="vertical-align: inherit;">
-                                        <font style="vertical-align: inherit;">Email, Push, On FINN.no</font>
-                                    </font>
-                                </span></p>
+            @include('common.partials.flash-messages')
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Lagrede søk</h3>
+                    <p>Søk på noe du har lyst på og trykk «Lagre søk». Da varsler NorgesHandel deg når det dukker opp
+                        nye
+                        annonser.</p>
+                    <a href="#">Nyttig informasjon om lagrede søk</a>
+                </div>
+            </div>
+            <div class="row" id="saved-search-editor">
+                {{--                <div class="col-md-12"><h3 class="u-t3">Jobb</h3></div>--}}
+            </div>
+            @foreach($searches as $search)
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="bg-maroon-lighter p-3 radius-8">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3 class="u-t4">
+                                        <a href="">{{$search->name}}</a>
+                                    </h3>
+                                    <p>
+                                        <span class="u-truncate u-display-block">{{$search->notification_email?'E-post ':''}}{{$search->notification_sms?'Push ':''}}{{$search->notification_web?'På NorgesHandel.no ':''}}</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <button type="button" data-target="#search_detail_{{$search->id}}" data-toggle="collapse"
+                                            class="btn btn-default color-maroon"><span
+                                            class="fa fa-edit"></span> Endre
+                                    </button>
+                                </div>
+                            </div>
+                            {{--                        end row--}}
+                            <div class="row collapse" id="search_detail_{{$search->id}}">
+                                <div class="col-md-12">
+                                    <form id="update-form" action="{{route('search.update', compact('search'))}}" method="post">
+                                        {{csrf_field()}}
+                                        {{method_field('PUT')}}
+                                        <pre>
+                                        <?php
+                                            $final = "";
+                                        $str = explode('?', $search->filter);
+                                        $str2 = "";
+                                        if (count($str)>1){
+                                        $str2 = $str[1];
+                                        }
+                                        else{
+                                            $str2 = $str[0];
+                                        }
+                                                $pairs = explode('&', $str2);
+                                        foreach ($pairs as $pair){
+                                            $key_val = explode('=',$pair);
+                                            $final.= !empty($key_val[1])?str_replace('-', ' ', str_replace('_', ' ', $key_val[1].', ')):'';
+                                        }
+                                        ?>
+                                            </pre>
+                                        <h3 class="u-t4">{{rtrim($final, ', ')}}</h3>
+                                        <div class="form-group row">
+                                            <label class="col-md-1">Navn</label>
+                                            <div class="col-md-6">
+                                                <input class="form-control" name="name"
+                                                       value="{{$search->name}}">
+                                            </div>
+                                            <div class="col-md-5">
+                                            </div>
+                                        </div>
+                                        <h4 class="u-mt16">Varslingsinnstillinger</h4>
+                                        <div class="">
+                                            <input name="notification_email" type="checkbox" value="1" id="notification_email_{{$search->id}}" {{$search->notification_email?'checked':''}}>
+                                            <label for="notification_email_{{$search->id}}">
+                                                 <strong class="">Daglig e-postvarsling</strong>
+                                                <span
+                                                    class="">Nye treff for dette søket sendes til din e-postadresse</span>
+                                            </label>
+                                        </div>
+                                        <div class="">
+                                            <input name="notification_sms" type="checkbox" value="1" id="notification_sms_{{$search->id}}" {{$search->notification_sms?'checked':''}}>
+                                            <label for="notification_sms_{{$search->id}}">
+                                                 <strong class="">Umiddelbar push-varsling</strong>
+                                                <span class="">Sanntidsvarsling for dette søket sendes til NorgesHandel-appen på iPhone, iPad og Android</span>
+                                            </label>
+                                        </div>
+                                        <div class="">
+                                            <input name="notification_web" type="checkbox" value="1" id="notification_web_{{$search->id}}" {{$search->notification_web?'checked':''}}>
+                                            <label for="notification_web_{{$search->id}}">
+                                                 <strong class="">Umiddelbar varsling på NorgesHandel.no</strong>
+                                                <span class="">Sanntidsvarsling i toppmenyen på NorgesHandel.no</span>
+                                            </label>
+                                        </div>
+                                        <div class="mb-2 mt-2">
+                                            <button type="submit" class="btn dme-btn-maroon radius-8">Ferdig</button>
+                                        </div>
+                                    </form>
+                                        <div class="">
+                                            <form action="{{route('search.destroy', compact('search'))}}" method="post">
+                                                {{csrf_field()}}
+                                                {{method_field('DELETE')}}
+                                                <button type="button" class="btn dme-btn-outlined-blue"
+                                                        onclick="javascript:$('#search_detail_{{$search->id}}').slideUp();">Avbryt
+                                                </button>
+                                                <button type="submit" class="link text-danger"><span class="fa fa-trash"></span> Slett
+                                                    søket
+                                                </button>
+                                            </form>
+                                        </div>
+                                </div>
+                                {{--                            end col--}}
+                            </div>
+                            {{--                        end row--}}
                         </div>
-                        <div class="btn bg-maroon text-white pt-0 pb-0"><button class="btn bg-maroon text-white">
-                                <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Change</font>
-                                </font>
-                            </button></div>
                     </div>
                 </div>
-            </section>
-
-            <div id="search-mysavedsearch-root">
-                <section class="u-r-size3of5" id="saved-search-editor">
-                    <h2 class="u-mt32 panel">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">Square</font>
-                        </font>
-                    </h2>
-                    <div class="saved-search-panel panel panel--info inputs-white p-4" style="padding-bottom: 50px !important;">
-                        <div class="form-grid u-mh0">
-                            <div class="form-grid__unit u-ph0">
-                                <form id="update-form" class="u-mb8">
-                                    <h3 class="u-t4">
-                                        <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">'bike', Clothing, cosmetics and
-                                                accessories,
-                                                Torget</font>
-                                        </font>
-                                    </h3>
-                                    <div class="input input--text"><label for="savedSearchName-38105410">
-                                            <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">Name</font>
-                                            </font>
-                                        </label><input class="form-control search-control" name="savedSearchName" id="savedSearchName-38105410"
-                                            value=""></div>
-                                    <h4 class="u-mt16">
-                                        <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Notification Settings</font>
-                                        </font>
-                                    </h4>
-                                    <div class="input-toggle"><input name="notify" type="checkbox" id="38105410-mail"
-                                            value="mail" checked=""><label for="38105410-mail"
-                                            class="u-display-block"><strong class="u-b1">
-                                                <font style="vertical-align: inherit;">
-                                                    <font style="vertical-align: inherit;">Daily Email Alert </font>
-                                                </font>
-                                            </strong><span class="u-display-block u-d1">
-                                                <font style="vertical-align: inherit;">
-                                                    <font style="vertical-align: inherit;">New hits for this search are
-                                                        sent to
-                                                        your email address</font>
-                                                </font>
-                                            </span></label></div>
-                                    <div class="input-toggle"><input name="notify" type="checkbox" id="38105410-push"
-                                            value="push" checked=""><label for="38105410-push"
-                                            class="u-display-block"><strong class="u-b1">
-                                                <font style="vertical-align: inherit;">
-                                                    <font style="vertical-align: inherit;">Immediate push notification
-                                                    </font>
-                                                </font>
-                                            </strong>
-                                            <font style="vertical-align: inherit;"><span class="u-display-block u-d1">
-                                                    <font style="vertical-align: inherit;">Real-time </font>
-                                                </span><strong class="u-b1">
-                                                    <font style="vertical-align: inherit;">notification </font>
-                                                </strong></font><span class="u-display-block u-d1">
-                                                <font style="vertical-align: inherit;">
-                                                    <font style="vertical-align: inherit;">for this search is sent to
-                                                        the FINN
-                                                        app on iPhone, iPad and Android</font>
-                                                </font>
-                                            </span>
-                                        </label></div>
-                                    <div class="input-toggle"><input name="notify" type="checkbox" id="38105410-web"
-                                            value="web" checked=""><label for="38105410-web"
-                                            class="u-display-block"><strong class="u-b1">
-                                                <font style="vertical-align: inherit;">
-                                                    <font style="vertical-align: inherit;">Immediate notification on
-                                                        FINN.no
-                                                    </font>
-                                                </font>
-                                            </strong>
-                                            <font style="vertical-align: inherit;"><span class="u-display-block u-d1">
-                                                    <font style="vertical-align: inherit;">Real-time </font>
-                                                </span><strong class="u-b1">
-                                                    <font style="vertical-align: inherit;">notification </font>
-                                                </strong></font><span class="u-display-block u-d1">
-                                                <font style="vertical-align: inherit;">
-                                                    <font style="vertical-align: inherit;">in the top menu on FINN.no
-                                                    </font>
-                                                </font>
-                                            </span>
-                                        </label></div>
-                                    <div class="input-toggle"><button class="btn bg-maroon text-white">
-                                            <font style="vertical-align: inherit;">
-                                                <font style="vertical-align: inherit;">Finished</font>
-                                            </font>
-                                        </button></div>
-                                </form>
-                                <br>
-                                <div class="u-display-inline" style="display: block;width: 10%;float: left;"><button class="btn bg-maroon text-white">
-                                        <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Cancel</font>
-                                        </font>
-                                    </button></div>
-                                <div class="u-display-inline" style="display: block;width: 16%;float: left;"><button class="btn bg-maroon text-white">
-                                        <font style="vertical-align: inherit;">
-                                            <font style="vertical-align: inherit;">Delete the search</font>
-                                        </font>
-                                    </button> </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
+            @endforeach
         </div>
-</div>
-</main>
+    </main>
 
 
 @endsection

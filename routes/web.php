@@ -28,6 +28,7 @@ Route::get('mail', function () {
 
 Route::get('lang', 'TranslationController@index');
 
+Route::get('checksearch', 'SearchController@checksearch');
 Route::get('savedsearches', 'SearchController@index');
 Route::post('savedsearches/', 'SearchController@store');
 Route::post('recentearches/{value}/{name}/{ad_type}', 'SearchController@recent');
@@ -130,6 +131,9 @@ Route::group(['middleware' => 'auth'], function () {
 
 //    my business/min handel page routes
     Route::group(['prefix' => 'my-business'], function () {
+        Route::get('savedsearches', 'SearchController@index');
+        Route::resource('search', 'SearchController');
+
         Route::get('/', function () {
             return view('user-panel.my-business.my_business');
         });
@@ -194,9 +198,8 @@ Route::group(['middleware' => 'auth'], function () {
             });
         });
     });
-
+    Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 });
-Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware'=>['role:admin|manager']], function () {
 

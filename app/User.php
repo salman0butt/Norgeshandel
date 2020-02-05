@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Search;
 use Illuminate\Support\Facades\App;
 use App\Admin\jobs\JobPreference;
 use App\Models\AllowedCompanyAd;
@@ -115,7 +116,9 @@ class User extends Authenticatable implements MustVerifyEmail
 //    public function job_followings(){
 //        return $this->hasMany(Following::class)->where('');
 //    }
-
+    public function saved_searches(){
+        return $this->hasMany(Search::class)->where('type', '=', 'saved');
+    }
     public function is($roleName)
     {
         foreach ($this->roles()->get() as $role)
