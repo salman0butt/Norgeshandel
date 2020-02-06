@@ -54,7 +54,7 @@
                 <div class="col-md-3 offset-md-3 pt-2 pb-5 text-center align-content-center">
                     <a href="{{url('my-business/profile/company_profile_form/property')}}" >
                         <div class="category-icon" style="margin-top: 15px;">
-                            <img src="http://localhost/norgeshandel/public/images/Eiendom_ikon_maroon.svg" style="max-height: 180px;">
+                            <img src="{{url('public/images/Eiendom_ikon_maroon.svg')}}" style="max-height: 180px;">
                         </div>
                         <div class="category-title color-grey col-12">Eiendom</div>
                     </a>
@@ -62,7 +62,7 @@
                 <div class="col-md-3 text-center pt-4 pb-5 text-center align-content-center">
                     <a href="{{url('my-business/profile/company_profile_form/job')}}" >
                         <div class="category-icon" style="width:245px;">
-                            <img src="http://localhost/norgeshandel/public/images/Jobb_ikon_maroon.svg" style="max-height: 180px;">
+                            <img src="{{url('public/images/Jobb_ikon_maroon.svg')}}" style="max-height: 180px;">
                         </div>
                         <div class="category-title color-grey col-12">Jobb</div>
                     </a>
