@@ -20,7 +20,7 @@
             }
        
         ?>
-       
+
 
 <main>
     <div class="left-ad float-left">
@@ -32,33 +32,31 @@
         </div>
     </div>
     <div class="dme-container p-3">
-       <div class="breade-crumb">
-                <nav aria-label="breadcrumb">
-                    <div class="row pl-3 pr-3">
-                        <div class="col-md-6 p-0">
-                            <ol class="breadcrumb w-100 "
-                                style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
-                                <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property</a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property For Flat Wishes rented</a></li>
-                            </ol>
-                        </div>
-                        <div class="col-md-6 p-0">
-                            <ul class="breadcrumb w-100   text-right d-block"
-                                style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
-                                        href="#"> &lt; Forrige </a> @else <span
-                                        class="text-muted">Forrige</span>@endif</li>
-                                <li class="breadcrumb-item active d-inline-block"><a href="#">Til
-                                        søket</a></li>
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a
-                                        href="#"> Neste ></a> @else <span
-                                        class="text-muted">Neste</span>@endif</li>
-                            </ul>
-                        </div>
+        <div class="breade-crumb">
+            <nav aria-label="breadcrumb">
+                <div class="row pl-3 pr-3">
+                    <div class="col-md-6 p-0">
+                        <ol class="breadcrumb w-100 "
+                            style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
+                            <li class="breadcrumb-item active"><a href="#">Property</a></li>
+                            <li class="breadcrumb-item active"><a href="#">Property For Flat Wishes rented</a></li>
+                        </ol>
                     </div>
-                </nav>
-            </div>
+                    <div class="col-md-6 p-0">
+                        <ul class="breadcrumb w-100   text-right d-block"
+                            style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
+                            <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a href="#"> &lt;
+                                    Forrige </a> @else <span class="text-muted">Forrige</span>@endif</li>
+                            <li class="breadcrumb-item active d-inline-block"><a href="#">Til
+                                    søket</a></li>
+                            <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a href="#"> Neste ></a>
+                                @else <span class="text-muted">Neste</span>@endif</li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <img src="{{$full_path}}" alt="" class="img-fluid">
@@ -70,15 +68,34 @@
         </div>
         <div class="row mt-4">
             <div class="col-md-8">
-                <button class="dme-btn-outlined-blue" title="Lagre som favoritt"><i class="fa fa-heart mr-2"></i>Legg
-                    til favoritt</button>
+                <a href="#" style="position: initial" class="
+                        add-to-fav
+                        @if(Auth::check() && count($property_data->ad->favorite($property_data->ad->id))>0)
+                        fav
+                        @else
+                        not-fav
+                        @endif
+                        " @if(Auth::check() && count($property_data->ad->favorite($property_data->ad->id))<1)
+                        data-target="#modal_select_category" @endif @if(Auth::check()) data-toggle="modal"
+                        data-id="{{$property_data->ad->id}}" @else data-toggle="modal" data-target="#modal_login"
+                        @endif>
+                        <button style="font-size: 20px;" class="dme-btn-outlined-blue" title="Lagre som favoritt">
+                            <span @if(Auth::check() && count($property_data->ad->favorite($property_data->ad->id))>0)
+                                class="fa fa-heart text-muted mr-2"
+                                @else
+                                class="far fa-heart text-muted mr-2"
+                                @endif
+                                ></span>
+                            Legg til favoritt
+                        </button>
+                </a>
                 <a href="#"><i class="fa fa-envelope" style="font-size: 25px; padding:7px 10px;"></i></a>
                 <a href="#"><i class="fab fa-facebook" style="font-size: 25px; padding:7px 10px;"></i></a>
                 <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
                 <div class="row single-realestate-detail p-3">
                     <div class="col-md-12">
                         <!-- <div class="u-t3 mt-3">JESSHEIM SENTRUM</div> -->
-                        
+
                         <h1 class="u-t2">{{$property_data->headline}}</h1>
                     </div>
                     {{-- <div class="col-md-12 text-muted"> </div> --}}
@@ -87,17 +104,17 @@
                     <div class="col-md-12 u-t3">{{$property_data->max_rent_per_month}} Kr</div>
                     <div class="clearfix"></div>
                     {{-- <div class="mt-2 col-md-12"></div> --}}
-                       <div class="bg-light-grey radius-8 col-md-12 p-3">
+                    <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
-                    <div class="col-md-12"><span class="font-weight-bold">Boligtype: </span>&nbsp;<span>
-                            {{rtrim($property_data->property_type,",")}} </span></div>
-                    <div class="col-md-12"><span class="font-weight-bold">Ønsket område:
-                        </span>&nbsp;<span>{{rtrim($property_data->region)}}</span></div>
-                    <div class="col-md-12"><span class="font-weight-bold">Antall
-                            beboere:</span>&nbsp;<span>{{rtrim($property_data->number_of_tenants)}}</span></div>
-                    <div class="col-md-6"><span class="font-weight-bold">Ønskes fra: </span>&nbsp;<span>
-                            {{date("d.m.Y", strtotime($property_data->wanted_from))}}</span></div>
-                    </div>
+                            <div class="col-md-12"><span class="font-weight-bold">Boligtype: </span>&nbsp;<span>
+                                    {{rtrim($property_data->property_type,",")}} </span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Ønsket område:
+                                </span>&nbsp;<span>{{rtrim($property_data->region)}}</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Antall
+                                    beboere:</span>&nbsp;<span>{{rtrim($property_data->number_of_tenants)}}</span></div>
+                            <div class="col-md-6"><span class="font-weight-bold">Ønskes fra: </span>&nbsp;<span>
+                                    {{date("d.m.Y", strtotime($property_data->wanted_from))}}</span></div>
+                        </div>
                     </div>
 
                     <!-- <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a> -->
@@ -113,7 +130,7 @@
                             <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div> -->
                     <!-- <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
                             <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>!-->
-                 
+
                     <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span> <span> 140424636</span>
                     </div>
                     <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span> <span>
@@ -145,16 +162,16 @@
                 <button class="dme-btn-outlined-blue col-12">Gi bud</button>
                 {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
                     rel="noopener external">Les mer om elektronisk budgiving</a> --}}
-                    <div class="mt-3 mb-3">
+                <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">
                             <font style="vertical-align: inherit;">{{$property_data->street_address}}</font>
                         </font><br>
                     </h5>
                 </div>
-                    <div style="width: 306px; height: 153px;">
-                        {!! Mapper::render() !!}
-                    </div>
+                <div style="width: 306px; height: 153px;">
+                    {!! Mapper::render() !!}
+                </div>
             </div>
         </div>
     </div>
