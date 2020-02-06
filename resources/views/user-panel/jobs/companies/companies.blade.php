@@ -40,7 +40,7 @@
             <div class="col-md-12 ">
                     @if(count($companies) > 0)
                     @foreach($companies as $company)
-                <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
+                <a href="{{ url('/single-company/'.$company->id) }}" class="">
                     <div class="row hover-border text-muted mt-2 mb-2 company">
                         <div class="col-md-3">
                             <div class="p-2 text-center company-image">

@@ -803,7 +803,7 @@ $(document).ready(function () {
                 validUrl: true
             },
             app_twitter: {
-                validUrl: true
+                twitterhandle: true
             }
         }
     });
