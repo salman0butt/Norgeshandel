@@ -50,7 +50,7 @@
                         </li>
                         <?php $filters = ['job_type'=>[]]; ?>
                         <li class="col-sm-4 pl-0 pr-0" style="width: 200px;">
-                            <a href="companies.php" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler (522)</a>
+                            <a href="{{ url('/companies') }}" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler (522)</a>
                         </li>
                     </ul>
                 </div>
