@@ -18,6 +18,8 @@ class CompanyController extends Controller
     public function index()
     {
         //
+        $companies = Company::all();
+        return view('user-panel.jobs.companies.companies',compact('companies'));
     }
 
     /**
@@ -59,9 +61,11 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function show(Company $company)
+    public function show(Company $company,$id)
     {
         //
+        $company = Company::findOrFail($id);
+        return view('user-panel.jobs.companies.signle_company', compact('company'));
     }
 
     /**

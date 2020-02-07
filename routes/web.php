@@ -62,6 +62,31 @@ Route::get('/personvern', function () {
 
     return view('user-panel.my-business.privacy_setting');
 });
+Route::get('/become-business', function () {
+
+    return view('user-panel.footer.become_business');
+});
+Route::get('/customer-admin-for-business', function () {
+
+    return view('user-panel.footer.customer_admin_for_business');
+});
+Route::get('/cookie', function () {
+
+    return view('user-panel.footer.cookie');
+});
+
+
+
+
+
+//Compnies List
+
+Route::get('/companies', 'CompanyController@index');
+Route::get('/single-company/{id}', 'CompanyController@show');
+
+
+
+
 
 //--
 

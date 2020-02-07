@@ -17,4 +17,7 @@ class CommercialPropertyForSale extends Model
     {
         return $this->belongsTo('App\User');
     }
+     public function ad(){
+    return $this->belongsTo('App\Models\Ad');
+    }
 }
