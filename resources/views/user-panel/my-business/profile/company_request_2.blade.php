@@ -27,12 +27,18 @@
                                 <label for="org_number">Org.Nr.</label>
                             </div>
                             <div class="col-md-4">
-                                <input type="number" class="form-control" placeholder="9 siffer" id="org_number" name="org_number">
+                                <input type="number" class="form-control" placeholder="9 siffer" id="org_number" name="org_number" minlength="9" maxlength="9" required>
                             </div>
                             <div class="col-md-3">
-                                <button type="submit" class="btn dme-btn-outlined-blue">Gå videre </button>
+                                <button type="button" class="btn dme-btn-outlined-blue find_detail_button" data-toggle="collapse" data-target="#form_manual_entry">Gå videre </button>
+                                <div id="imageLoader" style="display:none; margin-top:15%; padding-bottom: 15%">
+                                    <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader" height="50px">
+                                </div>
+
                             </div>
-                            <div class="col-md-5"></div>
+                            <div class="col-md-5">
+
+                            </div>
                         </div>
                     </form>
                     <div class="row">
@@ -46,6 +52,16 @@
                 <div class="col-md-8 collapse" id="form_manual_entry">
                     <form class="contact-info-form" method="post" name="contact_info_form" action="{{route('request_company_profile')}}">
                         {{csrf_field()}}
+                        <div class="bg-maroon-lighter radius-8 company_details p-2 mb-3 d-none">
+                            <div class="row">
+                                <div class="col-md-6">Firma:</div>
+                                <div class="col-md-6 company_name font-weight-bold"></div>
+                                <div class="col-md-6">Org.nr.:</div>
+                                <div class="col-md-6 company_reg_no font-weight-bold"></div>
+                                <div class="col-md-6">Adresse:</div>
+                                <div class="col-md-6 company_address font-weight-bold"></div>
+                            </div>
+                        </div>
                         <input type="hidden" name="type" value="{{$type}}">
                         <input type="hidden" name="form_type" value="manual_entry">
                         <div class="form-group row">
@@ -155,6 +171,35 @@
                     $(this).val(num);
                 }
             })
+
+            // find comapny detail
+            $(document).on('click', '.org-number .find_detail_button[type="button"]', function() {
+                var org_number = $('.org-number #org_number').val();
+                var api_url = 'https://data.brreg.no/enhetsregisteret/api/enheter/'; // api link concatenate the registration number
+                if(org_number){
+                    $.ajax({
+                        type: "GET",
+                        url: api_url+org_number,
+                        success: function(response) {
+                            $('.org-number #imageLoader').css('display','inline');
+                            var registration_number = response['organisasjonsnummer']; //  get the company registration number
+                            var company_name = response['navn'];  //get the company name
+                            var company_address = response['forretningsadresse']['adresse']; // get the company address
+                            var zip_code = response['forretningsadresse']['postnummer']; // get the postal code of company
+                            var post_office = response['forretningsadresse']['poststed']; // get the post office
+                            var company_add_zip = company_address+' '+zip_code+' '+post_office;
+                            $('.company_details').removeClass('d-none');
+                            $('.company_details .company_name').html(company_name);
+                            $('.company_details .company_reg_no').html(registration_number);
+                            $('.company_details .company_address').html(company_add_zip);
+
+                        },
+                        error: function(response) {
+                            alert('Noe gikk galt.');
+                        }
+                    });
+                }
+            });
         })
     </script>
 @endsection

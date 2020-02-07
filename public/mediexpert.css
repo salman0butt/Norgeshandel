@@ -1089,3 +1089,8 @@ ul.pagination .active .page-link{
 label span.count{
     color: #888888;
 }
+.dme-btn-outlined-blue a{
+    display:block;
+    margin:-8px -12px;
+    padding:8px 12px;
+}

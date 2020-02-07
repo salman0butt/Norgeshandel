@@ -65,13 +65,15 @@ class SearchController extends Controller
 
     }
 
-    public function checksearch(Request $request){
+    public function checksearch(Request $request)
+    {
         $search = Search::where('filter', $request->filter)->where('type', 'saved')->get();
-        if(count($search)>0)
+        if (count($search) > 0)
             exit(true);
         else
             exit(false);
     }
+
     public function recent($value, $name, $ad_type)
     {
         if (\Illuminate\Support\Facades\Auth::check()) {
@@ -128,7 +130,7 @@ class SearchController extends Controller
      */
     public function update(Request $request, Search $search)
     {
-        $search->update(['notification_web'=>0,'notification_sms'=>0,'notification_email'=>0]);
+        $search->update(['notification_web' => 0, 'notification_sms' => 0, 'notification_email' => 0]);
         $search->update($request->all());
         Session::flash('success', 'Søk oppdatert');
         return redirect()->back();
@@ -160,33 +162,41 @@ class SearchController extends Controller
             $commercial_plot = CommercialPlot::where('headline', 'LIKE', '%' . $search . '%')->get();
             $Business_for_sale = BusinessForSale::where('headline', 'LIKE', '%' . $search . '%')->get();
 
-            $job_parttime = DB::table('jobs')->join('ads', 'jobs.ad_id', 'ads.id')
+            $job_parttime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.status', '=', 'published')
                 ->where('jobs.job_type', '=', 'part_time')
-                ->where('jobs.title', 'LIKE', '%' . $search . '%')
-                ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
-                ->orWhere('jobs.keywords', 'like', "%" . $search . "%")->get();
-            $job_fulltime = DB::table('jobs')->join('ads', 'jobs.ad_id', 'ads.id')
+                ->where(function ($query) use ($search) {
+                    $query->where('jobs.title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.keywords', 'like', "%" . $search . "%");
+                })->get();
+            $job_fulltime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.status', '=', 'published')
                 ->where('jobs.job_type', '=', 'full_time')
-                ->where('jobs.title', 'LIKE', '%' . $search . '%')
-                ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
-                ->orWhere('jobs.keywords', 'like', "%" . $search . "%")->get();
-            $job_management = DB::table('jobs')->join('ads', 'jobs.ad_id', 'ads.id')
+                ->where(function ($query) use ($search) {
+                    $query->where('jobs.title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.keywords', 'like', "%" . $search . "%");
+                })->get();
+            $job_management = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.status', '=', 'published')
                 ->where('jobs.job_type', '=', 'management')
-                ->where('jobs.title', 'LIKE', '%' . $search . '%')
-                ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
-                ->orWhere('jobs.keywords', 'like', "%" . $search . "%")->get();
-
-//        dd($job_fulltime, $job_management, $job_parttime);
+                ->where(function ($query) use ($search) {
+                    $query->where('jobs.title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.keywords', 'like', "%" . $search . "%");
+                })->get();
             $html = "";
             $html .= view('user-panel.partials.global-search-inner',
-                compact('job_parttime', 'job_fulltime', 'job_management', 'property_for_rent', 'property_for_sale', 'property_for_holiday_home_for_Sale', 'property_realstate_business', 'property_flat_wishes', 'commercial_property_for_sale', 'commercial_property_for_rent', 'commercial_plot', 'Business_for_sale', 'search'))->render();
+                compact('search','job_parttime', 'job_fulltime', 'job_management', 'property_for_rent', 'property_for_sale', 'property_for_holiday_home_for_Sale', 'property_realstate_business', 'property_flat_wishes', 'commercial_property_for_sale', 'commercial_property_for_rent', 'commercial_plot', 'Business_for_sale', 'search'))->render();
             exit($html);
         } else {
             exit("");
         }
+    }
+
+    public function global($search=""){
+        return view('user-panel.searches.global', compact('search'));
     }
 
 }

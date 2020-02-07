@@ -119,6 +119,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function saved_searches(){
         return $this->hasMany(Search::class)->where('type', '=', 'saved');
     }
+    public function recent_searches(){
+        return $this->hasMany(Search::class)->where('type', '=', 'recent');
+    }
     public function is($roleName)
     {
         foreach ($this->roles()->get() as $role)
