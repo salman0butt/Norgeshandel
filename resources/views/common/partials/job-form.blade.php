@@ -295,6 +295,7 @@
                                     <input name="zip" id="zip" value="{{$obj_job->zip}}" type="text"
                                            class="form-control dme-form-control">
                                 </div>
+                                <span class="zip_code_city_name"></span>
                             </div>
                         </div>
                         <!--                            full input-->
@@ -550,5 +551,31 @@
             menubar: false,
             statusbar: false
         });
+    </script>
+
+    <script>   
+    
+    $(document).on('change', 'input[name="zip"]', function(e) {
+    var zip_code = $(this).val();
+    var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
+    // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
+    var client_url = 'localhost';
+    
+    if(zip_code){
+ var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+    }
+  };
+  var status = xhttp.open("GET", api_url+"?clientUrl="+client_url+"&pnr="+zip_code, true);
+var myJSON = JSON.stringify(status);
+
+ console.log(myJSON);
+  xhttp.send();
+    }
+
+});
+    
     </script>
 @endsection
