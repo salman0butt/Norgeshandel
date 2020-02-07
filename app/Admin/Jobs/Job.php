@@ -60,10 +60,14 @@ class Job extends Model
         return $this->morphMany('App\Media', 'mediable')->where('type','company_logo');
     }
 
+    public function company_gallery(){
+        return $this->morphMany('App\Media', 'mediable')->where('type','company_gallery');
+    }
+
+
     public function gallery(){
         return $this->morphMany('App\Media', 'mediable')->where('type','gallery');
     }
-
     public function terms(){
         return $this->belongsToMany('App\Term');
     }

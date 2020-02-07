@@ -20,7 +20,9 @@
                 <a href="{{url('my-business/profile/select_company_profile_type')}}">Be om mer grense.</a>
             </div>
 
-            @if($user->allowed_companies>0 && $user->allowed_companies>count($user->companies))
+            @if(($user->allowed_job_companies->first()->value >0 && $user->allowed_job_companies->first()->value > count($user->job_companies))
+            ||
+            ($user->allowed_property_companies->first()->value >0 && $user->allowed_property_companies->first()->value > count($user->property_companies)))
                 <div class="company-profile">
                     <div class="row">
                         <div class="col-md-12">

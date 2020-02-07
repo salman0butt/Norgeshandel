@@ -38,6 +38,7 @@ Route::get('/residential/and/recreational/land/for/sale', function(){
 });
 
 Route::get('searching/{search?}', 'SearchController@search')->name('searching');
+Route::get('global-search/{search}', 'SearchController@global')->name('global');
 //    home routes
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');

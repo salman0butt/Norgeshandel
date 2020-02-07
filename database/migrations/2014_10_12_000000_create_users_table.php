@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('username')->unique();
+            $table->string('username')->nullable();
             $table->string('mobile_number')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -34,7 +34,8 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        \App\User::create(['first_name'=>'Digital', 'last_name'=>'Mediexpert', 'username'=>'digitalmx', 'email'=>'zaheer@digitalmx.no', 'password'=>\Illuminate\Support\Facades\Hash::make('gujrat786'), 'status'=>'active']);
+        $user = new \App\User(['first_name'=>'Digital', 'last_name'=>'Mediexpert', 'username'=>'digitalmx', 'email'=>'zaheer@digitalmx.no', 'password'=>\Illuminate\Support\Facades\Hash::make('gujrat786'), 'status'=>'active']);
+        $user->roles()->attach(1);
     }
 
     /**

@@ -231,15 +231,17 @@
             $.ajax({
                 url: url+'/'+list_id+'/'+ad_id,
                 type: "GET",
+                async:false,
                 success: function (response) {
+                    window.location.reload();
                 }
             });
 
-                $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
-                $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
-                $('a[data-id="'+ad_id+'"]').addClass('fav');
-                $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
-                $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
+                // $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
+                // $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
+                // $('a[data-id="'+ad_id+'"]').addClass('fav');
+                // $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
+                // $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
 
         });
         $('#new-list').click(function (e) {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Admin\Jobs\Job;
+use App\Media;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,11 +16,11 @@ class Company extends Model
     }
 
     public function company_logo(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','=','company_logo');
+        return $this->morphMany(Media::class, 'mediable')->where('type','=','company_logo');
     }
 
     public function company_gallery(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','=','company_gallery');
+        return $this->morphMany(Media::class, 'mediable')->where('type','=','company_gallery');
     }
 
     public function jobs(){
