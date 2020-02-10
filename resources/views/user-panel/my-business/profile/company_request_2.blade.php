@@ -30,7 +30,7 @@
                                 <input type="number" class="form-control" placeholder="9 siffer" id="org_number" name="org_number" minlength="9" maxlength="9" required>
                             </div>
                             <div class="col-md-3">
-                                <button type="button" class="btn dme-btn-outlined-blue find_detail_button" data-toggle="collapse" data-target="#form_manual_entry">Gå videre </button>
+                                <button type="button" class="btn dme-btn-outlined-blue find_detail_button">Gå videre </button>
                                 <div id="imageLoader" style="display:none; margin-top:15%; padding-bottom: 15%">
                                     <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader" height="50px">
                                 </div>
@@ -66,7 +66,7 @@
                         <input type="hidden" name="form_type" value="manual_entry">
                         <div class="form-group row">
                             <label for="org_name_2" class="col-md-2">Firmanavn</label>
-                            <input name="org_name" class="form-control col-md-4" id="org_name_2" type="text" maxlength="255">
+                            <input name="org_name" class="form-control col-md-4" id="org_name_2" type="text" maxlength="255" required>
                             <div class="col-md-6"></div>
                         </div>
                         <div class="row">
@@ -78,18 +78,17 @@
                             <div class="col-md-6">
                                 <label for="first_name">Fornavn</label>
                                 <input class="form-control"
-                                    placeholder="Fornavn" name="first_name" id="first_name" type="text"
-                                    maxlength="255" aria-required="true" value="">
+                                    placeholder="Fornavn" name="first_name" id="first_name" type="text" maxlength="255" aria-required="true" value="" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="last_name">Etternavn</label>
-                                <input class="form-control" placeholder="Etternavn" name="last_name" id="last_name" type="text" maxlength="255" aria-required="true" value="">
+                                <input class="form-control" placeholder="Etternavn" name="last_name" id="last_name" type="text" maxlength="255" aria-required="true" value="" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="email">E-post</label>
-                                <input class="form-control" placeholder="e-post" name="email" id="email" type="email" aria-required="true" value="">
+                                <input class="form-control" placeholder="e-post" name="email" id="email" type="email" aria-required="true" value="" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="phone">Telefon (valgfritt)</label>
@@ -177,10 +176,20 @@
                 var org_number = $('.org-number #org_number').val();
                 var api_url = 'https://data.brreg.no/enhetsregisteret/api/enheter/'; // api link concatenate the registration number
                 if(org_number){
+                    if(org_number <= 0){
+                        alert('org.no må være større enn null.');
+                        return false;
+                    }
+
+                    if(org_number.length != 9){
+                        alert('org.no må være ni sifret.');
+                        return false;
+                    }
                     $.ajax({
                         type: "GET",
                         url: api_url+org_number,
                         success: function(response) {
+                            $('#form_org_number #btn_manual_entry').click();
                             $('.org-number #imageLoader').css('display','inline');
                             var registration_number = response['organisasjonsnummer']; //  get the company registration number
                             var company_name = response['navn'];  //get the company name
@@ -192,12 +201,13 @@
                             $('.company_details .company_name').html(company_name);
                             $('.company_details .company_reg_no').html(registration_number);
                             $('.company_details .company_address').html(company_add_zip);
-
                         },
                         error: function(response) {
                             alert('Noe gikk galt.');
                         }
                     });
+                }else{
+                    alert('Oppgi org.no');
                 }
             });
         })
