@@ -64,9 +64,6 @@
             <div class="realestate-blockk " style="">
                 <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="grid-box-ancor product-list-item">
                     <div class="home-grid-box trailing-border" style="text-align:center;">
-                        <div href="#" class="favorite-icon-outer">
-                            <div class="favorite-icon fa fa-heart"></div>
-                        </div>
                         <img src="{{$path}}" style="max-height: 302px;min-height:302px;width:100%;" class="img-fluid product-img" alt="">
                         <div class="product-total-price">
                             Totalpris:
@@ -122,6 +119,7 @@
                         ?>
                     </p>
                 </a>
+                @include('user-panel.partials.fav-heart-button', compact('ad'))
             </div>
         </div>
 
