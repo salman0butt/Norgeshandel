@@ -64,7 +64,8 @@ class EntrustSetupTables extends Migration
 //
 //            $table->primary(['permission_id', 'role_id']);
         });
-
+        $user = \App\User::find(1);
+        $user->roles()->attach(1);
         DB::commit();
     }
 

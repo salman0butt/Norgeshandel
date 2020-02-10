@@ -172,7 +172,7 @@
                         <h5 class="text-muted">{{Auth::user()->username}}</h5>
                     </div>
                     <div class="chat-thread-list">
-                        @foreach($users as $user) 
+                        @foreach($users as $user)
                             <a href="#" class="user"  id="{{ $user->id }}">
                                 <div class="row chat-thread-tab">
 
@@ -210,11 +210,11 @@
                     </div> -->
                     <div class="row message-box" style=";background-color:#fdfdfd;height: calc(100vh - 188px);">
                         <div class="col-md-12 conversation" style="" id="messages">
-                           
-                        
+
+
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -249,8 +249,8 @@
             </div>
 
             <div class="col-md-8 m-t-56" id="messages">
-                
-                
+
+
             </div>
         </div>
     </div> -->
@@ -279,8 +279,8 @@
             channel.bind('my-event', function(data) {
                 if (my_id == data.from) {
                     $('#' + data.to).click();
-                } 
-                else if (my_id == data.to) 
+                }
+                else if (my_id == data.to)
                 {
                     if (receiver_id == data.from) {
                         // if receiver is selected, reload the selected user ...
@@ -299,9 +299,9 @@
             });
 
 
-            $('.user').click(function (e) 
+            $('.user').click(function (e)
             {
-                e.preventDefault()
+                e.preventDefault();
                 $('.user').removeClass('active');
                 $(this).addClass('active');
                 $(this).find('.pending').remove();
@@ -352,7 +352,7 @@
                 scrollTop: $('.message-wrapper').get(0).scrollHeight
             }, 50);
         }
-    
+
     </script>
 
     @endsection
