@@ -21,24 +21,13 @@
                     @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search'))
                         @include('user-panel.partials.templates.filter-property-for-sale')
                     @endif
-                    @if(Auth::check())
-
                     <li class="nav-item" id="move_to_notifications">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ url('notifications/all') }}">
                             <span class="label" id="notification_count_pro">0</span>
                             <i class="far fa-bell nav-icons"></i>
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>
                     </li>
-                    @else
-                     <li class="nav-item" id="move_to_notifications">
-                        <a class="nav-link" href="{{ url('/login') }}">
-                            <i class="far fa-bell nav-icons"></i>
-                            <div class="mt-2 ml-2">Varslinger</div>
-                        </a>
-                    </li>
-
-                    @endif
                     <style>
                     #collapsibleNavbar > ul > li:nth-child(2) > a > span {
                         -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -72,22 +61,12 @@
                             <div class="mt-2 ml-2">Ny annonse</div>
                         </a>
                     </li>
-                    @if(Auth::check())
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url('/messages')}}">
-                                <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
-                                <div class="mt-2 ml-2">Meldinger</div>
-                            </a>
-                        </li>
-                    @else
-                       <li class="nav-item">
-                            <a class="nav-link" href="{{url('/login')}}">
-                                <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
-                                <div class="mt-2 ml-2">Meldinger</div>
-                            </a>
-                        </li>
-                    @endif
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('/messages')}}">
+                            <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
+                            <div class="mt-2 ml-2">Meldinger</div>
+                        </a>
+                    </li>
                     <li class="nav-item type-btn" style="padding-top: 4px; padding-bottom: 2px;">
                         @if(Auth::check())
                         <a class="nav-link dme-btn-outlined-blue" href="{{url('my-business')}}">

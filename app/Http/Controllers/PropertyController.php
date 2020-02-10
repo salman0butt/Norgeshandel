@@ -543,13 +543,20 @@ class PropertyController extends Controller
                 array_push($files_builded_arr,$val[0]);
             }
 
+            //Ameer Hamza code to store multiple images
+            if(is_countable($request->file('property_home_for_sale_photos'))){
+                common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'gallery'); // property_home_for_sale_photos
+            }
+            //End Ameer Hamza code
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
             {
+                /* Zille Shah Code commented by Ameer Hamza
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_photos');
                 }
+                end zille shah code */
                 if($i == 1)
                 {
                     common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
@@ -698,7 +705,7 @@ class PropertyController extends Controller
 
         $response = PropertyForSale::create($property_for_sale_data);
 
-        if ($request->file('property_photos') || $request->file('property_pdf') || $request->file('property_quote'))
+        if (is_countable($request->file('property_photos')) || $request->file('property_pdf') || $request->file('property_quote'))
         {
             // $files = $request->file('property_photos');
             // $files_pdf = $request->file('property_pdf');
@@ -712,12 +719,12 @@ class PropertyController extends Controller
             }
 
             $i = 0;
+            if(is_countable($request->file('property_photos')))
+            {
+                common::update_media($val, $response->id , 'App\PropertyForSale', 'gallery'); //propert_for_sale_photos
+            }
             foreach($files_builded_arr as $key=>$val)
             {
-                if($i == 0)
-                {
-                    common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_photos');
-                }
                 if($i == 1)
                 {
                     common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_quotes');
@@ -854,10 +861,9 @@ class PropertyController extends Controller
         $response = PropertyForRent::create($property_for_rent_data);
 
         //add images
-        if ($request->file('property_photos'))
+        if (is_countable($request->file('property_photos')))
         {
-            $file = $request->file('property_photos');
-            common::update_media($file, $response->id , 'App\PropertyForRent', 'propert_for_rent');
+            common::update_media($request->file('property_photos'), $response->id , 'App\PropertyForRent', 'gallery'); //propert_for_rent
 
         }
 
@@ -911,15 +917,12 @@ class PropertyController extends Controller
         $flat_wishes_rented_data['ad_id'] = $add_response->id;
         $response = FlatWishesRented::create($flat_wishes_rented_data);
 
-
-        if ($request->file('flat_wishes_rented'))
+        //Ameer Hamza code for storing multiple images
+        if (is_countable($request->file('flat_wishes_rented')))
         {
-            $files = $request->file('flat_wishes_rented');
-            foreach ($files as $file)
-            {
-                common::update_media($file, $response->id , 'App\FlatWishesRented', 'flat_wishes_rented');
-            }
+            common::update_media($request->file('flat_wishes_rented'), $response->id , 'App\FlatWishesRented', 'gallery'); //flat_wishes_rented
         }
+        //End Ameer Hamza code
 
         //Notification data
         $notifiable_id = $response -> id;
@@ -980,6 +983,7 @@ class PropertyController extends Controller
 
     public function addCommercialPropertyForSale(AddCommercialPropertyForSale $request)
     {
+
         $commercial_property_for_sale = $request->all();
 
         unset($commercial_property_for_sale['commercial_property_for_sale_photos']);
@@ -1017,9 +1021,13 @@ class PropertyController extends Controller
         $response = CommercialPropertyForSale::create($commercial_property_for_sale);
 
 
-        if ($request->file('commercial_property_for_sale_photos') || $request->file('commercial_property_for_sale_pdf'))
+        if (is_countable($request->file('commercial_property_for_sale_photos')) || $request->file('commercial_property_for_sale_pdf'))
         {
-
+            //Ameer Hamza Code start for storing multiple images
+            if(is_countable($request->file('commercial_property_for_sale_photos'))){
+                common::update_media($request->file('commercial_property_for_sale_photos'), $response->id , 'App\CommercialPropertyForSale', 'gallery');
+            }
+            //End ameer hamza code
             $files = $request->file();
             $files_builded_arr = array();
             foreach($files as $key=>$val)
@@ -1030,10 +1038,12 @@ class PropertyController extends Controller
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
             {
+                /* Zille Shad Code commented by Ameer Hamza
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_propert_for_sale_photos');
                 }
+                */
                 if($i == 1)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_property_for_sale_pdf');
@@ -1352,9 +1362,13 @@ class PropertyController extends Controller
         $response = CommercialPropertyForRent::create($commercial_property_for_rent);
 
 
-        if ($request->file('commercial_property_for_rent_photos') || $request->file('commercial_property_for_rent_pdf'))
+        if (is_countable($request->file('commercial_property_for_rent_photos')) || $request->file('commercial_property_for_rent_pdf'))
         {
-
+            //Ameer Hamza Code for storing muliple images
+            if(is_countable($request->file('commercial_property_for_rent_photos'))){
+                common::update_media($request->file('commercial_property_for_rent_photos'), $response->id , 'App\CommercialPropertyForRent', 'gallery');
+            }
+            //End Ameer Hamza Code
             $files = $request->file();
             $files_builded_arr = array();
             foreach($files as $key=>$val)
@@ -1365,10 +1379,12 @@ class PropertyController extends Controller
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
             {
+                /* Zille Shah code commented by Ameer Hamza
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_photos');
                 }
+                */
                 if($i == 1)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_pdf');
@@ -1485,9 +1501,13 @@ class PropertyController extends Controller
 
         $response = BusinessForSale::create($business_for_sale);
 
-        if ($request->file('business_for_sale_photos') || $request->file('business_for_sale_pdf'))
+        if (is_countable($request->file('business_for_sale_photos')) || $request->file('business_for_sale_pdf'))
         {
-
+            //Ameer Hamza code for storing multiple images
+            if(is_countable($request->file('business_for_sale_photos'))){
+                common::update_media($request->file('business_for_sale_photos'), $response->id , 'App\BusinessForSale', 'gallery');
+            }
+            //End
             $files = $request->file();
             $files_builded_arr = array();
             foreach($files as $key=>$val)
@@ -1498,10 +1518,12 @@ class PropertyController extends Controller
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
             {
+                /* Zille Shah Code commented by Ameer Hamza
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_photos');
                 }
+                */
                 if($i == 1)
                 {
                     common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
@@ -1613,9 +1635,13 @@ class PropertyController extends Controller
 
         $response = CommercialPlot::create($commercial_plot);
 
-        if ($request->file('commercial_plot_photos') || $request->file('commercial_plot_photos'))
+        if (is_countable($request->file('commercial_plot_photos')) || $request->file('commercial_plot_pdf'))
         {
-
+            //Ameer Hamza code to store mulitple images
+            if(is_countable($request->file('commercial_plot_photos'))){
+                common::update_media($request->file('commercial_plot_photos'), $response->id , 'App\CommercialPlot', 'gallery');
+            }
+            //End Code
             $files = $request->file();
             $files_builded_arr = array();
             foreach($files as $key=>$val)
@@ -1626,10 +1652,12 @@ class PropertyController extends Controller
             $i = 0;
             foreach($files_builded_arr as $key=>$val)
             {
+                /* Zille Shah Code commented by Ameer Hamza
                 if($i == 0)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_photos');
                 }
+                */
                 if($i == 1)
                 {
                     common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');

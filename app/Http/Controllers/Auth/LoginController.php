@@ -46,8 +46,10 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        return redirect()->intended($this->redirectPath());
+
 //        if ($user->hasRole(['admin', 'manager', 'salesman'])) {
-            return redirect()->to(session()->pull('request'));
+//            return redirect()->to(session()->pull('request'));
 //        }
 //        else{
 //            return redirect()->route('home');
