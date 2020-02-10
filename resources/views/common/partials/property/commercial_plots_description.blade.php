@@ -58,8 +58,13 @@
                 <div class="col-md-12">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            @if($name->count() > 0)
+                                @foreach($name as $key=>$val)
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" @if($key == 0) class="active" @endif></li>
+                                @endforeach
+                            @else
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            @endif
                         </ol>
                         <div class="carousel-inner">
 
@@ -78,10 +83,10 @@
                                     
                                 <?php $i++ ?>
                                 @endforeach
-                                 @else
-                             <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
+                             @else
+                                 <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
                                     <img class="d-block w-100" src="{{ asset('/public/uploads/banners/1280x720.png') }}" alt="First slide">
-                            </div>
+                                </div>
                             @endif 
 
                         </div>
@@ -96,7 +101,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 text-center">
-                    <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">Pen og koselig stue med peisovn til vedfyring (2/19)</div>
+                    <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">{{$property_data->headline ? $property_data->headline : 'N/A'}}</div>
                 </div>
             </div>
             <div class="row mt-4">
