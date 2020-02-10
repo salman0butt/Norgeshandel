@@ -366,7 +366,7 @@
         $(document).on('click',"#move_to_notifications",function(){
 
             var ids = {};
-            window.location.href = '{{url("show/notifications/all")}}';
+            window.location.href = '{{url("notifications/all")}}';
             console.log($.param(ids));
 
         });
