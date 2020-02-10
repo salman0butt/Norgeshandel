@@ -1,4 +1,5 @@
 @section('page_content')
+
     <?php
     $job_fun = "";
     $ind = "";
@@ -554,8 +555,7 @@
         });
     </script>
 
-    <script>   
-    
+<script>   
     $(document).on('change', 'input[name="zip"]', function(e) {
          document.getElementById("zip_code_city_name").innerHTML = '';
     var zip_code = $(this).val();
@@ -576,8 +576,7 @@
 
     xhttp.send();
     }
-
 });
-    
+   
     </script>
 @endsection

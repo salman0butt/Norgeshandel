@@ -5,13 +5,30 @@
 <style>
 .sidebar li {
     list-style:none;
+    padding:10px 15px;
+    width:100%;
 }
-.sidebar li a {
-    padding:5px 10px;
+.sidebar li a{
+    width:100%;
+    font-size:14px;
 }
+.sidebar .active {
+    background: #ac304a;
+}
+.sidebar .active a {
+    color: #ffffff !important;
+}
+.recent-articles ul, .related-articles ul {
+    padding-left:0px;
+}
+.recent-articles li,.related-articles li {
+    list-style:none;
+    margin: 10px;
+}
+
 </style>
 
-<div class="container u-mb32" style="margin-top:3%;">
+<div class="dme-container u-mb32" style="margin-top:3%;">
 
      <div class="breade-crumb">
             <nav aria-label="breadcrumb">
@@ -29,14 +46,14 @@
         </div>
 
         <div class="article-container row" style="margin-top:2%;" id="article-container">
-            <section class="article-sidebar col-md-4">
+            <section class="article-sidebar col-md-3">
                 <section class="section-articles collapsible-sidebar">
-                    <h3 class="collapsible-sidebar-title sidenav-title">Artikler i denne seksjonen</h3>
-                    <ul class="sidebar">
+                    <h6 class="collapsible-sidebar-title sidenav-title">Artikler i denne seksjonen</h6>
+                    <ul class="sidebar" style="padding-left: 15px;">
 
-                        <li id="art-305274">
+                        <li id="art-305274" class="active mt-4">
                             <a href="#"
-                                class="sidenav-item ">Personvernerklæring</a>
+                                class="sidenav-item">Personvernerklæring</a>
                         </li>
 
                         <li id="art-360001156689">
@@ -91,24 +108,15 @@
                 </section>
             </section>
 
-            <article class="article col-md-8">
+            <article class="article col-md-9">
                 <header class="article-header">
-                    <h1 title="Lokal lagring av data og informasjonskapsler" class="article-title">
-                        Lokal lagring av data og informasjonskapsler
-
-                    </h1>
-
-
-
-                </header>
-
-                <section class="article-info">
+                    <h3 title="Lokal lagring av data og informasjonskapsler" class="article-title" style="font-weight:400;">
+                        Lokal lagring av data og informasjonskapsler</h3> </header>
+        <section class="article-info">
                     <div class="article-content">
                         <div class="article-body">
-                            <h1>
-                                <h3>Hva er lokal lagring av data og informasjonskapsler (cookies)?</h3>
-                            </h1>
-                            <p><em><span style="font-weight: 400;">Lokal lagring av data og informasjonskapsler (ofte
+                                <h4 class="mt-5" style="font-weight:400;">Hva er lokal lagring av data og informasjonskapsler (cookies)?</h4>
+                            <p><em><span>Lokal lagring av data og informasjonskapsler (ofte
                                         kalt cookies) </span></em><span style="font-weight: 400;">innebærer at ulike
                                     typer data lagres lokalt på din enhet via nettleseren din. Slike lokalt lagrede data
                                     kan for eksempel inneholde brukerinnstillinger, informasjon om hvordan du har surfet
@@ -120,15 +128,15 @@
                             <p><span style="font-weight: 400;">Ved å benytte Norgeshandel.no samtykker du i at vi kan sette
                                     informasjonskapsler i din nettleser.</span></p>
                             <h1>
-                                <h3>Lokal lagring og informasjonskapsler (cookies)</h3>
+                                <h3 style="font-weight:400;">Lokal lagring og informasjonskapsler (cookies)</h3>
                             </h1>
                             <h2>
-                                <h4>Typer av lokal lagring</h4>
+                                <h4 style="font-weight:400;font-size:16px;margin:20px 0;">Typer av lokal lagring</h4>
                             </h2>
                             <p><span style="font-weight: 400;">Det Norgeshandeles forskjellig typer av informasjonskapsler, som
                                     kan deles inn på forskjellige måter.</span></p>
                             <ol>
-                                <li><strong>Etter utløpstid</strong>
+                                <li><strong style="font-weight:600;">Etter utløpstid</strong>
                                     <ol>
                                         <li><span style="font-weight: 400;"><em>Sesjonslagring</em> - inneholder kun
                                                 data fra ditt nåværende besøk. Når du avslutter besøket (sesjonen) vil
@@ -142,7 +150,7 @@
                                                 nettleseren din.<br></span><span style="font-weight: 400;"></span></li>
                                     </ol>
                                 </li>
-                                <li><strong>Etter hvilket domene de tilhører</strong>
+                                <li><strong style="font-weight:600;">Etter hvilket domene de tilhører</strong>
                                     <ol>
                                         <li><span style="font-weight: 400;"><em>Førstepart</em> - plasseres av den som
                                                 driver nettstedet du er på. Dette er lokal lagring Norgeshandel setter selv,
@@ -157,8 +165,8 @@
                             <p><strong>
                                     <h4><br></h4>
                                 </strong>
-                                <h4></h4><strong>
-                                    <h4>Andre teknologier som ligner</h4>
+                                <strong>
+                                    <h4 style="font-weight:400;">Andre teknologier som ligner</h4>
                                 </strong>
                             </p>
                             <p><span style="font-weight: 400;">Vi kan også bruke nettbøyer/pikseletikketter for å
@@ -168,7 +176,7 @@
                                     enhet du er på, for å forstå hvilke annonser som skal vises og hvilke som har vært
                                     vist.</span></p>
                             <h2>
-                                <h3>Hvorfor bruker Norgeshandel lokal lagring av data?</h3>
+                                <h5 style="font-weight:400;">Hvorfor bruker Norgeshandel lokal lagring av data?</h5>
                             </h2>
                             <p><span style="font-weight: 400;">Vi bruker lokal lagring av data for å gi deg relevant
                                     informasjon når du besøker nettstedet vårt. For eksempel kan vi lagre historikken
@@ -188,9 +196,7 @@
                                 <li style="font-weight: 400;"><span style="font-weight: 400;">Forbedre funksjonaliteten
                                         på nettsidene.</span></li>
                             </ol>
-                            <h2>
-                                <h3>Hva med informasjonskapsler fra annonsører og andre tredjeparter?</h3>
-                            </h2>
+                                <h5 style="font-weight:400;margin:20px 0;">Hva med informasjonskapsler fra annonsører og andre tredjeparter?</h5>
                             <p><span style="font-weight: 400;">Når du bruker våre tjenester kan annonsører og andre
                                     tredjeparter plassere informasjonskapsler for å måle og analysere effekten på
                                     annonsering. Vi har utarbeidet strenge retningslinjer for hvordan slike aktører kan
@@ -200,9 +206,9 @@
                                     Schibsted. Data kan kun samles inn for å analysere og måle effekten av
                                     annonseringen, for eksempel ved å telle antall annonsevisninger, klikk og hvor mange
                                     som går videre (konvertering).</span></p>
-                            <h2>
-                                <h3>Hvordan kan jeg styre cookies fra annonsører og andre tredjeparter?</h3>
-                            </h2>
+                         
+                                <h4 style="font-weight:400;margin:20px 0;">Hvordan kan jeg styre cookies fra annonsører og andre tredjeparter?</h4>
+                       
                             <p>Listen nedenfor består av de vanligste annonseverktøyene. I tillegg vil det være ulike
                                 tredjepartsverktøy avhengig av hvilke annonser som lastes på sidene våre. Schibsted
                                 krever at alle disse begrenser sin bruk av data i tråd med vår&nbsp;<a
@@ -257,7 +263,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <h2><br>Hvordan kan jeg se hvilke informasjonskapsler som lagres i nettleseren?</h2>
+                            <h4 style="font-weight:400;margin:20px 0;"><br>Hvordan kan jeg se hvilke informasjonskapsler som lagres i nettleseren?</h4>
                             <p><span style="font-weight: 400;">I innstillingene til nettleseren Norgeshandeler du som regel en
                                     oversikt over alle informasjonskapsler som er lagret, slik at du eventuelt kan
                                     slette de du ikke ønsker. Nettleseren lagrer vanligvis alle informasjonskapsler i en
@@ -271,7 +277,7 @@
                                         style="font-weight: 400;">www.disconnect.me</span></a><span
                                     style="font-weight: 400;">.</span></p>
                             <h2>
-                                <h3>Oversikt over informasjonskapsler på Norgeshandel</h3>
+                                <h4 style="font-weight:400;margin:20px 0;">Oversikt over informasjonskapsler på Norgeshandel</h4>
                             </h2>
                             <p><span style="font-weight: 400;">Norgeshandel har utarbeidet en oversikt over informasjonskapsler
                                     som er på siden til enhver tid. Oversikten omfatter datainnsamling på Norgeshandel.no og i
@@ -282,9 +288,9 @@
                             <p><span style="font-weight: 400;"><a
                                         href="#">Informasjonskapsler
                                         på Norgeshandel</a></span></p>
-                            <h2>
-                                <h3>Hvordan kan jeg administrere informasjonskapsler i nettleseren?</h3>
-                            </h2>
+                          
+                                <h4 style="font-weight:400;margin:20px 0px;">Hvordan kan jeg administrere informasjonskapsler i nettleseren?</h4>
+                         
                             <p><span style="font-weight: 400;">De fleste nettlesere er innstilt på å akseptere
                                     informasjonskapsler automatisk, men du kan selv endre innstillingene slik at
                                     informasjonskapsler ikke blir akseptert. Husk at dette kan føre til at Norgeshandel.no ikke
@@ -294,8 +300,8 @@
                                     nettsteder du tillater informasjonskapsler fra, inkludert tredjeparter som er
                                     tilknyttet nettsidene. Du kan også be om å bli varslet hver gang en ny
                                     informasjonskapsel blir lagret. </span></p>
-                            <h3><span style="font-weight: 400;">Slik går du frem for å slette informasjonskapsler i
-                                    ulike nettlesere</span></h3>
+                            <h4 style="font-weight: 400;margin:20px 0px;">Slik går du frem for å slette informasjonskapsler i
+                                    ulike nettlesere</h4>
                             <p><span style="font-weight: 400;">Den nøyaktige fremgangsmåten avhenger av enheten din og
                                     hvilken nettleser du bruker:</span></p>
                             <p><a
@@ -325,7 +331,6 @@
                             <p><em>10. oktober 2017: Lagt inn direktelenker for deaktivering av annonseverktøy.</em></p>
                             <h2>&nbsp;</h2>
                         </div>
-
                         <div class="article-attachments">
                             <ul class="attachments">
 
@@ -340,33 +345,28 @@
 
                     </div>
 
-                    <div class="article-votes">
-                        <span class="article-votes-question">Var denne artikkelen nyttig?</span>
-                        <div class="article-votes-controls" role="radiogroup">
-                            <a role="radio" rel="nofollow" class="button article-vote article-vote-up" title="Ja"
-                                aria-selected="false" data-auth-action="signin"
-                                href="#"></a>
-                            <a role="radio" rel="nofollow" class="button article-vote article-vote-down" title="Nei"
-                                aria-selected="false" data-auth-action="signin"
-                                href="#"></a>
+                    <div class="article-votes mt-5" align="center">
+                        <span class="text-center">Var denne artikkelen nyttig?</span><br>
+                        <div class="article-votes-controls" role="radiogroup"> <br> <br>
+                            <a role="radio" rel="nofollow" class="dme-btn-outlined-blue article-vote article-vote-up" title="Ja" href="#"><i class="fas fa-check"></i>&nbsp; Ja</a> &emsp;
+                            <a role="radio" rel="nofollow" class="dme-btn-outlined-blue article-vote article-vote-down" title="Nei"
+                                href="#"><i class="fas fa-times"></i>&nbsp; Nei</a><br>
                         </div>
                         <small class="article-votes-count">
-                            <span class="article-vote-label">40 av 73 syntes dette var nyttig</span>
+                            <span class="article-vote-label mt-5">40 av 73 syntes dette var nyttig</span>
                         </small>
-                    </div>
+                    </div><br> <br>
 
 
-                    <div class="article-more-questions">
+                    <div class="article-more-questions" align="center">
                         Har du flere spørsmål? <a href="#">Send oss en henvendelse</a>
                     </div>
-                    <div class="article-return-to-top">
-                        <a href="#article-container">Gå tilbake til toppen<span class="icon-arrow-up"></span></a>
-                    </div>
+
                 </footer>
 
-                <section class="article-relatives">
-                    <section class="recent-articles">
-                        <h3 class="recent-articles-title">Nylig viste artikler</h3>
+                <section class="article-relatives row mt-3">
+                    <section class="recent-articles col-md-6">
+                        <h4 class="recent-articles-title" style="font-weight:400">Nylig viste artikler</h4>
                         <ul>
                             <li><a href="#">Personvernerklæring</a></li>
                             <li><a href="#">Dine data,
@@ -378,9 +378,9 @@
                         </ul>
                     </section>
 
-                    <section class="related-articles">
+                    <section class="related-articles col-md-6">
 
-                        <h3 class="related-articles-title">Relaterte artikler</h3>
+                        <h4 class="related-articles-title" style="font-weight:400">Relaterte artikler</h4>
 
                         <ul>
 
