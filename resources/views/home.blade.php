@@ -11,15 +11,15 @@
         <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         {{-- <div id="slideshow">
                 {{(\App\Helpers\common::display_ad('left') ? \App\Helpers\common::display_ad('left') : '')}}
-  
+
         </div> --}}
-              
+
         </div>
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
-      
+
 <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
-{{-- 
+{{--
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -27,7 +27,7 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-  {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}} 
+  {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}}
     </div>
 </div>
 </div> --}}
@@ -42,7 +42,7 @@
 
                             @if (isset($saved_search))
                                 @foreach($saved_search as $search)
-                                    <li><a href="{{url(htmlspecialchars($search->filter))}}">{{ $search->name }}</a></li>
+                                    <li><a href="{{!empty($search->filter)?url($search->filter):"#"}}">{{ $search->name }}</a></li>
                                 @endforeach
                             @else
                                 <li><p class="u-d1">Det er ingen lagrede søk</p></li>
@@ -72,7 +72,7 @@
                 <div class="col-md-8">
                     <div class="input-group search-box position-relative">
                         <input type="text" name="search" id="search" class="form-control search-control"
-                               placeholder="Søk her..." autofocus>
+                               placeholder="Søk her..." autofocus autocomplete="off">
                         <label for="search"><span class="input-group-addon">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32"
                              width="32">
@@ -87,7 +87,7 @@
                         </span>
                         </label>
                         <div class="suggestions" id="suggestions"
-                             style="position:absolute;top:35px;width:100%;height:auto;z-index: 1;background-color: rgba(236,223,226,0.9)">
+                             style="position:absolute;top:35px;width:100%;height:auto;z-index: 1;background-color: rgba(236,223,226,0.9);box-shadow: 0 0 5px rgba(0,0,0,0.3);">
 
                             @if (isset($result) )
                                 @include('user-panel.partials.global-search-inner')
@@ -138,9 +138,9 @@
         <div class="right-ad pull-right">
         <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
          {{-- <div id="slideshow">
-            {{(\App\Helpers\common::display_ad('right') ? \App\Helpers\common::display_ad('right') : '')}} 
+            {{(\App\Helpers\common::display_ad('right') ? \App\Helpers\common::display_ad('right') : '')}}
         </div> --}}
-       
+
         </div>
     </main>
     <script type="text/javascript">
@@ -152,7 +152,13 @@
 
     <script>
         $(document).ready(function (e) {
-               function delay(callback, ms) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            function delay(callback, ms) {
                 var timer = 0;
                 return function() {
                     var context = this, args = arguments;
@@ -173,11 +179,6 @@
             $('#search').on('keyup', function (e) {
                 if(!isEmpty($('#search_url').val())) {
                     $('#suggestions').css('display', 'block');
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
                     $.ajax({
                         url: $('#search_url').val() + '/' + $('#search').val(),
                         type: "GET",
@@ -193,18 +194,9 @@
                     $('#suggestions').html("");
                 }
             });
-        });
 
-        $(document).ready(function (e) {
             $('.ad_clicked').on('click', function (e) {
                 //  e.preventDefault();
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-
                 var url = 'banner/ad/click';
                 var banner_id = $(this).attr("data-banner-id");
                 var user_id = $('#userId').val();

@@ -35,7 +35,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <h3 class="u-t4">
-                                        <a href="">{{$search->name}}</a>
+                                        <a href="{{!empty($search->filter)?url($search->filter):'#'}}">{{$search->name}}</a>
                                     </h3>
                                     <p>
                                         <span class="u-truncate u-display-block">{{$search->notification_email?'E-post ':''}}{{$search->notification_sms?'Push ':''}}{{$search->notification_web?'På NorgesHandel.no ':''}}</span>

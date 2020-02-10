@@ -30,10 +30,10 @@
                 <form method="POST" action="{{ route('register') }}" id="register_page">
                     @csrf
                     <h3>Registrer her</h3>
-                    <div class="form-group ">
+                    <div class="form-group hide">
                         <label for="first_name" class="u-t5">Fornavn</label>
                         <div class="" style="">
-                            <input id="first_name" type="text" class="dme-form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
+                            <input id="first_name" type="text" class="dme-form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" autocomplete="first_name" autofocus>
                             @error('first_name')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -41,10 +41,10 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group hide">
                         <label for="last_name" class="u-t5">Etternavn</label>
                         <div class="" style="">
-                            <input id="last_name" type="text" class="dme-form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                            <input id="last_name" type="text" class="dme-form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" autocomplete="last_name" autofocus>
 
                             @error('last_name')
                             <span class="invalid-feedback" role="alert">
@@ -53,10 +53,10 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group ">
+                    <div class="form-group hide">
                         <label for="username" class="u-t5">Brukernavn</label>
                         <div class="" style="">
-                            <input id="username" type="text" class="dme-form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+                            <input id="username" type="text" class="dme-form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autocomplete="username" autofocus>
 
                             @error('username')
                             <span class="invalid-feedback" role="alert">
@@ -91,15 +91,15 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group hide">
                         <label for="password-confirm" class="u-t5">Bekreft passord</label>
 
                         <div class="">
-                            <input id="password-confirm" type="password" class="dme-form-control" name="password_confirmation" required autocomplete="new-password">
+                            <input id="password-confirm" type="password" class="dme-form-control" name="password_confirmation" autocomplete="new-password">
                         </div>
                     </div>
 
-                    <div class="form-group ">
+                    <div class="form-group">
                         <div class="float-left mt-2">
                             <input id="radiuscheckbox" type="checkbox" name="radius" value="10000" data-geo-filter-checkbox="">
                             <label for="radiuscheckbox" aria-label="Husk meg på denne enheten">Husk meg på denne enheten</label>

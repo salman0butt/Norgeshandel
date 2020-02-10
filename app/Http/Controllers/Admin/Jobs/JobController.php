@@ -114,7 +114,7 @@ class JobController extends Controller
         $notification_response = $notification_obj->create($notifiable_id,'App\Admin\Jobs\Job','property have been added');
         $notification_id_search = $notification_response->id;
         //trigger event
-        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
+//        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
 
 
 
@@ -370,9 +370,8 @@ class JobController extends Controller
         if (isset($request->search) && !empty($request->search)){
             $query->where(function ($query) use ($request){
                 $query->where('jobs.name', 'like', "%".$request->search."%");
-                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
-                $query->orWhere('jobs.job_type', 'like', "%".$request->search."%");
                 $query->orWhere('jobs.keywords', 'like', "%".$request->search."%");
+                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
             });
         }
 

@@ -53,7 +53,7 @@
 
                 var myform = document.getElementById("property_for_rent_form");
                 var fd = new FormData(myform);
-                fd.append('property_photos', $('#property_photos').get(0).files[0]);
+                // fd.append('property_photos', $('#property_photos').get(0).files[0]);
                 var l = Ladda.create(this);
                 l.start();
 

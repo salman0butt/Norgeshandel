@@ -44,6 +44,7 @@ foreach ($my_ads as $ad){
             </div>
         </div>
         <div class="dme-container mb-5">
+            @include('common.partials.flash-messages')
             <div class="row">
                 <aside class="col-md-3">
                     <div class="form-group">
@@ -69,22 +70,62 @@ foreach ($my_ads as $ad){
                             <h3 class="u-t5 mt-5">Annonsetyper</h3>
                             <div class="pl-3 pr-3">
                                 <label for="ad-type" class="radio-lbl">Alle annonsetyper
-                                    <input type="radio" checked="" id="ad-type" class="ad_type" name="ad_type" value="all-ads">
+                                    <input type="radio" checked="" id="ad-type" class="ad_type" name="ad_type" value="all_ads">
                                     <span class="checkmark"></span>
                                 </label>
 
                                 <label for="ad-type-1" class="radio-lbl">Heltidsstilling
-                                    <input type="radio" id="ad-type-1" class="ad_type" name="ad_type" value="job-full_time">
+                                    <input type="radio" id="ad-type-1" class="ad_type" name="ad_type" value="jobs-full_time">
                                     <span class="checkmark"></span>
                                 </label>
 
                                 <label for="ad-type-2" class="radio-lbl">Deltidsstilling
-                                    <input type="radio" id="ad-type-2" class="ad_type" name="ad_type" value="job-part_time">
+                                    <input type="radio" id="ad-type-2" class="ad_type" name="ad_type" value="jobs-part_time">
                                     <span class="checkmark"></span>
                                 </label>
 
                                 <label for="ad-type-3" class="radio-lbl">Lederstilling
-                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="job-management">
+                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="jobs-management">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label for="property-property_for_rent" class="radio-lbl">Bolig til leie
+                                    <input type="radio" id="property-property_for_rent" class="ad_type" name="ad_type" value="property-property_for_rent">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label for="property-property_for_sales" class="radio-lbl">Bolig til salgs
+                                    <input type="radio" id="property-property_for_sales" class="ad_type" name="ad_type" value="property-property_for_sales">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label for="property-property_holidays_homes_for_sales" class="radio-lbl">Fritidsbolig til salgs
+                                    <input type="radio" id="property-property_holidays_homes_for_sales" class="ad_type" name="ad_type" value="property-property_holidays_homes_for_sales">
+                                    <span class="checkmark"></span>
+                                </label>
+
+{{--                                <label for="ad-type-3" class="radio-lbl">Lederstilling--}}
+{{--                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="property-realestate_business_plot">--}}
+{{--                                    <span class="checkmark"></span>--}}
+{{--                                </label>--}}
+
+{{--                                <label for="ad-type-3" class="radio-lbl">Lederstilling--}}
+{{--                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="property-commercial_plot">--}}
+{{--                                    <span class="checkmark"></span>--}}
+{{--                                </label>--}}
+
+                                <label for="property-business_for_sales" class="radio-lbl">Bedrifter til salgs
+                                    <input type="radio" id="property-business_for_sales" class="ad_type" name="ad_type" value="property-business_for_sales">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label for="property-commercial_property_for_rents" class="radio-lbl">Næringseiendom til leie
+                                    <input type="radio" id="property-commercial_property_for_rents" class="ad_type" name="ad_type" value="property-commercial_property_for_rents">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label for="property-commercial_property_for_sales" class="radio-lbl">Næringseiendom til salgs
+                                    <input type="radio" id="property-commercial_property_for_sales" class="ad_type" name="ad_type" value="property-commercial_property_for_sales">
                                     <span class="checkmark"></span>
                                 </label>
 
@@ -97,7 +138,10 @@ foreach ($my_ads as $ad){
                     <div class="ads-list" id="ads-list">
                         {{--repeatation--}}
                         @foreach($ads as $ad)
-                                @include('user-panel.partials.templates.job-saved')
+                            @if($ad->ad_type=='job')
+                            <?php $job = $ad->job ?>
+                                @include('user-panel.partials.templates.myads-job', compact('job'))
+                            @endif
                         @endforeach
                         @if(count($ads)<1)
                             <div class="row alert alert-warning">
@@ -129,29 +173,10 @@ foreach ($my_ads as $ad){
                     url: url+'/'+status+'/'+ad_type,
                     type: "GET",
                     success: function (response) {
-                        json_jobs = $.parseJSON(response);
-
-                        if(json_jobs.length>0) {
-                            $('#ads-list').html('');
-                            var data = '';
-                            for (var i = 0; i < json_jobs.length; i++) {
-                                data += '<div class="row product-list-item mr-1 p-sm-1 mt-3">' +
-                                    '<div class="image-section col-sm-4 p-2">' +
-                                    '<img src="{{url('public/images/image-placeholder.jpg')}}" alt="" class="img-fluid radius-8">' +
-                                    '</div>' +
-                                    '<div class="detailed-section col-sm-8 p-2">' +
-                                    '<div style="width:100%;">' +
-                                    '<div class="week-status u-t5 text-muted" style="">Ukens bolig</div>' +
-                                    '<a class="float-right" style="cursor: pointer;"><span class="fa fa-trash-alt text-muted"></span></a>' +
-                                    '<div class="location u-t5 text-muted mt-2">Agnesodden 12B, Stavern</div>' +
-                                    '<p class="detail u-t5 mt-3 text-muted">Eier (Selveier) • Tomannsbolig • 3 soverom <br>DNB Eiendom AS</p>' +
-                                    '</div>' +
-                                    '<a href="#" class="dme-btn-outlined-blue float-right">Flere valg</a>' +
-                                    '<a href="#" class="dme-btn-outlined-blue float-right mr-2">Fullfør annonsen</a>' +
-                                    '</div>' +
-                                    '</div>';
-                            }
-                            $('#ads-list').html(data);
+                        // json_jobs = $.parseJSON(response);
+                        // if(json_jobs.length>0) {
+                        if(response.length>0) {
+                            $('#ads-list').html(response);
                         }
                         else{
                             $('#ads-list').html(

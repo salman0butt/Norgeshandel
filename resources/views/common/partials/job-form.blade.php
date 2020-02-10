@@ -19,13 +19,17 @@
     $sectors = $sector->terms;
     //    $arr = ["id" => null,"name" => null,"title" => null,"job_type" => null,"slug" => null,"positions" => null,"commitment_type" => null,"sector" => null,"keywords" => null,"description" => null,"deadline" => null,"accession" => null,"emp_name" => null,"emp_company_information" => null,"emp_website" => null,"emp_facebook" => null,"emp_linkedin" => null,"emp_twitter" => null,"country" => null,"zip" => null,"address" => null,"workplace_video" => null,"app_receive_by" => null,"app_link_to_receive" => null,"app_email_to_receive" => null,"app_contact" => null,"app_contact_title" => null,"app_mobile" => null,"app_phone" => null,"app_email" => null,"app_linkedin" => null,"app_twitter" => null,"ad_id" => null,"user_id" => null,"created_at" => null,"updated_at" => null]
     $obj_job = new \App\Admin\Jobs\Job();
+    if(isset($job)){
+        $obj_job = $job;
+    }
     ?>
-    <form action="@if(Request::is('*/jobs/*/edit')){{route('jobs.update', $job->id)}}
+
+    <form action="@if(Request::is('jobs/*/edit')){{route('jobs.update', $job->id)}}
     @else {{route('jobs.store')}} @endif" name="job-form" id="job-form" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        @if(Request::is('*/jobs/*/edit')) {{method_field('PUT')}} @endif
-        <input type="hidden" name="ad_id" id="ad_id">
-        <input type="hidden" name="job_id" id="job_id">
+        @if(Request::is('jobs/*/edit')) {{method_field('PUT')}} @endif
+        <input type="hidden" name="ad_id" id="ad_id" value="{{isset($obj_job->ad)?$obj_job->ad->id:""}}">
+        <input type="hidden" name="job_id" id="job_id" value="{{isset($obj_job->id)?$obj_job->id:""}}">
         <div class="container p-3 pt-4 bg-white mt-5 shadow-10">
             <div class="row">
                 <div class="col-md-12">

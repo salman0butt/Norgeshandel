@@ -59,7 +59,6 @@
             <div class="col-md-12">
                 <div class="<?php
                 echo $col === 'grid' ? 'row' : '' ?> order_specific_result" id="">
-
                     @foreach ($add_array as $key => $value)
                         <?php
                         $property_for_sale = App\PropertyForSale::find($value->id);
@@ -67,7 +66,7 @@
                         if (!empty($property_for_sale_collection)) {
                             $path = \App\Helpers\common::getMediaPath($property_for_sale);
                             foreach ($property_for_sale_collection as $key => $val) {
-                                if ($val['type'] == "propert_for_sale_photos") {
+                                if ($val['type'] == "gallery") {
                                     $name = $val['name_unique'];
                                 }
                                 $full_path_photos = $path . "" . $name;
@@ -83,8 +82,7 @@
                                 <div
                                     class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                     <div class="trailing-border">
-                                        <img
-                                            src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/image-placeholder.jpg')}}@endif"
+                                        <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/image-placeholder.jpg')}}@endif"
                                             alt="" class="img-fluid radius-8 w-100 list-h">
                                     </div>
                                 </div>

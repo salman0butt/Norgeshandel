@@ -38,6 +38,7 @@ Route::get('/residential/and/recreational/land/for/sale', function(){
 });
 
 Route::get('searching/{search?}', 'SearchController@search')->name('searching');
+Route::get('global-search/{search}', 'SearchController@global')->name('global');
 //    home routes
 Route::get('/', 'HomeController@index');
 Route::get('home', 'HomeController@index')->name('home');
@@ -169,6 +170,17 @@ Route::get('us/{p}', function () {
 
 //    routes for all non guest users
 Route::group(['middleware' => 'auth'], function () {
+
+    // message
+    Route::get('/messages', 'PropertyController@messages');
+    Route::get('/message/{id}', 'PropertyController@getMessage');
+    Route::post('message', 'PropertyController@sendMessage');
+
+    //notifications
+    Route::post('notifications/all', 'NotificationController@getAllNotifications');
+
+    Route::get('notifications/all', 'NotificationController@showAllNotifications');
+
 //    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 
 //    my business/min handel page routes
@@ -342,17 +354,6 @@ Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commerc
 Route::get('/map/test', 'PropertyController@mapTest');
 
 Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
-
-//chat
-Route::get('/messages', 'PropertyController@messages');
-Route::get('/message/{id}', 'PropertyController@getMessage');
-Route::post('message', 'PropertyController@sendMessage');
-
-
-//notifications
-Route::post('notifications/all', 'NotificationController@getAllNotifications');
-
-Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
 
 Route::get('test', function () {
     event(new App\Events\PropertyForRent('Guest'));
