@@ -2,11 +2,11 @@
 @section('page_content')
 
 
-<?php 
+<?php
 
             $facilities = array();
             if(isset($property_data->facilities) && !empty($property_data->facilities))
-            {   
+            {
 
                 $facilities = explode(",",rtrim($property_data->facilities, ","));
 
@@ -112,6 +112,9 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+
+                @php $name = $property_data->media; @endphp
+                @include('user-panel.partials.landing_page_slider',compact('name'));
             </div>
             <div class="col-md-12 text-center">
                 <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">
@@ -172,6 +175,7 @@
                                     @foreach($facilities as $key=>$val)
                                     <li>
                                         <?php
+
                                                 if($val != "")
                                                 {
                                                     echo $val;
@@ -249,6 +253,7 @@
                 </div>
                 <button class="dme-btn-outlined-blue col-12">Gi bud</button>
 
+
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">
@@ -265,6 +270,7 @@
     </div>
 
     <div class="row">
+
         <div class="right-ad pull-right">
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
