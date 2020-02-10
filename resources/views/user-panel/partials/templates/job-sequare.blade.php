@@ -35,29 +35,5 @@ if(count($media)>0){
             <div class="dealer-logo float-right mt-3" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>
         </div>
     </a>
-    <a href="#" class="
-    add-to-fav
-    @if(Auth::check() && count($job->ad->favorite($job->ad->id))>0)
-        fav
-    @else
-        not-fav
-    @endif
-    "
-       @if(Auth::check() && count($job->ad->favorite($job->ad->id))<1)
-           data-target="#modal_select_category"
-       @endif
-   @if(Auth::check())
-        data-toggle="modal" data-id="{{$job->ad->id}}"
-   @else
-        data-toggle="modal" data-target="#modal_login"
-   @endif
-    >
-        <span
-        @if(Auth::check() && count($job->ad->favorite($job->ad->id))>0)
-            class="fa fa-heart text-muted"
-        @else
-            class="far fa-heart text-muted"
-        @endif
-    ></span>
-    </a>
+    @include('user-panel.partials.fav-heart-button', compact('ad'))
 </div>
