@@ -256,9 +256,7 @@
 
                 <div class="mt-3 mb-3">
                     <h5>
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">{{$property_data->street_address}}</font>
-                        </font><br>
+                        {{$property_data->street_address}}<br>
                     </h5>
 
                 </div>
