@@ -2,11 +2,11 @@
 @section('page_content')
 
 
-<?php 
+<?php
 
             $facilities = array();
             if(isset($property_data->facilities) && !empty($property_data->facilities))
-            {   
+            {
 
                 $facilities = explode(",",rtrim($property_data->facilities, ","));
 
@@ -74,10 +74,10 @@
                         <?php $i = 0; ?>
                         @if(is_countable($name) > 0)
                         @foreach($name as $key=>$val)
-                        <?php 
+                        <?php
                                     $unique_name  =  $val->name_unique;
                                     $path  =    \App\Helpers\common::getMediaPath($property_data);
-                                    $full_path  = $path."". $unique_name; 
+                                    $full_path  = $path."". $unique_name;
                                 ?>
 
                         <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
@@ -198,7 +198,7 @@
                                     <ul>
                                         @foreach($facilities as $key=>$val)
                                         <li>
-                                            <?php 
+                                            <?php
                                                 if($val != "")
                                                 {
                                                     echo $val;
@@ -303,18 +303,11 @@
                     forberedt på visning.
                 </div>
                 <button class="dme-btn-maroon col-12 mb-2">
-                    <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Se komplett salgsoppgave</font>
-                    </font>
+                    Se komplett salgsoppgave
                 </button>
                 <button class="dme-btn-maroon col-12 mb-2">
-                    <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Gi bud</font>
-                    </font>
+                    Gi bud
                 </button>
-                {{-- <button class="dme-btn-outlined-blue col-12">Gi bud</button> --}}
-                {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">
@@ -333,7 +326,7 @@
     <div class="row">
 
 
-            
+
         <div class="right-ad pull-right">
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>

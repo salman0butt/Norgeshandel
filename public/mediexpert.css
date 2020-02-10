@@ -1011,7 +1011,7 @@ ul.pagination .active .page-link{
 
 .cgrid .location {
     position: absolute;
-    top: -275px;
+    top: -275px !important;
     left: 15px;
     font-size: 16px !important;
 }
