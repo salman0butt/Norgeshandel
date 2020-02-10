@@ -42,22 +42,22 @@ if(count($media)>0){
     @else
         not-fav
     @endif
-        "
-       @if(Auth::check() && count($job->ad->favorite($job->ad->id))<1)
-       data-target="#modal_select_category"
-       @endif
-       @if(Auth::check())
-       data-toggle="modal" data-id="{{$job->ad->id}}"
-       @else
-       data-toggle="modal" data-target="#modal_login"
-        @endif
-    >
+                "
+               @if(Auth::check() && count($job->ad->favorite($job->ad->id))<1)
+                       data-target="#modal_select_category"
+               @endif
+                       @if(Auth::check())
+                       data-toggle="modal" data-id="{{$job->ad->id}}"
+               @else
+                       data-toggle="modal" data-target="#modal_login"
+                @endif
+        >
         <span
-            @if(Auth::check() && count($job->ad->favorite($job->ad->id))>0)
-            class="fa fa-heart text-muted"
-            @else
-            class="far fa-heart text-muted"
-        @endif
-    ></span>
+                @if(Auth::check() && count($job->ad->favorite($job->ad->id))>0)
+                class="fa fa-heart text-muted"
+                @else
+                class="far fa-heart text-muted"
+                @endif
+        ></span>
     </a>
 </div>

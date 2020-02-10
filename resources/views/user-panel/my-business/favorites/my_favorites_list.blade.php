@@ -30,12 +30,16 @@
         </div>
         <div class="fav-list row mt-5">
             <div class="col-md-8">
-                @if(isset($list->favorites) && is_countable($list->favorites) && count($list->favorites)>0)
+                @if(isset($list->favorites) && is_countable($list->favorites) && count($list->favorites) > 0)
                     <?php $fav = $list->favorites; ?>
                     @foreach($fav as $item)
                         <?php $ad = $item->ad; ?>
-                        @if(isset($ad->ad_type) && $ad->ad_type === "job")
-                            @include('user-panel.partials.templates.job-list', compact('ad'))
+                        @if(isset($ad->ad_type))
+                            @if($ad->ad_type === "job" )
+                                @include('user-panel.partials.templates.job-list', compact('ad'))
+                            @else
+                                @include('user-panel.partials.templates.property-list', compact('ad'))
+                            @endif
                         @endif
                     @endforeach
                 @else

@@ -179,7 +179,7 @@ Route::group(['middleware' => 'auth'], function () {
     //notifications
     Route::post('notifications/all', 'NotificationController@getAllNotifications');
 
-    Route::get('notifications/all', 'NotificationController@showAllNotifications');
+    Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
 
 //    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 
