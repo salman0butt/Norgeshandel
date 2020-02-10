@@ -123,8 +123,9 @@
         </div>
             <div class="row mt-4">
             <div class="col-md-8">
-                <button class="dme-btn-outlined-blue" title="Lagre som favoritt"><i class="fa fa-heart mr-2"></i>Legg
-                    til favoritt</button>
+                @php $ad = $property_data->ad; @endphp
+                @include('user-panel.partials.favorite-button',compact('ad'))
+
                 <a href="#"><i class="fa fa-envelope" style="font-size: 25px; padding:7px 10px;"></i></a>
                 <a href="#"><i class="fab fa-facebook" style="font-size: 25px; padding:7px 10px;"></i></a>
                 <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>

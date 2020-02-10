@@ -67,27 +67,9 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-8">
-                         <a href="#" style="position: initial" class="
-                        add-to-fav
-                        @if(Auth::check() && count($property_data->ad->favorite($property_data->ad->id))>0)
-                        fav
-                        @else
-                        not-fav
-                        @endif
-                        " @if(Auth::check() && count($property_data->ad->favorite($property_data->ad->id))<1)
-                        data-target="#modal_select_category" @endif @if(Auth::check()) data-toggle="modal"
-                        data-id="{{$property_data->ad->id}}" @else data-toggle="modal" data-target="#modal_login"
-                        @endif>
-                        <button style="font-size: 20px;" class="dme-btn-outlined-blue" title="Lagre som favoritt">
-                            <span @if(Auth::check() && count($property_data->ad->favorite($property_data->ad->id))>0)
-                                class="fa fa-heart text-muted mr-2"
-                                @else
-                                class="far fa-heart text-muted mr-2"
-                                @endif
-                                ></span>
-                            Legg til favoritt
-                        </button>
-                </a>
+                        @php $ad = $property_data->ad; @endphp
+                        @include('user-panel.partials.favorite-button',compact('ad'))
+
                         <a href="#"><i class="fa fa-envelope" style="font-size: 25px; padding:7px 10px;"></i></a>
                         <a href="#"><i class="fab fa-facebook" style="font-size: 25px; padding:7px 10px;"></i></a>
                         <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
