@@ -14,7 +14,7 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            
+
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('title')->nullable();
@@ -24,11 +24,11 @@ class CreateJobsTable extends Migration
             $table->string('commitment_type')->nullable();
             $table->string('sector')->nullable();
             $table->string('keywords')->nullable();
-            $table->string('description')->nullable();
+            $table->string('description', 2500)->nullable();
             $table->date('deadline')->nullable();
             $table->date('accession')->nullable();
             $table->string('emp_name')->nullable();
-            $table->string('emp_company_information')->nullable();
+            $table->string('emp_company_information', 2500)->nullable();
             $table->string('emp_website')->nullable();
             $table->string('emp_facebook')->nullable();
             $table->string('emp_linkedin')->nullable();
