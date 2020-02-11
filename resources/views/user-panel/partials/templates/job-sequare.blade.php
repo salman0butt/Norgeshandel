@@ -2,7 +2,7 @@
 $logo='';
 $gallery='';
 if(isset($ad)){$ad = \App\Models\Ad::find($ad->id);}
-if(isset($job)){$ad = \App\Admin\Jobs\Job::find($job->id);}
+if(isset($job)){$job = \App\Admin\Jobs\Job::find($job->id);}
 if(!isset($job)){
     $job = $ad->job;
 }
