@@ -1,7 +1,6 @@
 @extends('layouts.landingSite')
 
 @section('page_content')
-
 <style>
 .sidebar li {
     list-style:none;
@@ -25,7 +24,6 @@
     list-style:none;
     margin: 10px;
 }
-
 </style>
 
 <div class="dme-container u-mb32" style="margin-top:3%;">
@@ -73,13 +71,13 @@
 
                         <li id="art-360006266280">
                             <a href="#"
-                                class="sidenav-item ">Behandling av personopplysninger ved registrert interesse for
+                                class="sidenav-item">Behandling av personopplysninger ved registrert interesse for
                                 Kommer for salg-boligannonser</a>
                         </li>
 
                         <li id="art-115004085465">
                             <a href="#"
-                                class="sidenav-item ">Behandling av personopplysninger ved søk på stilling gjennom
+                                class="sidenav-item">Behandling av personopplysninger ved søk på stilling gjennom
                                 Norgeshandel</a>
                         </li>
 

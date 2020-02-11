@@ -75,6 +75,16 @@ Route::get('/cookie', function () {
     return view('user-panel.footer.cookie');
 });
 
+Route::get('/customer-services', function () {
+
+    return view('user-panel.footer.customer_service');
+});
+
+Route::get('/useful-info', function () {
+
+    return view('user-panel.footer.useful_info');
+});
+
 
 
 
