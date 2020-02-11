@@ -1090,7 +1090,7 @@ label span.count{
     color: #888888;
 }
 #zip_code_city_name {
-    color:green !important;
+    color: gray !important
 }
 .dme-btn-outlined-blue a{
     display:block;

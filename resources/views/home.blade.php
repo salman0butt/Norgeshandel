@@ -19,53 +19,11 @@
             <div class="row top-ad">
 
 <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
-{{--
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-  </ol>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-  {{(\App\Helpers\common::display_ad('top') ? \App\Helpers\common::display_ad('top') : '')}}
-    </div>
-</div>
-</div> --}}
-
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">
                 <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8">
-                    <h2 class="u-t4">Lagrede søk</h2>
-                    <ul>
-                        @if (Auth::check())
-
-                            @if (isset($saved_search))
-                                @foreach($saved_search as $search)
-                                    <li><a href="{{!empty($search->filter)?url($search->filter):"#"}}">{{ $search->name }}</a></li>
-                                @endforeach
-                            @else
-                                <li><p class="u-d1">Det er ingen lagrede søk</p></li>
-                            @endif
-                        @else
-                            <p class="u-d1"><a href="{{url('/login')}}">Logg inn</a> for å vise dine lagrede søk</p>
-                        @endif
-                    </ul>
-
-                    <h2 class="u-t4">Siste søk</h2>
-                    <ul>
-                        @if (Auth::check())
-                            @if (isset($recent_search))
-                                @foreach($recent_search as $recent)
-                                    <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ $recent->name }}</a></li>
-                                @endforeach
-                            @else
-                                <p class="u-d1">Det er ingen nylig søk</p>
-                            @endif
-                        @else
-                            <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
-                        @endif
-                    </ul>
+                    @include('user-panel.partials.searches-history')
                 </div>
                 <!--            ended col-->
 

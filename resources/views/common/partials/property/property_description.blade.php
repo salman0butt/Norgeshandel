@@ -66,7 +66,7 @@
         <div class="row">
             <div class="col-md-12">
                 @php $name = $property_data->media; @endphp
-                @include('user-panel.partials.landing_page_slider',compact('name'));
+                @include('user-panel.partials.landing_page_slider',compact('name'))
             </div>
             <div class="col-md-12 text-center">
                 <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">
@@ -86,7 +86,7 @@
                         <!-- <div class="u-t3 mt-3">JESSHEIM SENTRUM</div> -->
                         <h1 class="u-t2">{{$property_data->heading}}</h1>
                     </div>
-                    <div class="col-md-12 text-muted">{{$property_data->street_address}}</div>
+                    <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span></div>
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                     <div class="col-md-12 font-weight-bold mt-3">Månedsleie</div>
                     <div class="col-md-12 u-t3">{{$property_data->monthly_rent}} Kr</div>

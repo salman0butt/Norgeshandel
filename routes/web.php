@@ -181,6 +181,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
 
+    //Clear Searches
+    Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
+
 //    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 
 //    my business/min handel page routes

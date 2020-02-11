@@ -117,4 +117,54 @@ $(document).ready(function (e) {
     });
     // end side tabs in my-ads
 
+
+    // Find city name using database zip code for an add and show it front end
+    if($('span').hasClass('db_zip_code')){
+        var db_zip_code = $('.db_zip_code').text();
+        if(db_zip_code){
+            var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
+            // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
+            var client_url = 'localhost';
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const postalCode = JSON.parse(this.responseText);
+                    var zip_code_city = '';
+                    if(postalCode.result){
+                        zip_code_city = postalCode.result.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                            return letter.toUpperCase();
+                        });
+                    }
+                    $('.db_zip_code').text(db_zip_code+' '+zip_code_city);
+                    //console.log(postalCode.result);
+                }
+            };
+            xhttp.open("GET", api_url+"?clientUrl="+client_url+"&pnr="+db_zip_code, true);
+            xhttp.send();
+        }
+    }
+    //End zip code
+
+
+    //Clear Searches like recent and saved clear_searches_link
+    $(document).on('click', '.clear_searches_link', function () {
+        var type = $(this).data('search_type');
+        var url = $(this).data('action');
+        if(type && url){
+            $.ajax({
+                url: url,
+                type:'POST',
+                data: {'type':type},
+                dataType:'json',
+                success: function (data) {
+                    if(data == 'success'){
+                        location.reload();
+                    }else{
+                        alert('noe gikk galt.');
+                    }
+                }
+            });
+        }
+    });
 });

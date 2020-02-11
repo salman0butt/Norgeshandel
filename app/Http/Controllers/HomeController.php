@@ -34,6 +34,21 @@ class HomeController extends Controller
         }
         $ads = Ad::where('status', 'published')->orderBy('id', 'desc')->get();
         return view('home', compact('ads', 'saved_search', 'recent_search'));
+    }
 
+    //clear search history
+    public function clearSearches(Request $request){
+        $flag = '';
+        if($request->type){
+            $searches = Search::where('type', $request->type)->where('user_id', Auth::user()->id);
+            if($searches->count() > 0){
+                $searches->delete();
+                $flag = 'success';
+                return json_encode($flag);
+                exit();
+            }
+        }
+        return json_encode($flag);
+        exit();
     }
 }

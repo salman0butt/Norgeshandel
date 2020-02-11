@@ -49,7 +49,7 @@
                         <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
                             <!--                                        <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>-->
                             <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
-                            <div class="location u-t5 text-muted mt-2">{{$property_commercial_property_for_sale->street_address}} </div>
+                            <div class="location u-t5 text-muted mt-2">{{$property_commercial_property_for_sale->street_address}}</div>
                             <div class="title color-grey">{{$property_commercial_property_for_sale->headline}}</div>
                             <div class="mt-2">
                                 <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_sale->primary_room}} m²</div>
