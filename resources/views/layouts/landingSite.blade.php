@@ -54,7 +54,7 @@
     </style>
 
 </head>
-<body>
+<body class="@yield('body_class')">
 @include('user-panel.partials.header')
 @yield('page_content')
 <div id="modal_select_category" class="modal fade" role="dialog">

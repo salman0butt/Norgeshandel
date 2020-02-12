@@ -1,5 +1,9 @@
-    @extends('layouts.landingSite')
-    @section('page_content')
+@extends('layouts.landingSite')
+@section('body_class', 'page-messages')
+@section('page_content')
+@php
+    $user_avatar = Auth::user()->media!=null?asset(\App\Helpers\common::getMediaPath(Auth::user()->media)):asset('public/images/profile-placeholder.png');
+@endphp
 
     <style>
         /* width */
@@ -139,128 +143,85 @@
         input[type=text]:focus {
             border: 1px solid #aaaaaa;
         }
-        .m-t-56{
-            margin-top:56px;
+
+        .m-t-56 {
+            margin-top: 56px;
         }
-        .p-r{
+
+        .p-r {
             position: relative;
         }
-        .p-t{
+
+        .p-t {
             top: 60px;
         }
-        .m-t-8{
-            margin-top:8px;
+
+        .m-t-8 {
+            margin-top: 8px;
         }
-        .m-t-5{
-            margin-top:10px;
+
+        .m-t-5 {
+            margin-top: 10px;
         }
 
     </style>
-
-
-        <main class="smart-scroll">
+    <main class="smart-scroll">
 
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4 smart-scroll"
-                    style="border-right: 1px solid #ecdfe2; height: calc(100vh - 50px); overflow-y: scroll; overflow-x: hidden">
+                     style="border-right: 1px solid #ecdfe2; height: calc(100vh - 50px); overflow-y: scroll; overflow-x: hidden">
                     <div class="mt-3 text-center profile-icon">
-                        <img src="@if(Auth::user()->media!=null){{asset(\App\Helpers\common::getMediaPath(Auth::user()->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" class="" alt="Profile image"
+                        <img
+                            src="{{$user_avatar}}"
+                            class="" alt="Profile image"
                             style="width:80px;">
                     </div>
                     <div class="mb-3 text-center profile-name">
                         <h5 class="text-muted">{{Auth::user()->username}}</h5>
                     </div>
                     <div class="chat-thread-list">
-                        @foreach($users as $user)
-                            <a href="#" class="user"  id="{{ $user->id }}">
+                        @foreach($threads as $thread)
+                            @if(!empty($thread->ad))
+{{--                            <a href="#" class="user" id="{{ $thread->id }}">--}}
+                            <a href="#" class="thread" id="{{ $thread->id }}" data-id="{{ $thread->id }}">
                                 <div class="row chat-thread-tab">
 
                                     <div class="col-md-3 p-0 float-left profile-icon text-center">
-                                        @if($user->unread)
-                                            <span class="badge badge-primary pending" style="position: absolute;z-index: 99;left: 25px;">{{ $user->unread }}</span>
-                                        @endif
-
-                                        <img src="{{asset('public/images/image-placeholder.jpg')}}" class="profile-post-image" alt="">
-                                        <img src="@if(App\Media::where('mediable_id',$user->id)->first() != null){{asset(\App\Helpers\common::getMediaPath(App\Media::where('mediable_id',$user->id)->first()))}}@else {{asset('public/images/profile-1.jpg')}} @endif" class="profile-image" alt="Profile image"
-                                            style="">
+{{--                                        @if($user->unread)--}}
+{{--                                            <span class="badge badge-primary pending"--}}
+{{--                                                  style="position: absolute;z-index: 99;left: 25px;">{{ $user->unread }}</span>--}}
+{{--                                        @endif--}}
+                                        <img src="{{asset('public/images/image-placeholder.jpg')}}"
+                                             class="profile-post-image" alt="">
+                                        <img src="{{$thread->user->media!=null?asset(\App\Helpers\common::getMediaPath($thread->user->media)):asset('public/images/profile-placeholder.png')}}"
+                                            class="profile-image" alt="Profile image" style="">
                                     </div>
                                     <div class="col-md-9 p-0 mt-1 profile-name">
-                                        <span class="font-weight-bold align-middle">{{$user->username}}</span>
-                                        <p class="text-muted">{{$user->email}}</p>
+                                        <span class="font-weight-bold align-middle" style="min-height: 1em;">{{$thread->ad->getTitle()}}</span>
+                                        <p class="text-muted">message</p>
                                     </div>
                                 </div>
                             </a>
+                            @endif
                         @endforeach
                     </div>
                 </div>
-                <div class="col-md-8 smart-scroll" style="height: calc(100vh - 50px); overflow-y: scroll; position: relative;">
-                    <!-- <div class="row p-2 bg-maroon-lighter">
-                        <div class="col-md-12">
-                            <a href="#" class="">
-                                <div class="mr-3 float-left profile-icon text-center">
-                                    <img src="{{asset('public/images/profile-2.jpg')}}" class="circle" alt="Profile image"
-                                        style="width:60px;">
-                                </div>
-                                <div class="ml-3 mt-3 profile-name">
-                                    <span class="font-weight-bold align-middle">Judy Williams</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div> -->
-                    <div class="row message-box" style=";background-color:#fdfdfd;height: calc(100vh - 188px);">
-                        <div class="col-md-12 conversation" style="" id="messages">
-
-
-                        </div>
-                    </div>
+                <div class="col-md-8 smart-scroll"
+                     style="height: calc(100vh - 50px); overflow-y: scroll; position: relative;" id="thread-data">
 
                 </div>
             </div>
         </div>
 
-        </main>
-
-
-
-    <!-- <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="user-wrapper m-t-56">
-                    <ul class="users">
-                        @foreach($users as $user)
-                            <li class="user p-r"  id="{{ $user->id }}">
-                                @if($user->unread)
-                                    <span class="pending">{{ $user->unread }}</span>
-                                @endif
-                                <div class="media">
-                                    <div class="media-left">
-                                        <img src="https://via.placeholder.com/150" alt="" class="media-object">
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="name">{{$user->username}}</p>
-                                        <p class="email">{{$user->email}}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-md-8 m-t-56" id="messages">
-
-
-            </div>
-        </div>
-    </div> -->
+    </main>
     <!-- <script src="https://js.pusher.com/5.0/pusher.min.js"></script> -->
     <script>
 
         var receiver_id = '';
         var my_id = "{{ Auth::id() }}";
 
-        $(document).ready(function(){
+        $(document).ready(function () {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -276,12 +237,10 @@
             });
 
             var channel = pusher.subscribe('my-channel');
-            channel.bind('my-event', function(data) {
+            channel.bind('my-event', function (data) {
                 if (my_id == data.from) {
                     $('#' + data.to).click();
-                }
-                else if (my_id == data.to)
-                {
+                } else if (my_id == data.to) {
                     if (receiver_id == data.from) {
                         // if receiver is selected, reload the selected user ...
                         $('#' + data.from).click();
@@ -299,20 +258,18 @@
             });
 
 
-            $('.user').click(function (e)
-            {
+            $('.thread').click(function (e) {
                 e.preventDefault();
-                $('.user').removeClass('active');
+                $('.thread').removeClass('active');
                 $(this).addClass('active');
                 $(this).find('.pending').remove();
-                receiver_id = $(this).attr('id');
+                var thread_id = $(this).attr('id');
                 $.ajax({
                     type: "get",
-                    url: "message/" + receiver_id, // need to create this route
-                    data: "",
+                    url: "{{url('messages/render-thread')}}/"+thread_id, // need to create this route
                     cache: false,
                     success: function (data) {
-                        $('#messages').html(data);
+                        $('#thread-data').html(data);
                         scrollToBottomFunc();
                     }
                 });
@@ -346,13 +303,13 @@
 
         });
 
-         // make a function to scroll down auto
+        // make a function to scroll down auto
         function scrollToBottomFunc() {
-            $('.message-wrapper').animate({
-                scrollTop: $('.message-wrapper').get(0).scrollHeight
+            $('.message-box').animate({
+                scrollTop: $('.message-box').get(0).scrollHeight
             }, 50);
         }
 
     </script>
 
-    @endsection
+@endsection

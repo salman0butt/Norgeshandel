@@ -2,40 +2,7 @@
 
     if(isset($ad))
     {
-        $property = "";
-        if($ad->ad_type == 'property_for_rent')
-        {
-            $property = $ad->propertyForRent;
-        }
-        else if($ad->ad_type == 'property_for_sale')
-        {
-            $property = $ad->propertyForSale;
-        }
-        else if($ad->ad_type == 'property_holiday_home_for_sale')
-        {
-            $property = $ad->propertyHolydaysHomesForSale;
-        }
-        else if($ad->ad_type == 'property_flat_wishes_rented')
-        {
-            $property = $ad->propertyFlatWishesRented;
-        }
-        else if($ad->ad_type == 'property_commercial_for_sale')
-        {
-            $property = $ad->propertyCommercialPropertyForSale;
-        }
-        else if($ad->ad_type == 'property_commercial_for_rent')
-        {
-            $property = $ad->propertyCommercialPropertyForRent;
-        }
-        else if($ad->ad_type == 'property_commercial_plots')
-        {
-            $property = $ad->propertyCommercialPlot;
-        }
-        else if($ad->ad_type == 'property_business_for_sale')
-        {
-            $property = $ad->propertyBusinessForSale;
-        }
-
+        $property = $ad->property;
 
         if($property !== null)
         {
