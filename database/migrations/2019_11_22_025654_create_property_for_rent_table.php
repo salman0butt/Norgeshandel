@@ -39,7 +39,7 @@ class CreatePropertyForRentTable extends Migration
             $table->string('include_in_rent')->nullable();
             $table->date('rented_from')->nullable();
             $table->date('rented_to')->nullable();
-            $table->string('description', 2500)->nullable();
+            $table->text('description', 2500)->nullable();
 
             $table->date('delivery_date')->nullable();
             $table->string('from_clock')->nullable();
