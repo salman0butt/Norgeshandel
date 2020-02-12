@@ -276,6 +276,144 @@ class PropertyController extends Controller
     public function newAdd(){
         return view('user-panel.property.new_add');
     }
+    public function newAddedit($id){
+        $property_for_rent = PropertyForRent::findOrFail($id);
+        return view('user-panel.property.new_add',compact('property_for_rent'));
+    }
+        public function UpdatePropertyForRentAdd(Request $request,$id)
+    {
+        
+
+        $property_for_rent_data = $request->except('_method');
+        // dd($property_for_rent_data);
+        // // dd($property_for_rent_data);
+
+        //Manage Facilities
+        if(isset($property_for_rent_data['facilities']))
+        {
+            $facilities = "";
+            foreach($property_for_rent_data['facilities'] as $key=>$val)
+            {
+                $facilities .= $val . ",";
+            }
+            $property_for_rent_data['facilities'] = $facilities;
+        }
+
+        //Add More ViewingTimes
+        if(isset($property_for_rent_data['delivery_date']) && $property_for_rent_data['delivery_date'] != "")
+        {
+            $property_for_rent_data['secondary_delivery_date'] = null;
+            $i = 0;
+            foreach($property_for_rent_data['delivery_date'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_for_rent_data['delivery_date']  = $val;
+                }
+                else
+                {
+                    $property_for_rent_data['secondary_delivery_date'] .= $val.",";
+                }
+                $i++;
+            }
+        }
+
+        $property_for_rent_data['secondary_from_clock'] = "";
+        if(isset($property_for_rent_data['from_clock']))
+        {
+            $i = 0;
+            foreach($property_for_rent_data['from_clock'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_for_rent_data['from_clock']  = $val;
+                }
+                else
+                {
+                    $property_for_rent_data['secondary_from_clock'] .= $val.",";
+                }
+                $i++;
+            }
+        }
+
+        $property_for_rent_data['secondary_clockwise_clock'] = "";
+        if(isset($property_for_rent_data['clockwise_clock']))
+        {
+            $i = 0;
+            foreach($property_for_rent_data['clockwise_clock'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_for_rent_data['clockwise_clock']  = $val;
+                }
+                else
+                {
+                    $property_for_rent_data['secondary_clockwise_clock'] .= $val.",";
+                }
+                $i++;
+            }
+        }
+
+        $property_for_rent_data['secondary_note'] = "";
+        if(isset($property_for_rent_data['note']))
+        {
+            $i = 0;
+            foreach($property_for_rent_data['note'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_for_rent_data['note']  = $val;
+                }
+                else
+                {
+                    $property_for_rent_data['secondary_note'] .= $val.",";
+                }
+                $i++;
+            }
+        }
+
+        if(isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on')
+        {
+            $property_for_rent_data['published_on'] = 1;
+        }
+        else
+        {
+            $property_for_rent_data['published_on'] = 0;
+        }
+
+        unset($property_for_rent_data['property_photos']);
+        $property_for_rent_data['user_id'] = Auth::user()->id;
+
+        //add Add to tables
+        // $add = array();
+        // $add['ad_type'] = 'property_for_rent';
+        // $add['status']  = 'published';
+        // $add['user_id'] =  Auth::user()->id;
+        // $add_response   =  Ad::where('id', '=', $id)->update($add);
+
+
+        // $property_for_rent_data['ad_id'] = $add_response->id;
+
+        $response = PropertyForRent::where('id','=',$id)->update($property_for_rent_data);
+        //add images
+        if (is_countable($request->file('property_photos')))
+        {
+            common::update_media($request->file('property_photos'), $response->id , 'App\PropertyForRent', 'gallery'); 
+            //propert_for_rent
+
+        }
+
+        //Notification data
+        // $notifiable_id = $response -> id;
+        // $notification_obj = new NotificationController();
+        // $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForRent','property have been added');
+        // $notification_id_search = $notification_response->id;
+        // //trigger event
+        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+
+        $data['success'] = $response;
+        echo json_encode($data);
+    }
 
     public function newSaleAdd(){
         return view('user-panel.property.new_sale_add');
