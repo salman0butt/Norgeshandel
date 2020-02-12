@@ -50,7 +50,7 @@ class LoginController extends Controller
         //     Auth::logout();
         //     return redirect('/login');
         // }
-
+ 
         return redirect()->intended($this->redirectPath());
 
 //        if ($user->hasRole(['admin', 'manager', 'salesman'])) {
