@@ -1,11 +1,11 @@
 @extends('layouts.landingSite')
 @section('page_content')
 
-<?php 
-    
+<?php
+
         $facilities = array();
         if(isset($property_data->facilities) && !empty($property_data->facilities))
-        {   
+        {
 
             $facilities = explode(",",rtrim($property_data->facilities, ","));
 
@@ -16,7 +16,7 @@
         // {
         //     $name       =    $name->name_unique;
         //     $path       =    \App\Helpers\common::getMediaPath($property_data);
-        //     $full_path  =    $path."".$name; 
+        //     $full_path  =    $path."".$name;
         // }
         // else
         // {
@@ -64,7 +64,7 @@
             </div>
         <div class="row">
             <div class="col-md-12">
-                @include('user-panel.partials.landing_page_slider',compact('name'));
+                @include('user-panel.partials.landing_page_slider',compact('name'))
             </div>
             <div class="col-md-12 text-center">
                 <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">{{$property_data->headline ? $property_data->headline : 'N/A'}}</div>
