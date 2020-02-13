@@ -22,7 +22,7 @@
                     <p>Søk på noe du har lyst på og trykk «Lagre søk». Da varsler NorgesHandel deg når det dukker opp
                         nye
                         annonser.</p>
-                    <a href="#">Nyttig informasjon om lagrede søk</a>
+                    <a href="{{ url('/useful-info') }}">Nyttig informasjon om lagrede søk</a>
                 </div>
             </div>
             <div class="row" id="saved-search-editor">

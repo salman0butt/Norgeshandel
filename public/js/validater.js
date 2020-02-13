@@ -116,9 +116,6 @@ $(document).ready(function () {
                 required: true,
                 number: true
             },
-            floor: {
-                number: true
-            },
             land: {
                 number: true
             },
@@ -328,9 +325,6 @@ $(document).ready(function () {
                 number: true
             },
             county_number: {
-                number: true
-            },
-            cadastral_unit_number: {
                 number: true
             },
             cadastral_unit_number: {
@@ -774,7 +768,7 @@ $(document).ready(function () {
                 validUrl: true
             },
             emp_twitter: {
-                validUrl: true
+                twitterhandle: true
             },
             country: {
                 required: true

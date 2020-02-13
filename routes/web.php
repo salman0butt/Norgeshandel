@@ -75,6 +75,16 @@ Route::get('/cookie', function () {
     return view('user-panel.footer.cookie');
 });
 
+Route::get('/customer-services', function () {
+
+    return view('user-panel.footer.customer_service');
+});
+
+Route::get('/useful-info', function () {
+
+    return view('user-panel.footer.useful_info');
+});
+
 
 
 
@@ -294,6 +304,8 @@ Route::get('reset', function () {
 Route::get('property/realestate', 'PropertyController@list');
 Route::get('property/realestate/homes', 'PropertyController@ads');
 Route::get('new/property/rent/ad', 'PropertyController@newAdd');
+Route::get('new/property/rent/ad/{id}/edit', 'PropertyController@newAddedit');
+Route::patch('add/property/for/rent/ad/{id}', 'PropertyController@UpdatePropertyForRentAdd');
 Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
 Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
 Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');

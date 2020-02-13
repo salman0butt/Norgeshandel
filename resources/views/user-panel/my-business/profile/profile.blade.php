@@ -559,7 +559,7 @@
                             </form>
                         </div>
                         <div class="collapse show inner-col p-4 bg-maroon-lighter" id="view_profile">
-                            <h3 class="font-weight-normal mb-3"> Profildata</h3>
+                            <h3 class="font-weight-normal mb-3">Mine opplysninger</h3>
                             <p><b style="color:#646162" class="mr-3">Visningsnavn :</b> {{$user->username}}</p>
                             <p><b style="color:#646162" class="mr-3">Fornavn :</b> {{$user->first_name}}</p>
                             <p><b style="color:#646162" class="mr-3">Etternavn :</b> {{$user->last_name}}</p>
