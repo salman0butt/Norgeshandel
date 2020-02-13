@@ -58,20 +58,7 @@
             </div>
             <!--            ended col-->
             <div class="col-md-4 pr-5">
-               <h2 class="u-t4">Siste søk</h2>
-                    <ul>
-                        @if (Auth::check())
-                            @if (isset($recent_search))
-                                @foreach($recent_search as $recent)
-                                    <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ $recent->name }}</a></li>
-                                @endforeach
-                            @else
-                                <p class="u-d1">Det er ingen nylig søk</p>
-                            @endif
-                        @else
-                            <p class="u-d1"><a href="{{ url('/login') }}">Logg inn</a> for å vise dine siste søk her</p>
-                        @endif
-                    </ul>
+                @include('user-panel.partials.searches-history')
             </div>
             <!--            ended col-->
         </div>

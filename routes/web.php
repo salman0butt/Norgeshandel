@@ -188,9 +188,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('message', 'PropertyController@sendMessage');
 
     //notifications
-    Route::post('notifications/all', 'NotificationController@getAllNotifications');
+    Route::post('notifications/all', 'NotificationController@getAllNotifications'); // Kindly test this route for getting notification via ajax call.
+
+    Route::get('notifications/all', 'NotificationController@showAllNotifications');
 
     Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+
+    //Clear Searches
+    Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
 
 //    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 

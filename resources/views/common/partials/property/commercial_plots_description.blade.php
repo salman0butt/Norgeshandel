@@ -75,7 +75,7 @@
                             <!-- <div class="u-t3 mt-3">JESSHEIM SENTRUM</div> -->
                             <h1 class="u-t2">{{$property_data->headline}}</h1>
                         </div>
-                        <div class="col-md-12 text-muted">{{$property_data->street_address}}</div>
+                        <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
                         <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
                         <!-- <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
                         <div class="col-md-12 u-t3">5 250 000 kr</div> -->
