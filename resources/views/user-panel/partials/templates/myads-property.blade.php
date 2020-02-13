@@ -72,7 +72,7 @@ if($property !== null)
         </div>
     </a>
     <div class="detailed-section col-md-8 position-relative p-2">
-        <form action="" METHOD="POST">
+        <form action="{{ url('property/for/rent/ad/'.$property->id) }}" method="POST" onsubmit="javascript:return confirm('Vil du slette denne annonsen?')">
             {{csrf_field()}}
             {{method_field('DELETE')}}
             <button type="submit" class="link float-right" style="cursor: pointer;"><span class="fa fa-trash-alt text-muted"></span></button>

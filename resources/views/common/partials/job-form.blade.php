@@ -460,7 +460,7 @@
 
                         <hr>
 
-                        <input type="submit" class="btn btn-primary mb-3 col-12" id="publiserannonsen" value="Publiser annonsen!">
+                        <input type="submit" class="dme-btn-outlined-blue mb-3 col-12" id="publiserannonsen" value="Publiser annonsen!">
 {{--                        <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" class="btn btn-primary mb-3 col-12 ladda-button" id="publiserannonsen" data-style="expand-left"><span class="ladda-label">Publiser annonsen!</span></button>--}}
 
                         <p class="u-t5 text-center">By moving forward, the <a href="#">rules for advertising</a>are

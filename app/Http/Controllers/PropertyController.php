@@ -21,8 +21,10 @@ use App\PropertyForRentMoreTimes;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\PropertyHolidaysHomesForSale;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\AddCommercialPlot;
 use App\Http\Requests\AddBusinessForSale;
 use App\Http\Requests\AddPropertyForRent;
@@ -394,13 +396,14 @@ class PropertyController extends Controller
 
         // $property_for_rent_data['ad_id'] = $add_response->id;
 
-        $response = PropertyForRent::where('id','=',$id)->update($property_for_rent_data);
+        $response = PropertyForRent::findOrFail($id);
+        $response->update($property_for_rent_data);
         //add images
+      // dd($response);
         if (is_countable($request->file('property_photos')))
         {
             common::update_media($request->file('property_photos'), $response->id , 'App\PropertyForRent', 'gallery'); 
             //propert_for_rent
-
         }
 
         //Notification data
@@ -413,6 +416,23 @@ class PropertyController extends Controller
 
         $data['success'] = $response;
         echo json_encode($data);
+    }
+    public function deletePropertyForRent($id){
+        
+        $property_for_rent = PropertyForRent::findOrFail($id);
+        //$ad = Ad::findOrFail($id);
+    // dd($property_for_rent->media->first->mediable_id);
+
+        if(!empty($property_for_rent->media)){
+            if($property_for_rent->media->first())
+        common::delete_media($property_for_rent->media->first->mediable_id,$property_for_rent->media->first->mediable_type, $property_for_rent->media->first->type);
+        }
+        $property_for_rent->delete();
+      // $ad->delete();
+       // dd('working');
+     Session::flash('success', 'Property Deleted Successfully');
+
+        return redirect('/my-business/my-ads');
     }
 
     public function newSaleAdd(){
