@@ -53,7 +53,7 @@
 
 
                 $('.notice').html("");
-                var url = "{{ url('add/property/for/rent/ad/'.$property_for_rent->id) }}";
+               
 
                 var myform = document.getElementById("property_for_rent_form");
                 var fd = new FormData(myform);
@@ -62,6 +62,7 @@
                 var l = Ladda.create(this);
                 l.start();
        @if(Request::is('new/property/rent/ad/*/edit'))
+        var url = "{{ url('add/property/for/rent/ad/'.$property_for_rent->id) }}";
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -94,12 +95,10 @@
                 }).always(function () {
                     l.stop();
                 });
-
-
                 return false;
-
             });
             @else
+             var url = "{{ url('add/property/for/rent/ad/') }}";
  $.ajax({
                     type: "POST",
                     url: url,
