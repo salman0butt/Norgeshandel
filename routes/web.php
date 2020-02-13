@@ -187,7 +187,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('message', 'PropertyController@sendMessage');
 
     //notifications
-    Route::post('notifications/all', 'NotificationController@getAllNotifications');
+    Route::post('notifications/all', 'NotificationController@getAllNotifications'); // Kindly test this route for getting notification via ajax call.
+
+    Route::get('notifications/all', 'NotificationController@showAllNotifications');
 
     Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
 
