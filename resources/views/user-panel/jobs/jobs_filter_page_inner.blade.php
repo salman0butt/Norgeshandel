@@ -228,7 +228,7 @@
         $('#save_search').submit(function () {
             var param = urlParams;
             param.delete('page');
-            $('#filter').val(param.toString());
+            $('#filter').val("jobs/search?"+param.toString());
         });
 
         var param = urlParams;
@@ -240,7 +240,7 @@
         });
         $.ajax({
             url: '{{url('checksearch')}}',
-            data: {filter: param.toString()},
+            data: {filter: "jobs/search?"+param.toString()},
             type: "GET",
             success: function (response) {
                 if (response){
