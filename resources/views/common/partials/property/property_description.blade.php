@@ -93,7 +93,7 @@
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
                     <div class="col-md-12 mt-3"><span
-                            class="font-weight-bold">Inkluderer:</span><span>{{$property_data->include_in_rent}} 
+                            class="font-weight-bold">Inkluderer:</span><span>{{$property_data->include_in_rent}}
                             </sapn>
                     </div>
                     <div class="col-md-12 "><span class="font-weight-bold"">Depositum:</span><span>{{$property_data->deposit}}</span> Kr</div>

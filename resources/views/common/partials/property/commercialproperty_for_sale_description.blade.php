@@ -1,11 +1,11 @@
 @extends('layouts.landingSite')
 @section('page_content')
 
-<?php 
-    
+<?php
+
         $facilities = array();
         if(isset($property_data->facilities) && !empty($property_data->facilities))
-        {   
+        {
 
             $facilities = explode(",",rtrim($property_data->facilities, ","));
 
@@ -16,7 +16,7 @@
         // {
         //     $name       =    $name->name_unique;
         //     $path       =    \App\Helpers\common::getMediaPath($property_data);
-        //     $full_path  =    $path."".$name; 
+        //     $full_path  =    $path."".$name;
         // }
         // else
         // {

@@ -15,6 +15,7 @@ use App\Media;
 use App\Models\Ad;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
+
 Auth::routes(['verify' => true]);
 Route::get('verified', function (){return view('auth.verified');})->middleware('verified');
 Route::get('mail', function () {

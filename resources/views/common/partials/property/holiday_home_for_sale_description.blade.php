@@ -1,10 +1,10 @@
 @extends('layouts.landingSite')
 @section('page_content')
 
-<?php 
+<?php
             $facilities = array();
             if(isset($property_data->facilities) && !empty($property_data->facilities))
-            {   
+            {
 
                 $facilities = explode(",",rtrim($property_data->facilities, ","));
 
@@ -15,13 +15,13 @@
             // {
             //     $name       =    $name->name_unique;
             //     $path       = \App\Helpers\common::getMediaPath($property_data);
-            //     $full_path  = $path."".$name; 
+            //     $full_path  = $path."".$name;
             // }
             // else
             // {
             //     $full_path  = "";
             // }
-    
+
         ?>
 
 <main>
@@ -145,7 +145,7 @@
                                     <ul>
                                         @foreach($facilities as $key=>$val)
                                         <li>
-                                            <?php 
+                                            <?php
                                                 if($val != "")
                                                 {
                                                     echo $val;
@@ -234,7 +234,7 @@
                 </div>
                 <button class="dme-btn-outlined-blue col-12">Gi bud</button>
                 {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}   
+                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">
