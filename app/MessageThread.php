@@ -21,4 +21,8 @@ class MessageThread extends Model
     public function ad(){
         return $this->belongsTo(Ad::class);
     }
+
+    public function get_unread(){
+        return $this->hasMany(Message::class)->whereNull('read_at')->where('to_user_id', '=', \Auth::id());
+    }
 }

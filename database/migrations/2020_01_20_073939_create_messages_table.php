@@ -17,6 +17,9 @@ class CreateMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->text('message');
             $table->integer('sender');
+            $table->string('sender_type', 4);
+            $table->integer('from_user_id')->nullable();
+            $table->integer('to_user_id')->nullable();
             $table->integer('message_thread_id');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();

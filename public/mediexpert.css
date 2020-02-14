@@ -848,7 +848,7 @@ a > .alert-warning:hover{
 .chat-thread-tab.active{
     background: #fff;
 }
-.chat-thread-tab:hover {
+.chat-thread-tab:hover, .chat-thread-tab.active {
     background-color: #e7e7e7;
 }
 .chat-thread-list{
@@ -895,7 +895,7 @@ a > .alert-warning:hover{
     margin-top: 0;
 }
 .receiver-message .message-text{
-    margin-left: 45px;
+    float: left;
 }
 
 .message-text-right{
@@ -909,8 +909,8 @@ a > .alert-warning:hover{
 
 .message{
     width:100%;
-    padding-top:20px;
-    padding-bottom: 20px;
+    padding-top:5px;
+    padding-bottom: 5px;
 }
 .receiver-message .profile-icon{
     float: left;

@@ -1,10 +1,10 @@
 @extends('layouts.landingSite')
 @section('page_content')
 
-<?php 
+<?php
             $facilities = array();
             if(isset($property_data->facilities) && !empty($property_data->facilities))
-            {   
+            {
 
                 $facilities = explode(",",rtrim($property_data->facilities, ","));
 
@@ -15,13 +15,13 @@
             // {
             //     $name       =    $name->name_unique;
             //     $path       = \App\Helpers\common::getMediaPath($property_data);
-            //     $full_path  = $path."".$name; 
+            //     $full_path  = $path."".$name;
             // }
             // else
             // {
             //     $full_path  = "";
             // }
-    
+
         ?>
 
 <main>
@@ -144,7 +144,7 @@
                                     <ul>
                                         @foreach($facilities as $key=>$val)
                                         <li>
-                                            <?php 
+                                            <?php
                                                 if($val != "")
                                                 {
                                                     echo $val;
@@ -210,7 +210,11 @@
                 </div>
                 <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
                 <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
-                <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
+                @if(!$property_data->ad->is_mine())
+                    <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                @endif
+
+            <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                                 salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
@@ -233,7 +237,7 @@
                 </div>
                 <button class="dme-btn-outlined-blue col-12">Gi bud</button>
                 {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}   
+                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

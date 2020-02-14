@@ -121,4 +121,14 @@ class Ad extends Model
         }
         return Favorite::where('user_id', 0)->where('ad_id', $ad_id)->get();
     }
+
+    public function is_mine(){
+        if (Auth::check()){
+            if ($this->user->id==Auth::id()){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 }

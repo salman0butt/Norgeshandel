@@ -15,6 +15,7 @@ class CreateMessageThreadsTable extends Migration
     {
         Schema::create('message_threads', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title')->nullable();
             $table->integer('user_id');
             $table->integer('ad_id');
             $table->timestamps();

@@ -1,10 +1,10 @@
 @extends('layouts.landingSite')
 @section('page_content')
 
-    <?php 
+    <?php
         $facilities = array();
         if(isset($property_data->facilities) && !empty($property_data->facilities))
-        {   
+        {
 
             $facilities = explode(",",rtrim($property_data->facilities, ","));
 
@@ -15,7 +15,7 @@
         // {
         //     $name       =    $name->name_unique;
         //     $path       =    \App\Helpers\common::getMediaPath($property_data);
-        //     $full_path  =    $path."".$name; 
+        //     $full_path  =    $path."".$name;
         // }
         // else
         // {
@@ -99,18 +99,18 @@
                         <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>{{ $property_data->floors }}</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Ant p-plasser </span>&nbsp;<span>{{$property_data->number_of_parking_space}}</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Byggeår </span>&nbsp;<span>{{ $property_data -> rennovated_year }}</span></div>
-                        <div class="col-md-12"><span class="font-weight-bold">Overtakelse </span>&nbsp;<span>    
-                                    
+                        <div class="col-md-12"><span class="font-weight-bold">Overtakelse </span>&nbsp;<span>
+
                                 <?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y h:i", strtotime($property_data->created_at)) : "");  ?>
-                        
+
                         </span></div>
-                        
+
                         <div class="col-md-12 more_details_section">
                             <span class="font-weight-bold">Fasiliteter</span>
                             <ul>
                                 @foreach($facilities as $key=>$val)
                                     <li>
-                                        <?php 
+                                        <?php
                                             if($val != "")
                                             {
                                                 echo $val;
@@ -126,15 +126,15 @@
                         <div class="col-md-12"><span class="font-weight-bold">Beskrivelse</span></div>
                         <div class="col-md-12"><p>{{$property_data->last_description}}</p></div>
 
-                                            
-                        <div class="col-md-12"> 
+
+                        <div class="col-md-12">
                             <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a>
                         </div>
 
                         <div style="width: 500px; height: 300px;">
                             {!! Mapper::render() !!}
                         </div>
-                                            
+
                         <!-- <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
                         <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div> -->
                         <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>
@@ -149,7 +149,7 @@
                     <div class="text-center">
                         <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                     </div>
-                    <p class="mt-3">  
+                    <p class="mt-3">
                         {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                         Eiendomsmegler</p>
                     <div class="mb-2">
@@ -160,7 +160,11 @@
                     <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
                     <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                             salgsoppgave</a></div>
-                    <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
+                    @if(!$property_data->ad->is_mine())
+                        <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                    @endif
+
+                <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                     <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                     <h2 class="u-t3">Visning</h2>
                     <div class="mb-2">Ta kontakt for å avtale visning</div>

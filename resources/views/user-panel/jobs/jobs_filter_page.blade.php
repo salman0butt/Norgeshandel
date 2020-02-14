@@ -33,7 +33,7 @@
                 urlParams = new URLSearchParams(location.search);
                 var view = urlParams.get('view');
                 var sort = urlParams.get('sort');
-                console.log(newUrl);
+
                 var x = new URLSearchParams(newUrl);
                 if (!isEmpty(view)) {
                     newUrl += "&view=" + view;

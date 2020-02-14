@@ -2,13 +2,13 @@
 @extends('layouts.landingSite')
 @section('page_content')
 
-    <?php 
+    <?php
         $name       = $property_data->media;
         // if($name != null)
         // {
         //     $name       =    $name->name_unique;
         //     $path       =    \App\Helpers\common::getMediaPath($property_data);
-        //     $full_path  =    $path."".$name; 
+        //     $full_path  =    $path."".$name;
         // }
         // else
         // {
@@ -53,7 +53,7 @@
                     </div>
                 </nav>
             </div>
-    
+
             <div class="row">
                 <div class="col-md-12">
                     @include('user-panel.partials.landing_page_slider',compact('name'));
@@ -100,7 +100,7 @@
                         <div class="col-md-12">
                             <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a>
                         </div>
-                        
+
 
                         <div style="width: 500px; height: 300px;">
                             {!! Mapper::render() !!}
@@ -124,7 +124,7 @@
                     <div class="text-center">
                         <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                     </div>
-                    <p class="mt-3">  {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br> 
+                    <p class="mt-3">  {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                         Eiendomsmegler</p>
                     <div class="mb-2">
                         <span>Mobil: </span>
@@ -134,7 +134,11 @@
                     <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
                     <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                             salgsoppgave</a></div>
-                    <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
+                    @if(!$property_data->ad->is_mine())
+                        <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                    @endif
+
+                <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                     <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                     <h2 class="u-t3">Visning</h2>
                     <div class="mb-2">Ta kontakt for å avtale visning</div>
@@ -149,6 +153,6 @@
             <img src="assets/images/right-ad.png" class="img-fluid" alt="">
         </div>
     </main>
-    
-    
+
+
 @endsection

@@ -93,7 +93,7 @@
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
                     <div class="col-md-12 mt-3"><span
-                            class="font-weight-bold">Inkluderer:</span><span>{{$property_data->include_in_rent}} 
+                            class="font-weight-bold">Inkluderer:</span><span>{{$property_data->include_in_rent}}
                             </sapn>
                     </div>
                     <div class="col-md-12 "><span class="font-weight-bold"">Depositum:</span><span>{{$property_data->deposit}}</span> Kr</div>
@@ -181,6 +181,9 @@
                         </div> -->
                 <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
                 <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
+                @if(!$property_data->ad->is_mine())
+                <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                @endif
                 <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                                 salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>

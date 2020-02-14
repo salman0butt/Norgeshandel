@@ -8,6 +8,7 @@ use App\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Pusher\Pusher;
+use function Sodium\compare;
 
 class MessageController extends Controller
 {
@@ -19,9 +20,20 @@ class MessageController extends Controller
                 $active_thread->save();
             }
             $threads = MessageThread::all();
-            return view('user-panel.chat.messages', compact('active_thread', 'threads'));
+            return redirect(url('messages/thread', $active_thread->id));
+//            return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');
+    }
+
+    public function view_thread($thread_id){
+        $threads = MessageThread::orderBy('id', 'desc')->get();
+        if($thread_id != 0) {
+            $active_thread = MessageThread::find($thread_id);
+            Message::where('message_thread_id', $active_thread->id)->update(['read_at'=>now()]);
+            return view('user-panel.chat.messages', compact('active_thread', 'threads'));
+        }
+        return view('user-panel.chat.messages', compact( 'threads'));
     }
 
     public function render_thread($thread_id){
@@ -38,7 +50,7 @@ class MessageController extends Controller
     public function show_thread($thread_id){
         if(Auth::check()) {
             $active_thread = MessageThread::find($thread_id);
-            $threads = MessageThread::all();
+            $threads = MessageThread::orderBy('id', 'desc')->get();
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');
@@ -46,15 +58,12 @@ class MessageController extends Controller
 
     public function index(Request $request)
     {
-        //select all users except logged in user
-        //$users = User::where('id', '!=', Auth::id())->get();
-
-        $users = DB::select("select users.id, users.username, users.email, count(is_read) as unread 
-        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-        where users.id != " . Auth::id() . " 
-        group by users.id, users.username, users.email");
-
-        return view('user-panel.chat.messages',['users' => $users]);
+        if(Auth::check()) {
+            $active_thread = MessageThread::orderBy('id', 'desc')->first();
+            $threads = MessageThread::orderBy('id', 'desc')->get();
+            return view('user-panel.chat.messages', compact('active_thread', 'threads'));
+        }
+        return redirect('forbidden');
     }
 
     public function get($user_id)
@@ -74,21 +83,16 @@ class MessageController extends Controller
         return view('common.partials.messages.index', ['messages' => $messages]);
     }
 
+    public function read_all($thread_id){
+        Message::where('message_thread_id', '=', $thread_id)->whereNull('read_at')->update(['read_at'=>now()]);
+    }
 
     public function send(Request $request)
     {
-        $from = Auth::id();
-        $to = $request->receiver_id;
-        $message = $request->message;
+        $message = new Message($request->all());
+        $message->save();
 
-        $data = new Message();
-        $data->from = $from;
-        $data->to = $to;
-        $data->message = $message;
-        $data->is_read = 0; // message will be unread when sending message
-        $data->save();
-
-        // pusher
+//         pusher
         $options = array(
             'cluster' => 'ap2',
             'useTLS' => true
@@ -100,9 +104,12 @@ class MessageController extends Controller
             env('PUSHER_APP_ID'),
             $options
         );
-
-        $data = ['from' => $from, 'to' => $to]; // sending from and to user id when pressed enter
-        //$pusher->trigger('my-channel', 'my-event', $data);
+//
+        $data = ['from' => $request->sender, 'to' => $request->receiver,
+            'message'=>$request->message, 'thread_id'=>$message->message_thread_id,
+            'from_user_id'=>$request->from_user_id, 'to_user_id'=>$request->to_user_id];
+        $pusher->trigger('my-channel', 'my-event', $data);
+        $pusher->trigger('header-chat-notification', 'header-chat-notification-event', $data);
 
     }
 

@@ -17,48 +17,23 @@
     <link rel="stylesheet" href="{{asset('public/css/validate-error.css')}}">
 
 
-
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
 
     <!--    incluedes   -->
-    <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
     <script src="{{asset('public/js/html2canvas.min.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+            integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+            crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-        #collapsibleNavbar > ul > li:nth-child(1) > a > span
-        {
-                -webkit-tap-highlight-color: rgba(0,0,0,0);
-                font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-                list-style: none;
-                box-sizing: border-box;
-                text-align: center;
-                white-space: nowrap;
-                vertical-align: baseline;
-                border-radius: 1em;
-                color: #fff;
-                text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-                font-weight: 600;
-                top: 10px;
-                font-size: 10px;
-                padding: 0 2px;
-                line-height: 12px;
-                position: absolute;
-                display: block;
-                background: red;
-                padding:1px;
-                padding-left: 2px;
-                padding-right: 2px;
-        }
-    </style>
-
 </head>
 <body class="@yield('body_class')">
 @include('user-panel.partials.header')
 @yield('page_content')
 <div id="modal_select_category" class="modal fade" role="dialog">
-    <div class="modal-dialog pt-5" >
+    <div class="modal-dialog pt-5">
         <div class="modal-content smart-scroll" style="max-height: calc(100vh - 100px); overflow-y: scroll;">
             <div class="modal-body" id="list-body">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -70,16 +45,19 @@
                 </div>
                 <div class="row" id="fav_lists">
                     <div class="col-sm-4 pr-0">
-                        <a data-toggle="modal" data-dismiss="modal" data-target="#modal_new_category" href="#" id="new-list" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
+                        <a data-toggle="modal" data-dismiss="modal" data-target="#modal_new_category" href="#"
+                           id="new-list" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section col-sm-12 p-2">
                                 <div class="trailing-border">
-                                    <span class="fa fa-plus" style="padding-top:55px;font-size: 35px; width: 100%; min-height: 150px"></span>
+                                    <span class="fa fa-plus"
+                                          style="padding-top:55px;font-size: 35px; width: 100%; min-height: 150px"></span>
                                 </div>
                             </div>
                             <div class="detailed-section col-sm-12 pl-2 pr-2">
                                 <div class="title color-grey">Ny liste</div>
                                 <div class="detail u-t5 text-muted"></div>
-                                <div class="dealer-logo float-right mt-3" ><img src="#" style="max-height: 40px;" alt="" class="img-fluid"></div>
+                                <div class="dealer-logo float-right mt-3"><img src="#" style="max-height: 40px;" alt=""
+                                                                               class="img-fluid"></div>
                             </div>
                         </a>
                     </div>
@@ -110,8 +88,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12 pt-3">
-                            <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#modal_select_category"><span class="fa fa-angle-left"></span> Tilbake</a>
-                            <button type="submit" class="btn btn-success float-right" data-dismiss="modal" data-toggle="modal" id="save_category" data-target="#modal_select_category">Lagre</button>
+                            <a href="#" data-toggle="modal" data-dismiss="modal"
+                               data-target="#modal_select_category"><span class="fa fa-angle-left"></span> Tilbake</a>
+                            <button type="submit" class="btn btn-success float-right" data-dismiss="modal"
+                                    data-toggle="modal" id="save_category" data-target="#modal_select_category">Lagre
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -137,7 +118,8 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-10 offset-md-1 text-muted text-center">
-                        <h5 class="u-t5">Logg inn for å legge annonsen i dine favorittlister. Da kan du lett finne de igjen senere, uansett hvor du er.</h5>
+                        <h5 class="u-t5">Logg inn for å legge annonsen i dine favorittlister. Da kan du lett finne de
+                            igjen senere, uansett hvor du er.</h5>
                     </div>
                 </div>
                 <div class="row text-center">
@@ -158,7 +140,8 @@
 <input type="hidden" id="remove_fav_url" value="{{url('my-business/remove-fav')}}">
 <script>
     var ad_id = 0;
-    function getLists(){
+
+    function getLists() {
         var url = $('#get_fav_url').val();
         $.ajaxSetup({
             headers: {
@@ -169,7 +152,7 @@
             url: url,
             type: "GET",
             success: function (response) {
-                $('#fav_lists').html($('#fav_lists').html()+response);
+                $('#fav_lists').html($('#fav_lists').html() + response);
             }
 //                    document.getElementById("contact_us").reset();
         });
@@ -177,7 +160,7 @@
 
     $(document).ready(function () {
         @if(Auth::check())
-            getLists();
+        getLists();
         @endif
 
 
@@ -202,20 +185,20 @@
             $(this).find('span').addClass('far');
             $(this).addClass('not-fav');
             $(this).removeClass('fav');
-            $(this).attr('data-target',"#modal_select_category");
+            $(this).attr('data-target', "#modal_select_category");
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-                url: url+'/'+ad_id,
+                url: url + '/' + ad_id,
                 type: "GET",
-                async:false,
+                async: false,
                 success: function (response) {
                 }
             });
-            if ($(this).closest('.favorite-list-item').length>0){
+            if ($(this).closest('.favorite-list-item').length > 0) {
                 $(this).closest('.favorite-list-item').remove();
             }
         });
@@ -229,19 +212,19 @@
                 }
             });
             $.ajax({
-                url: url+'/'+list_id+'/'+ad_id,
+                url: url + '/' + list_id + '/' + ad_id,
                 type: "GET",
-                async:false,
+                async: false,
                 success: function (response) {
                     window.location.reload();
                 }
             });
 
-                // $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
-                // $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
-                // $('a[data-id="'+ad_id+'"]').addClass('fav');
-                // $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
-                // $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
+            // $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
+            // $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
+            // $('a[data-id="'+ad_id+'"]').addClass('fav');
+            // $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
+            // $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
 
         });
         $('#new-list').click(function (e) {
@@ -256,13 +239,13 @@
                 }
             });
             $.ajax({
-                url: url+'/'+name,
+                url: url + '/' + name,
                 type: "GET",
                 success: function (response) {
                 }
             });
             setTimeout(function () {
-                var data = '<div class="col-sm-4 pr-0">'+$('#fav_lists>div:first-child').html()+'</div>';
+                var data = '<div class="col-sm-4 pr-0">' + $('#fav_lists>div:first-child').html() + '</div>';
                 $('#fav_lists').html(data);
                 getLists();
             }, 500);
@@ -313,12 +296,12 @@
 <script>
     var urlParams = new URLSearchParams(location.search);
 
-    function search(data){
+    function search(data) {
         var urlParams = new URLSearchParams(location.search);
         var url = $('#mega_menu_search_url').val();
 
         $.ajax({
-            data:data,
+            data: data,
             url: url,
             type: "GET",
             success: function (response) {
@@ -330,16 +313,17 @@
         });
     }
 
-    function fix_page_links(){
+    function fix_page_links() {
         $('.pagination a').each(function (i) {
             var par = urlParams;
             par.delete('page');
             var page_arr = $(this).attr('href').split('=');
             par.set('page', page_arr[1]);
-            $(this).attr('href', "?"+par.toString());
+            $(this).attr('href', "?" + par.toString());
         });
     }
-    $(document).ready(function(){
+
+    $(document).ready(function () {
         $.ajaxSetup({
             headers: {
                 //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -347,23 +331,23 @@
         });
 
         //spinner start here
-        $(document).ajaxStart(function(){
+        $(document).ajaxStart(function () {
             $("#imageLoader").css("display", "block");
             $(".pagination_data").css("display", "none");
         });
 
-        $(document).ajaxComplete(function(){
+        $(document).ajaxComplete(function () {
             $("#imageLoader").css("display", "none");
             $(".pagination_data").css("display", "block");
         });
         //spinner ends here
 
-        @if(Auth::check())
-            var url = '{{url("notifications/all")}}';
-            getNotifications(url);
+            @if(Auth::check())
+        var url = '{{url("notifications/all")}}';
+        getNotifications(url);
         @endif
 
-        $(document).on('click',"#move_to_notifications",function(){
+        $(document).on('click', "#move_to_notifications", function () {
 
             var ids = {};
             window.location.href = '{{url("notifications/all")}}';
@@ -371,6 +355,26 @@
 
         });
 
+        Pusher.logToConsole = true;
+
+        @if(Auth::check())
+            var pusher = new Pusher('d4efdc4a073f0521f41e', {
+                    cluster: 'ap2',
+                    forceTLS: true
+                });
+
+            var channel = pusher.subscribe('header-chat-notification');
+            channel.bind('header-chat-notification-event', function (data) {
+                if(data.to_user_id=='{{Auth::id()}}') {
+                    var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
+                    if (isEmpty(prev)) {
+                        prev = 0;
+                    }
+                    prev++;
+                    $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+                }
+            });
+        @endif
     });
 </script>
 </body>

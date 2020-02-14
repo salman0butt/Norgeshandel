@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 
 Auth::routes(['verify' => true]);
+Route::get('clear-chat', function (){
+    \App\MessageThread::where('id', '!=', 0)->delete();
+    return redirect('messages');
+});
 Route::get('verified', function () {
     return view('auth.verified');
 })->middleware('verified');
@@ -165,11 +169,13 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::group(['middleware' => ['verified']], function () {
 
         // message
-        Route::get('messages/new-thread/{ad_id}', 'MessageController@new_thread');
+        Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
+        Route::get('messages/new/{ad_id}', 'MessageController@new_thread');
         Route::get('messages/render-thread/{thread_id}', 'MessageController@render_thread');
         Route::get('/messages', 'MessageController@index');
         Route::get('/message/{id}', 'MessageController@get');
         Route::post('message', 'MessageController@send');
+        Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
 
         //notifications
         Route::post('notifications/all', 'NotificationController@getAllNotifications');
