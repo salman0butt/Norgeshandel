@@ -22,37 +22,12 @@
                         @include('user-panel.partials.templates.filter-property-for-sale')
                     @endif
                     <li class="nav-item" id="move_to_notifications">
-                        <a class="nav-link" href="{{ url('notifications/all') }}">
-                            <span class="label" id="notification_count_pro">0</span>
+                        <a class="nav-link position-relative" href="{{ url('notifications/all') }}">
+                            <span class="badge badge-primary pending position-absolute" style="left:0">0</span>
                             <i class="far fa-bell nav-icons"></i>
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>
                     </li>
-                    <style>
-                    #collapsibleNavbar > ul > li:nth-child(2) > a > span {
-                        -webkit-tap-highlight-color: rgba(0,0,0,0);
-                            font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-                            list-style: none;
-                            box-sizing: border-box;
-                            text-align: center;
-                            white-space: nowrap;
-                            vertical-align: baseline;
-                            border-radius: 1em;
-                            color: #fff;
-                            text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-                            font-weight: 600;
-                            top: 10px;
-                            font-size: 10px;
-                            padding: 0 2px;
-                            line-height: 12px;
-                            position: absolute;
-                            display: block;
-                            background: red;
-                            padding:1px;
-                            padding-left: 2px;
-                            padding-right: 2px;
-                    }
-                    </style>
 
 
                     <li class="nav-item">
@@ -62,8 +37,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url('/messages')}}">
-                            <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
+                        <a class="nav-link position-relative" href="{{url('/messages')}}">
+                            @if(\Auth::check())
+                            <span class="badge badge-primary pending position-absolute" id="chat-notification" style="left:0">{{count(\Auth::user()->unread_messages())>0?count(\Auth::user()->unread_messages()):""}}</span>
+                            @endif
+                                <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
                             <div class="mt-2 ml-2">Meldinger</div>
                         </a>
                     </li>

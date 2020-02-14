@@ -187,7 +187,11 @@
                         rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                         salgsoppgave</a></div>
                         </div>
-                <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
+                @if(!$property_data->ad->is_mine())
+                    <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                @endif
+
+            <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                     <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                 <h2 class="u-t3">Visning</h2>
                 <div class="mb-2">Ta kontakt for å avtale visning</div>

@@ -843,11 +843,12 @@ a > .alert-warning:hover{
     border-bottom:1px solid #ddd;
     background: #fafafa;
     padding-top: 7px;
+    min-height: 76px;
 }
 .chat-thread-tab.active{
     background: #fff;
 }
-.chat-thread-tab:hover {
+.chat-thread-tab:hover, .chat-thread-tab.active {
     background-color: #e7e7e7;
 }
 .chat-thread-list{
@@ -887,17 +888,29 @@ a > .alert-warning:hover{
 .message-text{
     background-color: rgba(176,64,88,0.07);
     padding: 5px 10px 5px 10px;
+    margin:5px;
     border-radius: 20px;
     max-width: 70%;
     text-align: left;
+    margin-top: 0;
 }
 .receiver-message .message-text{
     float: left;
 }
+
+.message-text-right{
+    margin-right: 0;
+    margin-left: auto;
+}
+.message-text-left{
+    margin-left: 0;
+    margin-right: auto;
+}
+
 .message{
     width:100%;
-    padding-top:20px;
-    padding-bottom: 20px;
+    padding-top:5px;
+    padding-bottom: 5px;
 }
 .receiver-message .profile-icon{
     float: left;
@@ -1100,4 +1113,7 @@ label span.count{
     display:block;
     margin:-8px -12px;
     padding:8px 12px;
+}
+.page-messages footer{
+    display: none;;
 }
