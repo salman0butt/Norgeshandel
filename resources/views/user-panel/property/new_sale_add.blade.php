@@ -1,4 +1,13 @@
 @extends('layouts.landingSite')
+
+@section('style')
+
+    <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
+
+@endsection
+
 @section('page_content')
 
 <!-- property for sale -->
@@ -154,5 +163,13 @@
         })
 
     </script>
+
+@endsection
+
+@section('script')
+    <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
 
 @endsection

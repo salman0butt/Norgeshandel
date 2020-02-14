@@ -13,6 +13,7 @@
 
 use App\Media;
 use App\Models\Ad;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 
@@ -146,7 +147,6 @@ Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_
 Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
 Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
 Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
-
 
 
 Route::get('shared-lists/{link_id}', function ($link_id) {
@@ -379,4 +379,40 @@ Route::get('test', function () {
 });
 
 Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
+
+
+Route::get('/delete-media-dz',function(){
+    $media = Media::where('name_unique',$_GET['filename'])->first();
+    if($media){
+        if ($media) {
+            $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+            $arr = explode('.', $media->name_unique);
+
+            foreach (glob($path . $arr[0] . '*.*') as $file) {
+                unlink($file);
+            }
+            $media->delete();
+        }
+        $response = array();
+        $response['flag'] = 'success';
+        return json_encode($response);
+    }
+});
+Route::post('/update-media-positions',function(Request $request){
+    $response = array();
+    $response['flag'] = 'failure';
+    if(isset($request->dataArr))
+    {
+        $data = json_decode($request->dataArr);
+        foreach ($data as $data_arr) {
+            $response['flag'] = 'success';
+            $media = Media::where('name_unique',$data_arr[0])->first();
+            if($media){
+                $media->order = $data_arr[1];
+                $media->save();
+            }
+        }
+    }
+    return json_encode($response);
+});
 

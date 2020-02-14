@@ -1,3 +1,11 @@
+@section('style')
+
+    <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
+
+@endsection
+
 @section('page_content')
 
     <?php
@@ -25,7 +33,9 @@
     ?>
 
     <form action="@if(Request::is('jobs/*/edit')){{route('jobs.update', $job->id)}}
-    @else {{route('jobs.store')}} @endif" name="job-form" id="job-form" method="POST" enctype="multipart/form-data">
+    @else {{route('jobs.store')}} @endif" name="job-form" id="job-form" method="POST"
+          class="dropzone addMorePics p-0" data-action="@if(Request::is('jobs/*/edit')){{route('jobs.update', $job->id)}}
+    @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
         {{ csrf_field() }}
         @if(Request::is('jobs/*/edit')) {{method_field('PUT')}} @endif
         <input type="hidden" name="ad_id" id="ad_id" value="{{isset($obj_job->ad)?$obj_job->ad->id:""}}">
@@ -327,13 +337,52 @@
                                     <input type="file" name="company_logo" id="company_logo" class=""
                                            value="Select logo">
                                 </div>
-                                <label for="job_gallery"
-                                       class="col-md-2 u-t5">{{__('Workplace photos  (optional)')}}</label>
-                                <div class="col-sm-4 ">
-                                    <input type="file" name="company_gallery[]" id="job_gallery" class="" multiple>
+                                {{--<label for="job_gallery"--}}
+                                       {{--class="col-md-2 u-t5">{{__('Workplace photos  (optional)')}}</label>--}}
+                                {{--<div class="col-sm-4 ">--}}
+                                    {{--<input type="file" name="company_gallery[]" id="job_gallery" class="" multiple>--}}
+                                {{--</div>--}}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="address"
+                                       class="col-md-2 u-t5">{{__('Workplace  (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <div class="clearfix">
+                                        <a href="javascript:void(0);">
+                                            <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable">
+                                                <h3 class="sbold">Slipp filer her eller klikk for å laste opp</h3>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div action="#" class="picture dropzone-previews sortable">
+                                        @if($obj_job && $obj_job->company_gallery->count() > 0)
+                                            @foreach($obj_job->company_gallery as $company_gallery)
+                                                <?php
+                                                $unique_name  =  $company_gallery->name_unique;
+                                                $path  =    \App\Helpers\common::getMediaPath($obj_job);
+                                                $full_path  = $path."". $unique_name;
+                                                ?>
+                                                <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" >
+                                                    <div class="dz-image">
+                                                        <img data-dz-thumbnail="" alt="image not found" src="{{$full_path}}">
+                                                    </div>
+                                                    <div class="dz-details">
+                                                        <div class="dz-filename"><span data-dz-name="">{{@$company_gallery->name}}</span></div>
+                                                    </div>
+                                                    <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Remove file</a>
+
+                                                    <input type="text" class="form-control dme-form-control mt-2" name="title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                         <!--                            full input-->
                         <div class="form-group">
                             <div class="row">
@@ -498,7 +547,6 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-
                 $.ajax({
                     url: link,
                     type: "POST",
@@ -583,4 +631,13 @@
 });
    
     </script>
+@endsection
+
+
+@section('script')
+    <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
+
 @endsection

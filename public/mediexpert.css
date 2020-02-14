@@ -1101,3 +1101,16 @@ label span.count{
     margin:-8px -12px;
     padding:8px 12px;
 }
+
+
+.dropzone .dz-preview {
+    width: 200px !important;
+}
+.dropzone .dz-preview .dz-image {
+    width: 200px !important;
+}
+.dz-image img{
+    width: 200px !important;
+    height: 125px !important;
+}
+

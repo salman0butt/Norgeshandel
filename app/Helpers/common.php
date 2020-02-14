@@ -123,14 +123,20 @@ class common
 //        }
 //    }
 
-    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar')
+    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar',$delete_old='true')
     {
-        self::delete_media($mediable_id, $mediable_type, $type);
+        if($delete_old == 'true'){
+            self::delete_media($mediable_id, $mediable_type, $type);
+        }
+
+
         if (!is_array($files)) {
             $files = array($files);
         }
-
-        foreach ($files as $file) {
+        $names_files = array();
+        $org_file_names = array();
+        $file_names_encoded = array();
+        foreach ($files as $key=>$file) {
             $unique_name = date('ymd') . '-' . time() . '-' . mt_rand(1000000, 9999999);
             $name = $file->getClientOriginalName();
             $name_unique = $unique_name . '.' . $file->getClientOriginalExtension();
@@ -148,9 +154,18 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(768)->widen(768)->save($path . '/' . $unique_name . '-768x768.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
                 $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
+                $media->order = $key+1;
                 $media->save();
+                $names_files[] = $media->name_unique;
+                $org_file_names[] = $media->name;
+                $file_names_encoded[] = base64_encode($media->name_unique);
             }
         }
+        return json_encode([
+        'file_names' => $names_files,
+        'org_file_names' => $org_file_names,
+        'file_names_encoded' => $file_names_encoded,
+        ]);
     }
 
     public static function delete_media($mediable_id, $mediable_type, $type)
