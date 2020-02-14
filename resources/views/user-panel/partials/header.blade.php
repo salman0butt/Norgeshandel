@@ -23,7 +23,7 @@
                     @endif
                     <li class="nav-item" id="move_to_notifications">
                         <a class="nav-link position-relative" href="{{ url('notifications/all') }}">
-                            <span class="badge badge-primary pending position-absolute" style="left:0">0</span>
+                            <span class="badge badge-primary pending position-absolute" style="left:0"></span>
                             <i class="far fa-bell nav-icons"></i>
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>

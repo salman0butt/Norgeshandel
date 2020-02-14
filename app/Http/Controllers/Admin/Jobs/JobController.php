@@ -215,14 +215,16 @@ class JobController extends Controller
             if(preg_match('/image_title/',$key)){
                 $explode_values = explode('_',$key);
                 $name_unique = '';
-                if($explode_values[2] && $explode_values[3]){
-                    $name_unique = $explode_values[2].'.'.$explode_values[3];
-                }
-                if($name_unique){
-                    $media = Media::where('name_unique',$name_unique)->first();
-                    if($media){
-                        $media->title = $value;
-                        $media->update();
+                if(count($explode_values)>3) {
+                    if ($explode_values[2] && $explode_values[3]) {
+                        $name_unique = $explode_values[2] . '.' . $explode_values[3];
+                    }
+                    if ($name_unique) {
+                        $media = Media::where('name_unique', $name_unique)->first();
+                        if ($media) {
+                            $media->title = $value;
+                            $media->update();
+                        }
                     }
                 }
             }
@@ -337,6 +339,7 @@ class JobController extends Controller
             return $this->upload_images($request,$request->job_id);
         }
         $this->update_dummy($request);
+        $job->ad->update(['status'=>'published']);
         Session::flash('success', 'Jobben er lagret');
         return back();
     }

@@ -311,7 +311,7 @@
                                            class="form-control dme-form-control">
                                            <span id="zip_code_city_name"></span>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <!--                            full input-->
@@ -607,14 +607,14 @@
         });
     </script>
 
-<script>   
+<script>
     $(document).on('change', 'input[name="zip"]', function(e) {
          document.getElementById("zip_code_city_name").innerHTML = '';
     var zip_code = $(this).val();
     var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
     // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
     var client_url = 'localhost';
-    
+
     if(zip_code){
     var xhttp = new XMLHttpRequest();
    xhttp.onreadystatechange = function() {
@@ -629,7 +629,7 @@
     xhttp.send();
     }
 });
-   
+
     </script>
 @endsection
 
