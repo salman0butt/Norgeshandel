@@ -21,8 +21,10 @@ use App\PropertyForRentMoreTimes;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\PropertyHolidaysHomesForSale;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\AddCommercialPlot;
 use App\Http\Requests\AddBusinessForSale;
 use App\Http\Requests\AddPropertyForRent;
@@ -394,13 +396,14 @@ class PropertyController extends Controller
 
         // $property_for_rent_data['ad_id'] = $add_response->id;
 
-        $response = PropertyForRent::where('id','=',$id)->update($property_for_rent_data);
+        $response = PropertyForRent::findOrFail($id);
+        $response->update($property_for_rent_data);
         //add images
+      // dd($response);
         if (is_countable($request->file('property_photos')))
         {
             common::update_media($request->file('property_photos'), $response->id , 'App\PropertyForRent', 'gallery'); 
             //propert_for_rent
-
         }
 
         //Notification data
@@ -413,6 +416,23 @@ class PropertyController extends Controller
 
         $data['success'] = $response;
         echo json_encode($data);
+    }
+    public function deletePropertyForRent($id){
+        
+        $property_for_rent = PropertyForRent::findOrFail($id);
+        //$ad = Ad::findOrFail($id);
+    // dd($property_for_rent->media->first->mediable_id);
+
+        if(!empty($property_for_rent->media)){
+            if($property_for_rent->media->first())
+        common::delete_media($property_for_rent->media->first->mediable_id,$property_for_rent->media->first->mediable_type, $property_for_rent->media->first->type);
+        }
+        $property_for_rent->delete();
+      // $ad->delete();
+       // dd('working');
+     Session::flash('success', 'Property Deleted Successfully');
+
+        return redirect('/my-business/my-ads');
     }
 
     public function newSaleAdd(){
@@ -564,6 +584,196 @@ class PropertyController extends Controller
     {
         return view('user-panel.property.holiday_home_for_sale');
     }
+    //edit Holiday Home For Sale
+      public function editHolidayHomeForSale($id)
+    {
+        $holiday_home_for_sale = PropertyHolidaysHomesForSale::findOrFail($id);
+        return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale'));
+    }
+    //UpdatePropertyHolidayHomeForSale $request
+    public function updateHomeForSaleAd(AddPropertyHolidayHomeForSale $request,$id)
+    {
+        $property_home_for_sale_data = $request->all();
+
+        //Add More ViewingTimes
+        if(isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "")
+        {
+            $property_home_for_sale_data['secondary_deliver_date'] = null;
+            $i = 0;
+            foreach($property_home_for_sale_data['delivery_date'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_home_for_sale_data['delivery_date']  = $val;
+                }
+                else
+                {
+                    $property_home_for_sale_data['secondary_deliver_date'] .= $val.",";
+                }
+                $i++;
+            }
+        }
+
+        $property_home_for_sale_data['secondary_from_clock'] = "";
+        if(isset($property_home_for_sale_data['from_clock']))
+        {
+            $i = 0;
+            foreach($property_home_for_sale_data['from_clock'] as $key=>$val)
+            {
+                if($i == 0)
+                {
+                    $property_home_for_sale_data['from_clock']  = $val;
+                }
+                else
+                {
+                    $property_home_for_sale_data['secondary_from_clock'] .= $val.",";
+                }
+                $i++;
+            }
+        }
+
+          $property_home_for_sale_data['secondary_clockwise'] = "";
+          if(isset($property_home_for_sale_data['clockwise']))
+          {
+              $i = 0;
+              foreach($property_home_for_sale_data['clockwise'] as $key=>$val)
+              {
+                  if($i == 0)
+                  {
+                      $property_home_for_sale_data['clockwise']  = $val;
+                  }
+                  else
+                  {
+                      $property_home_for_sale_data['secondary_clockwise'] .= $val.",";
+                  }
+                  $i++;
+              }
+          }
+
+          $property_home_for_sale_data['secondary_note'] = "";
+          if(isset($property_home_for_sale_data['note']))
+          {
+              $i = 0;
+              foreach($property_home_for_sale_data['note'] as $key=>$val)
+              {
+                  if($i == 0)
+                  {
+                      $property_home_for_sale_data['note']  = $val;
+                  }
+                  else
+                  {
+                      $property_home_for_sale_data['secondary_note'] .= $val.",";
+                  }
+                  $i++;
+              }
+        }
+        //Manage Facilities
+        if(isset($property_home_for_sale_data['facilities']))
+        {
+            $facilities = "";
+            foreach($property_home_for_sale_data['facilities'] as $key=>$val)
+            {
+                $facilities .= $val . ",";
+            }
+            $property_home_for_sale_data['facilities'] = $facilities;
+        }
+
+        $property_home_for_sale_data['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        // $add = array();
+        // $add['ad_type'] = 'property_holiday_home_for_sale';
+        // $add['status']  = 'published';
+        // $add['user_id'] =  Auth::user()->id;
+        // $add_response   =  Ad::create($add);
+       // $property_home_for_sale_data['ad_id'] = $add_response->id;
+        if (isset($property_home_for_sale_data['property_home_for_sale_photos'])) {
+           unset($property_home_for_sale_data['property_home_for_sale_photos']);
+
+        }else if (isset($property_home_for_sale_data['property_home_for_sale_pdf_photos'])) {
+           unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
+
+        }else if (isset($property_home_for_sale_data['property_home_for_sale_sale_quote'])) {
+          unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
+        }
+        $response = PropertyHolidaysHomesForSale::findOrFail($id);
+        $response->update($property_home_for_sale_data);
+
+        //upload files
+        if ($request->file('property_home_for_sale_photos') || $request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote'))
+        {
+            // $files = $request->file('property_photos');
+            // $files_pdf = $request->file('property_pdf');
+            // $files_quote = $request->file('property_quote');
+
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+
+            //Ameer Hamza code to store multiple images
+            if(is_countable($request->file('property_home_for_sale_photos'))){
+                common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'gallery'); // property_home_for_sale_photos
+            }
+            //End Ameer Hamza code
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {
+                /* Zille Shah Code commented by Ameer Hamza
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_photos');
+                }
+                end zille shah code */
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
+                }
+                if($i == 2)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
+                }
+                $i++;
+
+            }
+
+
+
+        }
+
+        //Notification data
+        // $notifiable_id = $response -> id;
+        // $notification_obj = new NotificationController();
+        // $notification_response = $notification_obj->create($notifiable_id,'App\PropertyHolidaysHomesForSale','property have been added');
+        // $notification_id_search = $notification_response->id;
+
+        // //trigger event
+        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+
+        $data['success'] = $response;
+        echo json_encode($data);
+
+    }
+    // Delete Holiday Home for sale
+   public function deleteHomeForSaleAd($id){
+        
+        $holiday_home_for_sale = PropertyHolidaysHomesForSale::findOrFail($id);
+
+        //$ad = Ad::findOrFail($id);
+
+        if(!empty($holiday_home_for_sale->media)){
+            if($holiday_home_for_sale->media->first())
+        common::delete_media($holiday_home_for_sale->media->first->mediable_id,$holiday_home_for_sale->media->first->mediable_type, $holiday_home_for_sale->media->first->type);
+        }
+        $holiday_home_for_sale->delete();
+
+        Session::flash('success', 'Property Deleted Successfully');
+
+        return redirect('/my-business/my-ads');
+    }
+
 
     //AddPropertyHolidayHomeForSale $request
     public function addHomeForSaleAd(AddPropertyHolidayHomeForSale $request)
@@ -1021,6 +1231,85 @@ class PropertyController extends Controller
     public function newAddFlatWishesRented()
     {
         return view('user-panel.property.flat_wishes_rented');
+    }
+       public function editAddFlatWishesRented($id)
+    {
+        $flat_wishes_rented = FlatWishesRented::findOrFail($id);
+        return view('user-panel.property.flat_wishes_rented',compact('flat_wishes_rented'));
+    }
+    //update flat wishs rented
+    public function updateFlatWishesRented(AddFlatWishesRented $request,$id)
+    {
+     
+
+        $flat_wishes_rented_data = $request->all();
+        $regions = "";
+        foreach($flat_wishes_rented_data['region'] as $key=>$val)
+        {
+            $regions .= $val.",";
+        }
+        $flat_wishes_rented_data['region'] = $regions;
+
+        $property_types = "";
+        foreach($flat_wishes_rented_data['property_type'] as $key=>$val)
+        {
+            $property_types .= $val.",";
+        }
+        $flat_wishes_rented_data['property_type'] = $property_types;
+
+
+        unset($flat_wishes_rented_data['flat_wishes_rented']);
+        $flat_wishes_rented_data['user_id'] = Auth::user()->id;
+
+         //add Add to table
+        // $add = array();
+        // $add['ad_type'] = 'property_flat_wishes_rented';
+        // $add['status']  = 'published';
+        // $add['user_id'] =  Auth::user()->id;
+        // $add_response   =  Ad::create($add);
+
+        // $flat_wishes_rented_data['ad_id'] = $add_response->id;
+        $response = FlatWishesRented::findOrFail($id);
+          $response->update($flat_wishes_rented_data);
+
+        //Ameer Hamza code for storing multiple images
+        if (is_countable($request->file('flat_wishes_rented')))
+        {
+            common::update_media($request->file('flat_wishes_rented'), $response->id , 'App\FlatWishesRented', 'gallery'); //flat_wishes_rented
+        }
+        //End Ameer Hamza code
+
+        //Notification data
+        // $notifiable_id = $response -> id;
+        // $notification_obj = new NotificationController();
+        // $notification_response = $notification_obj->create($notifiable_id,'App\FlatWishesRented','property have been added');
+        // $notification_id_search = $notification_response->id;
+
+        // //trigger event
+        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+
+
+        $data['success'] = $response;
+        echo json_encode($data);
+
+
+    }
+      public function deleteFlatWishesRented($id){
+        
+        $flat_wishes_rented = FlatWishesRented::findOrFail($id);
+
+        //$ad = Ad::findOrFail($id);
+    // dd($property_for_rent->media->first->mediable_id);
+
+        if(!empty($flat_wishes_rented->media)){
+            if($flat_wishes_rented->media->first())
+        common::delete_media($flat_wishes_rented->media->first->mediable_id,$flat_wishes_rented->media->first->mediable_type, $flat_wishes_rented->media->first->type);
+        }
+        $flat_wishes_rented->delete();
+      // $ad->delete();
+     Session::flash('success', 'Property Deleted Successfully');
+
+        return redirect('/my-business/my-ads');
     }
 
     public function addFlatWishesRented(AddFlatWishesRented $request)
@@ -1952,67 +2241,4 @@ class PropertyController extends Controller
 
 
     }
-
-    public function messages(Request $request)
-    {
-        //select all users except logged in user
-        //$users = User::where('id', '!=', Auth::id())->get();
-
-        $users = DB::select("select users.id, users.username, users.email, count(is_read) as unread 
-        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-        where users.id != " . Auth::id() . " 
-        group by users.id, users.username, users.email");
-
-        return view('user-panel.chat.messages',['users' => $users]);
-    }
-
-    public function getMessage($user_id)
-    {
-        $my_id = Auth::id();
-
-        // Make read all unread message
-        Message::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
-
-        // Get all message from selected user
-        $messages = Message::where(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $user_id)->where('to', $my_id);
-        })->oRwhere(function ($query) use ($user_id, $my_id) {
-            $query->where('from', $my_id)->where('to', $user_id);
-        })->get();
-
-        return view('common.partials.messages.index', ['messages' => $messages]);
-    }
-
-
-    public function sendMessage(Request $request)
-    {
-        $from = Auth::id();
-        $to = $request->receiver_id;
-        $message = $request->message;
-
-        $data = new Message();
-        $data->from = $from;
-        $data->to = $to;
-        $data->message = $message;
-        $data->is_read = 0; // message will be unread when sending message
-        $data->save();
-
-        // pusher
-        $options = array(
-            'cluster' => 'ap2',
-            'useTLS' => true
-        );
-
-        $pusher = new Pusher(
-            env('PUSHER_APP_KEY'),
-            env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
-            $options
-        );
-
-        $data = ['from' => $from, 'to' => $to]; // sending from and to user id when pressed enter
-        //$pusher->trigger('my-channel', 'my-event', $data);
-
-    }
-
 }

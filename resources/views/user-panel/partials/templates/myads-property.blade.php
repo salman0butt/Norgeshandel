@@ -72,7 +72,7 @@ if($property !== null)
         </div>
     </a>
     <div class="detailed-section col-md-8 position-relative p-2">
-        <form action="" METHOD="POST">
+        <form action=" @if($ad->ad_type == 'property_for_rent') {{ url('property/for/rent/ad/'.$property->id)}} @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id)}} @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('flat/wishes/rented/'.$property->id)}} @endif" method="POST" onsubmit="javascript:return confirm('Vil du slette denne annonsen?')">
             {{csrf_field()}}
             {{method_field('DELETE')}}
             <button type="submit" class="link float-right" style="cursor: pointer;"><span class="fa fa-trash-alt text-muted"></span></button>
@@ -101,6 +101,7 @@ if($property !== null)
 
             ?>
         </p>
+        <a href="@if($ad->ad_type == 'property_for_rent') {{ url('property/for/rent/ad/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('flat/wishes/rented/'.$property->id.'/edit')}} @endif" style="color:#ac304a !important;" class="dme-btn-outlined-blue mr-2">rediger legg til</a>
         <div class="buttons position-absolute p-2" style="bottom: 0;right: 0">
             <a href="" class="dme-btn-outlined-blue float-right">Flere valg</a>
             @if($property->ad->status=='saved')

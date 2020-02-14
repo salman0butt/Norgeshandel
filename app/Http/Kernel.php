@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'authverified' => \App\Http\Middleware\AuthVerified::class,
 
 //        'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'role'=> \App\Helpers\CustomEntrustRole::class,     //overridden

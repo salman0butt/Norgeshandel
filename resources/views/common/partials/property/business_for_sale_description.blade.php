@@ -79,7 +79,6 @@
                                 <h1 class="u-t2">{{$property_data->headline}}</h1>
                             </div>
                             <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
-                      
                             <div class="col-md-12"><span class="font-weight-bold">Bransje: </span><span>{{$property_data->industry}}, {{$property_data->alternative_industry}}</span></div>
                             <!-- <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
@@ -133,7 +132,11 @@
                         <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                                 salgsoppgave</a></div>
-                        <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
+                        @if(!$property_data->ad->is_mine())
+                            <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                        @endif
+
+                    <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                         <h2 class="u-t3">Visning</h2>
                         <div class="mb-2">Ta kontakt for å avtale visning</div>

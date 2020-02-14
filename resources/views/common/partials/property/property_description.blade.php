@@ -181,6 +181,9 @@
                         </div> -->
                 <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
                 <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
+                @if(!$property_data->ad->is_mine())
+                <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                @endif
                 <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                                 salgsoppgave</a></div>
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
