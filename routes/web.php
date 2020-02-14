@@ -82,6 +82,7 @@ Route::get('/cookie', function () {
 Route::get('/rating', function () {
     return view('user-panel.my-business.rating');
 });
+
 Route::get('/customer-services', function () {
     return view('user-panel.footer.customer_service');
 });
@@ -308,17 +309,24 @@ Route::get('new/property/rent/ad', 'PropertyController@newAdd');
 Route::get('new/property/rent/ad/{id}/edit', 'PropertyController@newAddedit');
 Route::patch('add/property/for/rent/ad/{id}', 'PropertyController@UpdatePropertyForRentAdd');
 Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
+Route::delete('property/for/rent/ad/{id}', 'PropertyController@deletePropertyForRent');
 Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
 Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
 Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
 Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
 Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
+Route::get('holiday/home/for/sale/{id}/edit','PropertyController@editHolidayHomeForSale');
+Route::patch('holiday/home/for/sale/{id}','PropertyController@updateHomeForSaleAd');
+Route::delete('holiday/home/for/sale/{id}','PropertyController@deleteHomeForSaleAd');
 Route::get('property/for/rent', 'PropertyController@adsForRent');
 Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
 Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
 Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
 Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
+Route::get('new/flat/wishes/rented/{id}/edit', 'PropertyController@editAddFlatWishesRented');
+Route::patch('new/flat/wishes/rented/{id}', 'PropertyController@updateFlatWishesRented');
+Route::delete('flat/wishes/rented/{id}', 'PropertyController@deleteFlatWishesRented');
 Route::post('add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
 Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
 Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');

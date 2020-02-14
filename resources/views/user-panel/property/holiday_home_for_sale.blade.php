@@ -14,7 +14,11 @@
 
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-                    @include('common.partials.property.holiday_home_for_sale_form')
+                 @if(Request::is('holiday/home/for/sale/*/edit'))
+                    @include('common.partials.property.edit_holiday_home_for_sale_form')
+                @else
+                     @include('common.partials.property.holiday_home_for_sale_form')
+                @endif
                 </div>
             </div>
         </div>
@@ -57,13 +61,42 @@
 
                 e.preventDefault();
 
-                var url = '{{url('add/property/home/for/sale/ad')}}';
+               
                 $('.notice').html("");
                 var myform = document.getElementById("property_holiday_home_for_sale_form");
                 var fd = new FormData(myform);
                 e.preventDefault();
                 var l = Ladda.create(this);
                 l.start();
+        @if(Request::is('holiday/home/for/sale/*/edit'))
+         var url = '{{url('holiday/home/for/sale/'.$holiday_home_for_sale->id)}}';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: fd,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function(data){
+                            $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
+                    },
+                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors
+                            var errors = jqXhr.responseJSON;
+                            console.log(errors.errors);
+                            var html="<ul>";
+                            $.each( errors.errors, function( index, value ){
+                               console.log(value);
+                               html += "<li>"+value+"</li>";
+                            });
+                            html += "</ul>";
+                            $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
+                        },
+                }).always(function() { l.stop(); });
+                return false;
+
+            });
+        @else
+         var url = '{{url('add/property/home/for/sale/ad')}}';
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -90,6 +123,9 @@
 
             });
 
+
+
+        @endif
 
             var i = 0;
             $("#add_more_viewing_times_sales").click(function(e){
