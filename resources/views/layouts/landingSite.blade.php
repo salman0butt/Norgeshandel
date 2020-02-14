@@ -28,6 +28,8 @@
             crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('style')
+
 </head>
 <body class="@yield('body_class')">
 @include('user-panel.partials.header')
@@ -280,8 +282,14 @@
         </div>
     </div>
 </footer>
+
+<script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
+
+
+
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
-<script src="{{asset('public/js/app.js')}}"></script>
+{{--<script src="{{asset('public/js/app.js')}}"></script>--}}
 <script src="{{asset('public/mediexpert.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
@@ -376,6 +384,13 @@
             });
         @endif
     });
+
+
+
+    var site_url = "<?php echo url('/'); ?>";
 </script>
+
+@yield('script')
+
 </body>
 </html>

@@ -1,4 +1,4 @@
-<form action="#" method="post" id="property_for_sale_form" enctype="multipart/form-data">
+<form action="#" method="post" id="property_for_sale_form"  enctype="multipart/form-data">
 <?php
     $property_type = \App\Taxonomy::where('slug', 'pfs_property_type')->first();
     $property_types = $property_type->terms;
@@ -812,8 +812,7 @@
             <h3 class="u-t5">Bilder (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="file" name="property_photos[]" id="property_photos" class="" multiple>
-
+                    <input type="file" name="property_photos[]" id="property_photos" class="mt-3" multiple>
                 </div>
             </div>
         </div>

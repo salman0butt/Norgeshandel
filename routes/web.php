@@ -13,6 +13,7 @@
 
 use App\Media;
 use App\Models\Ad;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 
@@ -383,6 +384,42 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
         event(new App\Events\PropertyForRent('Guest'));
         return "Event has been sent!";
     });
+
+
+Route::get('/delete-media-dz',function(){
+    $media = Media::where('name_unique',$_GET['filename'])->first();
+    if($media){
+        if ($media) {
+            $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+            $arr = explode('.', $media->name_unique);
+
+            foreach (glob($path . $arr[0] . '*.*') as $file) {
+                unlink($file);
+            }
+            $media->delete();
+        }
+        $response = array();
+        $response['flag'] = 'success';
+        return json_encode($response);
+    }
+});
+Route::post('/update-media-positions',function(Request $request){
+    $response = array();
+    $response['flag'] = 'failure';
+    if(isset($request->dataArr))
+    {
+        $data = json_decode($request->dataArr);
+        foreach ($data as $data_arr) {
+            $response['flag'] = 'success';
+            $media = Media::where('name_unique',$data_arr[0])->first();
+            if($media){
+                $media->order = $data_arr[1];
+                $media->save();
+            }
+        }
+    }
+    return json_encode($response);
+});
 
     Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
 });

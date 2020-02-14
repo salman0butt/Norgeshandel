@@ -53,7 +53,7 @@ class AddPropertyForSale extends FormRequest
             'asset_value' => 'required|numeric',
             'asking_price' => 'required|numeric',
             'expenses' => 'required|numeric',
-            'costs_include' => 'required|numeric',
+            'costs_include' => 'required',
             'percentage_of_public_debt' => 'required|numeric',
             'value_rate' => 'sometimes|nullable|numeric',
             'loan_rate' => 'sometimes|nullable|numeric',

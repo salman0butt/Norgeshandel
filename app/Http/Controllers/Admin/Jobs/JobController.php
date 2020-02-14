@@ -68,9 +68,15 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+        $job_id = '';
+        if($request->job_id){
+            $job_id = $request->job_id;
+        }
+        if ($request->file('files')) {
+            return $this->upload_images($request,$job_id);
+        }
 
         $arr = array(
-
             'name' => $request->name,
             'title' => $request->title,
             'job_type' => $request->job_type,
@@ -125,10 +131,10 @@ class JobController extends Controller
             $file = $request->file('company_logo');
             common::update_media($file, $ad->job->id, 'App\Admin\Jobs\Job', 'company_logo');
         }
-        if ($request->file('company_gallery')) {
-            $files = $request->file('company_gallery');
-            common::update_media($files, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-        }
+//        if ($request->file('company_gallery')) {
+//            $files = $request->file('company_gallery');
+//            common::update_media($files, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+//        }
 
 
         $terms = Term::find([$request->industry, $request->job_function]);
@@ -168,6 +174,18 @@ class JobController extends Controller
         return back();
     }
 
+
+    public function upload_images($request, $job_id=''){
+        if ($request->file('files')) {
+            $files = $request->file('files');
+            if($job_id){
+                return common::update_media($files, $job_id, 'App\Admin\Jobs\Job', 'company_gallery','false');
+            }else{
+                return common::update_media($files, Auth::user()->id, 'temp_job_image', 'company_gallery','false');
+            }
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -193,6 +211,31 @@ class JobController extends Controller
      */
     public function update_dummy(Request $request)
     {
+        foreach ($request->all() as $key=>$value){
+            if(preg_match('/image_title/',$key)){
+                $explode_values = explode('_',$key);
+                $name_unique = '';
+                if($explode_values[2] && $explode_values[3]){
+                    $name_unique = $explode_values[2].'.'.$explode_values[3];
+                }
+                if($name_unique){
+                    $media = Media::where('name_unique',$name_unique)->first();
+                    if($media){
+                        $media->title = $value;
+                        $media->update();
+                    }
+                }
+            }
+        }
+        $job_temp_media = Media::where('mediable_id',Auth::user()->id)->where('mediable_type','temp_job_image')->get();
+        if($job_temp_media->count() > 0 && $request->job_id){
+            foreach ($job_temp_media as $key=>$job_temp_media_obj){
+                $job_temp_media_obj->mediable_id = $request->job_id;
+                $job_temp_media_obj->mediable_type = 'App\Admin\Jobs\Job';
+                $job_temp_media_obj->update();
+            }
+
+        }
         $job_id = $request->job_id;
         $job = Job::where('id', $job_id)->first();
         $arr = array(
@@ -290,6 +333,9 @@ class JobController extends Controller
      */
     public function update(Request $request, Job $job)
     {
+        if ($request->file('files')) {
+            return $this->upload_images($request,$request->job_id);
+        }
         $this->update_dummy($request);
         Session::flash('success', 'Jobben er lagret');
         return back();
@@ -358,7 +404,6 @@ class JobController extends Controller
         $req = $request->all();
         $arr = Arr::only($request->all(), ['job_function', 'industry', 'country', 'commitment_type', 'job_type',
             'sector', 'leadership_category']);
-//        dd($arr);
         $query = DB::table('ads')
             ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
             ->join('users', 'jobs.user_id', '=','users.id')

@@ -61,7 +61,7 @@ class Job extends Model
     }
 
     public function company_gallery(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','company_gallery');
+        return $this->morphMany('App\Media', 'mediable')->where('type','company_gallery')->orderBy('order','ASC');
     }
 
 
