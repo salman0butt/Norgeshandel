@@ -37,9 +37,10 @@ class JobController extends Controller
             return response()->view('admin.jobs.jobs', compact('ads'));
         }
         $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
+        $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
 
         $ads = Ad::where('status', 'published')->where('ad_type', 'job')->get();
-        return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search'));
+        return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search','saved_search'));
     }
 
     /**

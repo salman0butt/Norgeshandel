@@ -6,7 +6,9 @@ if(isset($job)){$job = \App\Admin\Jobs\Job::find($job->id);}
 if(!isset($job)){
     $job = $ad->job;
 }
+if (!isset($ad)){$ad=$job->ad;}
 $job = \App\Admin\Jobs\Job::find($job->id);
+$ad = $job->ad;
 $media = $job->media;
 if(count($media)>0){
         foreach ($media as $item){

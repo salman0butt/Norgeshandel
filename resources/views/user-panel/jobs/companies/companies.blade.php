@@ -5,7 +5,22 @@
     <div class="left-ad float-left">
         <img src="assets/images/left-ad.png" class="img-fluid" alt="">
     </div>
+    
     <div class="dme-container pl-3 pr-3">
+    <div class="breade-crumb">
+            <nav aria-label="breadcrumb">
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <ol class="breadcrumb w-100"
+                            style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;margin-bottom:0px;">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel</a></li>
+                            <li class="breadcrumb-item active"><a href="#">Jobb</a></li>
+                            <li class="breadcrumb-item active"><a href="#">Bedriftsprofiler</a></li>
+                        </ol>   
+                    </div>
+                </div>
+            </nav>
+        </div>
         <div class="row mt-4">
             <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
                 <img src="{{ asset('public/images/Jobb_ikon_maroon.svg') }}" style="max-width: 50px;"

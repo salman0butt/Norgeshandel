@@ -64,7 +64,7 @@
             </div>
         <div class="row">
             <div class="col-md-12">
-                @include('user-panel.partials.landing_page_slider',compact('name'));
+                @include('user-panel.partials.landing_page_slider',compact('name'))
             </div>
             <div class="col-md-12 text-center">
                 <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">{{$property_data->headline ? $property_data->headline : 'N/A'}}</div>
@@ -83,7 +83,7 @@
                         <div class="u-t3 mt-3">JESSHEIM SENTRUM</div>
                         <h1 class="u-t2">{{$property_data->headline}}</h1>
                     </div>
-                    <div class="col-md-12 text-muted">{{$property_data->street_address}}</div>
+                    <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span></div>
                     <div class="col-md-12 mt-2">
                         <p>{{$property_data->description_simple}}</p>
                     </div>

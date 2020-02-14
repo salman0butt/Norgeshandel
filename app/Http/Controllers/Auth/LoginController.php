@@ -46,6 +46,11 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        // if($user->verified == null) {
+        //     Auth::logout();
+        //     return redirect('/login');
+        // }
+ 
         return redirect()->intended($this->redirectPath());
 
 //        if ($user->hasRole(['admin', 'manager', 'salesman'])) {

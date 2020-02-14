@@ -67,19 +67,29 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.my-business.job_preferences');
     });
-    Route::get('/personvern', function () {
-
-        return view('user-panel.my-business.privacy_setting');
-    });
-    Route::get('/become-business', function () {
-
-        return view('user-panel.footer.become_business');
-    });
-    Route::get('/customer-admin-for-business', function () {
-
-        return view('user-panel.footer.customer_admin_for_business');
-    });
-    Route::get('/cookie', function () {
+Route::get('/personvern', function () {
+    return view('user-panel.my-business.privacy_setting');
+});
+Route::get('/become-business', function () {
+    return view('user-panel.footer.become_business');
+});
+Route::get('/customer-admin-for-business', function () {
+    return view('user-panel.footer.customer_admin_for_business');
+});
+Route::get('/cookie', function () {
+    return view('user-panel.footer.cookie');
+});
+Route::get('/rating', function () {
+    return view('user-panel.my-business.rating');
+});
+Route::get('/customer-services', function () {
+    return view('user-panel.footer.customer_service');
+});
+Route::get('/useful-info', function () {
+    return view('user-panel.footer.useful_info');
+});
+  
+  Route::get('/cookie', function () {
 
         return view('user-panel.footer.cookie');
     });
@@ -177,10 +187,13 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::post('message', 'MessageController@send');
         Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
 
-        //notifications
-        Route::post('notifications/all', 'NotificationController@getAllNotifications');
+
+      Route::get('notifications/all', 'NotificationController@showAllNotifications');
 
         Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+
+    //Clear Searches
+    Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
 
 //    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 
@@ -289,28 +302,30 @@ Route::group(['middleware' => 'authverified'], function () {
     });
 
 //  zille bellow
-    Route::get('property/realestate', 'PropertyController@list');
-    Route::get('property/realestate/homes', 'PropertyController@ads');
-    Route::get('new/property/rent/ad', 'PropertyController@newAdd');
-    Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
-    Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
-    Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
-    Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
-    Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
-    Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
-    Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
-    Route::get('property/for/rent', 'PropertyController@adsForRent');
-    Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
-    Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
-    Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
-    Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
-    Route::post('add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
-    Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
-    Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
-    Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
-    Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
-    Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
-    Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
+Route::get('property/realestate', 'PropertyController@list');
+Route::get('property/realestate/homes', 'PropertyController@ads');
+Route::get('new/property/rent/ad', 'PropertyController@newAdd');
+Route::get('new/property/rent/ad/{id}/edit', 'PropertyController@newAddedit');
+Route::patch('add/property/for/rent/ad/{id}', 'PropertyController@UpdatePropertyForRentAdd');
+Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
+Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
+Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
+Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
+Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
+Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
+Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
+Route::get('property/for/rent', 'PropertyController@adsForRent');
+Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
+Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
+Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
+Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
+Route::post('add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
+Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
+Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
+Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
+Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
+Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
+Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
 
 
 //flatwishesrented
