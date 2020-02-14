@@ -355,7 +355,7 @@
 
         });
 
-        Pusher.logToConsole = true;
+        // Pusher.logToConsole = true;
 
         @if(Auth::check())
             var pusher = new Pusher('d4efdc4a073f0521f41e', {

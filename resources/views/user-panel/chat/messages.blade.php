@@ -241,7 +241,7 @@
 
             // $('.thread.active').first().trigger('click');
             // Enable pusher logging - don't include this in production
-            Pusher.logToConsole = true;
+            // Pusher.logToConsole = true;
 
             var pusher = new Pusher('d4efdc4a073f0521f41e', {
                 cluster: 'ap2',
