@@ -90,7 +90,7 @@ Route::get('/customer-services', function () {
 Route::get('/useful-info', function () {
     return view('user-panel.footer.useful_info');
 });
-  
+
   Route::get('/cookie', function () {
 
         return view('user-panel.footer.cookie');
