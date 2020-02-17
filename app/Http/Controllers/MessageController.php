@@ -50,7 +50,7 @@ class MessageController extends Controller
     public function show_thread($thread_id){
         if(Auth::check()) {
             $active_thread = MessageThread::find($thread_id);
-            $threads = MessageThread::orderBy('id', 'desc')->get();
+            $threads = Auth::user()->threads;
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');
@@ -60,14 +60,13 @@ class MessageController extends Controller
     {
         if(Auth::check()) {
             $active_thread = MessageThread::orderBy('id', 'desc')->first();
-            $threads = MessageThread::orderBy('id', 'desc')->get();
+            $threads = Auth::user()->threads;
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');
     }
 
     public function read_all($thread_id){
-        Message::where('message_thread_id', '=', $thread_id)->where('to_user_id', '=', Auth::id())->whereNull('read_at')->get();
         Message::where('message_thread_id', '=', $thread_id)->where('to_user_id', '=', Auth::id())->whereNull('read_at')->update(['read_at'=>now()]);
     }
 
