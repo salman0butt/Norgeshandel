@@ -1,7 +1,6 @@
 <?php
 
 use App\Helpers\common;
-
 $empname = $job->company_id != 0 ? $job->company->emp_name : $job->emp_name;
 //dump($job);
 
