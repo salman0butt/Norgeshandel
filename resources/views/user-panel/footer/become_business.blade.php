@@ -31,27 +31,16 @@
     <div class="panel">
         <h2>
             <font style="vertical-align: inherit;">
-                <font style="vertical-align: inherit;">Bli bedriftskunde hos FINN</font>
+                <font style="vertical-align: inherit;">Bli bedriftskunde hos Norgeshandel</font>
             </font>
         </h2>
         <p class="u-mb16">
             <font style="vertical-align: inherit;">
                 <font style="vertical-align: inherit;">
-                    Annonserer du jevnlig på FINN på vegne av en bedrift ? </font>
+                   Som bedriftskunde hos Norgeshandel får du en rekke fordeler:</font>
             </font><br>
-            <font style="vertical-align: inherit;">
-                <font style="vertical-align: inherit;">
-                    Da lønner det seg å være bedriftskunde.
-                </font>
-            </font>
         </p>
-        <p>
-            <font style="vertical-align: inherit;">
-                <font style="vertical-align: inherit;">
-                    En bedriftsavtale gir deg fordeler som:
-                </font>
-            </font>
-        </p>
+
 
         <div class="media media--top u-mt16 u-mb16 tick">
             <div class="media__img u-primary-blue">
@@ -64,16 +53,9 @@
             <div class="media__body">
                 <h3 class="u-strong u-t4 u-mb0">
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Betaling med faktura</font>
+                        <font style="vertical-align: inherit;">Vårt mål er å bidra til at din bedrift får fornøyde kunder</font>
                     </font>
                 </h3>
-                <p class="u-caption">
-                    <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">
-                        Få bedre oversikt med samlefaktura en gang i måneden
-                        </font>
-                    </font>
-                </p>
             </div>
         </div>
         <div class="media media--top u-mt16 u-mb16 tick">
@@ -87,15 +69,9 @@
             <div class="media__body">
                 <h3 class="u-strong u-t4 u-mb0">
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Firmaprofilering</font>
+                        <font style="vertical-align: inherit;">Kredittid og en faktura på alle annonser</font>
                     </font>
                 </h3>
-                <p class="u-caption">
-                    <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Vis frem bedriften på Norges største markedsplass
-                        </font>
-                    </font>
-                </p>
             </div>
         </div>
         <div class="media media--top u-mt16 u-mb16 tick">
@@ -109,14 +85,10 @@
             <div class="media__body">
                 <h3 class="u-strong u-t4 u-mb0">
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Lenke til bedriftens nettsider i annonsene</font>
+                        <font style="vertical-align: inherit;">Individuelle betingelser og priser</font>
                     </font>
                 </h3>
-                <p class="u-caption">
-                    <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Skap økt trafikk til egne nettsider</font>
-                    </font>
-                </p>
+
             </div>
         </div>
         <div class="media media--top u-mt8 u-mb8 tick">
@@ -130,16 +102,27 @@
             <div class="media__body">
                 <h3 class="u-strong u-t4 u-mb0">
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Dedikert kontaktperson i Norgeshandel</font>
+                        <font style="vertical-align: inherit;">Firmaprofilering</font>
                     </font>
                 </h3>
-                <p class="u-caption">
+    
+            </div>
+        </div>
+                <div class="media media--top u-mt8 u-mb8 tick">
+            <div class="media__img u-primary-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" style="color:#AC304A;">
+                    <path fill="currentColor" fill-rule="evenodd"
+                        d="M9.78 15.51l8.86-10.05c.5-.57 1.37-.62 1.92-.1.55.53.59 1.41.09 1.98l-9.88 11.2c-.54.62-1.47.61-2 0l-5.42-5.8c-.5-.57-.46-1.46.1-1.97a1.32 1.32 0 0 1 1.91.1l4.42 4.64z">
+                    </path>
+                </svg>
+            </div>
+            <div class="media__body">
+                <h3 class="u-strong u-t4 u-mb0">
                     <font style="vertical-align: inherit;">
-                        <font style="vertical-align: inherit;">Optimaliser annonseringen sammen med en som kjenner din bedrift
-
-                        </font>
+                        <font style="vertical-align: inherit;">Lenke til bedriftens nettside i alle annonser</font>
                     </font>
-                </p>
+                </h3>
+    
             </div>
         </div>
 
@@ -157,7 +140,7 @@
 
         <div class="grid">
             <div class="grid__unit">
-                <a href="#" class="link link--dark">
+                <a href="{{ url('/my-business/profile/company_profile_form/property') }}" class="link link--dark">
                     <div class="media media--top u-mt8 u-mb8">
                         <div class="media__img u-secondary-blue">
                             <svg xmlns="http://www.w3.org/2000/svg" width="45" height="35" viewBox="0 0 45 35">
@@ -177,7 +160,7 @@
                 </a>
             </div>
             <div class="grid__unit">
-                <a href="#" class="link link--dark">
+                <a href="{{ url('/my-business/profile/company_profile_form/job') }}" class="link link--dark">
                     <div class="media media--top u-mt8 u-mb8">
                         <div class="media__img u-secondary-blue">
                             <svg xmlns="http://www.w3.org/2000/svg" width="45" height="35" viewBox="0 0 45 35">
