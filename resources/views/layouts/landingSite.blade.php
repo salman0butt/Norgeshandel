@@ -283,11 +283,6 @@
     </div>
 </footer>
 
-<script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
-
-
-
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
 {{--<script src="{{asset('public/js/app.js')}}"></script>--}}
 <script src="{{asset('public/mediexpert.js')}}"></script>
@@ -383,6 +378,8 @@
                 }
             });
         @endif
+
+
     });
 
 

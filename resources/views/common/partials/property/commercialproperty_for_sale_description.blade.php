@@ -66,9 +66,6 @@
             <div class="col-md-12">
                 @include('user-panel.partials.landing_page_slider',compact('name'))
             </div>
-            <div class="col-md-12 text-center">
-                <div class="single-realestate-caption" style="width:50%;margin:auto;margin-top: -20px;">{{$property_data->headline ? $property_data->headline : 'N/A'}}</div>
-            </div>
         </div>
         <div class="row mt-4">
             <div class="col-md-8">

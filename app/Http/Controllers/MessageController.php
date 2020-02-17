@@ -30,7 +30,7 @@ class MessageController extends Controller
         $threads = MessageThread::orderBy('id', 'desc')->get();
         if($thread_id != 0) {
             $active_thread = MessageThread::find($thread_id);
-            Message::where('message_thread_id', $active_thread->id)->update(['read_at'=>now()]);
+            Message::where('message_thread_id', $active_thread->id)->where('to_user_id', '=', Auth::id())->update(['read_at'=>now()]);
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return view('user-panel.chat.messages', compact( 'threads'));
