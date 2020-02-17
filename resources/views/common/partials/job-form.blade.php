@@ -156,7 +156,7 @@
                                 <label for="keywords" class="col-md-2 u-t5">{{__('Keywords (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="keywords" value="{{$obj_job->keywords}}" id="keywords" type="text"
-                                           class="form-control dme-form-control" required>
+                                           class="form-control dme-form-control" >
                                     <span
                                         class="u-t5">{{__('Keywords make it easier for candidates to search for your exact position. Choose up to 5 words you think the candidates are applying for.')}}</span>
                                 </div>
