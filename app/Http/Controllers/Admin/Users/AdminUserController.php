@@ -213,6 +213,7 @@ class AdminUserController extends Controller
     }
 
     public function request_company_profile(Request $request){
+        dd($request->all());
         if (Auth::check()) {
             if ((isset($request->org_number) && !empty($request->org_number)) ||
                 (isset($request->org_name) && !empty($request->org_name))){

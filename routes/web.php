@@ -22,9 +22,11 @@ Route::get('clear-chat', function (){
     \App\MessageThread::where('id', '!=', 0)->delete();
     return redirect('messages');
 });
+
 Route::get('verified', function () {
     return view('auth.verified');
 })->middleware('verified');
+
 Route::get('mail', function () {
     $to_name = 'Zain';
     $to_email = 'zain@digitalmx.no';
@@ -145,7 +147,6 @@ Route::get('/useful-info', function () {
     Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
     Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
     Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
-
 
     Route::get('shared-lists/{link_id}', function ($link_id) {
         $list = \App\fav_list::where('share_link', $link_id)->get()->first();
