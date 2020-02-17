@@ -68,7 +68,7 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.my-business.job_preferences');
     });
-Route::get('/personvern', function () {
+Route::get('/privacy', function () {
     return view('user-panel.my-business.privacy_setting');
 });
 Route::get('/become-business', function () {
@@ -77,7 +77,7 @@ Route::get('/become-business', function () {
 Route::get('/customer-admin-for-business', function () {
     return view('user-panel.footer.customer_admin_for_business');
 });
-Route::get('/cookie', function () {
+Route::get('/personvern', function () {
     return view('user-panel.footer.cookie');
 });
 Route::get('/rating', function () {

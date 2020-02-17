@@ -21,7 +21,7 @@ function getDataPagination(page,sorting_value,url,stylings)
         location.hash = page;
 
     }).fail(function(jqXHR, ajaxOptions, thrownError){
-        alert('No response from server');
+        console.log('No response from server');
     });
   
 }
@@ -46,6 +46,6 @@ function getNotifications(url)
             }
           
         }).fail(function(jqXHR, ajaxOptions, thrownError){
-            alert('No response from server');
+            console.log('No response from server');
         });
 }

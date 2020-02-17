@@ -171,7 +171,7 @@
                             <div><a href="#" class="emp-ads">more ads by company</a></div>
                         @else
                             @if(!empty($job->emp_website))
-                                <div><a href="{{$job->emp_website}}" class="emp-website">{{__('Company Homepage')}}</a></div>
+                                <div><a href="{{$job->emp_website}}" class="emp-website">{{__('Hjemmeside')}}</a></div>
                             @endif
                         @endif
 

@@ -1,11 +1,4 @@
-<a href="#" class="
-    add-to-fav
-    @if(Auth::check() && count($ad->favorite($ad->id))>0)
-        fav
-    @else
-        not-fav
-    @endif
-    "
+<a href="#" class="add-to-fav @if(Auth::check() && count($ad->favorite($ad->id))>0) fav @else not-fav @endif"
    @if(Auth::check() && count($ad->favorite($ad->id))<1)
     data-target="#modal_select_category"
     @endif
@@ -23,3 +16,4 @@
         @endif
     ></span>
 </a>
+
