@@ -135,6 +135,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    public function threads(){
+        return $this->belongsToMany(MessageThread::class);
+    }
     public function unread_messages(){
         return Message::where('to_user_id', $this->id)->whereNull('read_at')->get();
     }

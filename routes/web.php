@@ -186,7 +186,7 @@ Route::get('/useful-info', function () {
         Route::get('messages/new/{ad_id}', 'MessageController@new_thread');
         Route::get('messages/render-thread/{thread_id}', 'MessageController@render_thread');
         Route::get('/messages', 'MessageController@index');
-        Route::get('/message/{id}', 'MessageController@get');
+
         Route::post('message', 'MessageController@send');
         Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
 

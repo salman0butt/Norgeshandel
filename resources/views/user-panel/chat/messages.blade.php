@@ -171,10 +171,11 @@
                     <div class="mb-3 text-center profile-name">
                         <h5 class="text-muted">{{Auth::user()->username}}</h5>
                     </div>
-                    <div><a href="{{url('clear-chat')}}">clear</a></div>
+                    <div><a href="{{url('clear-chat')}}" style="display: none;">clear</a></div>
                     <div class="chat-thread-list">
                         @foreach($threads as $thread)
                             @if(!empty($thread->ad))
+                                @php($thread_user = $thread->users->where('user_id', '!=', Auth::id())->first())
                                 {{--                            <a href="#" class="user" id="{{ $thread->id }}">--}}
                                 <a href="{{url('messages/thread', $thread->id)}}"
                                    class="thread thread-link-{{$thread->id}} {{$thread->id==$active_thread->id?"active":""}}"
@@ -192,7 +193,7 @@
                                             <img src="{{asset('public/images/image-placeholder.jpg')}}"
                                                  class="profile-post-image" alt="">
                                             <img
-                                                src="{{$thread->user->media!=null?asset(\App\Helpers\common::getMediaPath($thread->user->media)):asset('public/images/profile-placeholder.png')}}"
+                                                src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
                                                 class="profile-image" alt="Profile image" style="">
                                         </div>
                                         <div class="col-md-9 p-0 mt-1 profile-name">
@@ -208,7 +209,6 @@
                 </div>
                 <div class="col-md-8 smart-scroll"
                      style="height: calc(100vh - 50px); overflow-y: scroll; position: relative;" id="thread-data">
-
                 </div>
             </div>
         </div>
@@ -241,7 +241,7 @@
 
             // $('.thread.active').first().trigger('click');
             // Enable pusher logging - don't include this in production
-            // Pusher.logToConsole = true;
+            Pusher.logToConsole = true;
 
             var pusher = new Pusher('d4efdc4a073f0521f41e', {
                 cluster: 'ap2',
@@ -250,123 +250,134 @@
 
             var channel = pusher.subscribe('my-channel');
             channel.bind('my-event', function (data) {
-                $('.thread-tab-' + data.thread_id + ' .thread-message').text(data.message);
-                if($('.thread-link-' + data.thread_id).length<1){
-                    var thread = '' +
-                        '<a href="messages/thread/' + data.thread_id + '" class="thread thread-link-' + data.thread_id + '" id="' + data.thread_id + '" data-id="' + data.thread_id + '">\n' +
-                        '    <div class="row chat-thread-tab thread-tab-' + data.thread_id + '">\n' +
-                        '        <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon" data-thread-id="' + data.thread_id + '">\n' +
-                        '                <span  data-thread-id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
-                        '                      style="">1</span>\n' +
-                        '            <img src="{{asset('public/images/image-placeholder.jpg')}}"\n' +
-                        '                 class="profile-post-image" alt="">\n' +
-                        '            <img src="public/images/profile-placeholder.png"\n' +
-                        '                class="profile-image" alt="Profile image" style="">\n' +
-                        '        </div>\n' +
-                        '        <div class="col-md-9 p-0 mt-1 profile-name">\n' +
-                        '            <span class="font-weight-bold align-middle" style="min-height: 1em;"></span>\n' +
-                        '            <p class="text-muted thread-message">' + data.message + '</p>\n' +
-                        '        </div>\n' +
-                        '    </div>\n' +
-                        '</a>\n';
+                if(data.to_user_id == '{{Auth::id()}}'){
+                    if($('.thread-link-' + data.thread_id).length<1){
+                        var thread = '' +
+                            '<a href="messages/thread/' + data.thread_id + '" class="thread thread-link-' + data.thread_id + '" id="' + data.thread_id + '" data-id="' + data.thread_id + '">\n' +
+                            '    <div class="row chat-thread-tab thread-tab-' + data.thread_id + '">\n' +
+                            '        <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon" data-thread-id="' + data.thread_id + '">\n' +
+                            '                <span  data-thread-id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
+                            '                      style="">1</span>\n' +
+                            '            <img src="{{asset('public/images/image-placeholder.jpg')}}"\n' +
+                            '                 class="profile-post-image" alt="">\n' +
+                            '            <img src="public/images/profile-placeholder.png"\n' +
+                            '                class="profile-image" alt="Profile image" style="">\n' +
+                            '        </div>\n' +
+                            '        <div class="col-md-9 p-0 mt-1 profile-name">\n' +
+                            '            <span class="font-weight-bold align-middle" style="min-height: 1em;"></span>\n' +
+                            '            <p class="text-muted thread-message">' + data.message + '</p>\n' +
+                            '        </div>\n' +
+                            '    </div>\n' +
+                            '</a>\n';
 
-                    $('.chat-thread-list').prepend(thread);
+                        $('.chat-thread-list').prepend(thread);
+                    }
+                    if (parseInt($('#current_thread').val()) == data.thread_id) {
+                        var str = '' +
+                            '            <div class="message receiver-message">\n' +
+                            '                <div class="profile-icon">\n' +
+                            '                    <img src="' + $('#my_avatar').val() + '" class="circle"\n' +
+                            '                         alt="Profile image" style="width:35px;">\n' +
+                            '                </div>\n' +
+                            '                <div class="message-text" style="min-height: 1em;">\n' +
+                            '                    <span class="align-middle">' + data.message + '</span>\n' +
+                            '                    <br>\n' +
+                            '                    <span class="text-muted timeago" style="font-size: 0.7em" title="'+new Date($.now())+'"></span>\n' +
+                            '                </div>\n' +
+                            '            </div>\n' +
+                            '            <div class="clearfix"></div>\n';
+                        $('#conversation').append(str);
+                        $(".timeago").timeago();
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            type: "get",
+                            url: "{{url('messages/read_all')}}/"+data.thread_id
+                        });
+                        scrollToBottomFunc();
+                    }
+                    $('.thread-tab-' + data.thread_id + ' .thread-message').text(data.message);
+                    if (!isEmpty($('.thread-link-' + data.thread_id))) {
 
+                        // if receiver is not selected, add notification for that user
+                        var pending = parseInt($('span[data-thread-id=' + data.thread_id + ']').html());
+
+                        if (pending) {
+                            $('span[data-thread-id=' + data.thread_id + ']').html(pending + 1);
+                        } else {
+                            $('.thread-icon[data-thread-id=' + data.thread_id + ']:not(.active .thread-icon[data-thread-id=' + data.thread_id + '])').append('' +
+                                '<span data-thread_id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
+                                '>1</span>');
+                        }
+                    }
                 }
-                else if (parseInt($('#my_id').val()) == data.to) {
+            });
+
+            $(document).on('keyup', '.message-input', function (e) {
+                var message = $("#message-input").val();
+                // check if enter key is pressed and message is not null also receiver is selected
+                if (e.keyCode == 13 && message != '') {
+                    send_message();
+                }
+            });
+
+            $(document).on('click', '#send_button', function (e) {
+                e.preventDefault();
+                send_message();
+                $("#message-input").focus();
+            })
+
+        });
+
+        function send_message() {
+            var message = $("#message-input").val();
+            var message_thread_id = $('#current_thread').val();
+            var from_user_id = $('#from_user_id').val();
+            var to_user_id = $('#to_user_id').val();
+
+            $(this).val(''); // while pressed enter text box will be empty
+
+            // var datastr = "receiver_id=" + receiver_id + "&message=" + message;
+            $.ajax({
+                type: "post",
+                url: "{{url('message')}}", // need to create this post route
+                data: {
+                    message: message,
+                    message_thread_id: message_thread_id,
+                    from_user_id:from_user_id,
+                    to_user_id:to_user_id
+                },
+                cache: false,
+                success: function (data) {
                     var str = '' +
-                        '            <div class="message receiver-message">\n' +
+                        '            <div class="message sender-message">\n' +
                         '                <div class="profile-icon">\n' +
                         '                    <img src="' + $('#my_avatar').val() + '" class="circle"\n' +
                         '                         alt="Profile image" style="width:35px;">\n' +
                         '                </div>\n' +
                         '                <div class="message-text" style="min-height: 1em;">\n' +
-                        '                    <span class="align-middle">' + data.message + '</span>\n' +
+                        '                    <span class="align-middle">' + message + '</span>\n' +
+                        '                    <br>\n' +
+                        '                    <span class="text-muted timeago" style="font-size: 0.7em" title="'+new Date($.now())+'"></span>\n' +
                         '                </div>\n' +
                         '            </div>\n' +
                         '            <div class="clearfix"></div>\n';
                     $('#conversation').append(str);
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        type: "get",
-                        url: "{{url('messages/read_all')}}/"+data.thread_id
-                    });
+                    $(".timeago").timeago();
+                    $('.thread-tab-' + message_thread_id + ' .thread-message').text(message);
+
+                },
+                error: function (jqXHR, status, err) {
+                },
+                complete: function () {
                     scrollToBottomFunc();
-
-                } else if (!isEmpty($('.thread-link-' + data.thread_id))) {
-
-                    // if receiver is not selected, add notification for that user
-                    var pending = parseInt($('span[data-thread-id=' + data.thread_id + ']').html());
-
-                    if (pending) {
-                        $('span[data-thread-id=' + data.thread_id + ']').html(pending + 1);
-                    } else {
-                        $('.thread-icon[data-thread-id=' + data.thread_id + ']:not(.active .thread-icon[data-thread-id=' + data.thread_id + '])').append('' +
-                            '<span data-thread_id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
-                            '>1</span>');
-                    }
                 }
             });
-
-
-            $(document).on('keyup', '.message-input', function (e) {
-
-                // check if enter key is pressed and message is not null also receiver is selected
-                if (e.keyCode == 13 && message != '') {
-                    var message = $(this).val();
-                    var sender = $('#my_id').val();
-                    var sender_type = $('#my_type').val();
-                    var receiver_id = $('#their_id').val();
-                    var message_thread_id = $('#message_thread_id').val();
-                    var from_user_id = $('#from_user_id').val();
-                    var to_user_id = $('#to_user_id').val();
-
-                    $(this).val(''); // while pressed enter text box will be empty
-
-                    // var datastr = "receiver_id=" + receiver_id + "&message=" + message;
-                    $.ajax({
-                        type: "post",
-                        url: "{{url('message')}}", // need to create this post route
-                        data: {
-                            message: message,
-                            sender: sender,
-                            sender_type: sender_type,
-                            receiver: receiver_id,
-                            message_thread_id: message_thread_id,
-                            from_user_id:from_user_id,
-                            to_user_id:to_user_id
-                        },
-                        cache: false,
-                        success: function (data) {
-                            var str = '' +
-                                '            <div class="message sender-message">\n' +
-                                '                <div class="profile-icon">\n' +
-                                '                    <img src="' + $('#my_avatar').val() + '" class="circle"\n' +
-                                '                         alt="Profile image" style="width:35px;">\n' +
-                                '                </div>\n' +
-                                '                <div class="message-text" style="min-height: 1em;">\n' +
-                                '                    <span class="align-middle">' + message + '</span>\n' +
-                                '                </div>\n' +
-                                '            </div>\n' +
-                                '            <div class="clearfix"></div>\n';
-                            $('#conversation').append(str);
-                            $('.thread-tab-' + message_thread_id + ' .thread-message').text(message);
-
-                        },
-                        error: function (jqXHR, status, err) {
-                        },
-                        complete: function () {
-                            scrollToBottomFunc();
-                        }
-                    })
-                }
-            });
-
-        });
+            $("#message-input").val('');
+        }
 
         // make a function to scroll down auto
         function scrollToBottomFunc() {
@@ -377,4 +388,7 @@
 
     </script>
 
+@endsection
+@section('script')
+    <script src="{{asset('public/js/time-ago-in-words.min.js')}}"></script>
 @endsection
