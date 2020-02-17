@@ -321,7 +321,7 @@
                                        class="col-md-2 u-t5">{{__('Street address  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="address" id="address" type="text"
-                                           class="form-control dme-form-control" required>
+                                           class="form-control dme-form-control">
                                     <span
                                         class="u-t5">{{__('Explain briefly about the access to the accommodation and how to find it, please tell about proximity to road, bus and train.')}}</span>
                                 </div>
@@ -374,7 +374,7 @@
                                                     </div>
                                                     <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Remove file</a>
 
-                                                    <input type="text" class="form-control dme-form-control mt-2" name="title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
+                                                    <input type="text" class="form-control dme-form-control mt-2" name="image_title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
                                                 </div>
                                             @endforeach
                                         @endif
@@ -635,6 +635,8 @@
 
 
 @section('script')
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
     <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
     <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>

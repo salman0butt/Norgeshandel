@@ -288,12 +288,12 @@ class JobController extends Controller
             $file = $request->file('company_logo');
             common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_logo');
         }
-        if ($request->file('company_gallery')) {
-            $files = $request->file('company_gallery');
-            foreach ($files as $file) {
-                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-            }
-        }
+//        if ($request->file('company_gallery')) {
+//            $files = $request->file('company_gallery');
+//            foreach ($files as $file) {
+//                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
+//            }
+//        }
 
         $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id];
         return response(json_encode($ids));
@@ -333,8 +333,11 @@ class JobController extends Controller
      * @param \App\Admin\Jobs\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(Request $request,$id)
     {
+        if($request->job_id){
+            $job = Job::find($request->job_id);
+        }
         if ($request->file('files')) {
             return $this->upload_images($request,$request->job_id);
         }
