@@ -1157,11 +1157,13 @@ label span.count{
     font-size: 26px;
     color: rgba(255, 255, 255, 0.3);
     text-align: center;
-    padding-top: 7px;
+    padding: 10px;
+    border: 2px solid rgba(176, 64, 88, 0);
+    border-radius: 25px;
+    transition: .5s all;
 }
 .add-to-fav:hover {
     color: rgba(176, 64, 88, 0.5);
     background-color: rgba(176, 64, 88, 0.2);
     border: 2px solid rgba(176, 64, 88, 0.3);
-    border-radius: 25px;
 }
