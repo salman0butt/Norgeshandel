@@ -287,7 +287,7 @@ class JobController extends Controller
 
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
-            common::update_media($file, $job->id, 'App\Models\Ad', 'logo');
+            common::update_media($file, $job->ad->id, 'App\Models\Ad', 'logo');
         }
 //        if ($request->file('company_gallery')) {
 //            $files = $request->file('company_gallery');
