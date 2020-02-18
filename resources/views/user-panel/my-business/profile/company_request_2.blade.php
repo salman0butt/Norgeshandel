@@ -216,7 +216,7 @@
 
                         error: function(response) {
                             if(response['status'] == 404 ){
-                                alert(Mine annonser'posten ikke funnet.');
+                                alert('posten ikke funnet.');
                             }else{
                                 alert('Noe gikk galt.');
                             }
