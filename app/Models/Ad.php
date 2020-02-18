@@ -23,6 +23,18 @@ class Ad extends Model
         'user_id','status','ad_type'
     ];
 
+    public function media(){
+        return $this->morphMany('App\Media', 'mediable');
+    }
+
+    public function company_logo(){
+        return $this->morphMany('App\Media', 'mediable')->where('type','logo')->orderBy('order','ASC');
+    }
+
+    public function company_gallery(){
+        return $this->morphMany('App\Media', 'mediable')->where('type','gallery')->orderBy('order','ASC');
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

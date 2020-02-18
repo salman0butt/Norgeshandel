@@ -52,22 +52,22 @@ class Job extends Model
         return $this->hasOne('App\User');
     }
 
-    public function media(){
-        return $this->morphMany('App\Media', 'mediable');
-    }
+//    public function media(){
+//        return $this->morphMany('App\Media', 'mediable');
+//    }
+//
+//    public function company_logo(){
+//        return $this->morphMany('App\Media', 'mediable')->where('type','company_logo');
+//    }
+//
+//    public function company_gallery(){
+//        return $this->morphMany('App\Media', 'mediable')->where('type','company_gallery')->orderBy('order','ASC');
+//    }
+//    public function gallery(){
+//        return $this->morphMany('App\Media', 'mediable')->where('type','gallery');
+//    }
 
-    public function company_logo(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','company_logo');
-    }
 
-    public function company_gallery(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','company_gallery')->orderBy('order','ASC');
-    }
-
-
-    public function gallery(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','gallery');
-    }
     public function terms(){
         return $this->belongsToMany('App\Term');
     }

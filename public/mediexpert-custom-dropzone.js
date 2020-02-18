@@ -41,7 +41,6 @@ function createDropZone(id, ajax_url) {
                     fileuploded.innerHTML = response.file_names[key];
                     var btndelete = fil.previewElement.querySelector("[data-dz-remove]");
                     btndelete.setAttribute("id", response.file_names[key]);
-
                     if(id.attr('data-append_input') == "yes") {
                         var appendedChild = fil.previewTemplate.appendChild(document.createElement('input'));
                         appendedChild.classList.add("form-control");

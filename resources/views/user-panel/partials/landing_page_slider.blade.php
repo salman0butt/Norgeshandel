@@ -18,10 +18,15 @@
                 }
                 $unique_name  =  $val->name_unique;
                 $path  =    \App\Helpers\common::getMediaPath($obj);
+                $file_path = 'public/uploads/' . date('Y', strtotime($obj->updated_at)) . '/' . date('m', strtotime($obj->updated_at)) . '/';
                 $full_path  = $path."". $unique_name;
                 ?>
                 <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
-                    <img class="d-block w-100" src="{{$full_path}}" alt="First slide">
+                    @if(!file_exists($file_path.$unique_name))
+                        <img class="d-block w-100" src="{{ asset('/public/uploads/banners/1280x720.png') }}" alt="First slide">
+                    @else
+                        <img class="d-block w-100" src="{{$full_path}}" alt="First slide">
+                    @endif
                     <div class="single-realestate-caption text-center carousel_image_slide_text" style="width:50%;margin:auto;margin-top: -20px;">
                        {{$val->title ? $val->title : ''}} ({{($key+1).'/'.$name->count()}})
                     </div>

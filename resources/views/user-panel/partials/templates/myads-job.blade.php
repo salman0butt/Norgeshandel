@@ -10,8 +10,8 @@ if ($job->company_id != 0) {
         $image_path = common::getMediaPath($job->company->company_gallery->first(), '235x180');
     }
 } else {
-    if (is_countable($job->company_gallery) && count($job->company_gallery) > 0) {
-        $image_path = common::getMediaPath($job->company_gallery->first(), '235x180');
+    if (is_countable($job->ad->company_gallery) && count($job->ad->company_gallery) > 0) {
+        $image_path = common::getMediaPath($job->ad->company_gallery->first(), '235x180');
     }
 }
 

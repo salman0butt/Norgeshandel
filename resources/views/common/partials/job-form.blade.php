@@ -321,7 +321,7 @@
                                        class="col-md-2 u-t5">{{__('Street address  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="address" id="address" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->address}}">
                                     <span
                                         class="u-t5">{{__('Explain briefly about the access to the accommodation and how to find it, please tell about proximity to road, bus and train.')}}</span>
                                 </div>
@@ -357,8 +357,8 @@
                                         </a>
                                     </div>
                                     <div action="#" class="picture dropzone-previews sortable">
-                                        @if($obj_job && $obj_job->company_gallery->count() > 0)
-                                            @foreach($obj_job->company_gallery as $company_gallery)
+                                        @if($obj_job && $obj_job->ad && $obj_job->ad->company_gallery->count() > 0)
+                                            @foreach($obj_job->ad->company_gallery as $company_gallery)
                                                 <?php
                                                 $unique_name  =  $company_gallery->name_unique;
                                                 $path  =    \App\Helpers\common::getMediaPath($obj_job);
@@ -389,7 +389,7 @@
                                        class="col-md-2 u-t5">{{__('Workplace video  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="workplace_video" id="workplace_video" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->workplace_video}}">
                                     <span class="u-t5">{{__('For example - youtube.com/watch?v=3C4W5zadc4g')}}</span>
                                 </div>
                                 <div class="col-md-6 offset-md-3">
@@ -409,15 +409,15 @@
                                 <div class="col-sm-4">
                                     <select class="form-control dme-form-control" id="app_receive_by"
                                             name="app_receive_by" data-selector="">
-                                        <option value="email" selected="">Søkerhåndtering</option>
-                                        <option value="url">Eget søknadsskjema</option>
+                                        <option value="email" {{$obj_job && $obj_job->app_receive_by == 'email' ? 'selected' : ''}}>Søkerhåndtering</option>
+                                        <option value="url" {{$obj_job && $obj_job->app_receive_by == 'url' ? 'selected' : ''}}>Eget søknadsskjema</option>
                                     </select>
                                 </div>
                                 <label for="app_link_to_receive"
                                        class="col-md-2 u-t5">{{__('Link to application form')}}</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="app_link_to_receive" id="app_link_to_receive"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_link_to_receive}}">
                                 </div>
                                 <div class="col-md-10 offset-md-2">
                                     <span
@@ -432,12 +432,12 @@
                                        class="col-md-2 u-t5">{{__('Email to receive notification')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_email_to_receive" id="app_email_to_receive" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_email_to_receive}}">
                                 </div>
                                 <label for="app_contact" class="col-md-2 u-t5">{{__('Contact')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_contact" id="app_contact" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_contact}}">
                                 </div>
                             </div>
                         </div>
@@ -447,7 +447,7 @@
                                 <label for="app_contact_title"
                                        class="col-md-2 u-t5">{{__('Contact person (optional)')}}</label>
                                 <div class="col-sm-10 ">
-                                    <input name="app_contact_title" id="app_contact_title" type="text"
+                                    <input name="app_contact_title" id="app_contact_title" type="text"  value="{{@$obj_job->app_contact_title}}"
                                            class="form-control dme-form-control">
                                     <span
                                         class="u-t5">{{__('Explain briefly about the access to the accommodation and how to find it, please tell about proximity to road, bus and train.')}}</span>
@@ -460,14 +460,14 @@
                                 <label for="app_mobile" class="col-md-2 u-t5">{{__('Mobile  (optional)')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_mobile" id="phone" type="tel"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_mobile}}" >
                                     <span id="valid-msg" class="hide"></span>
                                     <span id="error-msg" class="hide"></span>
                                 </div>
                                 <label for="app_phone" class="col-md-2 u-t5">{{__('Phone  (optional)')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_phone" id="phone" type="tel"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_phone}}" >
                                     <span id="valid-msg" class="hide"></span>
                                     <span id="error-msg" class="hide"></span>
                                 </div>
@@ -479,7 +479,7 @@
                                 <label for="app_email" class="col-md-2 u-t5">{{__('Email  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="app_email" id="app_email" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_email}}">
                                 </div>
                             </div>
                         </div>
@@ -491,7 +491,7 @@
                                 <div class="col-sm-10 ">
                                     <input name="app_linkedin" id="app_linkedin" type="text"
                                            class="form-control dme-form-control"
-                                           placeholder="linkedin.com/in/kontaktperson">
+                                           placeholder="linkedin.com/in/kontaktperson" value="{{@$obj_job->app_linkedin}}">
                                 </div>
                             </div>
                         </div>
@@ -501,7 +501,7 @@
                                 <label for="app_twitter" class="col-md-2 u-t5">{{__('Twitter  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="app_twitter" id="app_twitter" type="text"
-                                           class="form-control dme-form-control" placeholder="@kontaktperson">
+                                           class="form-control dme-form-control" placeholder="@kontaktperson" value="{{@$obj_job->app_twitter}}">
                                 </div>
                             </div>
                         </div>

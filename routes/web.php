@@ -180,7 +180,7 @@ Route::get('/useful-info', function () {
 
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
-
+        Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         // message
         Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
         Route::get('messages/new/{ad_id}', 'MessageController@new_thread');
@@ -338,21 +338,21 @@ Route::get('/property/description/{id}', ['uses' => 'PropertyController@property
 Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
 
 
-//flatwishesrented
+    //flatwishesrented
     Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
     Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
     Route::get('/flat/wishes/rented/description/{id}', ['uses' => 'PropertyController@flatWishesRentedDescription']);
 
-//holidayhomeforsale
+    //holidayhomeforsale
     Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');
     Route::get('/holiday/home/for/sale/description/{id}', ['uses' => 'PropertyController@holidayHomeForSaleDescription']);
 
-//commercialpropertyforsale
+    //commercialpropertyforsale
     Route::get('/commercial/property/for/sale/ads', 'PropertyController@commercialPropertyForSaleAds');
     Route::post('/property/commercial/for/sale/sorted/ad', 'PropertyController@commercialPropertyForSaleSortedAds');
     Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'PropertyController@commercialForSaleDescription']);
 
-//commercialpropertyforrent
+    //commercialpropertyforrent
     Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
     Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
     Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
@@ -389,6 +389,7 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
 
 Route::get('/delete-media-dz',function(){
     $media = Media::where('name_unique',$_GET['filename'])->first();
+
     if($media){
         if ($media) {
             $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
