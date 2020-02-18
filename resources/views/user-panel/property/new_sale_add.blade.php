@@ -75,8 +75,12 @@
                     $("input, select").removeClass("error-input");
                 });
 
+               @if(Request::is('new/property/sale/ad/*/edit'))
+                var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
+                @else 
+                 var url = "{{url('add/property/sale/ad')}}";
+                @endif 
 
-                var url = '{{url('add/property/sale/ad')}}';
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
                 var fd = new FormData(myform);
@@ -107,14 +111,12 @@
                             {
                                 $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
                             }
-                            
-
-
                         },
                 }).always(function() { l.stop(); });
                 return false;
 
             });
+         
 
             var i = 0;
             $("#add_more_viewing_times_sales").click(function(e){

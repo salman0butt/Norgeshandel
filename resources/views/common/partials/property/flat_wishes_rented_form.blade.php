@@ -1,4 +1,5 @@
 <form action="#" method="post" id="flat_wishes_rented_form" enctype="multipart/form-data">
+
     <div class="pl-3">
         <div class="form-group">
             <h3 class="u-t5">Ønsket leieområde</h3>

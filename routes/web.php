@@ -314,8 +314,10 @@ Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAd
 Route::delete('property/for/rent/ad/{id}', 'PropertyController@deletePropertyForRent');
 Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
 Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
+Route::get('new/property/sale/ad/{id}/edit', 'PropertyController@editSaleAdd');
 Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
 Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
+Route::patch('new/property/sale/ad/{id}', 'PropertyController@updateSaleAdd');
 Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
 Route::get('holiday/home/for/sale/{id}/edit','PropertyController@editHolidayHomeForSale');
@@ -329,7 +331,7 @@ Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented'
 Route::get('new/flat/wishes/rented/{id}/edit', 'PropertyController@editAddFlatWishesRented');
 Route::patch('new/flat/wishes/rented/{id}', 'PropertyController@updateFlatWishesRented');
 Route::delete('flat/wishes/rented/{id}', 'PropertyController@deleteFlatWishesRented');
-Route::post('add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
+Route::post('new/add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
 Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
 Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
 Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');

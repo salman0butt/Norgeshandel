@@ -451,6 +451,10 @@ class PropertyController extends Controller
     public function newSaleAdd(){
         return view('user-panel.property.new_sale_add');
     }
+     public function editSaleAdd($id){
+         $property_for_sale1 = PropertyForSale::findOrFail($id);
+        return view('user-panel.property.new_sale_add', compact('property_for_sale1'));
+    }
 
     public function getHomeForSaleAdd(Request $request){
 
@@ -948,6 +952,172 @@ class PropertyController extends Controller
 
     }
 
+     public function updateSaleAdd(AddPropertyForSale $request,$id)
+    {
+        $property_for_sale_data = $request->except('_method');
+
+        if(isset($property_for_sale_data['approved_rental_part']) && $property_for_sale_data['approved_rental_part'] == 'on')
+        {
+            $property_for_sale_data['approved_rental_part'] = 1;
+        }
+        else
+        {
+            $property_for_sale_data['approved_rental_part'] = 0;
+        }
+
+            //Add More ViewingTimes
+            if(isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "")
+            {
+                $property_for_sale_data['secondary_deliver_date'] = null;
+                $i = 0;
+                foreach($property_for_sale_data['deliver_date'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['deliver_date']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_deliver_date'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_sale_data['secondary_from_clock'] = "";
+            if(isset($property_for_sale_data['from_clock']))
+            {
+                $i = 0;
+                foreach($property_for_sale_data['from_clock'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['from_clock']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_from_clock'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_sale_data['secondary_clockwise'] = "";
+            if(isset($property_for_sale_data['clockwise']))
+            {
+                $i = 0;
+                foreach($property_for_sale_data['clockwise'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['clockwise']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_clockwise'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_sale_data['secondary_note1'] = "";
+            if(isset($property_for_sale_data['note1']))
+            {
+                $i = 0;
+                foreach($property_for_sale_data['note1'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['note1']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_note1'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+
+        unset($property_for_sale_data['property_photos']);
+        unset($property_for_sale_data['property_pdf']);
+        unset($property_for_sale_data['property_quote']);
+
+
+        //Manage Facilities
+        if(isset($property_for_sale_data['facilities']))
+        {
+            $property_for_sale_data['facilities'] = json_encode($property_for_sale_data['facilities']);
+//            following code converted to json
+//            $facilities = "";
+//            foreach($property_for_sale_data['facilities'] as $key=>$val)
+//            {
+//                $facilities .= $val . ",";
+//            }
+//            $property_for_sale_data['facilities'] = $facilities;
+        }
+
+        $property_for_sale_data['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        // $add = array();
+        // $add['ad_type'] = 'property_for_sale';
+        // $add['status']  = 'published';
+        // $add['user_id'] =  Auth::user()->id;
+        //$add_response   =  Ad::where('id', $id)->update($property_for_sale);
+
+        //$property_for_sale_data['ad_id'] = $add_response->id;
+
+        $response = PropertyForSale::where('id','=', $id)->update($property_for_sale_data);
+
+        if (is_countable($request->file('property_photos')) || $request->file('property_pdf') || $request->file('property_quote'))
+        {
+            // $files = $request->file('property_photos');
+            // $files_pdf = $request->file('property_pdf');
+            // $files_quote = $request->file('property_quote');
+
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+
+            $i = 0;
+            if(is_countable($request->file('property_photos')))
+            {
+                common::update_media($val, $response->id , 'App\PropertyForSale', 'gallery'); //propert_for_sale_photos
+            }
+            foreach($files_builded_arr as $key=>$val)
+            {
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_quotes');
+                }
+                if($i == 2)
+                {
+                    common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_pdf');
+                }
+                $i++;
+
+            }
+        }
+
+        //Notification data
+        // $notifiable_id = $response -> id;
+        // $notification_obj = new NotificationController();
+        // $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForSale','property have been added');
+        // $notification_id_search = $notification_response->id;
+
+        // // //trigger event
+        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+
+        $data['success'] = $response;
+        echo json_encode($data);
+
+    }
+
+    
     public function addSaleAdd(AddPropertyForSale $request)
     {
         $property_for_sale_data = $request->all();
