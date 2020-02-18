@@ -50,25 +50,28 @@ class common
     public static function getMediaPath($obj, $size = 'full')
     {
         $file_name = $obj->name_unique;
-
         $path = 'public/uploads/' . date('Y', strtotime($obj->updated_at)) . '/' . date('m', strtotime($obj->updated_at)) . '/';
+        $return_able = '';
         if ($size != 'full') {
             $arr = explode('.', $obj->name_unique);
             $sz = explode('x', $size);
             if (is_array($arr) && count($arr) == 2) {
                 $file = $path . $arr[0] . '-' . $size . '.' . $arr[1];
                 if(!file_exists($path . $arr[0] . '.' . $arr[1])){
-                    return null;
+                    $return_able =  null;
                 }
-                if (!file_exists($file)) {
+                if (!file_exists($file) && file_exists($path.$file_name)) {
                     Image::make($path . $obj->name_unique)->widen($sz[0])->heighten($sz[1])->save($path . $arr[0] . '-' . $size . '.' . $arr[1]);
                 }
-//                dd($file);
-                return url('/') . '/' . $file;
+                $return_able =  url('/') . '/' . $file;
             }
         }
-        return url('/') . '/' . $path . $file_name;
+        if(!$return_able){
+            $return_able = url('/') . '/' . $path . $file_name;
+        }
+        return $return_able;
     }
+
 
     public static function slug_unique($name, $num = 0, $Model, $collumn)
     {
@@ -125,7 +128,7 @@ class common
 
     public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar',$delete_old='true')
     {
-        $max_old_media_order = Media::where('mediable_type',$mediable_type)->where('mediable_id',$mediable_id)->orderBy('order','DESC')->first();
+        $max_old_media_order = Media::where('mediable_type',$mediable_type)->where('mediable_id',$mediable_id)->where('type',$type)->orderBy('order','DESC')->first();
         if($delete_old == 'true') {
             self::delete_media($mediable_id, $mediable_type, $type);
         }

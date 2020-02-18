@@ -418,11 +418,7 @@ class PropertyController extends Controller
         echo json_encode($data);
     }
     public function deletePropertyForRent($id){
-        
         $property_for_rent = PropertyForRent::findOrFail($id);
-        //$ad = Ad::findOrFail($id);
-    // dd($property_for_rent->media->first->mediable_id);
-
         if(!empty($property_for_rent->media)){
             if($property_for_rent->media->first())
         common::delete_media($property_for_rent->media->first->mediable_id,$property_for_rent->media->first->mediable_type, $property_for_rent->media->first->type);
@@ -433,6 +429,23 @@ class PropertyController extends Controller
      Session::flash('success', 'Property Deleted Successfully');
 
         return redirect('/my-business/my-ads');
+    }
+
+    public function property_destroy($obj){
+        // $obj has ad id
+        $ad = Ad::find($obj);
+        if($ad){
+            if($ad->property){
+                common::delete_media($ad->property->id, get_class($ad->property), 'logo');
+                common::delete_media($ad->property->id, get_class($ad->property), 'gallery');
+                $ad->property->delete();
+            }
+            common::delete_media($ad->id, Ad::class, 'logo');
+            common::delete_media($ad->id, Ad::class, 'gallery');
+            $ad->delete();
+            Session::flash('success', 'Eiendom ble slettet.');
+            return back();
+        }
     }
 
     public function newSaleAdd(){
