@@ -205,6 +205,7 @@
                         <!--                            full input-->
 {{--employer part--}}
                         <h4 class="text-muted pt-2">{{__('About the employer')}}</h4>
+                        {{--{{dd(Auth::user()->roles->first()->name)}}--}}
                         @if(Auth::user()->roles->first()->name=="company")
                             <div class="form-group">
                                 <div class="row">
@@ -349,35 +350,9 @@
                             <div class="row">
                                 <label for="address" class="col-md-2 u-t5">{{__('Workplace (optional)')}}</label>
                                 <div class="col-sm-10 ">
-                                    <div class="clearfix">
-                                        <a href="javascript:void(0);">
-                                            <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted">
-                                                <p class="">Slipp filer her eller klikk for å laste opp</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div action="#" class="picture dropzone-previews sortable">
-                                        @if($obj_job && $obj_job->ad && $obj_job->ad->company_gallery->count() > 0)
-                                            @foreach($obj_job->ad->company_gallery as $company_gallery)
-                                                <?php
-                                                $unique_name  =  $company_gallery->name_unique;
-                                                $path  =    \App\Helpers\common::getMediaPath($obj_job);
-                                                $full_path  = $path."". $unique_name;
-                                                ?>
-                                                <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" >
-                                                    <div class="dz-image">
-                                                        <img data-dz-thumbnail="" alt="image not found" src="{{$full_path}}">
-                                                    </div>
-                                                    <div class="dz-details">
-                                                        <div class="dz-filename"><span data-dz-name="">{{@$company_gallery->name}}</span></div>
-                                                    </div>
-                                                    <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Remove file</a>
+                                    @php $dropzone_img_obj = $obj_job; @endphp
+                                    @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
 
-                                                    <input type="text" class="form-control dme-form-control mt-2" name="image_title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -538,8 +513,8 @@
         $(document).ready(function (e) {
 
             $('#job-form input, #job-form select').blur(function (e) {
-                $('#description').text(tinyMCE.get("description").getContent());
-                //$('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
+                // $('#description').text(tinyMCE.get("description").getContent());
+                // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
                 var link = $('#ad_id').val().length > 0 ? '{{url('jobs/update_dummy')}}' : '{{url('jobs/store_dummy')}}';
                 $.ajaxSetup({
                     headers: {
@@ -590,20 +565,20 @@
             }
             // $(this).val()
         });
-        tinymce.init({
-            selector: 'textarea.description',
-            width: $(this).parent().width(),
-            height: 250,
-            menubar: false,
-            statusbar: false
-        });
-        tinymce.init({
-            selector: 'textarea.emp_company_information',
-            width: $(this).parent().width(),
-            height: 250,
-            menubar: false,
-            statusbar: false
-        });
+        // tinymce.init({
+        //     selector: 'textarea.description',
+        //     width: $(this).parent().width(),
+        //     height: 250,
+        //     menubar: false,
+        //     statusbar: false
+        // });
+        // tinymce.init({
+        //     selector: 'textarea.emp_company_information',
+        //     width: $(this).parent().width(),
+        //     height: 250,
+        //     menubar: false,
+        //     statusbar: false
+        // });
     </script>
 
 <script>
