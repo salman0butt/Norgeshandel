@@ -34,7 +34,6 @@
                                 <div id="imageLoader" style="display:none; margin-top:15%; padding-bottom: 15%">
                                     <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader" height="50px">
                                 </div>
-
                             </div>
                             <div class="col-md-5">
 
@@ -64,9 +63,9 @@
                         </div>
                         <input type="hidden" name="type" value="{{$type}}">
                         <input type="hidden" name="form_type" value="manual_entry">
-                        <div class="form-group row">
+                        <div class="form-group row company_name_section">
                             <label for="org_name_2" class="col-md-2">Firmanavn</label>
-                            <input name="org_name" class="form-control col-md-4" id="org_name_2" type="text" maxlength="255" required>
+                            <input name="org_name" class="form-control col-md-4" id="org_name_2" type="text" maxlength="255" required="required">
                             <div class="col-md-6"></div>
                         </div>
                         <div class="row">
@@ -171,7 +170,17 @@
                 }
             })
 
-            // find comapny detail
+            //Press enter in org-number submit a form
+            $(document).on('keypress', '.org-number #org_number', function(e) {
+                var key = e.which;
+                if(key == 13)  // the enter key code
+                {
+                    $('.org-number .find_detail_button[type="button"]').click();
+                    return false;
+                }
+            });
+
+            // find company detail
             $(document).on('click', '.org-number .find_detail_button[type="button"]', function() {
                 var org_number = $('.org-number #org_number').val();
                 var api_url = 'https://data.brreg.no/enhetsregisteret/api/enheter/'; // api link concatenate the registration number
@@ -198,12 +207,20 @@
                             var post_office = response['forretningsadresse']['poststed']; // get the post office
                             var company_add_zip = company_address+' '+zip_code+' '+post_office;
                             $('.company_details').removeClass('d-none');
+                            $('.company_name_section').addClass('d-none');
+                            $('.company_name_section #org_name_2').val(company_name);
                             $('.company_details .company_name').html(company_name);
                             $('.company_details .company_reg_no').html(registration_number);
                             $('.company_details .company_address').html(company_add_zip);
                         },
+
                         error: function(response) {
-                            alert('Noe gikk galt.');
+                            if(response['status'] == 404 ){
+                                alert('posten ikke funnet.');
+                            }else{
+                                alert('Noe gikk galt.');
+                            }
+
                         }
                     });
                 }else{

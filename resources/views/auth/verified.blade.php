@@ -10,8 +10,8 @@
                         <div class="alert alert-success" role="alert">
                             {{__('Your Email has been verified successfully')}}
                         </div>
-                       {{__('You may continue to your account by')}}
                         <a href="{{url('/')}}"> {{__('Clicking here')}}</a>
+                        {{__('to proceed to your account')}}
                     </div>
                 </div>
             </div>

@@ -1,11 +1,11 @@
 @extends('layouts.landingSite')
 {{--{{dd($my_ads)}}--}}
 <?php
-
+use App\Models\Ad;
 $ads = array();
-$published = 0;
-$saved = 0;
-$discontinued = 0;
+$published = Ad::where('status','published')->where('user_id',Auth::user()->id)->count();
+$saved = Ad::where('status','saved')->where('user_id',Auth::user()->id)->count();
+$discontinued = Ad::where('status','discontinued')->where('user_id',Auth::user()->id)->count();
 
 $job_fulltime = 0;
 $job_parttime = 0;
@@ -22,15 +22,8 @@ foreach ($my_ads as $ad){
             $job_parttime++;
         }
     }
-    if($ad->status == 'published'){
-        $published++;
-    }
-    elseif($ad->status == 'discontinued'){
-        $discontinued++;
-    }
-    elseif($ad->status == 'saved'){
+    if($ad->status == 'saved'){
         array_push($ads, $ad);
-        $saved++;
     }
 }
 ?>
@@ -104,15 +97,15 @@ foreach ($my_ads as $ad){
                                     <span class="checkmark"></span>
                                 </label>
 
-{{--                                <label for="ad-type-3" class="radio-lbl">Lederstilling--}}
-{{--                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="property-realestate_business_plot">--}}
-{{--                                    <span class="checkmark"></span>--}}
-{{--                                </label>--}}
+                                {{--                                <label for="ad-type-3" class="radio-lbl">Lederstilling--}}
+                                {{--                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="property-realestate_business_plot">--}}
+                                {{--                                    <span class="checkmark"></span>--}}
+                                {{--                                </label>--}}
 
-{{--                                <label for="ad-type-3" class="radio-lbl">Lederstilling--}}
-{{--                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="property-commercial_plot">--}}
-{{--                                    <span class="checkmark"></span>--}}
-{{--                                </label>--}}
+                                {{--                                <label for="ad-type-3" class="radio-lbl">Lederstilling--}}
+                                {{--                                    <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="property-commercial_plot">--}}
+                                {{--                                    <span class="checkmark"></span>--}}
+                                {{--                                </label>--}}
 
                                 <label for="property-business_for_sales" class="radio-lbl">Bedrifter til salgs
                                     <input type="radio" id="property-business_for_sales" class="ad_type" name="ad_type" value="property-business_for_sales">
@@ -134,12 +127,11 @@ foreach ($my_ads as $ad){
                     </div>
                 </aside>
                 <div class="col-md-9">
-
-                    <div class="ads-list" id="ads-list">
+                    <div class="my-ads-list" id="ads-list">
                         {{--repeatation--}}
-                        @foreach($ads as $ad)
-                            @if($ad->ad_type=='job')
-                            <?php $job = $ad->job ?>
+                        @foreach($ads as $key=>$ad)
+                            @if($ad->ad_type=='job' && $ad->job)
+                                <?php $job = $ad->job; ?>
                                 @include('user-panel.partials.templates.myads-job', compact('job'))
                             @endif
                         @endforeach
@@ -175,7 +167,7 @@ foreach ($my_ads as $ad){
                     success: function (response) {
                         // json_jobs = $.parseJSON(response);
                         // if(json_jobs.length>0) {
-                        if(response.length>0) {
+                        if(response.length > 0) {
                             $('#ads-list').html(response);
                         }
                         else{
@@ -184,7 +176,7 @@ foreach ($my_ads as $ad){
                                 '                                <h3 class=" text-center col-md-12">Du har ingen annonser.</h3>\n' +
                                 '                                <h5 class=" text-center col-md-12">Dine andre annonser kan du finne ved å endre på filteret.</h5>\n' +
                                 '</div>'
-                                );
+                            );
                         }
 
                     }

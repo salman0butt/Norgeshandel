@@ -60,6 +60,8 @@
         <div class="dme-container p-3">
             <div class="row">
                 <div class="col-md-12">
+                    @php $name = $job->company_gallery; $obj = $job; @endphp
+                    @include('user-panel.partials.landing_page_slider',compact('name'))
                     {{--<img src="{{asset('public/images/home.jpg')}}" alt="" class="img-fluid">--}}
                 </div>
             </div>

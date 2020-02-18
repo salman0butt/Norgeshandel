@@ -156,7 +156,7 @@
                                 <label for="keywords" class="col-md-2 u-t5">{{__('Keywords (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="keywords" value="{{$obj_job->keywords}}" id="keywords" type="text"
-                                           class="form-control dme-form-control" required>
+                                           class="form-control dme-form-control" >
                                     <span
                                         class="u-t5">{{__('Keywords make it easier for candidates to search for your exact position. Choose up to 5 words you think the candidates are applying for.')}}</span>
                                 </div>
@@ -311,7 +311,7 @@
                                            class="form-control dme-form-control">
                                            <span id="zip_code_city_name"></span>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <!--                            full input-->
@@ -321,7 +321,7 @@
                                        class="col-md-2 u-t5">{{__('Street address  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="address" id="address" type="text"
-                                           class="form-control dme-form-control" required>
+                                           class="form-control dme-form-control">
                                     <span
                                         class="u-t5">{{__('Explain briefly about the access to the accommodation and how to find it, please tell about proximity to road, bus and train.')}}</span>
                                 </div>
@@ -347,13 +347,12 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <label for="address"
-                                       class="col-md-2 u-t5">{{__('Workplace  (optional)')}}</label>
+                                <label for="address" class="col-md-2 u-t5">{{__('Workplace (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <div class="clearfix">
                                         <a href="javascript:void(0);">
-                                            <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable">
-                                                <h3 class="sbold">Slipp filer her eller klikk for å laste opp</h3>
+                                            <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted">
+                                                <p class="">Slipp filer her eller klikk for å laste opp</p>
                                             </div>
                                         </a>
                                     </div>
@@ -374,7 +373,7 @@
                                                     </div>
                                                     <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Remove file</a>
 
-                                                    <input type="text" class="form-control dme-form-control mt-2" name="title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
+                                                    <input type="text" class="form-control dme-form-control mt-2" name="image_title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
                                                 </div>
                                             @endforeach
                                         @endif
@@ -607,14 +606,14 @@
         });
     </script>
 
-<script>   
+<script>
     $(document).on('change', 'input[name="zip"]', function(e) {
          document.getElementById("zip_code_city_name").innerHTML = '';
     var zip_code = $(this).val();
     var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
     // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
     var client_url = 'localhost';
-    
+
     if(zip_code){
     var xhttp = new XMLHttpRequest();
    xhttp.onreadystatechange = function() {
@@ -629,12 +628,14 @@
     xhttp.send();
     }
 });
-   
+
     </script>
 @endsection
 
 
 @section('script')
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
     <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
     <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>

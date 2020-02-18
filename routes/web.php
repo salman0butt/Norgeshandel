@@ -22,9 +22,11 @@ Route::get('clear-chat', function (){
     \App\MessageThread::where('id', '!=', 0)->delete();
     return redirect('messages');
 });
+
 Route::get('verified', function () {
     return view('auth.verified');
 })->middleware('verified');
+
 Route::get('mail', function () {
     $to_name = 'Zain';
     $to_email = 'zain@digitalmx.no';
@@ -90,7 +92,7 @@ Route::get('/customer-services', function () {
 Route::get('/useful-info', function () {
     return view('user-panel.footer.useful_info');
 });
-  
+
   Route::get('/cookie', function () {
 
         return view('user-panel.footer.cookie');
@@ -146,7 +148,6 @@ Route::get('/useful-info', function () {
     Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
     Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
 
-
     Route::get('shared-lists/{link_id}', function ($link_id) {
         $list = \App\fav_list::where('share_link', $link_id)->get()->first();
         return view('user-panel.my-business.favorites.my_favorites_list', compact('list'));
@@ -185,7 +186,7 @@ Route::get('/useful-info', function () {
         Route::get('messages/new/{ad_id}', 'MessageController@new_thread');
         Route::get('messages/render-thread/{thread_id}', 'MessageController@render_thread');
         Route::get('/messages', 'MessageController@index');
-        Route::get('/message/{id}', 'MessageController@get');
+
         Route::post('message', 'MessageController@send');
         Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
 

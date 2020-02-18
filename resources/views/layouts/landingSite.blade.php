@@ -277,16 +277,11 @@
         <div class="row text-center">
             <div class="col-md-10 offset-sm-1">
                 <!--                <p class="mt-3">Innholdet er beskyttet etter åndsverkloven. Regelmessig, systematisk eller kontinuerlig innhenting, lagring, indeksering, distribusjon og all annen form for bruk av data fra NorgesHandel.no til andre enn rent personlige formål tillates ikke uten eksplisitt, skriftlig tillatelse fra NorgesHandel.no.</p>-->
-                <p>© 2019<a href="#">NorgesHandel.no</a></p>
+                <p>© {{now()->year}}<a href="#">NorgesHandel.no</a></p>
             </div>
         </div>
     </div>
 </footer>
-
-<script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
-
-
 
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
 {{--<script src="{{asset('public/js/app.js')}}"></script>--}}
@@ -383,6 +378,8 @@
                 }
             });
         @endif
+
+
     });
 
 

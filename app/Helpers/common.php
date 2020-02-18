@@ -125,10 +125,14 @@ class common
 
     public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar',$delete_old='true')
     {
-        if($delete_old == 'true'){
+        $max_old_media_order = Media::where('mediable_type',$mediable_type)->where('mediable_id',$mediable_id)->orderBy('order','DESC')->first();
+        if($delete_old == 'true') {
             self::delete_media($mediable_id, $mediable_type, $type);
         }
-
+        $order = 0;
+        if($max_old_media_order){
+            $order = $max_old_media_order->order;
+        }
 
         if (!is_array($files)) {
             $files = array($files);
@@ -154,11 +158,12 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(768)->widen(768)->save($path . '/' . $unique_name . '-768x768.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
                 $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
-                $media->order = $key+1;
+                $media->order = $order+1;
                 $media->save();
                 $names_files[] = $media->name_unique;
                 $org_file_names[] = $media->name;
                 $file_names_encoded[] = base64_encode($media->name_unique);
+                $order++;
             }
         }
         return json_encode([
