@@ -889,13 +889,14 @@ a > .alert-warning:hover{
     background-color: rgba(176,64,88,0.07);
     padding: 5px 10px 5px 10px;
     margin:5px;
-    border-radius: 20px;
+    border-radius: 10px;
     max-width: 70%;
     text-align: left;
     margin-top: 0;
 }
 .receiver-message .message-text{
     float: left;
+    background-color: #f5f5f5;
 }
 
 .message-text-right{
@@ -911,6 +912,7 @@ a > .alert-warning:hover{
     width:100%;
     padding-top:5px;
     padding-bottom: 5px;
+    overflow-wrap: break-word;
 }
 .receiver-message .profile-icon{
     float: left;
@@ -925,6 +927,12 @@ a > .alert-warning:hover{
  }
 .sender-message .message-text{
     float: right;
+}
+.page-messages .profile-name{
+    padding-right: 10px !important;
+}
+.page-messages .thread-message{
+    overflow: hidden;;
 }
 .single-realestate-detail>div{
     padding:5px;
@@ -1129,4 +1137,24 @@ label span.count{
 
 .page-messages footer{
     display: none;;
+}
+.add-to-fav  {
+    font-weight: 400;
+    line-height: 1.5;
+    box-sizing: border-box;
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    right: 20px;
+    top: 15px;
+    font-size: 26px;
+    color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    padding-top: 7px;
+}
+.add-to-fav:hover {
+    color: rgba(176, 64, 88, 0.5);
+    background-color: rgba(176, 64, 88, 0.2);
+    border: 2px solid rgba(176, 64, 88, 0.3);
+    border-radius: 25px;
 }

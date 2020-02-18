@@ -23,11 +23,7 @@
         {
 
 ?>
-
-
-
-        <div class="col-md-4 col-sm-6
-" style="">
+        <div class="col-md-4 col-sm-6" style="">
             <div class="realestate-blockk " style="">
                 <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="grid-box-ancor product-list-item">
                     <div class="home-grid-box trailing-border" style="text-align:center;">

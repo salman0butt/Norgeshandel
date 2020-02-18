@@ -294,7 +294,7 @@
                         <!--                            selection-->
                         <div class="form-group">
                             <div class="row">
-                                <label for="country" class="col-md-2 u-t5">{{__('Country')}}</label>
+                                <label for="country" class="col-md-2 u-t5">{{__('Land')}}</label>
                                 <div class="col-sm-4 ">
                                     <select class="form-control dme-form-control" id="country" name="country">
                                         @if(!empty($obj_job->country))
