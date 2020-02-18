@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            <div class="row">
+              <div class="row">
                 <div class="col-md-10 offset-md-1">
                 @if(Request::is('new/flat/wishes/rented/*/edit'))
                      @include('common.partials.property.edit_flat_wishes_rented_form')
@@ -73,7 +73,7 @@
 
     });
     @else
-      var url = '{{url('new/flat/wishes/rented')}}';
+      var url = '{{url('new/add/flat/wishes/rented')}}';
             $.ajax({
                 type: "POST",
                 url: url,

@@ -4,14 +4,22 @@
     $property_types = $property_type->terms;
     $tenure = \App\Taxonomy::where('slug', 'pfs_tenure')->first();
     $tenures = $tenure->terms;
+
+        $property_for_sale = new \App\PropertyForSale();
+    if(isset($property_for_sale1)){
+        $property_for_sale = $property_for_sale1;
+    }
 ?>
-    <input type="hidden" id="total_price" name="total_price" value="">
+ @if(Request::is('new/property/sale/ad/*/edit'))
+   @method('PATCH')
+  @endif 
+    <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
     <div class="pl-3 pr-3">
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="headline" class="dme-form-control">
+                    <input type="text" name="headline" value="{{ $property_for_sale->headline }}" class="dme-form-control">
                     <span class="error-span headline"></span>
                 </div>
             </div>
@@ -20,7 +28,7 @@
             <h3 class="u-t5">Postnummer</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="zip_code" type="text" class="dme-form-control">
+                    <input name="zip_code" type="text" value="{{ $property_for_sale->zip_code }}" class="dme-form-control">
                     <span class="error-span zip_code"></span>
                      <span id="zip_code_city_name"></span>
                 </div>
@@ -28,11 +36,12 @@
                 <br>
             </div>
         </div>
+
         <div class="form-group">
             <h3 class="u-t5">Gateadresse</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="street_address" type="text" class="dme-form-control">
+                    <input name="street_address" type="text" value="{{ $property_for_sale->street_address }}" class="dme-form-control">
                     <span class="error-span street_address"></span>
                 </div>
             </div>
@@ -41,7 +50,7 @@
             <h3 class="u-t5">Adkomst <span class="text-muted">(valgfritt)</span></h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea type="text" name="access" class="dme-form-control"></textarea><br>
+                    <textarea type="text" name="access" class="dme-form-control">{{ $property_for_sale->access }}</textarea><br>
                     <span class="u-t5">Forklar kort om adkomsten til boligen og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
 
                 </div>
@@ -52,7 +61,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea type="text" name="location" class="dme-form-control"
-                              placeholder="F.eks. Eiendommen ligger i nærheten til flotte tur- og friluftsområder og har kort gangavstand til skole og barnehage."></textarea><br>
+                              placeholder="F.eks. Eiendommen ligger i nærheten til flotte tur- og friluftsområder og har kort gangavstand til skole og barnehage.">{{ $property_for_sale->location }}</textarea><br>
                     <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
                     <span class="error-span location"></span>
                 </div>
@@ -62,7 +71,7 @@
             <h3 class="u-t5">Navn på lokalområde <span class="text-muted">(valgfritt)</span></h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="local_area_name" class="dme-form-control"
+                    <input type="text" name="local_area_name" value="{{ $property_for_sale->local_area_name }}" class="dme-form-control"
                            placeholder="F.eks. Bjerke eller Kampen">
                     <span class="u-t5">Her kan du skrive inn hvilken bydel eller område eiendommen befinner seg i</span>
                     <span class="error-span local_area_name"></span>
@@ -76,7 +85,7 @@
                     <select class="dme-form-control" name="property_type" id="property_type">
                         <option value=""></option>
                         @foreach($property_types as $type)
-                            <option value="{{$type->name}}">{{$type->name}}</option>
+                            <option value="{{$type->name}}" {{ ($property_for_sale->property_type == $type->name ? 'selected' : '') }}>{{$type->name}}</option>
                         @endforeach
                     </select>
                     <span class="error-span property_type"></span>
@@ -90,7 +99,7 @@
                     <select name="tenure" class="dme-form-control">
                         <option value=""></option>
                         @foreach($tenures as $type)
-                            <option value="{{$type->name}}">{{$type->name}}</option>
+                            <option value="{{$type->name}}" {{($property_for_sale->tenure == $type->name ? 'selected' : '')}}>{{$type->name}}</option>
                         @endforeach
                     </select>
                     <span class="u-t5">Beskriv varen kort. Denne beskrivelsen brukes til å finne riktig kategori i feltene under.</span>
@@ -103,8 +112,8 @@
                 <h3 class="u-t5">Kommunenummer</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input name="municipality_number" type="text" class="dme-form-control">
-                        <span class="error-span municipality_number"></span>
+                        <input name="municipality_number" type="text" value="{{ $property_for_sale->municipality_number }}" class="dme-form-control">
+                        <span class="error-span municipality_number"></span> 
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -121,7 +130,7 @@
                 <h3 class="u-t5">Gårdsnummer (Gnr)</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input name="farm_number" type="text" class="dme-form-control">
+                        <input name="farm_number" value="{{ $property_for_sale->farm_number }}" type="text" class="dme-form-control">
                         <span class="error-span farm_number"></span>
                     </div>
                     <div class="col-md-8"></div>
@@ -137,7 +146,7 @@
                 <h3 class="u-t5">Bruksnummer (Bnr)</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input name="usage_number" type="text" class="dme-form-control">
+                        <input name="usage_number" value="{{ $property_for_sale->usage_number }}" type="text" class="dme-form-control">
                         <span class="error-span usage_number"></span>
                     </div>
                     <div class="col-md-8"></div>
@@ -155,7 +164,7 @@
                 <h3 class="u-t5">Festenummer (Fnr) <span class="text-muted">(valgfritt)</span></h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input name="party_number" type="text" class="dme-form-control">
+                        <input name="party_number" value="{{ $property_for_sale->party_number }}" type="text" class="dme-form-control">
                         <span class="error-span party_number"></span>
                     </div>
                     <div class="col-md-8"></div>
@@ -173,7 +182,7 @@
                 <h3 class="u-t5">Seksjonsnummer (Snr) (valgfritt)</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input name="section_number" type="text" class="dme-form-control">
+                        <input name="section_number" value="{{ $property_for_sale->section_number }}" type="text" class="dme-form-control">
                         <span class="error-span section_number"></span>
                     </div>
                     <div class="col-md-8"></div>
@@ -191,7 +200,7 @@
                 <h3 class="u-t5">Leilighetsnummer (valgfritt)</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input name="apartment_number" type="text" class="dme-form-control" placeholder="H0201">
+                        <input name="apartment_number" value="{{ $property_for_sale->apartment_number }}" type="text" class="dme-form-control" placeholder="H0201">
                         <span class="error-span apartment_number"></span>
                      </div>
                     <div class="col-md-8"></div>
@@ -209,7 +218,7 @@
                 <h3 class="u-t5">Bruksareal (BRA)</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input type="text" name="use_area" class="dme-form-control" placeholder="m²">
+                        <input type="text" name="use_area" value="{{ $property_for_sale->use_area }}" class="dme-form-control" placeholder="m²">
                         <span class="error-span use_area"></span>
                     </div>
                     <div class="col-md-8"></div>
@@ -227,7 +236,7 @@
                 <h3 class="u-t5">Primærrom (P-ROM)</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input name="primary_room" type="text" class="dme-form-control" placeholder="m²">
+                    <input name="primary_room" value="{{ $property_for_sale->primary_room }}" type="text" class="dme-form-control" placeholder="m²">
                         <span class="error-span primary_room"></span>
                     </div>
                     <div class="col-md-8"></div>
@@ -245,7 +254,7 @@
                 <h3 class="u-t5">Grunnflate (BYA) (valgfritt)</h3>
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
-                        <input type="text" name="Base" class="dme-form-control" placeholder="m²">
+                        <input type="text" name="Base" value="{{ $property_for_sale->Base }}" class="dme-form-control" placeholder="m²">
                         <span class="error-span Base"></span>
                     </div>
                     <div class="col-md-8"></div>
@@ -263,7 +272,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="area_description" type="text" class="dme-form-control"
-                              placeholder="F.eks. grunnflate 60m², stue 30m², kjøkken 10m², WC 10m² osv."></textarea><br>
+                              placeholder="F.eks. grunnflate 60m², stue 30m², kjøkken 10m², WC 10m² osv.">{{ $property_for_sale->area_description }}</textarea><br>
                     <span class="u-t5">Her kan du gi en kort oversikt over størrelsen på rom i eiendommen din.</span>
                 </div>
             </div>
@@ -272,7 +281,7 @@
             <h3 class="u-t5">Byggeår</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="year" type="text" class="dme-form-control" placeholder="åååå">
+                    <input name="year" value="{{ $property_for_sale->year }}" type="text" class="dme-form-control" placeholder="åååå">
                     <span class="error-span year"></span>
                 </div>
                 <div class="col-md-8"></div>
@@ -283,7 +292,7 @@
             <h3 class="u-t5">Renovert år (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="renovated_year" type="text" class="dme-form-control" placeholder="åååå">
+                    <input name="renovated_year" value="{{ $property_for_sale->renovated_year }}" type="text" class="dme-form-control" placeholder="åååå">
                     <span class="error-span renovated_year"></span>
                 </div>
                 <div class="col-md-8"></div>
@@ -296,13 +305,13 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="energy_grade" class="dme-form-control">
                         <option value=""></option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                        <option value="G">G</option>
+                        <option value="A" {{($property_for_sale->energy_grade == 'A' ? 'selected' : '')}}>A</option>
+                        <option value="B" {{($property_for_sale->energy_grade == 'B' ? 'selected' : '')}}>B</option>
+                        <option value="C" {{($property_for_sale->energy_grade == 'C' ? 'selected' : '')}}>C</option>
+                        <option value="D" {{($property_for_sale->energy_grade == 'D' ? 'selected' : '')}}>D</option>
+                        <option value="E" {{($property_for_sale->energy_grade == 'E' ? 'selected' : '')}}>E</option>
+                        <option value="F" {{($property_for_sale->energy_grade == 'F' ? 'selected' : '')}}>F</option>
+                        <option value="G" {{($property_for_sale->energy_grade == 'G' ? 'selected' : '')}}>G</option>
                     </select>
                     <span class="error-span energy_grade"></span>
                     <span class="u-t5">Energikarakter går fra A til G, hvor A er best. Karakteren er basert på beregnet levert energi til boligen. En god energikarakter betyr at boligen er energieffektiv.</span>
@@ -315,11 +324,11 @@
                     <h3 for="" class="u-t5">Oppvarmingskarakter (valgfritt)</h3>
                     <select name="heating_character" class="dme-form-control">
                         <option value=""></option>
-                        <option value="Gul">Gul</option>
-                        <option value="Lysegrønn">Lysegrønn</option>
-                        <option value="Mørkegrønn">Mørkegrønn</option>
-                        <option value="Oransje">Oransje</option>
-                        <option value="Rød">Rød</option>
+                        <option value="Gul" {{($property_for_sale->heating_character == 'Gul' ? 'selected' : '')}}>Gul</option>
+                        <option value="Lysegrønn" {{($property_for_sale->heating_character == 'Lysegrønn' ? 'selected' : '')}}>Lysegrønn</option>
+                        <option value="Mørkegrønn" {{($property_for_sale->heating_character == 'Mørkegrønn' ? 'selected' : '')}}>Mørkegrønn</option>
+                        <option value="Oransje" {{($property_for_sale->heating_character == 'Oransje' ? 'selected' : '')}}>Oransje</option>
+                        <option value="Rød" {{($property_for_sale->heating_character == 'Rød' ? 'selected' : '')}}>Rød</option>
                     </select>
                     <span class="error-span heating_character"></span>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
@@ -330,7 +339,7 @@
             <h3 class="u-t5">Antall soverom</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="number_of_bedrooms" type="text" class="dme-form-control">
+                    <input name="number_of_bedrooms" value="{{ $property_for_sale->number_of_bedrooms }}" type="text" class="dme-form-control">
                     <span class="error-span number_of_bedrooms"></span>
                 </div>
                 <div class="col-md-8"></div>
@@ -341,7 +350,7 @@
             <h3 class="u-t5">Antall rom (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="number_of_rooms" type="text" class="dme-form-control">
+                    <input name="number_of_rooms" value="{{ $property_for_sale->number_of_rooms }}" type="text" class="dme-form-control">
                     <span class="error-span number_of_rooms"></span>
                 </div>
                 <div class="col-md-8"></div>
@@ -357,7 +366,7 @@
             <h3 class="u-t5">Etasje (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="floor" type="text" class="dme-form-control">
+                    <input name="floor" type="text" value="{{ $property_for_sale->floor }}" class="dme-form-control">
                     <span class="error-span floor"></span>
 
                 </div>
@@ -367,7 +376,7 @@
         </div>
         <div class="form-group ">
             <h3 class="mb-2 form-check-label" for="approved_rental_part">
-                <input id="approved_rental_part" name="approved_rental_part" type="checkbox">Godkjent utleiedel
+                <input id="approved_rental_part" value="{{ $property_for_sale->approved_rental_part }}" name="approved_rental_part" type="checkbox">Godkjent utleiedel
                 <span class="error-span approved_rental_part"></span>
             </h3>
             <div class="u-t5">Dersom eiendommen har godkjent utleiedel huker du av for dette her.</div>
@@ -473,7 +482,7 @@
             <h3 class="u-t5">Borettslagets navn (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="housing_team" class="dme-form-control">
+                    <input type="text" name="housing_team" value="{{ $property_for_sale->housing_team }}" class="dme-form-control">
                     <span class="error-span housing_team"></span>
                 </div>
             </div>
@@ -483,7 +492,7 @@
             </h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="owner_of_housing" type="text" class="dme-form-control">
+                    <input name="owner_of_housing" value="{{ $property_for_sale->owner_of_housing }}" type="text" class="dme-form-control">
                     <span class="error-span owner_of_housing"></span>
                 </div>
             </div>
@@ -492,7 +501,7 @@
             <h3 class="u-t5">Borettslagets org.nummer (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="housing_type_org_number" type="text" class="dme-form-control">
+                    <input name="housing_type_org_number" value="{{ $property_for_sale->housing_type_org_number }}" type="text" class="dme-form-control">
                     <span class="error-span housing_type_org_number"></span>
                 </div>
                 <div class="col-sm-8">
@@ -504,7 +513,7 @@
             <h3 class="u-t5">Borettslagets andelsnummer (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="housing_cooperative_share_number" type="text" class="dme-form-control">
+                <input name="housing_cooperative_share_number" value="{{ $property_for_sale->housing_cooperative_share_number }}" type="text" class="dme-form-control">
                     <span class="error-span housing_cooperative_share_number"></span>
                 </div>
                 <div class="col-sm-8">
@@ -521,7 +530,7 @@
             <h3 class="u-t5">Tomteareal (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="land" type="text" class="dme-form-control" placeholder="m²">
+                    <input name="land" type="text" value="{{ $property_for_sale->land }}"  class="dme-form-control" placeholder="m²">
                     <span class="error-span land"></span>
                 </div>
                 <div class="col-sm-8">
@@ -532,7 +541,7 @@
             <h3 class="u-t5">Festeår (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="holiday_year" type="text" class="dme-form-control" placeholder="åååå">
+                    <input name="holiday_year" value="{{ $property_for_sale->holiday_year }}"   type="text" class="dme-form-control" placeholder="åååå">
                     <span class="error-span holiday_year"></span>
                 </div>
                 <div class="col-sm-8">
@@ -546,7 +555,7 @@
             <h3 class="u-t5">Festeavgift (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="party_fee" type="text" class="dme-form-control" placeholder="Kr.">
+                    <input name="party_fee" value="{{ $property_for_sale->party_fee }}" type="text" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span party_fee"></span>
                 </div>
                 <div class="col-sm-8">
@@ -571,7 +580,7 @@
             <h3 class="u-t5">Beskaffenhet (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="character" id="beskrivelse" cols="30" rows="10"></textarea>
+                    <textarea name="character" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->character }}</textarea>
                     <span class="u-t5">Hva består tomten av? Her kan du for eksempel fortelle litt mer om hage, innkjørsel, parkering,og offentlige reguleringer.</span>
                     <span class="error-span character"></span>
                 </div>
@@ -581,7 +590,7 @@
             <h3 class="u-t5">Husleie/felleskost.</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="rent_shared_cost" type="text" class="dme-form-control" placeholder="Kr.">
+                    <input name="rent_shared_cost" type="text" value="{{ $property_for_sale->rent_shared_cost }}"  class="dme-form-control" placeholder="Kr.">
                     <span class="error-span rent_shared_cost"></span>
                 </div>
                 <div class="col-sm-8">
@@ -592,7 +601,7 @@
             <h3 class="u-t5">Felleskostnader inkluderer</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="shared_costs_include" type="text" class="dme-form-control"
+                    <input name="shared_costs_include" value="{{ $property_for_sale->shared_costs_include }}" type="text" class="dme-form-control"
                            placeholder="F.eks. kabeltv, strøm, vaktmester, trappevask, forsikring, kommunale avgifter">
                     <span class="error-span shared_costs_include"></span>
                 </div>
@@ -602,7 +611,7 @@
             <h3 class="u-t5">Felleskostnader etter avdragsfri periode (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-4 pr-md-0">
-                    <input name="common_costs_after_interest_free_period" type="text" class="dme-form-control"
+                    <input name="common_costs_after_interest_free_period" value="{{ $property_for_sale->common_costs_after_interest_free_period }}"  type="text" class="dme-form-control"
                            placeholder="Kr.">
                     <span class="error-span common_costs_after_interest_free_period"></span>
                 </div>
@@ -611,15 +620,15 @@
                     <div class="u-t5">Hva er estimerte felleskostnader etter den eventuelle avdragsfrie perioden? Dette
                         feltet må fylles ut dersom boligen har fellesgjeld. Dersom det ikke er avdragsfrihet i
                         fellesgjeld settes verdien til dagens felleskostnader.
-                    </div>
                 </div>
+               </div>
             </div>
-        </div>
+        </div> 
         <div class="form-group">
             <h3 class="u-t5">Formuesverdi</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="asset_value" type="text" class="dme-form-control total_price_constants"
+                    <input name="asset_value" value="{{ $property_for_sale->asset_value }}"   type="text" class="dme-form-control total_price_constants"
                            placeholder="Kr.">
                     <span class="error-span asset_value"></span>
                     <div class="u-t5">Formuesverdi legges til grunn av skatteetaten og kommuner når skatt av boligen
@@ -633,7 +642,7 @@
             <h3 class="u-t5">Prisantydning</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="asking_price" class="dme-form-control total_price_constants asking_price"
+                    <input type="text" name="asking_price" value="{{ $property_for_sale->asking_price }}" class="dme-form-control total_price_constants asking_price"
                            placeholder="Kr.">
                     <span class="error-span asking_price"></span>
                 </div>
@@ -648,7 +657,7 @@
             <h3 class="u-t5">Omkostninger</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="expenses" type="text" class="dme-form-control total_price_constants costs_include" placeholder="Kr.">
+                    <input name="expenses" type="text" value="{{ $property_for_sale->expenses }}" class="dme-form-control total_price_constants costs_include" placeholder="Kr.">
                     <span id="expenses" class="error-span expenses"></span>
                 </div>
                 <div class="col-sm-8">
@@ -664,7 +673,7 @@
             <h3 class="u-t5">Omkostninger inkluderer</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="costs_include" type="text" class="dme-form-control total_price_constants">
+                    <input name="costs_include" value="{{ $property_for_sale->costs_include }}" type="text" class="dme-form-control total_price_constants">
                     <span class="error-span costs_include"></span>
                 </div>
                 <div class="col-sm-8">
@@ -680,16 +689,16 @@
             <h3 class="u-t5">Andel fellesgjeld</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="percentage_of_public_debt" type="text"
+                <input name="percentage_of_public_debt" value="{{ $property_for_sale->percentage_of_public_debt }}" type="text"
                            class="dme-form-control total_price_constants percentage_of_public_debt" placeholder="Kr.">
                     <span class="error-span percentage_of_public_debt"></span>
                 </div>
                 <div class="col-sm-8">
                 </div>
                 <div class="col-md-12">
-                    <div class="u-t5">Fellesgjeld for din bolig. Har du ikke fellesgjeld på din bolig setter du denne
+        <div class="u-t5">Fellesgjeld for din bolig. Har du ikke fellesgjeld på din bolig setter du denne
                         verdien til 0.
-                    </div>
+        </div>
                 </div>
             </div>
         </div>
@@ -712,7 +721,7 @@
             <h3 class="u-t5">Verditakst (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="value_rate" type="text" class="dme-form-control" placeholder="Kr.">
+                    <input name="value_rate" value="{{ $property_for_sale->value_rate }}" type="text" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span value_rate"></span>
                 </div>
                 <div class="col-sm-8">
@@ -728,7 +737,7 @@
             <h3 class="u-t5">Lånetakst (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="loan_rate" type="text" class="dme-form-control" placeholder="Kr">
+                    <input name="loan_rate" value="{{ $property_for_sale->loan_rate }}" type="text" class="dme-form-control" placeholder="Kr">
                     <span class="error-span loan_rate"></span>
                 </div>
                 <div class="col-sm-8">
@@ -744,7 +753,7 @@
             <h3 class="u-t5">Andel fellesformue (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="percentage_of_common_wealth" class="dme-form-control" placeholder="Kr.">
+                    <input type="text" value="{{ $property_for_sale->percentage_of_common_wealth }}" name="percentage_of_common_wealth" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span percentage_of_common_wealth"></span>
                 </div>
                 <div class="col-sm-8">
@@ -758,7 +767,7 @@
             <h3 class="u-t5">Kommunale avgifter pr. år (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="muncipal_fees_per_year" type="text" class="dme-form-control" placeholder="Kr.">
+                    <input name="muncipal_fees_per_year" value="{{ $property_for_sale->muncipal_fees_per_year }}" type="text" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span muncipal_fees_per_year"></span>
                 </div>
                 <div class="col-sm-8">
@@ -780,7 +789,7 @@
             <h3 class="u-t5">Utfyllende informasjon om fellesgjeld og felleskostnader (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="joint_debt_costs" id="beskrivelse" cols="30" rows="10"></textarea>
+                    <textarea name="joint_debt_costs" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->joint_debt_costs }}</textarea>
                     <span class="u-t5">Dersom du har ytterligere informasjon om fellesgjeld og felleskostnader så kan du fortelle mer om det her.</span>
                     <span class="error-span joint_debt_costs"></span>
                 </div>
@@ -790,7 +799,7 @@
             <h3 class="u-t5">Forkjøpsrett (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="pre_empt_right" type="text" class="dme-form-control">
+                    <input name="pre_empt_right" type="text" value="{{ $property_for_sale->pre_empt_right }}" class="dme-form-control">
                     <div class="u-t5">Her kan du angi om det praktiseres en forkjøpsrett, eller når en eventuell
                         forkjøpsrett vil bli avklart.
                     </div>
@@ -820,7 +829,7 @@
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description2" id="beskrivelse" cols="30" rows="10"></textarea>
+                    <textarea name="description2" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->description2 }}</textarea>
                     <span class="u-t5">Fortell om hva som er bra med eiendommen, hvorfor har du trivdes der og hva som er inkludert av møbler og innredning osv.</span>
                 </div>
             </div>
@@ -828,9 +837,9 @@
         <div class="form-group">
             <h3 class="u-t5">Vesentlige opplysninger (valgfritt)</h3>
             <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <textarea name="essential_information" id="beskrivelse" cols="30" rows="10"
-                              placeholder="F.eks. Taket på det ene soverommet lekker. Det elektriske anlegget i kjelleren er utført av ufaglært."></textarea>
+        <div class="col-sm-12 pr-md-0">
+            <textarea name="essential_information" id="beskrivelse" cols="30" rows="10"
+                              placeholder="F.eks. Taket på det ene soverommet lekker. Det elektriske anlegget i kjelleren er utført av ufaglært.">{{ $property_for_sale->essential_information }}</textarea>
                     <span class="u-t5">Opplysninger om vesentlige kjente feil og mangler som er av betydning for kjøper. Dette kan f.eks være større fysiske skader på boligen, endringer på boligen som er gjort uten å skaffe nødvendig tillatelse, byggeprosjekter som kan påvirke boligen eller utført arbeid på eiendommen av ufaglærte. Henvis også gjerne til takst.</span>
                     <span class="error-span essential_information"></span>
                 </div>
@@ -849,7 +858,7 @@
             <h3 class="u-t5">Video (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="video" type="text" class="dme-form-control">
+                    <input name="video" type="text" value="{{ $property_for_sale->video }}" class="dme-form-control">
                     <div class="u-t5">Kopier eller skriv inn linken til en video på Youtube eller Vimeo.</div>
                     <span class="error-span video"></span>
                 </div>
@@ -868,7 +877,7 @@
             <h3 class="u-t5">Visningsdato (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-4 pr-md-0">
-                    <input name="deliver_date[]" type="date" class="dme-form-control">
+                    <input name="deliver_date[]" value="{{ $property_for_sale->deliver_date }}"  type="date" class="dme-form-control">
                     <span class="error-span deliver_date"></span>
                 </div>
                 <div class="col-md-8"></div>
@@ -879,7 +888,7 @@
             <h3 class="u-t5">Fra klokken (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-4 pr-md-0">
-                    <input name="from_clock[]" type="text" class="dme-form-control" placeholder="tt.mm">
+                    <input name="from_clock[]" value="{{ $property_for_sale->from_clock }}" type="text" class="dme-form-control" placeholder="tt.mm">
                     <span class="error-span from_clock"></span>
                 </div>
                 <div class="col-md-8"></div>
@@ -890,7 +899,7 @@
             <h3 class="u-t5">Til klokken (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-4 pr-md-0">
-                    <input name="clockwise[]" type="text" class="dme-form-control" placeholder="tt.mm">
+                    <input name="clockwise[]" value="{{ $property_for_sale->clockwise }}" type="text" class="dme-form-control" placeholder="tt.mm">
                     <span class="error-span clockwise"></span>
                 </div>
                 <div class="col-md-8"></div>
@@ -901,7 +910,7 @@
             <h3 class="u-t5">Merknad (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-12 pr-md-0">
-                    <input name="note1[]" type="text" class="dme-form-control"
+                    <input name="note1[]" value="{{ $property_for_sale->note1 }}" type="text" class="dme-form-control"
                            placeholder="F.eks.: visning etter avtale">
                     <span class="error-span note1"></span>
                 </div>
@@ -927,7 +936,7 @@
             <h3 class="u-t5">Telefon (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-12 pr-md-0">
-                    <input name="phone" type="tel" id="phone" class="dme-form-control">
+                    <input name="phone" value="{{ $property_for_sale->phone }}" type="tel" id="phone" class="dme-form-control">
                     <span id="valid-msg" class="hide"></span>
                     <span id="error-msg" class="hide"></span>
                     <div class="u-t5">Hvilket telefonnummer ønsker du at interesserte kjøpere skal kontakte deg på?
