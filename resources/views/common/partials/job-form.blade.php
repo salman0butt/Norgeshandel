@@ -347,13 +347,12 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <label for="address"
-                                       class="col-md-2 u-t5">{{__('Workplace  (optional)')}}</label>
+                                <label for="address" class="col-md-2 u-t5">{{__('Workplace (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <div class="clearfix">
                                         <a href="javascript:void(0);">
-                                            <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable">
-                                                <h3 class="sbold">Slipp filer her eller klikk for å laste opp</h3>
+                                            <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted">
+                                                <p class="">Slipp filer her eller klikk for å laste opp</p>
                                             </div>
                                         </a>
                                     </div>
