@@ -22,7 +22,7 @@
                 <span>{{$ad->getTitle()}}</span>
                 <br>
                 <span class="text-muted">price</span></div>
-            <img src="{{asset('public/images/image-placeholder.jpg')}}"
+            <img src="{{is_countable($ad->company_gallery)&&count($ad->company_gallery)>0?asset(\App\Helpers\common::getMediaPath($ad->company_gallery->first())):asset('public/images/image-placeholder.jpg')}}"
                  class="profile-post-image m-2" alt="" style="max-width: 70px;max-height: 70px;">
         </a>
     </div>
