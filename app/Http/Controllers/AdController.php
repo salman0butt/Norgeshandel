@@ -20,16 +20,9 @@ class AdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ads = Ad::where('ads.status', 'published')->orderByDesc('ads.updated_at')->get();
-
-
-//        $ads = Ad::where('status','published')->orderBy('id', 'desc')->get();
-//
-//        dd($ads);
-        return view('home', compact('ads'));
-
+        return redirect('home');
     }
 
     /**
@@ -37,6 +30,7 @@ class AdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         //
@@ -153,7 +147,7 @@ class AdController extends Controller
         $jobs = array();
         if ($ad_type != 'all_ads') {
             $query = DB::table('ads')->select('ads.id as ad_ad_id', 'ads.status', 'ads.ad_type')->join($table, 'ads.id', '=', $table . '.ad_id')
-                ->where('ads.status', '=', $status)->where('user_id', '=', Auth::id());
+                ->where('ads.status', '=', $status)->where('ads.user_id', '=', Auth::id());
             if ($table == 'jobs') {
                 $query->where('job_type', '=', $type);
             }

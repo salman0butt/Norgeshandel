@@ -1,3 +1,16 @@
+function formate_date(date) {
+    var str_date = "";
+    console.log(date);
+    var day = date.getDate();
+    console.log(day);
+    var mon = date.getMonth()+1;
+    console.log(mon);
+    var year = date.getFullYear();
+    str_date = day<10?"0"+day:day;
+    str_date += mon<10?".0"+mon:"."+mon;
+    str_date += "."+year;
+    return str_date;
+}
 function readFileURL(input, img) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

@@ -856,6 +856,13 @@ a > .alert-warning:hover{
 .chat-thread-list a{
     text-decoration: none;
 }
+.thread-delete-button{
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.thread-delete-button:hover{
+    opacity: 1;
+}
 .profile-icon{
     position:relative;;
 }

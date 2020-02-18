@@ -26,7 +26,7 @@ Route::get('clear-chat', function (){
 Route::get('verified', function () {
     return view('auth.verified');
 })->middleware('verified');
-
+Route::get('{ad_type}/ad', 'HomeController@single_ad');
 Route::get('mail', function () {
     $to_name = 'Zain';
     $to_email = 'zain@digitalmx.no';
