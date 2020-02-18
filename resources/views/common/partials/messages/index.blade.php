@@ -5,23 +5,32 @@
     //dd($ad);
     $my_avatar = $this_user->media!=null?asset(\App\Helpers\common::getMediaPath($this_user->media)):asset('public/images/profile-placeholder.png');
     $their_avatar = $other_user->media!=null?asset(\App\Helpers\common::getMediaPath($other_user->media)):asset('public/images/profile-placeholder.png');
-    //$ad_avatar = $ad->media!=null?asset(\App\Helpers\common::getMediaPath($other_user->media)):asset('public/images/profile-placeholder.png');
+
 @endphp
 <div class="row">
     <div class="col-md-12 p-2 bg-maroon-lighter">
-        <a href="#" class="">
+        <a href="{{url('profile/public/'.$other_user->id)}}" target="_blank" title="View profile" class="float-left">
             <div class="mr-3 float-left profile-icon text-center">
-                <img src="{{$their_avatar}}" class="circle" alt="Profile image" style="width:60px;">
+{{--                <img src="{{$their_avatar}}" class="circle" alt="Profile image" style="width:60px;height:60px;">--}}
             </div>
-            <div class="ml-3 mt-3 profile-name">
-                <span class="font-weight-bold align-middle">{{$ad->getTitle()}}</span>
+            <div class="m-3 profile-name">
+                <span class="font-weight-bold align-middle">{{$other_user->first_name}} {{$other_user->last_name}}</span>
             </div>
+        </a>
+        <a href="{{url('/?handel='.$ad->id)}}" style="float: right;text-align: right">
+            <div class="float-left m-2">
+                <span>{{$ad->getTitle()}}</span>
+                <br>
+                <span class="text-muted">price</span></div>
+            <img src="{{asset('public/images/image-placeholder.jpg')}}"
+                 class="profile-post-image m-2" alt="" style="max-width: 70px;max-height: 70px;">
         </a>
     </div>
 </div>
 <div class="row message-box" id="message-box"
-     style="max-height: calc(100% - 176px);overflow-y: scroll;background-color: #fdfdfd;">
-    <div class="col-md-12 conversation" id="conversation">
+     style="max-height: calc(100% - 185px);background-color: #fdfdfd;">
+    <div class="col-md-12 position-relative" style="padding:0;">
+        <div class="conversation position-absolute p-1" style="bottom: 0;width: 100%;overflow-y: scroll;max-height: 100%" id="conversation">
         @foreach($messages as $message)
             @php
                 if ($message->from_user_id==Auth::id()){
@@ -34,7 +43,7 @@
             @endphp
             <div class="message {{$class}}">
                 <div class="profile-icon">
-                    <img src="{{$message->sender==Auth::id()?$my_avatar:$their_avatar}}" class="circle"
+                    <img src="{{$message->from_user_id==Auth::id()?$my_avatar:$their_avatar}}" class="circle"
                          alt="Profile image" style="width:35px;">
                 </div>
                 <div class="message-text" style="min-height: 1em;">
@@ -45,6 +54,7 @@
             </div>
             <div class="clearfix"></div>
         @endforeach
+        </div>
     </div>
 </div>
 <div class="row">

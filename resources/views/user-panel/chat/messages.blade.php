@@ -165,8 +165,8 @@
                      style="border-right: 1px solid #ecdfe2; height: calc(100vh - 50px); overflow-y: scroll; overflow-x: hidden">
                     <div class="mt-3 text-center profile-icon">
                         <img src="{{$user_avatar}}"
-                             class="" alt="Profile image"
-                             style="width:80px;">
+                             class="circle" alt="Profile image"
+                             style="width:100px;height:100px;border: 1px solid #f7f7f7;">
                     </div>
                     <div class="mb-3 text-center profile-name">
                         <h5 class="text-muted">{{Auth::user()->username}}</h5>
@@ -175,8 +175,8 @@
                     <div class="chat-thread-list">
                         @foreach($threads as $thread)
                             @if(!empty($thread->ad))
-                                @php($thread_user = $thread->users->where('user_id', '!=', Auth::id())->first())
-                                {{--                            <a href="#" class="user" id="{{ $thread->id }}">--}}
+                                @php($thread_user = $thread->users->where('id', '!=', Auth::id())->first())
+                            <div class="position-relative">
                                 <a href="{{url('messages/thread', $thread->id)}}"
                                    class="thread thread-link-{{$thread->id}} {{$thread->id==$active_thread->id?"active":""}}"
                                    id="{{ $thread->id }}" data-id="{{ $thread->id }}">
@@ -194,15 +194,24 @@
                                                  class="profile-post-image" alt="">
                                             <img
                                                 src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
-                                                class="profile-image" alt="Profile image" style="">
+                                                class="profile-image" alt="Profile image" style="border: 1px solid #f7f7f7;">
                                         </div>
                                         <div class="col-md-9 p-0 mt-1 profile-name">
                                             <span class="font-weight-bold align-middle"
-                                                  style="min-height: 1em;">{{$thread->ad->getTitle()}}</span>
-                                            <p class="text-muted thread-message">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->message:""}}</p>
+                                                  style="min-height: 1em;">{{$thread_user->first_name}} {{$thread_user->last_name}}</span>
+                                            <p class="text-muted thread-ad-title mb-0">{{$thread->ad->getTitle()}}</p>
+                                            <p class="text-muted mb-1 small">
+                                                <span class="thread-time">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->created_at->format('d.m.Y'):""}}</span>
+                                                <span>-</span>
+                                                <span class="thread-message">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->message:""}}</span>
+                                            </p>
                                         </div>
                                     </div>
                                 </a>
+                                <a href="#" class="position-absolute text-muted thread-delete-button" style="top: 15px;right:0">
+                                    <span class="fa fa-trash" style="font-size: 1.3em;"></span>
+                                </a>
+                            </div>
                             @endif
                         @endforeach
                     </div>
@@ -340,7 +349,6 @@
 
             $(this).val(''); // while pressed enter text box will be empty
 
-            // var datastr = "receiver_id=" + receiver_id + "&message=" + message;
             $.ajax({
                 type: "post",
                 url: "{{url('message')}}", // need to create this post route
@@ -367,6 +375,7 @@
                         '            <div class="clearfix"></div>\n';
                     $('#conversation').append(str);
                     $(".timeago").timeago();
+                    $('.thread-tab-' + message_thread_id + ' .thread-time').text(formate_date(new Date($.now())));
                     $('.thread-tab-' + message_thread_id + ' .thread-message').text(message);
 
                 },
@@ -381,8 +390,8 @@
 
         // make a function to scroll down auto
         function scrollToBottomFunc() {
-            $('.message-box').animate({
-                scrollTop: $('.message-box').get(0).scrollHeight
+            $('#conversation').animate({
+                scrollTop: $('#conversation').get(0).scrollHeight
             }, 50);
         }
 
