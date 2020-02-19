@@ -358,7 +358,8 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
 
     //commercialpropertyforrent
     Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
-    Route::get('/add/new/commercial/property/for/rent/{id}/edit', 'PropertyController@editCommercialPropertyForRent');
+    Route::get('add/new/commercial/property/for/rent/{id}/edit', 'PropertyController@editCommercialPropertyForRent');
+    Route::patch('add/new/commercial/property/for/rent/{id}', 'PropertyController@updateCommercialPropertyForRent');
     Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
     Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
     Route::post('property/commercial/for/rent/sorted/ad', 'PropertyController@commercialPropertyForRentSortedAds');

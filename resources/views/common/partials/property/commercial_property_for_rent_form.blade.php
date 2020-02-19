@@ -10,10 +10,11 @@
     $countries = $country->terms;
 
     $property_type = explode(',', $commercial_property_for_rent->property_type);
-
+    $facilities = explode(',', $commercial_property_for_rent->facilities);
+    
 
 @endphp
-  @if(Request::is('/add/new/commercial/property/for/rent/*/edit'))
+  @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
   @method('PATCH')
   @endif
                         <div class="pl-3">
@@ -280,13 +281,13 @@
                                     <div class="col-sm-12 pr-md-0">
                                         <select class="dme-form-control" name="energy_grade">
                                             <option value=""></option>
-                                            <option value="A" {{ ($commercial_property_for_rent->energy_grade == 'A' ? "selected" : ? '') }}>A</option>
-                                            <option value="B" {{ ($commercial_property_for_rent->energy_grade == 'B' ? "selected" : ? '') }}>B</option>
-                                            <option value="C" {{ ($commercial_property_for_rent->energy_grade == 'C' ? "selected" : ? '') }}>C</option>
-                                            <option value="D" {{ ($commercial_property_for_rent->energy_grade == 'D' ? "selected" : ? '') }}>D</option>
-                                            <option value="E" {{ ($commercial_property_for_rent->energy_grade == 'E' ? "selected" : ? '') }}>E</option>
-                                            <option value="F" {{ ($commercial_property_for_rent->energy_grade == 'F' ? "selected" : ? '') }}>F</option>
-                                            <option value="G" {{ ($commercial_property_for_rent->energy_grade == 'G' ? "selected" : ? '') }}>G</option>
+                                            <option value="A" {{ ($commercial_property_for_rent->energy_grade == 'A' ? "selected" :  '') }}>A</option>
+                                            <option value="B" {{ ($commercial_property_for_rent->energy_grade == 'B' ? "selected" : '') }}>B</option>
+                                            <option value="C" {{ ($commercial_property_for_rent->energy_grade == 'C' ? "selected" : '') }}>C</option>
+                                            <option value="D" {{ ($commercial_property_for_rent->energy_grade == 'D' ? "selected" : '') }}>D</option>
+                                            <option value="E" {{ ($commercial_property_for_rent->energy_grade == 'E' ? "selected" : '') }}>E</option>
+                                            <option value="F" {{ ($commercial_property_for_rent->energy_grade == 'F' ? "selected" : '') }}>F</option>
+                                            <option value="G" {{ ($commercial_property_for_rent->energy_grade == 'G' ? "selected" : '') }}>G</option>
                                         </select>
                                         <span class="u-t5">Energikarakter går fra A til G, hvor A er best. Karakteren er basert på beregnet levert energi til boligen. En god energikarakter betyr at boligen er energieffektiv.</span>
                                     </div>
@@ -299,11 +300,11 @@
                                     <div class="col-sm-12 pr-md-0">
                                         <select class="dme-form-control" name="heating_character">
                                             <option value=""></option>
-                                            <option value="Gul" {{ ($commercial_property_for_rent->heating_character == 'Gul' ? "selected" : ? '') }}>Gul</option>
-                                            <option value="Lysegrønn" {{ ($commercial_property_for_rent->heating_character == 'Gul' ? "selected" : ? '') }}>Lysegrønn</option>
-                                            <option value="Mørkegrønn" {{ ($commercial_property_for_rent->heating_character == 'Gul' ? "selected" : ? '') }}>Mørkegrønn</option>
-                                            <option value="Oransje" {{ ($commercial_property_for_rent->heating_character == 'Gul' ? "selected" : ? '') }}>Oransje</option>
-                                            <option value="Rød" {{ ($commercial_property_for_rent->heating_character == 'Gul' ? "selected" : ? '') }}>Rød</option>
+                                            <option value="Gul" {{ ($commercial_property_for_rent->heating_character == 'Gul' ? "selected" :  '') }}>Gul</option>
+                                            <option value="Lysegrønn" {{ ($commercial_property_for_rent->heating_character == 'Lysegrønn' ? "selected" :  '') }}>Lysegrønn</option>
+                                            <option value="Mørkegrønn" {{ ($commercial_property_for_rent->heating_character == 'Mørkegrønn' ? "selected" : '') }}>Mørkegrønn</option>
+                                            <option value="Oransje" {{ ($commercial_property_for_rent->heating_character == 'Oransje' ? "selected" : '') }}>Oransje</option>
+                                            <option value="Rød" {{ ($commercial_property_for_rent->heating_character == 'Rød' ? "selected" : '') }}>Rød</option>
                                         </select>
                                         <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
                                     </div>
@@ -314,7 +315,7 @@
                                 <h3 class="u-t5">Standard/Tekniske opplysninger (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="standard_technical_information" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="standard_technical_information" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->standard_technical_information }}</textarea>
                                         <span class="u-t5">Her kan du feks. gi en kort beskrivelse av standarden på lokalene, samt tilstand på ventilasjon, kjøling, sentralvarme, heis adgangskontroll, brannsikring m.m.</span>
                                     </div>
                                 </div>
@@ -324,35 +325,35 @@
                                 <h3 class="u-t5">Fasiliteter (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-AIRCONDITIONING" type="checkbox" value="AIRCONDITIONING" name="facilities[]">
-                                        <label class="smalltext" for="facilities-AIRCONDITIONING"> Aircondition</label>
+                                        <input id="facilities-AIRCONDITIONING" type="checkbox" value="AIRCONDITIONING" name="facilities[]" {{ (in_array("AIRCONDITIONING", $facilities) ? "checked" : "") }}>
+                                        <label class="smalltext" for="facilities-AIRCONDITIONING" > Aircondition</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-ALARM" type="checkbox" value="ALARM" name="facilities[]">
+                                        <input id="facilities-ALARM" type="checkbox" value="ALARM" name="facilities[]" {{ (in_array("ALARM", $facilities) ? "checked" : "") }}>
                                         <label class="smalltext" for="facilities-ALARM"> Alarm</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-BROADBAND" type="checkbox" value="Bredbåndstilknytning" name="facilities[]">
+                                        <input id="facilities-BROADBAND" type="checkbox" value="Bredbåndstilknytning" name="facilities[]" {{ (in_array("Bredbåndstilknytning", $facilities) ? "checked" : "") }}>
                                         <label class="smalltext" for="facilities-BROADBAND"> Bredbåndstilknytning</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-RECEPTION" type="checkbox" value="Felles resepsjon" name="facilities[]">
+                                        <input id="facilities-RECEPTION" type="checkbox" value="Felles resepsjon" name="facilities[]" {{ (in_array("Felles resepsjon", $facilities) ? "checked" : "") }}>
                                         <label class="smalltext" for="facilities-RECEPTION"> Felles resepsjon</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-GARAGE" type="checkbox" value="Garasje/P-plass" name="facilities[]">
+                                        <input id="facilities-GARAGE" type="checkbox" value="Garasje/P-plass" name="facilities[]" {{ (in_array("Garasje/P-plass", $facilities) ? "checked" : "") }}>
                                         <label class="smalltext" for="facilities-GARAGE"> Garasje/P-plass</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-LIFT" type="checkbox" value="Heis" name="facilities[]">
+                                        <input id="facilities-LIFT" type="checkbox" value="Heis" name="facilities[]" {{ (in_array("Heis", $facilities) ? "checked" : "") }}>
                                         <label class="smalltext" for="facilities-LIFT"> Heis</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-CANTEEN" type="checkbox" value="Kantine" name="facilities[]">
+                                        <input id="facilities-CANTEEN" type="checkbox" value="Kantine" name="facilities[]" {{ (in_array("Kantine", $facilities) ? "checked" : "") }}>
                                         <label class="smalltext" for="facilities-CANTEEN"> Kantine</label>
                                     </div>
                                     <div class="col-md-4 input-toggle">
-                                        <input id="facilities-DRIVEIN" type="checkbox" value="Kjøreport" name="facilities[]">
+                                        <input id="facilities-DRIVEIN" type="checkbox" value="Kjøreport" name="facilities[]" {{ (in_array("Kjøreport", $facilities) ? "checked" : "") }}>
                                         <label class="smalltext" for="facilities-DRIVEIN"> Kjøreport</label>
                                     </div>
                                 </div>
@@ -362,7 +363,7 @@
                                 <h3 class="u-t5">Ledig fra / Leies ut fra (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="date" name="availiable_from" class="dme-form-control">
+                                        <input type="date" value="{{ $commercial_property_for_rent->availiable_from }}" name="availiable_from" class="dme-form-control">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -374,7 +375,7 @@
                                 <h3 class="u-t5">Husleie per m² per år (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input type="text" name="rent_per_meter_per_year" class="dme-form-control" placeholder="Kr.">
+                                        <input type="text" name="rent_per_meter_per_year" value="{{ $commercial_property_for_rent->rent_per_meter_per_year }}" class="dme-form-control" placeholder="Kr.">
                                     </div>
                                     <div class="col-sm-8">
                                     </div>
@@ -386,7 +387,7 @@
                                 <h3 class="u-t5">Visningsinformasjon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-md-12 pr-md-0">
-                                        <input type="text" name="display_information" class="dme-form-control" placeholder="">
+                                        <input type="text" name="display_information" value="{{ $commercial_property_for_rent->display_information }}" class="dme-form-control" placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -395,7 +396,7 @@
                                 <h3 class="u-t5">Legg til bilder (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="file" name="commercial_property_for_rent_photos[]" id="commercial_property_for_rent_photos" class="" multiple>
+                                        <input type="file" name="commercial_property_for_rent_photos[]" value="{{ $commercial_property_for_rent->commercial_property_for_rent_photos }}"  id="commercial_property_for_rent_photos" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -404,7 +405,7 @@
                                 <h3 class="u-t5">Legg till pdf</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="file" name="commercial_property_for_rent_pdf[]" id="commercial_property_for_rent_pdf" class="" multiple>
+                                        <input type="file" name="commercial_property_for_rent_pdf[]" value="{{ $commercial_property_for_rent->commercial_property_for_rent_pdf }}" id="commercial_property_for_rent_pdf" class="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -413,7 +414,7 @@
                                 <h3 class="u-t5">Annonseoverskrift</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" name="heading" class="dme-form-control">
+                                        <input type="text" value="{{ $commercial_property_for_rent->heading }}" name="heading" class="dme-form-control">
                                     </div>
                                 </div>
                             </div>
@@ -422,7 +423,7 @@
                                 <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <textarea name="last_description" id="beskrivelse" cols="30" rows="10"></textarea>
+                                        <textarea name="last_description" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->last_description }}</textarea>
                                         <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                                     </div>
                                 </div>
@@ -432,7 +433,7 @@
                                 <h3 class="u-t5">Tekst på lenke (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input name="link" type="text" class="dme-form-control">
+                                        <input name="link" type="text" value="{{ $commercial_property_for_rent->link }}" class="dme-form-control">
                                     </div>
                                 </div>
                             </div>
@@ -441,7 +442,7 @@
                                 <h3 class="u-t5">Lenke for mer informasjon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input name="link_for_information" type="text" class="dme-form-control">
+                                        <input name="link_for_information" value="{{ $commercial_property_for_rent->link_for_information }}" type="text" class="dme-form-control">
                                     </div>
                                 </div>
                             </div>
@@ -451,7 +452,7 @@
                                 <h3 class="u-t5">Telefon (valgfritt)</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="phone" type="text" class="dme-form-control">
+                                        <input name="phone" value="{{ $commercial_property_for_rent->phone }}" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>
@@ -462,7 +463,7 @@
                                 <h3 class="u-t5">Kontaktperson</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="contact" type="text" class="dme-form-control">
+                                        <input name="contact" value="{{ $commercial_property_for_rent->contact }}" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>
@@ -472,7 +473,7 @@
                                 <h3 class="u-t5">E-post</h3>
                                 <div class="row">
                                     <div class="col-sm-4 pr-md-0">
-                                        <input name="email" type="text" class="dme-form-control">
+                                        <input name="email" value="{{ $commercial_property_for_rent->email }}" type="text" class="dme-form-control">
                                     </div>
                                     <div class="col-md-8"></div>
                                 </div>

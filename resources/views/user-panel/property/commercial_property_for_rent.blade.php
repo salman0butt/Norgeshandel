@@ -36,8 +36,8 @@
             e.preventDefault();
             var l = Ladda.create(this);
             l.start();
-            @if(Request::is('/add/new/commercial/property/for/rent/*/edit'))
-            var url = "{{url('/add/new/commercial/property/for/rent/'.$commercial_property->id)}}";
+            @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
+            var url = "{{url('add/new/commercial/property/for/rent/'.$commercial_for_rent->id)}}";
             @else 
                var url = '{{url('add/commercial/property/for/rent')}}';
             @endif
