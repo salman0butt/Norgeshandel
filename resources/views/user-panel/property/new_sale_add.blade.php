@@ -80,7 +80,7 @@
                 @else 
                  var url = "{{url('add/property/sale/ad')}}";
                 @endif 
-
+                
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
                 var fd = new FormData(myform);
@@ -114,7 +114,6 @@
                         },
                 }).always(function() { l.stop(); });
                 return false;
-
             });
          
 

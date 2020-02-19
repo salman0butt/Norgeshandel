@@ -35,14 +35,12 @@ if($property !== null)
 {
 
 ?>
-
-
 {{--<a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
     <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="image-section col-md-4 p-2">
         <img src="{{$path}}" class="img-fluid radius-8 trailing-border"
              alt="">
-        <div class="product-total-price m-2">
+         <div class="product-total-price m-2">
             Totalpris:
             <?php
             echo($ad->ad_type == 'property_for_rent' ? $property->monthly_rent : "");
@@ -102,7 +100,7 @@ if($property !== null)
 
             ?>
         </p>
-        <a href="@if($ad->ad_type == 'property_for_rent') {{ url('property/for/rent/ad/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('flat/wishes/rented/'.$property->id.'/edit')}} @endif" style="color:#ac304a !important;" class="dme-btn-outlined-blue mr-2">rediger legg til</a>
+        <a href="@if($ad->ad_type == 'property_for_rent') {{ url('property/for/rent/ad/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('flat/wishes/rented/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}} @endif" style="color:#ac304a !important;" class="dme-btn-outlined-blue mr-2">rediger legg til</a>
         <div class="buttons position-absolute p-2" style="bottom: 0;right: 0">
             <a href="" class="dme-btn-outlined-blue float-right">Flere valg</a>
             @if($property->ad->status=='saved')

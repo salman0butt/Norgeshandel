@@ -36,7 +36,6 @@
                 <br>
             </div>
         </div>
-
         <div class="form-group">
             <h3 class="u-t5">Gateadresse</h3>
             <div class="row">
@@ -50,9 +49,8 @@
             <h3 class="u-t5">Adkomst <span class="text-muted">(valgfritt)</span></h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea type="text" name="access" class="dme-form-control">{{ $property_for_sale->access }}</textarea><br>
-                    <span class="u-t5">Forklar kort om adkomsten til boligen og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
-
+                <textarea type="text" name="access" class="dme-form-control">{{ $property_for_sale->access }}</textarea><br>
+                <span class="u-t5">Forklar kort om adkomsten til boligen og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
                 </div>
             </div>
         </div>
