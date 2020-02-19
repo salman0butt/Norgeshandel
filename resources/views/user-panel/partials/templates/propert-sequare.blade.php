@@ -6,7 +6,7 @@
 
         if($property !== null)
         {
-            $media = $property->media;
+            $media = $ad->media;
 
             if(count($media)>0)
             {

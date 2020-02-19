@@ -8,8 +8,6 @@ function createDropZone(id, ajax_url) {
         maxFiles: 50,
         maxFilesize: 500,
 
-
-
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -47,6 +45,7 @@ function createDropZone(id, ajax_url) {
                         appendedChild.classList.add("mt-2");
                         appendedChild.setAttribute("name","image_title_"+response.file_names[key]);
                         appendedChild.setAttribute("type","text");
+                        appendedChild.setAttribute("placeholder","Tittel");
                         appendedChild.setAttribute("class","form-control dme-form-control mt-2");
 
                     }
@@ -151,12 +150,14 @@ function ws_remove_file(filename) {
 
 $(document).on('click', '.dz-remove', function (e) {
     e.preventDefault();
+    filename = $(this).attr('id');
+    e.preventDefault();
+    ws_remove_file(filename);
+    $(this).parents('.dz-preview').fadeOut();
+    /*
     if (confirm("Er du sikker på å slette?") == true) {
-        filename = $(this).attr('id');
-        e.preventDefault();
-        ws_remove_file(filename);
-        $(this).parents('.dz-preview').fadeOut();
-    }
+
+    } */
 
 });
 

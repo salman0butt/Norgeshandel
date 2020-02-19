@@ -1,5 +1,8 @@
 @section('style')
 
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap-fileinput.css')}}">
+
+    <!-- Dropzone style files -->
     <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
@@ -334,9 +337,11 @@
                                 <label for="job_gallery"
                                        class="col-md-2 u-t5">{{__('Company logo  (optional)')}}</label>
                                 <div class="col-sm-4 ">
+                                    @php $single_image_obj = $obj_job; $file_upload_name = 'company_logo'; @endphp
+                                    @include('user-panel.partials.upload-single-image',compact('single_image_obj'))
                                     {{----}}
-                                    <input type="file" name="company_logo" id="company_logo" class=""
-                                           value="Select logo">
+                                    {{--<input type="file" name="company_logo" id="company_logo" class=""--}}
+                                           {{--value="Select logo">--}}
                                 </div>
                                 {{--<label for="job_gallery"--}}
                                        {{--class="col-md-2 u-t5">{{__('Workplace photos  (optional)')}}</label>--}}
@@ -609,6 +614,10 @@
 
 
 @section('script')
+
+    <script src="{{asset('public/js/bootstrap-fileinput.js')}}"></script>
+
+    <!-- Dropzone script files -->
     <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>

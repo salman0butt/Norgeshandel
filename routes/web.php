@@ -319,6 +319,7 @@ Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
 Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
 Route::patch('new/property/sale/ad/{id}', 'PropertyController@updateSaleAdd');
 Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
+
 Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
 Route::get('holiday/home/for/sale/{id}/edit','PropertyController@editHolidayHomeForSale');
 Route::patch('holiday/home/for/sale/{id}','PropertyController@updateHomeForSaleAd');
@@ -341,6 +342,9 @@ Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercia
 Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
 
+    /// Upload images using dropzone
+    Route::post('upload-images', 'PropertyController@upload_dropzone_images')->name('upload-images'); // upload images on add form request
+    Route::patch('update-upload-images', 'PropertyController@upload_dropzone_images'); // upload images on edit form request
 
     //flatwishesrented
     Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');

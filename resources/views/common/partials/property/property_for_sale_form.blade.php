@@ -1,4 +1,6 @@
-<form action="#" method="post" id="property_for_sale_form"  enctype="multipart/form-data">
+<form action="#" method="post" id="property_for_sale_form"  class="dropzone addMorePics p-0"
+      data-action="@if(Request::is('new/property/sale/ad/*/edit')){{url('update-upload-images?ad_id='.$property_for_sale1->ad->id)}}
+        @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 <?php
     $property_type = \App\Taxonomy::where('slug', 'pfs_property_type')->first();
     $property_types = $property_type->terms;
@@ -14,6 +16,7 @@
    @method('PATCH')
   @endif 
     <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
+    <input type="hidden" name="upload_dropzone_images_type" value="property_for_sale_temp_images">
     <div class="pl-3 pr-3">
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
@@ -819,7 +822,9 @@
             <h3 class="u-t5">Bilder (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="file" name="property_photos[]" id="property_photos" class="mt-3" multiple>
+                    @php $dropzone_img_obj = $property_for_sale; @endphp
+                    @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
+                    {{--<input type="file" name="property_photos[]" id="property_photos" class="mt-3" multiple>--}}
                 </div>
             </div>
         </div>

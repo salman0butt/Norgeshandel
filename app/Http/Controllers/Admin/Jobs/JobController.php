@@ -211,12 +211,11 @@ class JobController extends Controller
      */
     public function update_dummy(Request $request)
     {
-
         foreach ($request->all() as $key=>$value){
             if(preg_match('/image_title/',$key)){
                 $explode_values = explode('_',$key);
                 $name_unique = '';
-                if(count($explode_values)>3) {
+                if(count($explode_values) > 3) {
                     if ($explode_values[2] && $explode_values[3]) {
                         $name_unique = $explode_values[2] . '.' . $explode_values[3];
                     }
@@ -321,6 +320,9 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
+        if(!Auth::user()->hasRole('admin') && $job->user_id != Auth::id()){
+            return redirect('forbidden');
+        }
         if (request()->route()->getPrefix() == '/admin') {
             return view('admin.jobs.new_' . $job->job_type, compact('job'));
         }
@@ -342,10 +344,19 @@ class JobController extends Controller
         if ($request->file('files')) {
             return $this->upload_images($request,$request->ad_id);
         }
-        $this->update_dummy($request);
-        $job->ad->update(['status'=>'published']);
-        Session::flash('success', 'Jobben er lagret');
-        return back();
+        DB::beginTransaction();
+        try{
+            $this->update_dummy($request);
+            $job->ad->update(['status'=>'published']);
+            DB::commit();
+            Session::flash('success', 'Jobben er lagret');
+            return back();
+        }catch (\Exception $e){
+            DB::rollback();
+            Session::flash('danger', 'Noe gikk galt.');
+            return back();
+        }
+
     }
 
     /**
@@ -356,13 +367,31 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        common::delete_media($job->ad->id, Ad::class, 'logo');
-        common::delete_media($job->ad->id, Ad::class, 'gallery');
-        $job->ad()->delete();
-        $job->delete();
+        if($job){
+            if(!Auth::user()->hasRole('admin') && $job->user_id != Auth::id()){
+                return redirect('forbidden');
+            }
+            DB::beginTransaction();
+            try{
+                $ad_id = $job->ad->id;
+                $job->ad()->delete();
+                $job->delete();
+                common::delete_media($ad_id, Ad::class, 'logo');
+                common::delete_media($ad_id, Ad::class, 'gallery');
+                DB::commit();
+                Session::flash('success', 'Jobben er slettet');
+                return back();
 
-        Session::flash('success', 'Jobben er slettet');
-        return back();
+            }catch (\Exception $e){
+                DB::rollback();
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
+        }else{
+            abort(404);
+            Session::flash('danger', 'Noe gikk galt.');
+            return back();
+        }
     }
 
     /**
