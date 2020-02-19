@@ -22,7 +22,7 @@
                 </div>
                 <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Remove file</a>
 
-                <input type="text" class="form-control dme-form-control mt-2" name="image_title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
+                <input type="text" class="form-control dme-form-control mt-2" placeholder="Tittel" name="image_title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
             </div>
         @endforeach
     @endif
