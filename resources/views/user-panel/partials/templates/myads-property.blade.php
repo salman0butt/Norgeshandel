@@ -22,7 +22,7 @@ if (isset($ad)) {
 
 
     if ($property !== null) {
-        $media = $property->media;
+        $media = $property->ad->media;
 
         if (count($media) > 0) {
             $path = \App\Helpers\common::getMediaPath($media->first());

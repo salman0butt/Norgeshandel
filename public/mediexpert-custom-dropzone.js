@@ -8,8 +8,6 @@ function createDropZone(id, ajax_url) {
         maxFiles: 50,
         maxFilesize: 500,
 
-
-
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

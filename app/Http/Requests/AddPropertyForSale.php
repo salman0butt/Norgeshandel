@@ -24,7 +24,6 @@ class AddPropertyForSale extends FormRequest
     public function rules()
     {
         return [
-
             'headline' => 'required',
             'zip_code' => 'required|numeric',
             'street_address' => 'required',
