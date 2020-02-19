@@ -3,7 +3,9 @@
 <head>
     <title>@yield('main_title')</title>
     <meta charset="UTF-8">
+
     <script src="{{asset('public/admin/js/jquery.min.js')}}"></script>
+
     <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
 
@@ -284,6 +286,9 @@
     </div>
 </footer>
 
+
+@yield('script')
+
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
 {{--<script src="{{asset('public/js/app.js')}}"></script>--}}
 <script src="{{asset('public/mediexpert.js')}}"></script>
@@ -389,7 +394,7 @@
     var site_url = "<?php echo url('/'); ?>";
 </script>
 
-@yield('script')
+
 
 </body>
 </html>
