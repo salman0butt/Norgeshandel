@@ -211,7 +211,6 @@ class JobController extends Controller
      */
     public function update_dummy(Request $request)
     {
-
         foreach ($request->all() as $key=>$value){
             if(preg_match('/image_title/',$key)){
                 $explode_values = explode('_',$key);
