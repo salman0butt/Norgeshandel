@@ -335,6 +335,8 @@ Route::post('new/add/flat/wishes/rented', 'PropertyController@addFlatWishesRente
 Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
 Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
 Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
+Route::get('add/new/commercial/property/for/sale/{id}/edit', 'PropertyController@editcommercialPropertyForSale');
+Route::patch('add/new/commercial/property/for/sale/{id}', 'PropertyController@updateCommercialPropertyForSale');
 Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
 Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
@@ -356,6 +358,7 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
 
     //commercialpropertyforrent
     Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
+    Route::get('/add/new/commercial/property/for/rent/{id}/edit', 'PropertyController@editCommercialPropertyForRent');
     Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
     Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
     Route::post('property/commercial/for/rent/sorted/ad', 'PropertyController@commercialPropertyForRentSortedAds');
