@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\Ad;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class MessageThread extends Model
 {
@@ -11,7 +12,14 @@ class MessageThread extends Model
     protected $guarded = [];
 
     public function messages(){
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class)
+            ->where('deleted_by', '!=', Auth::id())
+            ->orWhereNull('deleted_by');
+    }
+
+    public function one_side_messages(){
+        return $this->hasMany(Message::class)
+            ->whereNotNull('deleted_by');
     }
 
     public function users(){
