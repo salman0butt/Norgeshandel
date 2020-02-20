@@ -1,4 +1,6 @@
-<form action="#" method="post" id="property_holiday_home_for_sale_form" enctype="multipart/form-data">
+<form action="#" method="post" id="property_holiday_home_for_sale_form" class="dropzone addMorePics p-0"
+      data-action="@if(Request::is('holiday/home/for/sale/*/edit')){{url('update-upload-images?ad_id='.$holiday_home_for_sale1->ad->id)}}
+      @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
     <div class="pl-3">
 @php
      $holiday_home_for_sale = new \App\PropertyHolidaysHomesForSale();
@@ -15,8 +17,9 @@
 
 @endphp
   @if(Request::is('holiday/home/for/sale/*/edit'))
-  @method('PATCH')
+    @method('PATCH')
   @endif
+        <input type="hidden" name="upload_dropzone_images_type" value="holiday_home_for_sale_temp_images">
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
@@ -710,8 +713,10 @@
             <h3 class="u-t5">Bilder (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="file" name="property_home_for_sale_photos[]" id="property_home_for_sale_photos"
-                           class="" multiple>
+                    @php $dropzone_img_obj = $holiday_home_for_sale; @endphp
+                    @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
+                    {{--<input type="file" name="property_home_for_sale_photos[]" id="property_home_for_sale_photos"--}}
+                           {{--class="" multiple>--}}
                 </div>
             </div>
         </div>
