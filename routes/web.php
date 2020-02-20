@@ -395,7 +395,6 @@ Route::group(['middleware' => 'authverified'], function () {
 
 Route::get('/delete-media-dz',function(){
     $media = Media::where('name_unique',$_GET['filename'])->first();
-
     if ($media) {
         $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
         $arr = explode('.', $media->name_unique);
