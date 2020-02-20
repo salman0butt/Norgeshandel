@@ -373,6 +373,8 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
     Route::get('/business/for/sale', 'PropertyController@BusinessForSale');
     Route::post('add/business/for/sale', 'PropertyController@addBusinessForSale');
     Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
+    Route::post('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
+    Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
 
     Route::post('business/for/sales/sorted/ad', 'PropertyController@businessForSaleSortedAds');
 

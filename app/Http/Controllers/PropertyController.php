@@ -2359,10 +2359,12 @@ class PropertyController extends Controller
         return view('common.partials.property.commercialproperty_for_rent_description')->with(compact('property_data'));
     }
 
+    // ad form Business for sale
     public function BusinessForSale()
     {
         return view('user-panel.property.business_for_sale');
     }
+    // store business for sale ad
     public function addBusinessForSale(AddBusinessForSale $request)
     {
 
