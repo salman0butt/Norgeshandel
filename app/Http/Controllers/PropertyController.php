@@ -630,8 +630,8 @@ class PropertyController extends Controller
     //edit Holiday Home For Sale
       public function editHolidayHomeForSale($id)
     {
-        $holiday_home_for_sale = PropertyHolidaysHomesForSale::findOrFail($id);
-        return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale'));
+        $holiday_home_for_sale1 = PropertyHolidaysHomesForSale::findOrFail($id);
+        return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale1'));
     }
     //UpdatePropertyHolidayHomeForSale $request
     public function updateHomeForSaleAd(AddPropertyHolidayHomeForSale $request,$id)
