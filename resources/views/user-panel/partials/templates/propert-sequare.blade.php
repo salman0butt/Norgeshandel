@@ -6,7 +6,7 @@
 
         if($property !== null)
         {
-            $media = $ad->media;
+            $media = $ad->company_gallery;
 
             if(count($media)>0)
             {
