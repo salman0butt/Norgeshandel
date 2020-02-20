@@ -126,7 +126,7 @@ class common
 //        }
 //    }
 
-    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar',$delete_old='true')
+    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar',$delete_old='true',$process_image=true)
     {
         $max_old_media_order = Media::where('mediable_type',$mediable_type)->where('mediable_id',$mediable_id)->where('type',$type)->orderBy('order','DESC')->first();
         if($delete_old == 'true') {
@@ -148,11 +148,12 @@ class common
             $name = $file->getClientOriginalName();
             $name_unique = $unique_name . '.' . $file->getClientOriginalExtension();
             $path = 'public/uploads/' . date('Y') . '/' . date('m');
-            if (strtolower($file->getClientOriginalExtension()) == 'jpg' ||
-                strtolower($file->getClientOriginalExtension()) == 'jpeg' ||
-                strtolower($file->getClientOriginalExtension()) == 'png'
+            $file->move($path, $name_unique);
+            if ((strtolower($file->getClientOriginalExtension()) == 'jpg' ||
+                    strtolower($file->getClientOriginalExtension()) == 'jpeg' ||
+                    strtolower($file->getClientOriginalExtension()) == 'png') &&
+                $process_image
             ) {
-                $file->move($path, $name_unique);
                 Image::make(asset($path . '/' . $name_unique))->heighten(66)->widen(66)->save($path . '/' . $unique_name . '-66x66.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(150)->widen(150)->save($path . '/' . $unique_name . '-150x150.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(250)->widen(250)->save($path . '/' . $unique_name . '-250x250.' . $file->getClientOriginalExtension());
@@ -160,14 +161,14 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(570)->widen(570)->save($path . '/' . $unique_name . '-570x570.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(768)->widen(768)->save($path . '/' . $unique_name . '-768x768.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
-                $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
-                $media->order = $order+1;
-                $media->save();
-                $names_files[] = $media->name_unique;
-                $org_file_names[] = $media->name;
-                $file_names_encoded[] = base64_encode($media->name_unique);
-                $order++;
             }
+            $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
+            $media->order = $order + 1;
+            $media->save();
+            $names_files[] = $media->name_unique;
+            $org_file_names[] = $media->name;
+            $file_names_encoded[] = base64_encode($media->name_unique);
+            $order++;
         }
         return json_encode([
         'file_names' => $names_files,
@@ -207,9 +208,9 @@ class common
 
             foreach($banner_group->banners as $banner):
                 // dd($banner->display_time_duration);
-              
-                // echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked  d-block w-100' data-id='".$id."' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media,'300x200'))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";     
-                echo "<img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''>";     
+
+                // echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked  d-block w-100' data-id='".$id."' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media,'300x200'))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";
+                echo "<img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''>";
                 $id++;
             endforeach;
             }
