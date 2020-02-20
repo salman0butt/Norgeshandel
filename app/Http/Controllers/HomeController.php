@@ -35,7 +35,7 @@ class HomeController extends Controller
     public function index(Request $request, $handel=0)
     {
         if ($request->handel) {
-            $handel = $request->handel;
+            $handel = $handel!=0?$handel:$request->handel;
             $ad = Ad::find($handel);
             if ($ad) {
                 $type = "";
