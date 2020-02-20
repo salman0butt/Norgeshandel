@@ -399,21 +399,18 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
 
 Route::get('/delete-media-dz',function(){
     $media = Media::where('name_unique',$_GET['filename'])->first();
+    if ($media) {
+        $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+        $arr = explode('.', $media->name_unique);
 
-    if($media){
-        if ($media) {
-            $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
-            $arr = explode('.', $media->name_unique);
-
-            foreach (glob($path . $arr[0] . '*.*') as $file) {
-                unlink($file);
-            }
-            $media->delete();
+        foreach (glob($path . $arr[0] . '*.*') as $file) {
+            unlink($file);
         }
-        $response = array();
-        $response['flag'] = 'success';
-        return json_encode($response);
+        $media->delete();
     }
+    $response = array();
+    $response['flag'] = 'success';
+    return json_encode($response);
 });
 Route::post('/update-media-positions',function(Request $request){
     $response = array();

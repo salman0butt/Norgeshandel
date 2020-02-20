@@ -3,25 +3,10 @@
 
     <?php
         $facilities = array();
-        if(isset($property_data->facilities) && !empty($property_data->facilities))
-        {
-
+        if(isset($property_data->facilities) && !empty($property_data->facilities)){
             $facilities = explode(",",rtrim($property_data->facilities, ","));
-
         }
-
-        $name       = $property_data->media;
-        // if($name != null)
-        // {
-        //     $name       =    $name->name_unique;
-        //     $path       =    \App\Helpers\common::getMediaPath($property_data);
-        //     $full_path  =    $path."".$name;
-        // }
-        // else
-        // {
-        //     $full_path  = "";
-        // }
-
+        $name       = $property_data->ad->media;
     ?>
 
     <main>
@@ -29,8 +14,8 @@
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
         <div class="dme-container">
+            <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
             <div class="row top-ad">
-                <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
             </div>
         </div>
         <div class="dme-container p-3">
