@@ -1,4 +1,5 @@
 <form action="#" method="post" id="flat_wishes_rented_form" enctype="multipart/form-data">
+
     <div class="pl-3">
         <div class="form-group">
             <h3 class="u-t5">Ønsket leieområde</h3>
@@ -257,7 +258,7 @@
                 <div class="profile-name">
                     <h3 class="text-muted">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h3>
                 </div>
-                <p>Hvis denne profilen ikke er riktig kan du endre den under Min handel deretter Endre profil.</p>
+                <p>Hvis denne profilen ikke er riktig kan du endre den under min handel deretter endre profil.</p>
             </div>
         </div>
 

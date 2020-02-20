@@ -1,6 +1,5 @@
 @extends('layouts.landingSite')
 @section('page_content')
-
     <main>
         <div class="dme-container">
             <div class="row">
@@ -37,7 +36,11 @@
 
             e.preventDefault();
 
-            var url = '{{url('add/commercial/property/for/sale')}}';
+            @if(Request::is('add/new/commercial/property/for/sale/*/edit'))
+            var url = "{{url('add/new/commercial/property/for/sale/'.$commercial_property->id)}}";
+            @else 
+             var url = "{{url('add/commercial/property/for/sale')}}";
+            @endif
 
             $('.notice').html("");
             var myform = document.getElementById("commercial_property_for_sale");

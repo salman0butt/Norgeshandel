@@ -9,13 +9,13 @@ if(!isset($job)){
 if (!isset($ad)){$ad=$job->ad;}
 $job = \App\Admin\Jobs\Job::find($job->id);
 $ad = $job->ad;
-$media = $job->media;
+$media = $ad->media;
 if(count($media)>0){
         foreach ($media as $item){
-            if ($item->type=='company_logo'){
+            if ($item->type=='logo'){
                 $logo = \App\Helpers\common::getMediaPath($item, '66x66');
             }
-            if ($item->type=='company_gallery'){
+            if ($item->type=='gallery'){
                 $gallery = \App\Helpers\common::getMediaPath($item, '200x200');
             }
         }

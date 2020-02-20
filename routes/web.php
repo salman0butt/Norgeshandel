@@ -180,7 +180,7 @@ Route::group(['middleware' => 'authverified'], function () {
 
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
-
+        Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         // message
         Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
         Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');
@@ -338,23 +338,28 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
     Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
 
+    /// Upload images using dropzone
+    Route::post('upload-images', 'PropertyController@upload_dropzone_images')->name('upload-images'); // upload images on add form request
+    Route::patch('update-upload-images', 'PropertyController@upload_dropzone_images'); // upload images on edit form request
 
-//flatwishesrented
+    //flatwishesrented
     Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
     Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
     Route::get('/flat/wishes/rented/description/{id}', ['uses' => 'PropertyController@flatWishesRentedDescription']);
 
-//holidayhomeforsale
+    //holidayhomeforsale
     Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');
     Route::get('/holiday/home/for/sale/description/{id}', ['uses' => 'PropertyController@holidayHomeForSaleDescription']);
 
-//commercialpropertyforsale
+    //commercialpropertyforsale
     Route::get('/commercial/property/for/sale/ads', 'PropertyController@commercialPropertyForSaleAds');
     Route::post('/property/commercial/for/sale/sorted/ad', 'PropertyController@commercialPropertyForSaleSortedAds');
     Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'PropertyController@commercialForSaleDescription']);
 
-//commercialpropertyforrent
+    //commercialpropertyforrent
     Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
+    Route::get('add/new/commercial/property/for/rent/{id}/edit', 'PropertyController@editCommercialPropertyForRent');
+    Route::patch('add/new/commercial/property/for/rent/{id}', 'PropertyController@updateCommercialPropertyForRent');
     Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
     Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
     Route::post('property/commercial/for/rent/sorted/ad', 'PropertyController@commercialPropertyForRentSortedAds');
@@ -388,22 +393,21 @@ Route::group(['middleware' => 'authverified'], function () {
     });
 
 
-    Route::get('/delete-media-dz', function () {
-        $media = Media::where('name_unique', $_GET['filename'])->first();
-        if ($media) {
-            if ($media) {
-                $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
-                $arr = explode('.', $media->name_unique);
+Route::get('/delete-media-dz',function(){
+    $media = Media::where('name_unique',$_GET['filename'])->first();
 
-                foreach (glob($path . $arr[0] . '*.*') as $file) {
-                    unlink($file);
-                }
-                $media->delete();
-            }
-            $response = array();
-            $response['flag'] = 'success';
-            return json_encode($response);
+    if ($media) {
+        $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+        $arr = explode('.', $media->name_unique);
+
+        foreach (glob($path . $arr[0] . '*.*') as $file) {
+            unlink($file);
         }
+        $media->delete();
+    }
+    $response = array();
+    $response['flag'] = 'success';
+    return json_encode($response);
     });
     Route::post('/update-media-positions', function (Request $request) {
         $response = array();

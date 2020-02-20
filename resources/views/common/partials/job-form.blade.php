@@ -1,5 +1,8 @@
 @section('style')
 
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap-fileinput.css')}}">
+
+    <!-- Dropzone style files -->
     <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
@@ -156,7 +159,7 @@
                                 <label for="keywords" class="col-md-2 u-t5">{{__('Keywords (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="keywords" value="{{$obj_job->keywords}}" id="keywords" type="text"
-                                           class="form-control dme-form-control" required>
+                                           class="form-control dme-form-control" >
                                     <span
                                         class="u-t5">{{__('Keywords make it easier for candidates to search for your exact position. Choose up to 5 words you think the candidates are applying for.')}}</span>
                                 </div>
@@ -205,6 +208,7 @@
                         <!--                            full input-->
 {{--employer part--}}
                         <h4 class="text-muted pt-2">{{__('About the employer')}}</h4>
+                        {{--{{dd(Auth::user()->roles->first()->name)}}--}}
                         @if(Auth::user()->roles->first()->name=="company")
                             <div class="form-group">
                                 <div class="row">
@@ -321,7 +325,7 @@
                                        class="col-md-2 u-t5">{{__('Street address  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="address" id="address" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->address}}">
                                     <span
                                         class="u-t5">{{__('Explain briefly about the access to the accommodation and how to find it, please tell about proximity to road, bus and train.')}}</span>
                                 </div>
@@ -333,9 +337,11 @@
                                 <label for="job_gallery"
                                        class="col-md-2 u-t5">{{__('Company logo  (optional)')}}</label>
                                 <div class="col-sm-4 ">
+                                    @php $single_image_obj = $obj_job; $file_upload_name = 'company_logo'; @endphp
+                                    @include('user-panel.partials.upload-single-image',compact('single_image_obj'))
                                     {{----}}
-                                    <input type="file" name="company_logo" id="company_logo" class=""
-                                           value="Select logo">
+                                    {{--<input type="file" name="company_logo" id="company_logo" class=""--}}
+                                           {{--value="Select logo">--}}
                                 </div>
                                 {{--<label for="job_gallery"--}}
                                        {{--class="col-md-2 u-t5">{{__('Workplace photos  (optional)')}}</label>--}}
@@ -347,38 +353,11 @@
 
                         <div class="form-group">
                             <div class="row">
-                                <label for="address"
-                                       class="col-md-2 u-t5">{{__('Workplace  (optional)')}}</label>
+                                <label for="address" class="col-md-2 u-t5">{{__('Workplace (optional)')}}</label>
                                 <div class="col-sm-10 ">
-                                    <div class="clearfix">
-                                        <a href="javascript:void(0);">
-                                            <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable">
-                                                <h3 class="sbold">Slipp filer her eller klikk for å laste opp</h3>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div action="#" class="picture dropzone-previews sortable">
-                                        @if($obj_job && $obj_job->company_gallery->count() > 0)
-                                            @foreach($obj_job->company_gallery as $company_gallery)
-                                                <?php
-                                                $unique_name  =  $company_gallery->name_unique;
-                                                $path  =    \App\Helpers\common::getMediaPath($obj_job);
-                                                $full_path  = $path."". $unique_name;
-                                                ?>
-                                                <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" >
-                                                    <div class="dz-image">
-                                                        <img data-dz-thumbnail="" alt="image not found" src="{{$full_path}}">
-                                                    </div>
-                                                    <div class="dz-details">
-                                                        <div class="dz-filename"><span data-dz-name="">{{@$company_gallery->name}}</span></div>
-                                                    </div>
-                                                    <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Remove file</a>
+                                    @php $dropzone_img_obj = $obj_job; @endphp
+                                    @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
 
-                                                    <input type="text" class="form-control dme-form-control mt-2" name="image_title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -390,7 +369,7 @@
                                        class="col-md-2 u-t5">{{__('Workplace video  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="workplace_video" id="workplace_video" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->workplace_video}}">
                                     <span class="u-t5">{{__('For example - youtube.com/watch?v=3C4W5zadc4g')}}</span>
                                 </div>
                                 <div class="col-md-6 offset-md-3">
@@ -410,15 +389,15 @@
                                 <div class="col-sm-4">
                                     <select class="form-control dme-form-control" id="app_receive_by"
                                             name="app_receive_by" data-selector="">
-                                        <option value="email" selected="">Søkerhåndtering</option>
-                                        <option value="url">Eget søknadsskjema</option>
+                                        <option value="email" {{$obj_job && $obj_job->app_receive_by == 'email' ? 'selected' : ''}}>Søkerhåndtering</option>
+                                        <option value="url" {{$obj_job && $obj_job->app_receive_by == 'url' ? 'selected' : ''}}>Eget søknadsskjema</option>
                                     </select>
                                 </div>
                                 <label for="app_link_to_receive"
                                        class="col-md-2 u-t5">{{__('Link to application form')}}</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="app_link_to_receive" id="app_link_to_receive"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_link_to_receive}}">
                                 </div>
                                 <div class="col-md-10 offset-md-2">
                                     <span
@@ -433,12 +412,12 @@
                                        class="col-md-2 u-t5">{{__('Email to receive notification')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_email_to_receive" id="app_email_to_receive" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_email_to_receive}}">
                                 </div>
                                 <label for="app_contact" class="col-md-2 u-t5">{{__('Contact')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_contact" id="app_contact" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_contact}}">
                                 </div>
                             </div>
                         </div>
@@ -448,7 +427,7 @@
                                 <label for="app_contact_title"
                                        class="col-md-2 u-t5">{{__('Contact person (optional)')}}</label>
                                 <div class="col-sm-10 ">
-                                    <input name="app_contact_title" id="app_contact_title" type="text"
+                                    <input name="app_contact_title" id="app_contact_title" type="text"  value="{{@$obj_job->app_contact_title}}"
                                            class="form-control dme-form-control">
                                     <span
                                         class="u-t5">{{__('Explain briefly about the access to the accommodation and how to find it, please tell about proximity to road, bus and train.')}}</span>
@@ -461,14 +440,14 @@
                                 <label for="app_mobile" class="col-md-2 u-t5">{{__('Mobile  (optional)')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_mobile" id="phone" type="tel"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_mobile}}" >
                                     <span id="valid-msg" class="hide"></span>
                                     <span id="error-msg" class="hide"></span>
                                 </div>
                                 <label for="app_phone" class="col-md-2 u-t5">{{__('Phone  (optional)')}}</label>
                                 <div class="col-sm-4 ">
                                     <input name="app_phone" id="phone" type="tel"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_phone}}" >
                                     <span id="valid-msg" class="hide"></span>
                                     <span id="error-msg" class="hide"></span>
                                 </div>
@@ -480,7 +459,7 @@
                                 <label for="app_email" class="col-md-2 u-t5">{{__('Email  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="app_email" id="app_email" type="text"
-                                           class="form-control dme-form-control">
+                                           class="form-control dme-form-control" value="{{@$obj_job->app_email}}">
                                 </div>
                             </div>
                         </div>
@@ -492,7 +471,7 @@
                                 <div class="col-sm-10 ">
                                     <input name="app_linkedin" id="app_linkedin" type="text"
                                            class="form-control dme-form-control"
-                                           placeholder="linkedin.com/in/kontaktperson">
+                                           placeholder="linkedin.com/in/kontaktperson" value="{{@$obj_job->app_linkedin}}">
                                 </div>
                             </div>
                         </div>
@@ -502,7 +481,7 @@
                                 <label for="app_twitter" class="col-md-2 u-t5">{{__('Twitter  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="app_twitter" id="app_twitter" type="text"
-                                           class="form-control dme-form-control" placeholder="@kontaktperson">
+                                           class="form-control dme-form-control" placeholder="@kontaktperson" value="{{@$obj_job->app_twitter}}">
                                 </div>
                             </div>
                         </div>
@@ -539,8 +518,8 @@
         $(document).ready(function (e) {
 
             $('#job-form input, #job-form select').blur(function (e) {
-                $('#description').text(tinyMCE.get("description").getContent());
-                //$('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
+                // $('#description').text(tinyMCE.get("description").getContent());
+                // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
                 var link = $('#ad_id').val().length > 0 ? '{{url('jobs/update_dummy')}}' : '{{url('jobs/store_dummy')}}';
                 $.ajaxSetup({
                     headers: {
@@ -591,20 +570,20 @@
             }
             // $(this).val()
         });
-        tinymce.init({
-            selector: 'textarea.description',
-            width: $(this).parent().width(),
-            height: 250,
-            menubar: false,
-            statusbar: false
-        });
-        tinymce.init({
-            selector: 'textarea.emp_company_information',
-            width: $(this).parent().width(),
-            height: 250,
-            menubar: false,
-            statusbar: false
-        });
+        // tinymce.init({
+        //     selector: 'textarea.description',
+        //     width: $(this).parent().width(),
+        //     height: 250,
+        //     menubar: false,
+        //     statusbar: false
+        // });
+        // tinymce.init({
+        //     selector: 'textarea.emp_company_information',
+        //     width: $(this).parent().width(),
+        //     height: 250,
+        //     menubar: false,
+        //     statusbar: false
+        // });
     </script>
 
 <script>
@@ -635,6 +614,10 @@
 
 
 @section('script')
+
+    <script src="{{asset('public/js/bootstrap-fileinput.js')}}"></script>
+
+    <!-- Dropzone script files -->
     <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>

@@ -3,9 +3,9 @@
 <?php
 use App\Models\Ad;
 $ads = array();
-$published = Ad::where('status','published')->count();
-$saved = Ad::where('status','saved')->count();
-$discontinued = Ad::where('status','discontinued')->count();
+$published = Ad::where('status','published')->where('user_id',Auth::user()->id)->count();
+$saved = Ad::where('status','saved')->where('user_id',Auth::user()->id)->count();
+$discontinued = Ad::where('status','discontinued')->where('user_id',Auth::user()->id)->count();
 
 $job_fulltime = 0;
 $job_parttime = 0;

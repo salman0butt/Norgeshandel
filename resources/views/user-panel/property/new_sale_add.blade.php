@@ -1,7 +1,7 @@
 @extends('layouts.landingSite')
 
 @section('style')
-
+    <!-- Dropzone style files -->
     <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
@@ -75,8 +75,12 @@
                     $("input, select").removeClass("error-input");
                 });
 
-
-                var url = '{{url('add/property/sale/ad')}}';
+               @if(Request::is('new/property/sale/ad/*/edit'))
+                var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
+                @else 
+                 var url = "{{url('add/property/sale/ad')}}";
+                @endif 
+                
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
                 var fd = new FormData(myform);
@@ -107,14 +111,11 @@
                             {
                                 $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
                             }
-                            
-
-
                         },
                 }).always(function() { l.stop(); });
                 return false;
-
             });
+         
 
             var i = 0;
             $("#add_more_viewing_times_sales").click(function(e){
@@ -167,6 +168,9 @@
 @endsection
 
 @section('script')
+    <!-- Dropzone script files -->
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
     <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
     <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>

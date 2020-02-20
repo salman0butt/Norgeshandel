@@ -19,7 +19,7 @@ if (isset($ad)) {
         $property = $ad->propertyBusinessForSale;
     }
     if ($property !== null) {
-        $media = $property->media;
+        $media = $property->ad->company_gallery;
         if (count($media) > 0) {
             $path = \App\Helpers\common::getMediaPath($media->first());
         } else {

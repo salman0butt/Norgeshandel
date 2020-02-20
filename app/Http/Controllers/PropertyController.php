@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Media;
 use Mapper;
 use App\User;
 use App\Message;
@@ -36,6 +37,7 @@ use App\Http\Requests\AddCommercialPropertyForRent;
 use App\Http\Requests\AddCommercialPropertyForSale;
 use App\Http\Requests\AddPropertyHolidayHomeForSale;
 use App\Events\PropertyForRent as PropertyForRentEvent;
+
 
 
 class PropertyController extends Controller
@@ -418,11 +420,7 @@ class PropertyController extends Controller
         echo json_encode($data);
     }
     public function deletePropertyForRent($id){
-        
         $property_for_rent = PropertyForRent::findOrFail($id);
-        //$ad = Ad::findOrFail($id);
-    // dd($property_for_rent->media->first->mediable_id);
-
         if(!empty($property_for_rent->media)){
             if($property_for_rent->media->first())
         common::delete_media($property_for_rent->media->first->mediable_id,$property_for_rent->media->first->mediable_type, $property_for_rent->media->first->type);
@@ -435,8 +433,53 @@ class PropertyController extends Controller
         return redirect('/my-business/my-ads');
     }
 
+    public function property_destroy($obj){
+        // $obj has ad id
+        $ad = Ad::find($obj);
+        if($ad){
+            DB::beginTransaction();
+            try{
+                if(!Auth::user()->hasRole('admin') && $ad && $ad->property && $ad->property->user_id != Auth::id()){
+                    abort(404);
+                }
+                if($ad->property){
+                    common::delete_media($ad->property->id, get_class($ad->property), 'logo');
+                    common::delete_media($ad->property->id, get_class($ad->property), 'gallery');
+                    $ad->property->delete();
+                }
+                $ad_id = $ad->id;
+                $ad->delete();
+                common::delete_media($ad_id, Ad::class, 'logo');
+                common::delete_media($ad_id, Ad::class, 'gallery');
+                DB::commit();
+                Session::flash('success', 'Eiendom ble slettet.');
+                return back();
+
+            }catch (\Exception $e){
+                DB::rollback();
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
+        }else{
+            abort(404);
+        }
+    }
+
     public function newSaleAdd(){
+        common::delete_media(Auth::user()->id, 'property_for_sale_temp_images', 'gallery');
         return view('user-panel.property.new_sale_add');
+    }
+     public function editSaleAdd($id){
+         $property_for_sale1 = PropertyForSale::findOrFail($id);
+         if($property_for_sale1){
+             if(!Auth::user()->hasRole('admin') && $property_for_sale1->user_id != Auth::user()->id){
+                 abort(404);
+             }
+             return view('user-panel.property.new_sale_add', compact('property_for_sale1'));
+         }else{
+             abort(404);
+         }
+
     }
 
     public function getHomeForSaleAdd(Request $request){
@@ -935,18 +978,20 @@ class PropertyController extends Controller
 
     }
 
-    public function addSaleAdd(AddPropertyForSale $request)
+     public function updateSaleAdd(AddPropertyForSale $request,$id)
     {
-        $property_for_sale_data = $request->all();
+        DB::beginTransaction();
+        try{
+            $property_for_sale_data = $request->except(['_method','upload_dropzone_images_type']);
 
-        if(isset($property_for_sale_data['approved_rental_part']) && $property_for_sale_data['approved_rental_part'] == 'on')
-        {
-            $property_for_sale_data['approved_rental_part'] = 1;
-        }
-        else
-        {
-            $property_for_sale_data['approved_rental_part'] = 0;
-        }
+            if(isset($property_for_sale_data['approved_rental_part']) && $property_for_sale_data['approved_rental_part'] == 'on')
+            {
+                $property_for_sale_data['approved_rental_part'] = 1;
+            }
+            else
+            {
+                $property_for_sale_data['approved_rental_part'] = 0;
+            }
 
             //Add More ViewingTimes
             if(isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "")
@@ -1022,81 +1067,289 @@ class PropertyController extends Controller
             }
 
 
-        unset($property_for_sale_data['property_photos']);
-        unset($property_for_sale_data['property_pdf']);
-        unset($property_for_sale_data['property_quote']);
+            unset($property_for_sale_data['property_photos']);
+            unset($property_for_sale_data['property_pdf']);
+            unset($property_for_sale_data['property_quote']);
 
 
-        //Manage Facilities
-        if(isset($property_for_sale_data['facilities']))
-        {
-            $property_for_sale_data['facilities'] = json_encode($property_for_sale_data['facilities']);
-//            following code converted to json
-//            $facilities = "";
-//            foreach($property_for_sale_data['facilities'] as $key=>$val)
-//            {
-//                $facilities .= $val . ",";
-//            }
-//            $property_for_sale_data['facilities'] = $facilities;
+            //Manage Facilities
+            if(isset($property_for_sale_data['facilities']))
+            {
+                $property_for_sale_data['facilities'] = json_encode($property_for_sale_data['facilities']);
+            }
+
+            $property_for_sale_data['user_id'] = Auth::user()->id;
+
+            //Update media (mediable id and mediable type)
+            if($id){
+                $temp_property_for_sale_obj = PropertyForSale::find($id);
+                if($temp_property_for_sale_obj && $temp_property_for_sale_obj->ad){
+                    $property_for_sale_data = $this->updated_dropzone_images_type($property_for_sale_data,$request->upload_dropzone_images_type,$temp_property_for_sale_obj->ad->id);
+                }
+            }
+
+            $response = PropertyForSale::where('id','=', $id)->update($property_for_sale_data);
+
+            if ($request->file('property_pdf') || $request->file('property_quote'))
+            {
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val)
+                {
+                    array_push($files_builded_arr,$val[0]);
+                }
+
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val)
+                {
+                    if($i == 1)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_quotes');
+                    }
+                    if($i == 2)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_pdf');
+                    }
+                    $i++;
+
+                }
+            }
+
+            //Notification data
+            // $notifiable_id = $response -> id;
+            // $notification_obj = new NotificationController();
+            // $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForSale','property have been added');
+            // $notification_id_search = $notification_response->id;
+
+            // // //trigger event
+            // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
+        }
+    }
+
+    //Upload dropzone images
+    public function upload_dropzone_images(Request $request){
+        $mediable_id = '';
+
+        if($request->ad_id){
+            $mediable_id = $request->ad_id;
+        }
+        if ($request->file('files')) {
+            $files = $request->file('files');
+            if($mediable_id){
+                return common::update_media($files, $mediable_id, 'App\Models\Ad', 'gallery','false');
+            }else{
+                return common::update_media($files, Auth::user()->id, $request->upload_dropzone_images_type, 'gallery','false');
+            }
+        }
+    }
+
+    //Updated the dropzone image
+    public function updated_dropzone_images_type($request,$mediable_type,$ad_id=''){
+        foreach ($request as $key=>$value){
+            if(preg_match('/image_title/',$key)){
+                $explode_values = explode('_',$key);
+                $name_unique = '';
+                if(count($explode_values) > 3) {
+                    if ($explode_values[2] && $explode_values[3]) {
+                        $name_unique = $explode_values[2] . '.' . $explode_values[3];
+                    }
+                    if ($name_unique) {
+                        $media = Media::where('name_unique', $name_unique)->first();
+                        if ($media) {
+                            $media->title = $value;
+                            $media->update();
+                        }
+                    }
+                }
+                unset($request[$key]);
+            }
+        }
+        $temp_media = Media::where('mediable_id',Auth::user()->id)->where('mediable_type',$mediable_type)->get();
+        if($temp_media->count() > 0 && $ad_id){
+            foreach ($temp_media as $key=>$temp_media_obj){
+                $temp_media_obj->mediable_id = $ad_id;
+                $temp_media_obj->mediable_type = 'App\Models\Ad';
+                $temp_media_obj->update();
+            }
+
+        }
+        return $request;
+    }
+    
+    public function addSaleAdd(AddPropertyForSale $request)
+    {
+        DB::beginTransaction();
+        try{
+            $property_for_sale_data = $request->except('upload_dropzone_images_type');
+
+            if(isset($property_for_sale_data['approved_rental_part']) && $property_for_sale_data['approved_rental_part'] == 'on')
+            {
+                $property_for_sale_data['approved_rental_part'] = 1;
+            }
+            else
+            {
+                $property_for_sale_data['approved_rental_part'] = 0;
+            }
+
+            //Add More ViewingTimes
+            if(isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "")
+            {
+                $property_for_sale_data['secondary_deliver_date'] = null;
+                $i = 0;
+                foreach($property_for_sale_data['deliver_date'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['deliver_date']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_deliver_date'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_sale_data['secondary_from_clock'] = "";
+            if(isset($property_for_sale_data['from_clock']))
+            {
+                $i = 0;
+                foreach($property_for_sale_data['from_clock'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['from_clock']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_from_clock'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_sale_data['secondary_clockwise'] = "";
+            if(isset($property_for_sale_data['clockwise']))
+            {
+                $i = 0;
+                foreach($property_for_sale_data['clockwise'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['clockwise']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_clockwise'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_sale_data['secondary_note1'] = "";
+            if(isset($property_for_sale_data['note1']))
+            {
+                $i = 0;
+                foreach($property_for_sale_data['note1'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_for_sale_data['note1']  = $val;
+                    }
+                    else
+                    {
+                        $property_for_sale_data['secondary_note1'] .= $val.",";
+                    }
+                    $i++;
+                }
+            }
+
+
+            unset($property_for_sale_data['property_photos']);
+            unset($property_for_sale_data['property_pdf']);
+            unset($property_for_sale_data['property_quote']);
+
+
+            //Manage Facilities
+            if(isset($property_for_sale_data['facilities']))
+            {
+                $property_for_sale_data['facilities'] = json_encode($property_for_sale_data['facilities']);
+            }
+
+            $property_for_sale_data['user_id'] = Auth::user()->id;
+
+            //add Add to table
+            $add = array();
+            $add['ad_type'] = 'property_for_sale';
+            $add['status']  = 'published';
+            $add['user_id'] =  Auth::user()->id;
+            $add_response   =  Ad::create($add);
+
+            $property_for_sale_data['ad_id'] = $add_response->id;
+
+            //Update media (mediable id and mediable type)
+            if($add_response->id){
+                $property_for_sale_data = $this->updated_dropzone_images_type($property_for_sale_data,$request->upload_dropzone_images_type,$add_response->id);
+            }
+
+            $response = PropertyForSale::create($property_for_sale_data);
+
+            if ($request->file('property_pdf') || $request->file('property_quote'))
+            {
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val)
+                {
+                    array_push($files_builded_arr,$val[0]);
+                }
+
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val)
+                {
+                    if($i == 1)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_quotes');
+                    }
+                    if($i == 2)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_pdf');
+                    }
+                    $i++;
+
+                }
+            }
+
+            //Notification data
+            $notifiable_id = $response -> id;
+            $notification_obj = new NotificationController();
+            $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForSale','property have been added');
+            $notification_id_search = $notification_response->id;
+
+            // //trigger event
+            event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
 
-        $property_for_sale_data['user_id'] = Auth::user()->id;
 
-        //add Add to table
-        $add = array();
-        $add['ad_type'] = 'property_for_sale';
-        $add['status']  = 'published';
-        $add['user_id'] =  Auth::user()->id;
-        $add_response   =  Ad::create($add);
 
-        $property_for_sale_data['ad_id'] = $add_response->id;
-
-        $response = PropertyForSale::create($property_for_sale_data);
-
-        if (is_countable($request->file('property_photos')) || $request->file('property_pdf') || $request->file('property_quote'))
-        {
-            // $files = $request->file('property_photos');
-            // $files_pdf = $request->file('property_pdf');
-            // $files_quote = $request->file('property_quote');
-
-            $files = $request->file();
-            $files_builded_arr = array();
-            foreach($files as $key=>$val)
-            {
-                array_push($files_builded_arr,$val[0]);
-            }
-
-            $i = 0;
-            if(is_countable($request->file('property_photos')))
-            {
-                common::update_media($val, $response->id , 'App\PropertyForSale', 'gallery'); //propert_for_sale_photos
-            }
-            foreach($files_builded_arr as $key=>$val)
-            {
-                if($i == 1)
-                {
-                    common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_quotes');
-                }
-                if($i == 2)
-                {
-                    common::update_media($val, $response->id , 'App\PropertyForSale', 'propert_for_sale_pdf');
-                }
-                $i++;
-
-            }
-        }
-
-        //Notification data
-        $notifiable_id = $response -> id;
-        $notification_obj = new NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForSale','property have been added');
-        $notification_id_search = $notification_response->id;
-
-        // //trigger event
-        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
-
-        $data['success'] = $response;
-        echo json_encode($data);
 
     }
 
@@ -1208,12 +1461,6 @@ class PropertyController extends Controller
         $property_for_rent_data['ad_id'] = $add_response->id;
         $response = PropertyForRent::create($property_for_rent_data);
 
-        //add images
-        if (is_countable($request->file('property_photos')))
-        {
-            common::update_media($request->file('property_photos'), $response->id , 'App\PropertyForRent', 'gallery'); //propert_for_rent
-
-        }
 
         //Notification data
         $notifiable_id = $response -> id;
@@ -1406,6 +1653,100 @@ class PropertyController extends Controller
     public function commercialPropertyForSale()
     {
         return view('user-panel.property.commercial_property_for_sale');
+    }
+       public function editcommercialPropertyForSale($id)
+    {
+        $commercial_property = CommercialPropertyForSale::findOrFail($id);
+        return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));
+    }
+
+    public function updateCommercialPropertyForSale(AddCommercialPropertyForSale $request, $id)
+    {
+
+        $commercial_property_for_sale = $request->except('_method');
+        
+        unset($commercial_property_for_sale['commercial_property_for_sale_photos']);
+        unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
+        $commercial_property_for_sale['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        // $add = array();
+        // $add['ad_type'] = 'property_commercial_for_sale';
+        // $add['status']  = 'published';
+        // $add['user_id'] =  Auth::user()->id;
+        // $add_response   =  Ad::create($add);
+        // $commercial_property_for_sale['ad_id'] = $add_response->id;
+
+        if(isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "")
+        {
+            $property_type = "";
+            foreach($commercial_property_for_sale['property_type'] as $key=>$val)
+            {
+                $property_type .= $val.",";
+            }
+            $commercial_property_for_sale['property_type'] = $property_type;
+        }
+        if(isset($commercial_property_for_sale['facilities']) && $commercial_property_for_sale['facilities'] != "")
+        {
+            $facilities = "";
+            foreach($commercial_property_for_sale['facilities'] as $key=>$val)
+            {
+                $facilities .= $val.",";
+            }
+            $commercial_property_for_sale['facilities'] = $facilities;
+
+        }
+
+        $response = CommercialPropertyForSale::where('id','=',$id);
+        $response->update($commercial_property_for_sale);
+
+
+        if (is_countable($request->file('commercial_property_for_sale_photos')) || $request->file('commercial_property_for_sale_pdf'))
+        {
+            //Ameer Hamza Code start for storing multiple images
+            if(is_countable($request->file('commercial_property_for_sale_photos'))){
+                common::update_media($request->file('commercial_property_for_sale_photos'), $response->id , 'App\CommercialPropertyForSale', 'gallery');
+            }
+            //End ameer hamza code
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {
+                /* Zille Shad Code commented by Ameer Hamza
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_propert_for_sale_photos');
+                }
+                */
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_property_for_sale_pdf');
+                }
+                $i++;
+
+            }
+
+
+
+        }
+
+        // //Notification data
+        // $notifiable_id = $response -> id;
+        // $notification_obj = new NotificationController();
+        // $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPropertyForSale','property have been added');
+        // $notification_id_search = $notification_response->id;
+        // //trigger event
+        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+
+        $data['success'] = $response;
+        echo json_encode($data);
+
     }
 
     public function addCommercialPropertyForSale(AddCommercialPropertyForSale $request)
@@ -1749,6 +2090,102 @@ class PropertyController extends Controller
     {
         return view('user-panel.property.commercial_property_for_rent');
     }
+     public function editCommercialPropertyForRent($id)
+    {
+        $commercial_for_rent = CommercialPropertyForRent::findOrFail($id);
+
+        return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));
+    }
+     public function updateCommercialPropertyForRent(AddCommercialPropertyForRent $request,$id)
+    {
+        $commercial_property_for_rent = $request->except('_method');
+
+        unset($commercial_property_for_rent['commercial_property_for_rent_photos']);
+        unset($commercial_property_for_rent['commercial_property_for_rent_pdf']);
+        $commercial_property_for_rent['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        // $add = array();
+        // $add['ad_type'] = 'property_commercial_for_rent';
+        // $add['status']  = 'published';
+        // $add['user_id'] =  Auth::user()->id;
+        // $add_response   =  Ad::create($add);
+        // $commercial_property_for_rent['ad_id'] = $add_response->id;
+
+        if(isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "")
+        {
+            $property_type = "";
+            foreach($commercial_property_for_rent['property_type'] as $key=>$val)
+            {
+                $property_type .= $val.",";
+            }
+            $commercial_property_for_rent['property_type'] = $property_type;
+        }
+        if(isset($commercial_property_for_rent['facilities']) && $commercial_property_for_rent['facilities'] != "")
+        {
+            $facilities = "";
+            foreach($commercial_property_for_rent['facilities'] as $key=>$val)
+            {
+                $facilities .= $val.",";
+            }
+            $commercial_property_for_rent['facilities'] = $facilities;
+
+        }
+
+
+        $response = CommercialPropertyForRent::findOrFail($id);
+        $response->update($commercial_property_for_rent);
+
+
+        if (is_countable($request->file('commercial_property_for_rent_photos')) || $request->file('commercial_property_for_rent_pdf'))
+        {
+            //Ameer Hamza Code for storing muliple images
+            if(is_countable($request->file('commercial_property_for_rent_photos'))){
+                common::update_media($request->file('commercial_property_for_rent_photos'), $response->id , 'App\CommercialPropertyForRent', 'gallery');
+            }
+            //End Ameer Hamza Code
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {
+                /* Zille Shah code commented by Ameer Hamza
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_photos');
+                }
+                */
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPropertyForRent', 'commercial_property_for_rent_pdf');
+                }
+                $i++;
+
+            }
+
+
+
+        }
+
+        //Notification data
+        // $notifiable_id = $response -> id;
+        // $notification_obj = new NotificationController();
+        // $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPropertyForRent','property have been added');
+        // $notification_id_search = $notification_response->id;
+
+        // //trigger event
+        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+
+        $data['success'] = $response;
+        echo json_encode($data);
+    }
+
+
     public function addCommercialPropertyForRent(AddCommercialPropertyForRent $request)
     {
         $commercial_property_for_rent = $request->all();

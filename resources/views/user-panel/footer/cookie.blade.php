@@ -51,7 +51,7 @@
     </div>
 
     <div class="article-container row" style="margin-top:2%;" id="article-container">
-        <section class="article-sidebar col-md-3">
+        {{-- <section class="article-sidebar col-md-3">
             <section class="section-articles collapsible-sidebar">
                 <h6 class="collapsible-sidebar-title sidenav-title">Artikler i denne seksjonen</h6>
                 <ul class="sidebar" style="padding-left: 15px;">
@@ -102,14 +102,14 @@
                 </ul>
 
             </section>
-        </section>
+        </section> --}}
 
-        <article class="article col-md-9">
+        <article class="article col-md-12">
             <header class="article-header">
                 <h3 title="Lokal lagring av data og informasjonskapsler" class="article-title" style="font-weight:400;">
                     Lokal lagring av data og informasjonskapsler</h3>
             </header>
-            <section class="article-info">
+            <section class="article-info mb-5">
                 <div class="article-content">
                     <div class="article-body">
                         <h4 class="mt-5" style="font-weight:400;">1.PERSONVERN</h4>
@@ -243,7 +243,8 @@
                                 Privacy Shield som sikkerhetstiltak for land uten en adekvat avgjørelse fra
                                 Europakommisjonen.
 
-                            </span></p>
+                            </span>
+                        </p>
 
                         <h4 style="font-weight:400;margin:20px 0px;">7.0 Hvor lenge lagrer vi opplysningene dine?</h4>
 
@@ -251,7 +252,8 @@
                                 Vi lagrer informasjonen i henhold til regnskapsføringsreglene i ditt land.<br>
                                 Etter denne tidsperioden vil personopplysningene dine slettes.
 
-                            </span></p>
+                            </span>
+                        </p>
 
                         <h4 style="font-weight:400;margin:20px 0px;">8.0 HVILKE RETTIGHETER HAR DU?</h4>
                         <h5 style="font-weight:400;margin:20px 0;">8.1 Rettighet til tilgang:</h5>
@@ -358,12 +360,9 @@
                     </div>
                 </div>
             </section>
-
+            {{-- 
             <footer>
-                <div class="article-footer">
-
-
-                </div>
+  
 
                 <div class="article-votes mt-5" align="center">
                     <span class="text-center">Var denne artikkelen nyttig?</span><br>
@@ -429,14 +428,14 @@
                 </section>
 
 
-            </section>
+            </section> --}}
 
 
 
         </article>
 
     </div>
-
+    <br>
 
 
 

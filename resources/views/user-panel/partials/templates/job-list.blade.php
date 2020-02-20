@@ -7,13 +7,13 @@ if(!isset($job)){
     $job = $ad->job;
 }
 $job = \App\Admin\Jobs\Job::find($job->id);
-$media = $job->media;
+$media = $job->ad->media;
 if(count($media)>0){
     foreach ($media as $item){
-        if ($item->type=='company_logo'){
+        if ($item->type=='logo'){
             $logo = \App\Helpers\common::getMediaPath($item, '66x66');
         }
-        if ($item->type=='company_gallery'){
+        if ($item->type=='gallery'){
             $gallery = \App\Helpers\common::getMediaPath($item, '200x200');
         }
     }

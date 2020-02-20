@@ -14,7 +14,7 @@
             $industry = $term->name;
         endif;
     endforeach;
-    $logo = $job->media()->where('type', 'company_logo')->get()->first();
+    $logo = $job->ad->media()->where('type', 'logo')->get()->first();
     if (!empty($logo)) {
         $logo = \App\Helpers\common::getMediaPath($logo, '150x150');
     }
@@ -60,7 +60,7 @@
         <div class="dme-container p-3">
             <div class="row">
                 <div class="col-md-12">
-                    @php $name = $job->media; $obj = $job; @endphp
+                    @php $name = $job->ad->company_gallery; $obj = $job; @endphp
                     @include('user-panel.partials.landing_page_slider',compact('name'))
                     {{--<img src="{{asset('public/images/home.jpg')}}" alt="" class="img-fluid">--}}
                 </div>

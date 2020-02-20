@@ -68,12 +68,12 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        $job_id = '';
-        if($request->job_id){
-            $job_id = $request->job_id;
+        $ad_id = '';
+        if($request->ad_id){
+            $ad_id = $request->ad_id;
         }
         if ($request->file('files')) {
-            return $this->upload_images($request,$job_id);
+            return $this->upload_images($request,$ad_id);
         }
 
         $arr = array(
@@ -129,7 +129,7 @@ class JobController extends Controller
         $ad->update(['status' => 'published']);
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
-            common::update_media($file, $ad->job->id, 'App\Admin\Jobs\Job', 'company_logo');
+            common::update_media($file, $ad->id, 'App\Models\Ad', 'logo');
         }
 //        if ($request->file('company_gallery')) {
 //            $files = $request->file('company_gallery');
@@ -175,13 +175,13 @@ class JobController extends Controller
     }
 
 
-    public function upload_images($request, $job_id=''){
+    public function upload_images($request, $ad_id=''){
         if ($request->file('files')) {
             $files = $request->file('files');
-            if($job_id){
-                return common::update_media($files, $job_id, 'App\Admin\Jobs\Job', 'company_gallery','false');
+            if($ad_id){
+                return common::update_media($files, $ad_id, 'App\Models\Ad', 'gallery','false');
             }else{
-                return common::update_media($files, Auth::user()->id, 'temp_job_image', 'company_gallery','false');
+                return common::update_media($files, Auth::user()->id, 'temp_job_image', 'gallery','false');
             }
         }
     }
@@ -215,7 +215,7 @@ class JobController extends Controller
             if(preg_match('/image_title/',$key)){
                 $explode_values = explode('_',$key);
                 $name_unique = '';
-                if(count($explode_values)>3) {
+                if(count($explode_values) > 3) {
                     if ($explode_values[2] && $explode_values[3]) {
                         $name_unique = $explode_values[2] . '.' . $explode_values[3];
                     }
@@ -230,10 +230,10 @@ class JobController extends Controller
             }
         }
         $job_temp_media = Media::where('mediable_id',Auth::user()->id)->where('mediable_type','temp_job_image')->get();
-        if($job_temp_media->count() > 0 && $request->job_id){
+        if($job_temp_media->count() > 0 && $request->ad_id){
             foreach ($job_temp_media as $key=>$job_temp_media_obj){
-                $job_temp_media_obj->mediable_id = $request->job_id;
-                $job_temp_media_obj->mediable_type = 'App\Admin\Jobs\Job';
+                $job_temp_media_obj->mediable_id = $request->ad_id;
+                $job_temp_media_obj->mediable_type = 'App\Models\Ad';
                 $job_temp_media_obj->update();
             }
 
@@ -276,17 +276,17 @@ class JobController extends Controller
             'app_twitter' => $request->app_twitter,
             'user_id' => Auth::user()->id,
         );
-
         $job->update($arr);
 
         if (empty($job->slug)) {
+
             $slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
             $job->update(['slug' => $slug]);
         }
 
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
-            common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_logo');
+            common::update_media($file, $job->ad->id, 'App\Models\Ad', 'logo');
         }
 //        if ($request->file('company_gallery')) {
 //            $files = $request->file('company_gallery');
@@ -320,6 +320,9 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
+        if(!Auth::user()->hasRole('admin') && $job->user_id != Auth::id()){
+            return redirect('forbidden');
+        }
         if (request()->route()->getPrefix() == '/admin') {
             return view('admin.jobs.new_' . $job->job_type, compact('job'));
         }
@@ -339,12 +342,21 @@ class JobController extends Controller
             $job = Job::find($request->job_id);
         }
         if ($request->file('files')) {
-            return $this->upload_images($request,$request->job_id);
+            return $this->upload_images($request,$request->ad_id);
         }
-        $this->update_dummy($request);
-        $job->ad->update(['status'=>'published']);
-        Session::flash('success', 'Jobben er lagret');
-        return back();
+        DB::beginTransaction();
+        try{
+            $this->update_dummy($request);
+            $job->ad->update(['status'=>'published']);
+            DB::commit();
+            Session::flash('success', 'Jobben er lagret');
+            return back();
+        }catch (\Exception $e){
+            DB::rollback();
+            Session::flash('danger', 'Noe gikk galt.');
+            return back();
+        }
+
     }
 
     /**
@@ -355,13 +367,31 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        common::delete_media($job->id, Job::class, 'company_logo');
-        common::delete_media($job->id, Job::class, 'company_gallery');
-        $job->ad()->delete();
-        $job->delete();
+        if($job){
+            if(!Auth::user()->hasRole('admin') && $job->user_id != Auth::id()){
+                return redirect('forbidden');
+            }
+            DB::beginTransaction();
+            try{
+                $ad_id = $job->ad->id;
+                $job->ad()->delete();
+                $job->delete();
+                common::delete_media($ad_id, Ad::class, 'logo');
+                common::delete_media($ad_id, Ad::class, 'gallery');
+                DB::commit();
+                Session::flash('success', 'Jobben er slettet');
+                return back();
 
-        Session::flash('success', 'Jobben er slettet');
-        return back();
+            }catch (\Exception $e){
+                DB::rollback();
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
+        }else{
+            abort(404);
+            Session::flash('danger', 'Noe gikk galt.');
+            return back();
+        }
     }
 
     /**
