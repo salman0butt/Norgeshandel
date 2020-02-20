@@ -2511,7 +2511,6 @@ class PropertyController extends Controller
 
     public function businessForSaleAds(Request $request)
     {
-
         $data = $request->all();
         $searchable = (isset($data['filter']) ? $data['filter'] : "");
         $order_by_thing = 'id';
