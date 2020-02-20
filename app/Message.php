@@ -12,4 +12,9 @@ class Message extends Model
     public function thread(){
         return $this->belongsTo(MessageThread::class);
     }
+
+    public function media(){
+        return $this->morphMany('App\Media', 'mediable');
+    }
+
 }

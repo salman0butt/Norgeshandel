@@ -172,9 +172,10 @@
                         <h5 class="text-muted">{{Auth::user()->username}}</h5>
                     </div>
                     <div><a href="{{url('clear-chat')}}" style="display: none;">clear</a></div>
+                    @include('common.partials.flash-messages')
                     <div class="chat-thread-list">
                         @foreach($threads as $thread)
-                            @if(!empty($thread->ad))
+                        @if(!empty($thread->ad) && (is_countable($thread->messages) && count($thread->messages)>0 || $thread->id==$active_thread->id))
                                 @php($thread_user = $thread->users->where('id', '!=', Auth::id())->first())
                             <div class="position-relative">
                                 <a href="{{url('messages/thread', $thread->id)}}"
@@ -208,7 +209,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#" class="position-absolute text-muted thread-delete-button" style="top: 15px;right:0">
+                                <a href="{{url('messages/delete/'.$thread->id)}}" class="position-absolute text-muted thread-delete-button" style="top: 15px;right:0">
                                     <span class="fa fa-trash" style="font-size: 1.3em;"></span>
                                 </a>
                             </div>
@@ -282,6 +283,12 @@
                         $('.chat-thread-list').prepend(thread);
                     }
                     if (parseInt($('#current_thread').val()) == data.thread_id) {
+                        var files = data.files;
+                        var file_anchor = "";
+                        for (var i=0; i<files.length; i++){
+                            file_anchor += '<br><a href="'+files[i].path+'" target="_blank"><span class="fa fa-paperclip"></span> '+files[i].name+'</a>'
+                        }
+
                         var str = '' +
                             '            <div class="message receiver-message">\n' +
                             '                <div class="profile-icon">\n' +
@@ -290,6 +297,7 @@
                             '                </div>\n' +
                             '                <div class="message-text" style="min-height: 1em;">\n' +
                             '                    <span class="align-middle">' + data.message + '</span>\n' +
+                            '                    ' + file_anchor + '\n' +
                             '                    <br>\n' +
                             '                    <span class="text-muted timeago" style="font-size: 0.7em" title="'+new Date($.now())+'"></span>\n' +
                             '                </div>\n' +
@@ -325,18 +333,27 @@
                 }
             });
 
-            $(document).on('keyup', '.message-input', function (e) {
+            $(document).on('keydown', '.message-input', function (e) {
                 var message = $("#message-input").val();
-                // check if enter key is pressed and message is not null also receiver is selected
-                if (e.keyCode == 13 && message != '') {
-                    send_message();
+                if ((e.keyCode == 13 || e.keyCode == 10) && message == '') {
+                    alert('Meldingen kan ikke være tom!');
+                    $("#message-input").focus();
                 }
+                if ((e.keyCode == 13 || e.keyCode == 10) && message != '') {
+                    e.preventDefault();
+                    send_message();
+                    $(this).val('');
+                    $("#message-input").focus();
+                }
+
             });
 
             $(document).on('click', '#send_button', function (e) {
                 e.preventDefault();
+                var message = $("#message-input").val();
                 send_message();
                 $("#message-input").focus();
+                $("#message-input").val('');
             })
 
         });
@@ -346,20 +363,30 @@
             var message_thread_id = $('#current_thread').val();
             var from_user_id = $('#from_user_id').val();
             var to_user_id = $('#to_user_id').val();
-
-            $(this).val(''); // while pressed enter text box will be empty
+            var form = document.getElementById('attachment-form');
+            var formdata = new FormData(form);
+            $('#attachment').val('');
+            formdata.append('message', message);
+            formdata.append('message_thread_id', message_thread_id);
+            formdata.append('from_user_id', from_user_id);
+            formdata.append('to_user_id', to_user_id);
+            formdata.append('form', form);
 
             $.ajax({
                 type: "post",
                 url: "{{url('message')}}", // need to create this post route
-                data: {
-                    message: message,
-                    message_thread_id: message_thread_id,
-                    from_user_id:from_user_id,
-                    to_user_id:to_user_id
-                },
+                processData: false,
+                contentType: false,
+                async:false,
+                data:formdata,
                 cache: false,
                 success: function (data) {
+                    data = JSON.parse(data);
+                    var files = data.files;
+                    var file_anchor = "";
+                    for (var i=0; i<files.length; i++){
+                        file_anchor += '<br><a href="'+files[i].path+'" target="_blank"><span class="fa fa-paperclip"></span> '+files[i].name+'</a>'
+                    }
                     var str = '' +
                         '            <div class="message sender-message">\n' +
                         '                <div class="profile-icon">\n' +
@@ -368,8 +395,10 @@
                         '                </div>\n' +
                         '                <div class="message-text" style="min-height: 1em;">\n' +
                         '                    <span class="align-middle">' + message + '</span>\n' +
+                        '                    '+file_anchor+'\n' +
                         '                    <br>\n' +
                         '                    <span class="text-muted timeago" style="font-size: 0.7em" title="'+new Date($.now())+'"></span>\n' +
+                        '                    <span class="msg-response"></span>\n' +
                         '                </div>\n' +
                         '            </div>\n' +
                         '            <div class="clearfix"></div>\n';
@@ -377,15 +406,18 @@
                     $(".timeago").timeago();
                     $('.thread-tab-' + message_thread_id + ' .thread-time').text(formate_date(new Date($.now())));
                     $('.thread-tab-' + message_thread_id + ' .thread-message').text(message);
-
                 },
                 error: function (jqXHR, status, err) {
+                    alert('Melding sendte mislyktes!');
                 },
                 complete: function () {
                     scrollToBottomFunc();
                 }
             });
-            $("#message-input").val('');
+            $('#attachment').val();
+            $('#attachment-box').html('');
+
+
         }
 
         // make a function to scroll down auto
