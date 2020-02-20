@@ -1485,8 +1485,8 @@ class PropertyController extends Controller
     }
        public function editAddFlatWishesRented($id)
     {
-        $flat_wishes_rented = FlatWishesRented::findOrFail($id);
-        return view('user-panel.property.flat_wishes_rented',compact('flat_wishes_rented'));
+        $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
+        return view('user-panel.property.flat_wishes_rented',compact('flat_wishes_rented1'));
     }
     //update flat wishs rented
     public function updateFlatWishesRented(AddFlatWishesRented $request,$id)
