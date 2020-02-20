@@ -1155,25 +1155,29 @@ class PropertyController extends Controller
 
     //Updated the dropzone image
     public function updated_dropzone_images_type($request,$mediable_type,$ad_id=''){
-        foreach ($request as $key=>$value){
-            if(preg_match('/image_title/',$key)){
-                $explode_values = explode('_',$key);
-                $name_unique = '';
-                if(count($explode_values) > 3) {
-                    if ($explode_values[2] && $explode_values[3]) {
-                        $name_unique = $explode_values[2] . '.' . $explode_values[3];
-                    }
-                    if ($name_unique) {
-                        $media = Media::where('name_unique', $name_unique)->first();
-                        if ($media) {
-                            $media->title = $value;
-                            $media->update();
+
+        if(count($request) > 0){
+            foreach ($request as $key=>$value){
+                if(preg_match('/image_title/',$key)){
+                    $explode_values = explode('_',$key);
+                    $name_unique = '';
+                    if(count($explode_values) > 3) {
+                        if ($explode_values[2] && $explode_values[3]) {
+                            $name_unique = $explode_values[2] . '.' . $explode_values[3];
+                        }
+                        if ($name_unique) {
+                            $media = Media::where('name_unique', $name_unique)->first();
+                            if ($media) {
+                                $media->title = $value;
+                                $media->update();
+                            }
                         }
                     }
+                    unset($request[$key]);
                 }
-                unset($request[$key]);
             }
         }
+
         $temp_media = Media::where('mediable_id',Auth::user()->id)->where('mediable_type',$mediable_type)->get();
         if($temp_media->count() > 0 && $ad_id){
             foreach ($temp_media as $key=>$temp_media_obj){
@@ -2359,78 +2363,154 @@ class PropertyController extends Controller
         return view('common.partials.property.commercialproperty_for_rent_description')->with(compact('property_data'));
     }
 
+    // ad form Business for sale
     public function BusinessForSale()
     {
+        common::delete_media(Auth::user()->id, 'business_for_sale_temp_images', 'gallery');
         return view('user-panel.property.business_for_sale');
     }
+    // store business for sale ad
     public function addBusinessForSale(AddBusinessForSale $request)
     {
+        DB::beginTransaction();
+        try{
+            $business_for_sale =  $request->except('upload_dropzone_images_type');
 
-        $business_for_sale = $request->all();
+            unset($business_for_sale['business_for_sale_photos']);
+            unset($business_for_sale['business_for_sale_pdf']);
+            $business_for_sale['user_id'] = Auth::user()->id;
 
-        unset($business_for_sale['business_for_sale_photos']);
-        unset($business_for_sale['business_for_sale_pdf']);
-        $business_for_sale['user_id'] = Auth::user()->id;
+            //add Add to table
+            $add = array();
+            $add['ad_type'] = 'property_business_for_sale';
+            $add['status']  = 'published';
+            $add['user_id'] =  Auth::user()->id;
+            $add_response   =  Ad::create($add);
+            $business_for_sale['ad_id'] = $add_response->id;
 
-        //add Add to table
-        $add = array();
-        $add['ad_type'] = 'property_business_for_sale';
-        $add['status']  = 'published';
-        $add['user_id'] =  Auth::user()->id;
-        $add_response   =  Ad::create($add);
-        $business_for_sale['ad_id'] = $add_response->id;
-
-        $response = BusinessForSale::create($business_for_sale);
-
-        if (is_countable($request->file('business_for_sale_photos')) || $request->file('business_for_sale_pdf'))
-        {
-            //Ameer Hamza code for storing multiple images
-            if(is_countable($request->file('business_for_sale_photos'))){
-                common::update_media($request->file('business_for_sale_photos'), $response->id , 'App\BusinessForSale', 'gallery');
+            //Update media (mediable id and mediable type)
+            if($add_response->id){
+                $business_for_sale = $this->updated_dropzone_images_type($business_for_sale,$request->upload_dropzone_images_type,$add_response->id);
             }
-            //End
-            $files = $request->file();
-            $files_builded_arr = array();
-            foreach($files as $key=>$val)
+
+            $response = BusinessForSale::create($business_for_sale);
+
+            if ($request->file('business_for_sale_pdf'))
             {
-                array_push($files_builded_arr,$val[0]);
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val)
+                {
+                    array_push($files_builded_arr,$val[0]);
+                }
+
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val)
+                {
+                    if($i == 1)
+                    {
+                        common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
+                    }
+                    $i++;
+
+                }
+
             }
 
-            $i = 0;
-            foreach($files_builded_arr as $key=>$val)
-            {
-                /* Zille Shah Code commented by Ameer Hamza
-                if($i == 0)
-                {
-                    common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_photos');
-                }
-                */
-                if($i == 1)
-                {
-                    common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
-                }
-                $i++;
+            //Notification data
+            $notifiable_id = $response -> id;
+            $notification_obj = new NotificationController();
+            $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
+            $notification_id_search = $notification_response->id;
+            //trigger event
+            event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
 
-            }
-
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
+    }
 
-        //Notification data
-        $notifiable_id = $response -> id;
-        $notification_obj = new NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
-        $notification_id_search = $notification_response->id;
-        //trigger event
-        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+    // Edit form for business for sale ad
+    public function editBusinessForSale($id){
+        $business_for_sale = BusinessForSale::findOrFail($id);
+        if($business_for_sale){
+            if(!Auth::user()->hasRole('admin') && $business_for_sale->user_id != Auth::user()->id){
+                return redirect('forbidden');
+            }
+            return view('user-panel.property.business_for_sale', compact('business_for_sale'));
+        }else{
+            abort(404);
+        }
+    }
 
-        $data['success'] = $response;
-        echo json_encode($data);
+    // update for business for sale ad
+    public function updateBusinessForSale(AddBusinessForSale $request ,$id){
+
+        DB::beginTransaction();
+        try{
+            $business_for_sale =  $request->except(['_method','upload_dropzone_images_type']);
+
+            unset($business_for_sale['business_for_sale_pdf']);
+            $business_for_sale['user_id'] = Auth::user()->id;
+
+
+            $response = BusinessForSale::find($id);
+            if($response){
+//                Update media (mediable id and mediable type)
+                if($response->ad){
+                    $business_for_sale = $this->updated_dropzone_images_type($business_for_sale,$request->upload_dropzone_images_type,$response->ad->id);
+                }
+                $response->update($business_for_sale);
+            }
+
+            if ($request->file('business_for_sale_pdf')) {
+                $files = $request->file();
+                $files_builded_arr = array();
+
+                foreach($files as $key=>$val) {
+                    array_push($files_builded_arr,$val[0]);
+                }
+                $i = 0;
+
+                foreach($files_builded_arr as $key=>$val) {
+                    if($i == 1) {
+                        common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
+                    }
+                    $i++;
+                }
+
+            }
+
+//            Notification data
+//            $notifiable_id = $response -> id;
+//            $notification_obj = new NotificationController();
+//            $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
+//            $notification_id_search = $notification_response->id;
+//            //trigger event
+//            event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
+        }
 
     }
 
     public function businessForSaleAds(Request $request)
     {
-
         $data = $request->all();
         $searchable = (isset($data['filter']) ? $data['filter'] : "");
         $order_by_thing = 'id';
@@ -2455,6 +2535,7 @@ class PropertyController extends Controller
         }
         return view('user-panel.property.ads_business_for_sale')->with(compact('add_array'));
     }
+
 
     public function businessForSaleSortedAds(Request $request)
     {

@@ -72,7 +72,7 @@
                             <?php
 
                                 $business_for_sale  = App\BusinessForSale::find($value->id);
-                                $name               = $business_for_sale->media->first();
+                                $name               = $business_for_sale->ad->company_gallery->first();
                                 if($name != null)
                                 {
                                     $name       =    $name->name_unique;

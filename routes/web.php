@@ -371,6 +371,8 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::post('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
     Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
     Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
+    Route::get('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
+    Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
 
     Route::post('business/for/sales/sorted/ad', 'PropertyController@businessForSaleSortedAds');
 
