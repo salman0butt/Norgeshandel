@@ -368,6 +368,8 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::get('/business/for/sale', 'PropertyController@BusinessForSale');
     Route::post('add/business/for/sale', 'PropertyController@addBusinessForSale');
+    Route::post('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
+    Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
     Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
 
     Route::post('business/for/sales/sorted/ad', 'PropertyController@businessForSaleSortedAds');
@@ -375,6 +377,8 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('/business/for/sale/description/{id}', 'PropertyController@businessForSaleDescription');
 
     Route::get('/commercial/plots', 'PropertyController@commercialPlots');
+    Route::get('/commercial/plots/{id}/edit', 'PropertyController@editCommercialPlots');
+    Route::patch('commercial/plots/{id}', 'PropertyController@updateCommercialPlots');
     Route::post('/add/commercial/plot/ad', 'PropertyController@addcommercialPlotsAd');
 
     Route::get('/commercial/plots/ads', 'PropertyController@commercialPlotsAds');

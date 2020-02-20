@@ -32,7 +32,14 @@
                 e.preventDefault();
                 var l = Ladda.create(this);
                 l.start();
+                
+                @if(Request::is('commercial/plots/*/edit'))
+                var url = "{{url('commercial/plots/'.$commercial_plots->id)}}";
+                @else 
                 var url = '{{url('add/commercial/plot/ad')}}';
+                @endif
+
+                
                 $('.notice').html("");
                 var myform = document.getElementById("commercial_plot_form");
                 var fd = new FormData(myform);

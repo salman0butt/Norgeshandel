@@ -2496,6 +2496,78 @@ class PropertyController extends Controller
     {
         return view('user-panel.property.commercial_plots');
     }
+    public function editCommercialPlots($id)
+    {
+        $commercial_plots = CommercialPlot::findOrFail($id);
+        
+        return view('user-panel.property.commercial_plots', compact('commercial_plots'));
+    }
+        public function updateCommercialPlots(AddCommercialPlot $request, $id)
+    {
+
+        $commercial_plot = $request->all();
+
+        unset($commercial_plot['commercial_plot_photos']);
+        unset($commercial_plot['commercial_plot_pdf']);
+        $commercial_plot['user_id'] = Auth::user()->id;
+
+        //add Add to table
+        // $add = array();
+        // $add['ad_type'] = 'property_commercial_plots';
+        // $add['status']  = 'published';
+        // $add['user_id'] =  Auth::user()->id;
+        // $add_response   =  Ad::create($add);
+        // $commercial_plot['ad_id'] = $add_response->id;
+
+        $response = CommercialPlot::findOrFail($id);
+        $response->update($commercial_plot);
+
+        if (is_countable($request->file('commercial_plot_photos')) || $request->file('commercial_plot_pdf'))
+        {
+            //Ameer Hamza code to store mulitple images
+            if(is_countable($request->file('commercial_plot_photos'))){
+                common::update_media($request->file('commercial_plot_photos'), $response->id , 'App\CommercialPlot', 'gallery');
+            }
+            //End Code
+            $files = $request->file();
+            $files_builded_arr = array();
+            foreach($files as $key=>$val)
+            {
+                array_push($files_builded_arr,$val[0]);
+            }
+
+            $i = 0;
+            foreach($files_builded_arr as $key=>$val)
+            {
+                /* Zille Shah Code commented by Ameer Hamza
+                if($i == 0)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_photos');
+                }
+                */
+                if($i == 1)
+                {
+                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
+                }
+                $i++;
+
+            }
+
+        }
+
+        // //Notification data
+        // $notifiable_id = $response->id;
+        // $notification_obj = new NotificationController();
+        // $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPlot','property have been added');
+        // $notification_id_search = $notification_response->id;
+
+        // //trigger event
+        // event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+
+        $data['success'] = $response;
+        echo json_encode($data);
+    }
+
 
     public function addcommercialPlotsAd(AddCommercialPlot $request)
     {
