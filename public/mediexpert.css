@@ -1157,7 +1157,7 @@ label span.count{
     font-size: 26px;
     color: rgba(255, 255, 255, 0.3);
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     border: 2px solid rgba(176, 64, 88, 0);
     border-radius: 25px;
     transition: .5s all;
@@ -1166,4 +1166,22 @@ label span.count{
     color: rgba(176, 64, 88, 0.5);
     background-color: rgba(176, 64, 88, 0.2);
     border: 2px solid rgba(176, 64, 88, 0.3);
+}
+.page-messages .attached-file{
+    float:left;
+    padding: 5px 10px;
+    margin: 1px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    background-color: white;
+    color: #888;
+    cursor: pointer;
+}
+.page-messages .attached-file-clear-link{
+    float:left;
+    padding: 5px 10px;
+    margin: 1px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 25px;
+    border: 1px solid #ddd;
 }

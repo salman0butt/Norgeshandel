@@ -15,7 +15,7 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('message');
+            $table->text('message')->nullable();
             $table->integer('from_user_id')->nullable();
             $table->integer('to_user_id')->nullable();
             $table->integer('message_thread_id');
