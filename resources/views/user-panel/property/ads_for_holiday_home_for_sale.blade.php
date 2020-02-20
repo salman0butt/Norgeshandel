@@ -91,10 +91,10 @@
                             <?php
                                 
                                 $property_holiday_home_for_sale = App\PropertyHolidaysHomesForSale::find($value->id);
-                                $name       = $property_holiday_home_for_sale->media->first();
+                                $name       = $property_holiday_home_for_sale->ad->company_gallery->first();
                                 if(!empty($name))
                                 {
-                                    $name = $property_holiday_home_for_sale->media->first()->name_unique;
+                                    $name = $property_holiday_home_for_sale->ad->company_gallery->first()->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($property_holiday_home_for_sale);
                                     $full_path  = $path."".$name; 
                                 }

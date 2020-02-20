@@ -84,10 +84,10 @@ $posts         =   array('img'=>'',
                             <?php
                                 
                                 $commercial_plot = App\CommercialPlot::find($value->id);
-                                $name       = $commercial_plot->media;
+                                $name       = $commercial_plot->ad->company_gallery;
                                 if(!$name->isEmpty())
                                 {
-                                    $name =     $commercial_plot->media->first()->name_unique;
+                                    $name =     $commercial_plot->ad->company_gallery->first()->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($commercial_plot);
                                     $full_path  = $path."".$name; 
                                 }
