@@ -10,7 +10,12 @@
     $country = \App\Taxonomy::where('slug', 'country')->first();
     $countries = $country->terms;
 
+//    $property_type = \App\Taxonomy::where('slug', 'cpfs_property_type')->first();
+  //  $property_types = $property_type->terms;
+
     $property_type = explode(',', $commercial_property_for_sale->property_type);
+    $json = json_encode($property_type);
+    $commercial_property_for_sale->update(['property_type'=>$json]);
     $facilities = explode(',', $commercial_property_for_sale->facilities);
 
 @endphp
@@ -535,14 +540,14 @@ lenke til profilsiden.
     </div>
 </form>
 
-<script>   
+<script>
     $(document).on('change', 'input[name="zip_code"]', function(e) {
          document.getElementById("zip_code_city_name").innerHTML = '';
     var zip_code = $(this).val();
     var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
     // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
     var client_url = 'localhost';
-    
+
     if(zip_code){
     var xhttp = new XMLHttpRequest();
    xhttp.onreadystatechange = function() {
@@ -557,5 +562,5 @@ lenke til profilsiden.
     xhttp.send();
     }
 });
-   
+
     </script>

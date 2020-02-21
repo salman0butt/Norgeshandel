@@ -109,6 +109,7 @@ Route::group(['middleware' => 'authverified'], function () {
 
 //property search and filters
     Route::get('property/property-for-sale/search', 'PropertyController@search_property_for_sale');
+    Route::get('property/commercial-property-for-sale/search', 'PropertyController@search_commercial_property_for_sale');
 
 
 //Banner ads mangment
