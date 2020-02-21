@@ -1,10 +1,8 @@
 <?php
-
 use App\Helpers\common;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateTermsTable extends Migration
 {
     /**
@@ -21,6 +19,7 @@ class CreateTermsTable extends Migration
     private $deadline = array("Siste frist","Under en uke", "Under tre døgn");
     private $pfs_property_type = array('Leilighet', 'Enebolig', 'Tomannsbolig', 'Rekkehus', 'Gårdsbruk/Småbruk', 'Prosjekt', 'Hytte', 'Garasje/Parkering', 'Tomter', 'Annet fritid', 'Produksjon/Industri', 'Hyttetomt', 'Bygård/Flermannsbolig', 'Kontor', 'Andre');
     private $pfs_tenure = array('Aksje','Andel','Annet','Eier Selveier','Obligasjon');
+    private $cpfs_property_type = array("Butikk/Handel","Bygård/Flermannsbolig","Garasje/Parkering","Gårdsbruk/Småbruk","Hotell/Overnatting","Kjøpesenter","Kombinasjonslokaler","Kontor","Lager/Logistikk","Produksjon/Industri","Serveringslokale/Kantine","Undervisning/Arrangement","Verksted","Andre",);
 
     public function up()
     {
@@ -33,7 +32,6 @@ class CreateTermsTable extends Migration
             $table->string('detail')->nullable();
             $table->timestamps();
         });
-
         common::insert_term_array($this->industry, \App\Taxonomy::where('slug', 'industry')->get()->first()->id, 0);
         common::insert_term_array($this->job_function, \App\Taxonomy::where('slug', 'job_function')->get()->first()->id, 0);
         common::insert_term_array($this->sector, \App\Taxonomy::where('slug', 'sector')->get()->first()->id, 0);
@@ -43,10 +41,8 @@ class CreateTermsTable extends Migration
         common::insert_term_array($this->country, \App\Taxonomy::where('slug', 'country')->get()->first()->id, 0);
         common::insert_term_array($this->pfs_property_type, \App\Taxonomy::where('slug', 'pfs_property_type')->get()->first()->id, 0);
         common::insert_term_array($this->pfs_tenure, \App\Taxonomy::where('slug', 'pfs_tenure')->get()->first()->id, 0);
-
-
+        common::insert_term_array($this->cpfs_property_type, \App\Taxonomy::where('slug', 'cpfs_property_type')->get()->first()->id, 0);
     }
-
     /**
      * Reverse the migrations.
      *

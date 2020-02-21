@@ -204,6 +204,159 @@ class PropertyController extends Controller
         }
         return view('user-panel.property.search-property-for-sale', compact('col', 'add_array'));
     }
+    public function search_commercial_property_for_sale(Request $request){
+//        dd($request->all());
+        $col = 'list';
+        if (isset($request->view) && !empty($request->view)){
+            $col = $request->view;
+        }
+        $query = DB::table('ads')
+            ->join('commercial_property_for_sales', 'commercial_property_for_sales.ad_id', 'ads.id')
+            ->where('ads.status', 'published');
+
+
+//        $arr = Arr::only($request->all(), ['country']);
+//
+//        if (isset($request->search) && !empty($request->search)){
+//            $query->where('headline', 'like', '%'.$request->search.'%');
+//        }
+//        if (isset($request->created_at)){
+//            $query->whereDate('property_for_sales.created_at', '=', $request->created_at);
+//        }
+//        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
+//            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
+//                $query->where('property_for_sales.local_area_name', 'like', '%' . $request->local_area_name . '%');
+//            }
+//        }
+//
+//        if (isset($request->asking_price_from) && !empty($request->asking_price_from)) {
+//                $query->where('property_for_sales.asking_price', '>=', (int)$request->asking_price_from);
+//        }
+//        if (isset($request->asking_price_to) && !empty($request->asking_price_to)) {
+//                $query->where('property_for_sales.asking_price', '<=', (int)$request->asking_price_to);
+//        }
+//
+//        if (isset($request->total_price_from) && !empty($request->total_price_from)) {
+//                $query->where('property_for_sales.total_price', '>=', (int)$request->total_price_from);
+//        }
+//        if (isset($request->total_price_to) && !empty($request->total_price_to)) {
+//                $query->where('property_for_sales.total_price', '<=', (int)$request->total_price_to);
+//        }
+//
+//        if (isset($request->rent_shared_cost_from) && !empty($request->rent_shared_cost_from)) {
+//                $query->where('property_for_sales.rent_shared_cost', '>=', (int)$request->rent_shared_cost_from);
+//        }
+//        if (isset($request->total_price_to) && !empty($request->total_price_to)) {
+//                $query->where('property_for_sales.rent_shared_cost', '<=', (int)$request->rent_shared_cost_to);
+//        }
+//
+//        if (isset($request->use_area_from) && !empty($request->use_area_from)) {
+//                $query->where('property_for_sales.use_area', '>=', (int)$request->use_area_from);
+//        }
+//        if (isset($request->use_area_to) && !empty($request->use_area_to)) {
+//                $query->where('property_for_sales.use_area', '<=', (int)$request->use_area_to);
+//        }
+//
+//        if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
+//                $query->where('property_for_sales.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+//        }
+//
+//        if (isset($request->land_from) && !empty($request->land_from)) {
+//            $query->where('property_for_sales.land', '>=', (int)$request->land_from);
+//        }
+//        if (isset($request->land_to) && !empty($request->land_to)) {
+//            $query->where('property_for_sales.land', '<=', (int)$request->land_to);
+//        }
+//
+//        if (isset($request->year_from) && !empty($request->year_from)) {
+//            $query->where('property_for_sales.year', '>=', (int)$request->year_from);
+//        }
+//
+//        if (isset($request->year_to) && !empty($request->year_to)) {
+//            $query->where('property_for_sales.year', '<=', (int)$request->year_to);
+//        }
+//
+//        if (isset($request->condition) && !empty($request->condition)) {
+//            if(in_array("new", $request->condition)){
+//                $query->where('property_for_sales.year', '>=', today()->addMonths(-6)->year);
+//            }
+//            if(in_array("used", $request->condition)){
+//                $query->where('property_for_sales.year', '<', today()->addMonths(-6)->year);
+//            }
+//        }
+//
+//        if (isset($request->display_date) && !empty($request->display_date)) {
+//            $query->whereDate('property_for_sales.deliver_date', '=', $request->display_date[0]);
+//            for($i=1; $i<count($request->display_date); $i++){
+//                $query->orWhereDate('property_for_sales.deliver_date', '=', $request->display_date[$i]);
+//            }
+//        }
+//
+//        if (isset($request->pfs_property_type) && !empty($request->pfs_property_type)) {
+//            $query->whereIn('property_for_sales.property_type', $request->pfs_property_type);
+//        }
+//
+//        if (isset($request->pfs_tenure) && !empty($request->pfs_tenure)) {
+//            $query->whereIn('property_for_sales.tenure', $request->pfs_tenure);
+//        }
+//
+//        if (isset($request->facilities) && !empty($request->facilities)) {
+//            $query->where('property_for_sales.facilities', 'like', '%'.$request->facilities[0].'%');
+//            for($i=1; $i<count($request->facilities); $i++){
+//                $query->orWhere('property_for_sales.facilities', 'like', '%'.$request->facilities[$i].'%');
+//            }
+//        }
+//
+//        if (isset($request->floor) && !empty($request->floor)) {
+//            $query->whereIn('property_for_sales.floor', $request->floor);
+//            if (in_array('over 6', $request->floor)){
+//                dd($request->floor);
+//                $query->orwhere('property_for_sales.floor', '>', 6);
+//            }
+//        }
+//
+//        if (isset($request->energy_unit) && !empty($request->energy_unit)) {
+//            $query->whereIn('property_for_sales.energy_grade', $request->energy_unit);
+//        }
+
+
+
+//        $order_by_thing = 'id';
+//        $order_by = 'DESC';
+
+//        if(isset($request->order) && !empty($request->order)) {
+//            $order = $request->order;
+//            switch ($order){
+//                case 'priced-low-high':
+//                    $query->orderBy('asking_price' ,'ASC');
+//                    break;
+//                case 'priced-high-low':
+//                    $query->orderBy('asking_price' ,'DESC');
+//                    break;
+//                case 'p-rom-area-low-high':
+//                    $query->orderBy('primary_room' ,'ASC');
+//                    break;
+//                case 'p-rom-area-high-low':
+//                    $query->orderBy('primary_room' ,'DESC');
+//                    break;
+//                case 'total-price-low-high':
+//                    $query->orderBy('total_price' ,'ASC');
+//                    break;
+//                case 'total-price-high-low':
+//                    $query->orderBy('total_price' ,'DESC');
+//                    break;
+//            }
+//        }
+//        $query->where($arr);
+
+        $add_array = $query->paginate(getenv('PAGINATION'));
+
+        if ($request->ajax()){
+            $html = view('user-panel.property.search-commercial-property-for-sale-inner', compact( 'add_array', 'col'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-commercial-property-for-sale', compact('col', 'add_array'));
+    }
 
     public function list()
     {
@@ -286,7 +439,7 @@ class PropertyController extends Controller
     }
         public function UpdatePropertyForRentAdd(Request $request,$id)
     {
-        
+
 
         $property_for_rent_data = $request->except('_method');
         // dd($property_for_rent_data);
@@ -404,7 +557,7 @@ class PropertyController extends Controller
       // dd($response);
         if (is_countable($request->file('property_photos')))
         {
-            common::update_media($request->file('property_photos'), $response->id , 'App\PropertyForRent', 'gallery'); 
+            common::update_media($request->file('property_photos'), $response->id , 'App\PropertyForRent', 'gallery');
             //propert_for_rent
         }
 
@@ -801,7 +954,7 @@ class PropertyController extends Controller
     }
     // Delete Holiday Home for sale
    public function deleteHomeForSaleAd($id){
-        
+
         $holiday_home_for_sale = PropertyHolidaysHomesForSale::findOrFail($id);
 
         //$ad = Ad::findOrFail($id);
@@ -1185,7 +1338,7 @@ class PropertyController extends Controller
         }
         return $request;
     }
-    
+
     public function addSaleAdd(AddPropertyForSale $request)
     {
         DB::beginTransaction();
@@ -1487,7 +1640,7 @@ class PropertyController extends Controller
     //update flat wishs rented
     public function updateFlatWishesRented(AddFlatWishesRented $request,$id)
     {
-     
+
 
         $flat_wishes_rented_data = $request->all();
         $regions = "";
@@ -1542,7 +1695,7 @@ class PropertyController extends Controller
 
     }
       public function deleteFlatWishesRented($id){
-        
+
         $flat_wishes_rented = FlatWishesRented::findOrFail($id);
 
         //$ad = Ad::findOrFail($id);
@@ -2499,7 +2652,7 @@ class PropertyController extends Controller
     public function editCommercialPlots($id)
     {
         $commercial_plots = CommercialPlot::findOrFail($id);
-        
+
         return view('user-panel.property.commercial_plots', compact('commercial_plots'));
     }
         public function updateCommercialPlots(AddCommercialPlot $request, $id)
