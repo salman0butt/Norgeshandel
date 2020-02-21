@@ -281,8 +281,8 @@ class PropertyController extends Controller
         return view('user-panel.property.new_add');
     }
     public function newAddedit($id){
-        $property_for_rent = PropertyForRent::findOrFail($id);
-        return view('user-panel.property.new_add',compact('property_for_rent'));
+        $property_for_rent1 = PropertyForRent::findOrFail($id);
+        return view('user-panel.property.new_add',compact('property_for_rent1'));
     }
         public function UpdatePropertyForRentAdd(Request $request,$id)
     {

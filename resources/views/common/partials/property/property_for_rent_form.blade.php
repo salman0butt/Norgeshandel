@@ -1,11 +1,28 @@
 <form action="#" method="post" id="property_for_rent_form" enctype="multipart/form-data">
+@php
+     $property_for_rent = new \App\PropertyForRent();
+    if(isset($property_for_rent1)){
+        $property_for_rent = $property_for_rent1;
+    }
+
+    $country = \App\Taxonomy::where('slug', 'country')->first();
+    $countries = $country->terms;
+
+    //$property_type = explode(',', $flat_wishes_rented->property_type);
+    //$region = explode(',', $flat_wishes_rented->region);
+
+
+@endphp
+    @if(Request::is('new/property/rent/ad/*/edit'))
+    @method('PATCH')
+    @endif
 
     <div class="pl-3 pr-3">
         <div class="form-group">
             <label class="u-t5">Overskrift</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="heading" class="dme-form-control"/>
+                    <input type="text" name="heading" value="{{ $property_for_rent->heading }}" class="dme-form-control"/>
                     <span class="error-span heading"></span>
                 </div>
             </div>
@@ -14,7 +31,7 @@
             <label class="u-t5">Postnummer</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="zip_code" class="dme-form-control">
+                    <input type="text" name="zip_code" value="{{ $property_for_rent->zip_code }}" class="dme-form-control">
                     <span class="error-span zip_code"></span>
                      <span id="zip_code_city_name"></span>
                 </div>
@@ -27,7 +44,7 @@
             </label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="street_address" class="dme-form-control">
+                    <input type="text" name="street_address" value="{{ $property_for_rent->street_address }}" class="dme-form-control">
                     <span class="error-span street_address"></span>
                 </div>
             </div>
@@ -38,6 +55,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="property_type" name="property_type" class="dme-form-control">
+        <option value="{{ $property_for_rent->property_type }}">{{ $property_for_rent->property_type }}</option>
                         <option value=""></option>
                         <option value="Andre">Andre</option>
                         <option value="Enebolig">Enebolig</option>
@@ -58,7 +76,7 @@
             <label class="u-t5">Primærrom (P-ROM)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="primary_rom" class="dme-form-control" placeholder="m²">
+                    <input type="text" value="{{ $property_for_rent->primary_rom }}" name="primary_rom" class="dme-form-control" placeholder="m²">
                     <span class="u-t5">Arealet av primærrom i boligen, sekundærrom tas ikke med i betegnelsen. Du kan finne arealet for primærrom i takstrapporten.</span>
                     <br><span class="error-span primary_rom"></span>
                 </div>
@@ -68,7 +86,7 @@
             <label class="u-t5">Bruttoareal (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="gross_area" class="dme-form-control" placeholder="m²">
+                    <input type="text" name="gross_area" value="{{ $property_for_rent->gross_area }}"  class="dme-form-control" placeholder="m²">
                     <span class="error-span gross_area"></span>
                 </div>
             </div>
@@ -77,7 +95,7 @@
             <label class="u-t5">Bruksareal (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="area_of_use" class="dme-form-control" placeholder="m²">
+                    <input type="text" name="area_of_use" value="{{ $property_for_rent->area_of_use }}" class="dme-form-control" placeholder="m²">
                     <span class="error-span area_of_use"></span>
                 </div>
             </div>
@@ -86,7 +104,7 @@
             <label class="u-t5">Antall soverom</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="number_of_bedrooms" class="dme-form-control" placeholder="m²">
+                    <input type="text" name="number_of_bedrooms" value="{{ $property_for_rent->number_of_bedrooms }}" class="dme-form-control" placeholder="m²">
                     <span class="error-span number_of_bedrooms"></span>
                 </div>
             </div>
@@ -95,7 +113,7 @@
             <label class="u-t5">Etasje (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="floor" class="dme-form-control" placeholder="m²">
+                    <input type="text" name="floor" value="{{ $property_for_rent->floor }}" class="dme-form-control" placeholder="m²">
                     <span class="error-span floor"></span>
                 </div>
             </div>
@@ -105,6 +123,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="furnishing" name="furnishing" class="dme-form-control">
+                        <option value="{{ $property_for_rent->furnishing }}">{{ $property_for_rent->floor }}</option>
                         <option value=""></option>
                         <option value="Delvis møblert">Delvis møblert</option>
                         <option value="Møblert">Møblert</option>
@@ -218,6 +237,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="energy_label.class" name="energy_label_class" data-selector="" class="dme-form-control">
+                        <option value="{{ $property_for_rent->energy_label_class }}">{{ $property_for_rent->energy_label_class }}</option>
                         <option value=""></option>
                         <option value="A">A</option>
                         <option value="B">B</option>
@@ -236,6 +256,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="energy_label.color" name="energy_label_color" data-selector="" class="dme-form-control">
+                        <option value="{{ $property_for_rent->energy_label_color }}">{{ $property_for_rent->energy_label_color }}</option>
                         <option value=""></option>
                         <option value="Gul">Gul</option>
                         <option value="Lysegrønn">Lysegrønn</option>
@@ -261,7 +282,7 @@
             <label class="u-t5">Månedsleie</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="monthly_rent" class="dme-form-control" placeholder="Kr.">
+                    <input type="text" name="monthly_rent" value="{{ $property_for_rent->monthly_rent }}" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span monthly_rent"></span>
                 </div>
                 <div class="col-sm-8">
@@ -272,7 +293,7 @@
             <label class="u-t5">Depositum (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="deposit" class="dme-form-control" placeholder="Kr.">
+                    <input type="text" name="deposit" value="{{ $property_for_rent->deposit }}" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span deposit"></span>
                 </div>
                 <div class="col-sm-8">
@@ -283,7 +304,7 @@
             <label class="u-t5">Inkludert i husleie (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="include_in_rent" class="dme-form-control"
+                    <input type="text" name="include_in_rent" value="{{ $property_for_rent->include_in_rent }}"  class="dme-form-control"
                            placeholder="F.eks.: Strøm, kabeltv, bredbånd osv.">
                     <span class="error-span include_in_rent"></span>
                 </div>
@@ -293,7 +314,7 @@
             <label class="u-t5">Leies ut fra</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" name="rented_from" class="dme-form-control">
+                    <input type="date" value="{{ $property_for_rent->rented_from }}" name="rented_from" class="dme-form-control">
                     <span class="error-span rented_from"></span>
                 </div>
                 <div class="col-sm-8">
@@ -304,7 +325,7 @@
             <label class="u-t5">Leies ut til (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" name="rented_to" class="dme-form-control">
+                    <input type="date" value="{{ $property_for_rent->rented_to }}" name="rented_to" class="dme-form-control">
                     <span class="error-span rented_to"></span>
                 </div>
                 <div class="col-sm-8">
@@ -316,7 +337,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <!-- <button class="dme-btn-outlined-blue">Legg til bilder</button> -->
-                    <input type="file" name="property_photos[]" id="property_photos" class="" multiple>
+                    <input type="file" name="property_photos[]" value="{{ $property_for_rent->property_photos }}" id="property_photos" class="" multiple>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -326,16 +347,17 @@
             <label class="u-t5">Beskrivelse (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="beskrivelse" cols="30" rows="10"></textarea>
+                    <textarea name="description" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
                     <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>
         </div>
+      
         <div class="form-group">
             <label class="u-t5">Visningsdato (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" name="delivery_date[]" class="dme-form-control">
+                    <input type="date" name="delivery_date[]" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control">
                     <span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>
                 </div>
             </div>
@@ -344,7 +366,7 @@
             <label class="u-t5">Fra klokken (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="from_clock[]" placeholder="tt.mm" class="dme-form-control">
+                    <input type="text" name="from_clock[]" value="{{ $property_for_rent->from_clock }}" placeholder="tt.mm" class="dme-form-control">
                     <span class="u-t5">Tid (eksempel 18:00)</span>
                 </div>
             </div>
@@ -353,7 +375,7 @@
             <label class="u-t5">Til klokken (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="clockwise_clock[]" placeholder="tt.mm" class="dme-form-control">
+                    <input type="text" name="clockwise_clock[]" value="{{ $property_for_rent->clockwise_clock }}" placeholder="tt.mm" class="dme-form-control">
                     <span class="u-t5">Tid (eksempel 19:00)</span>
                 </div>
             </div>
@@ -362,7 +384,7 @@
             <label class="u-t5">Merknad (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="note[]" placeholder="F.eks.: visning etter avtale"
+                    <input type="text" name="note[]" value="{{ $property_for_rent->note }}" placeholder="F.eks.: visning etter avtale"
                            class="dme-form-control">
                 </div>
             </div>
@@ -404,7 +426,7 @@
         <hr>
         <div class="notice"></div>
         <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiser_annonsen"
-                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
+                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">oppdater tillegget ditt</span></button>
 </form>
   <script>   
     $(document).on('change', 'input[name="zip_code"]', function(e) {
