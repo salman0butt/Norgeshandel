@@ -100,6 +100,10 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('user/ads/options', function () {
      return view('user-panel.my-business.my_ads_options');
     });
+    Route::get('user/ads/statistics', function () {
+     return view('user-panel.my-business.ads_statistics');
+    });
+
 
 //Compnies List
 
