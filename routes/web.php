@@ -97,7 +97,9 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.footer.cookie');
     });
-
+    Route::get('user/ads/options', function () {
+     return view('user-panel.my-business.my_ads_options');
+    });
 
 //Compnies List
 
