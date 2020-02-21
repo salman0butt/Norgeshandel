@@ -6,7 +6,7 @@
         if(isset($property_data->facilities) && !empty($property_data->facilities)){
             $facilities = explode(",",rtrim($property_data->facilities, ","));
         }
-        $name       = $property_data->ad->media;
+        $name       = $property_data->ad->company_gallery;
     ?>
 
     <main>

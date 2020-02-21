@@ -73,10 +73,10 @@
                             <?php
                                     
                                     $property_commercial_property_for_rent = App\CommercialPropertyForRent::find($value->id);
-                                    $name       = $property_commercial_property_for_rent->media->first();
+                                    $name       = $property_commercial_property_for_rent->ad->company_gallery->first();
                                     if(!empty($name))
                                     {
-                                        $name = $property_commercial_property_for_rent->media->first()->name_unique;
+                                        $name = $property_commercial_property_for_rent->ad->company_gallery->first()->name_unique;
                                         $path       = \App\Helpers\common::getMediaPath($property_commercial_property_for_rent);
                                         $full_path  = $path."".$name; 
                                     }

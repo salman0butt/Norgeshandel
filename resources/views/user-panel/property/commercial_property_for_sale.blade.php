@@ -66,19 +66,20 @@
                 },
                 error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
                     var errors = jqXhr.responseJSON;
-                    if(!isEmpty(errors.errors))
-                    {
-                        $.each( errors.errors, function( index, value ){
-
-                            $("."+index).html(value);
-                            $("input[name='"+index+"'],select[name='"+index+"']").addClass("error-input");
-
-                        });
-                    }
-                    else
+                    console.log(errors.errors);
+                    if(isEmpty(errors.errors))
                     {
                         $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                        return false;
                     }
+
+                    var html="<ul>";
+                    $.each( errors.errors, function( index, value ){
+                        console.log(value);
+                        html += "<li>"+value+"</li>";
+                    });
+                    html += "</ul>";
+                    $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                 },
             }).always(function () {
                 l.stop();

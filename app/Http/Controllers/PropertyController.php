@@ -778,178 +778,168 @@ class PropertyController extends Controller
 
     public function holidayHomeForSale(Request $request)
     {
+        common::delete_media(Auth::user()->id, 'holiday_home_for_sale_temp_images', 'gallery');
         return view('user-panel.property.holiday_home_for_sale');
     }
     //edit Holiday Home For Sale
-      public function editHolidayHomeForSale($id)
+    public function editHolidayHomeForSale($id)
     {
-        $holiday_home_for_sale = PropertyHolidaysHomesForSale::findOrFail($id);
-        return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale'));
+        $holiday_home_for_sale1 = PropertyHolidaysHomesForSale::findOrFail($id);
+        if($holiday_home_for_sale1){
+            if(!Auth::user()->hasRole('admin') && $holiday_home_for_sale1->user_id != Auth::user()->id){
+                return redirect('forbidden');
+            }
+            return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale1'));
+        }else{
+            abort(404);
+        }
+
     }
     //UpdatePropertyHolidayHomeForSale $request
     public function updateHomeForSaleAd(AddPropertyHolidayHomeForSale $request,$id)
     {
-        $property_home_for_sale_data = $request->all();
+        DB::beginTransaction();
+        try{
+            $property_home_for_sale_data = $request->except('upload_dropzone_images_type');
 
-        //Add More ViewingTimes
-        if(isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "")
-        {
-            $property_home_for_sale_data['secondary_deliver_date'] = null;
-            $i = 0;
-            foreach($property_home_for_sale_data['delivery_date'] as $key=>$val)
+            //Add More ViewingTimes
+            if(isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "")
             {
-                if($i == 0)
+                $property_home_for_sale_data['secondary_deliver_date'] = null;
+                $i = 0;
+                foreach($property_home_for_sale_data['delivery_date'] as $key=>$val)
                 {
-                    $property_home_for_sale_data['delivery_date']  = $val;
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['delivery_date']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_deliver_date'] .= $val.",";
+                    }
+                    $i++;
                 }
-                else
-                {
-                    $property_home_for_sale_data['secondary_deliver_date'] .= $val.",";
-                }
-                $i++;
             }
-        }
 
-        $property_home_for_sale_data['secondary_from_clock'] = "";
-        if(isset($property_home_for_sale_data['from_clock']))
-        {
-            $i = 0;
-            foreach($property_home_for_sale_data['from_clock'] as $key=>$val)
+            $property_home_for_sale_data['secondary_from_clock'] = "";
+            if(isset($property_home_for_sale_data['from_clock']))
             {
-                if($i == 0)
+                $i = 0;
+                foreach($property_home_for_sale_data['from_clock'] as $key=>$val)
                 {
-                    $property_home_for_sale_data['from_clock']  = $val;
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['from_clock']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_from_clock'] .= $val.",";
+                    }
+                    $i++;
                 }
-                else
-                {
-                    $property_home_for_sale_data['secondary_from_clock'] .= $val.",";
-                }
-                $i++;
             }
-        }
 
-          $property_home_for_sale_data['secondary_clockwise'] = "";
-          if(isset($property_home_for_sale_data['clockwise']))
-          {
-              $i = 0;
-              foreach($property_home_for_sale_data['clockwise'] as $key=>$val)
-              {
-                  if($i == 0)
-                  {
-                      $property_home_for_sale_data['clockwise']  = $val;
-                  }
-                  else
-                  {
-                      $property_home_for_sale_data['secondary_clockwise'] .= $val.",";
-                  }
-                  $i++;
-              }
-          }
-
-          $property_home_for_sale_data['secondary_note'] = "";
-          if(isset($property_home_for_sale_data['note']))
-          {
-              $i = 0;
-              foreach($property_home_for_sale_data['note'] as $key=>$val)
-              {
-                  if($i == 0)
-                  {
-                      $property_home_for_sale_data['note']  = $val;
-                  }
-                  else
-                  {
-                      $property_home_for_sale_data['secondary_note'] .= $val.",";
-                  }
-                  $i++;
-              }
-        }
-        //Manage Facilities
-        if(isset($property_home_for_sale_data['facilities']))
-        {
-            $facilities = "";
-            foreach($property_home_for_sale_data['facilities'] as $key=>$val)
+            $property_home_for_sale_data['secondary_clockwise'] = "";
+            if(isset($property_home_for_sale_data['clockwise']))
             {
-                $facilities .= $val . ",";
+                $i = 0;
+                foreach($property_home_for_sale_data['clockwise'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['clockwise']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_clockwise'] .= $val.",";
+                    }
+                    $i++;
+                }
             }
-            $property_home_for_sale_data['facilities'] = $facilities;
-        }
 
-        $property_home_for_sale_data['user_id'] = Auth::user()->id;
-
-        //add Add to table
-        // $add = array();
-        // $add['ad_type'] = 'property_holiday_home_for_sale';
-        // $add['status']  = 'published';
-        // $add['user_id'] =  Auth::user()->id;
-        // $add_response   =  Ad::create($add);
-       // $property_home_for_sale_data['ad_id'] = $add_response->id;
-        if (isset($property_home_for_sale_data['property_home_for_sale_photos'])) {
-           unset($property_home_for_sale_data['property_home_for_sale_photos']);
-
-        }else if (isset($property_home_for_sale_data['property_home_for_sale_pdf_photos'])) {
-           unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
-
-        }else if (isset($property_home_for_sale_data['property_home_for_sale_sale_quote'])) {
-          unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
-        }
-        $response = PropertyHolidaysHomesForSale::findOrFail($id);
-        $response->update($property_home_for_sale_data);
-
-        //upload files
-        if ($request->file('property_home_for_sale_photos') || $request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote'))
-        {
-            // $files = $request->file('property_photos');
-            // $files_pdf = $request->file('property_pdf');
-            // $files_quote = $request->file('property_quote');
-
-            $files = $request->file();
-            $files_builded_arr = array();
-            foreach($files as $key=>$val)
+            $property_home_for_sale_data['secondary_note'] = "";
+            if(isset($property_home_for_sale_data['note']))
             {
-                array_push($files_builded_arr,$val[0]);
+                $i = 0;
+                foreach($property_home_for_sale_data['note'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['note']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_note'] .= $val.",";
+                    }
+                    $i++;
+                }
             }
-
-            //Ameer Hamza code to store multiple images
-            if(is_countable($request->file('property_home_for_sale_photos'))){
-                common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'gallery'); // property_home_for_sale_photos
-            }
-            //End Ameer Hamza code
-            $i = 0;
-            foreach($files_builded_arr as $key=>$val)
+            //Manage Facilities
+            if(isset($property_home_for_sale_data['facilities']))
             {
-                /* Zille Shah Code commented by Ameer Hamza
-                if($i == 0)
+                $facilities = "";
+                foreach($property_home_for_sale_data['facilities'] as $key=>$val)
                 {
-                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_photos');
+                    $facilities .= $val . ",";
                 }
-                end zille shah code */
-                if($i == 1)
-                {
-                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
-                }
-                if($i == 2)
-                {
-                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
-                }
-                $i++;
-
+                $property_home_for_sale_data['facilities'] = $facilities;
             }
 
+            $property_home_for_sale_data['user_id'] = Auth::user()->id;
+
+            if (isset($property_home_for_sale_data['property_home_for_sale_pdf_photos'])) {
+                unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
+
+            }else if (isset($property_home_for_sale_data['property_home_for_sale_sale_quote'])) {
+                unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
+            }
+            $response = PropertyHolidaysHomesForSale::findOrFail($id);
+
+            //Update media (mediable id and mediable type)
+            if($response && $response->ad){
+                $property_home_for_sale_data = $this->updated_dropzone_images_type($property_home_for_sale_data,$request->upload_dropzone_images_type,$response->ad->id);
+            }
+
+            $response->update($property_home_for_sale_data);
+
+            //upload files
+            if ($request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote'))
+            {
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val)
+                {
+                    array_push($files_builded_arr,$val[0]);
+                }
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val)
+                {
+                    if($i == 1)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
+                    }
+                    if($i == 2)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
+                    }
+                    $i++;
+                }
+            }
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
 
 
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
 
-        //Notification data
-        // $notifiable_id = $response -> id;
-        // $notification_obj = new NotificationController();
-        // $notification_response = $notification_obj->create($notifiable_id,'App\PropertyHolidaysHomesForSale','property have been added');
-        // $notification_id_search = $notification_response->id;
 
-        // //trigger event
-        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
-        $data['success'] = $response;
-        echo json_encode($data);
 
     }
     // Delete Holiday Home for sale
@@ -972,163 +962,164 @@ class PropertyController extends Controller
 
 
     //AddPropertyHolidayHomeForSale $request
-    public function addHomeForSaleAd(AddPropertyHolidayHomeForSale $request)
+   public function addHomeForSaleAd(AddPropertyHolidayHomeForSale $request)
     {
-        $property_home_for_sale_data = $request->all();
-
-        //Add More ViewingTimes
-        if(isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "")
-        {
-            $property_home_for_sale_data['secondary_deliver_date'] = null;
-            $i = 0;
-            foreach($property_home_for_sale_data['delivery_date'] as $key=>$val)
+        DB::beginTransaction();
+        try{
+            $property_home_for_sale_data = $request->except('upload_dropzone_images_type');
+            //Add More ViewingTimes
+            if(isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "")
             {
-                if($i == 0)
+                $property_home_for_sale_data['secondary_deliver_date'] = null;
+                $i = 0;
+                foreach($property_home_for_sale_data['delivery_date'] as $key=>$val)
                 {
-                    $property_home_for_sale_data['delivery_date']  = $val;
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['delivery_date']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_deliver_date'] .= $val.",";
+                    }
+                    $i++;
                 }
-                else
-                {
-                    $property_home_for_sale_data['secondary_deliver_date'] .= $val.",";
-                }
-                $i++;
             }
-        }
 
-        $property_home_for_sale_data['secondary_from_clock'] = "";
-        if(isset($property_home_for_sale_data['from_clock']))
-        {
-            $i = 0;
-            foreach($property_home_for_sale_data['from_clock'] as $key=>$val)
+            $property_home_for_sale_data['secondary_from_clock'] = "";
+            if(isset($property_home_for_sale_data['from_clock']))
             {
-                if($i == 0)
+                $i = 0;
+                foreach($property_home_for_sale_data['from_clock'] as $key=>$val)
                 {
-                    $property_home_for_sale_data['from_clock']  = $val;
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['from_clock']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_from_clock'] .= $val.",";
+                    }
+                    $i++;
                 }
-                else
-                {
-                    $property_home_for_sale_data['secondary_from_clock'] .= $val.",";
-                }
-                $i++;
             }
-        }
 
-          $property_home_for_sale_data['secondary_clockwise'] = "";
-          if(isset($property_home_for_sale_data['clockwise']))
-          {
-              $i = 0;
-              foreach($property_home_for_sale_data['clockwise'] as $key=>$val)
-              {
-                  if($i == 0)
-                  {
-                      $property_home_for_sale_data['clockwise']  = $val;
-                  }
-                  else
-                  {
-                      $property_home_for_sale_data['secondary_clockwise'] .= $val.",";
-                  }
-                  $i++;
-              }
-          }
-
-          $property_home_for_sale_data['secondary_note'] = "";
-          if(isset($property_home_for_sale_data['note']))
-          {
-              $i = 0;
-              foreach($property_home_for_sale_data['note'] as $key=>$val)
-              {
-                  if($i == 0)
-                  {
-                      $property_home_for_sale_data['note']  = $val;
-                  }
-                  else
-                  {
-                      $property_home_for_sale_data['secondary_note'] .= $val.",";
-                  }
-                  $i++;
-              }
-        }
-        //Manage Facilities
-        if(isset($property_home_for_sale_data['facilities']))
-        {
-            $facilities = "";
-            foreach($property_home_for_sale_data['facilities'] as $key=>$val)
+            $property_home_for_sale_data['secondary_clockwise'] = "";
+            if(isset($property_home_for_sale_data['clockwise']))
             {
-                $facilities .= $val . ",";
+                $i = 0;
+                foreach($property_home_for_sale_data['clockwise'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['clockwise']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_clockwise'] .= $val.",";
+                    }
+                    $i++;
+                }
             }
-            $property_home_for_sale_data['facilities'] = $facilities;
-        }
 
-        $property_home_for_sale_data['user_id'] = Auth::user()->id;
-
-        //add Add to table
-        $add = array();
-        $add['ad_type'] = 'property_holiday_home_for_sale';
-        $add['status']  = 'published';
-        $add['user_id'] =  Auth::user()->id;
-        $add_response   =  Ad::create($add);
-        $property_home_for_sale_data['ad_id'] = $add_response->id;
-        unset($property_home_for_sale_data['property_home_for_sale_photos']);
-        unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
-        unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
-        $response = PropertyHolidaysHomesForSale::create($property_home_for_sale_data);
-
-        //upload files
-        if ($request->file('property_home_for_sale_photos') || $request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote'))
-        {
-            // $files = $request->file('property_photos');
-            // $files_pdf = $request->file('property_pdf');
-            // $files_quote = $request->file('property_quote');
-
-            $files = $request->file();
-            $files_builded_arr = array();
-            foreach($files as $key=>$val)
+            $property_home_for_sale_data['secondary_note'] = "";
+            if(isset($property_home_for_sale_data['note']))
             {
-                array_push($files_builded_arr,$val[0]);
+                $i = 0;
+                foreach($property_home_for_sale_data['note'] as $key=>$val)
+                {
+                    if($i == 0)
+                    {
+                        $property_home_for_sale_data['note']  = $val;
+                    }
+                    else
+                    {
+                        $property_home_for_sale_data['secondary_note'] .= $val.",";
+                    }
+                    $i++;
+                }
             }
-
-            //Ameer Hamza code to store multiple images
-            if(is_countable($request->file('property_home_for_sale_photos'))){
-                common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'gallery'); // property_home_for_sale_photos
-            }
-            //End Ameer Hamza code
-            $i = 0;
-            foreach($files_builded_arr as $key=>$val)
+            //Manage Facilities
+            if(isset($property_home_for_sale_data['facilities']))
             {
-                /* Zille Shah Code commented by Ameer Hamza
-                if($i == 0)
+                $facilities = "";
+                foreach($property_home_for_sale_data['facilities'] as $key=>$val)
                 {
-                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_photos');
+                    $facilities .= $val . ",";
                 }
-                end zille shah code */
-                if($i == 1)
+                $property_home_for_sale_data['facilities'] = $facilities;
+            }
+
+            $property_home_for_sale_data['user_id'] = Auth::user()->id;
+
+            //add Add to table
+            $add = array();
+            $add['ad_type'] = 'property_holiday_home_for_sale';
+            $add['status']  = 'published';
+            $add['user_id'] =  Auth::user()->id;
+            $add_response   =  Ad::create($add);
+            $property_home_for_sale_data['ad_id'] = $add_response->id;
+            unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
+            unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
+
+            //Update media (mediable id and mediable type)
+            if($add_response->id){
+                $property_home_for_sale_data = $this->updated_dropzone_images_type($property_home_for_sale_data,$request->upload_dropzone_images_type,$add_response->id);
+            }
+
+            $response = PropertyHolidaysHomesForSale::create($property_home_for_sale_data);
+
+            //upload files
+            if ($request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote'))
+            {
+                // $files = $request->file('property_photos');
+                // $files_pdf = $request->file('property_pdf');
+                // $files_quote = $request->file('property_quote');
+
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val)
                 {
-                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
+                    array_push($files_builded_arr,$val[0]);
                 }
-                if($i == 2)
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val)
                 {
-                    common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
+                    if($i == 1)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
+                    }
+                    if($i == 2)
+                    {
+                        common::update_media($val, $response->id , 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
+                    }
+                    $i++;
+
                 }
-                $i++;
+
+
 
             }
 
+            //Notification data
+            $notifiable_id = $response -> id;
+            $notification_obj = new NotificationController();
+            $notification_response = $notification_obj->create($notifiable_id,'App\PropertyHolidaysHomesForSale','property have been added');
+            $notification_id_search = $notification_response->id;
 
+            //trigger event
+            event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
 
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
-
-        //Notification data
-        $notifiable_id = $response -> id;
-        $notification_obj = new NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id,'App\PropertyHolidaysHomesForSale','property have been added');
-        $notification_id_search = $notification_response->id;
-
-        //trigger event
-        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
-
-        $data['success'] = $response;
-        echo json_encode($data);
-
     }
 
      public function updateSaleAdd(AddPropertyForSale $request,$id)
@@ -1308,25 +1299,29 @@ class PropertyController extends Controller
 
     //Updated the dropzone image
     public function updated_dropzone_images_type($request,$mediable_type,$ad_id=''){
-        foreach ($request as $key=>$value){
-            if(preg_match('/image_title/',$key)){
-                $explode_values = explode('_',$key);
-                $name_unique = '';
-                if(count($explode_values) > 3) {
-                    if ($explode_values[2] && $explode_values[3]) {
-                        $name_unique = $explode_values[2] . '.' . $explode_values[3];
-                    }
-                    if ($name_unique) {
-                        $media = Media::where('name_unique', $name_unique)->first();
-                        if ($media) {
-                            $media->title = $value;
-                            $media->update();
+
+        if(count($request) > 0){
+            foreach ($request as $key=>$value){
+                if(preg_match('/image_title/',$key)){
+                    $explode_values = explode('_',$key);
+                    $name_unique = '';
+                    if(count($explode_values) > 3) {
+                        if ($explode_values[2] && $explode_values[3]) {
+                            $name_unique = $explode_values[2] . '.' . $explode_values[3];
+                        }
+                        if ($name_unique) {
+                            $media = Media::where('name_unique', $name_unique)->first();
+                            if ($media) {
+                                $media->title = $value;
+                                $media->update();
+                            }
                         }
                     }
+                    unset($request[$key]);
                 }
-                unset($request[$key]);
             }
         }
+
         $temp_media = Media::where('mediable_id',Auth::user()->id)->where('mediable_type',$mediable_type)->get();
         if($temp_media->count() > 0 && $ad_id){
             foreach ($temp_media as $key=>$temp_media_obj){
@@ -1634,8 +1629,8 @@ class PropertyController extends Controller
     }
        public function editAddFlatWishesRented($id)
     {
-        $flat_wishes_rented = FlatWishesRented::findOrFail($id);
-        return view('user-panel.property.flat_wishes_rented',compact('flat_wishes_rented'));
+        $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
+        return view('user-panel.property.flat_wishes_rented',compact('flat_wishes_rented1'));
     }
     //update flat wishs rented
     public function updateFlatWishesRented(AddFlatWishesRented $request,$id)
@@ -2512,78 +2507,154 @@ class PropertyController extends Controller
         return view('common.partials.property.commercialproperty_for_rent_description')->with(compact('property_data'));
     }
 
+    // ad form Business for sale
     public function BusinessForSale()
     {
+        common::delete_media(Auth::user()->id, 'business_for_sale_temp_images', 'gallery');
         return view('user-panel.property.business_for_sale');
     }
+    // store business for sale ad
     public function addBusinessForSale(AddBusinessForSale $request)
     {
+        DB::beginTransaction();
+        try{
+            $business_for_sale =  $request->except('upload_dropzone_images_type');
 
-        $business_for_sale = $request->all();
+            unset($business_for_sale['business_for_sale_photos']);
+            unset($business_for_sale['business_for_sale_pdf']);
+            $business_for_sale['user_id'] = Auth::user()->id;
 
-        unset($business_for_sale['business_for_sale_photos']);
-        unset($business_for_sale['business_for_sale_pdf']);
-        $business_for_sale['user_id'] = Auth::user()->id;
+            //add Add to table
+            $add = array();
+            $add['ad_type'] = 'property_business_for_sale';
+            $add['status']  = 'published';
+            $add['user_id'] =  Auth::user()->id;
+            $add_response   =  Ad::create($add);
+            $business_for_sale['ad_id'] = $add_response->id;
 
-        //add Add to table
-        $add = array();
-        $add['ad_type'] = 'property_business_for_sale';
-        $add['status']  = 'published';
-        $add['user_id'] =  Auth::user()->id;
-        $add_response   =  Ad::create($add);
-        $business_for_sale['ad_id'] = $add_response->id;
-
-        $response = BusinessForSale::create($business_for_sale);
-
-        if (is_countable($request->file('business_for_sale_photos')) || $request->file('business_for_sale_pdf'))
-        {
-            //Ameer Hamza code for storing multiple images
-            if(is_countable($request->file('business_for_sale_photos'))){
-                common::update_media($request->file('business_for_sale_photos'), $response->id , 'App\BusinessForSale', 'gallery');
+            //Update media (mediable id and mediable type)
+            if($add_response->id){
+                $business_for_sale = $this->updated_dropzone_images_type($business_for_sale,$request->upload_dropzone_images_type,$add_response->id);
             }
-            //End
-            $files = $request->file();
-            $files_builded_arr = array();
-            foreach($files as $key=>$val)
+
+            $response = BusinessForSale::create($business_for_sale);
+
+            if ($request->file('business_for_sale_pdf'))
             {
-                array_push($files_builded_arr,$val[0]);
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val)
+                {
+                    array_push($files_builded_arr,$val[0]);
+                }
+
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val)
+                {
+                    if($i == 1)
+                    {
+                        common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
+                    }
+                    $i++;
+
+                }
+
             }
 
-            $i = 0;
-            foreach($files_builded_arr as $key=>$val)
-            {
-                /* Zille Shah Code commented by Ameer Hamza
-                if($i == 0)
-                {
-                    common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_photos');
-                }
-                */
-                if($i == 1)
-                {
-                    common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
-                }
-                $i++;
+            //Notification data
+            $notifiable_id = $response -> id;
+            $notification_obj = new NotificationController();
+            $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
+            $notification_id_search = $notification_response->id;
+            //trigger event
+            event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
 
-            }
-
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
+    }
 
-        //Notification data
-        $notifiable_id = $response -> id;
-        $notification_obj = new NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
-        $notification_id_search = $notification_response->id;
-        //trigger event
-        event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+    // Edit form for business for sale ad
+    public function editBusinessForSale($id){
+        $business_for_sale = BusinessForSale::findOrFail($id);
+        if($business_for_sale){
+            if(!Auth::user()->hasRole('admin') && $business_for_sale->user_id != Auth::user()->id){
+                return redirect('forbidden');
+            }
+            return view('user-panel.property.business_for_sale', compact('business_for_sale'));
+        }else{
+            abort(404);
+        }
+    }
 
-        $data['success'] = $response;
-        echo json_encode($data);
+    // update for business for sale ad
+    public function updateBusinessForSale(AddBusinessForSale $request ,$id){
+
+        DB::beginTransaction();
+        try{
+            $business_for_sale =  $request->except(['_method','upload_dropzone_images_type']);
+
+            unset($business_for_sale['business_for_sale_pdf']);
+            $business_for_sale['user_id'] = Auth::user()->id;
+
+
+            $response = BusinessForSale::find($id);
+            if($response){
+//                Update media (mediable id and mediable type)
+                if($response->ad){
+                    $business_for_sale = $this->updated_dropzone_images_type($business_for_sale,$request->upload_dropzone_images_type,$response->ad->id);
+                }
+                $response->update($business_for_sale);
+            }
+
+            if ($request->file('business_for_sale_pdf')) {
+                $files = $request->file();
+                $files_builded_arr = array();
+
+                foreach($files as $key=>$val) {
+                    array_push($files_builded_arr,$val[0]);
+                }
+                $i = 0;
+
+                foreach($files_builded_arr as $key=>$val) {
+                    if($i == 1) {
+                        common::update_media($val, $response->id , 'App\BusinessForSale', 'business_for_sale_pdf');
+                    }
+                    $i++;
+                }
+
+            }
+
+//            Notification data
+//            $notifiable_id = $response -> id;
+//            $notification_obj = new NotificationController();
+//            $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
+//            $notification_id_search = $notification_response->id;
+//            //trigger event
+//            event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
+        }
 
     }
 
     public function businessForSaleAds(Request $request)
     {
-
         $data = $request->all();
         $searchable = (isset($data['filter']) ? $data['filter'] : "");
         $order_by_thing = 'id';
@@ -2608,6 +2679,7 @@ class PropertyController extends Controller
         }
         return view('user-panel.property.ads_business_for_sale')->with(compact('add_array'));
     }
+
 
     public function businessForSaleSortedAds(Request $request)
     {
@@ -2647,144 +2719,138 @@ class PropertyController extends Controller
 
     public function commercialPlots()
     {
+        common::delete_media(Auth::user()->id, 'commercial_plots_temp_images', 'gallery');
         return view('user-panel.property.commercial_plots');
     }
     public function editCommercialPlots($id)
     {
         $commercial_plots = CommercialPlot::findOrFail($id);
-
-        return view('user-panel.property.commercial_plots', compact('commercial_plots'));
-    }
-        public function updateCommercialPlots(AddCommercialPlot $request, $id)
-    {
-
-        $commercial_plot = $request->all();
-
-        unset($commercial_plot['commercial_plot_photos']);
-        unset($commercial_plot['commercial_plot_pdf']);
-        $commercial_plot['user_id'] = Auth::user()->id;
-
-        //add Add to table
-        // $add = array();
-        // $add['ad_type'] = 'property_commercial_plots';
-        // $add['status']  = 'published';
-        // $add['user_id'] =  Auth::user()->id;
-        // $add_response   =  Ad::create($add);
-        // $commercial_plot['ad_id'] = $add_response->id;
-
-        $response = CommercialPlot::findOrFail($id);
-        $response->update($commercial_plot);
-
-        if (is_countable($request->file('commercial_plot_photos')) || $request->file('commercial_plot_pdf'))
-        {
-            //Ameer Hamza code to store mulitple images
-            if(is_countable($request->file('commercial_plot_photos'))){
-                common::update_media($request->file('commercial_plot_photos'), $response->id , 'App\CommercialPlot', 'gallery');
+        if($commercial_plots){
+            if(!Auth::user()->hasRole('admin') && $commercial_plots->user_id != Auth::user()->id){
+                return redirect('forbidden');
             }
-            //End Code
-            $files = $request->file();
-            $files_builded_arr = array();
-            foreach($files as $key=>$val)
-            {
-                array_push($files_builded_arr,$val[0]);
-            }
-
-            $i = 0;
-            foreach($files_builded_arr as $key=>$val)
-            {
-                /* Zille Shah Code commented by Ameer Hamza
-                if($i == 0)
-                {
-                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_photos');
-                }
-                */
-                if($i == 1)
-                {
-                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
-                }
-                $i++;
-
-            }
-
+            return view('user-panel.property.commercial_plots', compact('commercial_plots'));
+        }else{
+            abort(404);
         }
+    }
 
-        // //Notification data
-        // $notifiable_id = $response->id;
-        // $notification_obj = new NotificationController();
-        // $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPlot','property have been added');
-        // $notification_id_search = $notification_response->id;
+    public function updateCommercialPlots(AddCommercialPlot $request, $id)
+    {
+        DB::beginTransaction();
+        try{
 
-        // //trigger event
-        // event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            $commercial_plot = $request->except('upload_dropzone_images_type');
 
-        $data['success'] = $response;
-        echo json_encode($data);
+            unset($commercial_plot['commercial_plot_pdf']);
+            $commercial_plot['user_id'] = Auth::user()->id;
+
+            $response = CommercialPlot::findOrFail($id);
+
+            //Update media (mediable id and mediable type)
+            if($response && $response->ad){
+                $commercial_plot = $this->updated_dropzone_images_type($commercial_plot,$request->upload_dropzone_images_type,$response->ad->id);
+            }
+
+
+            $response->update($commercial_plot);
+
+            if ($request->file('commercial_plot_pdf'))
+            {
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val)
+                {
+                    array_push($files_builded_arr,$val[0]);
+                }
+
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val)
+                {
+                    if($i == 1)
+                    {
+                        common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
+                    }
+                    $i++;
+
+                }
+
+            }
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
+        }
     }
 
 
     public function addcommercialPlotsAd(AddCommercialPlot $request)
     {
+        DB::beginTransaction();
+        try{
+            $commercial_plot = $request->except('upload_dropzone_images_type');
 
-        $commercial_plot = $request->all();
+            unset($commercial_plot['commercial_plot_pdf']);
+            $commercial_plot['user_id'] = Auth::user()->id;
 
-        unset($commercial_plot['commercial_plot_photos']);
-        unset($commercial_plot['commercial_plot_pdf']);
-        $commercial_plot['user_id'] = Auth::user()->id;
+            //add Add to table
+            $add = array();
+            $add['ad_type'] = 'property_commercial_plots';
+            $add['status']  = 'published';
+            $add['user_id'] =  Auth::user()->id;
+            $add_response   =  Ad::create($add);
+            $commercial_plot['ad_id'] = $add_response->id;
 
-        //add Add to table
-        $add = array();
-        $add['ad_type'] = 'property_commercial_plots';
-        $add['status']  = 'published';
-        $add['user_id'] =  Auth::user()->id;
-        $add_response   =  Ad::create($add);
-        $commercial_plot['ad_id'] = $add_response->id;
-
-        $response = CommercialPlot::create($commercial_plot);
-
-        if (is_countable($request->file('commercial_plot_photos')) || $request->file('commercial_plot_pdf'))
-        {
-            //Ameer Hamza code to store mulitple images
-            if(is_countable($request->file('commercial_plot_photos'))){
-                common::update_media($request->file('commercial_plot_photos'), $response->id , 'App\CommercialPlot', 'gallery');
-            }
-            //End Code
-            $files = $request->file();
-            $files_builded_arr = array();
-            foreach($files as $key=>$val)
-            {
-                array_push($files_builded_arr,$val[0]);
+            //Update media (mediable id and mediable type)
+            if($add_response->id){
+                $commercial_plot = $this->updated_dropzone_images_type($commercial_plot,$request->upload_dropzone_images_type,$add_response->id);
             }
 
-            $i = 0;
-            foreach($files_builded_arr as $key=>$val)
-            {
-                /* Zille Shah Code commented by Ameer Hamza
-                if($i == 0)
-                {
-                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_photos');
+            $response = CommercialPlot::create($commercial_plot);
+
+            if ($request->file('commercial_plot_pdf')) {
+                $files = $request->file();
+                $files_builded_arr = array();
+                foreach($files as $key=>$val) {
+                    array_push($files_builded_arr,$val[0]);
                 }
-                */
-                if($i == 1)
-                {
-                    common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
+
+                $i = 0;
+                foreach($files_builded_arr as $key=>$val) {
+                    if($i == 1) {
+                        common::update_media($val, $response->id , 'App\CommercialPlot', 'commercial_plot_pdf');
+                    }
+                    $i++;
                 }
-                $i++;
 
             }
 
+            //Notification data
+            $notifiable_id = $response->id;
+            $notification_obj = new NotificationController();
+            $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPlot','property have been added');
+            $notification_id_search = $notification_response->id;
+
+            //trigger event
+            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
-
-        //Notification data
-        $notifiable_id = $response->id;
-        $notification_obj = new NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPlot','property have been added');
-        $notification_id_search = $notification_response->id;
-
-        //trigger event
-        event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
-
-        $data['success'] = $response;
-        echo json_encode($data);
     }
 
     public function commercialPlotsAds(Request $request)

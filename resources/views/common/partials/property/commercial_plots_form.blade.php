@@ -1,4 +1,6 @@
-<form action="#" method="post" id="commercial_plot_form" enctype="multipart/form-data">
+<form action="#" method="post" id="commercial_plot_form" class="dropzone addMorePics p-0"
+      data-action="@if(Request::is('commercial/plots/*/edit')){{url('update-upload-images?ad_id='.$commercial_plots->ad->id)}}
+      @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
 
      $commercial_plot = new \App\CommercialPlot();
@@ -17,7 +19,7 @@
   @if(Request::is('commercial/plots/*/edit'))
   @method('PATCH')
   @endif
-
+    <input type="hidden" name="upload_dropzone_images_type" value="commercial_plots_temp_images">
     <div class="pl-3">
         <!--                            radio -->
         <div class="form-group">
@@ -180,7 +182,9 @@
             <h3 class="u-t5">Legg til bilder (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="file" name="commercial_plot_photos[]" value="{{ $commercial_plot->commercial_plot_photos }}" id="property_photos" class="" multiple>
+                    @php $dropzone_img_obj = $commercial_plot; @endphp
+                    @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
+{{--                    <input type="file" name="commercial_plot_photos[]" value="{{ $commercial_plot->commercial_plot_photos }}" id="property_photos" class="" multiple>--}}
                 </div>
             </div>
         </div>
