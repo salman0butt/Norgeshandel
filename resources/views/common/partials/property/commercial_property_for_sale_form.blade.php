@@ -13,9 +13,8 @@
 //    $property_type = \App\Taxonomy::where('slug', 'cpfs_property_type')->first();
   //  $property_types = $property_type->terms;
 
-    $property_type = explode(',', $commercial_property_for_sale->property_type);
-    $json = json_encode($property_type);
-    $commercial_property_for_sale->update(['property_type'=>$json]);
+    $property_type = json_decode($commercial_property_for_sale->property_type);
+
     $facilities = explode(',', $commercial_property_for_sale->facilities);
 
 @endphp
@@ -47,7 +46,7 @@
                     <label class="smalltext" for="property_type-WAREHOUSE"> Lager/Logistikk</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox" value="Kombinasjonslokaler" {{ (in_array("Kombinasjonslokaler", $property_type))?"checked":"" }} name="property_type[]" {{ ($commercial_property_for_sale->property_type == 'Kombinasjonslokaler' ? 'checked' : '')  }}>
+                    <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox" value="Kombinasjonslokaler" {{ (in_array("Kombinasjonslokaler", $property_type))?"checked":"" }} name="property_type[]">
                     <label class="smalltext" for="property_type-MULTIPURPOSEAREA"> Kombinasjonslokaler</label>
                 </div>
                 <div class="col-md-4 input-toggle">

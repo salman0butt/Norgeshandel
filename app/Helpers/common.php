@@ -13,6 +13,14 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class common
 {
+    public static function map_json($json){
+        $returnable = "";
+        foreach(json_decode($json) as $val):
+            $returnable .= $val.', ';
+        endforeach;
+        return rtrim($returnable, ', ');
+    }
+
     public static function insert_term_array($arr, $taxonomy, $parent = 0){
         $Parent = $parent;
         foreach ($arr as $value) {

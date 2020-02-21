@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 
 if(isset($_GET['style']))
 {
@@ -7,7 +7,7 @@ if(isset($_GET['style']))
 }
 else
 {
-    $col = 'list';  
+    $col = 'list';
 }
 ?>
 
@@ -21,21 +21,21 @@ else
         echo $col==='grid'?'row':'' ?>">
             @foreach ($add_array as $key => $value)
                 <?php
-                        
+
                         $property_commercial_property_for_sale = App\CommercialPropertyForSale::find($value->id);
                         $name       = $property_commercial_property_for_sale->media->first();
                         if(!empty($name))
                         {
                             $name = $property_commercial_property_for_sale->media->first()->name_unique;
                             $path       = \App\Helpers\common::getMediaPath($property_commercial_property_for_sale);
-                            $full_path  = $path."".$name; 
+                            $full_path  = $path."".$name;
                         }
                         else
                         {
                             $full_path  = "";
                         }
-                        
-                    ?>  
+
+                    ?>
                 <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
                     <a href="{{url('/commercial/property/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                         <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
@@ -54,7 +54,7 @@ else
                             </div>
                             <br>
                             <div class="detail u-t5 mt-3 float-left text-muted">Koppang-Landbruk og Næringsmegling AS
-                                <br>Eier (Selveier) • {{rtrim($property_commercial_property_for_sale->property_type,",")}}</div>
+                                <br>Eier (Selveier) • {{\App\Helpers\common::map_json($property_commercial_property_for_sale->property_type)}}</div>
                                                                     <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid"></div>
                         </div>
                     </a>
