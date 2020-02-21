@@ -3,17 +3,7 @@
 @section('page_content')
 
     <?php
-        $name       = $property_data->media;
-        // if($name != null)
-        // {
-        //     $name       =    $name->name_unique;
-        //     $path       =    \App\Helpers\common::getMediaPath($property_data);
-        //     $full_path  =    $path."".$name;
-        // }
-        // else
-        // {
-        //     $full_path  = "";
-        // }
+        $name       = $property_data->ad->company_gallery;
     ?>
 
     <main>

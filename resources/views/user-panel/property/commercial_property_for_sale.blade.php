@@ -1,4 +1,13 @@
 @extends('layouts.landingSite')
+
+@section('style')
+    <!-- Dropzone style files -->
+    <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
+
+@endsection
+
 @section('page_content')
     <main>
         <div class="dme-container">
@@ -10,11 +19,8 @@
 
             <div class="row">
                 <div class="col-md-10 offset-md-1">
-
                       @include('common.partials.property.commercial_property_for_sale_form')
                  </div>
-
-                </div>
             </div>
         </div>
     </main>
@@ -61,13 +67,19 @@
                 error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
                     var errors = jqXhr.responseJSON;
                     console.log(errors.errors);
-                    var html = "<ul>";
-                    $.each(errors.errors, function (index, value) {
+                    if(isEmpty(errors.errors))
+                    {
+                        $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                        return false;
+                    }
+
+                    var html="<ul>";
+                    $.each( errors.errors, function( index, value ){
                         console.log(value);
-                        html += "<li>" + value + "</li>";
+                        html += "<li>"+value+"</li>";
                     });
                     html += "</ul>";
-                    $('.notice').append('<div class="alert alert-danger">' + html + '</div>');
+                    $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
                 },
             }).always(function () {
                 l.stop();
@@ -77,5 +89,16 @@
         });
 
     </script>
+
+@endsection
+
+@section('script')
+    <!-- Dropzone script files -->
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
 
 @endsection

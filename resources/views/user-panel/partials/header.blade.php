@@ -21,6 +21,9 @@
                     @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search'))
                         @include('user-panel.partials.templates.filter-property-for-sale')
                     @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/commercial-property-for-sale/search'))
+                        @include('user-panel.partials.templates.filter-commercial-property-for-sale')
+                    @endif
                     <li class="nav-item" id="move_to_notifications">
                         <a class="nav-link position-relative" href="{{ url('notifications/all') }}">
                             <span class="badge badge-primary pending position-absolute" style="left:0"></span>

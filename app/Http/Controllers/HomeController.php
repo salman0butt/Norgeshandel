@@ -32,23 +32,22 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function index(Request $request, $handel=0)
     {
-        if ($request->handel){
-            $ad = Ad::find($request->handel);
-            if ($ad){
+        if ($request->handel) {
+            $handel = $handel!=0?$handel:$request->handel;
+            $ad = Ad::find($handel);
+            if ($ad) {
                 $type = "";
-                if ($ad->ad_type=='job'){
-                    $type='jobs';
+                if ($ad->ad_type == 'job') {
+                    $type = 'jobs';
+                } else {
+                    $type = "properties";
                 }
-                else{
-                    $type="properties";
-                }
-                return redirect($type.'/ad?handel='.$ad->id);
+                return redirect($type . '/ad?handel=' . $ad->id);
             }
             abort(404);
         }
-
         $saved_search = null;
         $recent_search = null;
         if (Auth::check()) {

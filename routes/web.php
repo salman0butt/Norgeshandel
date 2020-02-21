@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 
 Auth::routes(['verify' => true]);
-Route::get('clear-chat', function (){
+Route::get('clear-chat', function () {
     \App\MessageThread::where('id', '!=', 0)->delete();
     return redirect('messages');
 });
@@ -52,8 +52,8 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('searching/{search?}', 'SearchController@search')->name('searching');
     Route::get('global-search/{search}', 'SearchController@global')->name('global');
 //    home routes
-    Route::get('/', 'HomeController@index');
-    Route::get('home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
+
     Route::get('/notification', function () {
 
         return view('notification');
@@ -70,30 +70,30 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.my-business.job_preferences');
     });
-Route::get('/privacy', function () {
-    return view('user-panel.my-business.privacy_setting');
-});
-Route::get('/become-business', function () {
-    return view('user-panel.footer.become_business');
-});
-Route::get('/customer-admin-for-business', function () {
-    return view('user-panel.footer.customer_admin_for_business');
-});
-Route::get('/personvern', function () {
-    return view('user-panel.footer.cookie');
-});
-Route::get('/rating', function () {
-    return view('user-panel.my-business.rating');
-});
+    Route::get('/privacy', function () {
+        return view('user-panel.my-business.privacy_setting');
+    });
+    Route::get('/become-business', function () {
+        return view('user-panel.footer.become_business');
+    });
+    Route::get('/customer-admin-for-business', function () {
+        return view('user-panel.footer.customer_admin_for_business');
+    });
+    Route::get('/personvern', function () {
+        return view('user-panel.footer.cookie');
+    });
+    Route::get('/rating', function () {
+        return view('user-panel.my-business.rating');
+    });
 
-Route::get('/customer-services', function () {
-    return view('user-panel.footer.customer_service');
-});
-Route::get('/useful-info', function () {
-    return view('user-panel.footer.useful_info');
-});
+    Route::get('/customer-services', function () {
+        return view('user-panel.footer.customer_service');
+    });
+    Route::get('/useful-info', function () {
+        return view('user-panel.footer.useful_info');
+    });
 
-  Route::get('/cookie', function () {
+    Route::get('/cookie', function () {
 
         return view('user-panel.footer.cookie');
     });
@@ -109,6 +109,7 @@ Route::get('/useful-info', function () {
 
 //property search and filters
     Route::get('property/property-for-sale/search', 'PropertyController@search_property_for_sale');
+    Route::get('property/commercial-property-for-sale/search', 'PropertyController@search_commercial_property_for_sale');
 
 
 //Banner ads mangment
@@ -183,6 +184,7 @@ Route::get('/useful-info', function () {
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         // message
         Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
+        Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');
         Route::get('messages/new/{ad_id}', 'MessageController@new_thread');
         Route::get('messages/render-thread/{thread_id}', 'MessageController@render_thread');
         Route::get('/messages', 'MessageController@index');
@@ -191,12 +193,12 @@ Route::get('/useful-info', function () {
         Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
 
 
-      Route::get('notifications/all', 'NotificationController@showAllNotifications');
+        Route::get('notifications/all', 'NotificationController@showAllNotifications');
 
         Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
 
-    //Clear Searches
-    Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
+        //Clear Searches
+        Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
 
 //    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 
@@ -342,6 +344,7 @@ Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercia
 Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
 
+
     /// Upload images using dropzone
     Route::post('upload-images', 'PropertyController@upload_dropzone_images')->name('upload-images'); // upload images on add form request
     Route::patch('update-upload-images', 'PropertyController@upload_dropzone_images'); // upload images on edit form request
@@ -375,6 +378,8 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
     Route::post('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
     Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
     Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
+    Route::get('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
+    Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
 
     Route::post('business/for/sales/sorted/ad', 'PropertyController@businessForSaleSortedAds');
 
@@ -403,39 +408,36 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
 
 Route::get('/delete-media-dz',function(){
     $media = Media::where('name_unique',$_GET['filename'])->first();
+    if ($media) {
+        $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+        $arr = explode('.', $media->name_unique);
 
-    if($media){
-        if ($media) {
-            $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
-            $arr = explode('.', $media->name_unique);
-
-            foreach (glob($path . $arr[0] . '*.*') as $file) {
-                unlink($file);
-            }
-            $media->delete();
+        foreach (glob($path . $arr[0] . '*.*') as $file) {
+            unlink($file);
         }
-        $response = array();
-        $response['flag'] = 'success';
-        return json_encode($response);
+        $media->delete();
     }
-});
-Route::post('/update-media-positions',function(Request $request){
     $response = array();
-    $response['flag'] = 'failure';
-    if(isset($request->dataArr))
-    {
-        $data = json_decode($request->dataArr);
-        foreach ($data as $data_arr) {
-            $response['flag'] = 'success';
-            $media = Media::where('name_unique',$data_arr[0])->first();
-            if($media){
-                $media->order = $data_arr[1];
-                $media->save();
+    $response['flag'] = 'success';
+    return json_encode($response);
+    });
+    Route::post('/update-media-positions', function (Request $request) {
+        $response = array();
+        $response['flag'] = 'failure';
+        if (isset($request->dataArr)) {
+            $data = json_decode($request->dataArr);
+            foreach ($data as $data_arr) {
+                $response['flag'] = 'success';
+                $media = Media::where('name_unique', $data_arr[0])->first();
+                if ($media) {
+                    $media->order = $data_arr[1];
+                    $media->save();
+                }
             }
         }
-    }
-    return json_encode($response);
-});
+        return json_encode($response);
+    });
 
     Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
+    Route::get('/{handel?}', 'HomeController@index');
 });

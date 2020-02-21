@@ -5,22 +5,9 @@
             $facilities = array();
             if(isset($property_data->facilities) && !empty($property_data->facilities))
             {
-
                 $facilities = explode(",",rtrim($property_data->facilities, ","));
-
             }
-
-            $name       =    $property_data->media;
-            // if($name != null)
-            // {
-            //     $name       =    $name->name_unique;
-            //     $path       = \App\Helpers\common::getMediaPath($property_data);
-            //     $full_path  = $path."".$name;
-            // }
-            // else
-            // {
-            //     $full_path  = "";
-            // }
+            $name       =    $property_data->ad->company_gallery;
 
         ?>
 

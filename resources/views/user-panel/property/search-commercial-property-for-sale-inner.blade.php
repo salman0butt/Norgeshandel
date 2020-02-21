@@ -62,7 +62,7 @@
                     @foreach ($add_array as $key => $value)
                         <?php
                         $property_for_sale = App\PropertyForSale::find($value->id);
-                        $property_for_sale_collection = $property_for_sale->ad->company_gallery->toArray();
+                        $property_for_sale_collection = $property_for_sale->media->toArray();
                         if (!empty($property_for_sale_collection)) {
                             $path = \App\Helpers\common::getMediaPath($property_for_sale);
                             foreach ($property_for_sale_collection as $key => $val) {

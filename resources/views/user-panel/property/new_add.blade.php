@@ -11,11 +11,7 @@
 
                 <div class="row">
                     <div class="col-md-10 offset-md-1">
-                     @if(Request::is('new/property/rent/ad/*/edit'))
-                        @include('common.partials.property.edit_property_for_rent_form')
-                    @else
                         @include('common.partials.property.property_for_rent_form')
-                    @endif
                     </div>
 
                 </div>
@@ -61,8 +57,11 @@
                 // fd.append('property_photos', $('#property_photos').get(0).files[0]);
                 var l = Ladda.create(this);
                 l.start();
-       @if(Request::is('new/property/rent/ad/*/edit'))
-        var url = "{{ url('add/property/for/rent/ad/'.$property_for_rent->id) }}";
+             @if(Request::is('new/property/rent/ad/*/edit'))
+             var url = "{{ url('add/property/for/rent/ad/'.$property_for_rent1->id) }}";
+             @else
+             var url = "{{ url('add/property/for/rent/ad/') }}";
+             @endif
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -97,46 +96,7 @@
                 });
                 return false;
             });
-            @else
-             var url = "{{ url('add/property/for/rent/ad/') }}";
- $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: fd,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        console.log(data);
-                        $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
-                    },
-                    error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
-                        
-                        var errors = jqXhr.responseJSON;
-                        if(!isEmpty(errors.errors))
-                        {
-                            $.each(errors.errors, function (index, value) 
-                            {
-                                $("." + index).html(value);
-                                $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
-                            });
-                        }
-                        else
-                        {
-                            $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
-                        }
-                    },
-
-                }).always(function () {
-                    l.stop();
-                });
-
-
-                return false;
-
-            });
-
-            @endif
+            
 
             var i = 0;
             $("#add_more_viewing_times").click(function (e) {

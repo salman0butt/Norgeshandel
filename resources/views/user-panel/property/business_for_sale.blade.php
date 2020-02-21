@@ -1,4 +1,13 @@
 @extends('layouts.landingSite')
+
+@section('style')
+    <!-- Dropzone style files -->
+    <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
+
+@endsection
+
 @section('page_content')
 
 <!-- property for rent -->
@@ -31,7 +40,13 @@
 
                     e.preventDefault();
                     $('.notice').html("");
-                    var url = '{{url('add/business/for/sale')}}';
+
+                    @if(Request::is('add/business/for/sale/*/edit'))
+                        var url = "{{url('add/business/for/sale/'.$business_for_sale->id)}}";
+                    @else
+                        var url = "{{url('add/business/for/sale')}}";
+                    @endif
+
             
                     var myform = document.getElementById("business_for_sale");
                     var fd = new FormData(myform);
@@ -49,9 +64,15 @@
                             console.log(data);
                             $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
                         },
-                        error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+                        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                             var errors = jqXhr.responseJSON;
                             console.log(errors.errors);
+                            if(isEmpty(errors.errors))
+                            {
+                                $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                                return false;
+                            }
+
                             var html="<ul>";
                             $.each( errors.errors, function( index, value ){
                                console.log(value);
@@ -69,5 +90,16 @@
     
 
     </script>
+
+@endsection
+
+@section('script')
+    <!-- Dropzone script files -->
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
 
 @endsection

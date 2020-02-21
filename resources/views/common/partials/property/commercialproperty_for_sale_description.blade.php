@@ -11,7 +11,7 @@
 
         }
 
-        $name       = $property_data->media;
+        $name       = $property_data->ad->company_gallery;
         // if($name != null)
         // {
         //     $name       =    $name->name_unique;

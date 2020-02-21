@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\common;
+use App\Media;
 use App\MessageThread;
 use App\Models\Ad;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Message;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +30,24 @@ class MessageController extends Controller
             return redirect(url('messages/thread', $active_thread->id));
         }
         return redirect('forbidden');
+    }
+
+    public function delete_thread($thread_id){
+        $thread = Auth::user()->threads->where('id', '=', $thread_id)->first();
+        if($thread){
+            $deleted_messages = $thread->one_side_messages;
+            $ids = $deleted_messages->pluck('id');
+            Message::whereIn('id', $ids)->delete();
+            $media = Media::whereIn('mediable_id', $ids)->get();
+            foreach ($media as $file){
+                common::delete_media($file->mediable_id, $file->mediable_id, $file->type);
+            }
+            Media::whereIn('id', $media->pluck('id'))->delete();
+            $ids = $thread->messages->pluck('id');
+            Message::whereIn('id', $ids)->update(['deleted_by'=>Auth::id()]);
+        }
+        Session::flash('success', 'Samtalen ble slettet');
+        return back();
     }
 
     public function view_thread($thread_id){
@@ -72,8 +93,11 @@ class MessageController extends Controller
 
     public function send(Request $request)
     {
-        $message = new Message($request->all());
+        $message = new Message($request->except(['form', 'attachment']));
         $message->save();
+        if($request->attachment){
+            common::update_media($request->attachment, $message->id, Message::class, 'attachment', true, false);
+        }
 
 //         pusher
         $options = array(
@@ -88,11 +112,21 @@ class MessageController extends Controller
             $options
         );
 //
+        $files = array();
+        $media = $message->media;
+        if (count($media)>0){
+            foreach ($media as $file){
+                $name = $file->name;
+                $path = common::getMediaPath($file);
+                array_push($files, ['name'=>$name, 'path'=>$path]);
+            }
+        }
         $data = ['message'=>$request->message, 'thread_id'=>$message->message_thread_id,
-            'from_user_id'=>$request->from_user_id, 'to_user_id'=>$request->to_user_id];
+            'from_user_id'=>$request->from_user_id, 'to_user_id'=>$request->to_user_id, 'files'=>$files];
         $pusher->trigger('my-channel', 'my-event', $data);
         $pusher->trigger('header-chat-notification', 'header-chat-notification-event', $data);
 
+        exit(json_encode($data));
     }
 
 }
