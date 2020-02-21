@@ -16,8 +16,8 @@ class Taxonomy extends Model
         return $this->hasMany('App\Term');
     }
 
-    public function parent_terms(){
-        return $this->hasMany('App\Term')->where('parent', '=', 0)->get();
+    public function parent_terms($parent=0){
+        return $this->hasMany('App\Term')->where('parent', '=', $parent)->get();
     }
 
 }
