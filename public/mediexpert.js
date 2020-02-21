@@ -38,7 +38,7 @@ function dme_nav_collapse(){
 }
 $(document).ready(function (e) {
     dme_nav_collapse();
-
+    $('.show-sub .list-unstyled .list-unstyled:first').css('display', 'block');
     $(document).on('click', '.dynamic-check-view-all.expand', function (e) {
         e.preventDefault();
         $(this).parent().find('>ul>li').slideDown();

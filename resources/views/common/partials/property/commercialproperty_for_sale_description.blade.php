@@ -96,7 +96,7 @@
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
                             <div class="col-md-6"><span class="font-weight-bold">Type lokale </span>&nbsp;<span
-                                    style="overflow-wrap: break-word;">{{rtrim($property_data->property_type,",")}}</span>
+                                    style="overflow-wrap: break-word;">{{\App\Helpers\common::map_json($property_data->property_type)}}</span>
                             </div>
                             <div class="col-md-6"><span class="font-weight-bold">Bruksarea
                                 </span>&nbsp;<span>{{$property_data->use_area}} m²</span></div>

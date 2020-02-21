@@ -1,9 +1,9 @@
 <li class="nav-item filter-btn">
     <a class="nav-link mega-menu-button" href="#">
-        <span class="fas fa-sliders-h float-left mt-2 color-maroon fa-times" style="font-size: 1.5em;"></span>
+        <span class="fas fa-sliders-h float-left mt-2 color-maroon fa-bars" style="font-size: 1.5em;"></span>
         <div class="mt-2 ml-2">Filtrer</div>
     </a>
-    <div class="mega-menu smart-scroll" style="display: block;">
+    <div class="mega-menu smart-scroll">
         <div class="container-fluid text-left">
             <form action="" id="mega_menu_form">
                 <div class="row">
@@ -74,32 +74,32 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Størrelse</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control">
-                                    <span class="u-t5">Fra m²</span>
+                                    <input type="text" class="dme-form-control" name="use_area_from">
+                                    <span class="u-t5">Fra m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control">
-                                    <span class="u-t5">Fra m²</span>
+                                    <input type="text" class="dme-form-control" name="use_area_to">
+                                    <span class="u-t5">Til m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4">
-                                    <button class="dme-btn-outlined-blue float-right">Søk</button>
+                                    <button type="button" name="size_btn" class="dme-btn-outlined-blue float-right">Søk</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div style="border-right:1px solid #ddd;" class="col-md-4">
-                        <div class="form-group nav-dynamic-checks mt-4">
+                        <div class="form-group nav-dynamic-checks mt-4 show-sub">
                             <h3 class="u-t5">Område</h3>
                             <?php
                             $tax = App\Taxonomy::where('slug', 'country')->first();
                             if (!empty($tax)){
                                 $norg = $tax->terms->where('slug', '=', 'norge');
                                 if (!empty($norg)){
-                                    echo App\Helpers\common::map_nav($tax->parent_terms($norg->first()->id));
+                                    echo App\Helpers\common::map_nav($tax->parent_terms());
                                 }
                             }
                             ?>
@@ -108,137 +108,11 @@
                     <div class="col-md-4">
                         <div class="u-mt32 form-group">
                             <h3 class="u-t5">Type lokale</h3>
-                            <ul class="list list-unstyled">
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="10" id="property_type-10">
-                                        <label for="property_type-10" class=""><span>Butikk/Handel <span class="u-stone"
-                                                                                                         id="count-property_type-10">(147)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="20" id="property_type-20">
-                                        <label for="property_type-20" class=""><span>Bygård/Flermannsbolig <span
-                                                    class="u-stone"
-                                                    id="count-property_type-20">(42)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="6" id="property_type-6">
-                                        <label for="property_type-6" class=""><span>Garasje/Parkering <span
-                                                    class="u-stone"
-                                                    id="count-property_type-6">(50)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="11" id="property_type-11">
-                                        <label for="property_type-11" class=""><span>Gårdsbruk/Småbruk <span
-                                                    class="u-stone"
-                                                    id="count-property_type-11">(43)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="8" id="property_type-8">
-                                        <label for="property_type-8" class=""><span>Hotell/Overnatting <span
-                                                    class="u-stone"
-                                                    id="count-property_type-8">(24)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="22" id="property_type-22">
-                                        <label for="property_type-22" class=""><span>Kjøpesenter <span class="u-stone"
-                                                                                                       id="count-property_type-22">(15)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="19" id="property_type-19">
-                                        <label for="property_type-19" class=""><span>Kombinasjonslokaler <span
-                                                    class="u-stone"
-                                                    id="count-property_type-19">(157)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="5" id="property_type-5">
-                                        <label for="property_type-5" class=""><span>Kontor <span class="u-stone"
-                                                                                                 id="count-property_type-5">(188)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="7" id="property_type-7">
-                                        <label for="property_type-7" class=""><span>Lager/Logistikk <span
-                                                    class="u-stone"
-                                                    id="count-property_type-7">(107)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="9" id="property_type-9">
-                                        <label for="property_type-9" class=""><span>Produksjon/Industri <span
-                                                    class="u-stone"
-                                                    id="count-property_type-9">(129)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="24" id="property_type-24">
-                                        <label for="property_type-24" class=""><span>Prosjekt <span class="u-stone"
-                                                                                                    id="count-property_type-24">(1)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="23" id="property_type-23">
-                                        <label for="property_type-23" class=""><span>Serveringslokale/Kantine <span
-                                                    class="u-stone"
-                                                    id="count-property_type-23">(28)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="28" id="property_type-28">
-                                        <label for="property_type-28" class=""><span>Undervisning/Arrangement <span
-                                                    class="u-stone"
-                                                    id="count-property_type-28">(27)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="26" id="property_type-26">
-                                        <label for="property_type-26" class=""><span>Verksted <span class="u-stone"
-                                                                                                    id="count-property_type-26">(56)</span></span></label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="property_type" value="18" id="property_type-18">
-                                        <label for="property_type-18" class=""><span>Andre <span class="u-stone"
-                                                                                                 id="count-property_type-18">(85)</span></span></label>
-                                    </div>
-                                </li>
-
-                            </ul>
+                            <?php
+                            if (!empty($tax = App\Taxonomy::where('slug', 'cpfs_property_type')->get()->first())) {
+                                echo App\Helpers\common::map_nav($tax->parent_terms());
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

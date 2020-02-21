@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 
 if(isset($filtering))
 {
@@ -7,7 +7,7 @@ if(isset($filtering))
 }
 else
 {
-    $col = 'list';  
+    $col = 'list';
 }
 
 ?>
@@ -19,11 +19,11 @@ else
 <div class="col-md-12">
 
 <div class="<?php echo $col==='grid'?'row':'' ?>">
-    
-    
+
+
     @foreach ($add_array as $key => $value)
 
-        <?php 
+        <?php
 
                 $property_for_sale  = App\PropertyForSale::find($value->id);
                 $name               = $property_for_sale->media->first();
@@ -31,7 +31,7 @@ else
                 {
                     $name       = $property_for_sale->media->first()->name_unique;
                     $path       = \App\Helpers\common::getMediaPath($property_for_sale);
-                    $full_path_photos  = $path."".$name; 
+                    $full_path_photos  = $path."".$name;
                 }
                 else
                 {
@@ -41,7 +41,7 @@ else
         ?>
 
 
-                
+
 
             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?>">
                 <a href="{{url('/property/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
@@ -62,7 +62,7 @@ else
                         <br>
                         <div class="detail u-t5 mt-3 float-left text-muted"><span> {{$property_for_sale->tenure}} • </span> <span> {{$property_for_sale->property_type}} • </span> <span> {{$property_for_sale->number_of_bedrooms}}  bedrooms</span></div>
                         <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
-            
+
                     </div>
                 </a>
             </div>
