@@ -1,5 +1,5 @@
 <form action="#" method="post" id="property_for_rent_form" class="dropzone addMorePics p-0"
-      data-action="@if(Request::is('commercial/plots/*/edit')){{url('update-upload-images?ad_id='.$commercial_plots->ad->id)}}
+      data-action="@if(Request::is('new/property/rent/ad/*/edit')){{url('update-upload-images?ad_id='.$property_for_rent1->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
      $property_for_rent = new \App\PropertyForRent();
