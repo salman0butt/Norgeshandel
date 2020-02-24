@@ -344,139 +344,121 @@ class PropertyController extends Controller
 
     public function newAdd()
     {
+        common::delete_media(Auth::user()->id, 'property_for_rent_temp_images', 'gallery');
         return view('user-panel.property.new_add');
     }
 
     public function newAddedit($id)
     {
         $property_for_rent1 = PropertyForRent::findOrFail($id);
-        return view('user-panel.property.new_add', compact('property_for_rent1'));
+        if($property_for_rent1){
+            if(!Auth::user()->hasRole('admin') && $property_for_rent1->user_id != Auth::user()->id){
+                abort(404);
+            }
+            return view('user-panel.property.new_add', compact('property_for_rent1'));
+        }else{
+            abort(404);
+        }
     }
 
     public function UpdatePropertyForRentAdd(Request $request, $id)
     {
+        DB::beginTransaction();
+        try{
+            $property_for_rent_data = $request->except(['_method','upload_dropzone_images_type']);
 
-
-        $property_for_rent_data = $request->except('_method');
-        // dd($property_for_rent_data);
-        // // dd($property_for_rent_data);
-
-        //Manage Facilities
-        if (isset($property_for_rent_data['facilities'])) {
-            $facilities = "";
-            foreach ($property_for_rent_data['facilities'] as $key => $val) {
-                $facilities .= $val . ",";
-            }
-            $property_for_rent_data['facilities'] = $facilities;
-        }
-
-        //Add More ViewingTimes
-        if (isset($property_for_rent_data['delivery_date']) && $property_for_rent_data['delivery_date'] != "") {
-            $property_for_rent_data['secondary_delivery_date'] = null;
-            $i = 0;
-            foreach ($property_for_rent_data['delivery_date'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['delivery_date'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_delivery_date'] .= $val . ",";
+            //Manage Facilities
+            if (isset($property_for_rent_data['facilities'])) {
+                $facilities = "";
+                foreach ($property_for_rent_data['facilities'] as $key => $val) {
+                    $facilities .= $val . ",";
                 }
-                $i++;
+                $property_for_rent_data['facilities'] = $facilities;
             }
-        }
 
-        $property_for_rent_data['secondary_from_clock'] = "";
-        if (isset($property_for_rent_data['from_clock'])) {
-            $i = 0;
-            foreach ($property_for_rent_data['from_clock'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['from_clock'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_from_clock'] .= $val . ",";
+            //Add More ViewingTimes
+            if (isset($property_for_rent_data['delivery_date']) && $property_for_rent_data['delivery_date'] != "") {
+                $property_for_rent_data['secondary_delivery_date'] = null;
+                $i = 0;
+                foreach ($property_for_rent_data['delivery_date'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['delivery_date'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_delivery_date'] .= $val . ",";
+                    }
+                    $i++;
                 }
-                $i++;
             }
-        }
 
-        $property_for_rent_data['secondary_clockwise_clock'] = "";
-        if (isset($property_for_rent_data['clockwise_clock'])) {
-            $i = 0;
-            foreach ($property_for_rent_data['clockwise_clock'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['clockwise_clock'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_clockwise_clock'] .= $val . ",";
+            $property_for_rent_data['secondary_from_clock'] = "";
+            if (isset($property_for_rent_data['from_clock'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['from_clock'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['from_clock'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_from_clock'] .= $val . ",";
+                    }
+                    $i++;
                 }
-                $i++;
             }
-        }
 
-        $property_for_rent_data['secondary_note'] = "";
-        if (isset($property_for_rent_data['note'])) {
-            $i = 0;
-            foreach ($property_for_rent_data['note'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['note'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_note'] .= $val . ",";
+            $property_for_rent_data['secondary_clockwise_clock'] = "";
+            if (isset($property_for_rent_data['clockwise_clock'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['clockwise_clock'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['clockwise_clock'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_clockwise_clock'] .= $val . ",";
+                    }
+                    $i++;
                 }
-                $i++;
             }
+
+            $property_for_rent_data['secondary_note'] = "";
+            if (isset($property_for_rent_data['note'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['note'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['note'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_note'] .= $val . ",";
+                    }
+                    $i++;
+                }
+            }
+
+            if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
+                $property_for_rent_data['published_on'] = 1;
+            } else {
+                $property_for_rent_data['published_on'] = 0;
+            }
+
+            $property_for_rent_data['user_id'] = Auth::user()->id;
+
+            $response = PropertyForRent::findOrFail($id);
+
+            //Update media (mediable id and mediable type)
+            if($response && $response->ad){
+                $property_for_rent_data = $this->updated_dropzone_images_type($property_for_rent_data,$request->upload_dropzone_images_type,$response->ad->id);
+            }
+
+            $response->update($property_for_rent_data);
+
+            DB::commit();
+
+            $data['success'] = $response;
+            echo json_encode($data);
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
-
-        if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
-            $property_for_rent_data['published_on'] = 1;
-        } else {
-            $property_for_rent_data['published_on'] = 0;
-        }
-
-        unset($property_for_rent_data['property_photos']);
-        $property_for_rent_data['user_id'] = Auth::user()->id;
-
-        //add Add to tables
-        // $add = array();
-        // $add['ad_type'] = 'property_for_rent';
-        // $add['status']  = 'published';
-        // $add['user_id'] =  Auth::user()->id;
-        // $add_response   =  Ad::where('id', '=', $id)->update($add);
-
-
-        // $property_for_rent_data['ad_id'] = $add_response->id;
-
-        $response = PropertyForRent::findOrFail($id);
-        $response->update($property_for_rent_data);
-        //add images
-        // dd($response);
-        if (is_countable($request->file('property_photos'))) {
-            common::update_media($request->file('property_photos'), $response->id, 'App\PropertyForRent', 'gallery');
-            //propert_for_rent
-        }
-
-        //Notification data
-        // $notifiable_id = $response -> id;
-        // $notification_obj = new NotificationController();
-        // $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForRent','property have been added');
-        // $notification_id_search = $notification_response->id;
-        // //trigger event
-        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
-
-        $data['success'] = $response;
-        echo json_encode($data);
     }
 
-    public function deletePropertyForRent($id)
-    {
-        $property_for_rent = PropertyForRent::findOrFail($id);
-        if (!empty($property_for_rent->media)) {
-            if ($property_for_rent->media->first())
-                common::delete_media($property_for_rent->media->first->mediable_id, $property_for_rent->media->first->mediable_type, $property_for_rent->media->first->type);
-        }
-        $property_for_rent->delete();
-        // $ad->delete();
-        // dd('working');
-        Session::flash('success', 'Property Deleted Successfully');
-
-        return redirect('/my-business/my-ads');
-    }
 
     public function property_destroy($obj)
     {
@@ -1261,234 +1243,244 @@ class PropertyController extends Controller
 
     public function newPropertyForRentAdd(AddPropertyForRent $request)
     {
-        $property_for_rent_data = $request->all();
-        //Manage Facilities
-        if (isset($property_for_rent_data['facilities'])) {
-            $facilities = "";
-            foreach ($property_for_rent_data['facilities'] as $key => $val) {
-                $facilities .= $val . ",";
-            }
-            $property_for_rent_data['facilities'] = $facilities;
-        }
-
-        //Add More ViewingTimes
-        if (isset($property_for_rent_data['delivery_date']) && $property_for_rent_data['delivery_date'] != "") {
-            $property_for_rent_data['secondary_delivery_date'] = null;
-            $i = 0;
-            foreach ($property_for_rent_data['delivery_date'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['delivery_date'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_delivery_date'] .= $val . ",";
+        DB::beginTransaction();
+        try{
+            $property_for_rent_data = $request->except('upload_dropzone_images_type');
+            //Manage Facilities
+            if (isset($property_for_rent_data['facilities'])) {
+                $facilities = "";
+                foreach ($property_for_rent_data['facilities'] as $key => $val) {
+                    $facilities .= $val . ",";
                 }
-                $i++;
+                $property_for_rent_data['facilities'] = $facilities;
             }
-        }
 
-        $property_for_rent_data['secondary_from_clock'] = "";
-        if (isset($property_for_rent_data['from_clock'])) {
-            $i = 0;
-            foreach ($property_for_rent_data['from_clock'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['from_clock'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_from_clock'] .= $val . ",";
+            //Add More ViewingTimes
+            if (isset($property_for_rent_data['delivery_date']) && $property_for_rent_data['delivery_date'] != "") {
+                $property_for_rent_data['secondary_delivery_date'] = null;
+                $i = 0;
+                foreach ($property_for_rent_data['delivery_date'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['delivery_date'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_delivery_date'] .= $val . ",";
+                    }
+                    $i++;
                 }
-                $i++;
             }
-        }
 
-        $property_for_rent_data['secondary_clockwise_clock'] = "";
-        if (isset($property_for_rent_data['clockwise_clock'])) {
-            $i = 0;
-            foreach ($property_for_rent_data['clockwise_clock'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['clockwise_clock'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_clockwise_clock'] .= $val . ",";
+            $property_for_rent_data['secondary_from_clock'] = "";
+            if (isset($property_for_rent_data['from_clock'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['from_clock'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['from_clock'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_from_clock'] .= $val . ",";
+                    }
+                    $i++;
                 }
-                $i++;
             }
-        }
 
-        $property_for_rent_data['secondary_note'] = "";
-        if (isset($property_for_rent_data['note'])) {
-            $i = 0;
-            foreach ($property_for_rent_data['note'] as $key => $val) {
-                if ($i == 0) {
-                    $property_for_rent_data['note'] = $val;
-                } else {
-                    $property_for_rent_data['secondary_note'] .= $val . ",";
+            $property_for_rent_data['secondary_clockwise_clock'] = "";
+            if (isset($property_for_rent_data['clockwise_clock'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['clockwise_clock'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['clockwise_clock'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_clockwise_clock'] .= $val . ",";
+                    }
+                    $i++;
                 }
-                $i++;
             }
+
+            $property_for_rent_data['secondary_note'] = "";
+            if (isset($property_for_rent_data['note'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['note'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['note'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_note'] .= $val . ",";
+                    }
+                    $i++;
+                }
+            }
+
+            if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
+                $property_for_rent_data['published_on'] = 1;
+            } else {
+                $property_for_rent_data['published_on'] = 0;
+            }
+
+            unset($property_for_rent_data['property_photos']);
+            $property_for_rent_data['user_id'] = Auth::user()->id;
+
+            //add Add to tables
+            $add = array();
+            $add['ad_type'] = 'property_for_rent';
+            $add['status'] = 'published';
+            $add['user_id'] = Auth::user()->id;
+            $add_response = Ad::create($add);
+            $property_for_rent_data['ad_id'] = $add_response->id;
+
+            //Update media (mediable id and mediable type)
+            if($add_response->id){
+                $property_for_rent_data = $this->updated_dropzone_images_type($property_for_rent_data,$request->upload_dropzone_images_type,$add_response->id);
+            }
+
+            $response = PropertyForRent::create($property_for_rent_data);
+
+
+            //Notification data
+            $notifiable_id = $response->id;
+            $notification_obj = new NotificationController();
+            $notification_response = $notification_obj->create($notifiable_id, 'App\PropertyForRent', 'property have been added');
+            $notification_id_search = $notification_response->id;
+            //trigger event
+            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+
+            DB::commit();
+            $data['success'] = $response;
+            echo json_encode($data);
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
-
-        if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
-            $property_for_rent_data['published_on'] = 1;
-        } else {
-            $property_for_rent_data['published_on'] = 0;
-        }
-
-        unset($property_for_rent_data['property_photos']);
-        $property_for_rent_data['user_id'] = Auth::user()->id;
-
-        //add Add to tables
-        $add = array();
-        $add['ad_type'] = 'property_for_rent';
-        $add['status'] = 'published';
-        $add['user_id'] = Auth::user()->id;
-        $add_response = Ad::create($add);
-        $property_for_rent_data['ad_id'] = $add_response->id;
-        $response = PropertyForRent::create($property_for_rent_data);
-
-
-        //Notification data
-        $notifiable_id = $response->id;
-        $notification_obj = new NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id, 'App\PropertyForRent', 'property have been added');
-        $notification_id_search = $notification_response->id;
-        //trigger event
-        event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
-
-        $data['success'] = $response;
-        echo json_encode($data);
     }
 
 
     public function newAddFlatWishesRented()
     {
+        common::delete_media(Auth::user()->id, 'flat_wishes_rented_temp_images', 'gallery');
         return view('user-panel.property.flat_wishes_rented');
     }
 
     public function editAddFlatWishesRented($id)
     {
         $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
-        return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));
+        if($flat_wishes_rented1){
+            if(!Auth::user()->hasRole('admin') && $flat_wishes_rented1->user_id != Auth::user()->id){
+                abort(404);
+            }
+            return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));
+        }else{
+            abort(404);
+        }
     }
 
     //update flat wishs rented
     public function updateFlatWishesRented(AddFlatWishesRented $request, $id)
     {
+        DB::beginTransaction();
+        try{
+            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type');
+            $regions = "";
+            foreach ($flat_wishes_rented_data['region'] as $key => $val) {
+                $regions .= $val . ",";
+            }
+            $flat_wishes_rented_data['region'] = $regions;
+
+            $property_types = "";
+            foreach ($flat_wishes_rented_data['property_type'] as $key => $val) {
+                $property_types .= $val . ",";
+            }
+            $flat_wishes_rented_data['property_type'] = $property_types;
 
 
-        $flat_wishes_rented_data = $request->all();
-        $regions = "";
-        foreach ($flat_wishes_rented_data['region'] as $key => $val) {
-            $regions .= $val . ",";
+            unset($flat_wishes_rented_data['flat_wishes_rented']);
+            $flat_wishes_rented_data['user_id'] = Auth::user()->id;
+
+            $response = FlatWishesRented::findOrFail($id);
+
+            //Update media (mediable id and mediable type)
+            if($response && $response->ad){
+                $flat_wishes_rented_data = $this->updated_dropzone_images_type($flat_wishes_rented_data,$request->upload_dropzone_images_type,$response->ad->id);
+            }
+
+            $response->update($flat_wishes_rented_data);
+            DB::commit();
+
+            $data['success'] = $response;
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
-        $flat_wishes_rented_data['region'] = $regions;
-
-        $property_types = "";
-        foreach ($flat_wishes_rented_data['property_type'] as $key => $val) {
-            $property_types .= $val . ",";
-        }
-        $flat_wishes_rented_data['property_type'] = $property_types;
-
-
-        unset($flat_wishes_rented_data['flat_wishes_rented']);
-        $flat_wishes_rented_data['user_id'] = Auth::user()->id;
-
-        //add Add to table
-        // $add = array();
-        // $add['ad_type'] = 'property_flat_wishes_rented';
-        // $add['status']  = 'published';
-        // $add['user_id'] =  Auth::user()->id;
-        // $add_response   =  Ad::create($add);
-
-        // $flat_wishes_rented_data['ad_id'] = $add_response->id;
-        $response = FlatWishesRented::findOrFail($id);
-        $response->update($flat_wishes_rented_data);
-
-        //Ameer Hamza code for storing multiple images
-        if (is_countable($request->file('flat_wishes_rented'))) {
-            common::update_media($request->file('flat_wishes_rented'), $response->id, 'App\FlatWishesRented', 'gallery'); //flat_wishes_rented
-        }
-        //End Ameer Hamza code
-
-        //Notification data
-        // $notifiable_id = $response -> id;
-        // $notification_obj = new NotificationController();
-        // $notification_response = $notification_obj->create($notifiable_id,'App\FlatWishesRented','property have been added');
-        // $notification_id_search = $notification_response->id;
-
-        // //trigger event
-        // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
-
-
-        $data['success'] = $response;
-        echo json_encode($data);
-
-
     }
 
-    public function deleteFlatWishesRented($id)
-    {
-
-        $flat_wishes_rented = FlatWishesRented::findOrFail($id);
-
-        //$ad = Ad::findOrFail($id);
-        // dd($property_for_rent->media->first->mediable_id);
-
-        if (!empty($flat_wishes_rented->media)) {
-            if ($flat_wishes_rented->media->first())
-                common::delete_media($flat_wishes_rented->media->first->mediable_id, $flat_wishes_rented->media->first->mediable_type, $flat_wishes_rented->media->first->type);
-        }
-        $flat_wishes_rented->delete();
-        // $ad->delete();
-        Session::flash('success', 'Property Deleted Successfully');
-
-        return redirect('/my-business/my-ads');
-    }
 
     public function addFlatWishesRented(AddFlatWishesRented $request)
     {
+        DB::beginTransaction();
+        try{
+            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type');
+            $regions = "";
+            foreach ($flat_wishes_rented_data['region'] as $key => $val) {
+                $regions .= $val . ",";
+            }
+            $flat_wishes_rented_data['region'] = $regions;
 
-        $flat_wishes_rented_data = $request->all();
-        $regions = "";
-        foreach ($flat_wishes_rented_data['region'] as $key => $val) {
-            $regions .= $val . ",";
+            $property_types = "";
+            foreach ($flat_wishes_rented_data['property_type'] as $key => $val) {
+                $property_types .= $val . ",";
+            }
+            $flat_wishes_rented_data['property_type'] = $property_types;
+
+
+            unset($flat_wishes_rented_data['flat_wishes_rented']);
+            $flat_wishes_rented_data['user_id'] = Auth::user()->id;
+
+            //add Add to table
+            $add = array();
+            $add['ad_type'] = 'property_flat_wishes_rented';
+            $add['status'] = 'published';
+            $add['user_id'] = Auth::user()->id;
+            $add_response = Ad::create($add);
+
+            $flat_wishes_rented_data['ad_id'] = $add_response->id;
+
+            //Update media (mediable id and mediable type)
+            if($add_response->id){
+                $flat_wishes_rented_data = $this->updated_dropzone_images_type($flat_wishes_rented_data,$request->upload_dropzone_images_type,$add_response->id);
+            }
+
+            $response = FlatWishesRented::create($flat_wishes_rented_data);
+
+
+            //Notification data
+            $notifiable_id = $response->id;
+            $notification_obj = new NotificationController();
+            $notification_response = $notification_obj->create($notifiable_id, 'App\FlatWishesRented', 'property have been added');
+            $notification_id_search = $notification_response->id;
+
+            //trigger event
+            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            DB::commit();
+
+            $data['success'] = $response;
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
-        $flat_wishes_rented_data['region'] = $regions;
-
-        $property_types = "";
-        foreach ($flat_wishes_rented_data['property_type'] as $key => $val) {
-            $property_types .= $val . ",";
-        }
-        $flat_wishes_rented_data['property_type'] = $property_types;
 
 
-        unset($flat_wishes_rented_data['flat_wishes_rented']);
-        $flat_wishes_rented_data['user_id'] = Auth::user()->id;
-
-        //add Add to table
-        $add = array();
-        $add['ad_type'] = 'property_flat_wishes_rented';
-        $add['status'] = 'published';
-        $add['user_id'] = Auth::user()->id;
-        $add_response = Ad::create($add);
-
-        $flat_wishes_rented_data['ad_id'] = $add_response->id;
-        $response = FlatWishesRented::create($flat_wishes_rented_data);
-
-        //Ameer Hamza code for storing multiple images
-        if (is_countable($request->file('flat_wishes_rented'))) {
-            common::update_media($request->file('flat_wishes_rented'), $response->id, 'App\FlatWishesRented', 'gallery'); //flat_wishes_rented
-        }
-        //End Ameer Hamza code
-
-        //Notification data
-        $notifiable_id = $response->id;
-        $notification_obj = new NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id, 'App\FlatWishesRented', 'property have been added');
-        $notification_id_search = $notification_response->id;
-
-        //trigger event
-        event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
 
 
-        $data['success'] = $response;
-        echo json_encode($data);
+
 
 
     }
