@@ -1,4 +1,6 @@
-<form action="#" method="post" id="property_for_rent_form" enctype="multipart/form-data">
+<form action="#" method="post" id="property_for_rent_form" class="dropzone addMorePics p-0"
+      data-action="@if(Request::is('new/property/rent/ad/*/edit')){{url('update-upload-images?ad_id='.$property_for_rent1->ad->id)}}
+      @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
      $property_for_rent = new \App\PropertyForRent();
     if(isset($property_for_rent1)){
@@ -17,6 +19,7 @@
     @method('PATCH')
     @endif
 
+    <input type="hidden" name="upload_dropzone_images_type" value="property_for_rent_temp_images">
     <div class="pl-3 pr-3">
         <div class="form-group">
             <label class="u-t5">Overskrift</label>
@@ -322,7 +325,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="u-t5">Leies ut til (valgfritt)</label>
+            <label class="u-t5">Leies ut til</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="date" value="{{ $property_for_rent->rented_to }}" name="rented_to" class="dme-form-control">
@@ -335,11 +338,10 @@
         <div class="form-group">
             <label class="u-t5">Bilder (valgfritt)</label>
             <div class="row">
-                <div class="col-sm-4 pr-md-0">
-                    <!-- <button class="dme-btn-outlined-blue">Legg til bilder</button> -->
-                    <input type="file" name="property_photos[]" value="{{ $property_for_rent->property_photos }}" id="property_photos" class="" multiple>
-                </div>
-                <div class="col-sm-8">
+                <div class="col-sm-12 pr-md-0">
+                    @php $dropzone_img_obj = $property_for_rent; @endphp
+                    @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
+                    {{--                    <input type="file" name="commercial_plot_photos[]" value="{{ $commercial_plot->commercial_plot_photos }}" id="property_photos" class="" multiple>--}}
                 </div>
             </div>
         </div>

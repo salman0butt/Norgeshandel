@@ -79,7 +79,7 @@
                             <?php
 
                                 $property_for_rent = App\PropertyForRent::find($value->id);
-                                $name       = $property_for_rent->media->first();
+                                $name       = $property_for_rent->ad->media->first();
                                 if($name != null)
                                 {
                                     $name       =    $name->name_unique;

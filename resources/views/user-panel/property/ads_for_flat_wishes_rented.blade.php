@@ -73,8 +73,8 @@
 
                         @foreach ($add_array as $key => $value)
                             <?php
-                                $property_for_flat_wishes_rented = App\FlatWishesRented::find($value->id);
-                                $name       = $property_for_flat_wishes_rented->media->first();
+                                $property_for_flat_wishes_rented = App\FlatWishesRented::find($value->id); 
+                                $name       = $property_for_flat_wishes_rented->ad->media->first();
                                 if($name != null)
                                 {
                                     $name       =    $name->name_unique;

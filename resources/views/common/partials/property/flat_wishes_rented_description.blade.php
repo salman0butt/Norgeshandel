@@ -1,29 +1,5 @@
 @extends('layouts.landingSite')
 @section('page_content')
-
-<?php
-
-            // if(isset($property_data->facilities) && !empty($property_data->facilities))
-            // {
-
-            //     $facilities = explode(",",rtrim($property_data->facilities, ","));
-
-            // }
-        /* Zille Shah code commented by Ameer Hamza
-            $name       = $property_data->media->first();
-            if($name != null)
-            {
-                $name       =    $name->name_unique;
-                $path       =    \App\Helpers\common::getMediaPath($property_data);
-                $full_path  =    $path."".$name;
-            }else{
-                $full_path = asset('/public/uploads/banners/1280x720.png');
-            }
-        */
-
-        ?>
-
-
 <main>
     <div class="left-ad float-left">
         <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
@@ -61,7 +37,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                @php $name = $property_data->media; @endphp
+                @php $name = $property_data->ad->media; @endphp
                 @include('user-panel.partials.landing_page_slider',compact('name'))
             </div>
 
