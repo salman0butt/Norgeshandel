@@ -6,7 +6,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel </a></li>
-                        <li class="breadcrumb-item"><a href="{{url('my-business/profile')}}">Min prifil </a></li>
+                        <li class="breadcrumb-item"><a href="{{url('my-business/profile')}}">Min profil </a></li>
                         <li class="breadcrumb-item active" aria-current="page">Be om firmaprofil</li>
                     </ol>
                 </nav>
@@ -28,13 +28,15 @@
                             </div>
                             <div class="col-md-4">
                                 <input type="number" class="form-control" placeholder="9 siffer" id="org_number" name="org_number" minlength="9" maxlength="9" required>
+                                <div id="error-show"></div>
                             </div>
                             <div class="col-md-3">
                                 <button type="button" class="btn dme-btn-outlined-blue find_detail_button">Gå videre </button>
                                 <div id="imageLoader" style="display:none; margin-top:15%; padding-bottom: 15%">
                                     <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader" height="50px">
                                 </div>
-                            </div>
+                            </div><br>
+                            
                             <div class="col-md-5">
 
                             </div>
@@ -185,13 +187,13 @@
                 var org_number = $('.org-number #org_number').val();
                 var api_url = 'https://data.brreg.no/enhetsregisteret/api/enheter/'; // api link concatenate the registration number
                 if(org_number){
-                    if(org_number <= 0){
-                        alert('org.no må være større enn null.');
+                    if(org_number <= 0){ 
+                          $('#error-show').html("<p style='color:red;'>org.no må være større enn null.</p>");
                         return false;
                     }
 
                     if(org_number.length != 9){
-                        alert('org.no må være ni sifret.');
+                        $('#error-show').html("<p style='color:red;'>org.no må være ni sifret.</p>");
                         return false;
                     }
                     $.ajax({
@@ -216,9 +218,9 @@
 
                         error: function(response) {
                             if(response['status'] == 404 ){
-                                alert('posten ikke funnet.');
+                                $('#error-show').html("<p style='color:red;'>Organisasjonsnummer ikke funnt</p>");
                             }else{
-                                alert('Noe gikk galt.');
+                                console.log('Noe gikk galt.');
                             }
 
                         }

@@ -53,7 +53,6 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                 <textarea type="text" name="access" class="dme-form-control">{{ $property_for_sale->access }}</textarea><br>
-                <span class="u-t5">Forklar kort om adkomsten til boligen og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
                 </div>
             </div>
         </div>
@@ -61,9 +60,8 @@
             <h3 class="u-t5">Beliggenhet <span class="text-muted">(valgfritt)</span></h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea type="text" name="location" class="dme-form-control"
-                              placeholder="F.eks. Eiendommen ligger i nærheten til flotte tur- og friluftsområder og har kort gangavstand til skole og barnehage.">{{ $property_for_sale->location }}</textarea><br>
-                    <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
+                    <textarea type="text" name="location" class="dme-form-control">{{ $property_for_sale->location }}</textarea><br>
+               
                     <span class="error-span location"></span>
                 </div>
             </div>
@@ -73,8 +71,8 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="local_area_name" value="{{ $property_for_sale->local_area_name }}" class="dme-form-control"
-                           placeholder="F.eks. Bjerke eller Kampen">
-                    <span class="u-t5">Her kan du skrive inn hvilken bydel eller område eiendommen befinner seg i</span>
+                           placeholder="Bydel.">
+                   
                     <span class="error-span local_area_name"></span>
                 </div>
             </div>
@@ -118,8 +116,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Identifikasjonsnummeret til din kommune. Du kan finne ditt kommunenummer på
-                            kartverkets hjemmesider.
+                        <div class="u-t5">Du kan finne ditt kommunenummer på kartverkets hjemmesider.
                         </div>
                     </div>
                     <br>
@@ -136,7 +133,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Nummeret på gårdsenheten, dette kan du finne på kartverkets hjemmesider.</div>
+                        <div class="u-t5">Dette kan du finne på kartverkets hjemmesider.</div>
                     </div>
                     <br>
                 </div>
@@ -152,8 +149,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Hvert gårdsnummer er delt inn i bruksnummer, du kan finne dette på kartverkets
-                            hjemmesider.
+                        <div class="u-t5">Du kan finne dette på kartverkets hjemmesider.
                         </div>
                     </div>
                     <br>
@@ -170,8 +166,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Brukes når bruksnummer skal deles inn i flere grunneiendommer. Du kan finne
-                            festenummeret til din eiendom på kartverkets hjemmesider.
+                        <div class="u-t5">Du kan finne festenummeret til din eiendom på kartverkets hjemmesider.
                         </div>
                     </div>
                     <br>
@@ -188,8 +183,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Seksjonsnummer får man tildelt når eiendommen seksjoneres. Du kan finne ditt
-                            seksjonsnummer på kartverkets hjemmesider.
+                        <div class="u-t5">Du kan finne ditt seksjonsnummer på kartverkets hjemmesider.
                         </div>
                     </div>
                     <br>
@@ -206,9 +200,7 @@
                      </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Leilighetsnummeret består av en H, L, U eller K og fire tall. H står for
-                            hovedetasje, 02 for andre etasje og 01 for første bolig til venstre.
-                        </div>
+                        
                     </div>
                     <br>
                 </div>
@@ -224,9 +216,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Bruksarealet er bruttoareal minus den plassen som opptas av yttervegger. Du
-                            kan finne bruksarealet i takstrapporten.
-                        </div>
+                        <div class="u-t5">Du kan finne bruksarealet i takstrapporten.</div>
                     </div>
                     <br>
                 </div>
@@ -242,9 +232,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Arealet av primærrom på eiendommen, sekundærrom tas ikke med i betegnelsen. Du
-                            kan finne arealet for primærrom i takstrapporten.
-                        </div>
+                        <div class="u-t5">Du kan finne arealet for primærrom i takstrapporten.</div>
                     </div>
                     <br>
                 </div>
@@ -260,8 +248,7 @@
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        <div class="u-t5">Det arealet som bygningen dekker på tomten, det vil si 'fotavtrykket' av
-                            bygningen.
+                        <div class="u-t5">Det arealet som bygningen dekker på tomten.
                         </div>
                     </div>
                     <br>
@@ -272,9 +259,8 @@
             <h3 class="u-t5">Arealbeskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="area_description" type="text" class="dme-form-control"
-                              placeholder="F.eks. grunnflate 60m², stue 30m², kjøkken 10m², WC 10m² osv.">{{ $property_for_sale->area_description }}</textarea><br>
-                    <span class="u-t5">Her kan du gi en kort oversikt over størrelsen på rom i eiendommen din.</span>
+                    <textarea name="area_description" type="text" class="dme-form-control">{{ $property_for_sale->area_description }}</textarea><br>
+                    <span class="u-t5">Størrelsen på rom i eiendommen</span>
                 </div>
             </div>
         </div>
@@ -315,7 +301,7 @@
                         <option value="G" {{($property_for_sale->energy_grade == 'G' ? 'selected' : '')}}>G</option>
                     </select>
                     <span class="error-span energy_grade"></span>
-                    <span class="u-t5">Energikarakter går fra A til G, hvor A er best. Karakteren er basert på beregnet levert energi til boligen. En god energikarakter betyr at boligen er energieffektiv.</span>
+                    <span class="u-t5">Enegikarakter der A er best.</span>
                 </div>
             </div>
         </div>
@@ -356,9 +342,7 @@
                 </div>
                 <div class="col-md-8"></div>
                 <div class="col-md-12">
-                    <div class="u-t5">Hvor mange bruksrom er det totalt på eiendommen? (bod og garasje ol. er ikke
-                        medregnet)
-                    </div>
+                    <div class="u-t5">Bod og garasje ol. er ikke medregnet.</div>
                 </div>
                 <br>
             </div>
@@ -508,7 +492,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <div class="u-t5">Organisasjonsnummeret til ditt borettslag kan du finne på Brønnøysundregistrene.</div>
+            <div class="u-t5">Org. nr. til ditt borettslag finnes hos Brønnøysundregistrene.</div>
         </div>
         <div class="form-group">
             <h3 class="u-t5">Borettslagets andelsnummer (valgfritt)</h3>
@@ -520,9 +504,7 @@
                 <div class="col-sm-8">
                 </div>
                 <div class="col-md-12">
-                    <div class="u-t5">Dette er det tinglyste nummeret for din seksjon (leilighet). Dette nummeret oppgis
-                        gjerne sammen med gårds- og bruksnummer for å identifisere en seksjon i en boligblokk. Du kan
-                        finne ditt andelsnummer på kartverkets hjemmesider.
+                    <div class="u-t5">Du kan finne ditt andelsnummer på kartverkets hjemmesider.
                     </div>
                 </div>
             </div>
@@ -582,7 +564,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="character" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->character }}</textarea>
-                    <span class="u-t5">Hva består tomten av? Her kan du for eksempel fortelle litt mer om hage, innkjørsel, parkering,og offentlige reguleringer.</span>
+                    <span class="u-t5">Info om adkomst, regulering, parkering og hage mm.</span>
                     <span class="error-span character"></span>
                 </div>
             </div>
@@ -618,10 +600,6 @@
                 </div>
                 <div class="col-md-8"></div>
                 <div class="col-md-12">
-                    <div class="u-t5">Hva er estimerte felleskostnader etter den eventuelle avdragsfrie perioden? Dette
-                        feltet må fylles ut dersom boligen har fellesgjeld. Dersom det ikke er avdragsfrihet i
-                        fellesgjeld settes verdien til dagens felleskostnader.
-                </div>
                </div>
             </div>
         </div> 
@@ -632,9 +610,7 @@
                     <input name="asset_value" value="{{ $property_for_sale->asset_value }}"   type="text" class="dme-form-control total_price_constants"
                            placeholder="Kr.">
                     <span class="error-span asset_value"></span>
-                    <div class="u-t5">Formuesverdi legges til grunn av skatteetaten og kommuner når skatt av boligen
-                        skal regnes ut. Mer om formuesverdi og hvordan du beregner dette kan du finne på skatteetaten
-                        sin hjemmeside.
+                    <div class="u-t5">Mer om formuesverdi og hvordan du beregner dette kan du finne på skatteetaten sin hjemmeside.
                     </div>
                 </div>
             </div>
@@ -649,9 +625,7 @@
                 </div>
                 <div class="col-sm-8">
                 </div>
-                <div class="col-md-12">
-                    <div class="u-t5">Minstebeløpet du selger eiendommen for.</div>
-                </div>
+            
             </div>
         </div>
         <div class="form-group">
@@ -664,8 +638,7 @@
                 <div class="col-sm-8">
                 </div>
                 <div class="col-md-12">
-                    <div class="u-t5">Dersom det vil påløpe ekstra omkostninger ved salg av denne eiendommen oppgir du
-                        beløpet her. Fyll inn 0 hvis det ikke er ekstra omkostninger.
+                    <div class="u-t5">Omkostninger ved salg av eiendom.
                     </div>
                 </div>
             </div>
@@ -679,11 +652,7 @@
                 </div>
                 <div class="col-sm-8">
                 </div>
-                <div class="col-md-12">
-                    <div class="u-t5">Her kan du gi en mer detaljert beskrivelse av hvilke omkostninger som inngår i
-                        kjøpet.
-                    </div>
-                </div>
+        
             </div>
         </div>
         <div class="form-group">
@@ -696,11 +665,7 @@
                 </div>
                 <div class="col-sm-8">
                 </div>
-                <div class="col-md-12">
-        <div class="u-t5">Fellesgjeld for din bolig. Har du ikke fellesgjeld på din bolig setter du denne
-                        verdien til 0.
-        </div>
-                </div>
+              
             </div>
         </div>
         <div class="form-group">
@@ -712,8 +677,8 @@
                 <div class="col-sm-8">
                 </div>
                 <div class="col-md-12">
-                    <div class="u-t5">Regnes ut som summen av prisantydning, fellesgjeld og omkostninger. Alle disse tre
-                        feltene må fylles ut for at totalpris skal vises.
+                    <div class="u-t5">Total pris ink fellesgjeld, prisantydning og
+omkostninger.
                     </div>
                 </div>
             </div>
@@ -728,8 +693,7 @@
                 <div class="col-sm-8">
                 </div>
                 <div class="col-md-12">
-                    <div class="u-t5">Verditakst blir satt av takstmannen og er forventet salgsverdi eller
-                        markedsverdien på din eiendom.
+                    <div class="u-t5">Markedsverdi for din eiendom.
                     </div>
                 </div>
             </div>
@@ -741,13 +705,7 @@
                     <input name="loan_rate" value="{{ $property_for_sale->loan_rate }}" type="text" class="dme-form-control" placeholder="Kr">
                     <span class="error-span loan_rate"></span>
                 </div>
-                <div class="col-sm-8">
-                </div>
-                <div class="col-md-12">
-                    <div class="u-t5">Lånetakst vil si den boligverdien som banken bruker for lån, pant og eventuelt
-                        tvangssalg av boliger. Lånetaksten er basert på verditaksten.
-                    </div>
-                </div>
+           
             </div>
         </div>
         <div class="form-group">
@@ -757,11 +715,7 @@
                     <input type="text" value="{{ $property_for_sale->percentage_of_common_wealth }}" name="percentage_of_common_wealth" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span percentage_of_common_wealth"></span>
                 </div>
-                <div class="col-sm-8">
-                </div>
-                <div class="col-md-12">
-                    <div class="u-t5">Boligens andel av borettslagets fellesformue</div>
-                </div>
+          
             </div>
         </div>
         <div class="form-group">
@@ -787,11 +741,10 @@
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Utfyllende informasjon om fellesgjeld og felleskostnader (valgfritt)</h3>
+            <h3 class="u-t5">Mer info om felleskostander</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="joint_debt_costs" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->joint_debt_costs }}</textarea>
-                    <span class="u-t5">Dersom du har ytterligere informasjon om fellesgjeld og felleskostnader så kan du fortelle mer om det her.</span>
                     <span class="error-span joint_debt_costs"></span>
                 </div>
             </div>
@@ -801,9 +754,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="pre_empt_right" type="text" value="{{ $property_for_sale->pre_empt_right }}" class="dme-form-control">
-                    <div class="u-t5">Her kan du angi om det praktiseres en forkjøpsrett, eller når en eventuell
-                        forkjøpsrett vil bli avklart.
-                    </div>
+                 
                     <span class="error-span pre_empt_right"></span>
                 </div>
             </div>
@@ -833,17 +784,16 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description2" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->description2 }}</textarea>
-                    <span class="u-t5">Fortell om hva som er bra med eiendommen, hvorfor har du trivdes der og hva som er inkludert av møbler og innredning osv.</span>
+               
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Vesentlige opplysninger (valgfritt)</h3>
+            <h3 class="u-t5">Andre opplysninger (valgfritt)</h3>
             <div class="row">
         <div class="col-sm-12 pr-md-0">
-            <textarea name="essential_information" id="beskrivelse" cols="30" rows="10"
-                              placeholder="F.eks. Taket på det ene soverommet lekker. Det elektriske anlegget i kjelleren er utført av ufaglært.">{{ $property_for_sale->essential_information }}</textarea>
-                    <span class="u-t5">Opplysninger om vesentlige kjente feil og mangler som er av betydning for kjøper. Dette kan f.eks være større fysiske skader på boligen, endringer på boligen som er gjort uten å skaffe nødvendig tillatelse, byggeprosjekter som kan påvirke boligen eller utført arbeid på eiendommen av ufaglærte. Henvis også gjerne til takst.</span>
+            <textarea name="essential_information" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->essential_information }}</textarea>
+                    <span class="u-t5">Informer om betydelig feil og mangler, referer evt. også til takst.</span>
                     <span class="error-span essential_information"></span>
                 </div>
             </div>
@@ -862,7 +812,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="video" type="text" value="{{ $property_for_sale->video }}" class="dme-form-control">
-                    <div class="u-t5">Kopier eller skriv inn linken til en video på Youtube eller Vimeo.</div>
+                    <div class="u-t5">Link til video</div>
                     <span class="error-span video"></span>
                 </div>
             </div>
@@ -929,8 +879,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <button id="add_more_viewing_times_sales" type="button" class="dme-btn-outlined-blue"> + Legg til
-                        flere visningstidspunkt
+                    <button id="add_more_viewing_times_sales" type="button" class="dme-btn-outlined-blue"> + Visningstidspunt
                     </button>
                 </div>
             </div>
@@ -942,8 +891,7 @@
                     <input name="phone" value="{{ $property_for_sale->phone }}" type="tel" id="phone" class="dme-form-control">
                     <span id="valid-msg" class="hide"></span>
                     <span id="error-msg" class="hide"></span>
-                    <div class="u-t5">Hvilket telefonnummer ønsker du at interesserte kjøpere skal kontakte deg på?
-                    </div>
+                  
                     <span class="error-span phone"></span>
                 </div>
             </div>

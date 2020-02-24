@@ -55,7 +55,9 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="property_type" name="property_type" class="dme-form-control">
-        <option value="{{ $property_for_rent->property_type }}">{{ $property_for_rent->property_type }}</option>
+                        @if(Request::is('new/property/rent/ad/*/edit'))
+                            <option value="{{ $property_for_rent->property_type }}">{{ $property_for_rent->property_type }}</option>
+                        @endif
                         <option value=""></option>
                         <option value="Andre">Andre</option>
                         <option value="Enebolig">Enebolig</option>
@@ -68,7 +70,6 @@
                     </select>
                     <span class="error-span property_type"></span>
 
-                    <span class="u-t5">Dersom du kun skal leie ut et rom må du huske å velge 'Rom i bofelleskap' under boligtype.</span>
                 </div>
             </div>
         </div>
@@ -77,7 +78,6 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" value="{{ $property_for_rent->primary_rom }}" name="primary_rom" class="dme-form-control" placeholder="m²">
-                    <span class="u-t5">Arealet av primærrom i boligen, sekundærrom tas ikke med i betegnelsen. Du kan finne arealet for primærrom i takstrapporten.</span>
                     <br><span class="error-span primary_rom"></span>
                 </div>
             </div>
@@ -123,7 +123,9 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="furnishing" name="furnishing" class="dme-form-control">
+                    @if(Request::is('new/property/rent/ad/*/edit'))
                         <option value="{{ $property_for_rent->furnishing }}">{{ $property_for_rent->floor }}</option>
+                    @endif    
                         <option value=""></option>
                         <option value="Delvis møblert">Delvis møblert</option>
                         <option value="Møblert">Møblert</option>
@@ -237,7 +239,9 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="energy_label.class" name="energy_label_class" data-selector="" class="dme-form-control">
+                    @if(Request::is('new/property/rent/ad/*/edit'))
                         <option value="{{ $property_for_rent->energy_label_class }}">{{ $property_for_rent->energy_label_class }}</option>
+                    @endif    
                         <option value=""></option>
                         <option value="A">A</option>
                         <option value="B">B</option>
@@ -247,7 +251,7 @@
                         <option value="F">F</option>
                         <option value="G">G</option>
                     </select>
-                    <span class="u-t5">Energikarakter går fra A til G, hvor A er best. Karakteren er basert på beregnet levert energi til boligen. En god energikarakter betyr at boligen er energieffektiv.</span>
+                    <span class="u-t5">Enegikarakter der A er best.</span>
                 </div>
             </div>
         </div>
@@ -256,7 +260,9 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="energy_label.color" name="energy_label_color" data-selector="" class="dme-form-control">
+                    @if(Request::is('new/property/rent/ad/*/edit'))
                         <option value="{{ $property_for_rent->energy_label_color }}">{{ $property_for_rent->energy_label_color }}</option>
+                    @endif    
                         <option value=""></option>
                         <option value="Gul">Gul</option>
                         <option value="Lysegrønn">Lysegrønn</option>
@@ -348,7 +354,6 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
-                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>
         </div>
@@ -395,9 +400,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue">+ Legg til flere
-                        visningstidspunkt
-                    </button>
+                    <button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue">+ Visningstidspunt</button>
                 </div>
             </div>
         </div>
@@ -426,7 +429,7 @@
         <hr>
         <div class="notice"></div>
         <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiser_annonsen"
-                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">oppdater tillegget ditt</span></button>
+                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label"> @if(Request::is('new/property/rent/ad/*/edit')) {{'oppdater tillegget ditt'}} @else {{ 'Publiser annonsen' }} @endif</span></button>
 </form>
   <script>   
     $(document).on('change', 'input[name="zip_code"]', function(e) {

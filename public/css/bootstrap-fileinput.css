@@ -6,9 +6,10 @@
  
 .btn-file {
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   vertical-align: middle;
 }
+
 .btn-file > input {
   position: absolute;
   top: 0;
@@ -22,6 +23,9 @@
   opacity: 0;
 
   direction: ltr;
+}
+.btn-file {
+    margin-top: -1px !important;
 }
 .fileinput {
   display: inline-block;
