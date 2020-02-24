@@ -1,11 +1,11 @@
 @extends('layouts.landingSite')
 
 @section('page_content')
-<main class="dme-wrepper">
+<main class="dme-wrapper">
     <div class="left-ad float-left">
         <img src="assets/images/left-ad.png" class="img-fluid" alt="">
     </div>
-    
+
     <div class="dme-container pl-3 pr-3">
     <div class="breade-crumb">
             <nav aria-label="breadcrumb">
@@ -16,7 +16,7 @@
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel</a></li>
                             <li class="breadcrumb-item active"><a href="#">Jobb</a></li>
                             <li class="breadcrumb-item active"><a href="#">Bedriftsprofiler</a></li>
-                        </ol>   
+                        </ol>
                     </div>
                 </div>
             </nav>

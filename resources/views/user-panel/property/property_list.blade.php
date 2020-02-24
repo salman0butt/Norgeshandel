@@ -6,7 +6,7 @@
         }
 </style>
 @section('page_content')
-<main class="dme-wrepper">
+<main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
@@ -50,7 +50,7 @@
                                 <a href="{{url('property/commercial-property-for-rent/search')}}">Næringseiendom til leie <span class="u-stone">(<?php echo App\CommercialPropertyForRent::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('commercial/plots/ads')}}">Næringstomter <span class="u-stone">(<?php echo App\CommercialPlot::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/commercial-property-for-rent/search')}}">Næringstomter <span class="u-stone">(<?php echo App\CommercialPlot::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('business/for/sale/ads')}}">Bedrifter til salgs <span class="u-stone">(<?php echo App\BusinessForSale::get()->count(); ?>)</span></a>

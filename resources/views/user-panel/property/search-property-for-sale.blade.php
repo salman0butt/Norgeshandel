@@ -1,6 +1,6 @@
 @extends('layouts.landingSite')
 @section('page_content')
-    <main class="dme-wrepper" id="dme-wrapper">
+    <main class="dme-wrapper" id="dme-wrapper">
         @include('user-panel.property.search-property-for-sale-inner')
     </main>
     <input type="hidden" id="mega_menu_search_url" value="{{url('property/property-for-sale/search')}}">

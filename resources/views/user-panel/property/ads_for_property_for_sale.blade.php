@@ -13,7 +13,7 @@
     ?>
 
 
-<main class="dme-wrepper">
+<main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
