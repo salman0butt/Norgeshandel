@@ -13,8 +13,8 @@ class MessageThread extends Model
 
     public function messages(){
         return $this->hasMany(Message::class)
-            ->where('deleted_by', '!=', Auth::id())
-            ->orWhereNull('deleted_by');
+            ->whereNull('deleted_by')
+            ->orWhere('deleted_by', '!=', Auth::id());
     }
 
     public function one_side_messages(){
