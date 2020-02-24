@@ -133,7 +133,7 @@ header .nav-icons{
 header .navbar .dropdown-toggle::after{
     display: none;
 }
-.dme-wrepper{
+.dme-wrapper{
     margin-top: 51px;
     margin-bottom: 40px;
 }

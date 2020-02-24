@@ -11,6 +11,7 @@
     $countries = $country->terms;
 
     $property_type = json_decode($commercial_property_for_sale->property_type);
+    if(empty($property_type)){$property_type=array();}
 
     $facilities = explode(',', $commercial_property_for_sale->facilities);
 

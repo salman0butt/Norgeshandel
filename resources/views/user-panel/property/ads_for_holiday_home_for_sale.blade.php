@@ -25,7 +25,7 @@
         top: -250px !important;
     }
     </style>
-    <main class="dme-wrepper">
+    <main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
@@ -89,21 +89,21 @@
                         @foreach ($add_array as $key => $value)
 
                             <?php
-                                
+
                                 $property_holiday_home_for_sale = App\PropertyHolidaysHomesForSale::find($value->id);
                                 $name       = $property_holiday_home_for_sale->ad->company_gallery->first();
                                 if(!empty($name))
                                 {
                                     $name = $property_holiday_home_for_sale->ad->company_gallery->first()->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($property_holiday_home_for_sale);
-                                    $full_path  = $path."".$name; 
+                                    $full_path  = $path."".$name;
                                 }
                                 else
                                 {
                                     $full_path  = "";
                                 }
 
-                            ?>  
+                            ?>
 
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
                                 <a href="{{url('/holiday/home/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
@@ -192,13 +192,13 @@
                 {
                     stylings = "";
                 }
-        
+
                 $.ajax({
                     type: "POST",
                     url: url,
                     data: {sending: data , stylings:stylings},
                     dataType: "json",
-                    success: function (data) 
+                    success: function (data)
                     {
                         $(".pagination_data").html(data['success']);
                     }
@@ -206,17 +206,17 @@
                 });
             });
 
-            
+
                 //pagination
                 $(document).on('click', '.pagination a',function(event)
                 {
                     event.preventDefault();
                     $('li').removeClass('active');
                     $(this).parent('li').addClass('active');
-        
+
                     var myurl = $(this).attr('href');
                     var page=$(this).attr('href').split('page=')[1];
-                   
+
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('holiday/home/for/sale/ads')}}';
                     var stylings = window.location.href.split('?', 2)[1];
@@ -225,7 +225,7 @@
                         stylings = "";
                     }
                     getDataPagination(page,sorting_value,url,stylings);
-                    
+
                 });
 
         });

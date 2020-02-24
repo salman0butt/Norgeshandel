@@ -346,6 +346,59 @@ class PropertyController extends Controller
         return view('user-panel.property.search-commercial-property-for-rent', compact('col', 'add_array'));
     }
 
+//    zain
+    public function search_commercial_plots(Request $request)
+    {
+        $col = 'list';
+        if (isset($request->view) && !empty($request->view)) {
+            $col = $request->view;
+        }
+        $query = DB::table('ads')
+            ->join('commercial_plots', 'commercial_plots.ad_id', 'ads.id')
+            ->where('ads.status', 'published');
+
+        if (isset($request->country) && !empty($request->country)) {
+            $query->whereIn('country', $request->country);
+        }
+        if (isset($request->search) && !empty($request->search)) {
+            $query->where('headline', 'like', '%' . $request->search . '%');
+        }
+        if (isset($request->created_at)) {
+            $query->whereDate('commercial_plots.created_at', '=', $request->created_at);
+        }
+        if (isset($request->use_area_from) && !empty($request->use_area_from)) {
+            $query->where('commercial_plots.plot_size', '>=', (int)$request->use_area_from);
+        }
+        if (isset($request->use_area_to) && !empty($request->use_area_to)) {
+            $query->where('commercial_plots.plot_size', '<=', (int)$request->use_area_to);
+        }
+
+        $order_by_thing = 'id';
+        $order_by = 'DESC';
+
+        if (isset($request->order) && !empty($request->order)) {
+            $order = $request->order;
+            switch ($order) {
+                case 'published':
+                    $query->orderBy('created_at', 'DESC');
+                    break;
+                case 'priced-low-high':
+                    $query->orderBy('value_rate', 'ASC');
+                    break;
+                case 'priced-high-low':
+                    $query->orderBy('value_rate', 'DESC');
+                    break;
+            }
+        }
+        $add_array = $query->paginate(getenv('PAGINATION'));
+//        dd(count($add_array));
+        if ($request->ajax()) {
+            $html = view('user-panel.property.search-commercial-plots-inner', compact('add_array', 'col'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-commercial-plots', compact('col', 'add_array'));
+    }
+
     public function list()
     {
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
