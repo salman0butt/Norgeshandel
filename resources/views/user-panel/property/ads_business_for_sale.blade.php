@@ -1,6 +1,6 @@
 @extends('layouts.landingSite')
 @section('page_content')
-    <?php 
+    <?php
 
 
         $col='list';
@@ -12,7 +12,7 @@
 
     ?>
 
-<main class="dme-wrepper">
+<main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
@@ -67,7 +67,7 @@
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?> " id="">
-                        
+
                         @foreach ($add_array as $key => $value)
                             <?php
 
@@ -77,7 +77,7 @@
                                 {
                                     $name       =    $name->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($business_for_sale);
-                                    $full_path  = $path."".$name; 
+                                    $full_path  = $path."".$name;
                                 }
                                 else
                                 {
@@ -85,7 +85,7 @@
                                 }
 
                             ?>
-                    
+
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
                                 <a href="{{url('/business/for/sale/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
@@ -125,7 +125,7 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
-    
+
     <script>
             $(document).ready(function(){
                               //spinner start here
@@ -139,7 +139,7 @@
                         $(".pagination_data").css("display", "block");
                     });
                 //spinner ends here
-                
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -147,7 +147,7 @@
                 });
 
                 $(document).on('change', '#sort_by', function() {
-                    
+
                     var url  = '{{url('business/for/sales/sorted/ad')}}';
                     var data = $(this).val();
 
@@ -156,7 +156,7 @@
                     {
                         stylings = "";
                     }
-    
+
 
 
                     $.ajax({
@@ -176,10 +176,10 @@
                     event.preventDefault();
                     $('li').removeClass('active');
                     $(this).parent('li').addClass('active');
-        
+
                     var myurl = $(this).attr('href');
                     var page=$(this).attr('href').split('page=')[1];
-                   
+
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('business/for/sale/ads')}}';
                     var stylings = window.location.href.split('?', 2)[1];

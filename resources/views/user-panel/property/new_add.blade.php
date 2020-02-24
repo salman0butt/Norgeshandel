@@ -1,4 +1,13 @@
 @extends('layouts.landingSite')
+
+@section('style')
+    <!-- Dropzone style files -->
+    <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
+
+@endsection
+
 @section('page_content')
 
     <!-- property for rent -->
@@ -76,6 +85,12 @@
                     error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
                         
                         var errors = jqXhr.responseJSON;
+                        console.log(errors.errors);
+                        if(isEmpty(errors.errors))
+                        {
+                            $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                            return false;
+                        }
                         if(!isEmpty(errors.errors))
                         {   
                             console.log(errors.errors);
@@ -146,5 +161,16 @@
         });
 
     </script>
+
+@endsection
+
+@section('script')
+    <!-- Dropzone script files -->
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
 
 @endsection

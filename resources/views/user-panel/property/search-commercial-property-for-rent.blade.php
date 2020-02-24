@@ -1,9 +1,9 @@
 @extends('layouts.landingSite')
 @section('page_content')
     <main class="dme-wrapper" id="dme-wrapper">
-        @include('user-panel.property.search-property-for-sale-inner')
+        @include('user-panel.property.search-commercial-property-for-rent-inner')
     </main>
-    <input type="hidden" id="mega_menu_search_url" value="{{url('property/property-for-sale/search')}}">
+    <input type="hidden" id="mega_menu_search_url" value="{{url('property/commercial-property-for-rent/search')}}">
 
     <script>
         $(document).ready(function () {
@@ -47,6 +47,8 @@
             });
         });
     </script>
+
+
 
 
 @endsection

@@ -1,4 +1,6 @@
-<form action="#" method="post" id="flat_wishes_rented_form" enctype="multipart/form-data">
+<form action="#" method="post" id="flat_wishes_rented_form" class="dropzone addMorePics p-0"
+      data-action="@if(Request::is('new/flat/wishes/rented/*/edit')){{url('update-upload-images?ad_id='.$flat_wishes_rented1->ad->id)}}
+      @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
      $flat_wishes_rented = new \App\FlatWishesRented();
     if(isset($flat_wishes_rented1)){
@@ -16,7 +18,7 @@
     @if(Request::is('new/flat/wishes/rented/*/edit'))
     @method('PATCH')
     @endif
-
+    <input type="hidden" name="upload_dropzone_images_type" value="flat_wishes_rented_temp_images">
     <div class="pl-3">
         <div class="form-group">
             <h3 class="u-t5">Ønsket leieområde</h3>
@@ -229,8 +231,11 @@
             <h3 class="u-t5">Bilder (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
+                @php $dropzone_img_obj = $flat_wishes_rented; @endphp
+                @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
+
                     <!-- <button class="dme-btn-outlined-blue">Legg til bilder</button> -->
-                    <input type="file" name="flat_wishes_rented[]" id="flat_wishes_rented" class="" multiple>
+                    {{--<input type="file" name="flat_wishes_rented[]" id="flat_wishes_rented" class="" multiple>--}}
                 </div>
             </div>
         </div>

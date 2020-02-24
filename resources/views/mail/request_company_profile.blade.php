@@ -1,4 +1,4 @@
-<main class="dme-wrepper">
+<main class="dme-wrapper">
     <div class="dme-container">
         <div style="min-height: 350px;" class="row">
             <div class="col-md-6 offset-md-3 text-center align-self-center">

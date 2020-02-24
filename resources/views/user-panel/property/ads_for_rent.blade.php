@@ -1,6 +1,6 @@
 @extends('layouts.landingSite')
 @section('page_content')
-    <?php 
+    <?php
 
 
         $col='list';
@@ -16,7 +16,7 @@
     top: -250px !important;
 }
 </style>
-<main class="dme-wrepper">
+<main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
@@ -66,7 +66,7 @@
                    <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader">
                  </div>
             </div>
-           
+
             <div class="row pagination_data">
                 <div class="col-md-12 outer-div">
                     <div class="inner-div">{{ $add_array->links() }}</div>
@@ -74,17 +74,17 @@
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?> order_specific_result" id="">
-                        
+
                         @foreach ($add_array as $key => $value)
                             <?php
 
                                 $property_for_rent = App\PropertyForRent::find($value->id);
-                                $name       = $property_for_rent->media->first();
+                                $name       = $property_for_rent->ad->media->first();
                                 if($name != null)
                                 {
                                     $name       =    $name->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($property_for_rent);
-                                    $full_path  = $path."".$name; 
+                                    $full_path  = $path."".$name;
                                 }
                                 else
                                 {
@@ -113,26 +113,26 @@
                                         <br>
                                         <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt"> <span>{{$property_for_rent->property_type}}</span></div>
                                         <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
-                                        
+
                                     </div>
                                 </a>
                             </div>
                         @endforeach
-                       
+
                     </div>
                 </div>
                 <div class="col-md-12 outer-div">
                     <div class="inner-div">{{ $add_array->links() }}</div>
                 </div>
             </div>
-           
+
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
-    
+
     <script>
             $(document).ready(function(){
                 //spinner start here
@@ -153,7 +153,7 @@
                 });
 
                 $(document).on('change', '#sort_by', function() {
-                    
+
                     var url  = '{{url('property/for/rent/sorted/ad')}}';
                     var data = $(this).val();
                     var stylings = window.location.href.split('?', 2)[1];
@@ -161,7 +161,7 @@
                     {
                         stylings = "";
                     }
-        
+
                     $.ajax({
                         type: "POST",
                         url: url,
@@ -171,7 +171,7 @@
                            $(".pagination_data").html(data['success']);
 
                         }
-                     
+
                     });
                 });
 
@@ -181,7 +181,7 @@
                     event.preventDefault();
                     $('li').removeClass('active');
                     $(this).parent('li').addClass('active');
-        
+
                     var myurl = $(this).attr('href');
                     var page=$(this).attr('href').split('page=')[1];
                     var sorting_value = $("#sort_by").val();
@@ -205,7 +205,7 @@
                 //         }
                 //     }
                 // });
-    
+
 
             });
     </script>
