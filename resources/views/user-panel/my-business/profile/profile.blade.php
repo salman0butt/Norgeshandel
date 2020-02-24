@@ -497,6 +497,11 @@
                                            value="{{$user->last_name}}" required="">
                                 </div>
                                 <div class="form-group">
+                                    <label for="personal_last_name">Visningsnavn*</label>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                           value="{{$user->username}}" required="">
+                                </div>
+                                <div class="form-group">
                                     <label for="personal_address">Adresse*</label>
                                     <input type="text" class="form-control" id="address" name="address"
                                            value="{{$user->address}}" required="">
