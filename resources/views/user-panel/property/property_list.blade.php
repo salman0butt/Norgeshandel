@@ -47,7 +47,7 @@
                                 <a href="{{url('property/commercial-property-for-sale/search')}}">Næringseiendom til salgs <span class="u-stone">(<?php echo App\CommercialPropertyForSale::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('commercial/property/for/rent/ads')}}">Næringseiendom til leie <span class="u-stone">(<?php echo App\CommercialPropertyForRent::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/commercial-property-for-rent/search')}}">Næringseiendom til leie <span class="u-stone">(<?php echo App\CommercialPropertyForRent::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('commercial/plots/ads')}}">Næringstomter <span class="u-stone">(<?php echo App\CommercialPlot::get()->count(); ?>)</span></a>
