@@ -745,21 +745,16 @@
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description" id="beskrivelsefirst" cols="30"
                         rows="10">{{ $holiday_home_for_sale->description }}</textarea>
-                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og
-                        innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
+                    <span class="u-t5">Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Vesentlige opplysninger (valgfritt)</h3>
+            <h3 class="u-t5">Andre opplysninger (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="essential_information" id="beskrivelsecond" cols="30" rows="10"
-                        placeholder="F.eks. Taket på det ene soverommet lekker. Det elektriske anlegget i kjelleren er utført av ufaglært.">{{ $holiday_home_for_sale->essential_information }}</textarea>
-                    <span class="u-t5">Opplysninger om vesentlige kjente feil og mangler som er av betydning for kjøper.
-                        Dette kan f.eks være større fysiske skader på boligen, endringer på boligen som er gjort uten å
-                        skaffe nødvendig tillatelse, byggeprosjekter som kan påvirke boligen eller utført arbeid på
-                        eiendommen av ufaglærte. Henvis også gjerne til takst.</span>
+                    <textarea name="essential_information" id="beskrivelsecond" cols="30" rows="10">{{ $holiday_home_for_sale->essential_information }}</textarea>
+                    <span class="u-t5">Informer om betydelig feil og mangler, referer evt. også til takst.</span>
                 </div>
             </div>
         </div>
@@ -781,7 +776,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <input name="video" type="text" value="{{ $holiday_home_for_sale->video }}"
                         class="dme-form-control">
-                    <span class="u-t5">Kopier eller skriv inn linken til en video på Youtube eller Vimeo.</span>
+                    <span class="u-t5">Link til video.</span>
                 </div>
             </div>
         </div>
@@ -851,8 +846,7 @@
             <h3 class="u-t5">Bilder (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <button id="add_more_viewing_times_sales" ype="button" class="dme-btn-outlined-blue">+ Legg til
-                        flere visningstidspunkt
+                    <button id="add_more_viewing_times_sales" ype="button" class="dme-btn-outlined-blue">+ Visningstidspunt
                     </button>
                 </div>
             </div>
@@ -868,7 +862,6 @@
                     <span id="error-msg" class="hide"></span>
                 </div>
                 <div class="col-md-8"></div>
-                <span class="u-t5">Hvilket telefonnummer ønsker du at interesserte kjøpere skal kontakte deg på?</span>
                 <br>
             </div>
         </div>
