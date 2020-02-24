@@ -68,10 +68,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <section class="panel panel--info u-pa32 maroon-box text-center">
-                            <h2 class="u-t3 u-mb16">På jakt etter ny jobb?</h2>
-                            <p class="u-mb16">
-                                Legg inn din CV slik at arbeidsgivere kan finne deg.
-                            </p>
+                            <h2 class="u-t3 u-mb16">Synliggjør deg, legg inn din CV?</h2>
+                         <br>
                             <div class="">
                                 <a href="{{ url('/my-business/cv') }}" class="dme-btn-outlined-blue">Legg inn CV</a>
                             </div>

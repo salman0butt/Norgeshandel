@@ -7,9 +7,7 @@
         padding: 25px;
         margin: 10px;
         text-align:center;
-
     }
-
     .col-md-3 {
         -ms-flex: 2 0 25% !important;
         flex: 2 0 25% !important;
@@ -103,7 +101,7 @@ var myChart = new Chart(ctx, {
     labels: ["1,Jan", "2,Jan", "3,Jan", "4,Feb", "5,March", "6,April", "7,July", "8,Agust", "9,Sep", "10,Sep", "11,Oct", "12,Oct"],
     datasets: [{
       label: '# of Views',
-      data: [12, 19, 3, 5, 2, 3, 20, 3, 5, 6, 2, 1],
+      data: [12, 19, 3, 8, 2, 3, 16, 3, 5, 9, 2, 1],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',

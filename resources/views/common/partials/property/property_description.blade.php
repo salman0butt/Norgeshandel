@@ -84,33 +84,47 @@
                     </div>
                     <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span></div>
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
+                    @if (!empty($property_data->monthly_rent))
                     <div class="col-md-12 font-weight-bold mt-3">Månedsleie</div>
                     <div class="col-md-12 u-t3">{{$property_data->monthly_rent}} Kr</div>
+                     @endif
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
+                 @if (!empty($property_data->include_in_rent))
                     <div class="col-md-12 mt-3"><span
                             class="font-weight-bold">Inkluderer:</span><span>{{$property_data->include_in_rent}}
                             </sapn>
                     </div>
+                     @endif
+                   @if (!empty($property_data->deposit))
                     <div class="col-md-12 "><span class="font-weight-bold"">Depositum:</span><span>{{$property_data->deposit}}</span> Kr</div>
                            </div></div>
+                    @endif
                             <div class=" clearfix"></div>
                     <div class="col-md-12"></div>
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
-
+                            @if (!empty($property_data->primary_rom))
                             <div class="col-md-6"><span class="font-weight-bold">Primærrom
                                 </span>&nbsp;<span>{{$property_data->primary_rom}} m²</span></div>
+                            @endif
+                            @if (!empty($property_data->number_of_bedrooms))
                             <div class="col-md-6"><span class="font-weight-bold">Soverom
                                 </span>&nbsp;<span>{{$property_data->number_of_bedrooms}}</span></div>
+                            @endif
+                            @if (!empty($property_data->floor))
                             <div class="col-md-6"><span class="font-weight-bold">Etasje
                                 </span>&nbsp;<span>{{$property_data->floor}}</span></div>
+                            @endif
+                            @if (!empty($property_data->property_type))
                             <div class="col-md-6"><span class="font-weight-bold">Boligtype
                                 </span>&nbsp;<span>{{$property_data->property_type}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Leieperiode
-                                </span>&nbsp;<span>{{ date("d.m.Y", strtotime($property_data-> rented_from)) }} -
-                                    {{ date("d.m.Y", strtotime($property_data-> rented_to)) }}</span></div>
-
+                            @endif
+                            @if (!empty($property_data->rented_from))
+                          <div class="col-md-6"><span class="font-weight-bold">Leieperiode
+                           </span>&nbsp;<span>{{ date("d.m.Y", strtotime($property_data-> rented_from)) }} -
+                              {{ date("d.m.Y", strtotime($property_data-> rented_to)) }}</span></div>
+                            @endif
                         </div>
                     </div>
 
