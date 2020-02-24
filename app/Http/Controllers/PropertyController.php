@@ -52,6 +52,7 @@ class PropertyController extends Controller
 
     }
 
+//    zain
     public function search_property_for_sale(Request $request)
     {
         $col = 'list';
@@ -204,9 +205,9 @@ class PropertyController extends Controller
         return view('user-panel.property.search-property-for-sale', compact('col', 'add_array'));
     }
 
+//    zain
     public function search_commercial_property_for_sale(Request $request)
     {
-//        dd($request->all());
         $col = 'list';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
@@ -215,9 +216,6 @@ class PropertyController extends Controller
             ->join('commercial_property_for_sales', 'commercial_property_for_sales.ad_id', 'ads.id')
             ->where('ads.status', 'published');
 
-//        $arr = Arr::only($request->all(), ['country']);
-
-//        dd($request->search);
         if (isset($request->country) && !empty($request->country)) {
             $query->whereIn('location', $request->country);
         }
@@ -280,6 +278,72 @@ class PropertyController extends Controller
             exit($html);
         }
         return view('user-panel.property.search-commercial-property-for-sale', compact('col', 'add_array'));
+    }
+
+//    zain
+    public function search_commercial_property_for_rent(Request $request)
+    {
+        $col = 'list';
+        if (isset($request->view) && !empty($request->view)) {
+            $col = $request->view;
+        }
+        $query = DB::table('ads')
+            ->join('commercial_property_for_rents', 'commercial_property_for_rents.ad_id', 'ads.id')
+            ->where('ads.status', 'published');
+
+        if (isset($request->country) && !empty($request->country)) {
+            $query->whereIn('country', $request->country);
+        }
+        if (isset($request->search) && !empty($request->search)) {
+            $query->where('heading', 'like', '%' . $request->search . '%');
+        }
+        if (isset($request->created_at)) {
+            $query->whereDate('commercial_property_for_rents.created_at', '=', $request->created_at);
+        }
+        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
+            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
+                $query->where('commercial_property_for_rents.street_address', 'like', '%' . $request->local_area_name . '%');
+            }
+        }
+
+        if (isset($request->use_area_from) && !empty($request->use_area_from)) {
+            $query->where('commercial_property_for_rents.use_area', '>=', (int)$request->use_area_from);
+        }
+        if (isset($request->use_area_to) && !empty($request->use_area_to)) {
+            $query->where('commercial_property_for_rents.use_area', '<=', (int)$request->use_area_to);
+        }
+
+        if (isset($request->cpfs_property_type) && !empty($request->cpfs_property_type)) {
+            $query->where('commercial_property_for_rents.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
+            for ($i = 1; $i < count($request->cpfs_property_type); $i++) {
+                $query->orWhere('commercial_property_for_rents.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
+            }
+        }
+
+        $order_by_thing = 'id';
+        $order_by = 'DESC';
+
+        if (isset($request->order) && !empty($request->order)) {
+            $order = $request->order;
+            switch ($order) {
+                case 'published':
+                    $query->orderBy('created_at', 'DESC');
+                    break;
+                case 'priced-low-high':
+                    $query->orderBy('value_rate', 'ASC');
+                    break;
+                case 'priced-high-low':
+                    $query->orderBy('value_rate', 'DESC');
+                    break;
+            }
+        }
+
+        $add_array = $query->paginate(getenv('PAGINATION'));
+        if ($request->ajax()) {
+            $html = view('user-panel.property.search-commercial-property-for-rent-inner', compact('add_array', 'col'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-commercial-property-for-rent', compact('col', 'add_array'));
     }
 
     public function list()
