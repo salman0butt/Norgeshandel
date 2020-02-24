@@ -116,6 +116,8 @@ Route::group(['middleware' => 'authverified'], function () {
 //property search and filters
     Route::get('property/property-for-sale/search', 'PropertyController@search_property_for_sale');
     Route::get('property/commercial-property-for-sale/search', 'PropertyController@search_commercial_property_for_sale');
+    Route::get('property/commercial-property-for-rent/search', 'PropertyController@search_commercial_property_for_rent');
+    Route::get('property/commercial-plots/search', 'PropertyController@search_commercial_plots');
 
 
 //Banner ads mangment
@@ -345,7 +347,7 @@ Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEst
 Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
 Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
 Route::get('add/new/commercial/property/for/sale/{id}/edit', 'PropertyController@editcommercialPropertyForSale');
-Route::patch('add/new/commercial/property/for/sale/{id}', 'PropertyController@updateCommercialPropertyForSale'); 
+Route::patch('add/new/commercial/property/for/sale/{id}', 'PropertyController@updateCommercialPropertyForSale');
 Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
 Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
 Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);

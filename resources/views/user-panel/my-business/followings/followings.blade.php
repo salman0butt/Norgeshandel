@@ -1,6 +1,6 @@
 @extends('layouts.landingSite')
 @section('page_content')
-<main class="dme-wrepper">
+<main class="dme-wrapper">
     <div class="dme-container">
         <div class="breade-crumb">
             <nav aria-label="breadcrumb">

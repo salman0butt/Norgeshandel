@@ -1,8 +1,8 @@
 @extends('layouts.landingSite')
 @section('page_content')
-    
-    <?php 
-        
+
+    <?php
+
         $col='list';
         if(isset($_GET)){
             if(isset($_GET['grid'])){
@@ -11,7 +11,7 @@
 
     ?>
 
-<main class="dme-wrepper">
+<main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
@@ -57,7 +57,7 @@
                    <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader">
                  </div>
             </div>
-           
+
             <div class="row pagination_data">
                 <div class="col-md-12 outer-div">
                     <div class="inner-div">
@@ -67,24 +67,24 @@
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?>">
-                      
-                        @foreach ($add_array as $key => $value)      
+
+                        @foreach ($add_array as $key => $value)
 
                             <?php
-                                    
+
                                     $property_commercial_property_for_rent = App\CommercialPropertyForRent::find($value->id);
                                     $name       = $property_commercial_property_for_rent->ad->company_gallery->first();
                                     if(!empty($name))
                                     {
                                         $name = $property_commercial_property_for_rent->ad->company_gallery->first()->name_unique;
                                         $path       = \App\Helpers\common::getMediaPath($property_commercial_property_for_rent);
-                                        $full_path  = $path."".$name; 
+                                        $full_path  = $path."".$name;
                                     }
                                     else
                                     {
                                         $full_path  = "";
                                     }
-                                    
+
                             ?>
 
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </div>
-          
+
         </div>
         <!--    ended container-->
         <div class="right-ad pull-right">
@@ -141,7 +141,7 @@
                         $(".pagination_data").css("display", "block");
                     });
                 //spinner ends here
-                
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -149,7 +149,7 @@
                 });
 
                 $(document).on('change', '#sort_by', function() {
-                    
+
                     var url  = '{{url('property/commercial/for/rent/sorted/ad')}}';
                     var data = $(this).val();
 
@@ -177,10 +177,10 @@
                     event.preventDefault();
                     $('li').removeClass('active');
                     $(this).parent('li').addClass('active');
-        
+
                     var myurl = $(this).attr('href');
                     var page=$(this).attr('href').split('page=')[1];
-                   
+
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('commercial/property/for/rent/ads')}}';
                     var stylings = window.location.href.split('?', 2)[1];
@@ -195,7 +195,7 @@
 
             });
 
-    </script>  
+    </script>
 
 
 

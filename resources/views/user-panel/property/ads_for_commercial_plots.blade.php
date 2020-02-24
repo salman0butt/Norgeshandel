@@ -1,4 +1,3 @@
-
 @extends('layouts.landingSite')
 @section('page_content')
 
@@ -18,7 +17,7 @@ $posts         =   array('img'=>'',
     'price'=>'',
     'detail'=>'');
 ?>
-    <main class="dme-wrepper">
+    <main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
@@ -50,7 +49,7 @@ $posts         =   array('img'=>'',
                     <div class="">
                         <label for="sort-by" class="mb-1">Sortér på</label>
                         <select name="sort-by" id="sort_by" class="dme-form-control">
-        
+
                             <option value="most-relevant">Mest relevant</option>
                             <option value="published" selected="">Publisert</option>
                             <option value="priced-low-high">Pris lav-høy</option>
@@ -82,23 +81,23 @@ $posts         =   array('img'=>'',
                         @foreach ($add_array as $key => $value)
 
                             <?php
-                                
+
                                 $commercial_plot = App\CommercialPlot::find($value->id);
                                 $name       = $commercial_plot->ad->company_gallery;
                                 if(!$name->isEmpty())
                                 {
                                     $name =     $commercial_plot->ad->company_gallery->first()->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($commercial_plot);
-                                    $full_path  = $path."".$name; 
+                                    $full_path  = $path."".$name;
                                 }
                                 else
                                 {
                                     $full_path  = "";
                                 }
-                               
 
-                            ?> 
-                             
+
+                            ?>
+
                             <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
                                 <a href="{{url('/commercial/plots/ads/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                     <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
@@ -121,7 +120,7 @@ $posts         =   array('img'=>'',
                                     </div>
                                 </a>
                             </div>
-                        
+
                         @endforeach
                     </div>
                 </div>
@@ -138,7 +137,7 @@ $posts         =   array('img'=>'',
         </div>
     </main>
 
-    
+
     <script>
             $(document).ready(function(){
 
@@ -153,7 +152,7 @@ $posts         =   array('img'=>'',
                         $(".pagination_data").css("display", "block");
                     });
                 //spinner ends here
-                
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -161,7 +160,7 @@ $posts         =   array('img'=>'',
                 });
 
                 $(document).on('change', '#sort_by', function() {
-                    
+
                     var url  = '{{url('get/commercial/plot/ad')}}';
                     var data = $(this).val();
 
@@ -170,7 +169,7 @@ $posts         =   array('img'=>'',
                     {
                         stylings = "";
                     }
-    
+
 
                     $.ajax({
                         type: "POST",
@@ -190,10 +189,10 @@ $posts         =   array('img'=>'',
                     event.preventDefault();
                     $('li').removeClass('active');
                     $(this).parent('li').addClass('active');
-        
+
                     var myurl = $(this).attr('href');
                     var page=$(this).attr('href').split('page=')[1];
-                   
+
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('commercial/plots/ads')}}';
                     var stylings = window.location.href.split('?', 2)[1];

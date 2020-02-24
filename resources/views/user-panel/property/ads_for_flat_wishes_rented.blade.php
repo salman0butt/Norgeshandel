@@ -1,6 +1,6 @@
 @extends('layouts.landingSite')
 @section('page_content')
-    <?php 
+    <?php
 
 
         $col='list';
@@ -12,7 +12,7 @@
 
     ?>
 
-<main class="dme-wrepper">
+<main class="dme-wrapper">
         <div class="left-ad float-left">
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
@@ -70,7 +70,7 @@
                 <div class="col-md-12">
                     <div class="<?php
                     echo $col==='grid'?'row':'' ?> order_specific_result" id="">
-                        
+
                         @foreach ($add_array as $key => $value)
                             <?php
                                 $property_for_flat_wishes_rented = App\FlatWishesRented::find($value->id); 
@@ -79,13 +79,13 @@
                                 {
                                     $name       =    $name->name_unique;
                                     $path       = \App\Helpers\common::getMediaPath($property_for_flat_wishes_rented);
-                                    $full_path  = $path."".$name; 
+                                    $full_path  = $path."".$name;
                                 }
                                 else
                                 {
                                     $full_path  = "";
                                 }
-                                
+
 
                             ?>
 
@@ -129,7 +129,7 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
-    
+
     <script>
             $(document).ready(function(){
                         //spinner start here
@@ -143,7 +143,7 @@
                         $(".pagination_data").css("display", "block");
                     });
                 //spinner ends here
-                
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -151,7 +151,7 @@
                 });
 
                 $(document).on('change', '#sort_by', function() {
-                    
+
                     var url  = '{{url('property/flat/wishes/rented/sorted/ad')}}';
                     var data = $(this).val();
 
@@ -160,7 +160,7 @@
                     {
                         stylings = "";
                     }
-    
+
                     $.ajax({
                         type: "POST",
                         url: url,
@@ -178,10 +178,10 @@
                     event.preventDefault();
                     $('li').removeClass('active');
                     $(this).parent('li').addClass('active');
-        
+
                     var myurl = $(this).attr('href');
                     var page=$(this).attr('href').split('page=')[1];
-                   
+
                     var sorting_value = $("#sort_by").val();
                     var url = '{{url('property/flat/wishes/rented')}}';
                     var stylings = window.location.href.split('?', 2)[1];

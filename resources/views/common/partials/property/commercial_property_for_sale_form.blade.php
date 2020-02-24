@@ -10,10 +10,8 @@
     $country = \App\Taxonomy::where('slug', 'country')->first();
     $countries = $country->terms;
 
-//    $property_type = \App\Taxonomy::where('slug', 'cpfs_property_type')->first();
-  //  $property_types = $property_type->terms;
-
     $property_type = json_decode($commercial_property_for_sale->property_type);
+    if(empty($property_type)){$property_type=array();}
 
     $facilities = explode(',', $commercial_property_for_sale->facilities);
 
