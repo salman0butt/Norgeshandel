@@ -158,7 +158,6 @@ class PropertyController extends Controller
         if (isset($request->floor) && !empty($request->floor)) {
             $query->whereIn('property_for_sales.floor', $request->floor);
             if (in_array('over 6', $request->floor)) {
-//                dd($request->floor);
                 $query->orwhere('property_for_sales.floor', '>', 6);
             }
         }
@@ -391,7 +390,6 @@ class PropertyController extends Controller
             }
         }
         $add_array = $query->paginate(getenv('PAGINATION'));
-//        dd(count($add_array));
         if ($request->ajax()) {
             $html = view('user-panel.property.search-commercial-plots-inner', compact('add_array', 'col'))->render();
             exit($html);

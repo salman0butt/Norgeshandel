@@ -6,14 +6,6 @@
 @section('page_content')
     <?php
     $job_function = "";
-    $industry = "";
-    foreach ($job->terms as $term):
-        if ($term->taxonomy->slug == 'job_function'):
-            $job_function = $term->name;
-        elseif ($term->taxonomy->slug == 'industry'):
-            $industry = $term->name;
-        endif;
-    endforeach;
     $logo = $job->ad->media()->where('type', 'logo')->get()->first();
     if (!empty($logo)) {
         $logo = \App\Helpers\common::getMediaPath($logo, '150x150');
@@ -107,13 +99,17 @@
                                 <div class="col-md-6 positions"><span
                                         class="font-weight-bold">Antall stillinger: </span>&nbsp;<span>{{$job->positions}}</span>
                                 </div>
-                                <div class="col-md-6 industry"><span
-                                        class="font-weight-bold">Bransje: </span>{{$industry}}<span>
-
-                                    </span></div>
-                                <div class="col-md-6 job-function"><span
-                                        class="font-weight-bold">Stillingsfunksjon: </span>&nbsp;<span>{{$job_function}}</span>
-                                </div>
+                                @if($job && $job->industry)
+                                    <div class="col-md-6 industry">
+                                        <span class="font-weight-bold">Bransje: </span>{{$job->industry}}<span>
+                                        </span>
+                                    </div>
+                                @endif
+                                @if($job_function)
+                                    <div class="col-md-6 job-function"><span
+                                            class="font-weight-bold">Stillingsfunksjon: </span>&nbsp;<span>{{$job_function}}</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -146,20 +142,26 @@
                                      alt="">
                             </div>
                             <p class="mt-3 u-t3">Spørsmål om stillingen</p>
-                            <div class="mb-2 contact-name">
-                                <span>Kontaktperson: </span>
-                                <span> {{$job->app_contact_title}} </span>
-                            </div>
-                            <div class="mb-2">
-                                <span class="contact-name">Telefon: </span>
-                                <span class="contact-tel"><a
-                                        href="tel:{{$job->app_phone}}">  {{$job->app_phone}}</a></span>
-                            </div>
-                            <div class="mb-2">
-                                <span class="contact-name">Mobil: </span>
-                                <span class="contact-tel"><a
-                                        href="tel:{{$job->app_mobile}}">  {{$job->app_mobile}}</a></span>
-                            </div>
+                            @if($job && $job->app_contact_title)
+                                <div class="mb-2 contact-name">
+                                    <span>Kontaktperson: </span>
+                                    <span> {{$job->app_contact_title}} </span>
+                                </div>
+                            @endif
+                            @if($job && $job->app_phone)
+                                <div class="mb-2">
+                                    <span class="contact-name">Telefon: </span>
+                                    <span class="contact-tel"><a
+                                            href="tel:{{$job->app_phone}}">  {{$job->app_phone}}</a></span>
+                                </div>
+                            @endif
+                            @if($job && $job->app_mobile)
+                                <div class="mb-2">
+                                    <span class="contact-name">Mobil: </span>
+                                    <span class="contact-tel"><a
+                                            href="tel:{{$job->app_mobile}}">  {{$job->app_mobile}}</a></span>
+                                </div>
+                            @endif
 
                         </div>
                         <button class="dme-btn-maroon col-12 mb-2">Søk her</button>

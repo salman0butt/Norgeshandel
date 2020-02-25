@@ -1,6 +1,6 @@
 <div class="clearfix">
     <a href="javascript:void(0);">
-        <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted">
+        <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted" style="border: 1px dashed #474445">
             <p class="">Slipp filer her eller klikk for å laste opp</p>
         </div>
     </a>

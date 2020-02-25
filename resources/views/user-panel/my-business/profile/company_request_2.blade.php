@@ -187,13 +187,13 @@
                 var org_number = $('.org-number #org_number').val();
                 var api_url = 'https://data.brreg.no/enhetsregisteret/api/enheter/'; // api link concatenate the registration number
                 if(org_number){
-                    if(org_number <= 0){ 
-                          $('#error-show').html("<p style='color:red;'>org.no må være større enn null.</p>");
+                    if(org_number <= 0){
+                        alert('Organisasjonsnummeret må være positiv 9 tall.');
                         return false;
                     }
 
                     if(org_number.length != 9){
-                        $('#error-show').html("<p style='color:red;'>org.no må være ni sifret.</p>");
+                        alert('Organisasjonsnummeret må bestå av 9 tall.');
                         return false;
                     }
                     $.ajax({
