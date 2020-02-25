@@ -10,10 +10,10 @@
     $country = \App\Taxonomy::where('slug', 'country')->first();
     $countries = $country->terms;
 
-    $property_type = json_decode($commercial_property_for_sale->property_type);
+    $property_type = json_decode($commercial_property_for_rent->property_type);
     if(empty($property_type)){$property_type=array();}
 
-    $facilities = explode(',', $commercial_property_for_sale->facilities);
+    $facilities = explode(',', $commercial_property_for_rent->facilities);
 
 @endphp
   @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
@@ -114,7 +114,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="street_address" value="{{ $commercial_property_for_rent->street_address }}" class="dme-form-control">
-        <span class="u-t5">Forklar kort om adkomsten til boligen og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
+
                 </div>
             </div>
         </div>
@@ -124,7 +124,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="venue_description" value="" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->venue_description }}</textarea>
-                    <span class="u-t5">Forklar kort om adkomsten til lokalet og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
+                
                 </div>
             </div>
         </div>
@@ -148,7 +148,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Identifikasjonsnummeret til din kommune. Du kan finne ditt kommunenummer på kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -160,7 +160,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Hvert gårdsnummer er delt inn i bruksnummer, du kan finne dette på kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -172,7 +172,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Nummeret på gårdsenheten, du kan finne dette på det lokale kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -184,7 +184,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Bruttoareal beskriver arealet av hele lokalet, inkludert boder, kjellerrom og så videre, målt fra ytterveggenes yttersider.</span>
+            <span class="u-t5">Bruttoareal er totale arealet ink yttervegger.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -196,7 +196,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Bruttoareal beskriver arealet av hele lokalet, inkludert boder, kjellerrom og så videre, målt fra ytterveggenes yttersider.</span>
+            <span class="u-t5">Bruttoareal er totale arealet ink yttervegger.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -208,7 +208,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Bruksarealet er bruttoareal minus den plassen som opptas av yttervegger. Du kan finne bruksarealet i takstrapporten.</span>
+            <span class="u-t5">Du kan finne bruksarealet i takstrapporten.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -292,7 +292,7 @@
                         <option value="F" {{ ($commercial_property_for_rent->energy_grade == 'F' ? "selected" : '') }}>F</option>
                         <option value="G" {{ ($commercial_property_for_rent->energy_grade == 'G' ? "selected" : '') }}>G</option>
                     </select>
-                    <span class="u-t5">Energikarakter går fra A til G, hvor A er best. Karakteren er basert på beregnet levert energi til boligen. En god energikarakter betyr at boligen er energieffektiv.</span>
+                    <span class="u-t5">Enegikarakter der A er best.</span>
                 </div>
             </div>
         </div>
@@ -319,7 +319,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="standard_technical_information" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->standard_technical_information }}</textarea>
-                    <span class="u-t5">Her kan du feks. gi en kort beskrivelse av standarden på lokalene, samt tilstand på ventilasjon, kjøling, sentralvarme, heis adgangskontroll, brannsikring m.m.</span>
+                   
                 </div>
             </div>
         </div>
@@ -383,7 +383,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Verditakst blir satt av takstmannen og er forventet salgsverdi eller markedsverdien på din eiendom.</span>
+        
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -429,7 +429,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="last_description" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->last_description }}</textarea>
-                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
+                    <span class="u-t5">Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>
         </div>
@@ -461,7 +461,6 @@
                 </div>
                 <div class="col-md-8"></div>
             </div>
-            <span class="u-t5">Hvilket telefonnummer ønsker du at interesserte kjøpere skal kontakte deg på?</span>
             <br>
         </div>
         <div class="form-group">

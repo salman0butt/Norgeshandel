@@ -155,7 +155,6 @@
                 <br>
             </div>
         </div>
-
         <div class="form-group">
             <h3 class="u-t5">Bruksnummer (Bnr) (valgfritt)</h3>
             <div class="row">
@@ -836,8 +835,6 @@
                 <div class="col-md-12 u-t5">Tid (eksempel 19:30)</div>
             </div>
         </div>
-
-
         <div id="add_more_viewing_times_fields">
 
         </div>
@@ -851,7 +848,6 @@
                 </div>
             </div>
         </div>
-
         <div class="form-group">
             <h3 class="u-t5">Telefon (valgfritt)</h3>
             <div class="row">
@@ -865,8 +861,6 @@
                 <br>
             </div>
         </div>
-
-
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                 <div class="profile-icon">

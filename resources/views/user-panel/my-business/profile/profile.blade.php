@@ -461,17 +461,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <label for="user_about_me" class="font-weight-bold text-muted">Her kan du skrive litt om
-                                    deg selv.</label>
+                                <label for="user_about_me" class="font-weight-bold text-muted">Om deg</label>
                                 <div class="textarea-section">
                                     <!--Material textarea-->
                                     <div class="md-form">
                                         <textarea id="user_about_me" class="md-textarea form-control" name="about_me"
                                                   rows="3">{{$user->about_me}}</textarea>
                                     </div>
-                                    <p style="font-size:13px; color:#242524">Profiler med en kort beskrivende tekst får
-                                        som regel flere seriøse henvendelser. Skriv gjerne litt om deg selv, slik at
-                                        andre vet hvem de handler med.</p>
+                                    <p style="font-size:13px; color:#242524">Gi en liten intro om deg for å gi et godt intrykk for folk som handler med deg.</p>
 
                                 </div>
                                 <button type="submit" class="btn bg-maroon text-white">Oppdater beskrivelse</button>
@@ -588,22 +585,19 @@
                 </div>
                 <div class="row  mb-5">
                     <div class="col-md-6 mt-4">
-                        <p>Profilbildet ditt vises på alle de aktive annonsene dine. I andre sammenhenger, som for
-                            eksempel når du kommuniserer med andre i vår meldingstjeneste, viser vi bare profilbilde,
-                            visningsnavn og beskrivelse.</p>
+                        <p>Profilbildet brukes i dine samtaler via Norgeshandel sin
+meldingstjeneste og i dine annonser.</p>
                         <a href="{{route('public_profile', $user->id)}}">Se profilen slik andre ser den</a>
                     </div>
                     <div class="col-md-6 mt-4">
-                        <p>Profilen din er bygget opp av informasjonen du har oppgitt. Opplysningene vises ikke i annonsene dine uten at du ber om det.</p>
+                     
                         {{-- <a href="#">Les mer om hvordan endre profil og e-post</a> --}}
                     </div>
                 </div>
                 @if($user->roles->first()->name!="company")
                     <div class="row  mb-5">
                         <div class="col-md-6 offset-md-3 mt-4 text-center">
-                            <p>Teksten din går her. Teksten din går her. Teksten din går her. Teksten din går her.
-                                Teksten
-                                din går her. </p>
+                       
                             <a href="{{url('my-business/profile/select_company_profile_type')}}"
                                class="btn bg-maroon color-white">Be om firmaprofil</a>
                         </div>

@@ -43,8 +43,8 @@
                         <p class="u-t3">Jobb</p>
                         <div class="form-group"><button type="button" class="triger-btn triger-btn1">
                                 <div class="expansion-panel__summary">
-                                    <div><span class="u-strong u-pr16">Heltidsstilling og lederstilling</span>
-                                        9&nbsp;990 kr</div>
+                                    <div><span class="u-strong u-pr16">Prisene gjelder både som bedrift eller privat</span>
+                                </div>
                                 </div>
                                  <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
                             </button>
@@ -52,60 +52,60 @@
                                 <table class="data-table mt-2 col-md-5">
                                     <thead>
                                         <tr>
-                                            <th class="u-t5 text-muted">Antall annonser</th>
-                                            <th class="u-t5 text-muted">Pris</th>
-                                            <th class="u-t5"></th>
+                                            <td>Bolig til leie:</td>
+                                            <td>Gratis</td>
+                                            <td></td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="bounds-width">0 - 5</td>
-                                            <td class="">9&nbsp;990</td>
+                                            <td class="bounds-width">Bolig til salgs:</td>
+                                            <td class="">990 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">6 - 10</td>
-                                            <td class="">7&nbsp;990</td>
+                                            <td class="bounds-width">Bolig ønskes leid:</td>
+                                            <td class="">Gratis</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">11 - 20</td>
-                                            <td class="">6&nbsp;890</td>
+                                            <td class="bounds-width">Fritidsbolig til salgs:</td>
+                                            <td class="">990 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">21 - 50</td>
-                                            <td class="">6&nbsp;290</td>
+                                            <td class="bounds-width">Næringseiendom til salg:</td>
+                                            <td class="">1490 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">51 - 100</td>
-                                            <td class="">5&nbsp;640</td>
+                                            <td class="bounds-width">Næringseiendom til leie:</td>
+                                            <td class="">1490 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">101 - 200</td>
-                                            <td class="">5&nbsp;200</td>
+                                            <td class="bounds-width">Næringstomt:</td>
+                                            <td class="">1490 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">201 - 300</td>
-                                            <td class="">4&nbsp;490</td>
+                                            <td class="bounds-width">Bedrifter til salgs:</td>
+                                            <td class="">1490 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">301 - 400</td>
-                                            <td class="">4&nbsp;100</td>
+                                            <td class="bounds-width">Heltidsstilling:</td>
+                                            <td class="">1990 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">401 - 500</td>
-                                            <td class="">3&nbsp;390</td>
+                                            <td class="bounds-width">Deltidsstilling:</td>
+                                            <td class="">1490 Kr</td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td class="bounds-width">500+</td>
-                                            <td class="">2&nbsp;900</td>
+                                            <td class="bounds-width">Lederstilling:</td>
+                                            <td class="">1990 Kr</td>
                                             <td></td>
                                         </tr>
                                     </tbody>
@@ -118,81 +118,7 @@
                             </div>
                         </div>
                        
-                        <div class="form-group" style="margin-top:20px"><button type="button" class="triger-btn triger-btn2">
-                                <div class="expansion-panel__summary">
-                                    <div><span class="u-strong u-pr16">Deltidsstilling</span> 4&nbsp;990 kr</div>
-                                </div>
-                                 <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
-                            </button>
-                            <div class="expansion-panel__details collapse multi-collapse" id="multiCollapseExample2">
-                                <table class="data-table mt-2 col-md-5">
-                                    <thead>
-                                        <tr>
-                                            <th class="u-t5 text-muted">Antall annonser</th>
-                                            <th class="u-t5 text-muted">Pris</th>
-                                            <th class="u-t5 text-muted"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="bounds-width">0 - 5</td>
-                                            <td class="">4&nbsp;990</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">6 - 10</td>
-                                            <td class="">3&nbsp;490</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">11 - 20</td>
-                                            <td class="">2&nbsp;920</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">21 - 50</td>
-                                            <td class="">2&nbsp;650</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">51 - 100</td>
-                                            <td class="">2&nbsp;340</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">101 - 200</td>
-                                            <td class="">1&nbsp;910</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">201 - 300</td>
-                                            <td class="">1&nbsp;660</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">301 - 400</td>
-                                            <td class="">1&nbsp;540</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">401 - 500</td>
-                                            <td class="">1&nbsp;420</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="bounds-width">500+</td>
-                                            <td class="">1&nbsp;220</td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-                                <caption>
-                                    <p class="u-t5">Alle priser er i NOK, gjelder pr. annonse og er ekskl.
-                                        moms</p>
-                                </caption>
-                            </div>
-                        </div>
+                    
                     </div>
 
                 </div>
@@ -268,6 +194,7 @@
     </div>
     <script>
         $(document).ready(function (e) {
+             $('#multiCollapseExample1').show();
             $('.triger-btn1').click(function (e) {
                 e.preventDefault();
                 $(this).find("i").toggleClass("fa-chevron-up fa-chevron-down");

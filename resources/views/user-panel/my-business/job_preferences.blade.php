@@ -14,30 +14,20 @@
         <!---- end breadcrumb----->
         <div class="panel u-mb32" id="main-content">
             <h2 class="mb-5">Mine jobb-preferanser</h2>
-            <p class="u-mb16" style="font-weight:600;">Hva er drømmejobben din?</p>
-            <p class="u-mb16">Vi ønsker å hjelpe deg å finne drømmejobben, slik at du slipper å aktivt lete
-                etter den selv. Anbefalinger vi gir deg er basert på <a href="#"
-                    target="_blank">selskaper du følger</a> og dine
-                jobbpreferanser.</p>
-            <p><em>Her kan du endre dine innstillinger. Det kan være lurt å oppdatere eller legge til ny
-                    informasjon med jevne mellomrom, slik at det du mottar alltid vil være relevant og
-                    interessant.</em></p>
+            <p class="u-mb16" style="font-weight:600;">Jobb preferanser</p>
+            <p class="u-mb16">Her kan la bedriftene finne deg relatert til dine jobb preferanser. Husk til enhver tid å ha oppdaterte
+preferanser slik at du er et steg nærmere drømme jobben din!</p>
         </div>
         <div class="panel">
             <div class="u-mb32 form-group">
-                <div class="input input--text u-mb8"><label for="keywords-input" class="u-t5">Hva vil du jobbe med?</label>
-                    <div class="u-position-relative" style="display: block;"><input id="keywords-input" type="text"
-                            placeholder="Stillingstittel eller nøkkelord" role="combobox" aria-autocomplete="list"
-                            aria-expanded="false" autocomplete="off" value="" class="dme-form-control">
+                <div class="input input--text u-mb8"><label for="keywords-input" class="u-t5">Dine preferanser</label>
+                    <div class="u-position-relative" style="display: block;"><input id="keywords-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" value="" class="dme-form-control">
                     </div>
-                
                 </div>
             </div>
             <div class="u-mb32 form-group">
-                <div class="input input--text u-mb8"><label for="geo-region-input" class="u-t5">Hvor vil du jobbe?</label>
-                    <div class="u-position-relative" style="display: block;"><input id="geo-region-input" type="text"
-                            placeholder="Oslo, Bergen, Trondheim" role="combobox" aria-autocomplete="list"
-                            aria-expanded="false" autocomplete="off" value="" class="dme-form-control">
+                <div class="input input--text u-mb8"><label for="geo-region-input" class="u-t5">Hvor?</label>
+                    <div class="u-position-relative" style="display: block;"><input id="geo-region-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" value="" class="dme-form-control">
                     </div>
                   
                 </div>
@@ -52,11 +42,7 @@
             </div>
         </div>
         <div class="panel u-d1 u-stone">
-            <p class="u-t5">All informasjon du gir fra deg i forbindelse med "Følg"-tjenesten er
-                konfidensiell, og deles ikke med andre enn de bedriftene du følger.</p>
-            <p class="u-t5">Denne informasjonen vil danne grunnlaget for din kandidatprofil på FINN.no, og er uavhengig
-                av de
-                enkelte bedriftene du følger.</p>
+    <br>
         </div>
     </div>
 </main>
