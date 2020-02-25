@@ -105,9 +105,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-8 offset-md-2 text-center bg-maroon-lighter radius-8 p-5">
-                    <h4>Annonsere som bedrift eller forhandler?</h4>
-                    <p>Har du et organisasjonsnummer og annonserer jevnlig på Handel?</p>
-                    <p>Da gir en bedriftsavtale deg flere fordeler.</p>
+                    <h4>For bedriftsavtale?</h4><br>
                     <a href="{{ url('my-business/profile/select_company_profile_type') }}" class="dme-btn-outlined-blue mt-2">Bli bedriftskunde </a>
                 </div>
             </div>

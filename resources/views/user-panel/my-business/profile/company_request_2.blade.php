@@ -6,7 +6,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel </a></li>
-                        <li class="breadcrumb-item"><a href="{{url('my-business/profile')}}">Min prifil </a></li>
+                        <li class="breadcrumb-item"><a href="{{url('my-business/profile')}}">Min profil </a></li>
                         <li class="breadcrumb-item active" aria-current="page">Be om firmaprofil</li>
                     </ol>
                 </nav>
@@ -28,13 +28,15 @@
                             </div>
                             <div class="col-md-4">
                                 <input type="number" class="form-control" placeholder="9 siffer" id="org_number" name="org_number" minlength="9" maxlength="9" required>
+                                <div id="error-show"></div>
                             </div>
                             <div class="col-md-3">
                                 <button type="button" class="btn dme-btn-outlined-blue find_detail_button">Gå videre </button>
                                 <div id="imageLoader" style="display:none; margin-top:15%; padding-bottom: 15%">
                                     <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader" height="50px">
                                 </div>
-                            </div>
+                            </div><br>
+                            
                             <div class="col-md-5">
 
                             </div>
@@ -216,9 +218,9 @@
 
                         error: function(response) {
                             if(response['status'] == 404 ){
-                                alert('posten ikke funnet.');
+                                $('#error-show').html("<p style='color:red;'>Organisasjonsnummer ikke funnt</p>");
                             }else{
-                                alert('Noe gikk galt.');
+                                console.log('Noe gikk galt.');
                             }
 
                         }

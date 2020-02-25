@@ -11,6 +11,7 @@
     $countries = $country->terms;
 
     $property_type = json_decode($commercial_property_for_sale->property_type);
+       // dd($property_type);
     if(empty($property_type)){$property_type=array();}
 
     $facilities = explode(',', $commercial_property_for_sale->facilities);
@@ -28,7 +29,7 @@
             <h3 class="u-t5">Type lokale</h3>
             <div class="row">
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-OFFICE" type="checkbox" value="Kontor" name="property_type[]"  {{ (in_array("Kontor", $property_type))?"checked":"" }} >
+                    <input data-selector="" id="property_type-OFFICE" type="checkbox" value="Kontor" name="property_type[]"  {{ (in_array("Kontor", $property_type)) ? "checked" : "" }} >
                     <label class="smalltext" for="property_type-OFFICE"> Kontor</label>
                 </div>
                 <div class="col-md-4 input-toggle">

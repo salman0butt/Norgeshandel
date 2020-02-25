@@ -191,7 +191,7 @@
         </div>
 
         <div class="form-group">
-            <h3 class="u-t5">Møblering (valgfritt)</h3>
+            <h3 class="u-t5">Møblert (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select class="dme-form-control" id="property_details.furnishing" name="furnishing">
@@ -254,7 +254,6 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description" id="beskrivelse" cols="30" rows="10">{{ $flat_wishes_rented->description }}</textarea>
-                    <span class="u-t5">Skriv kort om deg selv. Hvem er du og hva slags bolig er du på jakt etter? Ikke ta med kontaktinformasjon som e-post eller telefonnummer i dette feltet.</span>
                 </div>
             </div>
         </div>
@@ -270,7 +269,6 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <div class="u-t5">Hvilket telefonnummer ønsker du at interesserte skal kontakte deg på?</div>
         </div>
 
         <div class="form-group">
