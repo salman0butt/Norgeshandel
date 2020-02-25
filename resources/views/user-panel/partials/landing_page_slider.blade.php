@@ -1,4 +1,4 @@
-<div id="carouselExampleIndicators" class="carousel slide carouselExampleIndicators" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide carouselExampleIndicators" data-ride="carousel" data-interval="false">
     <ol class="carousel-indicators mb-5">
         @if($name->count() > 0)
             @foreach($name as $key=>$val)

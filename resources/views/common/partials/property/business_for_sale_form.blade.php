@@ -143,6 +143,7 @@
                 </div>
             </div>
         </div>
+
         <!--                            full input-->
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>

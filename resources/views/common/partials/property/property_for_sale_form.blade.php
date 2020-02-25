@@ -14,7 +14,7 @@
 ?>
  @if(Request::is('new/property/sale/ad/*/edit'))
    @method('PATCH')
-  @endif 
+  @endif
     <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_sale_temp_images">
     <div class="pl-3 pr-3">
@@ -852,7 +852,6 @@
             <div class="row">
                 <label class="u-t5">Last opp komplett salgsinformasjon</label>
                 <div class="col-sm-12 pr-md-0">
-                    <!-- <button  type="button" class="dme-btn-outlined-blue">Legg til salgsoppgave</button> -->
                     <input type="file" name="property_quote[]" id="property_quote" class="" multiple>
                 </div>
             </div>

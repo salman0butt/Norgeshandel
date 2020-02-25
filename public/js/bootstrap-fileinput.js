@@ -26,8 +26,9 @@
 
   var Fileinput = function (element, options) {
     this.$element = $(element)
-    
+
     this.$input = this.$element.find(':file')
+
     if (this.$input.length === 0) return
 
     this.name = this.$input.attr('name') || options.name
@@ -66,6 +67,7 @@
     e.stopPropagation()
 
     if (files.length === 0) {
+      return false; // ameer code
       this.clear()
       return
     }
@@ -110,7 +112,6 @@
 
   Fileinput.prototype.clear = function(e) {
     if (e) e.preventDefault()
-    
     this.$hidden.val('')
     this.$hidden.attr('name', this.name)
     this.$input.attr('name', '')
@@ -137,7 +138,6 @@
 
   Fileinput.prototype.reset = function() {
     this.clear()
-
     this.$hidden.val(this.original.hiddenVal)
     this.$preview.html(this.original.preview)
     this.$element.find('.fileinput-filename').text('')
@@ -186,13 +186,16 @@
   $(document).on('click.fileinput.data-api', '[data-provides="fileinput"]', function (e) {
     var $this = $(this)
     if ($this.data('bs.fileinput')) return
-    $this.fileinput($this.data())
+      $this.fileinput($this.data())
       
     var $target = $(e.target).closest('[data-dismiss="fileinput"],[data-trigger="fileinput"]');
     if ($target.length > 0) {
       e.preventDefault()
-      $target.trigger('click.bs.fileinput')
+      // $target.trigger('click.bs.fileinput')
     }
   })
+
+
+
 
 }(window.jQuery);
