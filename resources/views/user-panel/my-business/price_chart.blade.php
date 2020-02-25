@@ -199,13 +199,6 @@
                 e.preventDefault();
                 $(this).find("i").toggleClass("fa-chevron-up fa-chevron-down");
                 $('#multiCollapseExample1').toggle();
-
-            });
-            $('.triger-btn2').click(function (e) {
-                e.preventDefault();
-                $(this).find("i").toggleClass("fa-chevron-up fa-chevron-down");
-                $('#multiCollapseExample2').toggle();
-
             });
         });
 

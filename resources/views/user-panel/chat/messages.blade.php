@@ -335,7 +335,9 @@
 
             $(document).on('keydown', '.message-input', function (e) {
                 var message = $("#message-input").val();
-                if ((e.keyCode == 13 || e.keyCode == 10) && message == '') {
+                var attachment =   $('#attachment').val();
+        
+                if ((e.keyCode == 13 || e.keyCode == 10) && message == '' && attachment == '') {
                     alert('Meldingen kan ikke være tom!');
                     $("#message-input").focus();
                 }
@@ -351,7 +353,19 @@
             $(document).on('click', '#send_button', function (e) {
                 e.preventDefault();
                 var message = $("#message-input").val();
-                send_message();
+                var attachment = $("#attachment").val();
+                   
+                if(message == '' && attachment == ''){
+                   console.log('no message1');
+                   return false;
+                }
+                if(message == '' && attachment != '' || message != ''){
+                     send_message();
+                     
+                }
+                
+                
+                //send_message();
                 $("#message-input").focus();
                 $("#message-input").val('');
             })
