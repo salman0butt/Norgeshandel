@@ -38,7 +38,7 @@
                                 <a href="leisureplots.php?grid">Fritidstomter <span class="u-stone"></span></a>
                             </li> -->
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/for/rent')}}">Bolig til leie <span class="u-stone">(<?php echo App\PropertyForRent::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/commercial-property-for-rent/search')}}">Bolig til leie <span class="u-stone">(<?php echo App\PropertyForRent::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('property/flat/wishes/rented')}}">Bolig ønskes leid <span class="u-stone">(<?php echo App\FlatWishesRented::get()->count(); ?>)</span></a>
