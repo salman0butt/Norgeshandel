@@ -17,6 +17,9 @@
   @endif
     <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_sale_temp_images">
+
+
+
     <div class="pl-3 pr-3">
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
@@ -798,11 +801,28 @@ omkostninger.
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="u-t5">Last opp komplett salgsinformasjon</label>
-                <div class="col-sm-12 pr-md-0">
-                    <input type="file" name="property_quote[]" id="property_quote" class="" multiple>
+        <!-- Attachement as sales information -->
+        <div wt-paste="sales-information">
+            <div class="form-group">
+                <h3 class="u-t5">Last opp komplett salgsinformasjon</h3>
+                @if($property_for_sale && $property_for_sale->ad && $property_for_sale->ad->sales_information->count() > 0)
+                    @foreach($property_for_sale->ad->sales_information as $property_sales_information)
+                        <div class="show-file-section">
+                            <div class="row">
+                                <p class="col-sm-4">{{($property_sales_information->name)}}</p>
+                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$property_sales_information->name_unique}}">Fjerne</a></p>
+                                {{--<div class="col-sm-6"></div>--}}
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="file" name="property_quote[]" id="property_quote" class="">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-more="sales-information"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -816,15 +836,31 @@ omkostninger.
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="row">
-                <label class="u-t5">Vedlegg som PDF</label>
-                <div class="col-sm-12 pr-md-0">
-                    <!-- <button class="dme-btn-outlined-blue">Legg til pdf</button> -->
-                    <input type="file" name="property_pdf[]" id="property_pdf" class="" multiple>
+        <!-- Attachement as pdf files -->
+        <div wt-paste="attachment-as-pdf">
+            <div class="form-group">
+                <h3 class="u-t5">Vedlegg som PDF</h3>
+                @if($property_for_sale && $property_for_sale->ad && $property_for_sale->ad->pdf->count() > 0)
+                    @foreach($property_for_sale->ad->pdf as $key=>$property_pdf_file)
+                        <div class="show-file-section">
+                            <div class="row">
+                                <p class="col-sm-4">{{($property_pdf_file->name)}}</p>
+                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$property_pdf_file->name_unique}}">Fjerne</a></p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="property_pdf[]" id="property_pdf" accept="application/pdf">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <h3 class="u-t5">Visningsdato (valgfritt)</h3>
             <div class="row">

@@ -59,6 +59,23 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function setBirthdayAttribute($value)
+    {
+        if($value){
+            $this->attributes['birthday'] = date('Y-m-d',strtotime($value));
+        }else{
+            $this->attributes['birthday'] = null;
+        }
+
+    }
+    public function getBirthdayAttribute() {
+        if(!$this->attributes['birthday']){
+            return '';
+        }
+        return date('d-m-Y', strtotime($this->attributes['birthday']));
+    }
+
+
     public function roles(){
         return $this->belongsToMany('App\Role');
     }

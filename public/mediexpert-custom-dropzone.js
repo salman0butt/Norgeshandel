@@ -61,6 +61,7 @@ function createDropZone(id, ajax_url) {
                     $("#dropzoneErrors .errors ul").append("<li>" + message[i] + "</li>")
                 });
             });
+            myDropzone.options.dictRemoveFileConfirmation = "Er du sikker på å slette?";
             this.on("completemultiple", function(file) {
                 // myDropzone.removeFile(file);
             });
@@ -69,11 +70,8 @@ function createDropZone(id, ajax_url) {
             this.on("removedfile", function(file) {
                 var element = file.previewElement.querySelector("[data-dz-name]");
                 var filename = element.innerHTML;
-
-                 ws_remove_file(filename);
-
+                ws_remove_file(filename);
             });
-
         }
     });
 }
@@ -149,15 +147,39 @@ function ws_remove_file(filename) {
 }
 
 $(document).on('click', '.dz-remove', function (e) {
-    e.preventDefault();
-    filename = $(this).attr('id');
-    e.preventDefault();
-    ws_remove_file(filename);
-    $(this).parents('.dz-preview').fadeOut();
     /*
-    if (confirm("Er du sikker på å slette?") == true) {
+    var this_var = $(this);
+    e.preventDefault();
 
-    } */
+    swal({
+        title: "Bekreftelse",
+        text: "Er du sikker på å slette denne filen?",
+        icon: "warning",
+        buttons: [
+            'Nei, avbryt det!',
+            'Ja jeg er sikker!'
+        ],
+        dangerMode: true,
+    }).then(function(isConfirm) {
+        if (isConfirm) {
+            (this_var).parents('.dz-preview').fadeOut();
+            (this_var).parents('.show-file-section').fadeOut();
+            filename = (this_var).attr('id');
+            e.preventDefault();
+            ws_remove_file(filename);
+        }
+    });
+    */
+
+    if (confirm("Er du sikker på å slette?") == true) {
+        e.preventDefault();
+        filename = $(this).attr('id');
+        e.preventDefault();
+        ws_remove_file(filename);
+        $(this).parents('.dz-preview').fadeOut();
+        $(this).parents('.show-file-section').fadeOut();
+    }
+
 
 });
 
@@ -171,5 +193,4 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-
 });

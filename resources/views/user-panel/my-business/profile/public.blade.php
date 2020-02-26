@@ -22,14 +22,16 @@
                 </div>
 
                 <div class="col-md-9 align-self-center">
-                    <div class="username"><span style="font-size: 26px">{{$user->first_name}} {{$user->last_name}}</span> <span class="text-muted">({{$user->username}})</span></div>
+                    <div class="username"><span style="font-size: 26px">{{$user->username}}</span>
+                        {{--<span class="text-muted">({{$user->username}})</span>--}}
+                    </div>
                     <div class="small age">Medlem siden {{$user->created_at->year}}</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 pt-4 pb-4">
                     <div class="panel" aria-labelledby="profile-summary-header">
-                        <h3 class="summary font-weight-normal">Sammendrag</h3>
+                        <h3 class="summary font-weight-normal">Sammendrag12</h3>
                         <div class="about small">{{$user->about_me}}</div>
                     </div>
                 </div>

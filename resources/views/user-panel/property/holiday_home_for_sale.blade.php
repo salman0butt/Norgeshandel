@@ -23,6 +23,39 @@
             </div>
         </div>
     </div>
+
+    <!-- Upload sales information -->
+    <div wt-copy="sales-information" style="display:none">
+        <div class=""  wt-duplicate="sales-information">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="property_home_for_sale_sales_quote[]" id="property_home_for_sale_sales_quote">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-delete="sales-information"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attachment as PDF -->
+    <div wt-copy="attachment-as-pdf" style="display:none">
+        <div class=""  wt-duplicate="attachment-as-pdf">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="property_home_for_sale_pdf[]" id="property_home_for_sale_pdf" accept="application/pdf">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-delete="attachment-as-pdf"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 <script type="text/javascript">
 
