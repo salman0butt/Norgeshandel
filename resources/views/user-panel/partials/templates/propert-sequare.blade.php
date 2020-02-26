@@ -14,7 +14,7 @@ if(isset($ad))
         }
         else
         {
-            $path = asset('public/images/image-placeholder.jpg');
+            $path = asset('public/images/placeholder.png');
         }
     }
 

@@ -1,7 +1,5 @@
 @extends('layouts.landingSite')
 @section('page_content')
-
-
 <?php
 
 //            $facilities = array();
@@ -24,10 +22,7 @@
                 $full_path  = "";
             }
             */
-
-
         ?>
-
 <main>
     <div class="left-ad float-left">
         <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">

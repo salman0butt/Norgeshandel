@@ -4,7 +4,7 @@ use App\Helpers\common;
 $empname = $job->company_id != 0 ? $job->company->emp_name : $job->emp_name;
 //dump($job);
 
-$image_path = 'public/images/image-placeholder.jpg';
+$image_path = 'public/images/placeholder.png';
 if ($job->company_id != 0) {
     if (is_countable($job->company->company_gallery) && count($job->company->company_gallery) > 0) {
         $image_path = common::getMediaPath($job->company->company_gallery->first(), '235x180');
