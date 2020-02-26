@@ -21,6 +21,9 @@
                     @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search'))
                         @include('user-panel.partials.templates.filter-property-for-sale')
                     @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/property-for-rent/search'))
+                        @include('user-panel.partials.templates.filter-property-for-rent')
+                    @endif
                     @if(\Illuminate\Support\Facades\Request::is('property/commercial-property-for-sale/search'))
                         @include('user-panel.partials.templates.filter-commercial-property-for-sale')
                     @endif

@@ -62,15 +62,11 @@
                     @foreach ($add_array as $key => $value)
                         <?php
                         $property_for_sale = App\PropertyForSale::find($value->id);
-                        $property_for_sale_collection = $property_for_sale->ad->company_gallery->toArray();
+                        $property_for_sale_collection = $property_for_sale->ad->company_gallery->first();
                         if (!empty($property_for_sale_collection)) {
                             $path = \App\Helpers\common::getMediaPath($property_for_sale);
-                            foreach ($property_for_sale_collection as $key => $val) {
-                                if ($val['type'] == "gallery") {
-                                    $name = $val['name_unique'];
-                                }
-                                $full_path_photos = $path . "" . $name;
-                            }
+                            $name = $property_for_sale_collection->name_unique;
+                            $full_path_photos = $path . "" . $name;
                         } else {
                             $full_path_photos = "";
                         }

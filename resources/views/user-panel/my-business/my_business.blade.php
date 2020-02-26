@@ -72,7 +72,7 @@
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="{{ url('/personvern') }}" style="text-decoration: none;">
+                <a href="{{ url('/privacy') }}" style="text-decoration: none;">
                     <span class="font-weight-bold">Innstillinger for personvern</span>
                 </a>
             </li>

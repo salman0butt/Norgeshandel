@@ -177,5 +177,22 @@ $(document).ready(function (e) {
             });
         }
     });
+
+
+    //Add Fields
+    $.fn.WT_COPY_PASTE = function($this) {
+        var $copy = $('[wt-copy='+$this.attr('wt-more')+']');
+        $('[wt-paste='+$this.attr('wt-more')+']').append($copy.html());
+    };
+    $(document).on('click', '[wt-more]', function() {
+        $.fn.WT_COPY_PASTE($(this));
+    });
+    // DELETE COPY
+    $.fn.WT_COPY_DELETE = function($this) {
+        $this.parents('[wt-duplicate='+$this.attr('wt-delete')+']').remove();
+    };
+    $(document).on('click', '[wt-delete]', function() {
+        $.fn.WT_COPY_DELETE($(this));
+    });
 });
 

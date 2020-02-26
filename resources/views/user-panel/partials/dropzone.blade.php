@@ -20,7 +20,7 @@
                 <div class="dz-details">
                     <div class="dz-filename"><span data-dz-name="">{{@$company_gallery->name}}</span></div>
                 </div>
-                <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Remove file</a>
+                <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$company_gallery->name_unique}}">Slett</a>
 
                 <input type="text" class="form-control dme-form-control mt-2" placeholder="Tittel" name="image_title_{{(@$company_gallery->name_unique)}}" value="{{$company_gallery->title}}">
             </div>

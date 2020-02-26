@@ -10,6 +10,12 @@
     $country = \App\Taxonomy::where('slug', 'country')->first();
     $countries = $country->terms;
 
+    $types = \App\Taxonomy::where('slug', 'pfr_property_type')->first();
+    $property_types = $types->terms;
+
+    $pfr_facilities = \App\Taxonomy::where('slug', 'pfr_facilities')->first();
+    $facilities = $pfr_facilities->terms;
+
     //$property_type = explode(',', $flat_wishes_rented->property_type);
     //$region = explode(',', $flat_wishes_rented->region);
 
@@ -58,18 +64,13 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="property_type" name="property_type" class="dme-form-control">
+                        <option value=""></option>
+                        @foreach($property_types as $type)
                         @if(Request::is('new/property/rent/ad/*/edit'))
                             <option value="{{ $property_for_rent->property_type }}">{{ $property_for_rent->property_type }}</option>
                         @endif
-                        <option value=""></option>
-                        <option value="Andre">Andre</option>
-                        <option value="Enebolig">Enebolig</option>
-                        <option value="Garasje Parkering">Garasje/Parkering</option>
-                        <option value="Hybel">Hybel</option>
-                        <option value="Leilighet">Leilighet</option>
-                        <option value="Rekkehus">Rekkehus</option>
-                        <option value="Rom i bofellesskap">Rom i bofellesskap</option>
-                        <option value="Tomannsbolig">Tomannsbolig</option>
+                            <option value="{{$type->name}}">{{$type->name}}</option>
+                        @endforeach
                     </select>
                     <span class="error-span property_type"></span>
 
@@ -128,7 +129,7 @@
                     <select id="furnishing" name="furnishing" class="dme-form-control">
                     @if(Request::is('new/property/rent/ad/*/edit'))
                         <option value="{{ $property_for_rent->furnishing }}">{{ $property_for_rent->floor }}</option>
-                    @endif    
+                    @endif
                         <option value=""></option>
                         <option value="Delvis møblert">Delvis møblert</option>
                         <option value="Møblert">Møblert</option>
@@ -141,100 +142,13 @@
         <div class="form-group">
             <label class="u-t5">Fasiliteter (valgfritt)</label>
             <div class="row">
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-AIRCONDITIONING" type="checkbox" value="AIRCONDITIONING"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-AIRCONDITIONING"> Aircondition</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-ALARM" type="checkbox" value="ALARM" name="facilities[]">
-                    <label class="smalltext" for="facilities-ALARM"> Alarm</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-BALCONY" type="checkbox" value="BALCONY" name="facilities[]">
-                    <label class="smalltext" for="facilities-BALCONY"> Balkong/Terrasse</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CHILD-FRIENDLY" type="checkbox" value="CHILD-FRIENDLY"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-CHILD-FRIENDLY"> Barnevennlig</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-BROADBAND" type="checkbox" value="BROADBAND"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-BROADBAND"> Bredbåndstilknytning</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-COMMONWASHROOM" type="checkbox" value="COMMONWASHROOM"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-COMMONWASHROOM"> Fellesvaskeri</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-GARAGE" type="checkbox" value="GARAGE" name="facilities[]">
-                    <label class="smalltext" for="facilities-GARAGE"> Garasje/P-plass</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-LIFT" type="checkbox" value="LIFT" name="facilities[]">
-                    <label class="smalltext" for="facilities-LIFT"> Heis</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-NO-NEIGHBOURS-OP" type="checkbox" value="NO-NEIGHBOURS-OP"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-NO-NEIGHBOURS-OP"> Ingen gjenboere</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CABLE-TV" type="checkbox" value="CABLE-TV"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-CABLE-TV"> Kabel-TV</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CHARGING" type="checkbox" value="CHARGING"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-CHARGING"> Lademulighet</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-ACCESSIBILITY_LEVEL" type="checkbox"
-                           value="ACCESSIBILITY_LEVEL" name="facilities[]">
-                    <label class="smalltext" for="facilities-ACCESSIBILITY_LEVEL"> Livsløpsstandard</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-MODERN" type="checkbox" value="MODERN" name="facilities[]">
-                    <label class="smalltext" for="facilities-MODERN"> Moderne</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-PARQUETT" type="checkbox" value="PARQUETT"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-PARQUETT"> Parkett</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-FIREPLACE" type="checkbox" value="FIREPLACE"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-FIREPLACE"> Peis/Ildsted</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-QUIET-AREA" type="checkbox" value="QUIET-AREA"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-QUIET-AREA"> Rolig</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CENTRAL" type="checkbox" value="CENTRAL" name="facilities[]">
-                    <label class="smalltext" for="facilities-CENTRAL"> Sentralt</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-VIEW" type="checkbox" value="VIEW" name="facilities[]">
-                    <label class="smalltext" for="facilities-VIEW"> Utsikt</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-JANITORSERVICE" type="checkbox" value="JANITORSERVICE"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-JANITORSERVICE"> Vaktmester-/vektertjeneste</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-HIKING" type="checkbox" value="HIKING" name="facilities[]">
-                    <label class="smalltext" for="facilities-HIKING"> Turterreng</label>
-                </div>
-
-
+                @foreach($facilities as $facility)
+                    <div class="col-md-4 input-toggle">
+                        <input id="{{$facility->name}}-{{$facility->id}}" type="checkbox" value="{{$facility->name}}"
+                               name="facilities[]">
+                        <label class="smalltext" for="{{$facility->name}}-{{$facility->id}}"> {{$facility->name}}</label>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="form-group">
@@ -244,7 +158,7 @@
                     <select id="energy_label.class" name="energy_label_class" data-selector="" class="dme-form-control">
                     @if(Request::is('new/property/rent/ad/*/edit'))
                         <option value="{{ $property_for_rent->energy_label_class }}">{{ $property_for_rent->energy_label_class }}</option>
-                    @endif    
+                    @endif
                         <option value=""></option>
                         <option value="A">A</option>
                         <option value="B">B</option>
@@ -265,7 +179,7 @@
                     <select id="energy_label.color" name="energy_label_color" data-selector="" class="dme-form-control">
                     @if(Request::is('new/property/rent/ad/*/edit'))
                         <option value="{{ $property_for_rent->energy_label_color }}">{{ $property_for_rent->energy_label_color }}</option>
-                    @endif    
+                    @endif
                         <option value=""></option>
                         <option value="Gul">Gul</option>
                         <option value="Lysegrønn">Lysegrønn</option>
@@ -359,7 +273,7 @@
                 </div>
             </div>
         </div>
-      
+
         <div class="form-group">
             <label class="u-t5">Visningsdato (valgfritt)</label>
             <div class="row">
@@ -433,14 +347,14 @@
         <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiser_annonsen"
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label"> @if(Request::is('new/property/rent/ad/*/edit')) {{'oppdater tillegget ditt'}} @else {{ 'Publiser annonsen' }} @endif</span></button>
 </form>
-  <script>   
+  <script>
     $(document).on('change', 'input[name="zip_code"]', function(e) {
          document.getElementById("zip_code_city_name").innerHTML = '';
     var zip_code = $(this).val();
     var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
     // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
     var client_url = 'localhost';
-    
+
     if(zip_code){
     var xhttp = new XMLHttpRequest();
    xhttp.onreadystatechange = function() {
@@ -455,6 +369,6 @@
     xhttp.send();
     }
 });
-   
+
     </script>
 
