@@ -122,7 +122,11 @@ class AdController extends Controller
 
     public function my_ads($status = [])
     {
-        $my_ads = Ad::where('user_id', Auth::user()->id)->orderByDesc('ads.updated_at')->get();
+        DB::enableQueryLog();
+
+
+        $my_ads = Ad::where('user_id', Auth::user()->id)->where('status','=','published')->orderByDesc('ads.updated_at')->get();
+      // dd(DB::getQueryLog());
         return view('user-panel/my-business.my_ads', compact('my_ads'));
     }
 

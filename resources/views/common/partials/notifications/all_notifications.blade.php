@@ -19,19 +19,19 @@
             @if(count($ids) > 0)
                 @foreach ($ids as $key => $value)
 
-                        <?php 
+                        <?php
                             $t=time();
                             App\Notification::where('id', $value['id'])
                             ->update(['read_at' => date("Y-m-d h:m:i",$t)]);
                             $notification_type = App\Notification::where('notifiable_id',$value['notifiable_id'])->first(['type','created_at']);
-                    
+
                             $notification      = $notification_type->type::find($value['notifiable_id']);
                             $name              = $notification->media->first();
                             if($name != null)
                             {
                                 $name       =    $name->name_unique;
                                 $path       = \App\Helpers\common::getMediaPath($notification);
-                                $full_path  = $path."".$name; 
+                                $full_path  = $path."".$name;
                             }
                             else
                             {
@@ -46,7 +46,7 @@
                             <div class="ads__unit__img__ratio">
                                 <span><a href="{{url('/property/description', $value['notifiable_id'])}}">
                                     <img class="img-thumbnail w-100" style="border-radius:10px;"
-                                    src="@if(!empty($full_path)){{$full_path}}@else{{'http://localhost/norgeshandel/public/images/image-placeholder.jpg'}}@endif"
+                                    src="@if(!empty($full_path)){{$full_path}}@else{{'http://localhost/norgeshandel/public/images/placeholder.png'}}@endif"
                                     alt="">
                                 </span>
                             </div>
@@ -57,12 +57,12 @@
                                 style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">Treff i lagret
                                 søk</span>
                             <span class="u-stone" style="margin-left:10px;">
-                        
+
                                 <?php
-                                  
-                                    echo $notification_type->created_at->diffForHumans(); 
+
+                                    echo $notification_type->created_at->diffForHumans();
                                 ?>
-                             
+
                             </span>
                         </span>
                         <div class="ads__unit__content" style="display:block;width:70%;float:left;">
@@ -99,8 +99,8 @@
                                         }
                                         else if($notification_type->type  == "App\Admin\Jobs\Job")
                                         {
-                                            echo $notification -> title; 
-                                        } 
+                                            echo $notification -> title;
+                                        }
                                         else
                                         {
                                             echo $notification_type -> headline;

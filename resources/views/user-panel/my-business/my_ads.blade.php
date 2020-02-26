@@ -44,12 +44,12 @@ foreach ($my_ads as $ad){
                         <h3 class="u-t5">Status</h3>
                         <div class="pl-3 pr-3">
                             <label for="status" class="radio-lbl">Påbegynte annonser ({{$saved}})
-                                <input type="radio" id="status" class="status" checked name="status" value="saved">
+                                <input type="radio" id="status" class="status" name="status" value="saved">
                                 <span class="checkmark"></span>
                             </label>
 
                             <label for="status-1" class="radio-lbl">Aktive annonser ({{$published}})
-                                <input type="radio" id="status-1" class="status" name="status" value="published">
+                                <input type="radio" id="status-1" checked class="status" name="status" value="published">
                                 <span class="checkmark"></span>
                             </label>
 

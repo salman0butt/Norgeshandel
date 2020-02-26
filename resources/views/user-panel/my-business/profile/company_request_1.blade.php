@@ -47,6 +47,32 @@
                         <h3 class="u-strong u-t4 u-mb0"><span class="fa fa-check"></span>&nbsp; Dedikert kontaktperson i Norges Handel</h3>
                         <p class="u-caption">Optimaliser annonseringen sammen med en som kjenner din bedrift</p>
                     </div>
+                    <div class="col-md-4">
+                        <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
+                           Vårt mål er å bidra til at din bedrift får fornøyde kunder</h4>
+                        <p>&emsp;</p>
+                    </div>
+                         <div class="col-md-4">
+                        <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
+                           Kredittid og en faktura på alle annonser</h4>
+                        <p>&emsp;</p>
+                    </div>
+                       <div class="col-md-4">
+                        <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
+                           Individuelle betingelser og priser</h4>
+                        <p>&emsp;</p>
+                    </div>
+                       <div class="col-md-4">
+                        <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
+                          Firmaprofilering</h4>
+                        <p>&emsp;</p>
+                    </div>
+                        <div class="col-md-6">
+                        <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
+                          Lenke til bedriftens nettside i alle annonser</h4>
+                       <p></p>
+                        <a href="{{url('price-chart')}}">Se prisoversikt her</a>
+                    </div>
                 </div>
 
             </div>

@@ -176,7 +176,9 @@
                     <div class="chat-thread-list">
                         @foreach($threads as $thread)
                         @if(!empty($thread->ad) && (is_countable($thread->messages) && count($thread->messages)>0 || $thread->id==$active_thread->id))
+
                                 @php($thread_user = $thread->users->where('id', '!=', Auth::id())->first())
+
                             <div class="position-relative">
                                 <a href="{{url('messages/thread', $thread->id)}}"
                                    class="thread thread-link-{{$thread->id}} {{$thread->id==$active_thread->id?"active":""}}"
@@ -191,7 +193,7 @@
                                                       class="badge badge-primary pending"
                                                       style="">{{count($thread->get_unread)}}</span>
                                             @endif
-                                            <img src="{{asset('public/images/image-placeholder.jpg')}}"
+                                            <img src="{{asset('public/images/placeholder.png')}}"
                                                  class="profile-post-image" alt="">
                                             <img
                                                 src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
@@ -268,7 +270,7 @@
                             '        <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon" data-thread-id="' + data.thread_id + '">\n' +
                             '                <span  data-thread-id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
                             '                      style="">1</span>\n' +
-                            '            <img src="{{asset('public/images/image-placeholder.jpg')}}"\n' +
+                            '            <img src="{{asset('public/images/placeholder.png')}}"\n' +
                             '                 class="profile-post-image" alt="">\n' +
                             '            <img src="public/images/profile-placeholder.png"\n' +
                             '                class="profile-image" alt="Profile image" style="">\n' +
@@ -336,7 +338,7 @@
             $(document).on('keydown', '.message-input', function (e) {
                 var message = $("#message-input").val();
                 var attachment =   $('#attachment').val();
-        
+
                 if ((e.keyCode == 13 || e.keyCode == 10) && message == '' && attachment == '') {
                     alert('Meldingen kan ikke være tom!');
                     $("#message-input").focus();
@@ -354,17 +356,17 @@
                 e.preventDefault();
                 var message = $("#message-input").val();
                 var attachment = $("#attachment").val();
-                   
+
                 if(message == '' && attachment == ''){
                    console.log('no message1');
                    return false;
                 }
                 if(message == '' && attachment != '' || message != ''){
                      send_message();
-                     
+
                 }
-                
-                
+
+
                 //send_message();
                 $("#message-input").focus();
                 $("#message-input").val('');

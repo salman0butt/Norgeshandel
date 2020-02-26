@@ -82,7 +82,7 @@
                                 <div
                                     class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                     <div class="trailing-border">
-                                        <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/image-placeholder.jpg')}}@endif"
+                                        <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"
                                             alt="" class="img-fluid radius-8 w-100 list-h">
                                     </div>
                                 </div>

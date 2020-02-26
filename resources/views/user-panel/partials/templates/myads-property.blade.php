@@ -27,7 +27,7 @@ if (isset($ad)) {
         if (count($media) > 0) {
             $path = \App\Helpers\common::getMediaPath($media->first());
         } else {
-            $path = asset('public/images/image-placeholder.jpg');
+            $path = asset('public/images/placeholder.png');
         }
     }
 }

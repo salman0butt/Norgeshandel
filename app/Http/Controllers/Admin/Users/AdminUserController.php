@@ -218,7 +218,7 @@ class AdminUserController extends Controller
                 (isset($request->org_name) && !empty($request->org_name))){
 
                 $to_name = "NorgesHandel";
-                $to_email = 'zain@digitalmx.no';//env('ADMIN_EMAIL');
+                $to_email = getenv('COMPANY_REQUEST_EMAIL');//env('ADMIN_EMAIL');
                 $user = Auth::user();
                 $data = ['username'=>$user->username,'display_name'=>$user->first_name.' '.$user->last_name, 'email'=>$user->email,
                     'type'=>$request->type, 'org_name'=>$request->org_name,
@@ -231,6 +231,7 @@ class AdminUserController extends Controller
                         $message->to($to_email, $to_name)->subject('Forespørsel om ny firmaprofil');
                         $message->from($user->email, $user->first_name.' '.$user->last_name.' ('.$user->username.')');
                     });
+                    
 
                 Session::flash('success', 'Forespørselen din har blitt sendt på e-post, snart vil du bli kontaktet.');
             }
