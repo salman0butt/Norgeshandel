@@ -11,6 +11,9 @@
 .location {
     top: -250px !important;
 }
+.clist .location {
+    position: absolute;
+}
 </style>
 <main class="dme-wrapper">
         <div class="left-ad float-left">
