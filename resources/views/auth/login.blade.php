@@ -22,9 +22,8 @@
         <div class="row shadow">
             <div class="col-md-8 text-center bg-maroon-lighter p-5">
                 <img src="{{asset('public/images/NorgesHondel-logo.png')}}" alt="" class="mb-3 mt-5">
-                <p>Logg inn for å personalisere Norgeshandel, lagre søk, chat,
-varsler.</p>
-                <p><a href="{{ url('/customer-services') }}">hjelp</a> &nbsp; Tilbake til <a href="{{ url('/') }}">NorgesHandel</a></p>
+                <p>Logg inn for å personalisere Norgeshandel, lagre søk, chat, varsler.</p>
+                <p><a href="{{ url('/customer-services') }}" class="mr-4">Hjelp</a> Tilbake til <a href="{{ url('/') }}">NorgesHandel</a></p>
             </div>
             <div class="col-md-4 bg-white pt-5 pb-3">
                 <form method="POST" action="{{ route('login') }}" id="login_page" name="login_page">

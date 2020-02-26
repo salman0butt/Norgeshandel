@@ -13,6 +13,7 @@
 
 use App\Media;
 use App\Models\Ad;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
@@ -70,6 +71,7 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.my-business.job_preferences');
     });
+
     Route::get('/privacy', function () {
         return view('user-panel.my-business.privacy_setting');
     });
@@ -80,6 +82,7 @@ Route::group(['middleware' => 'authverified'], function () {
         return view('user-panel.footer.customer_admin_for_business');
     });
     Route::get('/personvern', function () {
+
         return view('user-panel.footer.cookie');
     });
     Route::get('/rating', function () {
@@ -249,7 +252,8 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
             Route::post('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
             Route::get('profile/select_company_profile_type', function () {
-                return view('user-panel.my-business.profile.company_request_1');
+                return view('user-panel.footer.become_business');
+//                return view('user-panel.my-business.profile.company_request_1');
             });
             Route::get('profile/company_profile_form/{type}', function ($type) {
                 return view('user-panel.my-business.profile.company_request_2', compact('type'));
@@ -330,14 +334,15 @@ Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropert
 Route::patch('new/property/sale/ad/{id}', 'PropertyController@updateSaleAdd');
 Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 
+//Holiday home for sale
 Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
 Route::get('holiday/home/for/sale/{id}/edit','PropertyController@editHolidayHomeForSale');
 Route::patch('holiday/home/for/sale/{id}','PropertyController@updateHomeForSaleAd');
-Route::delete('holiday/home/for/sale/{id}','PropertyController@deleteHomeForSaleAd');
-Route::get('property/for/rent', 'PropertyController@adsForRent');
-Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
 Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
 Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
+
+Route::get('property/for/rent', 'PropertyController@adsForRent');
+Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
 Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
 Route::get('new/flat/wishes/rented/{id}/edit', 'PropertyController@editAddFlatWishesRented');
 Route::patch('new/flat/wishes/rented/{id}', 'PropertyController@updateFlatWishesRented');
@@ -371,7 +376,7 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
     Route::post('/property/commercial/for/sale/sorted/ad', 'PropertyController@commercialPropertyForSaleSortedAds');
     Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'PropertyController@commercialForSaleDescription']);
 
-    //commercialpropertyforrent
+    //commercial property for rent
     Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
     Route::get('add/new/commercial/property/for/rent/{id}/edit', 'PropertyController@editCommercialPropertyForRent');
     Route::patch('add/new/commercial/property/for/rent/{id}', 'PropertyController@updateCommercialPropertyForRent');
@@ -381,6 +386,7 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
 
     Route::get('/commercial/property/for/rent/description/{id}', 'PropertyController@commercialForRentDescription');
 
+    // Business for sale
     Route::get('/business/for/sale', 'PropertyController@BusinessForSale');
     Route::post('add/business/for/sale', 'PropertyController@addBusinessForSale');
     Route::post('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
@@ -393,6 +399,7 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
 
     Route::get('/business/for/sale/description/{id}', 'PropertyController@businessForSaleDescription');
 
+    //Commercial Plots
     Route::get('/commercial/plots', 'PropertyController@commercialPlots');
     Route::get('/commercial/plots/{id}/edit', 'PropertyController@editCommercialPlots');
     Route::patch('commercial/plots/{id}', 'PropertyController@updateCommercialPlots');

@@ -759,13 +759,28 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <h3 class="u-t5">Last opp komplett salgsinformasjon</h3>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <!-- <button type="button" id="sales_quote class="dme-btn-outlined-blue">Legg til salgsoppgave</button> -->
-                    <input type="file" name="property_home_for_sale_sale_quote[]" id="property_home_for_sale_sale_quote"
-                        class="" multiple>
+        <!-- Attachement as sales information -->
+        <div wt-paste="sales-information">
+            <div class="form-group">
+                <h3 class="u-t5">Last opp komplett salgsinformasjon</h3>
+                @if($holiday_home_for_sale && $holiday_home_for_sale->ad && $holiday_home_for_sale->ad->sales_information->count() > 0)
+                    @foreach($holiday_home_for_sale->ad->sales_information as $holiday_home_for_sale_sales_information)
+                        <div class="show-file-section">
+                            <div class="row">
+                                <p class="col-sm-4">{{($holiday_home_for_sale_sales_information->name)}}</p>
+                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$holiday_home_for_sale_sales_information->name_unique}}">Fjerne</a></p>
+                                {{--<div class="col-sm-6"></div>--}}
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input type="file" name="property_home_for_sale_sales_quote[]" id="property_home_for_sale_sales_quote" class="">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-more="sales-information"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -781,13 +796,27 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <h3 class="u-t5">PDF-vedlegg (valgfritt)</h3>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <!-- <button type="button" class="dme-btn-outlined-blue">Legg til pdf</button> -->
-                    <input type="file" name="property_home_for_sale_pdf_photos[]" id="property_home_for_sale_pdf_photos"
-                        class="" multiple>
+        <!-- Attachement as pdf files -->
+        <div wt-paste="attachment-as-pdf">
+            <div class="form-group">
+                <h3 class="u-t5">PDF-vedlegg (valgfritt)</h3>
+                @if($holiday_home_for_sale && $holiday_home_for_sale->ad && $holiday_home_for_sale->ad->pdf->count() > 0)
+                    @foreach($holiday_home_for_sale->ad->pdf as $key=>$holiday_home_for_sale_pdf_file)
+                        <div class="show-file-section">
+                            <div class="row">
+                                <p class="col-sm-4">{{($holiday_home_for_sale_pdf_file->name)}}</p>
+                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$holiday_home_for_sale_pdf_file->name_unique}}">Fjerne</a></p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="property_home_for_sale_pdf[]" id="property_home_for_sale_pdf" accept="application/pdf">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>

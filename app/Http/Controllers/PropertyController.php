@@ -594,6 +594,8 @@ class PropertyController extends Controller
                 $ad->delete();
                 common::delete_media($ad_id, Ad::class, 'logo');
                 common::delete_media($ad_id, Ad::class, 'gallery');
+                common::delete_media($ad_id, Ad::class, 'sales_information');
+                common::delete_media($ad_id, Ad::class, 'pdf');
                 DB::commit();
                 Session::flash('success', 'Eiendom ble slettet.');
                 return back();
@@ -832,40 +834,28 @@ class PropertyController extends Controller
             }
 
             $property_home_for_sale_data['user_id'] = Auth::user()->id;
-
-            if (isset($property_home_for_sale_data['property_home_for_sale_pdf_photos'])) {
-                unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
-
-            } else if (isset($property_home_for_sale_data['property_home_for_sale_sale_quote'])) {
-                unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
-            }
+            unset($property_home_for_sale_data['property_home_for_sale_pdf']);
+            unset($property_home_for_sale_data['property_home_for_sale_sales_quote']);
             $response = PropertyHolidaysHomesForSale::findOrFail($id);
 
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {
                 $property_home_for_sale_data = $this->updated_dropzone_images_type($property_home_for_sale_data, $request->upload_dropzone_images_type, $response->ad->id);
+
+                //Store property_home_for_sale_sales_quote file
+                if($request->file('property_home_for_sale_sales_quote') && count($request->file('property_home_for_sale_sales_quote')) > 0){
+                    common::update_media($request->file('property_home_for_sale_sales_quote'), $response->ad->id, 'App\Models\Ad', 'sales_information','false');
+                }
+
+                //Store property_home_for_sale_pdf file
+                if($request->file('property_home_for_sale_pdf') && count($request->file('property_home_for_sale_pdf')) > 0){
+                    common::update_media($request->file('property_home_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf','false');
+                }
+
             }
 
             $response->update($property_home_for_sale_data);
 
-            //upload files
-            if ($request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
-                    }
-                    if ($i == 2) {
-                        common::update_media($val, $response->id, 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
-                    }
-                    $i++;
-                }
-            }
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
@@ -978,41 +968,28 @@ class PropertyController extends Controller
             $add['user_id'] = Auth::user()->id;
             $add_response = Ad::create($add);
             $property_home_for_sale_data['ad_id'] = $add_response->id;
-            unset($property_home_for_sale_data['property_home_for_sale_pdf_photos']);
-            unset($property_home_for_sale_data['property_home_for_sale_sale_quote']);
+
+            unset($property_home_for_sale_data['property_home_for_sale_sales_quote']);
+            unset($property_home_for_sale_data['property_home_for_sale_pdf']);
 
             //Update media (mediable id and mediable type)
             if ($add_response->id) {
                 $property_home_for_sale_data = $this->updated_dropzone_images_type($property_home_for_sale_data, $request->upload_dropzone_images_type, $add_response->id);
+
+                //Store property_home_for_sale_sales_quote file
+                if($request->file('property_home_for_sale_sales_quote') && count($request->file('property_home_for_sale_sales_quote')) > 0){
+                    common::update_media($request->file('property_home_for_sale_sales_quote'), $add_response->id, 'App\Models\Ad', 'sales_information');
+                }
+
+                //Store property_home_for_sale_pdf file
+                if($request->file('property_home_for_sale_pdf') && count($request->file('property_home_for_sale_pdf')) > 0){
+                    common::update_media($request->file('property_home_for_sale_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
+                }
+
             }
 
             $response = PropertyHolidaysHomesForSale::create($property_home_for_sale_data);
 
-            //upload files
-            if ($request->file('property_home_for_sale_pdf_photos') || $request->file('property_home_for_sale_sale_quote')) {
-                // $files = $request->file('property_photos');
-                // $files_pdf = $request->file('property_pdf');
-                // $files_quote = $request->file('property_quote');
-
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_quotes');
-                    }
-                    if ($i == 2) {
-                        common::update_media($val, $response->id, 'App\PropertyHolidaysHomesForSale', 'property_home_for_sale_pdf');
-                    }
-                    $i++;
-
-                }
-
-
-            }
 
             //Notification data
             $notifiable_id = $response->id;
@@ -1021,7 +998,7 @@ class PropertyController extends Controller
             $notification_id_search = $notification_response->id;
 
             //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
@@ -1100,11 +1077,8 @@ class PropertyController extends Controller
                 }
             }
 
-
-            unset($property_for_sale_data['property_photos']);
             unset($property_for_sale_data['property_pdf']);
             unset($property_for_sale_data['property_quote']);
-
 
             //Manage Facilities
             if (isset($property_for_sale_data['facilities'])) {
@@ -1118,39 +1092,20 @@ class PropertyController extends Controller
                 $temp_property_for_sale_obj = PropertyForSale::find($id);
                 if ($temp_property_for_sale_obj && $temp_property_for_sale_obj->ad) {
                     $property_for_sale_data = $this->updated_dropzone_images_type($property_for_sale_data, $request->upload_dropzone_images_type, $temp_property_for_sale_obj->ad->id);
+
+                    //Store property_pdf file
+                    if($request->file('property_pdf') && count($request->file('property_pdf')) > 0){
+                        common::update_media($request->file('property_pdf'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'pdf','false');
+                    }
+
+                    //Store property_quote file
+                    if($request->file('property_quote') && count($request->file('property_quote')) > 0){
+                        common::update_media($request->file('property_quote'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'sales_information','false');
+                    }
                 }
             }
 
             $response = PropertyForSale::where('id', '=', $id)->update($property_for_sale_data);
-
-            if ($request->file('property_pdf') || $request->file('property_quote')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\PropertyForSale', 'propert_for_sale_quotes');
-                    }
-                    if ($i == 2) {
-                        common::update_media($val, $response->id, 'App\PropertyForSale', 'propert_for_sale_pdf');
-                    }
-                    $i++;
-
-                }
-            }
-
-            //Notification data
-            // $notifiable_id = $response -> id;
-            // $notification_obj = new NotificationController();
-            // $notification_response = $notification_obj->create($notifiable_id,'App\PropertyForSale','property have been added');
-            // $notification_id_search = $notification_response->id;
-
-            // // //trigger event
-            // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
@@ -1285,8 +1240,6 @@ class PropertyController extends Controller
                 }
             }
 
-
-            unset($property_for_sale_data['property_photos']);
             unset($property_for_sale_data['property_pdf']);
             unset($property_for_sale_data['property_quote']);
 
@@ -1314,24 +1267,14 @@ class PropertyController extends Controller
 
             $response = PropertyForSale::create($property_for_sale_data);
 
-            if ($request->file('property_pdf') || $request->file('property_quote')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
+            //Store property_pdf file
+            if($request->file('property_pdf') && count($request->file('property_pdf')) > 0){
+                common::update_media($request->file('property_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
+            }
 
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\PropertyForSale', 'propert_for_sale_quotes');
-                    }
-                    if ($i == 2) {
-                        common::update_media($val, $response->id, 'App\PropertyForSale', 'propert_for_sale_pdf');
-                    }
-                    $i++;
-
-                }
+            //Store property_quote file
+            if($request->file('property_quote') && count($request->file('property_quote')) > 0){
+                common::update_media($request->file('property_quote'), $add_response->id, 'App\Models\Ad', 'sales_information');
             }
 
             //Notification data
@@ -1341,7 +1284,7 @@ class PropertyController extends Controller
             $notification_id_search = $notification_response->id;
 
             // //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
@@ -1454,7 +1397,7 @@ class PropertyController extends Controller
             $notification_response = $notification_obj->create($notifiable_id, 'App\PropertyForRent', 'property have been added');
             $notification_id_search = $notification_response->id;
             //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
 
             DB::commit();
             $data['success'] = $response;
@@ -1578,7 +1521,7 @@ class PropertyController extends Controller
             $notification_id_search = $notification_response->id;
 
             //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
             DB::commit();
 
             $data['success'] = $response;
@@ -1628,7 +1571,7 @@ class PropertyController extends Controller
         $notification_response = $notification_obj->create($notifiable_id, 'App\RealestateBusinessPlot', 'property have been added');
         $notification_id_search = $notification_response->id;
         //trigger event
-        event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+        //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
 
         $data['success'] = $response;
         echo json_encode($data);
@@ -1662,14 +1605,6 @@ class PropertyController extends Controller
             unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
             $commercial_property_for_sale['user_id'] = Auth::user()->id;
 
-            //add Add to table
-            // $add = array();
-            // $add['ad_type'] = 'property_commercial_for_sale';
-            // $add['status']  = 'published';
-            // $add['user_id'] =  Auth::user()->id;
-            // $add_response   =  Ad::create($add);
-            // $commercial_property_for_sale['ad_id'] = $add_response->id;
-
             if (isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "") {
                 $commercial_property_for_sale['property_type'] = json_encode($commercial_property_for_sale['property_type']);
             }
@@ -1689,44 +1624,15 @@ class PropertyController extends Controller
                 $temp_commercial_property_for_sale_obj = CommercialPropertyForSale::find($id);
                 if ($temp_commercial_property_for_sale_obj && $temp_commercial_property_for_sale_obj->ad) {
                     $commercial_property_for_sale = $this->updated_dropzone_images_type($commercial_property_for_sale, $request->upload_dropzone_images_type, $temp_commercial_property_for_sale_obj->ad->id);
+
+                    //Store property_pdf file
+                    if($request->file('commercial_property_for_sale_pdf') && count($request->file('commercial_property_for_sale_pdf')) > 0){
+                        common::update_media($request->file('commercial_property_for_sale_pdf'), $temp_commercial_property_for_sale_obj->ad->id, 'App\Models\Ad', 'pdf','false');
+                    }
                 }
             }
 
             $response->update($commercial_property_for_sale);
-
-
-            if ($request->file('commercial_property_for_sale_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    /* Zille Shad Code commented by Ameer Hamza
-                    if($i == 0)
-                    {
-                        common::update_media($val, $response->id , 'App\CommercialPropertyForSale', 'commercial_propert_for_sale_photos');
-                    }
-                    */
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\CommercialPropertyForSale', 'commercial_property_for_sale_pdf');
-                    }
-                    $i++;
-
-                }
-
-
-            }
-
-            // //Notification data
-            // $notifiable_id = $response -> id;
-            // $notification_obj = new NotificationController();
-            // $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPropertyForSale','property have been added');
-            // $notification_id_search = $notification_response->id;
-            // //trigger event
-            // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
             DB::commit();
             $data['success'] = $response;
@@ -1762,14 +1668,10 @@ class PropertyController extends Controller
             if ($add_response->id) {
                 $commercial_property_for_sale = $this->updated_dropzone_images_type($commercial_property_for_sale, $request->upload_dropzone_images_type, $add_response->id);
             }
-
             if (isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "") {
-                $property_type = "";
-                foreach ($commercial_property_for_sale['property_type'] as $key => $val) {
-                    $property_type .= $val . ",";
-                }
-                $commercial_property_for_sale['property_type'] = $property_type;
+                $commercial_property_for_sale['property_type'] = json_encode($commercial_property_for_sale['property_type']);
             }
+
             if (isset($commercial_property_for_sale['facilities']) && $commercial_property_for_sale['facilities'] != "") {
                 $facilities = "";
                 foreach ($commercial_property_for_sale['facilities'] as $key => $val) {
@@ -1781,22 +1683,9 @@ class PropertyController extends Controller
 
             $response = CommercialPropertyForSale::create($commercial_property_for_sale);
 
-
-            if ($request->file('commercial_property_for_sale_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\CommercialPropertyForSale', 'commercial_property_for_sale_pdf');
-                    }
-                    $i++;
-
-                }
-
+            //Store commercial_property_for_sale_pdf file
+            if($request->file('commercial_property_for_sale_pdf') && count($request->file('commercial_property_for_sale_pdf')) > 0){
+                common::update_media($request->file('commercial_property_for_sale_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
             }
 
             //Notification data
@@ -1805,7 +1694,7 @@ class PropertyController extends Controller
             $notification_response = $notification_obj->create($notifiable_id, 'App\CommercialPropertyForSale', 'property have been added');
             $notification_id_search = $notification_response->id;
             //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
 
             DB::commit();
             $data['success'] = $response;
@@ -2070,12 +1959,9 @@ class PropertyController extends Controller
             $commercial_property_for_rent['user_id'] = Auth::user()->id;
 
             if (isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "") {
-                $property_type = "";
-                foreach ($commercial_property_for_rent['property_type'] as $key => $val) {
-                    $property_type .= $val . ",";
-                }
-                $commercial_property_for_rent['property_type'] = $property_type;
+                $commercial_property_for_rent['property_type'] = json_encode($commercial_property_for_rent['property_type']);
             }
+
             if (isset($commercial_property_for_rent['facilities']) && $commercial_property_for_rent['facilities'] != "") {
                 $facilities = "";
                 foreach ($commercial_property_for_rent['facilities'] as $key => $val) {
@@ -2088,32 +1974,13 @@ class PropertyController extends Controller
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {
                 $commercial_property_for_rent = $this->updated_dropzone_images_type($commercial_property_for_rent, $request->upload_dropzone_images_type, $response->ad->id);
+
+                //Store property_pdf file
+                if($request->file('commercial_property_for_rent_pdf') && count($request->file('commercial_property_for_rent_pdf')) > 0){
+                    common::update_media($request->file('commercial_property_for_rent_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf','false');
+                }
             }
             $response->update($commercial_property_for_rent);
-
-            if ($request->file('commercial_property_for_rent_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\CommercialPropertyForRent', 'commercial_property_for_rent_pdf');
-                    }
-                    $i++;
-                }
-            }
-
-            //Notification data
-            // $notifiable_id = $response -> id;
-            // $notification_obj = new NotificationController();
-            // $notification_response = $notification_obj->create($notifiable_id,'App\CommercialPropertyForRent','property have been added');
-            // $notification_id_search = $notification_response->id;
-
-            // //trigger event
-            // event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
 
             DB::commit();
             $data['success'] = $response;
@@ -2125,7 +1992,6 @@ class PropertyController extends Controller
             echo json_encode($data);
             exit();
         }
-
 
     }
 
@@ -2147,12 +2013,9 @@ class PropertyController extends Controller
             $add_response = Ad::create($add);
             $commercial_property_for_rent['ad_id'] = $add_response->id;
             if (isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "") {
-                $property_type = "";
-                foreach ($commercial_property_for_rent['property_type'] as $key => $val) {
-                    $property_type .= $val . ",";
-                }
-                $commercial_property_for_rent['property_type'] = $property_type;
+                $commercial_property_for_rent['property_type'] = json_encode($commercial_property_for_rent['property_type']);
             }
+
             if (isset($commercial_property_for_rent['facilities']) && $commercial_property_for_rent['facilities'] != "") {
                 $facilities = "";
                 foreach ($commercial_property_for_rent['facilities'] as $key => $val) {
@@ -2170,22 +2033,9 @@ class PropertyController extends Controller
 
             $response = CommercialPropertyForRent::create($commercial_property_for_rent);
 
-
-            if ($request->file('commercial_property_for_rent_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\CommercialPropertyForRent', 'commercial_property_for_rent_pdf');
-                    }
-                    $i++;
-
-                }
+            //Store property_pdf file
+            if($request->file('commercial_property_for_rent_pdf') && count($request->file('commercial_property_for_rent_pdf')) > 0){
+                common::update_media($request->file('commercial_property_for_rent_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
             }
 
             //Notification data
@@ -2195,11 +2045,12 @@ class PropertyController extends Controller
             $notification_id_search = $notification_response->id;
 
             //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            ////event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
 
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
+            exit();
         } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
@@ -2283,7 +2134,6 @@ class PropertyController extends Controller
         try {
             $business_for_sale = $request->except('upload_dropzone_images_type');
 
-            unset($business_for_sale['business_for_sale_photos']);
             unset($business_for_sale['business_for_sale_pdf']);
             $business_for_sale['user_id'] = Auth::user()->id;
 
@@ -2298,27 +2148,15 @@ class PropertyController extends Controller
             //Update media (mediable id and mediable type)
             if ($add_response->id) {
                 $business_for_sale = $this->updated_dropzone_images_type($business_for_sale, $request->upload_dropzone_images_type, $add_response->id);
+
+                //Store property_pdf file
+                if($request->file('business_for_sale_pdf') && count($request->file('business_for_sale_pdf')) > 0){
+                    common::update_media($request->file('business_for_sale_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
+                }
+
             }
 
             $response = BusinessForSale::create($business_for_sale);
-
-            if ($request->file('business_for_sale_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\BusinessForSale', 'business_for_sale_pdf');
-                    }
-                    $i++;
-
-                }
-
-            }
 
             //Notification data
             $notifiable_id = $response->id;
@@ -2326,7 +2164,7 @@ class PropertyController extends Controller
             $notification_response = $notification_obj->create($notifiable_id, 'App\BusinessForSale', 'property have been added');
             $notification_id_search = $notification_response->id;
             //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
@@ -2371,27 +2209,15 @@ class PropertyController extends Controller
 //                Update media (mediable id and mediable type)
                 if ($response->ad) {
                     $business_for_sale = $this->updated_dropzone_images_type($business_for_sale, $request->upload_dropzone_images_type, $response->ad->id);
+
+                    //Store property_pdf file
+                    if($request->file('business_for_sale_pdf') && count($request->file('business_for_sale_pdf')) > 0){
+                        common::update_media($request->file('business_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf','false');
+                    }
                 }
                 $response->update($business_for_sale);
             }
 
-            if ($request->file('business_for_sale_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-                $i = 0;
-
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\BusinessForSale', 'business_for_sale_pdf');
-                    }
-                    $i++;
-                }
-
-            }
 
 //            Notification data
 //            $notifiable_id = $response -> id;
@@ -2399,7 +2225,7 @@ class PropertyController extends Controller
 //            $notification_response = $notification_obj->create($notifiable_id,'App\BusinessForSale','property have been added');
 //            $notification_id_search = $notification_response->id;
 //            //trigger event
-//            event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
+//            //event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
@@ -2505,6 +2331,11 @@ class PropertyController extends Controller
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {
                 $commercial_plot = $this->updated_dropzone_images_type($commercial_plot, $request->upload_dropzone_images_type, $response->ad->id);
+
+                //Store commercial_plot_pdf file
+                if($request->file('commercial_plot_pdf') && count($request->file('commercial_plot_pdf')) > 0){
+                    common::update_media($request->file('commercial_plot_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf','false');
+                }
             }
 
 
@@ -2565,21 +2396,10 @@ class PropertyController extends Controller
 
             $response = CommercialPlot::create($commercial_plot);
 
-            if ($request->file('commercial_plot_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
 
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\CommercialPlot', 'commercial_plot_pdf');
-                    }
-                    $i++;
-                }
-
+            //Store commercial_plot_pdf file
+            if($request->file('commercial_plot_pdf') && count($request->file('commercial_plot_pdf')) > 0){
+                common::update_media($request->file('commercial_plot_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
             }
 
             //Notification data
@@ -2589,7 +2409,7 @@ class PropertyController extends Controller
             $notification_id_search = $notification_response->id;
 
             //trigger event
-            event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
+            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
 
             DB::commit();
             $data['success'] = $response;

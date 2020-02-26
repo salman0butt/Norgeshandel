@@ -43,15 +43,15 @@
                     <ul class="product-sub-cat-list pl-3 pt-3 col-md-12">
                         <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
 <!--                            --><?php //$filters = [];?>
-                            <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger (21 552)</a>
+                            <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger ({{$ads->count()}})</a>
                         </li>
                         <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
                             <?php $array = ['job_type'=>'management'];?>
-                            <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger (713)</a>
+                            <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger ({{$management_jobs->count()}})</a>
                         </li>
                         <?php $filters = ['job_type'=>[]]; ?>
                         <li class="col-sm-4 pl-0 pr-0" style="width: 200px;">
-                            <a href="{{ url('/companies') }}" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler (522)</a>
+                            <a href="{{ url('/companies') }}" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler ({{$companies->count()}})</a>
                         </li>
                     </ul>
                 </div>

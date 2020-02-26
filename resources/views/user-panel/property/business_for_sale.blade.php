@@ -11,20 +11,37 @@
 @section('page_content')
 
 <!-- property for rent -->
-        <main>
-            <div class="dme-container">
+<main>
+    <div class="dme-container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 mt-5 mb-5">
+                <h2 class="text-muted">Bedrifter til salgs</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                @include('common.partials.property.business_for_sale_form')
+            </div>
+        </div>
+    </div>
+
+    <!-- Attachment as PDF -->
+    <div wt-copy="attachment-as-pdf" style="display:none">
+        <div class=""  wt-duplicate="attachment-as-pdf">
+            <div class="form-group">
                 <div class="row">
-                    <div class="col-md-10 offset-md-1 mt-5 mb-5">
-                        <h2 class="text-muted">Bedrifter til salgs</h2>
+                    <div class="col-sm-4 ">
+                        <input type="file" name="business_for_sale_pdf[]" id="business_for_sale_pdf" accept="application/pdf">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 offset-md-1">
-                        @include('common.partials.property.business_for_sale_form')
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-delete="attachment-as-pdf"><i class="fa fa-trash"></i></button>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
+    </div>
+
+</main>
 
     <script type="text/javascript">
         

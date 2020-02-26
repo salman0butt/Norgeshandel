@@ -184,19 +184,36 @@
                 <div class="col-sm-12 pr-md-0">
                     @php $dropzone_img_obj = $commercial_plot; @endphp
                     @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
-{{--                    <input type="file" name="commercial_plot_photos[]" value="{{ $commercial_plot->commercial_plot_photos }}" id="property_photos" class="" multiple>--}}
                 </div>
             </div>
         </div>
-        <!--                            button-->
-        <div class="form-group">
-            <h3 class="u-t5">Legg till pdf</h3>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <input type="file" name="commercial_plot_pdf[]" value="{{ $commercial_plot->commercial_plot_pdf }}" id="property_photos" class="" multiple>
+
+
+        <!-- Attachement as pdf files -->
+        <div wt-paste="attachment-as-pdf">
+            <div class="form-group">
+                <h3 class="u-t5">Legg till pdf</h3>
+                @if($commercial_plot && $commercial_plot->ad && $commercial_plot->ad->pdf->count() > 0)
+                    @foreach($commercial_plot->ad->pdf as $key=>$commercial_plot_pdf_file)
+                        <div class="show-file-section">
+                            <div class="row">
+                                <p class="col-sm-4">{{($commercial_plot_pdf_file->name)}}</p>
+                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$commercial_plot_pdf_file->name_unique}}">Fjerne</a></p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="commercial_plot_pdf[]" id="commercial_plot_pdf" accept="application/pdf">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
+
         <!--                            full input-->
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>

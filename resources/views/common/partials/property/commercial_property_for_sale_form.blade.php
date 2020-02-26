@@ -11,7 +11,7 @@
     $countries = $country->terms;
 
     $property_type = json_decode($commercial_property_for_sale->property_type);
-       // dd($property_type);
+
     if(empty($property_type)){$property_type=array();}
 
     $facilities = explode(',', $commercial_property_for_sale->facilities);
@@ -443,17 +443,31 @@
                 <div class="col-sm-12 pr-md-0">
                     @php $dropzone_img_obj = $commercial_property_for_sale; @endphp
                     @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
-
-                    {{--<input type="file" value="{{ $commercial_property_for_sale->commercial_property_for_sale_photos }}" name="commercial_property_for_sale_photos[]" id="commercial_property_for_sale_photos" class="" multiple>--}}
                 </div>
             </div>
         </div>
-        <!--                            button-->
-        <div class="form-group">
-            <h3 class="u-t5">Legg till pdf</h3>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <input type="file" value="{{ $commercial_property_for_sale->commercial_property_for_sale_pdf }}" name="commercial_property_for_sale_pdf[]" id="commercial_property_for_sale_pdf" class="" multiple>
+
+        <!-- Attachement as pdf files -->
+        <div wt-paste="attachment-as-pdf">
+            <div class="form-group">
+                <h3 class="u-t5">Legg till pdf</h3>
+                @if($commercial_property_for_sale && $commercial_property_for_sale->ad && $commercial_property_for_sale->ad->pdf->count() > 0)
+                    @foreach($commercial_property_for_sale->ad->pdf as $key=>$commercial_property_for_sale_pdf)
+                        <div class="show-file-section">
+                            <div class="row">
+                                <p class="col-sm-4">{{($commercial_property_for_sale_pdf->name)}}</p>
+                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$commercial_property_for_sale_pdf->name_unique}}">Fjerne</a></p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="commercial_property_for_sale_pdf[]" id="commercial_property_for_sale_pdf" accept="application/pdf">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>

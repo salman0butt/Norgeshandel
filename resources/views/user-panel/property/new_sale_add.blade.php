@@ -1,6 +1,8 @@
 @extends('layouts.landingSite')
 
 @section('style')
+    {{--<link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />--}}
+    {{--<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>--}}
     <!-- Dropzone style files -->
     <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
@@ -12,19 +14,52 @@
 
 <!-- property for sale -->
 <main>
-        <div class="dme-container">
-            <div class="row">
-                <div class="col-md-10 offset-md-1 mt-5 mb-5">
-                    <h2 class="text-muted">Bolig til Salgs</h2>
-                </div>
+    <div class="dme-container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 mt-5 mb-5">
+                <h2 class="text-muted">Bolig til Salgs</h2>
             </div>
-            <div class="row">
-                <div class="col-md-10 offset-md-1">
-                    @include('common.partials.property.property_for_sale_form')
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                @include('common.partials.property.property_for_sale_form')
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload sales information -->
+    <div wt-copy="sales-information" style="display:none">
+        <div class=""  wt-duplicate="sales-information">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="property_quote[]" id="property_quote">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-delete="sales-information"><i class="fa fa-trash"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
+    <!-- Attachment as PDF -->
+    <div wt-copy="attachment-as-pdf" style="display:none">
+        <div class=""  wt-duplicate="attachment-as-pdf">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="property_pdf[]" id="property_quote" accept="application/pdf">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-delete="attachment-as-pdf"><i class="fa fa-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
 
     <script type="text/javascript">
 
@@ -61,8 +96,9 @@
                 }
 
                 var total_price = parseInt(asking_price) + parseInt(costs_include) + parseInt(percentage_of_public_debt);
-                $("#total_price_sale_add").text(total_price);
                 $("#total_price").val(total_price);
+                total_price = total_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+                $("#total_price_sale_add").text(total_price);
 
             });
 

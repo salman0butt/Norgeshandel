@@ -130,16 +130,31 @@
                 <div class="col-sm-12 pr-md-0">
                     @php $dropzone_img_obj = $business_for_sale_obj ; @endphp
                     @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
-                    {{--<input type="file" name="business_for_sale_photos[]" id="property_photos" class="" multiple>--}}
                 </div>
             </div>
         </div>
-        <!--                            button-->
-        <div class="form-group">
-            <h3 class="u-t5">Legg till pdf</h3>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <input type="file" name="business_for_sale_pdf[]" id="property_pdf" class="" multiple>
+
+        <!-- Attachement as pdf files -->
+        <div wt-paste="attachment-as-pdf">
+            <div class="form-group">
+                <h3 class="u-t5">Legg till pdf</h3>
+                @if($business_for_sale_obj && $business_for_sale_obj->ad && $business_for_sale_obj->ad->pdf->count() > 0)
+                    @foreach($business_for_sale_obj->ad->pdf as $key=>$business_for_sale_obj_pdf_file)
+                        <div class="show-file-section">
+                            <div class="row">
+                                <p class="col-sm-4">{{($business_for_sale_obj_pdf_file->name)}}</p>
+                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$business_for_sale_obj_pdf_file->name_unique}}">Fjerne</a></p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+                <div class="row">
+                    <div class="col-sm-4 ">
+                        <input type="file" name="business_for_sale_pdf[]" id="business_for_sale_pdf" accept="application/pdf">
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
+                    </div>
                 </div>
             </div>
         </div>

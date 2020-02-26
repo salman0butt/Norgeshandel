@@ -19,8 +19,9 @@ class CommercialPlot extends Model
     {
         return $this->belongsTo('App\User');
     }
-     public function ad(){
-    return $this->belongsTo('App\Models\Ad');
+    public function ad(){
+        return $this->belongsTo('App\Models\Ad');
     }
+
 
 }

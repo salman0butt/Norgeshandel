@@ -28,7 +28,6 @@ class AddCommercialPlot extends FormRequest
             'country'   => 'required',
             'zip_code'  => 'required',
             'location_description'  => 'required',
-            'location_description'  => 'required',
             'municipal_number'      => 'sometimes|nullable|numeric',
             'usage_number'          => 'required|numeric',
             'farm_number'           => 'required|numeric',

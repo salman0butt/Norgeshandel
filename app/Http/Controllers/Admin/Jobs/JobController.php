@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Jobs;
 
+use App\Models\Company;
 use App\Term;
 use App\User;
 use App\Media;
@@ -40,7 +41,10 @@ class JobController extends Controller
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
 
         $ads = Ad::where('status', 'published')->where('ad_type', 'job')->get();
-        return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search','saved_search'));
+
+        $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')->where('ads.status','published')->where('jobs.job_type','management')->get();
+        $companies = Company::get();
+        return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search','saved_search','management_jobs','companies'));
     }
 
     /**

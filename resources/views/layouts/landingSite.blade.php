@@ -263,8 +263,8 @@
             <li><a href="{{ url('/become-business') }}">Bli bedriftskunde</a></li>
             <li><a href="{{ url('/customer-admin-for-business') }}">Admin for bedrifter</a></li>
             <li><a href="#">Om NorgesHandel.no</a></li>
-            <li><a href="{{ url('/privacy') }}">Personvernerklæring</a></li>
-            <li><a href="{{ url('/personvern') }}">Cookies</a></li>
+            <li><a href="{{ url('/personvern') }}">Personvernerklæring</a></li>
+            {{--<li><a href="{{ url('/personvern') }}">Cookies</a></li>--}}
             <li><a href="{{ url('/customer-services') }}"><span class="fa fa-help"></span>Kundeservice</a></li>
         </ul>
     </nav>
