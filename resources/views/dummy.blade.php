@@ -1,1 +1,1 @@
-array("Butikk/Handel","Bygård/Flermannsbolig","Garasje/Parkering","Gårdsbruk/Småbruk","Hotell/Overnatting","Kjøpesenter","Kombinasjonslokaler","Kontor","Lager/Logistikk","Produksjon/Industri","Serveringslokale/Kantine","Undervisning/Arrangement","Verksted","Andre",)
+array("Balkong/Terrasse","Garasje/P-plass","Heis","Ingen gjenboere","Lademulighet","Peis/Ildsted","Strandlinje","Turterreng","Utsikt","Vaktmester-/vektertjeneste",)

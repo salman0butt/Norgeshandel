@@ -4,13 +4,13 @@
 
 <?php
 
-            $facilities = array();
-            if(isset($property_data->facilities) && !empty($property_data->facilities))
-            {
-
-                $facilities = explode(",",rtrim($property_data->facilities, ","));
-
-            }
+//            $facilities = array();
+//            if(isset($property_data->facilities) && !empty($property_data->facilities))
+//            {
+//
+//                $facilities = explode(",",rtrim($property_data->facilities, ","));
+//
+//            }
             /* Zille Code commented by ameer hamza
             $name       = $property_data->media->first();
             if($name != null)
@@ -133,20 +133,10 @@
                     <div class="col-md-12">
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
                             <div class="row">
-                                <span class="font-weight-bold">Facilities</span>
-                                <ul>
-                                    @foreach($facilities as $key=>$val)
-                                    <li>
-                                        <?php
-
-                                                if($val != "")
-                                                {
-                                                    echo $val;
-                                                }
-                                            ?>
-                                    </li>
-                                    @endforeach
-                                </ul>
+                                <span class="font-weight-bold">Facilities&nbsp;</span>
+                                @if(!empty($property_data->facilities))
+                                    {{\App\Helpers\common::map_json($property_data->facilities)}}
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -12,9 +12,11 @@ class TaxonomyTableSeeder extends Seeder
         ['name'=>'Leadership category','slug'=>'leadership_category'],
         ['name'=>'Deadline','slug'=>'deadline'],
         ['name'=>'Country','slug'=>'country'],
-        ['name'=>'Property type', 'slug'=>'pfs_property_type'],
+        ['name'=>'For Sale Property type', 'slug'=>'pfs_property_type'],
         ['name'=>'Ownership Type', 'slug'=>'pfs_tenure'],
         ['name'=>'Commercial Property type', 'slug'=>'cpfs_property_type'],
+        ['name'=>'For Rent Property type', 'slug'=>'pfr_property_type'],
+        ['name'=>'For Rent Facilities', 'slug'=>'pfr_facilities'],
     ];
 
     /**
