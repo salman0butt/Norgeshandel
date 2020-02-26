@@ -16,6 +16,8 @@ class TermsTableSeeder extends Seeder
         'pfs_property_type' => array('Leilighet', 'Enebolig', 'Tomannsbolig', 'Rekkehus', 'Gårdsbruk/Småbruk', 'Prosjekt', 'Hytte', 'Garasje/Parkering', 'Tomter', 'Annet fritid', 'Produksjon/Industri', 'Hyttetomt', 'Bygård/Flermannsbolig', 'Kontor', 'Andre'),
         'pfs_tenure' => array('Aksje', 'Andel', 'Annet', 'Eier Selveier', 'Obligasjon'),
         'cpfs_property_type' => array("Butikk/Handel", "Bygård/Flermannsbolig", "Garasje/Parkering", "Gårdsbruk/Småbruk", "Hotell/Overnatting", "Kjøpesenter", "Kombinasjonslokaler", "Kontor", "Lager/Logistikk", "Produksjon/Industri", "Serveringslokale/Kantine", "Undervisning/Arrangement", "Verksted", "Andre",),
+        'pfr_property_type' => array("Enebolig","Garasje/Parkering","Hybel","Leilighet","Rekkehus","Rom i bofellesskap","Tomannsbolig","Andre",),
+        'pfr_facilities' => array("Balkong/Terrasse","Garasje/P-plass","Heis","Ingen gjenboere","Lademulighet","Peis/Ildsted","Strandlinje","Turterreng","Utsikt","Vaktmester-/vektertjeneste",),
     );
 
     /**

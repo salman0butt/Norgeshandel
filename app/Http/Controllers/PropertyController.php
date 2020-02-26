@@ -37,6 +37,7 @@ use App\Http\Requests\AddCommercialPropertyForRent;
 use App\Http\Requests\AddCommercialPropertyForSale;
 use App\Http\Requests\AddPropertyHolidayHomeForSale;
 use App\Events\PropertyForRent as PropertyForRentEvent;
+use function foo\func;
 
 
 class PropertyController extends Controller
@@ -397,6 +398,131 @@ class PropertyController extends Controller
         return view('user-panel.property.search-commercial-plots', compact('col', 'add_array'));
     }
 
+//    zain
+    public function search_property_for_rent(Request $request)
+    {
+        DB::enableQueryLog();
+        $col = 'list';
+        if (isset($request->view) && !empty($request->view)) {
+            $col = $request->view;
+        }
+        $query = DB::table('ads')
+            ->join('property_for_rent', 'property_for_rent.ad_id', 'ads.id')
+            ->where('ads.status', 'published');
+
+//        $arr = Arr::only($request->all(), ['']);
+//        if (isset($request->country) && !empty($request->country)) {
+//            $query->where('land', '=', $request->country);
+//        }
+        if (isset($request->search) && !empty($request->search)) {
+            $query->where('heading', 'like', '%' . $request->search . '%');
+        }
+        if (isset($request->created_at)) {
+            $query->whereDate('property_for_rent.created_at', '=', $request->created_at);
+        }
+        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
+            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
+                $query->where('property_for_rent.	street_address', 'like', '%' . $request->local_area_name . '%');
+            }
+        }
+
+        if (isset($request->monthly_rent_from) && !empty($request->monthly_rent_from)) {
+            $query->where('property_for_rent.monthly_rent', '>=', (int)$request->monthly_rent_from);
+        }
+        if (isset($request->monthly_rent_to) && !empty($request->monthly_rent_to)) {
+            $query->where('property_for_rent.monthly_rent', '<=', (int)$request->monthly_rent_to);
+        }
+
+        if (isset($request->use_area_from) && !empty($request->use_area_from)) {
+            $query->where('property_for_rent.gross_area', '>=', (int)$request->use_area_from);
+        }
+        if (isset($request->use_area_to) && !empty($request->use_area_to)) {
+            $query->where('property_for_rent.gross_area', '<=', (int)$request->use_area_to);
+        }
+        if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
+            $query->where('property_for_rent.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+        }
+        if (isset($request->pfr_property_type) && !empty($request->pfr_property_type)) {
+            $query->where(function ($query) use ($request) {
+                $query->whereIn('property_for_rent.property_type', $request->pfr_property_type);
+                for ($i = 1; $i < count($request->pfr_property_type); $i++) {
+                    $query->orWhere('property_for_rent.property_type', '=', str_replace('/', '\\\/', $request->pfr_property_type[$i]));
+                }
+            });
+        }
+        if (isset($request->pfr_facilities) && !empty($request->pfr_facilities)) {
+            $query->where(function ($query) use ($request) {
+                $query->where('property_for_rent.facilities', 'like', '%"' . $request->pfr_facilities[0] . '"%');
+                for ($i = 1; $i < count($request->pfr_facilities); $i++) {
+                    $query->orWhere('property_for_rent.facilities', 'like', '%"' . $request->pfr_facilities[$i] . '"%');
+                }
+                $query->orWhere('property_for_rent.facilities', 'like', '%"' . str_replace('/', '\\\/', $request->pfr_facilities[0]) . '"%');
+                for ($i = 1; $i < count($request->pfr_facilities); $i++) {
+                    $query->orWhere('property_for_rent.facilities', 'like', '%"' . str_replace('/', '\\\/', $request->pfr_facilities[$i]) . '"%');
+                }
+            });
+        }
+
+        if (isset($request->floor) && !empty($request->floor)) {
+            $query->where(function ($query) use ($request) {
+//                if($request->floor[0]!='over_6') {
+//                    $query->where('property_for_rent.floor', '=', $request->floor[0]);
+//                }
+                for ($i = 0; $i < count($request->floor); $i++) {
+                    if ($request->floor[$i] != 'over_6') {
+                        $query->orWhere('property_for_rent.floor', '=', $request->floor[$i]);
+                    }
+                }
+                if (in_array('over_6', $request->floor)) {
+                    $query->orWhere('property_for_rent.floor', '>', 6);
+                }
+            });
+        }
+
+        if (isset($request->available_from) && !empty($request->available_from)) {
+            $query->where(function ($query) use ($request) {
+                $query->where('property_for_rent.rented_from', 'LIKE', '%' . $request->available_from[0] . '%');
+                for ($i = 1; $i < count($request->available_from); $i++) {
+                    $query->orWhere('property_for_rent.rented_from', 'LIKE', '%' . $request->available_from[$i] . '%');
+                }
+            });
+        }
+//
+        if (isset($request->order) && !empty($request->order)) {
+            $order = $request->order;
+            switch ($order) {
+                case 'priced-low-high':
+                    $query->orderBy('asking_price', 'ASC');
+                    break;
+                case 'priced-high-low':
+                    $query->orderBy('asking_price', 'DESC');
+                    break;
+                case 'p-rom-area-low-high':
+                    $query->orderBy('primary_room', 'ASC');
+                    break;
+                case 'p-rom-area-high-low':
+                    $query->orderBy('primary_room', 'DESC');
+                    break;
+                case 'total-price-low-high':
+                    $query->orderBy('total_price', 'ASC');
+                    break;
+                case 'total-price-high-low':
+                    $query->orderBy('total_price', 'DESC');
+                    break;
+                default:
+                    $query->orderBy('id', 'DESC');
+                    break;
+            }
+        }
+
+        $add_array = $query->paginate(getenv('PAGINATION'));
+        if ($request->ajax()) {
+            $html = view('user-panel.property.search-property-for-rent-inner', compact('add_array', 'col'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-property-for-rent', compact('col', 'add_array'));
+    }
+
     public function list()
     {
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
@@ -466,12 +592,12 @@ class PropertyController extends Controller
     public function newAddedit($id)
     {
         $property_for_rent1 = PropertyForRent::findOrFail($id);
-        if($property_for_rent1){
-            if(!Auth::user()->hasRole('admin') && $property_for_rent1->user_id != Auth::user()->id){
+        if ($property_for_rent1) {
+            if (!Auth::user()->hasRole('admin') && $property_for_rent1->user_id != Auth::user()->id) {
                 abort(404);
             }
             return view('user-panel.property.new_add', compact('property_for_rent1'));
-        }else{
+        } else {
             abort(404);
         }
     }
@@ -479,16 +605,16 @@ class PropertyController extends Controller
     public function UpdatePropertyForRentAdd(Request $request, $id)
     {
         DB::beginTransaction();
-        try{
-            $property_for_rent_data = $request->except(['_method','upload_dropzone_images_type']);
+        try {
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
-                $facilities = "";
-                foreach ($property_for_rent_data['facilities'] as $key => $val) {
-                    $facilities .= $val . ",";
-                }
-                $property_for_rent_data['facilities'] = $facilities;
+//                $facilities = "";
+//                foreach ($property_for_rent_data['facilities'] as $key => $val) {
+//                    $facilities .= $val . ",";
+//                }
+                $property_for_rent_data['facilities'] = json_encode($property_for_rent_data['facilities']);
             }
 
             //Add More ViewingTimes
@@ -555,8 +681,8 @@ class PropertyController extends Controller
             $response = PropertyForRent::findOrFail($id);
 
             //Update media (mediable id and mediable type)
-            if($response && $response->ad){
-                $property_for_rent_data = $this->updated_dropzone_images_type($property_for_rent_data,$request->upload_dropzone_images_type,$response->ad->id);
+            if ($response && $response->ad) {
+                $property_for_rent_data = $this->updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
             }
 
             $response->update($property_for_rent_data);
@@ -565,7 +691,7 @@ class PropertyController extends Controller
 
             $data['success'] = $response;
             echo json_encode($data);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
@@ -1359,15 +1485,15 @@ class PropertyController extends Controller
     public function newPropertyForRentAdd(AddPropertyForRent $request)
     {
         DB::beginTransaction();
-        try{
+        try {
             $property_for_rent_data = $request->except('upload_dropzone_images_type');
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
-                $facilities = "";
-                foreach ($property_for_rent_data['facilities'] as $key => $val) {
-                    $facilities .= $val . ",";
-                }
-                $property_for_rent_data['facilities'] = $facilities;
+//                $facilities = "";
+//                foreach ($property_for_rent_data['facilities'] as $key => $val) {
+//                    $facilities .= $val . ",";
+//                }
+                $property_for_rent_data['facilities'] = json_encode($property_for_rent_data['facilities']);
             }
 
             //Add More ViewingTimes
@@ -1441,8 +1567,8 @@ class PropertyController extends Controller
             $property_for_rent_data['ad_id'] = $add_response->id;
 
             //Update media (mediable id and mediable type)
-            if($add_response->id){
-                $property_for_rent_data = $this->updated_dropzone_images_type($property_for_rent_data,$request->upload_dropzone_images_type,$add_response->id);
+            if ($add_response->id) {
+                $property_for_rent_data = $this->updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $add_response->id);
             }
 
             $response = PropertyForRent::create($property_for_rent_data);
@@ -1459,7 +1585,7 @@ class PropertyController extends Controller
             DB::commit();
             $data['success'] = $response;
             echo json_encode($data);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
@@ -1478,12 +1604,12 @@ class PropertyController extends Controller
     public function editAddFlatWishesRented($id)
     {
         $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
-        if($flat_wishes_rented1){
-            if(!Auth::user()->hasRole('admin') && $flat_wishes_rented1->user_id != Auth::user()->id){
+        if ($flat_wishes_rented1) {
+            if (!Auth::user()->hasRole('admin') && $flat_wishes_rented1->user_id != Auth::user()->id) {
                 abort(404);
             }
             return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));
-        }else{
+        } else {
             abort(404);
         }
     }
@@ -1492,7 +1618,7 @@ class PropertyController extends Controller
     public function updateFlatWishesRented(AddFlatWishesRented $request, $id)
     {
         DB::beginTransaction();
-        try{
+        try {
             $flat_wishes_rented_data = $request->except('upload_dropzone_images_type');
             $regions = "";
             foreach ($flat_wishes_rented_data['region'] as $key => $val) {
@@ -1513,8 +1639,8 @@ class PropertyController extends Controller
             $response = FlatWishesRented::findOrFail($id);
 
             //Update media (mediable id and mediable type)
-            if($response && $response->ad){
-                $flat_wishes_rented_data = $this->updated_dropzone_images_type($flat_wishes_rented_data,$request->upload_dropzone_images_type,$response->ad->id);
+            if ($response && $response->ad) {
+                $flat_wishes_rented_data = $this->updated_dropzone_images_type($flat_wishes_rented_data, $request->upload_dropzone_images_type, $response->ad->id);
             }
 
             $response->update($flat_wishes_rented_data);
@@ -1523,7 +1649,7 @@ class PropertyController extends Controller
             $data['success'] = $response;
             echo json_encode($data);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
@@ -1536,7 +1662,7 @@ class PropertyController extends Controller
     public function addFlatWishesRented(AddFlatWishesRented $request)
     {
         DB::beginTransaction();
-        try{
+        try {
             $flat_wishes_rented_data = $request->except('upload_dropzone_images_type');
             $regions = "";
             foreach ($flat_wishes_rented_data['region'] as $key => $val) {
@@ -1564,8 +1690,8 @@ class PropertyController extends Controller
             $flat_wishes_rented_data['ad_id'] = $add_response->id;
 
             //Update media (mediable id and mediable type)
-            if($add_response->id){
-                $flat_wishes_rented_data = $this->updated_dropzone_images_type($flat_wishes_rented_data,$request->upload_dropzone_images_type,$add_response->id);
+            if ($add_response->id) {
+                $flat_wishes_rented_data = $this->updated_dropzone_images_type($flat_wishes_rented_data, $request->upload_dropzone_images_type, $add_response->id);
             }
 
             $response = FlatWishesRented::create($flat_wishes_rented_data);
@@ -1584,18 +1710,13 @@ class PropertyController extends Controller
             $data['success'] = $response;
             echo json_encode($data);
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
             echo json_encode($data);
             exit();
         }
-
-
-
-
-
 
 
     }
