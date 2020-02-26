@@ -66,8 +66,6 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="street_address" value="{{ $commercial_plot->street_address }}" type="text" class="dme-form-control">
-                    <span class="u-t5">Forklar kort om adkomsten til boligen og hvordan man finner fram,
-                        fortell gjerne om nærhet til vei, buss og tog.</span>
                 </div>
             </div>
         </div>
@@ -93,8 +91,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Identifikasjonsnummeret til din kommune. Du kan finne ditt kommunenummer
-                på kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -106,8 +103,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Hvert gårdsnummer er delt inn i bruksnummer, du kan finne dette på
-                kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -119,8 +115,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Nummeret på gårdsenheten, du kan finne dette på det lokale kartverkets
-                hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -165,8 +160,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Verditakst blir satt av takstmannen og er forventet salgsverdi eller
-                markedsverdien på din eiendom.</span>
+   
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -212,8 +206,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description" id="description" cols="30" rows="10">{{ $commercial_plot->headline }}</textarea>
-                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av
-                        møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til
+                    <span class="u-t5">Fortell gjerne litt om nabolaget og nærhet til
                         transport.</span>
                 </div>
             </div>
@@ -246,8 +239,6 @@
                 </div>
                 <div class="col-md-8"></div>
             </div>
-            <span class="u-t5">Hvilket telefonnummer ønsker du at interesserte kjøpere skal kontakte deg
-                på?</span>
             <br>
         </div>
         <div class="form-group">

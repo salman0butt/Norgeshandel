@@ -97,6 +97,9 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.footer.cookie');
     });
+    Route::get('/about-us', function () {
+        return view('user-panel.footer.about_us');
+    });
     Route::get('user/ads/options', function () {
      return view('user-panel.my-business.my_ads_options');
     });

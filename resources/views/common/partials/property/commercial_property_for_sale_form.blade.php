@@ -152,7 +152,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Identifikasjonsnummeret til din kommune. Du kan finne ditt kommunenummer på kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -164,7 +164,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Hvert gårdsnummer er delt inn i bruksnummer, du kan finne dette på kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -176,7 +176,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Nummeret på gårdsenheten, du kan finne dette på det lokale kartverkets hjemmesider.</span>
+            <span class="u-t5">Dette finner du på kartverkets hjemmeside.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -188,7 +188,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Bruttoareal beskriver arealet av hele lokalet, inkludert boder, kjellerrom og så videre, målt fra ytterveggenes yttersider.</span>
+            <span class="u-t5">Bruttoareal er totale arealet ink yttervegger.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -200,7 +200,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Bruttoareal beskriver arealet av hele lokalet, inkludert boder, kjellerrom og så videre, målt fra ytterveggenes yttersider.</span>
+            <span class="u-t5">Bruttoareal er totale arealet ink yttervegger.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -212,7 +212,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Arealet av primærrom på eiendommen, sekundærrom tas ikke med i betegnelsen. Du kan finne arealet for primærrom i takstrapporten.</span>
+            <span class="u-t5">Du kan finne arealet for primærrom i takstrapporten.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -224,7 +224,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Bruksarealet er bruttoareal minus den plassen som opptas av yttervegger. Du kan finne bruksarealet i takstrapporten.</span>
+            <span class="u-t5">Du kan finne bruksarealet i takstrapporten.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -309,7 +309,7 @@
                         <option value="F">F</option>
                         <option value="G">G</option>
                     </select>
-                    <span class="u-t5">Energikarakter går fra A til G, hvor A er best. Karakteren er basert på beregnet levert energi til boligen. En god energikarakter betyr at boligen er energieffektiv.</span>
+                    <span class="u-t5">Enegikarakter der A er best.</span>
                 </div>
             </div>
         </div>
@@ -337,7 +337,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="standard_technica_information" id="standard_technica_information" cols="30" rows="10">{{ $commercial_property_for_sale->standard_technica_information }}</textarea>
-                    <span class="u-t5">Her kan du feks. gi en kort beskrivelse av standarden på lokalene, samt tilstand på ventilasjon, kjøling, sentralvarme, heis adgangskontroll, brannsikring m.m.</span>
+           
                 </div>
             </div>
         </div>
@@ -389,7 +389,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Minstebeløpet du selger eiendommen for.</span>
+            
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -401,7 +401,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Verditakst blir satt av takstmannen og er forventet salgsverdi eller markedsverdien på din eiendom.</span>
+            <span class="u-t5">Markedsverdi for din eiendom.</span>
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -413,7 +413,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Lånetakst vil si den boligverdien som banken bruker for lån, pant og eventuelt tvangssalg av boliger. Lånetaksten er basert på verditaksten.</span>
+     
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -472,7 +472,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description_simple" id="description_simple" cols="30" rows="10">{{ $commercial_property_for_sale->description_simple }}</textarea>
-                    <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
+                   
                 </div>
             </div>
         </div>
@@ -504,7 +504,7 @@
                 </div>
                 <div class="col-md-8"></div>
             </div>
-            <span class="u-t5">Hvilket telefonnummer ønsker du at interesserte kjøpere skal kontakte deg på?</span>
+            
             <br>
         </div>
 
