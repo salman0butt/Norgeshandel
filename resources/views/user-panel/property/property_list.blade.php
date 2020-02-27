@@ -32,7 +32,7 @@
                                 <a href="plots.php?grid">Tomter <span class="u-stone">(1 575)</span></a>
                             </li> -->
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href=" {{url('holiday/home/for/sale/ads')}}">Fritidsbolig til salgs <span class="u-stone">(<?php echo App\PropertyHolidaysHomesForSale::get()->count(); ?>)</span></a>
+                                <a href=" {{url('property/holiday-homes-for-sale/search')}}">Fritidsbolig til salgs <span class="u-stone">(<?php echo App\PropertyHolidaysHomesForSale::get()->count(); ?>)</span></a>
                             </li>
                             <!-- <li class="dme-btn-outlined-blue" style="">
                                 <a href="leisureplots.php?grid">Fritidstomter <span class="u-stone"></span></a>
