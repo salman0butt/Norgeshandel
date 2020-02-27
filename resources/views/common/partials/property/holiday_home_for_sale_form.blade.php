@@ -10,6 +10,15 @@
         $country = \App\Taxonomy::where('slug', 'country')->first();
         $countries = $country->terms;
 
+        $property = \App\Taxonomy::where('slug', 'hhfs_property_type')->first();
+        $property_types = $property->terms;
+
+        $ownership = \App\Taxonomy::where('slug', 'hhfs_tenure')->first();
+        $ownership_types = $ownership->terms;
+
+        $facility = \App\Taxonomy::where('slug', 'hhfs_facilities')->first();
+        $facilities = $facility->terms;
+
         // $property_type = explode(',', $commercial_property_for_rent->property_type);
         // $facilities = explode(',', $commercial_property_for_rent->facilities);
 
@@ -95,16 +104,10 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="property_type" class="dme-form-control" name="property_type" data-selector="">
-                        <option value="{{ $holiday_home_for_sale->property_type }}">
-                            {{ $holiday_home_for_sale->property_type }}</option>
                         <option value=""></option>
-                        <option value="Andre">Andre</option>
-                        <option value="Enebolig">Enebolig</option>
-                        <option value="Gårdsbruk Småbruk">Gårdsbruk/Småbruk</option>
-                        <option value="Hytte">Hytte</option>
-                        <option value="Leilighet">Leilighet</option>
-                        <option value="Rekkehus">Rekkehus</option>
-                        <option value="Tomannsbolig">Tomannsbolig</option>
+                        @foreach($property_types as $type)
+                            <option value="{{$type->name}}" {{$holiday_home_for_sale->property_type==$type->name?"selected":""}}>{{$type->name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -115,14 +118,10 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="ownership_type" class="dme-form-control" name="ownership_type" data-selector="">
-                        <option value="{{ $holiday_home_for_sale->ownership_type }}">
-                            {{ $holiday_home_for_sale->ownership_type }}</option>
                         <option value=""></option>
-                        <option value="Aksje">Aksje</option>
-                        <option value="Andel">Andel</option>
-                        <option value="Annet">Annet</option>
-                        <option value="Eier Selveier">Eier (Selveier)</option>
-                        <option value="Obligasjon">Obligasjon</option>
+                        @foreach($ownership_types as $type)
+                            <option value="{{$type->name}}" {{$holiday_home_for_sale->ownership_type==$type->name?"selected":""}}>{{$type->name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -404,74 +403,12 @@
         <div class="form-group">
             <h3 class="u-t5">Fasiliteter (valgfritt)</h3>
             <div class="row">
-
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-DOWNHILL_SKIING" type="checkbox" value="Alpinanlegg" name="facilities[]">
-                    <label class="smalltext" for="facilities-DOWNHILL_SKIING"> Alpinanlegg</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-BALCONY" type="checkbox" value="Balkong/Terrasse" name="facilities[]">
-                    <label class="smalltext" for="facilities-BALCONY"> Balkong/Terrasse</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-ROAD_ACCESS" type="checkbox" value="Bilvei frem" name="facilities[]">
-                    <label class="smalltext" for="facilities-ROAD_ACCESS"> Bilvei frem</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-BOAT_MOORING" type="checkbox" value="Båtplass" name="facilities[]">
-                    <label class="smalltext" for="facilities-BOAT_MOORING"> Båtplass</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-GARAGE" type="checkbox" value="Garasje/P-plass" name="facilities[]">
-                    <label class="smalltext" for="facilities-GARAGE"> Garasje/P-plass</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-GOLF" type="checkbox" value="Golfbane" name="facilities[]">
-                    <label class="smalltext" for="facilities-GOLF"> Golfbane</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-CHARGING" type="checkbox" value="Lademulighet" name="facilities[]">
-                    <label class="smalltext" for="facilities-CHARGING"> Lademulighet</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-PUBLIC_SEWER" type="checkbox" value="Offentlig vann/kloakk"
-                        name="facilities[]">
-                    <label class="smalltext" for="facilities-PUBLIC_SEWER"> Offentlig vann/kloakk</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-FIREPLACE" type="checkbox" value=" Peis/Ildsted" name="facilities[]">
-                    <label class="smalltext" for="facilities-FIREPLACE"> Peis/Ildsted</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-VIEW" type="checkbox" value="Utsikt" name="facilities[]">
-                    <label class="smalltext" for="facilities-VIEW"> Utsikt</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-JANITORSERVICE" type="checkbox" value="Vaktmester-/vektertjeneste"
-                        name="facilities[]">
-                    <label class="smalltext" for="facilities-JANITORSERVICE"> Vaktmester-/vektertjeneste</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-ANGLING" type="checkbox" value="Fiskemulighet" name="facilities">
-                    <label class="smalltext" for="facilities-ANGLING"> Fiskemulighet</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-MAINS_ELECTRICITY" type="checkbox" value="Innlagt strøm" name="facilities[]">
-                    <label class="smalltext" for="facilities-MAINS_ELECTRICITY"> Innlagt strøm</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-MAINS_WATER" type="checkbox" value="Innlagt vann" name="facilities[]">
-                    <label class="smalltext" for="facilities-MAINS_WATER"> Innlagt vann</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-SHORELINE" type="checkbox" value="Strandlinje" name="facilities[]">
-                    <label class="smalltext" for="facilities-SHORELINE"> Strandlinje</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input id="facilities-HIKING" type="checkbox" value="Turterreng" name="facilities[]">
-                    <label class="smalltext" for="facilities-HIKING"> Turterreng</label>
-                </div>
-
+                @foreach($facilities as $facility)
+                    <div class="col-md-4 input-toggle">
+                        <input id="facilities-DOWNHILL_SKIING-{{$facility->id}}" type="checkbox" value="{{$facility->name}}" name="facilities[]">
+                        <label class="smalltext" for="facilities-DOWNHILL_SKIING-{{$facility->id}}"> {{$facility->name}}</label>
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -501,7 +438,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-12 input-toggle">
-                    <input id="owned_site" type="checkbox" value="DOWNHILL_SKIING">
+                    <input id="owned_site" type="checkbox" value="true">
                     <label class="smalltext" for=""> Eiet tomt (valgfritt)</label>
                     <span class="u-t5">Tomten eies av selger</span>
                 </div>

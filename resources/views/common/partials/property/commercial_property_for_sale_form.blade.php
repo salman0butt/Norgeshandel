@@ -337,7 +337,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="standard_technica_information" id="standard_technica_information" cols="30" rows="10">{{ $commercial_property_for_sale->standard_technica_information }}</textarea>
-           
+
                 </div>
             </div>
         </div>
@@ -389,7 +389,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            
+
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -413,7 +413,7 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-     
+
         </div>
         <!--                            small input-->
         <div class="form-group">
@@ -472,7 +472,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description_simple" id="description_simple" cols="30" rows="10">{{ $commercial_property_for_sale->description_simple }}</textarea>
-                   
+
                 </div>
             </div>
         </div>
@@ -504,7 +504,7 @@
                 </div>
                 <div class="col-md-8"></div>
             </div>
-            
+
             <br>
         </div>
 
