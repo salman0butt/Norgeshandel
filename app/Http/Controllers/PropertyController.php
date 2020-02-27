@@ -401,7 +401,7 @@ class PropertyController extends Controller
 //    zain
     public function search_property_for_rent(Request $request)
     {
-        DB::enableQueryLog();
+//        DB::enableQueryLog();
         $col = 'list';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
@@ -410,10 +410,6 @@ class PropertyController extends Controller
             ->join('property_for_rent', 'property_for_rent.ad_id', 'ads.id')
             ->where('ads.status', 'published');
 
-//        $arr = Arr::only($request->all(), ['']);
-//        if (isset($request->country) && !empty($request->country)) {
-//            $query->where('land', '=', $request->country);
-//        }
         if (isset($request->search) && !empty($request->search)) {
             $query->where('heading', 'like', '%' . $request->search . '%');
         }
@@ -465,9 +461,6 @@ class PropertyController extends Controller
 
         if (isset($request->floor) && !empty($request->floor)) {
             $query->where(function ($query) use ($request) {
-//                if($request->floor[0]!='over_6') {
-//                    $query->where('property_for_rent.floor', '=', $request->floor[0]);
-//                }
                 for ($i = 0; $i < count($request->floor); $i++) {
                     if ($request->floor[$i] != 'over_6') {
                         $query->orWhere('property_for_rent.floor', '=', $request->floor[$i]);
@@ -521,6 +514,110 @@ class PropertyController extends Controller
             exit($html);
         }
         return view('user-panel.property.search-property-for-rent', compact('col', 'add_array'));
+    }
+
+//    zain
+    public function search_holiday_homes_for_sale(Request $request)
+    {
+        DB::enableQueryLog();
+        $col = 'list';
+        if (isset($request->view) && !empty($request->view)) {
+            $col = $request->view;
+        }
+        $query = DB::table('ads')
+            ->join('property_holidays_homes_for_sales', 'property_holidays_homes_for_sales.ad_id', 'ads.id')
+            ->where('ads.status', 'published');
+
+//        if (isset($request->country) && !empty($request->country)) {
+//            $query->whereIn('country', $request->country);
+//        }
+//        DB::enableQueryLog();
+        if (isset($request->search) && !empty($request->search)) {
+            $query->where('property_holidays_homes_for_sales.ad_headline', 'like', '%' . $request->search . '%');
+        }
+        if (isset($request->created_at)) {
+            $query->whereDate('property_holidays_homes_for_sales.created_at', '=', $request->created_at);
+        }
+        if (isset($request->asking_price_from) && !empty($request->asking_price_from)) {
+            $query->where('property_holidays_homes_for_sales.asking_price', '>=', (int)$request->asking_price_from);
+        }
+        if (isset($request->asking_price_to) && !empty($request->asking_price_to)) {
+            $query->where('property_holidays_homes_for_sales.asking_price', '<=', (int)$request->asking_price_to);
+        }
+        if (isset($request->total_price_from) && !empty($request->total_price_from)) {
+            $query->where('property_holidays_homes_for_sales.total_price', '>=', (int)$request->total_price_from);
+        }
+        if (isset($request->total_price_to) && !empty($request->total_price_to)) {
+            $query->where('property_holidays_homes_for_sales.total_price', '<=', (int)$request->total_price_to);
+        }
+        if (isset($request->use_area_from) && !empty($request->use_area_from)) {
+            $query->where('property_holidays_homes_for_sales.use_area', '>=', (int)$request->use_area_from);
+        }
+        if (isset($request->use_area_to) && !empty($request->use_area_to)) {
+            $query->where('property_holidays_homes_for_sales.use_area', '<=', (int)$request->use_area_to);
+        }
+        if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
+            $query->where('property_holidays_homes_for_sales.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+        }
+        if (isset($request->location) && !empty($request->location)) {
+            $query->whereIn('property_holidays_homes_for_sales.location', $request->location);
+        }
+        if (isset($request->owned_site) && !empty($request->owned_site)) {
+            $query->whereNotNull('property_holidays_homes_for_sales.owned_site');
+        }
+        if (isset($request->hhfs_facilities) && !empty($request->hhfs_facilities)) {
+            $query->where(function ($query) use ($request) {
+                $query->where('property_holidays_homes_for_sales.facilities', 'like', '%' . $request->hhfs_facilities[0] . '%');
+                for ($i = 1; $i < count($request->hhfs_facilities); $i++) {
+                    $query->orWhere('property_holidays_homes_for_sales.facilities', 'like', '%' . $request->hhfs_facilities[$i] . '%');
+                }
+                $query->orWhere('property_holidays_homes_for_sales.facilities', 'like', '%' . str_replace('/', '\\\/', $request->hhfs_facilities[0]) . '%');
+                for ($i = 1; $i < count($request->hhfs_facilities); $i++) {
+                    $query->orWhere('property_holidays_homes_for_sales.facilities', 'like', '%' . str_replace('/', '\\\/', $request->hhfs_facilities[$i]) . '%');
+                }
+            });
+        }
+        if (isset($request->hhfs_property_type) && !empty($request->hhfs_property_type)) {
+            $query->whereIn('property_holidays_homes_for_sales.property_type', $request->hhfs_property_type);
+        }
+        if (isset($request->display_date) && !empty($request->display_date)) {
+            $query->where(function($query) use ($request){
+                $query->where('property_holidays_homes_for_sales.delivery_date', 'like', '%'.$request->display_date[0].'%');
+                for ($i = 1; $i < count($request->display_date); $i++) {
+                    $query->orWhere('property_holidays_homes_for_sales.delivery_date', 'like', '%'.$request->display_date[$i].'%');
+                }
+                $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%'.$request->display_date[0].'%');
+                for ($i = 1; $i < count($request->display_date); $i++) {
+                    $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%'.$request->display_date[$i].'%');
+                }
+            });
+        }
+
+
+        $order_by_thing = 'id';
+        $order_by = 'DESC';
+
+        if (isset($request->order) && !empty($request->order)) {
+            $order = $request->order;
+            switch ($order) {
+                case 'published':
+                    $query->orderBy('ad.created_at', 'DESC');
+                    break;
+                case 'priced-low-high':
+                    $query->orderBy('value_rate', 'ASC');
+                    break;
+                case 'priced-high-low':
+                    $query->orderBy('asking_price', 'DESC');
+                    break;
+            }
+        }
+        $add_array = $query->paginate(getenv('PAGINATION'));
+//        dd(DB::getQueryLog());
+        if ($request->ajax()) {
+            $html = view('user-panel.property.search-holiday-homes-for-sale-inner', compact('add_array', 'col'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array'));
     }
 
     public function list()

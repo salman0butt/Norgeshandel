@@ -33,6 +33,9 @@
                     @if(\Illuminate\Support\Facades\Request::is('property/commercial-plots/search'))
                         @include('user-panel.partials.templates.filter-commercial-plots')
                     @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/holiday-homes-for-sale/search'))
+                        @include('user-panel.partials.templates.filter-holiday-homes-for-sale')
+                    @endif
                     <li class="nav-item" id="move_to_notifications">
                         <a class="nav-link position-relative" href="{{ url('notifications/all') }}">
                             <span class="badge badge-primary pending position-absolute" style="left:0"></span>

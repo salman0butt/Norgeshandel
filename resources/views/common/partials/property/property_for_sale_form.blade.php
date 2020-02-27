@@ -11,7 +11,10 @@
     if(isset($property_for_sale1)){
         $property_for_sale = $property_for_sale1;
     }
-?>
+
+    $pfs_facility = \App\Taxonomy::where('slug', 'pfs_facilities')->first();
+    $pfs_facilities = $pfs_facility->terms;
+    ?>
  @if(Request::is('new/property/sale/ad/*/edit'))
    @method('PATCH')
   @endif
@@ -64,7 +67,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea type="text" name="location" class="dme-form-control">{{ $property_for_sale->location }}</textarea><br>
-               
+
                     <span class="error-span location"></span>
                 </div>
             </div>
@@ -75,7 +78,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="local_area_name" value="{{ $property_for_sale->local_area_name }}" class="dme-form-control"
                            placeholder="Bydel.">
-                   
+
                     <span class="error-span local_area_name"></span>
                 </div>
             </div>
@@ -115,7 +118,7 @@
                 <div class="row">
                     <div class="col-sm-4 pr-md-0">
                         <input name="municipality_number" type="text" value="{{ $property_for_sale->municipality_number }}" class="dme-form-control">
-                        <span class="error-span municipality_number"></span> 
+                        <span class="error-span municipality_number"></span>
                     </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
@@ -203,7 +206,7 @@
                      </div>
                     <div class="col-md-8"></div>
                     <div class="col-md-12">
-                        
+
                     </div>
                     <br>
                 </div>
@@ -372,98 +375,12 @@
         <div class="form-group">
             <h3 class="u-t5">Fasiliteter (valgfritt)</h3>
             <div class="row">
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-AIRCONDITIONING" type="checkbox" value="AIRCONDITIONING"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-AIRCONDITIONING"> Aircondition</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-ALARM" type="checkbox" value="ALARM" name="facilities[]">
-                    <label class="smalltext" for="facilities-ALARM"> Alarm</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-BALCONY" type="checkbox" value="BALCONY" name="facilities[]">
-                    <label class="smalltext" for="facilities-BALCONY"> Balkong/Terrasse</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CHILD-FRIENDLY" type="checkbox" value="CHILD-FRIENDLY"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-CHILD-FRIENDLY"> Barnevennlig</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-BROADBAND" type="checkbox" value="BROADBAND"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-BROADBAND"> Bredbåndstilknytning</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-COMMONWASHROOM" type="checkbox" value="COMMONWASHROOM"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-COMMONWASHROOM"> Fellesvaskeri</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-GARAGE" type="checkbox" value="GARAGE" name="facilities[]">
-                    <label class="smalltext" for="facilities-GARAGE"> Garasje/P-plass</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-LIFT" type="checkbox" value="LIFT" name="facilities[]">
-                    <label class="smalltext" for="facilities-LIFT"> Heis</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-NO-NEIGHBOURS-OP" type="checkbox" value="NO-NEIGHBOURS-OP"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-NO-NEIGHBOURS-OP"> Ingen gjenboere</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CABLE-TV" type="checkbox" value="CABLE-TV"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-CABLE-TV"> Kabel-TV</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CHARGING" type="checkbox" value="CHARGING"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-CHARGING"> Lademulighet</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-ACCESSIBILITY_LEVEL" type="checkbox"
-                           value="ACCESSIBILITY_LEVEL" name="facilities[]">
-                    <label class="smalltext" for="facilities-ACCESSIBILITY_LEVEL"> Livsløpsstandard</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-MODERN" type="checkbox" value="MODERN" name="facilities[]">
-                    <label class="smalltext" for="facilities-MODERN"> Moderne</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-PARQUETT" type="checkbox" value="PARQUETT"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-PARQUETT"> Parkett</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-FIREPLACE" type="checkbox" value="FIREPLACE"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-FIREPLACE"> Peis/Ildsted</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-QUIET-AREA" type="checkbox" value="QUIET-AREA"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-QUIET-AREA"> Rolig</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-CENTRAL" type="checkbox" value="CENTRAL" name="facilities[]">
-                    <label class="smalltext" for="facilities-CENTRAL"> Sentralt</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-VIEW" type="checkbox" value="VIEW" name="facilities[]">
-                    <label class="smalltext" for="facilities-VIEW"> Utsikt</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-JANITORSERVICE" type="checkbox" value="JANITORSERVICE"
-                           name="facilities[]">
-                    <label class="smalltext" for="facilities-JANITORSERVICE"> Vaktmester-/vektertjeneste</label>
-                </div>
-                <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="facilities-HIKING" type="checkbox" value="HIKING" name="facilities[]">
-                    <label class="smalltext" for="facilities-HIKING"> Turterreng</label>
-                </div>
+                @foreach($pfs_facilities as $facility)
+                    <div class="col-md-4 input-toggle">
+                        <input id="facilities-{{$facility->id}}" type="checkbox" value="{{$facility->name}}" name="facilities[]">
+                        <label class="smalltext" for="facilities-{{$facility->id}}"> {{$facility->name}}</label>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="form-group">
@@ -605,7 +522,7 @@
                 <div class="col-md-12">
                </div>
             </div>
-        </div> 
+        </div>
         <div class="form-group">
             <h3 class="u-t5">Formuesverdi</h3>
             <div class="row">
@@ -628,7 +545,7 @@
                 </div>
                 <div class="col-sm-8">
                 </div>
-            
+
             </div>
         </div>
         <div class="form-group">
@@ -655,7 +572,7 @@
                 </div>
                 <div class="col-sm-8">
                 </div>
-        
+
             </div>
         </div>
         <div class="form-group">
@@ -668,7 +585,7 @@
                 </div>
                 <div class="col-sm-8">
                 </div>
-              
+
             </div>
         </div>
         <div class="form-group">
@@ -708,7 +625,7 @@ omkostninger.
                     <input name="loan_rate" value="{{ $property_for_sale->loan_rate }}" type="text" class="dme-form-control" placeholder="Kr">
                     <span class="error-span loan_rate"></span>
                 </div>
-           
+
             </div>
         </div>
         <div class="form-group">
@@ -718,7 +635,7 @@ omkostninger.
                     <input type="text" value="{{ $property_for_sale->percentage_of_common_wealth }}" name="percentage_of_common_wealth" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span percentage_of_common_wealth"></span>
                 </div>
-          
+
             </div>
         </div>
         <div class="form-group">
@@ -757,7 +674,7 @@ omkostninger.
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="pre_empt_right" type="text" value="{{ $property_for_sale->pre_empt_right }}" class="dme-form-control">
-                 
+
                     <span class="error-span pre_empt_right"></span>
                 </div>
             </div>
@@ -787,7 +704,7 @@ omkostninger.
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="description2" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->description2 }}</textarea>
-               
+
                 </div>
             </div>
         </div>
@@ -926,7 +843,7 @@ omkostninger.
                     <input name="phone" value="{{ $property_for_sale->phone }}" type="tel" id="phone" class="dme-form-control">
                     <span id="valid-msg" class="hide"></span>
                     <span id="error-msg" class="hide"></span>
-                  
+
                     <span class="error-span phone"></span>
                 </div>
             </div>
@@ -958,14 +875,14 @@ omkostninger.
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
     </div>
 </form>
- <script>   
+ <script>
     $(document).on('change', 'input[name="zip_code"]', function(e) {
          document.getElementById("zip_code_city_name").innerHTML = '';
     var zip_code = $(this).val();
     var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
     // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
     var client_url = 'localhost';
-    
+
     if(zip_code){
     var xhttp = new XMLHttpRequest();
    xhttp.onreadystatechange = function() {
@@ -980,5 +897,5 @@ omkostninger.
     xhttp.send();
     }
 });
-   
+
     </script>

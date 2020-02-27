@@ -17,6 +17,10 @@ class TaxonomyTableSeeder extends Seeder
         ['name'=>'Commercial Property type', 'slug'=>'cpfs_property_type'],
         ['name'=>'For Rent Property type', 'slug'=>'pfr_property_type'],
         ['name'=>'For Rent Facilities', 'slug'=>'pfr_facilities'],
+        ['name'=>'Holiday Home Facilities', 'slug'=>'hhfs_facilities'],
+        ['name'=>'Holiday Home Property Type', 'slug'=>'hhfs_property_type'],
+        ['name'=>'Holiday Home Tenure', 'slug'=>'hhfs_tenure'],
+        ['name'=>'Property for sale facilities', 'slug'=>'pfs_facilities'],
     ];
 
     /**

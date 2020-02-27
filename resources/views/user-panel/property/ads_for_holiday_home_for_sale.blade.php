@@ -159,6 +159,7 @@
             <div class="right-ad pull-right">
                 <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
             </div>
+        </div>
     </main>
 
     <script>
