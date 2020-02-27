@@ -183,4 +183,35 @@ class AdController extends Controller
         }
         exit($html);
     }
+
+    // Show the options against an ad
+    public function ad_option($id){
+        $ad = Ad::find($id);
+        if($ad){
+            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+                return view('user-panel.my-business.my_ads_options',compact('ad'));
+            }else{
+                return redirect('forbidden');
+            }
+        }else{
+            abort(404);
+        }
+    }
+
+    // Mark as sold an ad
+    public function ad_sold($id){
+        $ad = Ad::find($id);
+        if($ad){
+            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+                $ad->sold_at = date('Y-m-d');
+                $ad->update();
+                return back();
+            }else{
+                return redirect('forbidden');
+            }
+        }else{
+            abort(404);
+        }
+    }
+
 }

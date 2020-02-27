@@ -384,7 +384,8 @@ class JobController extends Controller
                 common::delete_media($ad_id, Ad::class, 'gallery');
                 DB::commit();
                 Session::flash('success', 'Jobben er slettet');
-                return back();
+                return redirect(url('my-business/my-ads'));
+//                return back();
 
             }catch (\Exception $e){
                 DB::rollback();

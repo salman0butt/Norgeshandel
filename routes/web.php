@@ -103,10 +103,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('/about-us', function () {
         return view('user-panel.footer.about_us');
     });
-    Route::get('user/ads/options', function () {
-     return view('user-panel.my-business.my_ads_options');
-    });
-    Route::get('user/ads/statistics', function () {
+    Route::get('my-business/my-ads/{id}/statistics', function () {
      return view('user-panel.my-business.ads_statistics');
     });
 
@@ -197,6 +194,9 @@ Route::group(['middleware' => 'authverified'], function () {
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
+
+        Route::get('my-business/my-ads/{id}/options', 'AdController@ad_option');
+        Route::post('my-business/my-ads/{id}/sold', 'AdController@ad_sold')->name('ad-sold');
         // message
         Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
         Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');

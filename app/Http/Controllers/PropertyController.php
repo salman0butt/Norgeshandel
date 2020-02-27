@@ -724,7 +724,7 @@ class PropertyController extends Controller
                 common::delete_media($ad_id, Ad::class, 'pdf');
                 DB::commit();
                 Session::flash('success', 'Eiendom ble slettet.');
-                return back();
+                return redirect(url('my-business/my-ads'));
 
             } catch (\Exception $e) {
                 DB::rollback();
