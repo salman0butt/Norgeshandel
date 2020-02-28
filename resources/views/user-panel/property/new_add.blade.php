@@ -80,7 +80,7 @@
                     contentType: false,
                     success: function (data) {
                         console.log(data);
-                        $('.notice').append('<div class="alert alert-success">Eiendom lagt til!</div>');
+                        $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
                     },
                     error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
                         

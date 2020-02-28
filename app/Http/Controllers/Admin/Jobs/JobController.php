@@ -73,7 +73,7 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $ad_id = '';
-        if($request->ad_id){
+        if($request->ad_id && !empty($ad->id)){
             $ad_id = $request->ad_id;
         }
         if ($request->file('files')) {
