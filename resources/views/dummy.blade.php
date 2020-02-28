@@ -1,1 +1,1 @@
-array("Agentur","Butikk/Kiosk","Frisør/Velvære","Hotell/Overnatting","Nettbutikk/Nettsted","Restaurant/Kafé","Annet",)
+array("Enebolig","Garasje/Parkering","Hybel","Leilighet","Rekkehus","Rom i bofellesskap","Tomannsbolig","Andre",)

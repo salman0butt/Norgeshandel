@@ -23,6 +23,7 @@ class TermsTableSeeder extends Seeder
         'hhfs_tenure'=>array("Aksje","Andel","Annet","Eier (Selveier)","Obligasjon"),
         'pfs_facilities'=>array("Balkong/Terrasse","Garasje/P-plass","Heis","Ingen gjenboere","Lademulighet","Peis/Ildsted","Strandlinje","Turterreng","Utsikt","Vaktmester-/vektertjeneste",),
         'bfs_industries'=>array("Agentur","Butikk/Kiosk","Frisør/Velvære","Hotell/Overnatting","Nettbutikk/Nettsted","Restaurant/Kafé","Annet",),
+        'fwr_property_type'=>array("Enebolig","Garasje/Parkering","Hybel","Leilighet","Rekkehus","Rom i bofellesskap","Tomannsbolig","Andre",),
     );
 
     /**

@@ -39,6 +39,9 @@
                     @if(\Illuminate\Support\Facades\Request::is('property/business-for-sale/search'))
                         @include('user-panel.partials.templates.filter-business-for-sale')
                     @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/flat-wishes-rented/search'))
+                        @include('user-panel.partials.templates.filter-flat-wishes-rented')
+                    @endif
                     <li class="nav-item" id="move_to_notifications">
                         <a class="nav-link position-relative" href="{{ url('notifications/all') }}">
                             <span class="badge badge-primary pending position-absolute" style="left:0"></span>

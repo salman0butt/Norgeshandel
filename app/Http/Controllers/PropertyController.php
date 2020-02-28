@@ -676,6 +676,86 @@ class PropertyController extends Controller
         return view('user-panel.property.search-business-for-sale', compact('col', 'add_array'));
     }
 
+//    zain
+    public function search_flat_wishes_rented(Request $request)
+    {
+        $col = 'list';
+        if (isset($request->view) && !empty($request->view)) {
+            $col = $request->view;
+        }
+        $query = DB::table('ads')
+            ->join('flat_wishes_renteds', 'flat_wishes_renteds.ad_id', 'ads.id')
+            ->where('ads.status', 'published');
+//        DB::enableQueryLog();
+
+        if (isset($request->search) && !empty($request->search)) {
+            $query->where('flat_wishes_renteds.headline', 'like', '%' . $request->search . '%');
+        }
+        if (isset($request->created_at)) {
+            $query->whereDate('flat_wishes_renteds.created_at', '=', $request->created_at);
+        }
+        if (isset($request->price_from) && !empty($request->price_from)) {
+            $query->where('flat_wishes_renteds.max_rent_per_month', '>=', (int)$request->price_from);
+        }
+        if (isset($request->price_to) && !empty($request->price_to)) {
+            $query->where('flat_wishes_renteds.max_rent_per_month', '<=', (int)$request->price_to);
+        }
+        if (isset($request->country) && !empty($request->country)) {
+            $query->whereIn('flat_wishes_renteds.region', $request->country);
+        }
+        if (isset($request->fwr_property_type) && !empty($request->fwr_property_type)) {
+            $query->where(function($query) use ($request){
+                $query->where('flat_wishes_renteds.property_type', 'like', '%'.$request->fwr_property_type[0].'%');
+                for ($i=1; $i<count($request->fwr_property_type); $i++){
+                    $query->orWhere('flat_wishes_renteds.property_type', 'like', '%'.$request->fwr_property_type[$i].'%');
+                }
+            });
+        }
+        if (isset($request->wanted_from) && !empty($request->wanted_from)) {
+            $query->where(function($query) use ($request){
+                $query->where('flat_wishes_renteds.wanted_from', 'like', '%'.$request->wanted_from[0].'%');
+                for ($i=1; $i<count($request->wanted_from); $i++){
+                    $query->orWhere('flat_wishes_renteds.wanted_from', 'like', '%'.$request->wanted_from[$i].'%');
+                }
+            });
+        }
+        if (isset($request->number_of_tenants) && !empty($request->number_of_tenants)) {
+            $query->where(function($query) use ($request){
+                $query->whereIn('flat_wishes_renteds.number_of_tenants', $request->number_of_tenants);
+                if(in_array(4, $request->number_of_tenants)) {
+                    $query->orWhere('flat_wishes_renteds.number_of_tenants', '>=', 4);
+                }
+            });
+        }
+
+
+
+        $order_by_thing = 'id';
+        $order_by = 'DESC';
+
+        if (isset($request->order) && !empty($request->order)) {
+            $order = $request->order;
+            switch ($order) {
+                case 'published':
+                    $query->orderBy('ad.created_at', 'DESC');
+                    break;
+                case 'priced-low-high':
+                    $query->orderBy('value_rate', 'ASC');
+                    break;
+                case 'priced-high-low':
+                    $query->orderBy('asking_price', 'DESC');
+                    break;
+            }
+        }
+        $add_array = $query->paginate(getenv('PAGINATION'));
+//        dd(DB::getQueryLog());
+        if ($request->ajax()) {
+            $html = view('user-panel.property.search-flat-wishes-rented-inner', compact('add_array', 'col'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-flat-wishes-rented', compact('col', 'add_array'));
+    }
+
     public function list()
     {
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
