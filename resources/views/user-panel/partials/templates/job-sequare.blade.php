@@ -1,14 +1,14 @@
 <?php
 $logo='';
 $gallery='';
-if(isset($ad)){$ad = \App\Models\Ad::find($ad->id);}
-if(isset($job)){$job = \App\Admin\Jobs\Job::find($job->id);}
-if(!isset($job)){
+if(isset($job)){
+    $ad = \App\Models\Ad::find($job->ad_id);
     $job = $ad->job;
 }
-if (!isset($ad)){$ad=$job->ad;}
-$job = \App\Admin\Jobs\Job::find($job->id);
-$ad = $job->ad;
+elseif(isset($ad)){
+    $ad = \App\Models\Ad::find($ad->id);
+    $job = $ad->job;
+}
 $media = $ad->media;
 if(count($media)>0){
         foreach ($media as $item){
