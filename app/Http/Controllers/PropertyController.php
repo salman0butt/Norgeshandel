@@ -196,7 +196,8 @@ class PropertyController extends Controller
         }
         $query->where($arr);
 
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
 
         if ($request->ajax()) {
             $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col'))->render();
@@ -271,7 +272,8 @@ class PropertyController extends Controller
         }
 //        $query->where($arr);
 
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
 
         if ($request->ajax()) {
             $html = view('user-panel.property.search-commercial-property-for-sale-inner', compact('add_array', 'col'))->render();
@@ -338,7 +340,8 @@ class PropertyController extends Controller
             }
         }
 
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
         if ($request->ajax()) {
             $html = view('user-panel.property.search-commercial-property-for-rent-inner', compact('add_array', 'col'))->render();
             exit($html);
@@ -390,7 +393,8 @@ class PropertyController extends Controller
                     break;
             }
         }
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
         if ($request->ajax()) {
             $html = view('user-panel.property.search-commercial-plots-inner', compact('add_array', 'col'))->render();
             exit($html);
@@ -508,7 +512,8 @@ class PropertyController extends Controller
             }
         }
 
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
         if ($request->ajax()) {
             $html = view('user-panel.property.search-property-for-rent-inner', compact('add_array', 'col'))->render();
             exit($html);
@@ -611,7 +616,8 @@ class PropertyController extends Controller
                     break;
             }
         }
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
 //        dd(DB::getQueryLog());
         if ($request->ajax()) {
             $html = view('user-panel.property.search-holiday-homes-for-sale-inner', compact('add_array', 'col'))->render();
@@ -667,7 +673,8 @@ class PropertyController extends Controller
                     break;
             }
         }
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
 //        dd(DB::getQueryLog());
         if ($request->ajax()) {
             $html = view('user-panel.property.search-business-for-sale-inner', compact('add_array', 'col'))->render();
@@ -747,7 +754,8 @@ class PropertyController extends Controller
                     break;
             }
         }
-        $add_array = $query->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = $query->paginate($pagination==0?30:$pagination);
         if ($request->ajax()) {
             $html = view('user-panel.property.search-flat-wishes-rented-inner', compact('add_array', 'col'))->render();
             exit($html);
@@ -794,8 +802,9 @@ class PropertyController extends Controller
             $order_by = "DESC";
         }
 
+        $pagination = getenv('PAGINATION');
 
-        $add_array = DB::table('property_for_sales')->orderBy($order_by_thing, $order_by)->paginate(getenv('PAGINATION'));
+        $add_array = DB::table('property_for_sales')->orderBy($order_by_thing, $order_by)->paginate($pagination==0?30:$pagination);
 
         if ($request->ajax()) {
             return view('common.partials.property.ads_for_sale_sortion_pagination')->with(compact('add_array'))->render();
@@ -1016,7 +1025,8 @@ class PropertyController extends Controller
             $order_by = "desc";
         }
 
-        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing, $order_by)->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing, $order_by)->paginate($pagination==0?30:$pagination);
         // $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response = view('common.partials.property.holiday_home_for_sale_render_ads')->with(compact('add_array', 'filtering'))->render();
 
@@ -1055,7 +1065,8 @@ class PropertyController extends Controller
 
         //$add_array = DB::table('property_for_rent')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
 
-        $add_array = DB::table('property_for_rent')->orderBy($order_by_thing, $order_by)->paginate(getenv('PAGINATION'));
+        $pagination = getenv('PAGINATION');
+        $add_array = DB::table('property_for_rent')->orderBy($order_by_thing, $order_by)->paginate($pagination==0?30:$pagination);
         $response = view('common.partials.property.render_ads')->with(compact('add_array', 'filtering'))->render();
 
 
