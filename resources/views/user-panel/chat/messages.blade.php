@@ -174,9 +174,8 @@
                     <div><a href="{{url('clear-chat')}}" style="display: none;">clear</a></div>
                     @include('common.partials.flash-messages')
                     <div class="chat-thread-list">
-                        @foreach($threads as $thread)
+                        @foreach($threads as $key=>$thread)
                         @if(!empty($thread->ad) && (is_countable($thread->messages) && count($thread->messages)>0 || $thread->id==$active_thread->id))
-
                                 @php($thread_user = $thread->users->where('id', '!=', Auth::id())->first())
 
                             <div class="position-relative">
@@ -197,12 +196,13 @@
                                                  class="profile-post-image" alt="">
                                             <img
                                                 src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
-                                                class="profile-image" alt="Profile image" style="border: 1px solid #f7f7f7;">
+                                                class="profile-image" alt="Profile image" style="border: 1px solid #f7f7f7; @if($thread->ad->deleted_at) bottom:35px !important; @endif">
                                         </div>
                                         <div class="col-md-9 p-0 mt-1 profile-name">
                                             <span class="font-weight-bold align-middle"
                                                   style="min-height: 1em;">{{$thread_user->username}}</span>
                                             <p class="text-muted thread-ad-title mb-0">{{$thread->ad->getTitle()}}</p>
+                                            @if($thread->ad->deleted_at) <small>(Denne annonsen er ikke mer.)</small><br>@endif
                                             <p class="text-muted mb-1 small">
                                                 <span class="thread-time">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->created_at->format('d.m.Y'):""}}</span>
                                                 <span>-</span>

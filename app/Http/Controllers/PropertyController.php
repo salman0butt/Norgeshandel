@@ -812,16 +812,16 @@ class PropertyController extends Controller
                     abort(404);
                 }
                 if ($ad->property) {
-                    common::delete_media($ad->property->id, get_class($ad->property), 'logo');
-                    common::delete_media($ad->property->id, get_class($ad->property), 'gallery');
+//                    common::delete_media($ad->property->id, get_class($ad->property), 'logo');
+//                    common::delete_media($ad->property->id, get_class($ad->property), 'gallery');
                     $ad->property->delete();
                 }
                 $ad_id = $ad->id;
                 $ad->delete();
-                common::delete_media($ad_id, Ad::class, 'logo');
-                common::delete_media($ad_id, Ad::class, 'gallery');
-                common::delete_media($ad_id, Ad::class, 'sales_information');
-                common::delete_media($ad_id, Ad::class, 'pdf');
+//                common::delete_media($ad_id, Ad::class, 'logo');
+//                common::delete_media($ad_id, Ad::class, 'gallery');
+//                common::delete_media($ad_id, Ad::class, 'sales_information');
+//                common::delete_media($ad_id, Ad::class, 'pdf');
                 DB::commit();
                 Session::flash('success', 'Eiendom ble slettet.');
                 return redirect(url('my-business/my-ads'));

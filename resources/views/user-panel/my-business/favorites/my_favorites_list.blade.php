@@ -30,13 +30,13 @@
         </div>
         <div class="fav-list row mt-5">
             <div class="col-md-8">
+                <?php
+                    use Illuminate\Support\Facades\Auth;
+                    $fav = $list->favorites->where('user_id',Auth::id());
+                ?>
                 @if(isset($list->favorites) && is_countable($list->favorites) && count($list->favorites) > 0)
-                    <?php
-                        use Illuminate\Support\Facades\Auth;
-                        $fav = $list->favorites->where('user_id',Auth::id());
-                        ?>
                     @foreach($fav as $item)
-                        <?php $ad = $item->ad; ?>
+                        <?php $ad = $item->ad;?>
                         @if(isset($ad->ad_type))
                             @if($ad->ad_type === "job" )
                                 @include('user-panel.partials.templates.job-list', compact('ad'))

@@ -201,6 +201,7 @@
                 type: "GET",
                 async: false,
                 success: function (response) {
+                    location.reload();
                 }
             });
             if ($(this).closest('.favorite-list-item').length > 0) {

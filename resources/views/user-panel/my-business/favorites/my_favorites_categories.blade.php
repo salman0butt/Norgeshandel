@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="detailed-section col-sm-10 pl-2 pr-2">
                                     <div class="title color-grey">{{$list->name}}</div>
-                                    <div class="detail u-t5 text-muted">{{count($list->favorites->where('user_id',Auth::id()))}} annonser</div>
+                                    <div class="detail u-t5 text-muted">{{\App\Helpers\common::count_list_ads($list->id)}} annonser</div>
                                 </div>
                             </a>
                             <a href="#" data-id="{{$list->id}}" data-name="{{$list->name}}" data-share-link="{{url('shared-lists/'.$list->share_link)}}" data-target="#modal_landing_edit_category" data-toggle="modal" class="edit_list" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil-alt"></span></a>

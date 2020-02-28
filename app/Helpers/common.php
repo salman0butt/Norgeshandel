@@ -5,6 +5,7 @@ use App\Media;
 use Carbon\Carbon;
 use App\Admin\ads\Banner;
 use App\Term;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Admin\Banners\BannerGroup;
 use Illuminate\Database\Eloquent\Model;
@@ -259,6 +260,19 @@ class common
                 return $expired;
             }
         }
+    }
 
+    //Calculate favorite list total ads
+    public static function count_list_ads($list_id){
+        $total_list_ads = 0;
+        $list_ads = \App\Favorite::where('user_id',Auth::id())->where('list_id',$list_id)->get();
+        if($list_ads->count() > 0){
+            foreach ($list_ads as $list_ad){
+                if($list_ad->ad){
+                    $total_list_ads = $total_list_ads + 1;
+                }
+            }
+        }
+        return $total_list_ads;
     }
 }

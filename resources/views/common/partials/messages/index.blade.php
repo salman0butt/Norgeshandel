@@ -18,10 +18,11 @@
                     class="font-weight-bold align-middle">{{$other_user->username}}</span>
             </div>
         </a>
-        <a href="{{url('/?handel='.$ad->id)}}" style="float: right;text-align: right">
+        <a href="@if($ad->deleted_at) javascript:void(0); @else {{url('/?handel='.$ad->id)}} @endif" style="float: right;text-align: right">
             <div class="float-left m-2">
                 <span>{{$ad->getTitle()}}</span>
                 <br>
+                @if($ad->deleted_at) <small>(Denne annonsen er ikke mer.)</small><br>@endif
                 <span class="text-muted">price</span></div>
             <img
                 src="{{is_countable($ad->company_gallery)&&count($ad->company_gallery)>0?asset(\App\Helpers\common::getMediaPath($ad->company_gallery->first())):asset('public/images/placeholder.png')}}"

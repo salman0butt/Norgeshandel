@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PropertyForRent extends Model
 {
-    //
+    use SoftDeletes;
     protected $table = 'property_for_rent';
     protected $guarded = [];
 

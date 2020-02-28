@@ -166,14 +166,17 @@ class AdController extends Controller
         if(count($ads)>0) {
             foreach ($ads as $ad) {
                 $ad = Ad::find($ad->ad_ad_id);
-                if ($ad->ad_type == 'job') {
-                    $job = $ad->job;
-                    if (!empty($job)) {
-                        $html .= view('user-panel.partials.templates.myads-job', compact('job'))->render();
+                if($ad){
+                    if ($ad->ad_type == 'job') {
+                        $job = $ad->job;
+                        if (!empty($job)) {
+                            $html .= view('user-panel.partials.templates.myads-job', compact('job'))->render();
+                        }
+                    } else {
+                        $html.= view('user-panel.partials.templates.myads-property', compact('ad'))->render();
                     }
-                } else {
-                    $html.= view('user-panel.partials.templates.myads-property', compact('ad'))->render();
                 }
+
             }
         }
         else {

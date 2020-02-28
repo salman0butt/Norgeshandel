@@ -385,8 +385,6 @@ class JobController extends Controller
                 DB::commit();
                 Session::flash('success', 'Jobben er slettet');
                 return redirect(url('my-business/my-ads'));
-//                return back();
-
             }catch (\Exception $e){
                 DB::rollback();
                 Session::flash('danger', 'Noe gikk galt.');

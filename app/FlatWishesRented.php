@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FlatWishesRented extends Model
 {
-    //  
+    use SoftDeletes;
     protected $table = 'flat_wishes_renteds';
     protected $guarded = [];
 
