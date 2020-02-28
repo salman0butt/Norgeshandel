@@ -53,7 +53,7 @@
                                 <a href="{{url('property/commercial-plots/search')}}">Næringstomter <span class="u-stone">(<?php echo App\CommercialPlot::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('business/for/sale/ads')}}">Bedrifter til salgs <span class="u-stone">(<?php echo App\BusinessForSale::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/business-for-sale/search')}}">Bedrifter til salgs <span class="u-stone">(<?php echo App\BusinessForSale::get()->count(); ?>)</span></a>
                             </li>
                         </ul>
                     </div>

@@ -620,6 +620,62 @@ class PropertyController extends Controller
         return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array'));
     }
 
+//    zain
+    public function search_business_for_sale(Request $request)
+    {
+        $col = 'list';
+        if (isset($request->view) && !empty($request->view)) {
+            $col = $request->view;
+        }
+        $query = DB::table('ads')
+            ->join('business_for_sales', 'business_for_sales.ad_id', 'ads.id')
+            ->where('ads.status', 'published');
+//        DB::enableQueryLog();
+
+        if (isset($request->search) && !empty($request->search)) {
+            $query->where('business_for_sales.headline', 'like', '%' . $request->search . '%');
+        }
+        if (isset($request->created_at)) {
+            $query->whereDate('business_for_sales.created_at', '=', $request->created_at);
+        }
+        if (isset($request->bfs_industries) && !empty($request->bfs_industries)) {
+            $query->where(function ($query) use ($request) {
+                $query->whereIn('business_for_sales.industry', $request->bfs_industries);
+                $query->orWhereIn('business_for_sales.alternative_industry', $request->bfs_industries);
+            });
+        }
+//        dd(DB::getQueryLog());
+        if (isset($request->country) && !empty($request->country)) {
+            $query->whereIn('business_for_sales.country', $request->country);
+        }
+
+
+        $order_by_thing = 'id';
+        $order_by = 'DESC';
+
+        if (isset($request->order) && !empty($request->order)) {
+            $order = $request->order;
+            switch ($order) {
+                case 'published':
+                    $query->orderBy('ad.created_at', 'DESC');
+                    break;
+                case 'priced-low-high':
+                    $query->orderBy('value_rate', 'ASC');
+                    break;
+                case 'priced-high-low':
+                    $query->orderBy('asking_price', 'DESC');
+                    break;
+            }
+        }
+        $add_array = $query->paginate(getenv('PAGINATION'));
+//        dd(DB::getQueryLog());
+        if ($request->ajax()) {
+            $html = view('user-panel.property.search-business-for-sale-inner', compact('add_array', 'col'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-business-for-sale', compact('col', 'add_array'));
+    }
+
     public function list()
     {
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();

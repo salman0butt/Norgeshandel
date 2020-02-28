@@ -1,1 +1,1 @@
-array("Balkong/Terrasse","Garasje/P-plass","Heis","Ingen gjenboere","Lademulighet","Peis/Ildsted","Strandlinje","Turterreng","Utsikt","Vaktmester-/vektertjeneste",)
+array("Agentur","Butikk/Kiosk","Frisør/Velvære","Hotell/Overnatting","Nettbutikk/Nettsted","Restaurant/Kafé","Annet",)

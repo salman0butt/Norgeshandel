@@ -21,7 +21,8 @@ class TermsTableSeeder extends Seeder
         'hhfs_facilities' => array("Alpinanlegg","Balkong/Terrasse","Bilvei frem","Båtplass","Fiskemulighet","Garasje/P-plass","Golfbane","Innlagt strøm","Innlagt vann","Lademulighet","Offentlig vann/kloakk","Peis/Ildsted","Strandlinje","Turterreng","Utsikt","Vaktmester-/vektertjeneste"),
         'hhfs_property_type'=>array("Annet fritid","Enebolig","Gårdsbruk/Småbruk","Hytte","Hyttetomt","Leilighet","Rekkehus","Tomannsbolig","Tomter","Andre",),
         'hhfs_tenure'=>array("Aksje","Andel","Annet","Eier (Selveier)","Obligasjon"),
-        'pfs_facilities'=>array("Balkong/Terrasse","Garasje/P-plass","Heis","Ingen gjenboere","Lademulighet","Peis/Ildsted","Strandlinje","Turterreng","Utsikt","Vaktmester-/vektertjeneste",)
+        'pfs_facilities'=>array("Balkong/Terrasse","Garasje/P-plass","Heis","Ingen gjenboere","Lademulighet","Peis/Ildsted","Strandlinje","Turterreng","Utsikt","Vaktmester-/vektertjeneste",),
+        'bfs_industries'=>array("Agentur","Butikk/Kiosk","Frisør/Velvære","Hotell/Overnatting","Nettbutikk/Nettsted","Restaurant/Kafé","Annet",),
     );
 
     /**

@@ -121,6 +121,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('property/commercial-property-for-rent/search', 'PropertyController@search_commercial_property_for_rent');
     Route::get('property/commercial-plots/search', 'PropertyController@search_commercial_plots');
     Route::get('property/holiday-homes-for-sale/search', 'PropertyController@search_holiday_homes_for_sale');
+    Route::get('property/business-for-sale/search', 'PropertyController@search_business_for_sale');
 
 
 //Banner ads mangment
