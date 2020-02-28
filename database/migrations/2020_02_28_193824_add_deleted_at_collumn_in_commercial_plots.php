@@ -14,7 +14,7 @@ class AddDeletedAtCollumnInCommercialPlots extends Migration
     public function up()
     {
         Schema::table('commercial_plots', function (Blueprint $table) {
-            $table->dateTime('deleted_at');
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 
