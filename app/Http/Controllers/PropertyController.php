@@ -737,18 +737,17 @@ class PropertyController extends Controller
             $order = $request->order;
             switch ($order) {
                 case 'published':
-                    $query->orderBy('ad.created_at', 'DESC');
+                    $query->orderBy('flat_wishes_renteds.created_at', 'DESC');
                     break;
                 case 'priced-low-high':
-                    $query->orderBy('value_rate', 'ASC');
+                    $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'ASC');
                     break;
                 case 'priced-high-low':
-                    $query->orderBy('asking_price', 'DESC');
+                    $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'DESC');
                     break;
             }
         }
         $add_array = $query->paginate(getenv('PAGINATION'));
-//        dd(DB::getQueryLog());
         if ($request->ajax()) {
             $html = view('user-panel.property.search-flat-wishes-rented-inner', compact('add_array', 'col'))->render();
             exit($html);
