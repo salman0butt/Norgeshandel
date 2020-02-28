@@ -22,6 +22,7 @@ class TaxonomyTableSeeder extends Seeder
         ['name'=>'Holiday Home Tenure', 'slug'=>'hhfs_tenure'],
         ['name'=>'Property for sale facilities', 'slug'=>'pfs_facilities'],
         ['name'=>'Business for sale Industries', 'slug'=>'bfs_industries'],
+        ['name'=>'Flat wishes rented Property type', 'slug'=>'fwr_property_type'],
     ];
 
     /**

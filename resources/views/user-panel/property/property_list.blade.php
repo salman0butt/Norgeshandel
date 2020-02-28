@@ -41,7 +41,7 @@
                                 <a href="{{url('property/property-for-rent/search')}}">Bolig til leie <span class="u-stone">(<?php echo App\PropertyForRent::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/flat/wishes/rented')}}">Bolig ønskes leid <span class="u-stone">(<?php echo App\FlatWishesRented::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/flat-wishes-rented/search')}}">Bolig ønskes leid <span class="u-stone">(<?php echo App\FlatWishesRented::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('property/commercial-property-for-sale/search')}}">Næringseiendom til salgs <span class="u-stone">(<?php echo App\CommercialPropertyForSale::get()->count(); ?>)</span></a>
