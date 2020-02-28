@@ -106,6 +106,23 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('my-business/my-ads/{id}/statistics', function () {
      return view('user-panel.my-business.ads_statistics');
     });
+    Route::get('/account/summary', function () {
+
+    return view('user-panel.my-business.profile.account_summary');
+   });
+    Route::get('/account/setting', function () {
+
+        return view('user-panel.my-business.profile.account_setting');
+    });
+    Route::get('/account/chnagepassword', function () {
+
+        return view('user-panel.my-business.profile.account_changepass');
+    });
+    Route::get('/account/phone', function () {
+
+        return view('user-panel.my-business.profile.account_phone');
+    });
+
 
 
 //Compnies List
