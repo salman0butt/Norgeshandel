@@ -195,11 +195,10 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select class="dme-form-control" id="property_details.furnishing" name="furnishing">
-                        <option value="{{ $flat_wishes_rented->furnishing }}">{{ $flat_wishes_rented->furnishing }}</option>
                         <option value=""></option>
-                        <option value="Delvis møblert">Delvis møblert</option>
-                        <option value="Møblert">Møblert</option>
-                        <option value="Umøblert">Umøblert</option>
+                        <option value="Delvis møblert" {{$flat_wishes_rented->furnishing == "Delvis møblert" ? "selected" : ""}}>Delvis møblert</option>
+                        <option value="Møblert" {{$flat_wishes_rented->furnishing == "Møblert" ? "selected" : ""}}>Møblert</option>
+                        <option value="Umøblert" {{$flat_wishes_rented->furnishing == "Umøblert" ? "selected" : ""}}>Umøblert</option>
                     </select>
                 </div>
             </div>

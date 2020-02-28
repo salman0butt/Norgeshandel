@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PropertyForSale extends Model
 {
-    //
+    use SoftDeletes;
     protected $table = 'property_for_sales';
     protected $guarded = [];
 

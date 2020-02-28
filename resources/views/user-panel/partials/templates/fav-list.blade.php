@@ -7,7 +7,7 @@
         </div>
         <div class="detailed-section col-sm-12 pl-2 pr-2">
             <div class="title color-grey">{{$list->name}}</div>
-            <div class="detail u-t5 text-muted">{{count($list->favorites)}} annonser</div>
+            <div class="detail u-t5 text-muted">{{\App\Helpers\common::count_list_ads($list->id)}} annonser</div>
             <div class="dealer-logo float-right mt-3" ><img src="#" style="max-height: 40px;" alt="" class="img-fluid"></div>
         </div>
     </a>

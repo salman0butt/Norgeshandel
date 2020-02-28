@@ -16,11 +16,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Favorite;
 use phpDocumentor\Reflection\Types\Null_;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ad extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
-        'user_id','status','ad_type'
+        'user_id','status','ad_type','sold_at',''
     ];
 
     public function media(){
@@ -104,25 +106,25 @@ class Ad extends Model
             return $this->hasOne(PropertyForRent::class);
         }
         else if($this->ad_type == 'property_for_sale'){
-            return $this->hasOne(PropertyForSale::class);
+            return $this->hasOne(PropertyForSale::class)->withTrashed();
         }
         else if($this->ad_type == 'property_holiday_home_for_sale'){
-            return $this->hasOne(PropertyHolidaysHomesForSale::class);
+            return $this->hasOne(PropertyHolidaysHomesForSale::class)->withTrashed();
         }
         else if($this->ad_type == 'property_flat_wishes_rented'){
-            return $this->hasOne(FlatWishesRented::class);
+            return $this->hasOne(FlatWishesRented::class)->withTrashed();
         }
         else if($this->ad_type == 'property_commercial_for_sale'){
-            return $this->hasOne(CommercialPropertyForSale::class);
+            return $this->hasOne(CommercialPropertyForSale::class)->withTrashed();
         }
         else if($this->ad_type == 'property_commercial_for_rent'){
-            return $this->hasOne(CommercialPropertyForRent::class);
+            return $this->hasOne(CommercialPropertyForRent::class)->withTrashed();
         }
         else if($this->ad_type == 'property_commercial_plots'){
-            return $this->hasOne(CommercialPlot::class);
+            return $this->hasOne(CommercialPlot::class)->withTrashed();
         }
         else if($this->ad_type == 'property_business_for_sale'){
-            return $this->hasOne(BusinessForSale::class);
+            return $this->hasOne(BusinessForSale::class)->withTrashed();
         }
         return null;
     }

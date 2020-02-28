@@ -299,15 +299,14 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select class="dme-form-control" name="energy_grade">
-                        <option value="{{ $commercial_property_for_sale->energy_grade }}">{{ $commercial_property_for_sale->energy_grade }}</option>
                         <option value=""></option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                        <option value="G">G</option>
+                        <option value="A" {{$commercial_property_for_sale->energy_grade == "A" ? "selected" : ""}}>A</option>
+                        <option value="B" {{$commercial_property_for_sale->energy_grade == "B" ? "selected" : ""}}>B</option>
+                        <option value="C" {{$commercial_property_for_sale->energy_grade == "C" ? "selected" : ""}}>C</option>
+                        <option value="D" {{$commercial_property_for_sale->energy_grade == "D" ? "selected" : ""}}>D</option>
+                        <option value="E" {{$commercial_property_for_sale->energy_grade == "E" ? "selected" : ""}}>E</option>
+                        <option value="F" {{$commercial_property_for_sale->energy_grade == "F" ? "selected" : ""}}>F</option>
+                        <option value="G" {{$commercial_property_for_sale->energy_grade == "G" ? "selected" : ""}}>G</option>
                     </select>
                     <span class="u-t5">Enegikarakter der A er best.</span>
                 </div>
@@ -319,13 +318,12 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select name="heating_character" class="dme-form-control">
-                        <option value="{{ $commercial_property_for_sale->heating_character }}">{{ $commercial_property_for_sale->heating_character }}</option>
                         <option value=""></option>
-                        <option value="Gul">Gul</option>
-                        <option value="Lysegrønn">Lysegrønn</option>
-                        <option value="Mørkegrønn">Mørkegrønn</option>
-                        <option value="Oransje">Oransje</option>
-                        <option value="Rød">Rød</option>
+                        <option value="Gul" {{$commercial_property_for_sale->heating_character == "Gul" ? "selected" : ""}}>Gul</option>
+                        <option value="Lysegrønn" {{$commercial_property_for_sale->heating_character == "Lysegrønn" ? "selected" : ""}}>Lysegrønn</option>
+                        <option value="Mørkegrønn" {{$commercial_property_for_sale->heating_character == "Mørkegrønn" ? "selected" : ""}}>Mørkegrønn</option>
+                        <option value="Oransje" {{$commercial_property_for_sale->heating_character == "Oransje" ? "selected" : ""}}>Oransje</option>
+                        <option value="Rød" {{$commercial_property_for_sale->heating_character == "Rød" ? "selected" : ""}}>Rød</option>
                     </select>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
                 </div>
