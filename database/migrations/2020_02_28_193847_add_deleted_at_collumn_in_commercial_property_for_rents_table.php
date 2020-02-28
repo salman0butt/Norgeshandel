@@ -14,7 +14,7 @@ class AddDeletedAtCollumnInCommercialPropertyForRentsTable extends Migration
     public function up()
     {
         Schema::table('commercial_property_for_rents', function (Blueprint $table) {
-            $table->dateTime('deleted_at');
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 

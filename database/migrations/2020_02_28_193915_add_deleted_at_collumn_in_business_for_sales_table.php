@@ -14,7 +14,7 @@ class AddDeletedAtCollumnInBusinessForSalesTable extends Migration
     public function up()
     {
         Schema::table('business_for_sales', function (Blueprint $table) {
-            $table->dateTime('deleted_at');
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 

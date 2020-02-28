@@ -14,7 +14,7 @@ class AddDeletedAtCollumnInFlatWishesRentedsTable extends Migration
     public function up()
     {
         Schema::table('flat_wishes_renteds', function (Blueprint $table) {
-            $table->dateTime('deleted_at');
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 
