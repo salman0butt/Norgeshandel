@@ -606,6 +606,9 @@ class PropertyController extends Controller
     {
         DB::beginTransaction();
         try {
+            if(!$request->facilities2){
+                $request->merge(['facilities2'=>null]);
+            }
             $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type']);
 
             //Manage Facilities
