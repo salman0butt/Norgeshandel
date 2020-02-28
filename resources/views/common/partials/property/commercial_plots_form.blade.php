@@ -42,7 +42,7 @@
                 <div class="col-sm-12 pr-md-0">
                     <select class="dme-form-control" id="country" name="country">
                         @foreach($countries as $ctry)
-                        <option value="{{$ctry['name']}}"{{ ($commercial_plot->location == $ctry['name']) ? 'selected' : '' }}>{{$ctry['name']}}</option>
+                        <option value="{{$ctry['name']}}"{{ ($commercial_plot->country == $ctry['name']) ? 'selected' : '' }}>{{$ctry['name']}}</option>
                         @endforeach
                     </select>
                 </div>

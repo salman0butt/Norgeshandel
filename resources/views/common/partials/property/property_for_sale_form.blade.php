@@ -367,7 +367,7 @@
         </div>
         <div class="form-group ">
             <h3 class="mb-2 form-check-label" for="approved_rental_part">
-                <input id="approved_rental_part" value="{{ $property_for_sale->approved_rental_part }}" name="approved_rental_part" type="checkbox">Godkjent utleiedel
+                <input id="approved_rental_part" value="true" name="approved_rental_part" type="checkbox" {{$property_for_sale->approved_rental_part == "true" ? "checked" : ""}}>Godkjent utleiedel
                 <span class="error-span approved_rental_part"></span>
             </h3>
             <div class="u-t5">Dersom eiendommen har godkjent utleiedel huker du av for dette her.</div>
@@ -375,9 +375,15 @@
         <div class="form-group">
             <h3 class="u-t5">Fasiliteter (valgfritt)</h3>
             <div class="row">
+                @php
+                    $property_facilities = array();
+                    if($property_for_sale->facilities){
+                        $property_facilities = json_decode($property_for_sale->facilities);
+                    }
+                @endphp
                 @foreach($pfs_facilities as $facility)
                     <div class="col-md-4 input-toggle">
-                        <input id="facilities-{{$facility->id}}" type="checkbox" value="{{$facility->name}}" name="facilities[]">
+                        <input id="facilities-{{$facility->id}}" type="checkbox" value="{{$facility->name}}" name="facilities[]" {{is_numeric(array_search($facility->name, $property_facilities)) ? "checked" : ""}}>
                         <label class="smalltext" for="facilities-{{$facility->id}}"> {{$facility->name}}</label>
                     </div>
                 @endforeach
@@ -472,7 +478,7 @@
             <div class="row">
                 <div class="col-md-12 input-toggle">
                     <input name="facilities2" data-selector="" id="facilities-AIRCONDITIONING2" type="checkbox"
-                           value="AIRCONDITIONING2" name="facilities2">
+                           value="AIRCONDITIONING2" {{$property_for_sale->facilities2 == "AIRCONDITIONING2" ? "checked" : ""}}>
                     <label class="smalltext" for="facilities-AIRCONDITIONING2"> Eiet tomt (valgfritt) </label>
                     <div class="u-t5">Tomten eies av selger</div>
                     <span class="error-span facilities2"></span>
@@ -652,9 +658,9 @@ omkostninger.
         <div class="form-group">
             <div class="row">
                 <div class="col-md-12 input-toggle">
-                    <input data-selector="" id="facilities-AIRCONDITIONING2" type="checkbox" value="AIRCONDITIONING2"
-                           name="facilities3">
-                    <label class="smalltext" for="facilities-AIRCONDITIONING2"> Borettslaget har
+                    <input data-selector="" id="facilities-AIRCONDITIONING3" type="checkbox" value="AIRCONDITIONING3"
+                           name="facilities3" {{$property_for_sale->facilities3 == "AIRCONDITIONING3" ? "checked" : ""}}>
+                    <label class="smalltext" for="facilities-AIRCONDITIONING3"> Borettslaget har
                         sikringsordning </label>
                     <span class="error-span facilities3"></span>
                 </div>
@@ -682,10 +688,10 @@ omkostninger.
         <div class="form-group">
             <div class="row">
                 <div class="col-md-12 input-toggle">
-                    <input data-selector="" id="facilities-AIRCONDITIONING2" type="checkbox" value="AIRCONDITIONING2"
-                           name="facilities4">
-                    <label class="smalltext" for="facilities-AIRCONDITIONING2"> Jeg har eierskifteforsikring </label>
-                    <span id="AIRCONDITIONING2" class="error-span"></span>
+                    <input data-selector="" id="facilities-AIRCONDITIONING4" type="checkbox" value="facilities4"
+                           name="facilities4" {{$property_for_sale->facilities4 == "facilities4" ? "checked" : ""}}>
+                    <label class="smalltext" for="facilities-AIRCONDITIONING4"> Jeg har eierskifteforsikring </label>
+                    <span id="AIRCONDITIONING4" class="error-span"></span>
                 </div>
             </div>
         </div>

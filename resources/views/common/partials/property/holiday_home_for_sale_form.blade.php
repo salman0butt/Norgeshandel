@@ -6,7 +6,6 @@
         if(isset($holiday_home_for_sale1)){
         $holiday_home_for_sale = $holiday_home_for_sale1;
         }
-        //ghjgh
         $country = \App\Taxonomy::where('slug', 'country')->first();
         $countries = $country->terms;
 
@@ -18,10 +17,6 @@
 
         $facility = \App\Taxonomy::where('slug', 'hhfs_facilities')->first();
         $facilities = $facility->terms;
-
-        // $property_type = explode(',', $commercial_property_for_rent->property_type);
-        // $facilities = explode(',', $commercial_property_for_rent->facilities);
-
 
         @endphp
         @if(Request::is('holiday/home/for/sale/*/edit'))
@@ -66,12 +61,10 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select name="location" id="situation" class="dme-form-control" data-selector="">
-                        <option value="{{ $holiday_home_for_sale->location }}">{{ $holiday_home_for_sale->location }}
-                        </option>
                         <option value=""></option>
-                        <option value="INLAND">Innlandet</option>
-                        <option value="MOUNTAINS">På fjellet</option>
-                        <option value="COAST">Ved sjøen</option>
+                        <option value="INLAND" {{ $holiday_home_for_sale->location == "INLAND" ? 'selected' : ''}}>Innlandet</option>
+                        <option value="MOUNTAINS" {{ $holiday_home_for_sale->location == "MOUNTAINS" ? 'selected' : ''}}>På fjellet</option>
+                        <option value="COAST" {{ $holiday_home_for_sale->location == "COAST" ? 'selected' : ''}}>Ved sjøen</option>
                     </select>
                 </div>
             </div>
@@ -308,15 +301,13 @@
                     <select name="energy_grade" class="dme-form-control" id="energy_label.class"
                         name="energy_label.class" data-selector="">
                         <option value=""></option>
-                        <option value="{{ $holiday_home_for_sale->energy_grade }}">
-                            {{ $holiday_home_for_sale->energy_grade }}</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                        <option value="G">G</option>
+                        <option value="A" {{$holiday_home_for_sale->energy_grade == "A" ? "selected" : ""}}>A</option>
+                        <option value="B" {{$holiday_home_for_sale->energy_grade == "B" ? "selected" : ""}}>B</option>
+                        <option value="C" {{$holiday_home_for_sale->energy_grade == "C" ? "selected" : ""}}>C</option>
+                        <option value="D" {{$holiday_home_for_sale->energy_grade == "D" ? "selected" : ""}}>D</option>
+                        <option value="E" {{$holiday_home_for_sale->energy_grade == "E" ? "selected" : ""}}>E</option>
+                        <option value="F" {{$holiday_home_for_sale->energy_grade == "F" ? "selected" : ""}}>F</option>
+                        <option value="G" {{$holiday_home_for_sale->energy_grade == "G" ? "selected" : ""}}>G</option>
                     </select>
                     <span class="tu-t5">Enegikarakter der A er best.</span>
                 </div>
@@ -330,11 +321,9 @@
                     <select name="heating_character" class="dme-form-control" id="property_details.furnishing"
                         name="property_details.furnishing">
                         <option value=""></option>
-                        <option value="{{ $holiday_home_for_sale->heating_character }}">
-                            {{ $holiday_home_for_sale->heating_character }}</option>
-                        <option value="Delvis møblert">Delvis møblert</option>
-                        <option value="Møblert">Møblert</option>
-                        <option value="Umøblert">Umøblert</option>
+                        <option value="Delvis møblert" {{$holiday_home_for_sale->heating_character == "Delvis møblert" ? "selected" : ""}}>Delvis møblert</option>
+                        <option value="Møblert" {{$holiday_home_for_sale->heating_character == "Møblert" ? "selected" : ""}}>Møblert</option>
+                        <option value="Umøblert" {{$holiday_home_for_sale->heating_character == "Umøblert" ? "selected" : ""}}>Umøblert</option>
                     </select>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som
                         gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%,
@@ -399,13 +388,20 @@
                 </div>
             </div>
         </div>
-
+        {{--{{dd($holiday_home_for_sale->facilities)}}--}}
         <div class="form-group">
             <h3 class="u-t5">Fasiliteter (valgfritt)</h3>
             <div class="row">
+                @php
+                    $property_facilities = array();
+                    if($holiday_home_for_sale->facilities){
+                        $property_facilities = explode(',',$holiday_home_for_sale->facilities);
+                        $property_facilities = array_filter($property_facilities);
+                    }
+                @endphp
                 @foreach($facilities as $facility)
                     <div class="col-md-4 input-toggle">
-                        <input id="facilities-DOWNHILL_SKIING-{{$facility->id}}" type="checkbox" value="{{$facility->name}}" name="facilities[]">
+                        <input id="facilities-DOWNHILL_SKIING-{{$facility->id}}" type="checkbox" value="{{$facility->name}}" name="facilities[]" {{is_numeric(array_search($facility->name,$property_facilities)) ? 'checked' : ''}}>
                         <label class="smalltext" for="facilities-DOWNHILL_SKIING-{{$facility->id}}"> {{$facility->name}}</label>
                     </div>
                 @endforeach
@@ -438,7 +434,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-12 input-toggle">
-                    <input id="owned_site" type="checkbox" value="true">
+                    <input id="owned_site" type="checkbox" value="true" name="owned_site" {{$holiday_home_for_sale->owned_site == "true" ? "checked" : ""}}>
                     <label class="smalltext" for=""> Eiet tomt (valgfritt)</label>
                     <span class="u-t5">Tomten eies av selger</span>
                 </div>
@@ -462,7 +458,7 @@
             <h3 class="u-t5">Fasiliteter (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-12 input-toggle">
-                    <input name="amenities" id="" type="checkbox" value="DOWNHILL_SKIING">
+                    <input name="amenities" id="" type="checkbox" value="DOWNHILL_SKIING" {{$holiday_home_for_sale->amenities == "DOWNHILL_SKIING" ? "checked" : ""}}>
                     <label class="smalltext" for=""> Punktfeste (valgfritt)</label>
                     <span class="u-t5">Tomten eies av selger</span>
                 </div>

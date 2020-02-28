@@ -996,6 +996,12 @@ class PropertyController extends Controller
     {
         DB::beginTransaction();
         try {
+            if(!$request->amenities){
+                $request->merge(['amenities'=>null]);
+            }
+            if(!$request->owned_site){
+                $request->merge(['owned_site'=>null]);
+            }
             $property_home_for_sale_data = $request->except('upload_dropzone_images_type');
 
             //Add More ViewingTimes
@@ -1242,13 +1248,20 @@ class PropertyController extends Controller
     {
         DB::beginTransaction();
         try {
-            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type']);
-
-            if (isset($property_for_sale_data['approved_rental_part']) && $property_for_sale_data['approved_rental_part'] == 'on') {
-                $property_for_sale_data['approved_rental_part'] = 1;
-            } else {
-                $property_for_sale_data['approved_rental_part'] = 0;
+            if(!$request->approved_rental_part){
+                $request->merge(['approved_rental_part'=>null]);
             }
+            if(!$request->facilities2){
+                $request->merge(['facilities2'=>null]);
+            }
+            if(!$request->facilities3){
+                $request->merge(['facilities3'=>null]);
+            }
+             if(!$request->facilities4){
+                 $request->merge(['facilities4'=>null]);
+             }
+
+            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type']);
 
             //Add More ViewingTimes
             if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {
@@ -1406,13 +1419,6 @@ class PropertyController extends Controller
         DB::beginTransaction();
         try {
             $property_for_sale_data = $request->except('upload_dropzone_images_type');
-
-            if (isset($property_for_sale_data['approved_rental_part']) && $property_for_sale_data['approved_rental_part'] == 'on') {
-                $property_for_sale_data['approved_rental_part'] = 1;
-            } else {
-                $property_for_sale_data['approved_rental_part'] = 0;
-            }
-
             //Add More ViewingTimes
             if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {
                 $property_for_sale_data['secondary_deliver_date'] = null;
@@ -2541,9 +2547,10 @@ class PropertyController extends Controller
     {
         DB::beginTransaction();
         try {
-
+            if(!$request->owned_plot_facilities){
+                $request->merge(['owned_plot_facilities'=>null]);
+            }
             $commercial_plot = $request->except('upload_dropzone_images_type');
-
             unset($commercial_plot['commercial_plot_pdf']);
             $commercial_plot['user_id'] = Auth::user()->id;
 
