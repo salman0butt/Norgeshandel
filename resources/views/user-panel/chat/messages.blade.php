@@ -201,7 +201,7 @@
                                         </div>
                                         <div class="col-md-9 p-0 mt-1 profile-name">
                                             <span class="font-weight-bold align-middle"
-                                                  style="min-height: 1em;">{{$thread_user->first_name}} {{$thread_user->last_name}}</span>
+                                                  style="min-height: 1em;">{{$thread_user->username}}</span>
                                             <p class="text-muted thread-ad-title mb-0">{{$thread->ad->getTitle()}}</p>
                                             <p class="text-muted mb-1 small">
                                                 <span class="thread-time">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->created_at->format('d.m.Y'):""}}</span>

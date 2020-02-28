@@ -15,7 +15,7 @@
             </div>
             <div class="m-3 profile-name">
                 <span
-                    class="font-weight-bold align-middle">{{$other_user->first_name}} {{$other_user->last_name}}</span>
+                    class="font-weight-bold align-middle">{{$other_user->username}}</span>
             </div>
         </a>
         <a href="{{url('/?handel='.$ad->id)}}" style="float: right;text-align: right">

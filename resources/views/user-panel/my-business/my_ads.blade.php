@@ -2,10 +2,9 @@
 {{--{{dd($my_ads)}}--}}
 <?php
 use App\Models\Ad;
-$ads = array();
 $published = Ad::where('status','published')->where('user_id',Auth::user()->id)->count();
 $saved = Ad::where('status','saved')->where('user_id',Auth::user()->id)->count();
-$discontinued = Ad::where('status','discontinued')->where('user_id',Auth::user()->id)->count();
+$discontinued = Ad::where('user_id',Auth::user()->id)->where('status','<>','published')->Where('status','<>','saved')->count();
 
 $job_fulltime = 0;
 $job_parttime = 0;
@@ -21,9 +20,6 @@ foreach ($my_ads as $ad){
         elseif($ad->job_type == "part_time"){
             $job_parttime++;
         }
-    }
-    if($ad->status == 'saved'){
-        array_push($ads, $ad);
     }
 }
 ?>
@@ -128,19 +124,27 @@ foreach ($my_ads as $ad){
                 </aside>
                 <div class="col-md-9">
                     <div class="my-ads-list" id="ads-list">
-                        {{--repeatation--}}
-                        @foreach($ads as $key=>$ad)
-                            @if($ad->ad_type=='job' && $ad->job)
-                                <?php $job = $ad->job; ?>
-                                @include('user-panel.partials.templates.myads-job', compact('job'))
-                            @endif
-                        @endforeach
-                        @if(count($ads)<1)
+                        @if($my_ads->count() > 0)
+                            @foreach($my_ads as $key=>$ad)
+                                @if($ad->ad_type=='job' && $ad->job)
+                                    <?php $job = $ad->job; ?>
+                                    @include('user-panel.partials.templates.myads-job', compact('job'))
+                                @endif
+                                @if($ad->ad_type !='job' && $ad->property)
+                                    <?php $property = $ad->property; ?>
+                                    @include('user-panel.partials.templates.myads-property', compact('property'))
+                                @endif
+                            @endforeach
+                        @else
                             <div class="row alert alert-warning">
                                 <h3 class=" text-center col-md-12">Du har ingen annonser.</h3>
                                 <h5 class=" text-center col-md-12">Dine andre annonser kan du finne ved å endre på filteret.</h5>
                             </div>
                         @endif
+
+                        {{--@if(count($ads)<1)--}}
+                            {{----}}
+                        {{--@endif--}}
                         {{--end repeatation--}}
                     </div>
                 </div>

@@ -100,13 +100,26 @@ if($property !== null)
 
             ?>
         </p>
-        <a href="@if($ad->ad_type == 'property_for_rent') {{ url('property/for/rent/ad/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('flat/wishes/rented/'.$property->id.'/edit')}} @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}} @endif" style="color:#ac304a !important;" class="dme-btn-outlined-blue mr-2">rediger legg til</a>
-        <div class="buttons position-absolute p-2" style="bottom: 0;right: 0">
-            <a href="" class="dme-btn-outlined-blue float-right">Flere valg</a>
-            @if($property->ad->status=='saved')
-                <a href="" class="dme-btn-outlined-blue float-right mr-2">Fullfør annonsen</a>
-            @endif
-        </div>
+        <a href="
+            @if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$property->id.'/edit')}}
+        @endif" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm p-0">Endre</a>
+        <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="dme-btn-outlined-blue mr-2 btn-sm">Se annonse</a>
+
+        <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Se statistikk</a>
+        <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Flere valg</a>
+        {{--<div class="buttons position-absolute p-2" style="bottom: 0;right: 0">--}}
+            {{--<a href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue float-right">Flere valg</a>--}}
+            {{--@if($property->ad->status=='saved')--}}
+                {{--<a href="" class="dme-btn-outlined-blue float-right mr-2">Fullfør annonsen</a>--}}
+            {{--@endif--}}
+        {{--</div>--}}
     </div>
 </div>
 

@@ -124,14 +124,15 @@ class AdController extends Controller
     {
         DB::enableQueryLog();
 
-
         $my_ads = Ad::where('user_id', Auth::user()->id)->where('status','=','published')->orderByDesc('ads.updated_at')->get();
-      // dd(DB::getQueryLog());
         return view('user-panel/my-business.my_ads', compact('my_ads'));
     }
 
     public function filter_my_ads($status, $ad_type)
     {
+        if($status == 'expired'){
+            $status = 'sold';
+        }
         $type = "";
         $table = "";
         if ($ad_type != 'all_ads') {
@@ -183,4 +184,36 @@ class AdController extends Controller
         }
         exit($html);
     }
+
+    // Show the options against an ad
+    public function ad_option($id){
+        $ad = Ad::find($id);
+        if($ad){
+            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+                return view('user-panel.my-business.my_ads_options',compact('ad'));
+            }else{
+                return redirect('forbidden');
+            }
+        }else{
+            abort(404);
+        }
+    }
+
+    // Mark as sold an ad
+    public function ad_sold($id){
+        $ad = Ad::find($id);
+        if($ad){
+            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+                $ad->sold_at = date('Y-m-d G:i');
+                $ad->status = 'sold';
+                $ad->update();
+                return back();
+            }else{
+                return redirect('forbidden');
+            }
+        }else{
+            abort(404);
+        }
+    }
+
 }

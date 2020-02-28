@@ -66,10 +66,7 @@
                     <select id="property_type" name="property_type" class="dme-form-control">
                         <option value=""></option>
                         @foreach($property_types as $type)
-                        @if(Request::is('new/property/rent/ad/*/edit'))
-                            <option value="{{ $property_for_rent->property_type }}">{{ $property_for_rent->property_type }}</option>
-                        @endif
-                            <option value="{{$type->name}}">{{$type->name}}</option>
+                            <option value="{{$type->name}}" {{$property_for_rent->property_type == $type->name ? 'selected' : ''}}>{{$type->name}}</option>
                         @endforeach
                     </select>
                     <span class="error-span property_type"></span>
@@ -127,13 +124,10 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="furnishing" name="furnishing" class="dme-form-control">
-                    @if(Request::is('new/property/rent/ad/*/edit'))
-                        <option value="{{ $property_for_rent->furnishing }}">{{ $property_for_rent->floor }}</option>
-                    @endif
                         <option value=""></option>
-                        <option value="Delvis møblert">Delvis møblert</option>
-                        <option value="Møblert">Møblert</option>
-                        <option value="Umøblert">Umøblert</option>
+                        <option value="Delvis møblert" {{$property_for_rent->furnishing == 'Delvis møblert' ? 'selected' : ''}}>Delvis møblert</option>
+                        <option value="Møblert" {{$property_for_rent->furnishing == 'Møblert' ? 'selected' : ''}}>Møblert</option>
+                        <option value="Umøblert" {{$property_for_rent->furnishing == 'Umøblert' ? 'selected' : ''}}>Umøblert</option>
                     </select>
                     <span class="error-span furnishing"></span>
                 </div>
@@ -142,10 +136,16 @@
         <div class="form-group">
             <label class="u-t5">Fasiliteter (valgfritt)</label>
             <div class="row">
+                @php
+                    $property_facilities = array();
+                    if($property_for_rent->facilities){
+                        $property_facilities = json_decode($property_for_rent->facilities);
+                    }
+                @endphp
                 @foreach($facilities as $facility)
                     <div class="col-md-4 input-toggle">
                         <input id="{{$facility->name}}-{{$facility->id}}" type="checkbox" value="{{$facility->name}}"
-                               name="facilities[]">
+                               name="facilities[]" {{is_numeric(array_search($facility->name, $property_facilities)) ? 'checked' : ''}}>
                         <label class="smalltext" for="{{$facility->name}}-{{$facility->id}}"> {{$facility->name}}</label>
                     </div>
                 @endforeach
@@ -156,17 +156,14 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="energy_label.class" name="energy_label_class" data-selector="" class="dme-form-control">
-                    @if(Request::is('new/property/rent/ad/*/edit'))
-                        <option value="{{ $property_for_rent->energy_label_class }}">{{ $property_for_rent->energy_label_class }}</option>
-                    @endif
                         <option value=""></option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="E">E</option>
-                        <option value="F">F</option>
-                        <option value="G">G</option>
+                        <option value="A" {{ $property_for_rent->energy_label_class == 'A' ? 'selected' : ''}}>A</option>
+                        <option value="B" {{ $property_for_rent->energy_label_class == 'B' ? 'selected' : ''}}>B</option>
+                        <option value="C" {{ $property_for_rent->energy_label_class == 'C' ? 'selected' : ''}}>C</option>
+                        <option value="D" {{ $property_for_rent->energy_label_class == 'D' ? 'selected' : ''}}>D</option>
+                        <option value="E" {{ $property_for_rent->energy_label_class == 'E' ? 'selected' : ''}}>E</option>
+                        <option value="F" {{ $property_for_rent->energy_label_class == 'F' ? 'selected' : ''}}>F</option>
+                        <option value="G" {{ $property_for_rent->energy_label_class == 'G' ? 'selected' : ''}}>G</option>
                     </select>
                     <span class="u-t5">Enegikarakter der A er best.</span>
                 </div>
@@ -177,15 +174,12 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <select id="energy_label.color" name="energy_label_color" data-selector="" class="dme-form-control">
-                    @if(Request::is('new/property/rent/ad/*/edit'))
-                        <option value="{{ $property_for_rent->energy_label_color }}">{{ $property_for_rent->energy_label_color }}</option>
-                    @endif
                         <option value=""></option>
-                        <option value="Gul">Gul</option>
-                        <option value="Lysegrønn">Lysegrønn</option>
-                        <option value="Mørkegrønn">Mørkegrønn</option>
-                        <option value="Oransje">Oransje</option>
-                        <option value="Rød">Rød</option>
+                        <option value="Gul" {{ $property_for_rent->energy_label_color == 'Gul' ? 'selected' : ''}}>Gul</option>
+                        <option value="Lysegrønn" {{ $property_for_rent->energy_label_color == 'Lysegrønn' ? 'selected' : ''}}>Lysegrønn</option>
+                        <option value="Mørkegrønn" {{ $property_for_rent->energy_label_color == 'Mørkegrønn' ? 'selected' : ''}}>Mørkegrønn</option>
+                        <option value="Oransje" {{ $property_for_rent->energy_label_color == 'Oransje' ? 'selected' : ''}}>Oransje</option>
+                        <option value="Rød" {{ $property_for_rent->energy_label_color == 'Rød' ? 'selected' : ''}}>Rød</option>
                     </select>
                     <span class="u-t5">Oppvarmingskarakteren forteller om hvor stor andel av boligens oppvarming som gjøres med fossilt brensel og strøm. F.eks. blir karakteren mørkegrønn når andelen er under 30%, mens den blir rød når andelen er over 82,5%.</span>
                 </div>
@@ -195,7 +189,7 @@
             <div class="row">
                 <div class="col-md-12 input-toggle">
                     <input data-selector="" id="facilities-AIRCONDITIONING2" type="checkbox" value="AIRCONDITIONING2"
-                           name="facilities2">
+                           name="facilities2" {{$property_for_rent->facilities2 == 'AIRCONDITIONING2' ? 'checked' : ''}}>
                     <label class="smalltext" for="facilities-AIRCONDITIONING2"> Dyrehold tillatt </label>
                     <span class="error-span facilities-AIRCONDITIONING2"></span>
                 </div>

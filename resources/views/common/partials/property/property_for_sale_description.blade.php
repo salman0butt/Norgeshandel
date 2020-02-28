@@ -83,9 +83,10 @@ $name = $property_data->ad->company_gallery;
                         <div class="col-md-12">
 
                             <div class="u-t3 mt-3">{{$property_data->local_area_name}}</div>
-                            <h1 class="u-t2">{{$property_data->local_area_name}}
-                                | {{$property_data->number_of_bedrooms}}
-                                soverom | {{$property_data->property_type}} | </h1>
+                            <h1 class="u-t2">{{$property_data->headline}}</h1>
+                            {{--<h1 class="u-t2">{{$property_data->local_area_name}}--}}
+                                {{--| {{$property_data->number_of_bedrooms}}--}}
+                                {{--soverom | {{$property_data->property_type}} | </h1>--}}
                         </div>
                         <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
                         <div class="col-md-12 mt-2">
@@ -93,7 +94,7 @@ $name = $property_data->ad->company_gallery;
                         </div>
 
                         <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
-                        <div class="col-md-12 u-t3">{{$property_data->asking_price}} Kr</div>
+                        <div class="col-md-12 u-t3">{{number_format($property_data->asking_price,0,""," ")}} Kr</div>
                         <div class="clearfix"></div>
                         {{-- <div class="mt-2 col-md-12"></div> --}}
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
@@ -101,7 +102,7 @@ $name = $property_data->ad->company_gallery;
                                 <div class="col-md-12"><span class="font-weight-bold">Omkostninger
                                     :</span>&nbsp;<span>{{$property_data->expenses}} m²</span></div>
                                 <div class="col-md-12"><span class="font-weight-bold">Totalpris
-                                    :</span>&nbsp;<span>{{$property_data->total_price}} Kr</span></div>
+                                    :</span>&nbsp;<span>{{number_format($property_data->total_price,0,""," ")}} Kr</span></div>
                                 <div class="col-md-12"><span
                                         class="font-weight-bold">Kommunale avg :.</span>&nbsp;<span>
                                     {{$property_data->Kommunale}} Kr</span></div>
@@ -128,7 +129,7 @@ $name = $property_data->ad->company_gallery;
                                 <div class="col-md-6"><span class="font-weight-bold">Tomteareal
                                 </span>&nbsp;<span>{{$property_data->land}} m²</span></div>
                                 <div class="col-md-6"><span class="font-weight-bold">Bruttoareal </span>&nbsp;<span>
-                                    {{$property_data->use_area}} </span></div>
+                                    {{$property_data->use_area}} m² </span></div>
 
                                 <div class="col-md-12"><span class="font-weight-bold">Formuesverdi: </span>&nbsp;<span>
                                     {{$property_data->asset_value}} Kr</span></div>
@@ -155,8 +156,12 @@ $name = $property_data->ad->company_gallery;
                                     </div>
                                 </div>
                             </div>
-                            <span class="font-weight-bold">Arealbeskrivelse</span>
-                            <br>
+                            @if($property_data->area_description)
+                                <span class="font-weight-bold">Arealbeskrivelse</span>
+                                <div class=""><span>
+                                    {{$property_data->area_description}}</span></div>
+                                <br>
+                            @endif
                             <br>
                             <span class="font-weight-bold ">Matrikkelinformasjon</span>
                             <div class="col-md-12"><span class="">Kommunenr: </span>&nbsp;<span>
@@ -208,51 +213,80 @@ $name = $property_data->ad->company_gallery;
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div
-                        style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
-                        <div class="text-center">
-                            <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
+                    @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
+                        <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                            <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}</p>
+                            @if(!$property_data->ad->is_mine())
+                                <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                            @endif
+                            @if($property_data->phone)
+                                <div class="mb-2">
+                                    <a data-toggle="collapse" href="#collapseExample">Mobil </a>
+                                    <p class="collapse" id="collapseExample"><a href="{{ $property_data->phone }}" class="u-select-all"
+                                             data-controller="trackSendSMS">{{ $property_data->phone }}</a></p>
+                                </div>
+                            @endif
+                            @if($property_data->deliver_date)
+                                <div class="mb-2">
+                                    <span>Visning: </span>
+                                    <span>{{date('d-m-Y', strtotime($property_data->deliver_date))}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}}</span>
+                                </div>
+                            @endif
+                            <div class="mb-2">
+                                <a href="mailto:{{$property_data->user->email}}">Visning også etter avtale</a>
+                            </div>
+                            {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
+                            <div class="mb-2">
+                                <a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra
+                                    annonsør</a>
+                            </div>
                         </div>
+                    @else
+                        <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                            <div class="text-center">
+                                <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
+                            </div>
 
-                        <p class="mt-3">
-                            {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
-                            Eiendomsmegler</p>
-                        <div class="mb-2">
-                            <span>Mobil: </span>
-                            <span><a href="tel:+4746545247" class="u-select-all"
-                                     data-controller="trackSendSMS">{{ $property_data->phone }}</a></span>
+                            <p class="mt-3">
+                                {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
+                                <br>
+                                Eiendomsmegler
+                            </p>
+                            @if($property_data->phone)
+                                <div class="mb-2">
+                                    <span>Mobil: </span>
+                                    <span><a href="tel:+4746545247" class="u-select-all"
+                                             data-controller="trackSendSMS">{{ $property_data->phone }}</a>
+                                    </span>
+                                </div>
+                            @endif
+                            {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
+                            <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra
+                                    annonsør</a></div>
+                            @if(!$property_data->ad->is_mine())
+                                <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                            @endif
                         </div>
-                        {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
-                        <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra
-                                annonsør</a></div>
-                        @if(!$property_data->ad->is_mine())
-                            <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                        <h2 class="u-t3">Visning</h2>
+                        @if(!empty($property_data->deliver_date) || !empty($property_data->from_clock) ||
+                        !empty($property_data->clockwise) || !empty($property_data->clockwise) ||
+                        !empty($property_data->note))
+                            <div class="mb-2">
+                            <span style="font-weight:500"><?php echo(!empty($property_data->deliver_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
+                                <span style="font-weight:500"><?php echo(!empty($property_data->from_clock) ? $property_data->from_clock : ""); ?></span>
+                                <span style="font-weight:500"><?php echo(!empty($property_data->clockwise) ? $property_data->clockwise : ""); ?></span>
+                                <span style="font-weight:500"><?php echo(!empty($property_data->note) ? $property_data->note : ""); ?></span>
+                            </div>
+                        @else
+                            <div class="mb-2" style="font-weight:500"><span>Ta kontakt for å avtale visning</span></div>
                         @endif
+                    @endif
 
-                    </div>
                     <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                                     salgsoppgave</a></div>
                             <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                             <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
-                    <h2 class="u-t3">Visning</h2>
-                    @if(!empty($property_data->deliver_date) || !empty($property_data->from_clock) ||
-                    !empty($property_data->clockwise) || !empty($property_data->clockwise) ||
-                    !empty($property_data->note))
-                        <div class="mb-2">
-                            <span
-                                style="font-weight:500"><?php echo(!empty($property_data->deliver_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
-                            <span
-                                style="font-weight:500"><?php echo(!empty($property_data->from_clock) ? $property_data->from_clock : ""); ?>
-                    </span>
-                            <span
-                                style="font-weight:500"><?php echo(!empty($property_data->clockwise) ? $property_data->clockwise : ""); ?>
-                    </span>
-                            <span
-                                style="font-weight:500"><?php echo(!empty($property_data->note) ? $property_data->note : ""); ?></span>
-                        </div>
-                    @else
-                        <div class="mb-2" style="font-weight:500"><span>Ta kontakt for å avtale visning</span></div>
-                    @endif
+
                     <div class="mb-2" style="font-weight:500">Husk å bestille/laste ned salgsoppgave så du kan stille
                         godt forberedt på visning.
                     </div>

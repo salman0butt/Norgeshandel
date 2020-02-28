@@ -6,7 +6,7 @@
         if(isset($holiday_home_for_sale1)){
         $holiday_home_for_sale = $holiday_home_for_sale1;
         }
-
+        //ghjgh
         $country = \App\Taxonomy::where('slug', 'country')->first();
         $countries = $country->terms;
 

@@ -224,4 +224,41 @@ class common
             }
     }
 
+    public static function get_ad_attribute($obj,$attribute){
+        if($obj){
+            if($attribute == 'heading'){
+                $heading = '';
+                if($obj->ad_type  == 'property_for_rent' || $obj->ad_type == 'property_commercial_for_rent'){
+                    $heading = $obj->property->heading;
+                }if($obj->ad_type  == 'property_for_sale' || $obj->ad_type == 'property_flat_wishes_rented' || $obj->ad_type == 'property_commercial_for_sale' || $obj->ad_type == 'property_commercial_plots' || $obj->ad_type == 'property_business_for_sale'){
+                    $heading = $obj->property->headline;
+                }if($obj->ad_type  == 'property_holiday_home_for_sale'){
+                    $heading = $obj->property->ad_headline;
+                }if($obj->ad_type == 'job'){
+                    $heading = $obj->job->title;
+                }
+                return $heading;
+            }
+
+            if($attribute == 'started'){
+                $started = '';
+                if($obj->ad_type  == 'property_for_rent'){
+                    $started = $obj->property->rented_from;
+                }
+                if($obj->ad_type  == 'property_commercial_for_rent'){
+                    $started = $obj->property->availiable_from;
+                }
+                return $started;
+            }
+
+            if($attribute == 'expired'){
+                $expired = '';
+                if($obj->ad_type  == 'property_for_rent'){
+                    $expired = $obj->property->rented_to;
+                }
+                return $expired;
+            }
+        }
+
+    }
 }
