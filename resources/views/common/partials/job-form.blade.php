@@ -92,12 +92,8 @@
                             <div class="col-sm-4 ">
                                 <select id="commitment_type" name="commitment_type"
                                     class="form-control dme-form-control" data-selector="" required>
-                                    @if(!empty($obj_job->commitment_type))
-                                    <option selected value="{{$obj_job->commitment_type}}">{{$obj_job->commitment_type}}
-                                    </option>
-                                    @endif
                                     @foreach($commitment_types as $commitment_type)
-                                    <option value="{{$commitment_type['name']}}">{{$commitment_type['name']}}</option>
+                                        <option value="{{$commitment_type['name']}}" {{$obj_job->commitment_type == $commitment_type['name'] ? 'selected' : ''}}>{{$commitment_type['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -106,7 +102,7 @@
                                 <select id="sector" name="sector" class="form-control dme-form-control" data-selector=""
                                     required>
                                     @foreach($sectors as $sect)
-                                    <option value="{{$sect->name}}" {{$sect->name==$obj_job->sector?"selected":""}}>
+                                    <option value="{{$sect->name}}" {{$sect->name==$obj_job->sector ? "selected" : ""}}>
                                         {{$sect->name}}</option>
                                     @endforeach
                                 </select>
@@ -120,9 +116,8 @@
                             <div class="col-sm-4 ">
                                 <select name="industry" id="industry" data-input-name="industry"
                                     class="form-control dme-form-control" data-max-selections="3" required>
-                                    <option value="{{$obj_job->industry}}">{{$obj_job->industry}}</option>
                                     @foreach($industries as $industry)
-                                    <option value="{{$industry->name}}">{{$industry->name}}</option>
+                                    <option value="{{$industry->name}}" {{$obj_job->industry == $industry->name ? 'selected' : ''}}>{{$industry->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -130,9 +125,8 @@
                             <div class="col-sm-4 ">
                                 <select name="job_function" id="job_function" data-input-name="occupation"
                                     class="form-control dme-form-control" data-max-selections="3" required>
-                                    <option value="{{$obj_job->job_function}}">{{$obj_job->job_function}}</option>
                                     @foreach($job_functions as $job_function)
-                                    <option value="{{$job_function->name}}">{{$job_function->name}}</option>
+                                    <option value="{{$job_function->name}}" {{$obj_job->job_function == $job_function->name ? 'selected' : ''}}>{{$job_function->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -146,10 +140,8 @@
                             <div class="col-sm-10 ">
                                 <select name="leadership_category" id="leadership_category"
                                     data-input-name="leadership_category" class="form-control dme-form-control">
-                                    <option value="{{$obj_job->leadership_category}}">{{$obj_job->leadership_category}}
-                                    </option>
                                     @foreach($leadership_categories as $leadership_category)
-                                    <option value="{{$leadership_category->name}}">{{$leadership_category->name}}
+                                    <option value="{{$leadership_category->name}}" {{$obj_job->leadership_category == $leadership_category->name ? 'selected' : ''}}>{{$leadership_category->name}}
                                     </option>
                                     @endforeach
                                 </select>
@@ -300,12 +292,14 @@
                             <label for="country" class="col-md-2 u-t5">{{__('Land')}}</label>
                             <div class="col-sm-4 ">
                                 <select class="form-control dme-form-control" id="country" name="country">
-                                    @if(!empty($obj_job->country))
-                                    <option selected value="{{$obj_job->country}}">{{$obj_job->country}}</option>
-                                    @endif
+                                    @php
+                                        $country = "Norway";
+                                        if($obj_job->country){
+                                            $country = $obj_job->country;
+                                        }
+                                    @endphp
                                     @foreach($countries as $ctry)
-                                    <option value="{{$ctry['name']}}" @if($ctry['name']=="Norway" ) selected @endif>
-                                        {{$ctry['name']}}</option>
+                                    <option value="{{$ctry['name']}}" {{$country == $ctry['name'] ? 'selected' : ''}}>{{$ctry['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -519,9 +513,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
         $('#job-form input, #job-form select').blur(function (e) {
             // $('#description').text(tinyMCE.get("description").getContent());
             // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
-            var link = $('#ad_id').val().length > 0 ? '{{url('
-            jobs / update_dummy ')}}': '{{url('
-            jobs / store_dummy ')}}';
+            var link = $('#ad_id').val().length > 0 ? '{{url('jobs/update_dummy')}}' : '{{url('jobs/store_dummy')}}';
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
