@@ -103,8 +103,9 @@
             });
 
             $("#publiserannonsen").click(function(e){
-
                 e.preventDefault();
+
+                if(! $('#property_for_sale_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function( index ) {
                     $(".error-span").html('');
@@ -130,7 +131,9 @@
                     processData: false,
                     contentType: false,
                     success: function(data){
-                            $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                        document.getElementById("property_for_sale_form").reset();
+                        document.getElementById("zip_code_city_name").innerHTML = '';
+                        $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
                     },
                     error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                         var errors = jqXhr.responseJSON;
@@ -196,7 +199,6 @@
                         $("#add_more_viewing_times_fields").append(html);
 
             });
-            
         
         })
 
