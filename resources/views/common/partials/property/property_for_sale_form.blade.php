@@ -28,7 +28,7 @@
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="headline" value="{{ $property_for_sale->headline }}" class="dme-form-control">
+                    <input type="text" name="headline" id="1234as" value="{{ $property_for_sale->headline }}" class="dme-form-control">
                     <span class="error-span headline"></span>
                 </div>
             </div>
@@ -37,7 +37,7 @@
             <h3 class="u-t5">Postnummer</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="zip_code" type="text" value="{{ $property_for_sale->zip_code }}" class="dme-form-control">
+                    <input name="zip_code" type="text" value="{{ $property_for_sale->zip_code }}" class="dme-form-control zip_code">
                     <span class="error-span zip_code"></span>
                      <span id="zip_code_city_name"></span>
                 </div>
@@ -884,27 +884,3 @@ omkostninger.
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">Publiser annonsen!</span></button>
     </div>
 </form>
- <script>
-    $(document).on('change', 'input[name="zip_code"]', function(e) {
-         document.getElementById("zip_code_city_name").innerHTML = '';
-    var zip_code = $(this).val();
-    var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
-    // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
-    var client_url = 'localhost';
-
-    if(zip_code){
-    var xhttp = new XMLHttpRequest();
-   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      const postalCode = JSON.parse(this.responseText);
-      document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
-        console.log(postalCode.result);
-     }
-    };
-    xhttp.open("GET", api_url+"?clientUrl="+client_url+"&pnr="+zip_code, true);
-
-    xhttp.send();
-    }
-});
-
-    </script>

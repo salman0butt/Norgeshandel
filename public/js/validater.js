@@ -52,7 +52,7 @@ $(document).ready(function () {
     });
   //  Property for sale
 
-    $("#property_for_sale_form,#commercial_property_for_rent").validate({
+    $("#property_for_sale_form").validate({
         lang: 'no',
         rules: {
             headline: {
@@ -76,6 +76,7 @@ $(document).ready(function () {
             municipality_number: {
                 required: true,
                 minlength: 4,
+                maxlength: 4,
                 number: true
             },
             farm_number: {
@@ -169,10 +170,89 @@ $(document).ready(function () {
             }
         }
     });
-    // jQuery.validator.addClassRules("pub_validate", {
-    //     cRequired: true
-    // });
-    // flat wishes rented
+
+    $("#commercial_property_for_rent").validate({
+        lang: 'no',
+        rules: {
+            headline: {
+                required: true,
+                minlength: 2,
+                maxlength: 120
+            },
+            zip_code: {
+                required: true,
+                zipcode: true
+            },
+            property_type: {
+                required: true
+            },
+            floor: {
+                number: true
+            },
+            tenure: {
+                required: true
+            },
+            municipality_number: {
+                minlength: 4,
+                maxlength: 4,
+                number: true
+            },
+            farm_number: {
+                number: true
+            },
+            usage_number: {
+                number: true
+            },
+            use_area: {
+                number: true
+            },
+            gross_area_from:{
+                number: true
+            },
+            gross_area_to:{
+                number: true
+            },
+            land: {
+              number: true
+            },
+            number_of_office_space: {
+                number: true
+            },
+            number_of_parking_space: {
+                number: true
+            },
+            floors: {
+                number: true
+            },
+            year_of_construction: {
+                number: true,
+                date: true
+            },
+            renovated_year: {
+                number: true,
+                date: true
+            },
+            rent_per_meter_per_year:{
+                number: true,
+            },
+            link_for_information: {
+                validUrl: true
+            },
+            phone: {
+                minlength: 8,
+                maxlength: 9
+            },
+            contact:{
+                required: true,
+                number: true
+            },
+            email:{
+                required:true,
+                email: true
+            }
+        }
+    });
+
 
     $("#flat_wishes_rented_form").validate({
         lang: 'no',
@@ -195,6 +275,9 @@ $(document).ready(function () {
             property_type: {
                 required: true,
                 min: 1
+            },
+            phone: {
+                number: true
             }
         }
 
@@ -391,20 +474,15 @@ $(document).ready(function () {
             property_type: {
                 required: true
             },
-            ownership_type: {
-                required: true
-            },
             muncipal_number: {
-                required: true,
                 minlength: 4,
+                maxlength: 4,
                 number: true
             },
             farm_number: {
-                required: true,
                 number: true
             },
             usage_number: {
-                required: true,
                 number: true
             },
             party_number: {
@@ -413,8 +491,10 @@ $(document).ready(function () {
             section_number: {
                 number: true
             },
+            base: {
+                number: true
+            },
             use_area: {
-                required: true,
                 number: true
             },
             primary_room: {
@@ -422,7 +502,6 @@ $(document).ready(function () {
                 number: true
             },
             gross_area: {
-                required: true,
                 number: true
             },
             Base: {
@@ -432,7 +511,6 @@ $(document).ready(function () {
                 number: true
             },
             year_of_construction: {
-                required: true,
                 number: true,
                 date: true
             },
@@ -479,7 +557,6 @@ $(document).ready(function () {
                 number: true
             },
             asset_value: {
-                required: true,
                 number: true
             },
             asking_price: {
@@ -521,6 +598,11 @@ $(document).ready(function () {
             },
             apartment_number: {
                 number: true
+            },
+            phone: {
+                number: true,
+                minlength: 8,
+                maxlength: 9,
             }
         }
     });
@@ -602,12 +684,10 @@ $(document).ready(function () {
                 zipcode: true
             },
             municipal_number: {
-                required: true,
                 minlength: 4,
                 number: true
             },
             usage_number: {
-                required: true,
                 number: true
             },
             farm_number: {
@@ -666,6 +746,11 @@ $(document).ready(function () {
             },
             link_for_information: {
                 validUrl: true
+            },
+            phone: {
+                number: true,
+                minlength: 8,
+                maxlength: 9
             }
         }
 
@@ -963,11 +1048,11 @@ $(document).ready(function () {
 
 
     //submit button checks
-    // $('#flat_wishes_rented_form input').bind('keyup blur click', function () { // fires on every keyup & blur
+    // $('#property_for_rent_form').on('click submit', function () { // fires on every keyup & blur
     //     if ($('#flat_wishes_rented_form').validate().checkForm()) { // checks form for validity
-    //         $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
+    //         // $('#publiserannonsen').removeClass('button_disabled').prop('disabled', false); // enables button
     //     } else {
-    //         $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
+    //         // $('#publiserannonsen').addClass('button_disabled').prop('disabled', true); // disables button
     //     }
     // });
     // $('#property_for_sale_form input').bind('keyup blur click', function () { // fires on every keyup & blur

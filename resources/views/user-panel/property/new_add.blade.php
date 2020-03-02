@@ -37,10 +37,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-
-            $("input,select").on("keyup change", function() {
-
+            $("input,select,form").on("keyup change submit", function() {
                 $(this).parent().find('.error-span').html("");
                 $(this).removeClass("error-input");
 
@@ -49,29 +46,30 @@
 
  
             $("#publiser_annonsen").click(function (e) {
+
                 e.preventDefault();
+                if(! $('#property_for_rent_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function( index ) {
                     $(".error-span").html('');
                     $("input, select").removeClass("error-input");
                 });
-
-
                 $('.notice').html("");
-               
+
 
                 var myform = document.getElementById("property_for_rent_form");
                 var fd = new FormData(myform);
-            
+
                 // fd.append('property_photos', $('#property_photos').get(0).files[0]);
                 var l = Ladda.create(this);
                 l.start();
-             @if(Request::is('new/property/rent/ad/*/edit'))
-             var url = "{{ url('add/property/for/rent/ad/'.$property_for_rent1->id) }}";
-             @else
-             var url = "{{ url('add/property/for/rent/ad/') }}";
-             @endif
+                @if(Request::is('new/property/rent/ad/*/edit'))
+                    var url = "{{ url('add/property/for/rent/ad/'.$property_for_rent1->id) }}";
+                @else
+                    var url = "{{ url('add/property/for/rent/ad/') }}";
+                @endif
                 $.ajax({
+
                     type: "POST",
                     url: url,
                     data: fd,
@@ -80,10 +78,13 @@
                     contentType: false,
                     success: function (data) {
                         console.log(data);
+                        document.getElementById("property_for_rent_form").reset();
+                        document.getElementById("zip_code_city_name").innerHTML = '';
                         $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+
                     },
                     error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
-                        
+
                         var errors = jqXhr.responseJSON;
                         console.log(errors.errors);
                         if(isEmpty(errors.errors))
@@ -92,9 +93,9 @@
                             return false;
                         }
                         if(!isEmpty(errors.errors))
-                        {   
+                        {
                             console.log(errors.errors);
-                            $.each(errors.errors, function (index, value) 
+                            $.each(errors.errors, function (index, value)
                             {
                                 $("." + index).html(value);
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
@@ -157,7 +158,6 @@
 
 
             });
-
         });
 
     </script>
