@@ -32,7 +32,6 @@
             <div class="">
                 <label for="sort-by" class="mb-1">Sortér på</label>
                 <select name="sort-by" id="sort_by" class="dme-form-control">
-
                     <option value="most-relevant">Mest relevant</option>
                     <option value="published" selected="">Publisert</option>
                     <option value="priced-low-high">Pris lav-høy</option>
@@ -40,7 +39,6 @@
                     <option value="area_low_high">Areal lav-høy</option>
                     <option value="area_high_low">Areal høy-lav</option>
                     <option value="nearest">Nærmest</option>
-
                 </select>
             </div>
         </div>
@@ -62,9 +60,7 @@
             <div class="<?php
             echo $col === 'grid' ? 'row' : '' ?>">
                 @foreach ($add_array as $key => $value)
-
                     <?php
-
                     $commercial_plot = App\CommercialPlot::find($value->id);
                     $name = $commercial_plot->ad->company_gallery;
                     if (!$name->isEmpty()) {
@@ -74,12 +70,10 @@
                     } else {
                         $full_path = "";
                     }
-
-
                     ?>
 
                     <div
-                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>">
+                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/commercial/plots/ads/description', $value->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
@@ -92,7 +86,7 @@
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <div class="week-status u-t5 text-muted"
                                      style="">{{$commercial_plot->street_address}}</div>
-                                <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
+                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="u-t5 text-muted mt-2">Christian Krohgs gate 16, 0186 Oslo</div>
                                 <div class="title color-grey">{{$commercial_plot->headline}}</div>
                                 <div class="mt-2">
@@ -112,8 +106,12 @@
                                 </div>
                             </div>
                         </a>
+                        <div>
+                          @php $ad = $commercial_plot->ad;  @endphp
+                          @include('user-panel.partials.fav-heart-button', compact('ad'))
+                        </div>
                     </div>
-
+                  
                 @endforeach
             </div>
         </div>

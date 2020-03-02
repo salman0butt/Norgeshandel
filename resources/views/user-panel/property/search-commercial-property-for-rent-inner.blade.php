@@ -74,7 +74,7 @@
                     ?>
 
                     <div
-                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>">
+                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/commercial/property/for/rent/description', $value->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
@@ -86,8 +86,8 @@
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>
-                                <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
-                                <div class=" u-t5 text-muted mt-2">{{$property_commercial_property_for_rent->street_address}}</div>
+                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
+                                <div class="u-t5 text-muted mt-2">{{$property_commercial_property_for_rent->street_address}}</div>
                                 <div class="title color-grey mt-1">{{$property_commercial_property_for_rent->heading}}</div>
                                 <div class="mt-2">
                                     <div
@@ -113,6 +113,10 @@
                                 </div>
                             </div>
                         </a>
+                        <div>
+                          @php $ad = $property_commercial_property_for_rent->ad;  @endphp
+                          @include('user-panel.partials.fav-heart-button', compact('ad'))
+                        </div>
                     </div>
                 @endforeach
             </div>

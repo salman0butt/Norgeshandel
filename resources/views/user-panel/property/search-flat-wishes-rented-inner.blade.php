@@ -71,7 +71,7 @@
                     }
                     ?>
                     <div
-                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>">
+                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/flat/wishes/rented/description', $value->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
@@ -83,7 +83,7 @@
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
 
-                                <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
+                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="location u-t5 text-muted mt-2"></div>
                                 <div class="title color-grey">{{$property_for_flat_wishes_rented->headline}}</div>
                                 <div class="mt-2">
@@ -101,6 +101,10 @@
                                                                                alt="" class="img-fluid"></div>
                             </div>
                         </a>
+                        <div>
+                          @php $ad = $property_for_flat_wishes_rented->ad;  @endphp
+                          @include('user-panel.partials.fav-heart-button', compact('ad'))
+                        </div>
                     </div>
                 @endforeach
             </div>

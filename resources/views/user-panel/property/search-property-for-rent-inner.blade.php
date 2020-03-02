@@ -74,16 +74,16 @@
 
 
                     ?>
-                    <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>">
+                    <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>" style="position:relative">
                         <a href="{{url('/property/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
-                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/image-placeholder.jpg')}}@endif" alt="" class="img-fluid radius-8" style="min-height:207px;">
+                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif" alt="" class="img-fluid radius-8" style="min-height:207px;">
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
                                 <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>
-                                <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
+                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="u-t5 text-muted mt-2">{{$property_for_rent->street_address}}</div>
                                 <div class="title color-grey">{{$property_for_rent->heading}}</div>
                                 <div class="mt-2">
@@ -95,7 +95,11 @@
                                 <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
 
                             </div>
-                        </a>
+                          </a>
+                            <div>
+                                @php $ad = $property_for_rent->ad;  @endphp
+                                @include('user-panel.partials.fav-heart-button', compact('ad'))
+                            </div>
                     </div>
                 @endforeach
 
