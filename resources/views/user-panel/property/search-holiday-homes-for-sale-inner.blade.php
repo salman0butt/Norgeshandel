@@ -75,14 +75,14 @@
                     ?>
 
                     <div
-                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>">
+                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/holiday/home/for/sale/description', $value->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
 
                                 <div class="trailing-border">
                                     <img
-                                        src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/image-placeholder.jpg')}}@endif"
+                                        src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8"
                                         style="min-height:207px;max-height:207px;width:100%;">
                                 </div>
@@ -90,7 +90,7 @@
                             <div
                                 class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <div class="u-t5 text-muted" style=""></div>
-                                <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
+                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div
                                     class="location u-t5 text-muted mt-2">{{ $property_holiday_home_for_sale -> street_address}}</div>
                                 <div
@@ -120,6 +120,10 @@
 
                             </div>
                         </a>
+                        <div>
+                          @php $ad = $property_holiday_home_for_sale->ad;  @endphp
+                          @include('user-panel.partials.fav-heart-button', compact('ad'))
+                        </div>
                     </div>
 
                 @endforeach

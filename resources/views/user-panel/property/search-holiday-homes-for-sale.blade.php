@@ -1,4 +1,9 @@
 @extends('layouts.landingSite')
+<style>
+.clist .location {
+    position: unset !important;
+  }
+</style>
 @section('page_content')
     <main class="dme-wrapper" id="dme-wrapper">
         @include('user-panel.property.search-holiday-homes-for-sale-inner')

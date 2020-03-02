@@ -110,6 +110,9 @@ Route::group(['middleware' => 'authverified'], function () {
 
     return view('user-panel.my-business.profile.account_summary');
    });
+    Route::get('/account', function () {
+    return view('user-panel.my-business.profile.account');
+   });
     Route::get('/account/setting', function () {
 
         return view('user-panel.my-business.profile.account_setting');

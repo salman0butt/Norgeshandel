@@ -1,4 +1,12 @@
 @extends('layouts.landingSite')
+<style>
+.trailing-border img {
+    min-height: 207px !important;
+}
+.clist .location {
+    position: unset !important;
+}
+</style>
 @section('page_content')
     <main class="dme-wrapper" id="dme-wrapper">
         @include('user-panel.property.search-flat-wishes-rented-inner')

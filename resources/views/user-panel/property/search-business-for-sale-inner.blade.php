@@ -72,7 +72,7 @@
                     ?>
 
                     <div
-                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>">
+                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/business/for/sale/description', $value->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
@@ -86,7 +86,7 @@
                                 <!-- <div class="week-status u-t5 stext-muted" style="">Strandvegen, 2380 Brumunddal</div>-->
                                 <!--<div class="u-t5 text-muted" style="">&nbsp;</div>-->
                                 <div class="location u-t5 text-muted mt-2">{{$business_for_sale->street_address}}</div>
-                                <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div>
+                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="title color-grey">{{$business_for_sale->headline}}</div>
                                 <div class="mt-2">
                                     <div class="area font-weight-bold float-left color-grey">&nbsp;</div>
@@ -101,6 +101,10 @@
                                         src="assets/images/businessplots-logo.png" alt="" class="img-fluid"></div>
                             </div>
                         </a>
+                        <div>
+                          @php $ad = $business_for_sale->ad;  @endphp
+                          @include('user-panel.partials.fav-heart-button', compact('ad'))
+                        </div>
                     </div>
 
                 @endforeach

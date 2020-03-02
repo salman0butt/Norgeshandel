@@ -103,6 +103,10 @@
             return false;
 
         });
+        window.history.pushState('', null, './');
+        $(window).on('popstate', function() {
+        location.reload(true);
+        });
 
     </script>
 
