@@ -175,46 +175,56 @@
                     @include('common.partials.flash-messages')
                     <div class="chat-thread-list">
                         @foreach($threads as $key=>$thread)
-                        @if(!empty($thread->ad) && (is_countable($thread->messages) && count($thread->messages)>0 || $thread->id==$active_thread->id))
+                            @if(!empty($thread->ad) &&
+                            (
+                            (isset($new_id) && $new_id==$thread->id)
+                            ||
+                            ((is_countable($thread->messages) && count($thread->messages)>0)))
+                            )
                                 @php($thread_user = $thread->users->where('id', '!=', Auth::id())->first())
 
-                            <div class="position-relative">
-                                <a href="{{url('messages/thread', $thread->id)}}"
-                                   class="thread thread-link-{{$thread->id}} {{$thread->id==$active_thread->id?"active":""}}"
-                                   id="{{ $thread->id }}" data-id="{{ $thread->id }}">
-                                    <div
-                                        class="row chat-thread-tab thread-tab-{{$thread->id}} {{$thread->id==$active_thread->id?"active":""}}">
+                                <div class="position-relative">
+                                    <a href="{{url('messages/thread', $thread->id)}}"
+                                       class="thread thread-link-{{$thread->id}} {{$thread->id==$active_thread->id?"active":""}}"
+                                       id="{{ $thread->id }}" data-id="{{ $thread->id }}">
+                                        <div class="row chat-thread-tab thread-tab-{{$thread->id}} {{$thread->id==$active_thread->id?"active":""}}">
 
-                                        <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon"
-                                             data-thread-id="{{$thread->id}}">
-                                            @if(count($thread->get_unread)>0)
-                                                <span data-thread-id="{{$thread->id}}"
-                                                      class="badge badge-primary pending"
-                                                      style="">{{count($thread->get_unread)}}</span>
-                                            @endif
-                                            <img src="{{asset('public/images/placeholder.png')}}"
-                                                 class="profile-post-image" alt="">
-                                            <img
-                                                src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
-                                                class="profile-image" alt="Profile image" style="border: 1px solid #f7f7f7; @if($thread->ad->deleted_at) bottom:35px !important; @endif">
-                                        </div>
-                                        <div class="col-md-9 p-0 mt-1 profile-name">
+                                            <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon"
+                                                 data-thread-id="{{$thread->id}}">
+                                                @if(count($thread->get_unread)>0)
+                                                    <span data-thread-id="{{$thread->id}}"
+                                                          class="badge badge-primary pending"
+                                                          style="">{{count($thread->get_unread)}}</span>
+                                                @endif
+                                                <img src="{{asset('public/images/placeholder.png')}}"
+                                                     class="profile-post-image" alt="">
+                                                <img
+                                                    src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
+                                                    class="profile-image" alt="Profile image"
+                                                    style="border: 1px solid #f7f7f7; @if($thread->ad->deleted_at) bottom:35px !important; @endif">
+                                            </div>
+                                            <div class="col-md-9 p-0 mt-1 profile-name">
                                             <span class="font-weight-bold align-middle"
                                                   style="min-height: 1em;">{{$thread_user->username}}</span>
-                                            <p class="text-muted thread-ad-title mb-0">{{$thread->ad->getTitle()}}</p>
-                                            @if($thread->ad->deleted_at) <small>(Denne annonsen er ikke mer.)</small><br>@endif
-                                            <p class="text-muted mb-1 small">
-                                                <span class="thread-time">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->created_at->format('d.m.Y'):""}}</span>
-                                                <span>-</span>
-                                                <span class="thread-message">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->message:""}}</span>
-                                            </p>
+                                                <p class="text-muted thread-ad-title mb-0">{{$thread->ad->getTitle()}}</p>
+                                                @if($thread->ad->deleted_at) <small>(Denne annonsen er ikke
+                                                    mer.)</small><br>@endif
+                                                <p class="text-muted mb-1 small">
+                                                    <span
+                                                        class="thread-time">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->created_at->format('d.m.Y'):""}}</span>
+                                                    <span>-</span>
+                                                    <span
+                                                        class="thread-message">{{!empty($thread->messages)&&is_countable($thread->messages)&&count($thread->messages)>0?$thread->messages->last()->message:""}}</span>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <a href="{{url('messages/delete/'.$thread->id)}}" class="position-absolute text-muted thread-delete-button" style="top: 15px;right:0">
-                                    <span class="fa fa-trash" style="font-size: 1.3em;"></span>
-                                </a>
-                            </div>
+                                    </a>
+                                    <a href="{{url('messages/delete/'.$thread->id)}}"
+                                       class="position-absolute text-muted thread-delete-button"
+                                       style="top: 15px;right:0">
+                                        <span class="fa fa-trash" style="font-size: 1.3em;"></span>
+                                    </a>
+                                </div>
                             @endif
                         @endforeach
                     </div>
@@ -262,8 +272,8 @@
 
             var channel = pusher.subscribe('my-channel');
             channel.bind('my-event', function (data) {
-                if(data.to_user_id == '{{Auth::id()}}'){
-                    if($('.thread-link-' + data.thread_id).length<1){
+                if (data.to_user_id == '{{Auth::id()}}') {
+                    if ($('.thread-link-' + data.thread_id).length < 1) {
                         var thread = '' +
                             '<a href="messages/thread/' + data.thread_id + '" class="thread thread-link-' + data.thread_id + '" id="' + data.thread_id + '" data-id="' + data.thread_id + '">\n' +
                             '    <div class="row chat-thread-tab thread-tab-' + data.thread_id + '">\n' +
@@ -287,8 +297,8 @@
                     if (parseInt($('#current_thread').val()) == data.thread_id) {
                         var files = data.files;
                         var file_anchor = "";
-                        for (var i=0; i<files.length; i++){
-                            file_anchor += '<br><a href="'+files[i].path+'" target="_blank"><span class="fa fa-paperclip"></span> '+files[i].name+'</a>'
+                        for (var i = 0; i < files.length; i++) {
+                            file_anchor += '<br><a href="' + files[i].path + '" target="_blank"><span class="fa fa-paperclip"></span> ' + files[i].name + '</a>'
                         }
 
                         var str = '' +
@@ -301,7 +311,7 @@
                             '                    <span class="align-middle">' + data.message + '</span>\n' +
                             '                    ' + file_anchor + '\n' +
                             '                    <br>\n' +
-                            '                    <span class="text-muted timeago" style="font-size: 0.7em" title="'+new Date($.now())+'"></span>\n' +
+                            '                    <span class="text-muted timeago" style="font-size: 0.7em" title="' + new Date($.now()) + '"></span>\n' +
                             '                </div>\n' +
                             '            </div>\n' +
                             '            <div class="clearfix"></div>\n';
@@ -314,7 +324,7 @@
                         });
                         $.ajax({
                             type: "get",
-                            url: "{{url('messages/read_all')}}/"+data.thread_id
+                            url: "{{url('messages/read_all')}}/" + data.thread_id
                         });
                         scrollToBottomFunc();
                     }
@@ -337,7 +347,7 @@
 
             $(document).on('keydown', '.message-input', function (e) {
                 var message = $("#message-input").val();
-                var attachment =   $('#attachment').val();
+                var attachment = $('#attachment').val();
 
                 if ((e.keyCode == 13 || e.keyCode == 10) && message == '' && attachment == '') {
                     alert('Meldingen kan ikke være tom!');
@@ -357,12 +367,12 @@
                 var message = $("#message-input").val();
                 var attachment = $("#attachment").val();
 
-                if(message == '' && attachment == ''){
-                   console.log('no message1');
-                   return false;
+                if (message == '' && attachment == '') {
+                    console.log('no message1');
+                    return false;
                 }
-                if(message == '' && attachment != '' || message != ''){
-                     send_message();
+                if (message == '' && attachment != '' || message != '') {
+                    send_message();
 
                 }
 
@@ -393,15 +403,15 @@
                 url: "{{url('message')}}", // need to create this post route
                 processData: false,
                 contentType: false,
-                async:false,
-                data:formdata,
+                async: false,
+                data: formdata,
                 cache: false,
                 success: function (data) {
                     data = JSON.parse(data);
                     var files = data.files;
                     var file_anchor = "";
-                    for (var i=0; i<files.length; i++){
-                        file_anchor += '<br><a href="'+files[i].path+'" target="_blank"><span class="fa fa-paperclip"></span> '+files[i].name+'</a>'
+                    for (var i = 0; i < files.length; i++) {
+                        file_anchor += '<br><a href="' + files[i].path + '" target="_blank"><span class="fa fa-paperclip"></span> ' + files[i].name + '</a>'
                     }
                     var str = '' +
                         '            <div class="message sender-message">\n' +
@@ -411,9 +421,9 @@
                         '                </div>\n' +
                         '                <div class="message-text" style="min-height: 1em;">\n' +
                         '                    <span class="align-middle">' + message + '</span>\n' +
-                        '                    '+file_anchor+'\n' +
+                        '                    ' + file_anchor + '\n' +
                         '                    <br>\n' +
-                        '                    <span class="text-muted timeago" style="font-size: 0.7em" title="'+new Date($.now())+'"></span>\n' +
+                        '                    <span class="text-muted timeago" style="font-size: 0.7em" title="' + new Date($.now()) + '"></span>\n' +
                         '                    <span class="msg-response"></span>\n' +
                         '                </div>\n' +
                         '            </div>\n' +

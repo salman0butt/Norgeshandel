@@ -88,7 +88,7 @@
 </div>
 <div class="row go-to-global-search-page">
     <div class="col-md-10 offset-md-1 p-2">
-        <a href="{{url('global-search/'.$search)}}">
+        <a href="{{url('global-search/'.$search)}}" id="all-searches-page">
             <div class="float-left">
                 <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32" width="32">
                     <path fill="currentColor" fill-rule="evenodd" d="M22.412

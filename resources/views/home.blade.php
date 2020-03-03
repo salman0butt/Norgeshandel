@@ -101,10 +101,6 @@
 
         </div>
     </main>
-    <script type="text/javascript">
-        // $(document)
-    </script>
-
     <input type="hidden" id="search_url" value="{{url('searching')}}">
 
 
@@ -136,17 +132,23 @@
 
             $('#search').on('keyup', function (e) {
                 if(!isEmpty($('#search_url').val())) {
-                    $('#suggestions').css('display', 'block');
-                    $.ajax({
-                        url: $('#search_url').val() + '/' + $('#search').val(),
-                        type: "GET",
-                        success: function (response) {
-                            $('#suggestions').html(response);
-                        },
-                        error: function (error) {
-                            console.log(error);
+                    if(e.key=='Enter') {
+                        var link = $('#all-searches-page').attr('href');
+                        if(!isEmpty(link)){
+                            location.href = link;
                         }
-                    })
+                    }
+                        $('#suggestions').css('display', 'block');
+                        $.ajax({
+                            url: $('#search_url').val() + '/' + $('#search').val(),
+                            type: "GET",
+                            success: function (response) {
+                                $('#suggestions').html(response);
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
                 }
                 else{
                     $('#suggestions').html("");

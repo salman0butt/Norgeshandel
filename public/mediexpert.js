@@ -74,6 +74,7 @@ $(document).ready(function (e) {
     var isOpen = false;
 
     $('.mega-menu-button').click(function (e) {
+        e.preventDefault();
         if(isDown){
             $('.mega-menu').slideUp();
             isDown = false;
