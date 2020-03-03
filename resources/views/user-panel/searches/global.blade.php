@@ -68,7 +68,7 @@
                 error: function (error) {
                     console.log(error);
                 }
-            })
+            });
             $('#search').on('blur', function (e) {
                 $('#suggestions').css('display', 'none');
             });

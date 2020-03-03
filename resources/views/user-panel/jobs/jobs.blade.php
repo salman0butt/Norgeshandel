@@ -24,10 +24,13 @@
         <div class="row mt-4">
             <div class="col-md-8">
                 <div class="row">
-                    <div class="input-group search-box col-md-12">
-                        <input type="text" name="search" class="form-control search-control" placeholder="Stilling, nøkkelord eller firmanavn" autofocus="">
-                        <span class="input-group-addon">
-                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32" width="32">
+                    <div class="input-group search-box position-relative">
+                        <input type="text" name="search" id="search" class="form-control search-control"
+                               placeholder="Søk her..." autocomplete="off" value="">
+{{--                               placeholder="Søk her..." autocomplete="off" value="{{$search}}">--}}
+                        <label for="search"><span class="input-group-addon">
+                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32"
+                             width="32">
                         <path fill="currentColor" fill-rule="evenodd" d="M22.412
                             21.198l-.558.656-.656.558a10.449 10.449 0 0 1-6.754 2.476C8.685
                             24.888 4 20.203 4 14.444 4 8.685 8.685 4 14.444 4c5.759 0 10.445
@@ -37,6 +40,13 @@
                             5.878-1.11 8.048-2.952L28.556 30 30 28.555l-6.064-6.063z"></path>
                         </svg>
                         </span>
+                        </label>
+                        <div class="suggestions" id="suggestions"
+                             style="position:absolute;top:35px;width:100%;height:auto;z-index: 1;background-color: rgba(236,223,226,0.9);box-shadow: 0 0 5px rgba(0,0,0,0.3);">
+                            @if (isset($result) )
+                                @include('user-panel.partials.global-search-inner')
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="row">

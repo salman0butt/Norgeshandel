@@ -11,10 +11,13 @@ class MessageThread extends Model
     //
     protected $guarded = [];
 
-    public function messages(){
+    public function messages()
+    {
         return $this->hasMany(Message::class)
-            ->whereNull('deleted_by')
-            ->orWhere('deleted_by', '!=', Auth::id());
+            ->where(function ($q) {
+                $q->whereNull('deleted_by')
+                    ->orWhere('deleted_by', '!=', Auth::id());
+                    });
     }
 
     public function one_side_messages(){

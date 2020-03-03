@@ -5,7 +5,12 @@
     </main>
     <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
     <script>
+        var added = false;
         $(document).ready(function () {
+            $(window).on('popstate', function(e) {
+                window.location.href =  window.location.href.split("?")[0];
+            });
+
             var urlParams = new URLSearchParams(location.search);
             var type = urlParams.get('job_type');
             if (isEmpty(type)) {
@@ -43,32 +48,40 @@
                 }
 
                 search(newUrl);
-                history.pushState('data', 'NorgesHandel', "?" + newUrl);
+                if(!added){
+                    history.pushState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
+                    added = true;
+                }
+                else{
+                    history.replaceState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
+                    }
             });
               
             var strsearch = urlParams;
             strsearch.delete('page');
             var value = strsearch.toString();
-            if (!isEmpty(value)) {
-                var url = "{{url('/recentearches')}}";
+            var job_type = strsearch.get('job_type');
+            if(!isEmpty(job_type)) {
+                if (!isEmpty(value)) {
+                    var url = "{{url('/recentearches')}}";
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: url + '/' + value + '/'+urlParams.get('search')+'/job',
-                    type: "POST",
-                    success: function (response) {
-                        // console.log(response);
-
-                    },
-                    error: function (error) {
-                        // console.log(error);
-                    }
-                });
-            }   
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: url + '/' + value + '/' + urlParams.get('search') + '/job',
+                        type: "POST",
+                        success: function (response) {
+                            // console.log(response);
+                        },
+                        error: function (error) {
+                            // console.log(error);
+                        }
+                    });
+                }
+            }
         });
     jQuery(document).ready(function($)
     {
