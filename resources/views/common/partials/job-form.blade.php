@@ -306,7 +306,7 @@
                             <label for="zip" class="col-md-2 u-t5">{{__('zip code')}}</label>
                             <div class="col-sm-4 ">
                                 <input name="zip" id="zip" value="{{$obj_job->zip}}" type="text"
-                                    class="form-control dme-form-control">
+                                    class="form-control dme-form-control zip_code">
                                 <span id="zip_code_city_name"></span>
                             </div>
 
@@ -540,7 +540,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                     }
                 }
 
-                //                    document.getElementById("contact_us").reset();
+                //document.getElementById("contact_us").reset();
             })
         });
     });
@@ -583,30 +583,6 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
 
 </script>
 
-<script>
-    $(document).on('change', 'input[name="zip"]', function (e) {
-        document.getElementById("zip_code_city_name").innerHTML = '';
-        var zip_code = $(this).val();
-        var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
-        // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
-        var client_url = 'localhost';
-
-        if (zip_code) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    const postalCode = JSON.parse(this.responseText);
-                    document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
-                    console.log(postalCode.result);
-                }
-            };
-            xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, true);
-
-            xhttp.send();
-        }
-    });
-
-</script>
 @endsection
 
 
