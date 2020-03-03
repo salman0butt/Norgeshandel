@@ -199,4 +199,42 @@ class SearchController extends Controller
         return view('user-panel.searches.global', compact('search'));
     }
 
+    public function job_search($search = "")
+    {
+        if (!empty($search)) {
+            $job_parttime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
+                ->where('ads.status', '=', 'published')
+                ->where('jobs.job_type', '=', 'part_time')
+                ->where(function ($query) use ($search) {
+                    $query->where('jobs.title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.keywords', 'like', "%" . $search . "%");
+                })->get();
+            $job_fulltime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
+                ->where('ads.status', '=', 'published')
+                ->where('jobs.job_type', '=', 'full_time')
+                ->where(function ($query) use ($search) {
+                    $query->where('jobs.title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.keywords', 'like', "%" . $search . "%");
+                })->get();
+            $job_management = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
+                ->where('ads.status', '=', 'published')
+                ->where('jobs.job_type', '=', 'management')
+                ->where(function ($query) use ($search) {
+                    $query->where('jobs.title', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('jobs.keywords', 'like', "%" . $search . "%");
+                })->get();
+            $html = "";
+            $html .= view('user-panel.partials.job-search-inner',
+                compact('search','job_parttime', 'job_fulltime', 'job_management'))->render();
+            exit($html);
+        } else {
+            exit("");
+        }
+    }
+    public function job_global($search=""){
+//        return view('user-panel.searches.global', compact('search'));
+    }
 }

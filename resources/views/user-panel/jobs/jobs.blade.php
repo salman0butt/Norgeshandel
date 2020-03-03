@@ -23,7 +23,7 @@
         </div>
         <div class="row mt-4">
             <div class="col-md-8">
-                <div class="row">
+{{--                <div class="row">--}}
                     <div class="input-group search-box position-relative">
                         <input type="text" name="search" id="search" class="form-control search-control"
                                placeholder="Søk her..." autocomplete="off" value="">
@@ -48,7 +48,7 @@
                             @endif
                         </div>
                     </div>
-                </div>
+{{--                </div>--}}
                 <div class="row">
                     <ul class="product-sub-cat-list pl-3 pt-3 col-md-12">
                         <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
@@ -115,4 +115,50 @@
         <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
     </div>
 </main>
+<input type="hidden" id="search_url" value="{{url('job-searching')}}">
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: $('#search_url').val() + '/' + $('#search').val(),
+            type: "GET",
+            success: function (response) {
+                $('#suggestions').html(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+        $('#search').on('blur', function (e) {
+            $('#suggestions').css('display', 'none');
+        });
+
+        $("#suggestions").hover(function () {
+            $(this).css('display', 'block');
+        });
+
+        $('#search').on('keyup', function (e) {
+            if (!isEmpty($('#search_url').val())) {
+                $('#suggestions').css('display', 'block');
+                $.ajax({
+                    url: $('#search_url').val() + '/' + $('#search').val(),
+                    type: "GET",
+                    success: function (response) {
+                        $('#suggestions').html(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            } else {
+                $('#suggestions').html("");
+            }
+        });
+    });
+
+</script>
 @endsection
