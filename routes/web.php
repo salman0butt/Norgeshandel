@@ -52,6 +52,8 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::get('searching/{search?}', 'SearchController@search')->name('searching');
     Route::get('global-search/{search}', 'SearchController@global')->name('global');
+    Route::get('job-searching/{search?}', 'SearchController@job_search')->name('job-searching');
+    Route::get('job-search/{search}', 'SearchController@job_global')->name('job-global');
 //    home routes
     Route::get('/home', 'HomeController@index')->name('home');
 
