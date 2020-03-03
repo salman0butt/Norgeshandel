@@ -14,9 +14,16 @@
          if (!isEmpty(sort)) {
              newUrl += "&sort=" + sort;
          }
-
-         history.pushState('data', 'NorgesHandel', "?" + newUrl);
+         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
          search(newUrl);
+         // fix_page_links();
+         var back_url = $('#back_url').val();
+         if (!added) {
+             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             added = true;
+         } else {
+             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+         }
          // fix_page_links();
      });
 
@@ -24,6 +31,32 @@
          var newUrl = $('#mega_menu_form').serialize();
          var sort = $(this).val();
          var view = urlParams.get('view');
+         var page = urlParams.get('page');
+         if (!isEmpty(sort)) {
+             newUrl += "&sort=" + sort;
+         }
+         if (!isEmpty(view)) {
+             newUrl += "&view=" + view;
+         }
+         if (!isEmpty(page)) {
+             newUrl += "&page=" + page;
+         }
+         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
+         search(newUrl);
+         // fix_page_links();
+         var back_url = $('#back_url').val();
+         if (!added) {
+             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             added = true;
+         } else {
+             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+         }
+     });
+     $(document).on('click', '#view', function (e) {
+         e.preventDefault();
+         var newUrl = $('#mega_menu_form').serialize();
+         var sort = urlParams.get('sort');
+         var view = $(this).attr();
          var page = urlParams.get('page');
          if (!isEmpty(sort)) {
              newUrl += "&sort=" + sort;

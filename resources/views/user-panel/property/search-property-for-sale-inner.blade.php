@@ -21,8 +21,15 @@
         </div>
         <div class="col-md-4 pt-4">
             <div class="pt-3 float-left" style="min-width: 53px;">
-                <a href="?<?php echo $col == 'grid' ? 'view=list' : 'view=grid' ?>" class="dme-btn-rounded-back-only"><i
-                        class="<?php echo $col == 'grid' ? 'fa fa-list' : 'fa fa-th' ?>"></i></a>
+                @if($col == 'grid')
+                    <a href="?view=list" data-view="list" class="dme-btn-rounded-back-only">
+                        <i class="fa fa-list"></i>
+                    </a>
+                @else
+                    <a href="?view=grid" data-view="grid" class="dme-btn-rounded-back-only">
+                        <i class="fas fa-th"></i>
+                    </a>
+                @endif
             </div>
             <div class="pt-3 float-left">
                 <a href="#" class="dme-btn-rounded-back-only"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
@@ -72,27 +79,32 @@
                         }
                         ?>
                         <div
-                            class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position: relative">
+                            class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>"
+                            style="position: relative">
                             <a href="{{url('/property/for/sale/description', $value->id)}}"
                                class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                 <div
                                     class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                     <div class="trailing-border">
-                                        <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"
+                                        <img
+                                            src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"
                                             alt="" class="img-fluid radius-8 w-100 list-h">
                                     </div>
                                 </div>
                                 <div
                                     class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                     <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>
-                                   
-                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">{{$property_for_sale->street_address}}</div>
+
+                                    <div
+                                        class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">{{$property_for_sale->street_address}}</div>
                                     <div class="title color-grey">{{$property_for_sale->headline}}</div>
                                     <div class="mt-2">
-                                        <div class="area font-weight-bold float-left color-grey">{{$property_for_sale->primary_room}}
+                                        <div
+                                            class="area font-weight-bold float-left color-grey">{{$property_for_sale->primary_room}}
                                             m²
                                         </div>
-                                        <div class="price font-weight-bold float-right color-grey">{{$property_for_sale->total_price}}
+                                        <div
+                                            class="price font-weight-bold float-right color-grey">{{$property_for_sale->total_price}}
                                             kr
                                         </div>
                                     </div>
@@ -112,7 +124,7 @@
                                 @php $ad = $property_for_sale->ad;  @endphp
                                 @include('user-panel.partials.fav-heart-button', compact('ad'))
                             </div>
-                                    
+
                         </div>
                     @endforeach
                 </div>
