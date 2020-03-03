@@ -22,6 +22,7 @@
         </div>
         <div class="row">
             <div class="col-md-10 offset-md-1">
+              <div class="notice"></div>
                 @include('common.partials.property.property_for_sale_form')
             </div>
         </div>
@@ -71,10 +72,8 @@
                 }
             });
             $("input,select").on("keyup", function() {
-
                 $(this).parent().find('.error-span').html("");
                 $(this).removeClass("error-input");
-
             });
 
             $(document).on('keyup', '.asking_price,.costs_include,.percentage_of_public_debt', function() {
@@ -102,22 +101,23 @@
 
             });
 
-            $("#publiserannonsen").click(function(e){
+            $("input,select").on('blur',function(e){
                 e.preventDefault();
+            
+             @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
+                @endif 
 
-                if(! $('#property_for_sale_form').valid()) return false;
+               // if(! $('#property_for_sale_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function( index ) {
                     $(".error-span").html('');
                     $("input, select").removeClass("error-input");
                 });
-
-               @if(Request::is('new/property/sale/ad/*/edit'))
-                var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
-                @else 
+               @if(!Request::is('new/property/sale/ad/*/edit') && !Request::is('complete/ad/*'))
                  var url = "{{url('add/property/sale/ad')}}";
                 @endif 
-                
+
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
                 var fd = new FormData(myform);
@@ -131,9 +131,17 @@
                     processData: false,
                     contentType: false,
                     success: function(data){
-                        document.getElementById("property_for_sale_form").reset();
-                        document.getElementById("zip_code_city_name").innerHTML = '';
-                        $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                       // document.getElementById("property_for_sale_form").reset();
+                       // document.getElementById("zip_code_city_name").innerHTML = '';
+                          $('.notice').hide();
+                        $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+                      
+                        setTimeout(function () {
+                            $('.notice').show('slow');
+                        }, 2000);
+                        setTimeout(function () {
+                            $('.notice').hide('slow');
+                        }, 5000);
                     },
                     error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                         var errors = jqXhr.responseJSON;
@@ -155,7 +163,67 @@
                 }).always(function() { l.stop(); });
                 return false;
             });
-         
+
+         //click button update
+             $("#publiserannonsen").click(function(e){
+                e.preventDefault();
+             @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                var url = "{{url('new/property/sale/ad/update/'.$property_for_sale1->id)}}";
+                @endif 
+
+               // if(! $('#property_for_sale_form').valid()) return false;
+
+                $("input ~ span,select ~ span").each(function( index ) {
+                    $(".error-span").html('');
+                    $("input, select").removeClass("error-input");
+                });
+               @if(!Request::is('new/property/sale/ad/*/edit') && !Request::is('complete/ad/*'))
+                 var url = "{{url('add/property/sale/ad')}}";
+                @endif 
+                $('.notice').html("");
+                var myform = document.getElementById("property_for_sale_form");
+                var fd = new FormData(myform);
+                var l = Ladda.create(this);
+                l.start();
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: fd,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function(data){
+                       // document.getElementById("property_for_sale_form").reset();
+                      //  document.getElementById("zip_code_city_name").innerHTML = '';
+                        if(data['success']){
+                        $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                        }
+                    },
+                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors
+                        var errors = jqXhr.responseJSON;
+                        console.log(errors.errors);
+                        if(isEmpty(errors.errors))
+                        {
+                            $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                            return false;
+                        }
+
+                       // var html="<ul>";
+                        $.each( errors.errors, function( index, value ){
+                            console.log(value);
+                            $("."+index).html(value);
+                            $("input[name='"+index+"'],select[name='"+index+"']").addClass("error-input");
+                        });
+                      //  html += "</ul>";
+                     //   $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
+                    },
+                }).always(function() { l.stop(); });
+                return false;
+            });
+
+
+
+
 
             var i = 0;
             $("#add_more_viewing_times_sales").click(function(e){
