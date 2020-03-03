@@ -1,4 +1,9 @@
 @extends('layouts.landingSite')
+<style>
+.trailing-border img {
+    min-height: 207px !important;
+}
+</style>
 @section('page_content')
     <main class="dme-wrapper" id="dme-wrapper">
         @include('user-panel.property.search-property-for-sale-inner')

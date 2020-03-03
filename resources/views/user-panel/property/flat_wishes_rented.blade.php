@@ -42,6 +42,7 @@
         $("#publiserannonsen").click(function(e){
 
             e.preventDefault();
+            if(! $('#flat_wishes_rented_form').valid()) return false;
 
             $('.notice').html("");
             var myform = document.getElementById("flat_wishes_rented_form");
@@ -62,7 +63,9 @@
                 processData: false,
                 contentType: false,
                 success: function(data){
-                        $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                    document.getElementById("flat_wishes_rented_form").reset();
+                    document.getElementById("zip_code_city_name").innerHTML = '';
+                    $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
                 },
                 error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                     var errors = jqXhr.responseJSON;

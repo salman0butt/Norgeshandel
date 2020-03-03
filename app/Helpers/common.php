@@ -16,10 +16,26 @@ class common
 {
     public static function map_json($json){
         $returnable = "";
-        foreach(json_decode($json) as $val):
-            $returnable .= $val.', ';
-        endforeach;
-        return rtrim($returnable, ', ');
+        if ($json) {
+            $json_value = (json_decode($json));
+            if($json_value){
+            foreach(json_decode($json) as $key=>$val):
+                $returnable .= $val.', ';
+            endforeach;
+         return rtrim($returnable, ', ');
+
+            }else{
+               
+                    return rtrim($json, ', ');
+                //  foreach($explod_val as $key=>$val):
+                //  $returnable = 
+                //   endforeach;
+               // dd($arr);
+            }
+           
+
+            
+        }
     }
 
     public static function insert_term_array($arr, $taxonomy, $parent = 0){

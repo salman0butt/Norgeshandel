@@ -57,6 +57,7 @@
         $("#publiserannonsen").click(function (e) {
 
             e.preventDefault();
+            if(! $('#commercial_property_for_sale').valid()) return false;
 
             @if(Request::is('add/new/commercial/property/for/sale/*/edit'))
                 var url = "{{url('add/new/commercial/property/for/sale/'.$commercial_property->id)}}";
@@ -78,6 +79,8 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    document.getElementById("commercial_property_for_sale").reset();
+                    document.getElementById("zip_code_city_name").innerHTML = '';
                     $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
                 },
                 error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
@@ -102,6 +105,10 @@
             });
             return false;
 
+        });
+        window.history.pushState('', null, './');
+        $(window).on('popstate', function() {
+        location.reload(true);
         });
 
     </script>

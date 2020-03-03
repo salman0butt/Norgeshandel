@@ -56,7 +56,7 @@
                     history.replaceState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
                     }
             });
-
+              
             var strsearch = urlParams;
             strsearch.delete('page');
             var value = strsearch.toString();
@@ -83,6 +83,14 @@
                 }
             }
         });
-
+    jQuery(document).ready(function($)
+    {
+        if (window.history && window.history.pushState)
+        {
+            $(window).on('popstate', function(e) {
+                window.location.href =  window.location.href.split("?")[0];
+            });
+        }
+    });
     </script>
 @endsection

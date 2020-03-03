@@ -94,7 +94,7 @@
         $("#publiserannonsen").click(function(e){
 
             e.preventDefault();
-
+            if(! $('#property_holiday_home_for_sale_form').valid()) return false;
 
             $('.notice').html("");
             var myform = document.getElementById("property_holiday_home_for_sale_form");
@@ -115,7 +115,10 @@
                 processData: false,
                 contentType: false,
                 success: function(data){
-                        $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                    document.getElementById("property_holiday_home_for_sale_form").reset();
+                    document.getElementById("zip_code_city_name").innerHTML = '';
+
+                    $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
                 },
                 error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                     var errors = jqXhr.responseJSON;

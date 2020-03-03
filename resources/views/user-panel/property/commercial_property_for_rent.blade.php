@@ -57,8 +57,8 @@
     });
 
     $("#publiserannonsen").click(function(e){
-
         e.preventDefault();
+        if(! $('#commercial_property_for_rent').valid()) return false;
         var l = Ladda.create(this);
         l.start();
         @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
@@ -80,7 +80,9 @@
             processData: false,
             contentType: false,
             success: function(data){
-                    $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                document.getElementById("commercial_property_for_rent").reset();
+                document.getElementById("zip_code_city_name").innerHTML = '';
+                $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
             },
             error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                 var errors = jqXhr.responseJSON;
