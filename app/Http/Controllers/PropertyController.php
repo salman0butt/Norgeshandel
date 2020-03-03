@@ -1430,8 +1430,21 @@ class PropertyController extends Controller
             exit();
         }
     }
+    
+    //update dummy property for sale to published
+    public function UpdateDummySaleAdd(AddPropertyForSale $request, $id) {
+      //  DB::connection()->enableQueryLog();
+        $property = PropertyForSale::find($id);
+        $ad = $property->ad;
 
-    public function updateSaleAdd(AddPropertyForSale $request, $id)
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+          
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+
+    public function updateSaleAdd(Request $request, $id)
     {
         DB::beginTransaction();
         try {
