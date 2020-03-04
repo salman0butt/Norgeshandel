@@ -116,7 +116,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group nav-dynamic-checks mt-4 show-sub">
+                        <div class="form-group nav-dynamic-checks mt-4">
                             <?php
                             if (!empty($tax = App\Taxonomy::where('slug', 'states_and_cities')->first())) {
                                 echo App\Helpers\common::map_nav($tax->parent_terms());

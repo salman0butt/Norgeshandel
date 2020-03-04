@@ -26,7 +26,7 @@
             <h3 class="u-t5">Annonsetype</h3>
             <div class="row pl-3">
                 <div class="col-md-12 input-toggle">
-                    <input class="checkmark" type="radio" value="Bortfeste" name="plot_type" id="type_boligtomt" {{ $commercial_plot->plot_type == "Bortfeste" ? "checked" : ''}}>
+                    <input class="checkmark" type="radio" value="Bortfeste" name="plot_type" id="type_boligtomt" @if(!$commercial_plot->plot_type) checked @endif {{ $commercial_plot->plot_type == "Bortfeste" ? "checked" : ''}}>
                     <label for="type_boligtomt" class="radio-lbl"> Salg</label>
                 </div>
                 <div class="col-md-12 input-toggle">
@@ -53,7 +53,7 @@
             <h3 class="u-t5">Postnummerss</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="zip_code" type="text" value="{{ $commercial_plot->zip_code }}" class="dme-form-control">
+                    <input name="zip_code" type="text" value="{{ $commercial_plot->zip_code }}" class="dme-form-control zip_code">
                     <span id="zip_code_city_name"></span>
                 </div>
                 <div class="col-sm-8">
@@ -71,7 +71,7 @@
         </div>
         <!--                            text area-->
         <div class="form-group">
-            <h3 class="u-t5">Beliggenhet</h3>
+            <h3 class="u-t5">Beliggenhet (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="location_description" id="location_description" cols="30" rows="10">{{ $commercial_plot->location_description }}</textarea>
@@ -311,28 +311,3 @@
     </div>
 </form>
 
-<script>
-    $(document).on('change', 'input[name="zip_code"]', function (e) {
-        document.getElementById("zip_code_city_name").innerHTML = '';
-        var zip_code = $(this).val();
-        var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
-        // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
-        var client_url = 'localhost';
-
-        if (zip_code) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    const postalCode = JSON.parse(this.responseText);
-                    document.getElementById("zip_code_city_name").innerHTML = postalCode
-                        .result;
-                    console.log(postalCode.result);
-                }
-            };
-            xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, true);
-
-            xhttp.send();
-        }
-    });
-
-</script>

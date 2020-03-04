@@ -173,6 +173,15 @@ foreach ($my_ads as $ad){
                         // if(json_jobs.length>0) {
                         if(response.length > 0) {
                             $('#ads-list').html(response);
+
+                            if(status == 'saved'){
+                                $('.statistics-button').addClass('d-none');
+                                $('.edit-ad-button').text('Fullfør annonsen');
+                            }
+
+                            if(status == 'expired'){
+                                $('.edit-ad-button').addClass('d-none');
+                            }
                         }
                         else{
                             $('#ads-list').html(

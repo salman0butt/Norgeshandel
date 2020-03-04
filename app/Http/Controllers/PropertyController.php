@@ -43,9 +43,13 @@ use function foo\func;
 
 class PropertyController extends Controller
 {
+    private $pagination;
+
     //
     public function __construct()
     {
+        $this->pagination = getenv('PAGINATION');
+        $this->pagination = $this->pagination==0?30:$this->pagination;
         Mapper::map(53.381128999999990000, -1.470085000000040000);
     }
 
@@ -57,13 +61,20 @@ class PropertyController extends Controller
 //    zain
     public function search_property_for_sale(Request $request)
     {
+        $table = 'property_for_sales';
         $col = 'list';
+        $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
-            ->join('property_for_sales', 'property_for_sales.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->join($table, $table.'.ad_id', 'ads.id')
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull($table.'.deleted_at');
 
 
         $arr = Arr::only($request->all(), ['country']);
@@ -71,110 +82,104 @@ class PropertyController extends Controller
             $query->where('headline', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate('property_for_sales.created_at', '=', $request->created_at);
+            $query->whereDate($table.'.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where('property_for_sales.local_area_name', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table.'.local_area_name', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->asking_price_from) && !empty($request->asking_price_from)) {
-            $query->where('property_for_sales.asking_price', '>=', (int)$request->asking_price_from);
+            $query->where($table.'.asking_price', '>=', (int)$request->asking_price_from);
         }
         if (isset($request->asking_price_to) && !empty($request->asking_price_to)) {
-            $query->where('property_for_sales.asking_price', '<=', (int)$request->asking_price_to);
+            $query->where($table.'.asking_price', '<=', (int)$request->asking_price_to);
         }
 
         if (isset($request->total_price_from) && !empty($request->total_price_from)) {
-            $query->where('property_for_sales.total_price', '>=', (int)$request->total_price_from);
+            $query->where($table.'.total_price', '>=', (int)$request->total_price_from);
         }
         if (isset($request->total_price_to) && !empty($request->total_price_to)) {
-            $query->where('property_for_sales.total_price', '<=', (int)$request->total_price_to);
+            $query->where($table.'.total_price', '<=', (int)$request->total_price_to);
         }
 
         if (isset($request->rent_shared_cost_from) && !empty($request->rent_shared_cost_from)) {
-            $query->where('property_for_sales.rent_shared_cost', '>=', (int)$request->rent_shared_cost_from);
+            $query->where($table.'.rent_shared_cost', '>=', (int)$request->rent_shared_cost_from);
         }
         if (isset($request->total_price_to) && !empty($request->total_price_to)) {
-            $query->where('property_for_sales.rent_shared_cost', '<=', (int)$request->rent_shared_cost_to);
+            $query->where($table.'.rent_shared_cost', '<=', (int)$request->rent_shared_cost_to);
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where('property_for_sales.use_area', '>=', (int)$request->use_area_from);
+            $query->where($table.'.use_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where('property_for_sales.use_area', '<=', (int)$request->use_area_to);
+            $query->where($table.'.use_area', '<=', (int)$request->use_area_to);
         }
 
         if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
-            $query->where('property_for_sales.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+            $query->where($table.'.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
         }
 
         if (isset($request->land_from) && !empty($request->land_from)) {
-            $query->where('property_for_sales.land', '>=', (int)$request->land_from);
+            $query->where($table.'.land', '>=', (int)$request->land_from);
         }
         if (isset($request->land_to) && !empty($request->land_to)) {
-            $query->where('property_for_sales.land', '<=', (int)$request->land_to);
+            $query->where($table.'.land', '<=', (int)$request->land_to);
         }
 
         if (isset($request->year_from) && !empty($request->year_from)) {
-            $query->where('property_for_sales.year', '>=', (int)$request->year_from);
+            $query->where($table.'.year', '>=', (int)$request->year_from);
         }
 
         if (isset($request->year_to) && !empty($request->year_to)) {
-            $query->where('property_for_sales.year', '<=', (int)$request->year_to);
+            $query->where($table.'.year', '<=', (int)$request->year_to);
         }
 
         if (isset($request->condition) && !empty($request->condition)) {
             if (in_array("new", $request->condition)) {
-                $query->where('property_for_sales.year', '>=', today()->addMonths(-6)->year);
+                $query->where($table.'.year', '>=', today()->addMonths(-6)->year);
             }
             if (in_array("used", $request->condition)) {
-                $query->where('property_for_sales.year', '<', today()->addMonths(-6)->year);
+                $query->where($table.'.year', '<', today()->addMonths(-6)->year);
             }
         }
 
         if (isset($request->display_date) && !empty($request->display_date)) {
-            $query->whereDate('property_for_sales.deliver_date', '=', $request->display_date[0]);
+            $query->whereDate($table.'.deliver_date', '=', $request->display_date[0]);
             for ($i = 1; $i < count($request->display_date); $i++) {
-                $query->orWhereDate('property_for_sales.deliver_date', '=', $request->display_date[$i]);
+                $query->orWhereDate($table.'.deliver_date', '=', $request->display_date[$i]);
             }
         }
 
         if (isset($request->pfs_property_type) && !empty($request->pfs_property_type)) {
-            $query->whereIn('property_for_sales.property_type', $request->pfs_property_type);
+            $query->whereIn($table.'.property_type', $request->pfs_property_type);
         }
 
         if (isset($request->pfs_tenure) && !empty($request->pfs_tenure)) {
-            $query->whereIn('property_for_sales.tenure', $request->pfs_tenure);
+            $query->whereIn($table.'.tenure', $request->pfs_tenure);
         }
 
         if (isset($request->facilities) && !empty($request->facilities)) {
-            $query->where('property_for_sales.facilities', 'like', '%' . $request->facilities[0] . '%');
+            $query->where($table.'.facilities', 'like', '%' . $request->facilities[0] . '%');
             for ($i = 1; $i < count($request->facilities); $i++) {
-                $query->orWhere('property_for_sales.facilities', 'like', '%' . $request->facilities[$i] . '%');
+                $query->orWhere($table.'.facilities', 'like', '%' . $request->facilities[$i] . '%');
             }
         }
 
         if (isset($request->floor) && !empty($request->floor)) {
-            $query->whereIn('property_for_sales.floor', $request->floor);
+            $query->whereIn($table.'.floor', $request->floor);
             if (in_array('over 6', $request->floor)) {
-                $query->orwhere('property_for_sales.floor', '>', 6);
+                $query->orwhere($table.'.floor', '>', 6);
             }
         }
 
         if (isset($request->energy_unit) && !empty($request->energy_unit)) {
-            $query->whereIn('property_for_sales.energy_grade', $request->energy_unit);
+            $query->whereIn($table.'.energy_grade', $request->energy_unit);
         }
 
-
-        $order_by_thing = 'id';
-        $order_by = 'DESC';
-
-        if (isset($request->order) && !empty($request->order)) {
-            $order = $request->order;
-            switch ($order) {
+            switch ($sort) {
                 case 'priced-low-high':
                     $query->orderBy('asking_price', 'ASC');
                     break;
@@ -194,29 +199,35 @@ class PropertyController extends Controller
                     $query->orderBy('total_price', 'DESC');
                     break;
             }
-        }
         $query->where($arr);
 
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
 
+        $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-property-for-sale', compact('col', 'add_array'));
+        return view('user-panel.property.search-property-for-sale', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
     public function search_commercial_property_for_sale(Request $request)
     {
+        $table = 'commercial_property_for_sales';
         $col = 'list';
+        $sort = 'published';
+//        dd($request->sort);
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
-            ->join('commercial_property_for_sales', 'commercial_property_for_sales.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->join($table, $table.'.ad_id', 'ads.id')
+            ->where('ads.status', 'published')
+        ->whereNull('ads.deleted_at')
+        ->whereNull($table.'.deleted_at');
 
         if (isset($request->country) && !empty($request->country)) {
             $query->whereIn('location', $request->country);
@@ -225,43 +236,38 @@ class PropertyController extends Controller
             $query->where('headline', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate('commercial_property_for_sales.created_at', '=', $request->created_at);
+            $query->whereDate($table.'.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where('commercial_property_for_sales.street_address', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table.'.street_address', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->price_from) && !empty($request->price_from)) {
-            $query->where('commercial_property_for_sales.value_rate', '>=', (int)$request->price_from);
+            $query->where($table.'.value_rate', '>=', (int)$request->price_from);
         }
         if (isset($request->price_to) && !empty($request->price_to)) {
-            $query->where('commercial_property_for_sales.value_rate', '<=', (int)$request->price_to);
+            $query->where($table.'.value_rate', '<=', (int)$request->price_to);
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where('commercial_property_for_sales.use_area', '>=', (int)$request->use_area_from);
+            $query->where($table.'.use_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where('commercial_property_for_sales.use_area', '<=', (int)$request->use_area_to);
+            $query->where($table.'.use_area', '<=', (int)$request->use_area_to);
         }
 
         if (isset($request->cpfs_property_type) && !empty($request->cpfs_property_type)) {
-            $query->where('commercial_property_for_sales.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
+            $query->where($table.'.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
             for ($i = 1; $i < count($request->cpfs_property_type); $i++) {
-                $query->orWhere('commercial_property_for_sales.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
+                $query->orWhere($table.'.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
             }
         }
 
-        $order_by_thing = 'id';
-        $order_by = 'DESC';
-
-        if (isset($request->order) && !empty($request->order)) {
-            $order = $request->order;
-            switch ($order) {
+            switch ($sort) {
                 case 'published':
-                    $query->orderBy('created_at', 'DESC');
+                    $query->orderBy($table.'.created_at', 'DESC');
                     break;
                 case 'priced-low-high':
                     $query->orderBy('value_rate', 'ASC');
@@ -270,29 +276,33 @@ class PropertyController extends Controller
                     $query->orderBy('value_rate', 'DESC');
                     break;
             }
-        }
-//        $query->where($arr);
 
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
+        $add_array = $query->paginate($this->pagination);
 
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-commercial-property-for-sale-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-commercial-property-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-commercial-property-for-sale', compact('col', 'add_array'));
+        return view('user-panel.property.search-commercial-property-for-sale', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
     public function search_commercial_property_for_rent(Request $request)
     {
+        $table = 'commercial_property_for_rents';
         $col = 'list';
+        $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
-            ->join('commercial_property_for_rents', 'commercial_property_for_rents.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->join($table, $table.'.ad_id', 'ads.id')
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull($table.'.deleted_at');
 
         if (isset($request->country) && !empty($request->country)) {
             $query->whereIn('country', $request->country);
@@ -301,65 +311,66 @@ class PropertyController extends Controller
             $query->where('heading', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate('commercial_property_for_rents.created_at', '=', $request->created_at);
+            $query->whereDate($table.'.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where('commercial_property_for_rents.street_address', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table.'.street_address', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where('commercial_property_for_rents.use_area', '>=', (int)$request->use_area_from);
+            $query->where($table.'.use_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where('commercial_property_for_rents.use_area', '<=', (int)$request->use_area_to);
+            $query->where($table.'.use_area', '<=', (int)$request->use_area_to);
         }
 
         if (isset($request->cpfs_property_type) && !empty($request->cpfs_property_type)) {
-            $query->where('commercial_property_for_rents.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
+            $query->where($table.'.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
             for ($i = 1; $i < count($request->cpfs_property_type); $i++) {
-                $query->orWhere('commercial_property_for_rents.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
+                $query->orWhere($table.'.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
             }
         }
 
-        $order_by_thing = 'id';
-        $order_by = 'DESC';
-
-        if (isset($request->order) && !empty($request->order)) {
-            $order = $request->order;
-            switch ($order) {
-                case 'published':
-                    $query->orderBy('created_at', 'DESC');
-                    break;
-                case 'priced-low-high':
-                    $query->orderBy('value_rate', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('value_rate', 'DESC');
-                    break;
-            }
+        switch ($sort) {
+            case 'published':
+                $query->orderBy($table.'.created_at', 'DESC');
+                break;
+            case 'priced-low-high':
+                $query->orderBy('value_rate', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('value_rate', 'DESC');
+                break;
         }
 
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
+
+        $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-commercial-property-for-rent-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-commercial-property-for-rent-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-commercial-property-for-rent', compact('col', 'add_array'));
+        return view('user-panel.property.search-commercial-property-for-rent', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
     public function search_commercial_plots(Request $request)
     {
+        $table = 'commercial_plots';
         $col = 'list';
+        $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
-            ->join('commercial_plots', 'commercial_plots.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->join($table, $table.'.ad_id', 'ads.id')
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull($table.'.deleted_at');
 
         if (isset($request->country) && !empty($request->country)) {
             $query->whereIn('country', $request->country);
@@ -368,23 +379,18 @@ class PropertyController extends Controller
             $query->where('headline', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate('commercial_plots.created_at', '=', $request->created_at);
+            $query->whereDate($table.'.created_at', '=', $request->created_at);
         }
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where('commercial_plots.plot_size', '>=', (int)$request->use_area_from);
+            $query->where($table.'.plot_size', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where('commercial_plots.plot_size', '<=', (int)$request->use_area_to);
+            $query->where($table.'.plot_size', '<=', (int)$request->use_area_to);
         }
 
-        $order_by_thing = 'id';
-        $order_by = 'DESC';
-
-        if (isset($request->order) && !empty($request->order)) {
-            $order = $request->order;
-            switch ($order) {
+            switch ($sort) {
                 case 'published':
-                    $query->orderBy('created_at', 'DESC');
+                    $query->orderBy($table.'.created_at', 'DESC');
                     break;
                 case 'priced-low-high':
                     $query->orderBy('value_rate', 'ASC');
@@ -393,55 +399,61 @@ class PropertyController extends Controller
                     $query->orderBy('value_rate', 'DESC');
                     break;
             }
-        }
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
+
+        $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-commercial-plots-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-commercial-plots-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-commercial-plots', compact('col', 'add_array'));
+        return view('user-panel.property.search-commercial-plots', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
     public function search_property_for_rent(Request $request)
     {
 //        DB::enableQueryLog();
+        $table = 'property_for_rent';
         $col = 'list';
+        $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
-            ->join('property_for_rent', 'property_for_rent.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->join($table, $table.'.ad_id', 'ads.id')
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull($table.'.deleted_at');
 
         if (isset($request->search) && !empty($request->search)) {
             $query->where('heading', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate('property_for_rent.created_at', '=', $request->created_at);
+            $query->whereDate($table.'.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where('property_for_rent.	street_address', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table.'.street_address', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->monthly_rent_from) && !empty($request->monthly_rent_from)) {
-            $query->where('property_for_rent.monthly_rent', '>=', (int)$request->monthly_rent_from);
+            $query->where($table.'.monthly_rent', '>=', (int)$request->monthly_rent_from);
         }
         if (isset($request->monthly_rent_to) && !empty($request->monthly_rent_to)) {
-            $query->where('property_for_rent.monthly_rent', '<=', (int)$request->monthly_rent_to);
+            $query->where($table.'.monthly_rent', '<=', (int)$request->monthly_rent_to);
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where('property_for_rent.gross_area', '>=', (int)$request->use_area_from);
+            $query->where($table.'.gross_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where('property_for_rent.gross_area', '<=', (int)$request->use_area_to);
+            $query->where($table.'.gross_area', '<=', (int)$request->use_area_to);
         }
         if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
-            $query->where('property_for_rent.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+            $query->where($table.'.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
         }
         if (isset($request->pfr_property_type) && !empty($request->pfr_property_type)) {
             $query->where(function ($query) use ($request) {
@@ -486,9 +498,7 @@ class PropertyController extends Controller
             });
         }
 //
-        if (isset($request->order) && !empty($request->order)) {
-            $order = $request->order;
-            switch ($order) {
+            switch ($sort) {
                 case 'priced-low-high':
                     $query->orderBy('asking_price', 'ASC');
                     break;
@@ -508,18 +518,17 @@ class PropertyController extends Controller
                     $query->orderBy('total_price', 'DESC');
                     break;
                 default:
-                    $query->orderBy('id', 'DESC');
+                    $query->orderBy('property_for_rent.id', 'DESC');
                     break;
-            }
         }
 
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
+
+        $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-property-for-rent-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-property-for-rent-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-property-for-rent', compact('col', 'add_array'));
+        return view('user-panel.property.search-property-for-rent', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
@@ -527,12 +536,18 @@ class PropertyController extends Controller
     {
         DB::enableQueryLog();
         $col = 'list';
+        $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
             ->join('property_holidays_homes_for_sales', 'property_holidays_homes_for_sales.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull('property_holidays_homes_for_sales.deleted_at');
 
 //        if (isset($request->country) && !empty($request->country)) {
 //            $query->whereIn('country', $request->country);
@@ -599,11 +614,6 @@ class PropertyController extends Controller
             });
         }
 
-
-        $order_by_thing = 'id';
-        $order_by = 'DESC';
-
-        if (isset($request->order) && !empty($request->order)) {
             $order = $request->order;
             switch ($order) {
                 case 'published':
@@ -616,27 +626,32 @@ class PropertyController extends Controller
                     $query->orderBy('asking_price', 'DESC');
                     break;
             }
-        }
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
+
+        $add_array = $query->paginate($this->pagination);
 //        dd(DB::getQueryLog());
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-holiday-homes-for-sale-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-holiday-homes-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array'));
+        return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
     public function search_business_for_sale(Request $request)
     {
         $col = 'list';
+        $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
             ->join('business_for_sales', 'business_for_sales.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull('business_for_sales.deleted_at');
 //        DB::enableQueryLog();
 
         if (isset($request->search) && !empty($request->search)) {
@@ -656,44 +671,43 @@ class PropertyController extends Controller
             $query->whereIn('business_for_sales.country', $request->country);
         }
 
-
-        $order_by_thing = 'id';
-        $order_by = 'DESC';
-
-        if (isset($request->order) && !empty($request->order)) {
-            $order = $request->order;
-            switch ($order) {
+            switch ($sort) {
                 case 'published':
-                    $query->orderBy('ad.created_at', 'DESC');
+                    $query->orderBy('ads.created_at', 'DESC');
                     break;
                 case 'priced-low-high':
-                    $query->orderBy('value_rate', 'ASC');
+                    $query->orderBy('price', 'ASC');
                     break;
                 case 'priced-high-low':
-                    $query->orderBy('asking_price', 'DESC');
+                    $query->orderBy('price', 'DESC');
                     break;
             }
-        }
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
+
+        $add_array = $query->paginate($this->pagination);
 //        dd(DB::getQueryLog());
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-business-for-sale-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-business-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-business-for-sale', compact('col', 'add_array'));
+        return view('user-panel.property.search-business-for-sale', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
     public function search_flat_wishes_rented(Request $request)
     {
         $col = 'list';
+        $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
             $col = $request->view;
         }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
         $query = DB::table('ads')
             ->join('flat_wishes_renteds', 'flat_wishes_renteds.ad_id', 'ads.id')
-            ->where('ads.status', 'published');
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull('flat_wishes_renteds.deleted_at');
 //        DB::enableQueryLog();
 
         if (isset($request->search) && !empty($request->search)) {
@@ -736,14 +750,7 @@ class PropertyController extends Controller
             });
         }
 
-
-
-        $order_by_thing = 'id';
-        $order_by = 'DESC';
-
-        if (isset($request->order) && !empty($request->order)) {
-            $order = $request->order;
-            switch ($order) {
+            switch ($sort) {
                 case 'published':
                     $query->orderBy('flat_wishes_renteds.created_at', 'DESC');
                     break;
@@ -754,16 +761,14 @@ class PropertyController extends Controller
                     $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'DESC');
                     break;
             }
-        }
-        $pagination = getenv('PAGINATION');
-        $add_array = $query->paginate($pagination==0?30:$pagination);
+
+        $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-flat-wishes-rented-inner', compact('add_array', 'col'))->render();
+            $html = view('user-panel.property.search-flat-wishes-rented-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-flat-wishes-rented', compact('col', 'add_array'));
+        return view('user-panel.property.search-flat-wishes-rented', compact('col', 'add_array', 'sort'));
     }
-
 
 //    zain
     public function new_property_for_sale(Request $request){
@@ -866,9 +871,9 @@ class PropertyController extends Controller
             $order_by = "DESC";
         }
 
-        $pagination = getenv('PAGINATION');
 
-        $add_array = DB::table('property_for_sales')->orderBy($order_by_thing, $order_by)->paginate($pagination==0?30:$pagination);
+
+        $add_array = DB::table('property_for_sales')->orderBy($order_by_thing, $order_by)->paginate($this->pagination);
 
         if ($request->ajax()) {
             return view('common.partials.property.ads_for_sale_sortion_pagination')->with(compact('add_array'))->render();
@@ -1102,8 +1107,8 @@ class PropertyController extends Controller
             $order_by = "desc";
         }
 
-        $pagination = getenv('PAGINATION');
-        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing, $order_by)->paginate($pagination==0?30:$pagination);
+
+        $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing, $order_by)->paginate($this->pagination);
         // $add_array = DB::table('property_holidays_homes_for_sales')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
         $response = view('common.partials.property.holiday_home_for_sale_render_ads')->with(compact('add_array', 'filtering'))->render();
 
@@ -1142,8 +1147,8 @@ class PropertyController extends Controller
 
         //$add_array = DB::table('property_for_rent')->orderBy($order_by_thing,$order_by)->get(['id'])->toArray();
 
-        $pagination = getenv('PAGINATION');
-        $add_array = DB::table('property_for_rent')->orderBy($order_by_thing, $order_by)->paginate($pagination==0?30:$pagination);
+
+        $add_array = DB::table('property_for_rent')->orderBy($order_by_thing, $order_by)->paginate($this->pagination);
         $response = view('common.partials.property.render_ads')->with(compact('add_array', 'filtering'))->render();
 
 
@@ -1466,7 +1471,7 @@ class PropertyController extends Controller
             exit();
         }
     }
-    
+
     //update dummy property for sale to published
     public function UpdateDummySaleAdd(AddPropertyForSale $request, $id) {
       //  DB::connection()->enableQueryLog();
@@ -1475,7 +1480,7 @@ class PropertyController extends Controller
 
           $response = $ad->update(['status'=>'published']);
         //  dd(DB::getQueryLog());
-          
+
             $data['success'] = $response;
             echo json_encode($data);
     }
