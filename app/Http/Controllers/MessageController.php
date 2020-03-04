@@ -18,7 +18,7 @@ class MessageController extends Controller
 {
     public function new_thread($ad_id){
         $ad = Ad::find($ad_id);
-        if(!empty($ad)) {
+        if($ad) {
             $ad_threads = Auth::user()->threads->where('ad_id', $ad_id);
             if (is_countable($ad_threads) && count($ad_threads) > 0) {
                 $active_thread = $ad_threads->first();
@@ -27,34 +27,20 @@ class MessageController extends Controller
                 $active_thread->save();
                 $active_thread->users()->attach([Auth::id(), $ad->user->id]);
             }
-            return redirect(url('messages/thread', $active_thread->id));
+//            return redirect(url('messages/thread', $active_thread->id));
+            $new_id = $active_thread->id;
+            return $this->view_thread($active_thread->id, $new_id);
         }
-        return redirect('forbidden');
+        else{
+            return redirect('forbidden');
+        }
     }
 
-    public function delete_thread($thread_id){
-        $thread = Auth::user()->threads->where('id', '=', $thread_id)->first();
-        if($thread){
-            $deleted_messages = $thread->one_side_messages;
-            $ids = $deleted_messages->pluck('id');
-            Message::whereIn('id', $ids)->delete();
-            $media = Media::whereIn('mediable_id', $ids)->get();
-            foreach ($media as $file){
-                common::delete_media($file->mediable_id, $file->mediable_id, $file->type);
-            }
-            Media::whereIn('id', $media->pluck('id'))->delete();
-            $ids = $thread->messages->pluck('id');
-            Message::whereIn('id', $ids)->update(['deleted_by'=>Auth::id()]);
-        }
-        Session::flash('success', 'Samtalen ble slettet');
-        return back();
-    }
-
-    public function view_thread($thread_id){
+    public function view_thread($thread_id, $new_id = 0){
         $threads = Auth::user()->threads;
         $active_thread = MessageThread::find($thread_id);
         Message::where('message_thread_id', $active_thread->id)->where('to_user_id', '=', Auth::id())->update(['read_at'=>now()]);
-        return view('user-panel.chat.messages', compact('active_thread', 'threads'));
+        return view('user-panel.chat.messages', compact('active_thread', 'threads', 'new_id'));
     }
 
     public function render_thread($thread_id){
@@ -127,6 +113,25 @@ class MessageController extends Controller
         $pusher->trigger('header-chat-notification', 'header-chat-notification-event', $data);
 
         exit(json_encode($data));
+    }
+
+    public function delete_thread($thread_id){
+        $thread = Auth::user()->threads->where('id', '=', $thread_id)->first();
+        if($thread){
+            $deleted_messages = $thread->one_side_messages;
+            $ids = $deleted_messages->pluck('id');
+            Message::whereIn('id', $ids)->delete();
+            $media = Media::whereIn('mediable_id', $ids)->get();
+            foreach ($media as $file){
+                common::delete_media($file->mediable_id, $file->mediable_id, $file->type);
+            }
+            Media::whereIn('id', $media->pluck('id'))->delete();
+            $ids = $thread->messages->pluck('id');
+            Message::whereIn('id', $ids)->update(['deleted_by'=>Auth::id()]);
+        }
+        Session::flash('success', 'Samtalen ble slettet');
+        return redirect(url('/messages'));
+//        return back();
     }
 
 }

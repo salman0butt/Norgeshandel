@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 class TaxonomyTableSeeder extends Seeder
 {
     private $taxes = [
+        ['name'=>'States and Cities', 'slug'=>'states_and_cities'],
         ['name'=>'industry','slug'=>'industry'],
         ['name'=>'Job Function','slug'=>'job_function'],
         ['name'=>'Sector','slug'=>'sector'],

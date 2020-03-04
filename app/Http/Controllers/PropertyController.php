@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin\Jobs\Job;
 use App\Media;
 use Mapper;
 use App\User;
@@ -763,6 +764,46 @@ class PropertyController extends Controller
         return view('user-panel.property.search-flat-wishes-rented', compact('col', 'add_array'));
     }
 
+
+//    zain
+    public function new_property_for_sale(Request $request){
+        $ad = new Ad(['ad_type' => 'property_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+        if ($ad) {
+            $property = new PropertyForSale(['user_id' => Auth::id()]);
+            $ad->propertyForSale()->save($property);
+            if ($property) {
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+
+//    zain
+    public function complete_property($id){
+        $ad = Ad::find($id);
+        if ($ad) {
+            if ($ad->ad_type == 'property_for_sale') {
+                $property_for_sale1 = $ad->property;
+                if ($property_for_sale1) {
+                    return view('user-panel.property.new_sale_add', compact('property_for_sale1'));
+                }
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+
+
     public function list()
     {
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
@@ -1389,8 +1430,21 @@ class PropertyController extends Controller
             exit();
         }
     }
+    
+    //update dummy property for sale to published
+    public function UpdateDummySaleAdd(AddPropertyForSale $request, $id) {
+      //  DB::connection()->enableQueryLog();
+        $property = PropertyForSale::find($id);
+        $ad = $property->ad;
 
-    public function updateSaleAdd(AddPropertyForSale $request, $id)
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+          
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+
+    public function updateSaleAdd(Request $request, $id)
     {
         DB::beginTransaction();
         try {

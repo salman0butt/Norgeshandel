@@ -56,10 +56,11 @@ class common
     {
         $html = '<ul class="list list-unstyled">';
         foreach ($terms as $term) {
+            $value = $term->taxonomy->slug=='states_and_cities'?$term->serial:$term->name;
             $html .= '
             <li>
                 <div class="input-toggle">
-                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="'.$term->name.'" id="'.$term->taxonomy->id.'-'.$term->id.'">
+                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="'.$value.'" id="'.$term->taxonomy->id.'-'.$term->id.'">
                     <label for="'.$term->taxonomy->id.'-'.$term->id.'" class="">'.$term->name . ' <span data-name="'.$term->name.'" data-title="'.$term->taxonomy->slug.'" class="count"></span></label>
                 </div>
                 ';

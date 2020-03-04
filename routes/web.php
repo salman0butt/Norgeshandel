@@ -52,6 +52,8 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::get('searching/{search?}', 'SearchController@search')->name('searching');
     Route::get('global-search/{search}', 'SearchController@global')->name('global');
+    Route::get('job-searching/{search?}', 'SearchController@job_search')->name('job-searching');
+    Route::get('job-search/{search}', 'SearchController@job_global')->name('job-global');
 //    home routes
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -104,15 +106,15 @@ Route::group(['middleware' => 'authverified'], function () {
         return view('user-panel.footer.about_us');
     });
     Route::get('my-business/my-ads/{id}/statistics', function () {
-     return view('user-panel.my-business.ads_statistics');
+        return view('user-panel.my-business.ads_statistics');
     });
     Route::get('/account/summary', function () {
 
-    return view('user-panel.my-business.profile.account_summary');
-   });
+        return view('user-panel.my-business.profile.account_summary');
+    });
     Route::get('/account', function () {
-    return view('user-panel.my-business.profile.account');
-   });
+        return view('user-panel.my-business.profile.account');
+    });
     Route::get('/account/setting', function () {
 
         return view('user-panel.my-business.profile.account_setting');
@@ -125,7 +127,6 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.my-business.profile.account_phone');
     });
-
 
 
 //Compnies List
@@ -307,8 +308,16 @@ Route::group(['middleware' => 'authverified'], function () {
                     return view('user-panel.jobs.new_management');
                 });
             });
+
+            Route::group(['prefix' => 'property'], function () {
+                Route::get('property-for-sale', 'PropertyController@new_property_for_sale');
+            });
         });
-        Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
+        Route::group(['prefix' => 'complete'], function () {
+            Route::get('ad/{id}', 'PropertyController@complete_property');
+        });
+
+            Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager']], function () {
@@ -344,43 +353,44 @@ Route::group(['middleware' => 'authverified'], function () {
     });
 
 //  zille bellow
-Route::get('property/realestate', 'PropertyController@list');
-Route::get('property/realestate/homes', 'PropertyController@ads');
-Route::get('new/property/rent/ad', 'PropertyController@newAdd');
-Route::get('new/property/rent/ad/{id}/edit', 'PropertyController@newAddedit');
-Route::patch('add/property/for/rent/ad/{id}', 'PropertyController@UpdatePropertyForRentAdd');
-Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
-Route::delete('property/for/rent/ad/{id}', 'PropertyController@deletePropertyForRent');
-Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
-Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
-Route::get('new/property/sale/ad/{id}/edit', 'PropertyController@editSaleAdd');
-Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
-Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
-Route::patch('new/property/sale/ad/{id}', 'PropertyController@updateSaleAdd');
-Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
+    Route::get('property/realestate', 'PropertyController@list');
+    Route::get('property/realestate/homes', 'PropertyController@ads');
+    Route::get('new/property/rent/ad', 'PropertyController@newAdd');
+    Route::get('new/property/rent/ad/{id}/edit', 'PropertyController@newAddedit');
+    Route::patch('add/property/for/rent/ad/{id}', 'PropertyController@UpdatePropertyForRentAdd');
+    Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
+    Route::delete('property/for/rent/ad/{id}', 'PropertyController@deletePropertyForRent');
+    Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
+    Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
+    Route::get('new/property/sale/ad/{id}/edit', 'PropertyController@editSaleAdd');
+    Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
+    Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
+    Route::patch('new/property/sale/ad/{id}', 'PropertyController@updateSaleAdd');
+    Route::patch('new/property/sale/ad/update/{id}', 'PropertyController@UpdateDummySaleAdd');
+    Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 
 //Holiday home for sale
-Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
-Route::get('holiday/home/for/sale/{id}/edit','PropertyController@editHolidayHomeForSale');
-Route::patch('holiday/home/for/sale/{id}','PropertyController@updateHomeForSaleAd');
-Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
-Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
+    Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
+    Route::get('holiday/home/for/sale/{id}/edit', 'PropertyController@editHolidayHomeForSale');
+    Route::patch('holiday/home/for/sale/{id}', 'PropertyController@updateHomeForSaleAd');
+    Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
+    Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
 
-Route::get('property/for/rent', 'PropertyController@adsForRent');
-Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
-Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
-Route::get('new/flat/wishes/rented/{id}/edit', 'PropertyController@editAddFlatWishesRented');
-Route::patch('new/flat/wishes/rented/{id}', 'PropertyController@updateFlatWishesRented');
-Route::delete('flat/wishes/rented/{id}', 'PropertyController@deleteFlatWishesRented');
-Route::post('new/add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
-Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
-Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
-Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
-Route::get('add/new/commercial/property/for/sale/{id}/edit', 'PropertyController@editcommercialPropertyForSale');
-Route::patch('add/new/commercial/property/for/sale/{id}', 'PropertyController@updateCommercialPropertyForSale');
-Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
-Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
-Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
+    Route::get('property/for/rent', 'PropertyController@adsForRent');
+    Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
+    Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
+    Route::get('new/flat/wishes/rented/{id}/edit', 'PropertyController@editAddFlatWishesRented');
+    Route::patch('new/flat/wishes/rented/{id}', 'PropertyController@updateFlatWishesRented');
+    Route::delete('flat/wishes/rented/{id}', 'PropertyController@deleteFlatWishesRented');
+    Route::post('new/add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
+    Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
+    Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
+    Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
+    Route::get('add/new/commercial/property/for/sale/{id}/edit', 'PropertyController@editcommercialPropertyForSale');
+    Route::patch('add/new/commercial/property/for/sale/{id}', 'PropertyController@updateCommercialPropertyForSale');
+    Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
+    Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
+    Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
 
 
     /// Upload images using dropzone
@@ -446,20 +456,20 @@ Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController
     });
 
 
-Route::get('/delete-media-dz',function(){
-    $media = Media::where('name_unique',$_GET['filename'])->first();
-    if ($media) {
-        $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
-        $arr = explode('.', $media->name_unique);
+    Route::get('/delete-media-dz', function () {
+        $media = Media::where('name_unique', $_GET['filename'])->first();
+        if ($media) {
+            $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+            $arr = explode('.', $media->name_unique);
 
-        foreach (glob($path . $arr[0] . '*.*') as $file) {
-            unlink($file);
+            foreach (glob($path . $arr[0] . '*.*') as $file) {
+                unlink($file);
+            }
+            $media->delete();
         }
-        $media->delete();
-    }
-    $response = array();
-    $response['flag'] = 'success';
-    return json_encode($response);
+        $response = array();
+        $response['flag'] = 'success';
+        return json_encode($response);
     });
     Route::post('/update-media-positions', function (Request $request) {
         $response = array();

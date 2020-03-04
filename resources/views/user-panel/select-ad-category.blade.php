@@ -33,7 +33,7 @@
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="{{url('new/property/sale/ad')}}">Bolig til salgs
+                            <a href="{{url('new/property/property-for-sale')}}">Bolig til salgs
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">

@@ -1,5 +1,6 @@
 <form action="#" method="post" id="property_for_sale_form"  class="dropzone addMorePics p-0"
-      data-action="@if(Request::is('new/property/sale/ad/*/edit')){{url('update-upload-images?ad_id='.$property_for_sale1->ad->id)}}
+      data-action="@if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+      {{url('update-upload-images?ad_id='.$property_for_sale1->ad->id)}}
         @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 <?php
     $property_type = \App\Taxonomy::where('slug', 'pfs_property_type')->first();
@@ -15,7 +16,7 @@
     $pfs_facility = \App\Taxonomy::where('slug', 'pfs_facilities')->first();
     $pfs_facilities = $pfs_facility->terms;
     ?>
- @if(Request::is('new/property/sale/ad/*/edit'))
+ @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
    @method('PATCH')
   @endif
     <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
