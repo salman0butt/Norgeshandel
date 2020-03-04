@@ -106,10 +106,12 @@
             return false;
 
         });
+        /* show page not found while refresh a page
         window.history.pushState('', null, './');
         $(window).on('popstate', function() {
         location.reload(true);
         });
+        */
 
     </script>
 

@@ -1,5 +1,3 @@
-
-
 <form action="#" method="post" id="business_for_sale" class="dropzone addMorePics p-0"
       data-action="@if(Request::is('add/business/for/sale/*/edit')){{url('update-upload-images?ad_id='.$business_for_sale->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
@@ -76,7 +74,7 @@
             <h3 class="u-t5">Postnummer</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="zip_code" type="text" class="dme-form-control" value="{{$business_for_sale_obj->zip_code}}">
+                    <input name="zip_code" type="text" class="dme-form-control zip_code" value="{{$business_for_sale_obj->zip_code}}">
                     <span id="zip_code_city_name"></span>
                 </div>
                 <div class="col-sm-8">
@@ -236,31 +234,3 @@
 
     </div>
 </form>
-
-<script>   
-    $(document).on('change', 'input[name="zip_code"]', function(e) {
-        // document.getElementById("zip_code_city_name").innerHTML = '';
-         var val = document.getElementById("zip_code_city_name").innerHTML;
-         
-    var zip_code = $(this).val();
-    var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
-    // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
-    var client_url = 'localhost';
-    
-    if(zip_code){
-    var xhttp = new XMLHttpRequest();
-   xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      const postalCode = JSON.parse(this.responseText);
-
-      document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
-        console.log(postalCode.result);
-     }
-    };
-    xhttp.open("GET", api_url+"?clientUrl="+client_url+"&pnr="+zip_code, true);
-
-    xhttp.send();
-    }
-});
-   
-    </script> 

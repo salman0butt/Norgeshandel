@@ -55,51 +55,50 @@
 
             $("#publiser_annonsen").click(function(e){
 
-                    e.preventDefault();
-                    $('.notice').html("");
+                e.preventDefault();
+                if(! $('#business_for_sale').valid()) return false;
+                $('.notice').html("");
+                @if(Request::is('add/business/for/sale/*/edit'))
+                    var url = "{{url('add/business/for/sale/'.$business_for_sale->id)}}";
+                @else
+                    var url = "{{url('add/business/for/sale')}}";
+                @endif
 
-                    @if(Request::is('add/business/for/sale/*/edit'))
-                        var url = "{{url('add/business/for/sale/'.$business_for_sale->id)}}";
-                    @else
-                        var url = "{{url('add/business/for/sale')}}";
-                    @endif
+                var myform = document.getElementById("business_for_sale");
+                var fd = new FormData(myform);
+                var l = Ladda.create(this);
+                l.start();
 
-            
-                    var myform = document.getElementById("business_for_sale");
-                    var fd = new FormData(myform);
-                    var l = Ladda.create(this);
-                    l.start();
-                    
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: fd,
-                        dataType: "json",
-                        processData: false,
-                        contentType: false,
-                        success: function(data){
-                            console.log(data);
-                            $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
-                        },
-                        error: function(jqXhr, json, errorThrown){// this are default for ajax errors
-                            var errors = jqXhr.responseJSON;
-                            console.log(errors.errors);
-                            if(isEmpty(errors.errors))
-                            {
-                                $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
-                                return false;
-                            }
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: fd,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function(data){
+                        console.log(data);
+                        $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                    },
+                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors
+                        var errors = jqXhr.responseJSON;
+                        console.log(errors.errors);
+                        if(isEmpty(errors.errors))
+                        {
+                            $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                            return false;
+                        }
 
-                            var html="<ul>";
-                            $.each( errors.errors, function( index, value ){
-                               console.log(value);
-                               html += "<li>"+value+"</li>";
-                            });
-                            html += "</ul>";
-                            $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
-                        },
-                
-                    }).always(function() { l.stop(); });
+                        var html="<ul>";
+                        $.each( errors.errors, function( index, value ){
+                           console.log(value);
+                           html += "<li>"+value+"</li>";
+                        });
+                        html += "</ul>";
+                        $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
+                    },
+
+                }).always(function() { l.stop(); });
             });
 
         });
