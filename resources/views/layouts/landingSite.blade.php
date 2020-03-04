@@ -287,6 +287,40 @@
     </div>
 </footer>
 
+<script>
+     function find_zipcode_city(val) {
+        document.getElementById("zip_code_city_name").innerHTML = '';
+        var zip_code = val;
+        var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
+        // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
+        var client_url = 'localhost';
+
+        if(zip_code){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const postalCode = JSON.parse(this.responseText);
+
+                    if(postalCode.result == "Ugyldig postnummer"){
+                        $('#zip_code-error').css('display','block');
+                        console.log(postalCode.result);
+                        if(document.getElementById('zip_code-error') == null) {
+                            $( "input[name='zip_code']" ).after( "<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>" );
+                        }else{
+                            document.getElementById("zip_code-error").innerHTML = "Ugyldig verdi";
+                        }
+                    }else{
+                        document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
+                        console.log(postalCode.result);
+                    }
+                }
+            };
+            xhttp.open("GET", api_url+"?clientUrl="+client_url+"&pnr="+zip_code, true);
+
+            xhttp.send();
+        }
+  }
+</script>
 @yield('script')
 
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
@@ -385,7 +419,6 @@
                 }
             });
         @endif
-
     });
 
 

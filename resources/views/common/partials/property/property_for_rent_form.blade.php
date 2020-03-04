@@ -1,5 +1,5 @@
 <form action="#" method="post" id="property_for_rent_form" class="dropzone addMorePics p-0"
-      data-action="@if(Request::is('new/property/rent/ad/*/edit')){{url('update-upload-images?ad_id='.$property_for_rent1->ad->id)}}
+      data-action="@if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$property_for_rent1->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
      $property_for_rent = new \App\PropertyForRent();
@@ -21,10 +21,10 @@
 
 
 @endphp
-    @if(Request::is('new/property/rent/ad/*/edit'))
+    @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
     @method('PATCH')
     @endif
-
+    <input type="hidden" id="old_zip" value="{{ (isset($property_for_rent->zip_code) ? $property_for_rent->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_rent_temp_images">
     <div class="pl-3 pr-3">
         <div class="form-group">

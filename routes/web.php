@@ -309,6 +309,7 @@ Route::group(['middleware' => 'authverified'], function () {
 
             Route::group(['prefix' => 'property'], function () {
                 Route::get('property-for-sale', 'PropertyController@new_property_for_sale');
+                Route::get('property-for-rent', 'PropertyController@new_property_for_rent');
             });
         });
         Route::group(['prefix' => 'complete'], function () {
@@ -356,6 +357,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('new/property/rent/ad', 'PropertyController@newAdd');
     Route::get('new/property/rent/ad/{id}/edit', 'PropertyController@newAddedit');
     Route::patch('add/property/for/rent/ad/{id}', 'PropertyController@UpdatePropertyForRentAdd');
+    Route::patch('add/property/for/rent/ad/update/{id}', 'PropertyController@UpdateDummyRentAdd');
     Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
     Route::delete('property/for/rent/ad/{id}', 'PropertyController@deletePropertyForRent');
     Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');

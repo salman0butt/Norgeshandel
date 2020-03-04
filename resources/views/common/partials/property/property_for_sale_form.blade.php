@@ -21,6 +21,7 @@
   @endif
     <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_sale_temp_images">
+    <input type="hidden" id="old_zip" value="{{ (isset($property_for_sale->zip_code) ? $property_for_sale->zip_code : '') }}">
 
 
 
@@ -88,7 +89,7 @@
             <h3 class="u-t5">Boligtype</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <select class="dme-form-control" name="property_type" id="property_type">
+                    <select class="dme-form-control" name="property_type" id="property_type" class="select-box">
                         <option value=""></option>
                         @foreach($property_types as $type)
                             <option value="{{$type->name}}" {{ ($property_for_sale->property_type == $type->name ? 'selected' : '') }}>{{$type->name}}</option>
@@ -102,7 +103,7 @@
             <h3 class="u-t5">Eieform</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <select name="tenure" class="dme-form-control">
+                    <select name="tenure" class="dme-form-control select-box">
                         <option value=""></option>
                         @foreach($tenures as $type)
                             <option value="{{$type->name}}" {{($property_for_sale->tenure == $type->name ? 'selected' : '')}}>{{$type->name}}</option>
@@ -297,7 +298,7 @@
             <h3 class="u-t5">Energikarakter (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <select name="energy_grade" class="dme-form-control">
+                    <select name="energy_grade" class="dme-form-control select-box">
                         <option value=""></option>
                         <option value="A" {{($property_for_sale->energy_grade == 'A' ? 'selected' : '')}}>A</option>
                         <option value="B" {{($property_for_sale->energy_grade == 'B' ? 'selected' : '')}}>B</option>
@@ -316,7 +317,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <h3 for="" class="u-t5">Oppvarmingskarakter (valgfritt)</h3>
-                    <select name="heating_character" class="dme-form-control">
+                    <select name="heating_character" class="dme-form-control select-box">
                         <option value=""></option>
                         <option value="Gul" {{($property_for_sale->heating_character == 'Gul' ? 'selected' : '')}}>Gul</option>
                         <option value="Lysegrønn" {{($property_for_sale->heating_character == 'Lysegrønn' ? 'selected' : '')}}>Lysegrønn</option>
