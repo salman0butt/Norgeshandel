@@ -180,9 +180,10 @@ $(document).ready(function (e) {
     });
 
     // Find city name against a zip code
-    $(document).on('change', '.zip_code', function(e) {
+ /* function find_zipcode_city(val) {
+      alert('working');
         document.getElementById("zip_code_city_name").innerHTML = '';
-        var zip_code = $(this).val();
+        var zip_code = val;
         var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
         // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
         var client_url = 'localhost';
@@ -211,7 +212,7 @@ $(document).ready(function (e) {
 
             xhttp.send();
         }
-    });
+  }  */
 
 
     //Add Fields

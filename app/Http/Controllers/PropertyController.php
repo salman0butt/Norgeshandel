@@ -783,16 +783,39 @@ class PropertyController extends Controller
             abort(404);
         }
     }
+    //prooperty for rent new
+        public function new_property_for_rent(Request $request){
+        $ad = new Ad(['ad_type' => 'property_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+        if ($ad) {
+            $property = new PropertyForRent(['user_id' => Auth::id()]);
+            $ad->propertyForRent()->save($property);
+            if ($property) {
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
 
 //    zain
     public function complete_property($id){
+        
         $ad = Ad::find($id);
+
         if ($ad) {
             if ($ad->ad_type == 'property_for_sale') {
                 $property_for_sale1 = $ad->property;
                 if ($property_for_sale1) {
                     return view('user-panel.property.new_sale_add', compact('property_for_sale1'));
                 }
+            }else if ($ad->ad_type == 'property_for_rent') {
+                    $property_for_rent1 = $ad->property;
+                    return view('user-panel.property.new_add', compact('property_for_rent1'));   
             }
             else{
                 abort(404);
@@ -870,6 +893,18 @@ class PropertyController extends Controller
         common::delete_media(Auth::user()->id, 'property_for_rent_temp_images', 'gallery');
         return view('user-panel.property.new_add');
     }
+      //update dummy property for sale to published
+    // public function UpdateDummyRentAdd(AddPropertyForRent $request, $id) {
+    //   //  DB::connection()->enableQueryLog();
+    //     $property = PropertyForRent::find($id);
+    //     $ad = $property->ad;
+
+    //       $response = $ad->update(['status'=>'published']);
+    //     //  dd(DB::getQueryLog());
+          
+    //         $data['success'] = $response;
+    //         echo json_encode($data);
+    // }
 
     public function newAddedit($id)
     {
@@ -976,6 +1011,7 @@ class PropertyController extends Controller
 
             $data['success'] = $response;
             echo json_encode($data);
+            exit();
         } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
@@ -1435,6 +1471,19 @@ class PropertyController extends Controller
     public function UpdateDummySaleAdd(AddPropertyForSale $request, $id) {
       //  DB::connection()->enableQueryLog();
         $property = PropertyForSale::find($id);
+        $ad = $property->ad;
+
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+          
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+       //update dummy property for sale to published
+    public function UpdateDummyRentAdd(AddPropertyForRent $request, $id) {
+      //  DB::connection()->enableQueryLog();
+      dd('working');
+        $property = PropertyForRent::find($id);
         $ad = $property->ad;
 
           $response = $ad->update(['status'=>'published']);
