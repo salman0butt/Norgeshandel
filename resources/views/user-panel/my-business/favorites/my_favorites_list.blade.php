@@ -56,7 +56,7 @@
 <script>
     $('#landing_list_search').keyup(function (e) {
         if($(this).val().length>0){
-            $.each($('.favorite-list-item'), function(){
+            $.each($('.end_fav_item'), function(){
                 if($(this).attr('data-name').toLowerCase().search($('#landing_list_search').val().toLowerCase())<0){
                     $(this).hide()
                 }
@@ -66,7 +66,7 @@
             });
         }
         else{
-            $('.favorite-list-item').show();
+            $('.end_fav_item').show();
         }
     });
 </script>

@@ -19,7 +19,7 @@ if(count($media)>0){
     }
 }
 ?>
-<div class="col-sm-12 pr-0">
+<div class="col-sm-12 pr-0 end_fav_item" data-name="{{$job->title}}">
 
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
         <div class="image-section col-sm-4  p-2">

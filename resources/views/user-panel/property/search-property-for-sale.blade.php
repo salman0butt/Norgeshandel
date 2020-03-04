@@ -10,6 +10,6 @@
     </main>
     <input type="hidden" id="mega_menu_search_url" value="{{url('property/property-for-sale/search')}}">
     <input type="hidden" id="back_url" value="{{ url()->current() }}">
-   
+
     <script src="{{asset('public/js/property-filter.js')}}"></script>
 @endsection

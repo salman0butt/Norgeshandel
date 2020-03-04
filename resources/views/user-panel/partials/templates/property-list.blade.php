@@ -31,7 +31,7 @@ if($property !== null)
 {
 ?>
 {{--<a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
-<div class="col-sm-12 pr-0">
+<div class="col-sm-12 pr-0 end_fav_item" data-name="{{$ad->getTitle()}}">
     <div class="row product-list-item mr-1 p-sm-1 mt-3">
         <div class="image-section image-section col-sm-4  p-2">
             <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" style="display: block;" class="trailing-border">
@@ -53,8 +53,7 @@ if($property !== null)
                     KR
                     <!-- Totalpris: 2011 111 KR -->
                 </div>
-                <div class="product-price"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}"
-                                                    width="23px;">
+                <div class="product-price"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}" width="23px;">
                     <?php
                     echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
                     echo($ad->ad_type == 'property_for_sale' ? number_format($property->asking_price,0,""," ") : "");
@@ -71,27 +70,29 @@ if($property !== null)
         </div>
         <div class="detailed-section col-md-8 position-relative p-2">
             <p class="product-location text-muted mb-0 mt-2 u-d1">
-                <?php
-                echo($ad->ad_type == 'property_for_rent' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_for_sale' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_commercial_plots' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_business_for_sale' ? $property->street_address : "");
-                ?>
+                {{$property->street_address}}
+<!--                --><?php
+//                echo($ad->ad_type == 'property_for_rent' ? $property->street_address : "");
+//                echo($ad->ad_type == 'property_for_sale' ? $property->street_address : "");
+//                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->street_address : "");
+//                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->street_address : "");
+//                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->street_address : "");
+//                echo($ad->ad_type == 'property_commercial_plots' ? $property->street_address : "");
+//                echo($ad->ad_type == 'property_business_for_sale' ? $property->street_address : "");
+//                ?>
             </p>
             <p class="product-title u-t4">
-                <?php
-                echo($ad->ad_type == 'property_for_rent' ? $property->heading : "");
-                echo($ad->ad_type == 'property_for_sale' ? $property->headline : "");
-                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->ad_headline : "");
-                echo($ad->ad_type == 'property_flat_wishes_rented' ? $property->headline : "");
-                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->headline : "");
-                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->heading : "");
-                echo($ad->ad_type == 'property_commercial_plots' ? $property->headline : "");
-                echo($ad->ad_type == 'property_business_for_sale' ? $property->headline : "");
-                ?>
+                {{$ad->getTitle()}}
+<!--                --><?php
+//                echo($ad->ad_type == 'property_for_rent' ? $property->heading : "");
+//                echo($ad->ad_type == 'property_for_sale' ? $property->headline : "");
+//                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->ad_headline : "");
+//                echo($ad->ad_type == 'property_flat_wishes_rented' ? $property->headline : "");
+//                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->headline : "");
+//                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->heading : "");
+//                echo($ad->ad_type == 'property_commercial_plots' ? $property->headline : "");
+//                echo($ad->ad_type == 'property_business_for_sale' ? $property->headline : "");
+//                ?>
             </p>
         </div>
         @include('user-panel.partials.fav-heart-button', compact('ad'))

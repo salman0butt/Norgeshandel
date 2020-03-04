@@ -197,7 +197,7 @@ Route::group(['middleware' => 'authverified'], function () {
         'trans' => 'TranslationController'
     ]);
     Route::get('dummy', function () {
-        return view('user-panel.nav');
+        return view('dummy');
     });
     Route::get('single', function () {
         return view('user-panel/jobs/single');

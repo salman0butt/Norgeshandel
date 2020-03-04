@@ -21,8 +21,7 @@
         </div>
         <div class="col-md-4 pt-4">
             <div class="pt-3 float-left" style="min-width: 53px;">
-                <a href="?<?php echo $col === 'grid' ? 'list' : 'grid' ?>" class="dme-btn-rounded-back-only"><i
-                        class="<?php echo $col === 'grid' ? 'fa fa-list' : 'fa fa-th' ?>"></i></a>
+                @include('user-panel.partials.change-view-btn')
             </div>
             <div class="pt-3 float-left">
                 <a href="#" class="dme-btn-rounded-back-only"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
@@ -32,11 +31,11 @@
             <div class="">
                 <label for="sort-by" class="mb-1">Sortér på</label>
                 <select name="sort-by" id="sort_by" class="dme-form-control">
-                    <option value="0">Mest relevant</option>
-                    <option value="1" selected>Publisert</option>
-                    <option value="sqm-low-high">square meter low-high</option>
-                    <option value="sqm-high-low">square meter high-low</option>
-                    <option value="99">Nærmest</option>
+                    <option @if(isset($sort) && $sort=='0') selected @endif value="0">Mest relevant</option>
+                    <option @if(isset($sort) && $sort=='1') selected @endif value="1">Publisert</option>
+                    <option @if(isset($sort) && $sort=='sqm-low-high') selected @endif value="sqm-low-high">square meter low-high</option>
+                    <option @if(isset($sort) && $sort=='sqm-high-low') selected @endif value="sqm-high-low">square meter high-low</option>
+                    <option @if(isset($sort) && $sort=='99') selected @endif value="99">Nærmest</option>
                 </select>
             </div>
         </div>
