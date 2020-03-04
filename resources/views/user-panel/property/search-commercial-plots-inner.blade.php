@@ -21,8 +21,7 @@
         </div>
         <div class="col-md-4 pt-4">
             <div class="pt-3 float-left" style="min-width: 53px;">
-                <a href="?<?php echo $col === 'grid' ? 'list' : 'grid' ?>" class="dme-btn-rounded-back-only"><i
-                        class="<?php echo $col === 'grid' ? 'fa fa-list' : 'fa fa-th' ?>"></i></a>
+                @include('user-panel.partials.change-view-btn')
             </div>
             <div class="pt-3 float-left">
                 <a href="#" class="dme-btn-rounded-back-only"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
@@ -32,13 +31,13 @@
             <div class="">
                 <label for="sort-by" class="mb-1">Sortér på</label>
                 <select name="sort-by" id="sort_by" class="dme-form-control">
-                    <option value="most-relevant">Mest relevant</option>
-                    <option value="published" selected="">Publisert</option>
-                    <option value="priced-low-high">Pris lav-høy</option>
-                    <option value="priced-high-low">Pri høy-lav</option>
-                    <option value="area_low_high">Areal lav-høy</option>
-                    <option value="area_high_low">Areal høy-lav</option>
-                    <option value="nearest">Nærmest</option>
+                    <option @if(isset($sort) && $sort=='most') selected @endif value="most-relevant">Mest relevant</option>
+                    <option @if(isset($sort) && $sort=='published') selected @endif value="published">Publisert</option>
+                    <option @if(isset($sort) && $sort=='priced-low-high') selected @endif value="priced-low-high">Pris lav-høy</option>
+                    <option @if(isset($sort) && $sort=='priced-high-low') selected @endif value="priced-high-low">Pri høy-lav</option>
+                    <option @if(isset($sort) && $sort=='area_low_high') selected @endif value="area_low_high">Areal lav-høy</option>
+                    <option @if(isset($sort) && $sort=='area_high_low') selected @endif value="area_high_low">Areal høy-lav</option>
+                    <option @if(isset($sort) && $sort=='nearest') selected @endif value="nearest">Nærmest</option>
                 </select>
             </div>
         </div>
@@ -111,7 +110,7 @@
                           @include('user-panel.partials.fav-heart-button', compact('ad'))
                         </div>
                     </div>
-                  
+
                 @endforeach
             </div>
         </div>
