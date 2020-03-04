@@ -22,7 +22,7 @@
     <div class="pl-3">
         <div class="form-group">
             <h3 class="u-t5">Ønsket leieområde</h3>
-            <div class="row">
+            <div class="row property_region_section">
                 <div class="input-toggle col-md-4">
                     <input type="checkbox" value="akershus" name="region[]" class="region" id="region-akershus" {{ (in_array("akershus", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-akershus" data-has-area-subarea="true">Akershus</label>
@@ -136,7 +136,7 @@
         </div>   
         <div class="form-group">
             <h3 class="u-t5">Ønsket boligtype</h3>
-            <div class="row">
+            <div class="row property_type_section">
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-FLAT" type="checkbox" value="Leilighet" name="property_type[]" class="property_type" {{ (in_array("Leilighet", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-FLAT"> Leilighet</label>
@@ -241,9 +241,9 @@
 
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <input type="text" value="{{ $flat_wishes_rented->headline }}"  name="headline" class="dme-form-control">
+            <div class="row headline_section">
+                <div class="col-sm-12 pr-md-0 ">
+                    <input type="text" value="{{ $flat_wishes_rented->headline }}"  name="headline" class="dme-form-control ">
                 </div>
             </div>
         </div>

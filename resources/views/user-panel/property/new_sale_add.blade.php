@@ -101,12 +101,12 @@
 
             });
 
-            $("input,select").on('blur',function(e){
-                e.preventDefault();
+            $("input,select").on('change',function(e){
+                // e.preventDefault();
             
-             @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+            @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
                 var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
-                @endif 
+            @endif
 
                // if(! $('#property_for_sale_form').valid()) return false;
 
@@ -169,7 +169,7 @@
                 e.preventDefault();
              @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
                 var url = "{{url('new/property/sale/ad/update/'.$property_for_sale1->id)}}";
-                @endif 
+            @endif
 
                // if(! $('#property_for_sale_form').valid()) return false;
 
@@ -179,7 +179,7 @@
                 });
                @if(!Request::is('new/property/sale/ad/*/edit') && !Request::is('complete/ad/*'))
                  var url = "{{url('add/property/sale/ad')}}";
-                @endif 
+                @endif
                 $('.notice').html("");
                 var myform = document.getElementById("property_for_sale_form");
                 var fd = new FormData(myform);

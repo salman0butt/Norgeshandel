@@ -24,7 +24,7 @@
         <!-- checkbox -->
         <div class="form-group">
             <h3 class="u-t5">Type lokale</h3>
-            <div class="row">
+            <div class="row property_type_section">
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-OFFICE" type="checkbox" value="Kontor" name="property_type[]" class="property_type"  {{ (in_array("Kontor", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-OFFICE"> Kontor</label>

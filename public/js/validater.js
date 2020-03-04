@@ -253,6 +253,13 @@ $(document).ready(function () {
                 required:true,
                 email: true
             }
+        },
+        errorPlacement: function (error, element) {
+            if (element.attr("type") == "checkbox") {
+                error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));
+            } else {
+                // something else
+            }
         }
     });
 
@@ -286,8 +293,20 @@ $(document).ready(function () {
             phone: {
                 number: true
             }
-        }
+        },
+        errorPlacement: function (error, element) {
+            if (element.attr("type") == "checkbox") {
+                error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));
+            }
 
+            if (element.attr("type") == "checkbox" ) {
+                error.insertAfter($(element).parents('.property_region_section').after($('.property_region_section')));
+            }
+
+            if (element.attr("type") == "text" ) {
+                error.insertAfter($(element).parents('.headline_section').after($('.headline_section')));
+            }
+        }
     });
 
     // required check box (region) on flat wishes rented page
@@ -337,7 +356,7 @@ $(document).ready(function () {
             },
             headline: {
                 required: true,
-                minlenght: 2,
+                minlength: 2,
                 maxlength: 120
             },
             link: {
@@ -347,9 +366,11 @@ $(document).ready(function () {
                 number: true
             },
             contact: {
+                required: true,
                 number: true
             },
             e_post: {
+                required: true,
                 email: true
             }
         }
@@ -753,8 +774,20 @@ $(document).ready(function () {
                 minlength: 8,
                 maxlength: 9
             }
+        },
+        errorPlacement: function (error, element) {
+            if (element.attr("type") == "checkbox") {
+                error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));
+            } else {
+                // something else
+            }
         }
 
+    });
+
+    // required check box (property type) on commercial property for sale page
+    $("#commercial_property_for_sale .property_type").rules("add", {
+        required:true
     });
 
     // LOGIN PAGE VALIDATION

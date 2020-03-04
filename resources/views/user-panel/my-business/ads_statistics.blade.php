@@ -35,30 +35,29 @@
             <div class="box col-md-3">
                 <div class="content">
                     <p class="text-center"><i class="far fa-heart" style="font-size:50px;"></i> <span
-                            style="font-size:40px;">11</span></p> Lorem ipsum dolor
+                            style="font-size:40px;">{{$count_favorite}}</span></p> har annonsen som favoritt
                 </div>
             </div>
             <div class="box col-md-3">
                 <div class="content">
                     <p class="text-center"><i class="far fa-envelope" style="font-size:50px;"></i> <span
                             style="font-size:40px;">120</span></p>
-                    Lorem ipsum dolor
+                    har mottat annonsen på e-post
                 </div>
             </div>
             <div class="box col-md-3">
                 <div class="content">
                     <p class="text-center"><i class="far fa-comments" style="font-size:50px;"></i> <span
-                            style="font-size:40px;">780</span></p>
-                    Lorem ipsum dolor 
+                            style="font-size:40px;">{{$count_thread}}</span></p>
+                    har trykket på send melding
                 </div>
             </div>
             <div class="mt-5">
-                <h4 style="display:inline;" class="ut-5">89 Some Text There</h4> 
+                <h4 style="display:inline;" class="ut-5">89 klikk på annonsen</h4>
                 <form action="#" style="display:inline;">
                 <select style="display:inline;width:unset;margin-left: 20px;" class="form-control">
-                    <option value="">Choose options</option>
-                    <option value="">Option 1</option>
-                    <option value="">Option 2</option>
+                    <option value="">i hele annonseringsperioden</option>
+                    <option value="">de siste 14 dagene</option>
                     </select>
                 </form>
             </div>
@@ -69,7 +68,7 @@
        </div>
        <div class="boxed mb-5">
        <h1><i class="far fa-user"></i> 79</h1>
-       <h4>Some Text There</h4>
+       <h4>personer har klikket på annonsen</h4>
        <table>
         <thead>
             <tr>

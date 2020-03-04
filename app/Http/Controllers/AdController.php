@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Favorite;
+use App\MessageThread;
 use App\Models\Ad;
 use http\Message\Body;
 use Illuminate\Http\Request;
@@ -217,6 +219,26 @@ class AdController extends Controller
         }else{
             abort(404);
         }
+    }
+
+
+    // Static of an ad
+    public function ad_statistics($id){
+        $ad = Ad::find($id);
+        if($ad){
+            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+                dd(Request::ip());
+                $count_favorite = Favorite::where('ad_id',$ad->id)->count();
+                $count_thread = MessageThread::where('ad_id',$ad->id)->count();
+
+                return view('user-panel.my-business.ads_statistics',compact('count_favorite','count_thread'));
+            }else{
+                return redirect('forbidden');
+            }
+        }else{
+            abort(404);
+        }
+
     }
 
 }
