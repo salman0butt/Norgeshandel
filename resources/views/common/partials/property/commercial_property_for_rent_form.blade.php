@@ -26,59 +26,59 @@
             <h3 class="u-t5">Type lokale</h3>
             <div class="row">
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-OFFICE" type="checkbox" value="Kontor" name="property_type[]" {{ (in_array("Kontor", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-OFFICE" type="checkbox" value="Kontor" name="property_type[]" class="property_type"  {{ (in_array("Kontor", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-OFFICE"> Kontor</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-BUSINESS" type="checkbox" value="Butikk/Handel" name="property_type[]" {{ (in_array("Butikk/Handel", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-BUSINESS" type="checkbox" value="Butikk/Handel" name="property_type[]" class="property_type"  {{ (in_array("Butikk/Handel", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-BUSINESS"> Butikk/Handel</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-INDUSTRIAL" type="checkbox" value="Produksjon/Industri" name="property_type[]" {{ (in_array("Produksjon/Industri", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-INDUSTRIAL" type="checkbox" value="Produksjon/Industri" name="property_type[]" class="property_type"  {{ (in_array("Produksjon/Industri", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-INDUSTRIAL"> Produksjon/Industri</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-WAREHOUSE" type="checkbox" value="Lager/Logistikk" name="property_type[]" {{ (in_array("Lager/Logistikk", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-WAREHOUSE" type="checkbox" value="Lager/Logistikk" name="property_type[]" class="property_type"  {{ (in_array("Lager/Logistikk", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-WAREHOUSE"> Lager/Logistikk</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox" value="Kombinasjonslokaler" name="property_type[]" {{ (in_array("Kombinasjonslokaler", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-MULTIPURPOSEAREA" type="checkbox" value="Kombinasjonslokaler" name="property_type[]" class="property_type"  {{ (in_array("Kombinasjonslokaler", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-MULTIPURPOSEAREA"> Kombinasjonslokaler</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-FARM" type="checkbox" value="Gårdsbruk/Småbruk" name="property_type[]" {{ (in_array("Gårdsbruk/Småbruk", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-FARM" type="checkbox" value="Gårdsbruk/Småbruk" name="property_type[]" class="property_type"  {{ (in_array("Gårdsbruk/Småbruk", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-FARM"> Gårdsbruk/Småbruk</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-MULTIUNITS" type="checkbox" value="Bygård/Flermannsbolig" name="property_type[]" {{ (in_array("Bygård/Flermannsbolig", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-MULTIUNITS" type="checkbox" value="Bygård/Flermannsbolig" name="property_type[]" class="property_type"  {{ (in_array("Bygård/Flermannsbolig", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-MULTIUNITS"> Bygård/Flermannsbolig</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-SHOPPINGMALL" type="checkbox" value="Kjøpesenter" name="property_type[]" {{ (in_array("Kjøpesenter", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-SHOPPINGMALL" type="checkbox" value="Kjøpesenter" name="property_type[]" class="property_type"  {{ (in_array("Kjøpesenter", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-SHOPPINGMALL"> Kjøpesenter</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-MECHSHOP" type="checkbox" value="Verksted" name="property_type[]" {{ (in_array("Verksted", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-MECHSHOP" type="checkbox" value="Verksted" name="property_type[]" class="property_type"  {{ (in_array("Verksted", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-MECHSHOP"> Verksted</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-GARAGE" type="checkbox" value="Garasje/Parkering" name="property_type[]" {{ (in_array("Garasje/Parkering", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-GARAGE" type="checkbox" value="Garasje/Parkering" name="property_type[]" class="property_type"  {{ (in_array("Garasje/Parkering", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-GARAGE"> Garasje/Parkering</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-HOTEL" type="checkbox" value="Hotell/Overnatting" name="property_type[]" {{ (in_array("Hotell/Overnatting", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-HOTEL" type="checkbox" value="Hotell/Overnatting" name="property_type[]" class="property_type"  {{ (in_array("Hotell/Overnatting", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-HOTEL"> Hotell/Overnatting</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-RESTAURANT" type="checkbox" value="Serveringslokale/Kantine" name="property_type[]" {{ (in_array("Serveringslokale/Kantine", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-RESTAURANT" type="checkbox" value="Serveringslokale/Kantine" name="property_type[]" class="property_type"  {{ (in_array("Serveringslokale/Kantine", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-RESTAURANT"> Serveringslokale/Kantine</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-LEARNINGFACILITY" type="checkbox" value="Undervisning/Arrangement" name="property_type[]" {{ (in_array("Undervisning/Arrangement", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-LEARNINGFACILITY" type="checkbox" value="Undervisning/Arrangement" name="property_type[]" class="property_type"  {{ (in_array("Undervisning/Arrangement", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-LEARNINGFACILITY"> Undervisning/Arrangement</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-OTHER" type="checkbox" value="OTHER" name="property_type[]" {{ (in_array("OTHER", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-OTHER" type="checkbox" value="OTHER" name="property_type[]" class="property_type"  {{ (in_array("OTHER", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-OTHER"> Andre</label>
                 </div>
             </div>

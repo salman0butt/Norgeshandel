@@ -287,7 +287,6 @@
     </div>
 </footer>
 
-
 @yield('script')
 
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
@@ -386,7 +385,6 @@
                 }
             });
         @endif
-
 
     });
 

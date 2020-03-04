@@ -44,28 +44,30 @@
 </main>
 
     <script type="text/javascript">
-        
+
         $(document).ready(function(){
 
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }); 
-        
-            $("#publiserannonsen").click(function(e){
+            });
 
+            $("#publiserannonsen").click(function(e){
                 e.preventDefault();
+
+                if(! $('#commercial_plot_form').valid()) return false;
+
                 var l = Ladda.create(this);
                 l.start();
-                
+
                 @if(Request::is('commercial/plots/*/edit'))
                     var url = "{{url('commercial/plots/'.$commercial_plots->id)}}";
-                @else 
+                @else
                     var url = '{{url('add/commercial/plot/ad')}}';
                 @endif
 
-                
+
                 $('.notice').html("");
                 var myform = document.getElementById("commercial_plot_form");
                 var fd = new FormData(myform);
@@ -80,7 +82,7 @@
                     success: function(data){
                             $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
                     },
-                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors 
+                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors
                         var errors = jqXhr.responseJSON;
                         console.log(errors.errors);
                         if(isEmpty(errors.errors))
@@ -107,6 +109,7 @@
 @endsection
 
 @section('script')
+
     <!-- Dropzone script files -->
     <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>

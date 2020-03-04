@@ -174,10 +174,8 @@ $(document).ready(function () {
     $("#commercial_property_for_rent").validate({
         lang: 'no',
         rules: {
-            check: {
-                property_type: true
-            },
-            headline: {
+            'property_type': {required: true},
+            heading: {
                 required: true,
                 minlength: 2,
                 maxlength: 120
@@ -186,9 +184,9 @@ $(document).ready(function () {
                 required: true,
                 zipcode: true
             },
-            property_type: {
-                required: true
-            },
+            // property_type: {
+            //     required: true
+            // },
             floor: {
                 number: true
             },
@@ -210,9 +208,11 @@ $(document).ready(function () {
                 number: true
             },
             gross_area_from:{
+                required: true,
                 number: true
             },
             gross_area_to:{
+                required: true,
                 number: true
             },
             land: {
@@ -256,6 +256,10 @@ $(document).ready(function () {
         }
     });
 
+    // required check box (property type) on commercial property for rent page
+    $("#commercial_property_for_rent .property_type").rules("add", {
+        required:true
+    });
 
     $("#flat_wishes_rented_form").validate({
         lang: 'no',
@@ -286,6 +290,16 @@ $(document).ready(function () {
 
     });
 
+    // required check box (region) on flat wishes rented page
+    $("#flat_wishes_rented_form .region").rules("add", {
+        required:true
+    });
+
+
+    // required check box (property_type) on flat wishes rented page
+    $("#flat_wishes_rented_form .property_type").rules("add", {
+        required:true
+    });
 
     // Commercial Lot
 
@@ -303,19 +317,15 @@ $(document).ready(function () {
                 zipcode: true
             },
             municipal_number: {
-                required: true,
                 number: true
             },
             usage_number: {
-                required: true,
                 number: true
             },
              farm_number: {
-                 required: true,
                  number: true
              },
             plot_size: {
-                required: true,
                 number: true
             },
             asking_price: {
@@ -323,7 +333,6 @@ $(document).ready(function () {
                 number: true
             },
             verditakst: {
-                required: true,
                 number: true
             },
             headline: {
@@ -356,22 +365,11 @@ $(document).ready(function () {
             industry: {
                 required: true
             },
-            alternative_industry: {
-                required: true
-            },
             zip_code: {
                 required: true,
                 zipcode: true
             },
-            company_name: {
-                 required: true
-            },
-            organiztion_number: {
-                number: true,
-                required: true
-            },
             price: {
-                required: true,
                 number: true
             },
             headline: {

@@ -24,112 +24,112 @@
             <h3 class="u-t5">Ønsket leieområde</h3>
             <div class="row">
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="akershus" name="region[]" id="region-akershus" {{ (in_array("akershus", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="akershus" name="region[]" class="region" id="region-akershus" {{ (in_array("akershus", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-akershus" data-has-area-subarea="true">Akershus</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="aust-agder" name="region[]" id="region-aust-agder" {{ (in_array("aust-agder", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="aust-agder" name="region[]" class="region" id="region-aust-agder" {{ (in_array("aust-agder", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-aust-agder" data-has-area-subarea="true">Aust-Agder</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="bergen" name="region[]" id="region-bergen" {{ (in_array("bergen", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="bergen" name="region[]" class="region" id="region-bergen" {{ (in_array("bergen", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-bergen"
                            data-has-area-subarea="true">Bergen</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="bodø" name="region[]" id="region-bodø" {{ (in_array("bodø", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="bodø" name="region[]" class="region" id="region-bodø" {{ (in_array("bodø", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-bodø"
                            data-has-area-subarea="false">Bodø</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="buskerud" name="region[]" id="region-buskerud" {{ (in_array("buskerud", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="buskerud" name="region[]" class="region" id="region-buskerud" {{ (in_array("buskerud", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-buskerud" data-has-area-subarea="true">Buskerud</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="finnmark" name="region[]" id="region-finnmark" {{ (in_array("finnmark", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="finnmark" name="region[]" class="region" id="region-finnmark" {{ (in_array("finnmark", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-finnmark" data-has-area-subarea="true">Finnmark</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="hedmark" name="region[]" id="region-hedmark" {{ (in_array("hedmark", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="hedmark" name="region[]" class="region" id="region-hedmark" {{ (in_array("hedmark", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-hedmark" data-has-area-subarea="true">Hedmark</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="hordaland" name="region[]" id="region-hordaland" {{ (in_array("hordaland", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="hordaland" name="region[]" class="region" id="region-hordaland" {{ (in_array("hordaland", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-hordaland" data-has-area-subarea="true">Hordaland</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="kristiansand" name="region[]"
+                    <input type="checkbox" value="kristiansand" name="region[]" class="region"
                            id="region-kristiansand" {{ (in_array("kristiansand", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-kristiansand" data-has-area-subarea="true">Kristiansand</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="møre og romsdal" name="region[]"
+                    <input type="checkbox" value="møre og romsdal" name="region[]" class="region"
                            id="region-møre og romsdal" {{ (in_array("møre og romsdal", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-møre og romsdal"
                            data-has-area-subarea="true">Møre og Romsdal</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="nordland" name="region[]" id="region-nordland" {{ (in_array("nordland", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="nordland" name="region[]" class="region" id="region-nordland" {{ (in_array("nordland", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-nordland" data-has-area-subarea="true">Nordland</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="oppland" name="region[]" id="region-oppland" {{ (in_array("oppland", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="oppland" name="region[]" class="region" id="region-oppland" {{ (in_array("oppland", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-oppland" data-has-area-subarea="true">Oppland</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="oslo" name="region[]" id="region-oslo" {{ (in_array("oslo", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="oslo" name="region[]" class="region" id="region-oslo" {{ (in_array("oslo", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-oslo"
                            data-has-area-subarea="true">Oslo</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="rogaland" name="region[]" id="region-rogaland" {{ (in_array("rogaland", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="rogaland" name="region[]" class="region" id="region-rogaland" {{ (in_array("rogaland", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-rogaland" data-has-area-subarea="true">Rogaland</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="sogn og fjordane" name="region[]"
+                    <input type="checkbox" value="sogn og fjordane" name="region[]" class="region"
                            id="region-sogn og fjordane" {{ (in_array("sogn og fjordane", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-sogn og fjordane"
                            data-has-area-subarea="true">Sogn og Fjordane</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="stavanger" name="region[]" id="region-stavanger" {{ (in_array("stavanger", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="stavanger" name="region[]" class="region" id="region-stavanger" {{ (in_array("stavanger", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-stavanger" data-has-area-subarea="true">Stavanger</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="svalbard" name="region[]" id="region-svalbard" {{ (in_array("svalbard", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="svalbard" name="region[]" class="region" id="region-svalbard" {{ (in_array("svalbard", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-svalbard" data-has-area-subarea="true">Svalbard</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="telemark" name="region[]" id="region-telemark" {{ (in_array("telemark", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="telemark" name="region[]" class="region" id="region-telemark" {{ (in_array("telemark", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-telemark" data-has-area-subarea="true">Telemark</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="troms" name="region[]" id="region-troms" {{ (in_array("troms", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="troms" name="region[]" class="region" id="region-troms" {{ (in_array("troms", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-troms"
                            data-has-area-subarea="true">Troms</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="tromsø" name="region[]" id="region-tromsø" {{ (in_array("tromsø", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="tromsø" name="region[]" class="region" id="region-tromsø" {{ (in_array("tromsø", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-tromsø" data-has-area-subarea="false">Tromsø</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="trondheim" name="region[]" id="region-trondheim" {{ (in_array("trondheim", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="trondheim" name="region[]" class="region" id="region-trondheim" {{ (in_array("trondheim", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-trondheim" data-has-area-subarea="true">Trondheim</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="trøndelag" name="region[]" id="region-trøndelag" {{ (in_array("trøndelag", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="trøndelag" name="region[]" class="region" id="region-trøndelag" {{ (in_array("trøndelag", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-trøndelag" data-has-area-subarea="true">Trøndelag</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="vest-agder" name="region[]" id="region-vest-agder" {{ (in_array("vest-agder", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="vest-agder" name="region[]" class="region" id="region-vest-agder" {{ (in_array("vest-agder", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-vest-agder" data-has-area-subarea="true">Vest-Agder</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="vestfold" name="region[]" id="region-vestfold" {{ (in_array("vestfold", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="vestfold" name="region[]" class="region" id="region-vestfold" {{ (in_array("vestfold", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-vestfold" data-has-area-subarea="true">Vestfold</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="østfold" name="region[]" id="region-østfold" {{ (in_array("østfold", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="østfold" name="region[]" class="region" id="region-østfold" {{ (in_array("østfold", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-østfold" data-has-area-subarea="true">Østfold</label>
                 </div>
             </div>
@@ -138,42 +138,42 @@
             <h3 class="u-t5">Ønsket boligtype</h3>
             <div class="row">
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-FLAT" type="checkbox" value="Leilighet" name="property_type[]" {{ (in_array("Leilighet", $property_type) ? "checked" : "") }}>
+                    <input data-selector="" id="property_type-FLAT" type="checkbox" value="Leilighet" name="property_type[]" class="property_type" {{ (in_array("Leilighet", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-FLAT"> Leilighet</label>
                 </div>
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-DETACHED" type="checkbox" value="Enebolig"
-                           name="property_type[]" {{ (in_array("Enebolig", $property_type) ? "checked" : "") }}>
+                           name="property_type[]" class="property_type" {{ (in_array("Enebolig", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-DETACHED"> Enebolig</label>
                 </div>
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-TERRACED" type="checkbox" value="Rekkehus"
-                           name="property_type[]" {{ (in_array("Rekkehus", $property_type) ? "checked" : "") }}>
+                           name="property_type[]" class="property_type" {{ (in_array("Rekkehus", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-TERRACED"> Rekkehus</label>
                 </div>
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-SEMIDETACHED" type="checkbox" value="Tomannsbolig"
-                           name="property_type[]" {{ (in_array("Tomannsbolig", $property_type) ? "checked" : "") }}>
+                           name="property_type[]" class="property_type" {{ (in_array("Tomannsbolig", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-SEMIDETACHED"> Tomannsbolig</label>
                 </div>
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-BEDSIT" type="checkbox" value="Hybel"
-                           name="property_type[]" {{ (in_array("Hybel", $property_type) ? "checked" : "") }}>
+                           name="property_type[]" class="property_type" {{ (in_array("Hybel", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-BEDSIT"> Hybel</label>
                 </div>
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-HOUSESHARE" type="checkbox" value="Rom i bofellesskap"
-                           name="property_type[]" {{ (in_array("Rom i bofellesskap", $property_type) ? "checked" : "") }}>
+                           name="property_type[]" class="property_type" {{ (in_array("Rom i bofellesskap", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-HOUSESHARE"> Rom i bofellesskap</label>
                 </div>
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-GARAGE" type="checkbox" value="Garasje Parkering"
-                           name="property_type[]" {{ (in_array("Garasje Parkering", $property_type) ? "checked" : "") }}>
+                           name="property_type[]" class="property_type" {{ (in_array("Garasje Parkering", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-GARAGE"> Garasje/Parkering</label>
                 </div>
                 <div class="col-md-4 input-toggle">
                     <input data-selector="" id="property_type-OTHER" type="checkbox" value="Andre"
-                           name="property_type[]" {{ (in_array("Andre", $property_type) ? "checked" : "") }}>
+                           name="property_type[]" class="property_type" {{ (in_array("Andre", $property_type) ? "checked" : "") }}>
                     <label class="smalltext" for="property_type-OTHER"> Andre</label>
                 </div>
             </div>
