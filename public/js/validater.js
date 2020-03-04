@@ -174,6 +174,9 @@ $(document).ready(function () {
     $("#commercial_property_for_rent").validate({
         lang: 'no',
         rules: {
+            check: {
+                property_type: true
+            },
             headline: {
                 required: true,
                 minlength: 2,
