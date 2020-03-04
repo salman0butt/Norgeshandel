@@ -227,7 +227,6 @@ class AdController extends Controller
         $ad = Ad::find($id);
         if($ad){
             if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
-                dd(Request::ip());
                 $count_favorite = Favorite::where('ad_id',$ad->id)->count();
                 $count_thread = MessageThread::where('ad_id',$ad->id)->count();
 
