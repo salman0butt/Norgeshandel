@@ -105,9 +105,9 @@
         });
 
         function record_store_ajax_request(event, this_obj) {
-          //  if(event == 'click'){
-            // if(! $('#property_for_sale_form').valid()) return false;
-             //}
+           if(event == 'click'){
+               if(! $('#property_for_sale_form').valid()) return false;
+           }
             if (event == 'change') {
                 var zip_code = $('.zip_code').val();
                 var old_zip = $('#old_zip').val();

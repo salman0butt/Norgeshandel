@@ -64,7 +64,7 @@
                 contentType: false,
                 success: function(data){
                     document.getElementById("flat_wishes_rented_form").reset();
-                    document.getElementById("zip_code_city_name").innerHTML = '';
+                    // document.getElementById("zip_code_city_name").innerHTML = '';
                     $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
                 },
                 error: function(jqXhr, json, errorThrown){// this are default for ajax errors
