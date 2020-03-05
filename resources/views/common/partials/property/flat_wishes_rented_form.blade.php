@@ -1,5 +1,5 @@
 <form action="#" method="post" id="flat_wishes_rented_form" class="dropzone addMorePics p-0"
-      data-action="@if(Request::is('new/flat/wishes/rented/*/edit')){{url('update-upload-images?ad_id='.$flat_wishes_rented1->ad->id)}}
+      data-action="@if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$flat_wishes_rented1->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
      $flat_wishes_rented = new \App\FlatWishesRented();
@@ -15,7 +15,7 @@
 
 
 @endphp
-    @if(Request::is('new/flat/wishes/rented/*/edit'))
+    @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
     @method('PATCH')
     @endif
     <input type="hidden" name="upload_dropzone_images_type" value="flat_wishes_rented_temp_images">

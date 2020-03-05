@@ -50,7 +50,7 @@
             e.preventDefault();
             var l = Ladda.create(this);
             l.start();
-            @if(Request::is('new/flat/wishes/rented/*/edit'))
+            @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
              var url = "{{url('new/flat/wishes/rented/'.$flat_wishes_rented1->id)}}";
             @else
             var url = '{{url('new/add/flat/wishes/rented')}}';
