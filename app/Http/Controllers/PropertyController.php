@@ -806,6 +806,24 @@ class PropertyController extends Controller
             abort(404);
         }
     }
+       //prooperty for rent new
+        public function new_property_for_flat_wishes_rented(Request $request){
+        $ad = new Ad(['ad_type' => 'property_flat_wishes_rented', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+        if ($ad) {
+            $property = new FlatWishesRented(['user_id' => Auth::id()]);
+            $ad->propertyFlatWishesRented()->save($property);
+            if ($property) {
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
 
 //    zain
     public function complete_property($id){

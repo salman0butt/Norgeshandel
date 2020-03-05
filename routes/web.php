@@ -310,6 +310,7 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::group(['prefix' => 'property'], function () {
                 Route::get('property-for-sale', 'PropertyController@new_property_for_sale');
                 Route::get('property-for-rent', 'PropertyController@new_property_for_rent');
+                Route::get('property-for-flat-wishes-rented', 'PropertyController@new_property_for_flat_wishes_rented');
             });
         });
         Route::group(['prefix' => 'complete'], function () {
