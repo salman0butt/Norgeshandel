@@ -56,7 +56,7 @@
             $("#publiser_annonsen").click(function(e){
 
                 e.preventDefault();
-                if(! $('#business_for_sale').valid()) return false;
+                if(! $('#business_for_sale').valid())return false;
                 $('.notice').html("");
                 @if(Request::is('add/business/for/sale/*/edit'))
                     var url = "{{url('add/business/for/sale/'.$business_for_sale->id)}}";

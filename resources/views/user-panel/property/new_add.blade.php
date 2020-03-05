@@ -33,8 +33,9 @@
         $(document).ready(function () {
             
             function record_store_ajax_request(event, this_obj) {
-            
-        
+                if(event == 'click'){
+                    if(! $('#property_for_rent_form').valid()) return false;
+                }
                 if (event == 'change') {
                     console.log('status 1');
                     var zip_code = $('.zip_code').val();

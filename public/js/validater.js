@@ -12,6 +12,9 @@ $(document).ready(function () {
                 required: true,
                 zipcode: true
             },
+            street_address: {
+                required: true
+            },
             property_type: {
                 required: true
             },
@@ -65,6 +68,9 @@ $(document).ready(function () {
                 zipcode: true
             },
             property_type: {
+                required: true
+            },
+            street_address:{
                 required: true
             },
             floor: {
@@ -134,6 +140,10 @@ $(document).ready(function () {
             shared_costs_include: {
                 required: true
             },
+            costs_include:{
+                required: true,
+                number: true
+            },
             common_costs_after_interest_free_period: {
                 number: true
             },
@@ -167,6 +177,13 @@ $(document).ready(function () {
             },
             apartment_number: {
                 number: true
+            }
+        },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
             }
         }
     });
@@ -258,9 +275,16 @@ $(document).ready(function () {
             if (element.attr("type") == "checkbox") {
                 error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));
             } else {
-                // something else
+                error.insertAfter(element);
             }
-        }
+        },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
+            }
+        },
     });
 
     // required check box (property type) on commercial property for rent page
@@ -292,6 +316,13 @@ $(document).ready(function () {
             },
             phone: {
                 number: true
+            }
+        },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
             }
         },
         errorPlacement: function (error, element) {
@@ -373,6 +404,13 @@ $(document).ready(function () {
                 required: true,
                 email: true
             }
+        },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
+            }
         }
 
     });
@@ -406,6 +444,13 @@ $(document).ready(function () {
             },
             phone: {
                 number: true
+            }
+        },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
             }
         }
 
@@ -626,7 +671,14 @@ $(document).ready(function () {
                 minlength: 8,
                 maxlength: 9,
             }
-        }
+        },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
+            }
+        },
     });
 
 
@@ -775,13 +827,22 @@ $(document).ready(function () {
                 maxlength: 9
             }
         },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+          var errors = validator.numberOfInvalids();
+           if (errors) {
+                validator.errorList[0].element.focus();
+           }
+        },
         errorPlacement: function (error, element) {
+
             if (element.attr("type") == "checkbox") {
                 error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));
             } else {
-                // something else
+                error.insertAfter(element);
             }
         }
+     
 
     });
 
