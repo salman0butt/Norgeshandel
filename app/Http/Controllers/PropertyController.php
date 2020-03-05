@@ -2983,30 +2983,48 @@ class PropertyController extends Controller
     {
         if ($type == 'property_for_rent') {
             $property_data = PropertyForRent::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.property_description')->with(compact('property_data'));
         } else if ($type == 'property_for_sale') {
             $property_data = PropertyForSale::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.property_for_sale_description')->with(compact('property_data'));
         } else if ($type == 'property_holiday_home_for_sale') {
             $property_data = PropertyHolidaysHomesForSale::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.holiday_home_for_sale_description')->with(compact('property_data'));
         } else if ($type == 'property_flat_wishes_rented') {
             $property_data = FlatWishesRented::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.flat_wishes_rented_description')->with(compact('property_data'));
         } else if ($type == 'property_commercial_for_sale') {
             $property_data = CommercialPropertyForSale::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.commercialproperty_for_sale_description')->with(compact('property_data'));
         } else if ($type == 'property_commercial_for_rent') {
             $property_data = CommercialPropertyForRent::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.commercialproperty_for_rent_description')->with(compact('property_data'));
         } else if ($type == 'property_commercial_plots') {
             $property_data = CommercialPlot::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.commercial_plots_description')->with(compact('property_data'));
         } else if ($type == 'property_business_for_sale') {
             $property_data = BusinessForSale::where('id', $id)->first();
+            $this->store_ad_views($property_data);
             return view('common.partials.property.business_for_sale_description')->with(compact('property_data'));
         }
+    }
 
 
+    // Store ad view when an user click on property ad
+    public function store_ad_views($obj){
+        if($obj && $obj->ad){
+            $count = $obj->ad->views()->where('ip', \request()->getClientIp())->get();
+            if (count($count) == 0) {
+                $view = new \App\Models\AdView(['ad_id' => $obj->ad->id, 'ip' =>  \request()->getClientIp()]);
+                $view->save();
+            }
+        }
     }
 }
