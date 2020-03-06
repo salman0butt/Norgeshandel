@@ -35,57 +35,103 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-
-        });
-
-        $("#publiserannonsen").click(function(e){
-
-            e.preventDefault();
-            if(! $('#flat_wishes_rented_form').valid()) return false;
-
-            $('.notice').html("");
-            var myform = document.getElementById("flat_wishes_rented_form");
-            var fd = new FormData(myform);
-            e.preventDefault();
-            var l = Ladda.create(this);
-            l.start();
-            @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
-             var url = "{{url('new/flat/wishes/rented/'.$flat_wishes_rented1->id)}}";
-            @else
-            var url = '{{url('new/add/flat/wishes/rented')}}';
-            @endif 
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: fd,
-                dataType: "json",
-                processData: false,
-                contentType: false,
-                success: function(data){
-                    document.getElementById("flat_wishes_rented_form").reset();
-                    // document.getElementById("zip_code_city_name").innerHTML = '';
-                    $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
-                },
-                error: function(jqXhr, json, errorThrown){// this are default for ajax errors
-                    var errors = jqXhr.responseJSON;
-                    console.log(errors.errors);
-                    if(isEmpty(errors.errors))
-                    {
-                        $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
-                        return false;
+          
+            function record_store_ajax_request(event, this_obj) {
+               // if(event == 'click'){
+                 //   if(! $('#property_for_rent_form').valid()) return false;
+               // }
+               var url = '';
+                if (event == 'change') {
+                    console.log('status 1');
+                    var zip_code = $('.zip_code').val();
+                    var old_zip = $('#old_zip').val();
+                    console.log(old_zip);
+                    if (zip_code) {
+                        if (old_zip != zip_code) {
+                            find_zipcode_city(zip_code);
+                        }
                     }
-                    var html="<ul>";
-                    $.each( errors.errors, function( index, value ){
-                    console.log(value);
-                    html += "<li>"+value+"</li>";
-                    });
-                    html += "</ul>";
-                    $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
-                    },
-            }).always(function() { l.stop(); });
-            return false;
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                      var url = "{{url('new/flat/wishes/rented/'.$flat_wishes_rented1->id)}}";
+                    @endif
+                } else {
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    var url = "{{url('new/flat/wishes/rented/update/'.$flat_wishes_rented1->id)}}";
+                    @endif
+                }
+                console.log('status 2');
+                //if (!$('#property_for_rent_form').valid()) return false;
 
+                $("input ~ span,select ~ span").each(function (index) {
+                    $(".error-span").html('');
+                    $("input, select").removeClass("error-input");
+                });
+                $('.notice').html("");
+
+                console.log('status 3');
+                var myform = document.getElementById("flat_wishes_rented_form");
+                var fd = new FormData(myform);
+
+                // fd.append('property_photos', $('#property_photos').get(0).files[0]);
+                var l = Ladda.create(this_obj);
+                l.start();
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: fd,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log(data);
+                       // document.getElementById("property_for_rent_form").reset();
+                       // document.getElementById("zip_code_city_name").innerHTML = '';
+                           if (event == 'change') {
+                        setTimeout(function () {
+                            $('.notice').show('slow');
+                        }, 2000);
+                        setTimeout(function () {
+                            $('.notice').hide('slow');
+                        }, 5000);
+                    }
+                    $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+
+                    },
+                    error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+
+                        var errors = jqXhr.responseJSON;
+                        console.log(errors.errors);
+                        if (isEmpty(errors.errors)) {
+                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
+                            return false;
+                        }
+                        if (!isEmpty(errors.errors)) {
+                            console.log(errors.errors);
+                            $.each(errors.errors, function (index, value) {
+                                $("." + index).html(value);
+                                $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
+                            });
+                        } else {
+                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
+                        }
+                    },
+
+                }).always(function () {
+                    l.stop();
+                });
+                return false;
+            }
+            
+            $("input").on('change', function (e) {
+                e.preventDefault();
+               record_store_ajax_request('change', (this));
+            });
+            //click button update
+            $("#publiserannonsen").click(function (e) {
+                e.preventDefault();
+                record_store_ajax_request('click', (this));
+            });
+       
     });
 
     </script>

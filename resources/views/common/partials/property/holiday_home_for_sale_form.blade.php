@@ -1,4 +1,4 @@
-<form action="#" method="post" id="property_holiday_home_for_sale_form" class="dropzone addMorePics p-0" data-action="@if(Request::is('holiday/home/for/sale/*/edit')){{url('update-upload-images?ad_id='.$holiday_home_for_sale1->ad->id)}}
+<form action="#" method="post" id="property_holiday_home_for_sale_form" class="dropzone addMorePics p-0" data-action="@if(Request::is('holiday/home/for/sale/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$holiday_home_for_sale1->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
     <div class="pl-3">
         @php
@@ -19,7 +19,7 @@
         $facilities = $facility->terms;
 
         @endphp
-        @if(Request::is('holiday/home/for/sale/*/edit'))
+        @if(Request::is('holiday/home/for/sale/*/edit') || Request::is('complete/ad/*'))
         @method('PATCH')
         @endif
         <input type="hidden" name="upload_dropzone_images_type" value="holiday_home_for_sale_temp_images">
