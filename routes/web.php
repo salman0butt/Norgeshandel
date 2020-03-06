@@ -310,7 +310,9 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::group(['prefix' => 'property'], function () {
                 Route::get('property-for-sale', 'PropertyController@new_property_for_sale');
                 Route::get('property-for-rent', 'PropertyController@new_property_for_rent');
-                Route::get('property-for-flat-wishes-rented', 'PropertyController@new_property_for_flat_wishes_rented');
+               Route::get('property-for-flat-wishes-rented', 'PropertyController@new_property_for_flat_wishes_rented');
+               Route::get('property-for-holiday-homes-for-sale', 'PropertyController@new_property_for_holiday_homes_for_sale');
+                 Route::get('commercial-property-for-sale', 'PropertyController@new_commercial_property_for_sale');
             });
         });
         Route::group(['prefix' => 'complete'], function () {
@@ -374,6 +376,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
     Route::get('holiday/home/for/sale/{id}/edit', 'PropertyController@editHolidayHomeForSale');
     Route::patch('holiday/home/for/sale/{id}', 'PropertyController@updateHomeForSaleAd');
+    Route::patch('holiday/home/for/sale/update/{id}', 'PropertyController@updateDummyHomeForSaleAd');
     Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
     Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
 
@@ -382,6 +385,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
     Route::get('new/flat/wishes/rented/{id}/edit', 'PropertyController@editAddFlatWishesRented');
     Route::patch('new/flat/wishes/rented/{id}', 'PropertyController@updateFlatWishesRented');
+    Route::patch('new/flat/wishes/rented/update/{id}', 'PropertyController@updateDummyFlatWishesRented');
     Route::delete('flat/wishes/rented/{id}', 'PropertyController@deleteFlatWishesRented');
     Route::post('new/add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
     Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
@@ -389,6 +393,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
     Route::get('add/new/commercial/property/for/sale/{id}/edit', 'PropertyController@editcommercialPropertyForSale');
     Route::patch('add/new/commercial/property/for/sale/{id}', 'PropertyController@updateCommercialPropertyForSale');
+    Route::patch('add/new/commercial/property/for/sale/update/{id}', 'PropertyController@updateDummyCommercialPropertyForSale');
     Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
     Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
     Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
