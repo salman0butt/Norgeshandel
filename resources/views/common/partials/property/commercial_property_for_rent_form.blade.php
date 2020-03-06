@@ -1,5 +1,5 @@
 <form action="#" method="post" id="commercial_property_for_rent" class="dropzone addMorePics p-0"
-      data-action="@if(Request::is('add/new/commercial/property/for/rent/*/edit')){{url('update-upload-images?ad_id='.$commercial_for_rent->ad->id)}}
+      data-action="@if(Request::is('add/new/commercial/property/for/rent/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$commercial_for_rent->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
 
@@ -16,7 +16,7 @@
     $facilities = explode(',', $commercial_property_for_rent->facilities);
 
 @endphp
-  @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
+  @if(Request::is('add/new/commercial/property/for/rent/*/edit') || Request::is('complete/ad/*'))
   @method('PATCH')
   @endif
     <div class="pl-3">

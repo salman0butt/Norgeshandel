@@ -313,6 +313,8 @@ Route::group(['middleware' => 'authverified'], function () {
                Route::get('property-for-flat-wishes-rented', 'PropertyController@new_property_for_flat_wishes_rented');
                Route::get('property-for-holiday-homes-for-sale', 'PropertyController@new_property_for_holiday_homes_for_sale');
                  Route::get('commercial-property-for-sale', 'PropertyController@new_commercial_property_for_sale');
+                 Route::get('commercial-property-for-rent', 'PropertyController@new_commercial_property_for_rent');
+                 Route::get('business-for-sale', 'PropertyController@new_business_for_sale');
             });
         });
         Route::group(['prefix' => 'complete'], function () {
@@ -421,6 +423,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
     Route::get('add/new/commercial/property/for/rent/{id}/edit', 'PropertyController@editCommercialPropertyForRent');
     Route::patch('add/new/commercial/property/for/rent/{id}', 'PropertyController@updateCommercialPropertyForRent');
+    Route::patch('add/new/commercial/property/for/rent/update/{id}', 'PropertyController@updateDummyCommercialPropertyForRent');
     Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
     Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
     Route::post('property/commercial/for/rent/sorted/ad', 'PropertyController@commercialPropertyForRentSortedAds');
@@ -432,6 +435,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::post('add/business/for/sale', 'PropertyController@addBusinessForSale');
     Route::post('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
     Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
+    Route::patch('add/business/for/sale/update/{id}', 'PropertyController@updateDummyBusinessForSale');
     Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
     Route::get('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
     Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');

@@ -53,55 +53,102 @@
             }
         });
 
-
-    });
-
-    $("#publiserannonsen").click(function(e){
-        e.preventDefault();
-        if(! $('#commercial_property_for_rent').valid()) return false;
-        var l = Ladda.create(this);
-        l.start();
-        @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
-            var url = "{{url('add/new/commercial/property/for/rent/'.$commercial_for_rent->id)}}";
-        @else
-           var url = '{{url('add/commercial/property/for/rent')}}';
-        @endif
-
-
-        $('.notice').html("");
-        var myform = document.getElementById("commercial_property_for_rent");
-        var fd = new FormData(myform);
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: fd,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            success: function(data){
-                document.getElementById("commercial_property_for_rent").reset();
-                document.getElementById("zip_code_city_name").innerHTML = '';
-                $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
-            },
-            error: function(jqXhr, json, errorThrown){// this are default for ajax errors
-                var errors = jqXhr.responseJSON;
-                console.log(errors.errors);
-                if(isEmpty(errors.errors))
-                {
-                    $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
-                    return false;
+        function record_store_ajax_request(event, this_obj) {
+               if(event == 'click'){
+                 if(! $('#commercial_property_for_rent').valid()) return false;
+                  }
+               var url = '';
+                if (event == 'change') {
+                    console.log('status 1');
+                    var zip_code = $('.zip_code').val();
+                    var old_zip = $('#old_zip').val();
+                    console.log(old_zip);
+                    if (zip_code) {
+                        if (old_zip != zip_code) {
+                            find_zipcode_city(zip_code);
+                        }
+                    }
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                   var url = "{{url('add/new/commercial/property/for/rent/'.$commercial_for_rent->id)}}";
+                    @endif
+                } else {
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+               var url = "{{url('add/new/commercial/property/for/rent/update/'.$commercial_for_rent->id)}}";
+                    @endif
                 }
+                console.log('status 2');
+                //if (!$('#property_for_rent_form').valid()) return false;
 
-                var html="<ul>";
-                $.each( errors.errors, function( index, value ){
-                    console.log(value);
-                    html += "<li>"+value+"</li>";
+                $("input ~ span,select ~ span").each(function (index) {
+                    $(".error-span").html('');
+                    $("input, select").removeClass("error-input");
                 });
-                html += "</ul>";
-                $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
-                },
-        }).always(function() { l.stop(); });
+                $('.notice').html("");
+
+                console.log('status 3');
+                var myform = document.getElementById("commercial_property_for_rent");
+                var fd = new FormData(myform);
+                
+                // fd.append('property_photos', $('#property_photos').get(0).files[0]);
+                var l = Ladda.create(this_obj);
+                l.start();
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: fd,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log(data);
+                       // document.getElementById("property_for_rent_form").reset();
+                       // document.getElementById("zip_code_city_name").innerHTML = '';
+                           if (event == 'change') {
+                        setTimeout(function () {
+                            $('.notice').show('slow');
+                        }, 2000);
+                        setTimeout(function () {
+                            $('.notice').hide('slow');
+                        }, 5000);
+                    }
+                    $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+
+                    },
+                    error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+
+                        var errors = jqXhr.responseJSON;
+                        console.log(errors.errors);
+                        if (isEmpty(errors.errors)) {
+                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
+                            return false;
+                        }
+                        if (!isEmpty(errors.errors)) {
+                            console.log(errors.errors);
+                            $.each(errors.errors, function (index, value) {
+                                $("." + index).html(value);
+                                $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
+                            });
+                        } else {
+                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
+                        }
+                    },
+
+                }).always(function () {
+                    l.stop();
+                });
+                return false;
+            }
+            
+            $("input").on('change', function (e) {
+                e.preventDefault();
+               record_store_ajax_request('change', (this));
+            });
+            //click button update
+            $("#publiserannonsen").click(function (e) {
+                e.preventDefault();
+                record_store_ajax_request('click', (this));
+            });
+
 
 });
 
