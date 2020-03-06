@@ -107,7 +107,31 @@ class MessageController extends Controller
                 array_push($files, ['name'=>$name, 'path'=>$path]);
             }
         }
+        $ad_img_src = asset('public/images/placeholder.png');
+        $ad_title = '';
+        $last_message_date = '';
+        if($message->message_thread_id){
+            $message_thread = MessageThread::find($message->message_thread_id);
+            if($message_thread){
+
+                // Get title of an ad
+                if($message_thread->ad){
+                    $ad_title = $message_thread->ad->getTitle();
+                }
+
+                // Get date of last message
+                if($message_thread->messages->last()){
+                    $last_message_date = $message_thread->messages->last()->created_at->format('d.m.Y');
+                }
+
+                // Get image of ad
+                if(is_countable($message_thread->ad->company_gallery) && count($message_thread->ad->company_gallery) > 0){
+                    $ad_img_src = asset(\App\Helpers\common::getMediaPath($message_thread->ad->company_gallery->first()),"150x150");
+                }
+            }
+        }
         $data = ['message'=>$request->message, 'thread_id'=>$message->message_thread_id,
+            'ad_img_src'=>$ad_img_src,'ad_title'=>$ad_title,'last_message_date'=>$last_message_date,
             'from_user_id'=>$request->from_user_id, 'to_user_id'=>$request->to_user_id, 'files'=>$files];
         $pusher->trigger('my-channel', 'my-event', $data);
         $pusher->trigger('header-chat-notification', 'header-chat-notification-event', $data);

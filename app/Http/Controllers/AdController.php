@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Favorite;
 use App\MessageThread;
 use App\Models\Ad;
+use App\Models\AdView;
+use Carbon\Traits\Date;
+use DateTime;
 use http\Message\Body;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -223,14 +226,42 @@ class AdController extends Controller
 
 
     // Static of an ad
-    public function ad_statistics($id){
+    public function ad_statistics(Request $request,$id){
         $ad = Ad::find($id);
+        $date = new DateTime();
+        $dateMinus12 = $date->modify("-12 months");
+        $compare_date = $dateMinus12->format("Y-m-t");
+
+        if($request->type == '15_days_clicks'){
+            $compare_date = (date("Y-m-d", strtotime("-15 day")));
+        }
         if($ad){
             if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
                 $count_favorite = Favorite::where('ad_id',$ad->id)->count();
                 $count_thread = MessageThread::where('ad_id',$ad->id)->count();
 
-                return view('user-panel.my-business.ads_statistics',compact('count_favorite','count_thread'));
+                // find last year ad views
+                $ad_views = DB::table('ad_views')->selectRaw('year(created_at) year, monthname(created_at) month, count(ad_id) as count_view')
+                    ->groupBy('year', 'month')
+                    ->whereDate('created_at','>',$compare_date)
+                    ->where('ad_id',$id)
+                    ->orderBy('created_at','ASC')
+                    ->get();
+
+                // find last 15 days ad views
+                if($request->type == '15_days_clicks'){
+                    $ad_views = DB::table('ad_views')->selectRaw("COUNT(ad_id) as count_view, date(created_at) date ")
+                        ->groupBy('date')
+                        ->where('ad_id',$id)
+                        ->whereDate('created_at','>',$compare_date)
+                        ->get();
+                }
+                if($request->ajax()){
+                    return response(json_encode($ad_views));
+                    exit();
+                }
+
+                return view('user-panel.my-business.ads_statistics',compact('count_favorite','count_thread','ad','ad_views'));
             }else{
                 return redirect('forbidden');
             }

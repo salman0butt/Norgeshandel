@@ -258,6 +258,31 @@ class common
                 return $heading;
             }
 
+            if($attribute == 'price'){
+                $price = '';
+                if($obj->property){
+                    if($obj->ad_type  == 'property_for_rent'){
+                        $price = $obj->property->monthly_rent;
+                    }if($obj->ad_type  == 'property_for_sale' || $obj->ad_type == 'property_commercial_plots'){
+                        $price = $obj->property->asking_price;
+                    }if($obj->ad_type  == 'property_holiday_home_for_sale'){
+                        $price = $obj->property->total_price;
+                    }if($obj->ad_type  == 'property_flat_wishes_rented'){
+                        $price = $obj->property->max_rent_per_month;
+                    }if($obj->ad_type  == 'property_commercial_for_sale'){
+                        $price = $obj->property->rental_income;
+                    }if($obj->ad_type  == 'property_commercial_for_rent'){
+                        $price = $obj->property->rent_per_meter_per_year;
+                    }if($obj->ad_type  == 'property_business_for_sale'){
+                        $price = $obj->property->price;
+                    }
+                }
+                if($obj->ad_type == 'job'){
+                    $price = '';
+                }
+                return $price;
+            }
+
             if($attribute == 'started'){
                 $started = '';
                 if($obj->ad_type  == 'property_for_rent'){

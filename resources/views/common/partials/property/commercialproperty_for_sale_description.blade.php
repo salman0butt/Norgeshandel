@@ -85,7 +85,7 @@
                         <p>{{$property_data->description_simple}}</p>
                     </div>
                     <div class="col-md-12 font-weight-bold mt-3">Totalpris</div>
-                    <div class="col-md-12 u-t3">{{$property_data->rental_income}} kr</div>
+                    <div class="col-md-12 u-t3">{{number_format($property_data->rental_income,0,""," ")}} kr</div>
                     <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
@@ -95,8 +95,20 @@
                     {{-- <div class="mt-2 col-md-12"></div> --}}
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
+                            @php
+                                $property_type = array();
+                                $property_type = json_decode($property_data->property_type);
+                            @endphp
                             <div class="col-md-6"><span class="font-weight-bold">Type lokale </span>&nbsp;<span
-                                    style="overflow-wrap: break-word;">{{\App\Helpers\common::map_json($property_data->property_type)}}</span>
+                                   >
+                                 @if(count($property_type) > 0)
+                                        <ul>
+                                        @foreach($property_type as $value)
+                                                <li>{{$value}}</li>
+                                            @endforeach
+                                    </ul>
+                                    @endif
+                                </span>
                             </div>
                             <div class="col-md-6"><span class="font-weight-bold">Bruksarea
                                 </span>&nbsp;<span>{{$property_data->use_area}} m²</span></div>

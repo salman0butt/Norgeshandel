@@ -68,7 +68,7 @@
                         <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
                         <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
                         <div class="col-md-12 font-weight-bold mt-3">Leie pr m²/år:</div>
-                        <div class="col-md-12 u-t3">{{$property_data->rent_per_meter_per_year}} kr</div>
+                        <div class="col-md-12 u-t3">{{number_format($property_data->rent_per_meter_per_year,0,""," ")}} kr</div>
                         <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
@@ -76,7 +76,19 @@
                         <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div>
                         <div class="clearfix"></div> -->
                         <div class="mt-2 col-md-12"></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Type lokale </span>&nbsp;<span> {{$property_data->property_type}} </span> </div>
+                        @php
+                            $property_type = array();
+                            $property_type = json_decode($property_data->property_type);
+                        @endphp
+                        <div class="col-md-6"><span class="font-weight-bold">Type lokale </span>&nbsp;<span>
+                                @if(count($property_type) > 0)
+                                    <ul>
+                                        @foreach($property_type as $value)
+                                             <li>{{$value}}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </span> </div>
                         <div class="col-md-6"><span class="font-weight-bold">Areal </span>&nbsp;<span>{{$property_data->gross_area_from}} - {{$property_data->gross_area_to}} m²</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Ant kontorplasser </span>&nbsp;<span>{{$property_data->number_of_office_space}}</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>{{ $property_data->floors }}</span></div>
