@@ -196,7 +196,9 @@
                                                           class="badge badge-primary pending"
                                                           style="">{{count($thread->get_unread)}}</span>
                                                 @endif
-                                                <img src="{{asset('public/images/placeholder.png')}}"
+                                                <img
+                                                        src="{{is_countable($thread->ad->company_gallery) && count($thread->ad->company_gallery) > 0 ? asset(\App\Helpers\common::getMediaPath($thread->ad->company_gallery->first()),"150x150"):asset('public/images/placeholder.png')}}"
+                                                        {{--src="{{asset('public/images/placeholder.png')}}"--}}
                                                      class="profile-post-image" alt="">
                                                 <img
                                                     src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
@@ -273,21 +275,26 @@
             var channel = pusher.subscribe('my-channel');
             channel.bind('my-event', function (data) {
                 if (data.to_user_id == '{{Auth::id()}}') {
+
                     if ($('.thread-link-' + data.thread_id).length < 1) {
+                        var thread_url = "{{url('messages/thread')}}/" +data.thread_id;
+                        var dummy_user_image = "{{asset('public/images/profile-placeholder.png')}}";
                         var thread = '' +
-                            '<a href="messages/thread/' + data.thread_id + '" class="thread thread-link-' + data.thread_id + '" id="' + data.thread_id + '" data-id="' + data.thread_id + '">\n' +
+                            '<a href="'+thread_url+'" class="thread thread-link-' + data.thread_id + '" id="' + data.thread_id + '" data-id="' + data.thread_id + '">\n' +
                             '    <div class="row chat-thread-tab thread-tab-' + data.thread_id + '">\n' +
                             '        <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon" data-thread-id="' + data.thread_id + '">\n' +
                             '                <span  data-thread-id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
                             '                      style="">1</span>\n' +
-                            '            <img src="{{asset('public/images/placeholder.png')}}"\n' +
+                            '            <img src='+data.ad_img_src+'\n' +
                             '                 class="profile-post-image" alt="">\n' +
-                            '            <img src="public/images/profile-placeholder.png"\n' +
+                            '            <img src="'+dummy_user_image+'"\n' +
                             '                class="profile-image" alt="Profile image" style="">\n' +
                             '        </div>\n' +
                             '        <div class="col-md-9 p-0 mt-1 profile-name">\n' +
                             '            <span class="font-weight-bold align-middle" style="min-height: 1em;"></span>\n' +
-                            '            <p class="text-muted thread-message">' + data.message + '</p>\n' +
+                            '             <p class="text-muted thread-ad-title mb-0">'+data.ad_title+'</p>\n'+
+                            '               <span class="thread-time">'+data.last_message_date+'</span>\n'+
+                            '            <span class="thread-message">' + data.message + '</span>\n' +
                             '        </div>\n' +
                             '    </div>\n' +
                             '</a>\n';

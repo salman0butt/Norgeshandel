@@ -57,7 +57,7 @@
                         <div style="min-width: 0;" class="ml-3">
                             <h4 class="u-truncate" >{{\App\Helpers\common::get_ad_attribute($ad,'heading')}}</h4>
                             <p>
-                                417,-&nbsp;
+                                {{--417,-&nbsp;--}}
                                 <a href="{{url('my-business/my-ads/'.$ad->id.'/statistics')}}">Se statistikk</a>
                             </p>
                         </div>
