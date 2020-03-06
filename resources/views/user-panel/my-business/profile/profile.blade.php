@@ -582,10 +582,11 @@
                             <p><b style="color:#646162" class="mr-3">Født :</b> {{$user->birthday}}</p>
                             <p><b style="color:#646162" class="mr-3">Kjønn :</b> @if($user && $user->gender) {{$user->gender == 'male' ? 'Mann' : 'Kvinne'}} @endif</p>
                             <p class="mr-3">
-                                <button class="btn bg-maroon text-white" data-toggle="collapse"
-                                        data-target="#edit_profile"
-                                        onclick="javascript:$('#view_profile').removeClass('show');">Rediger profil
-                                </button>
+                                <a href="{{url('account/summary')}}" class="btn bg-maroon text-white" >Rediger profil</a>
+                                {{--<button class="btn bg-maroon text-white" data-toggle="collapse"--}}
+                                        {{--data-target="#edit_profile"--}}
+                                        {{--onclick="javascript:$('#view_profile').removeClass('show');">Rediger profil--}}
+                                {{--</button>--}}
                             </p>
                         </div>
                     </div>

@@ -15,6 +15,7 @@ use App\Media;
 use App\Models\Ad;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 
@@ -61,16 +62,14 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('notification');
     });
-    Route::get('/setting', function () {
 
+    Route::get('/setting', function () {
         return view('user-panel.my-business.settings');
     });
     Route::get('/price-chart', function () {
-
         return view('user-panel.my-business.price_chart');
     });
     Route::get('/job-pref', function () {
-
         return view('user-panel.my-business.job_preferences');
     });
 
@@ -106,25 +105,14 @@ Route::group(['middleware' => 'authverified'], function () {
         return view('user-panel.footer.about_us');
     });
 
-    Route::get('/account/summary', function () {
-
+    /*
+    Route::get('/account/old-summary', function () {
         return view('user-panel.my-business.profile.account_summary');
     });
     Route::get('/account', function () {
         return view('user-panel.my-business.profile.account');
     });
-    Route::get('/account/setting', function () {
-
-        return view('user-panel.my-business.profile.account_setting');
-    });
-    Route::get('/account/chnagepassword', function () {
-
-        return view('user-panel.my-business.profile.account_changepass');
-    });
-    Route::get('/account/phone', function () {
-
-        return view('user-panel.my-business.profile.account_phone');
-    });
+    */
 
 
 //Compnies List
@@ -320,6 +308,39 @@ Route::group(['middleware' => 'authverified'], function () {
         });
 
             Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
+
+
+    ///Account setting pages and routes
+        Route::get('/account/products', function () {
+            return view('user-panel.my-business.profile.account-products');
+        });
+
+        Route::get('/account/purchasehistory', function () {
+            return view('user-panel.my-business.profile.account-purchase-history');
+        });
+
+        Route::get('/account/privacy', function () {
+            return view('user-panel.my-business.profile.account-privacy');
+        });
+        Route::get('/account/summary', function () {
+            return view('user-panel.my-business.profile.account-summary');
+        });
+        Route::get('/account/redeem', function () {
+            return view('user-panel.my-business.profile.account-redeem');
+        });
+        Route::get('/account/setting', function () {
+            $user = Auth::user();
+            return view('user-panel.my-business.profile.account_setting',compact('user'));
+        });
+        Route::get('/account/chnagepassword', function () {
+            return view('user-panel.my-business.profile.account-change-password');
+        });
+
+        Route::get('/account/phones', function () {
+            return view('user-panel.my-business.profile.account_phone');
+        });
+
+
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager']], function () {

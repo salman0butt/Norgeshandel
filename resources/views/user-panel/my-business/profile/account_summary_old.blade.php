@@ -48,7 +48,6 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <main class="public_profile">
     <div class="dme-container pt-4">
-        <a href="{{ url('/') }}">« Tilbake til Norgeshandel.no</a><br><br>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="Konto-tab" data-toggle="tab" href="#Konto" role="tab"
