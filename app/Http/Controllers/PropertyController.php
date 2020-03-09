@@ -807,6 +807,97 @@ class PropertyController extends Controller
         }
     }
 
+        //prooperty for new_property_for_holiday_homes_for_sale new
+    public function new_property_for_holiday_homes_for_sale(Request $request){
+    
+        $ad = new Ad(['ad_type' => 'property_holiday_home_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+       
+
+        if ($ad) {
+            $property = new PropertyHolidaysHomesForSale(['user_id' => Auth::id()]);
+            $ad->propertyHolydaysHomesForSale()->save($property);
+            if ($property) {
+              
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+    //prooperty for new_commercial_property_for_sale new
+    public function new_commercial_property_for_sale(Request $request){
+    
+        $ad = new Ad(['ad_type' => 'property_commercial_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+       
+
+        if ($ad) {
+            $property = new CommercialPropertyForSale(['user_id' => Auth::id()]);
+            $ad->propertyCommercialPropertyForSale()->save($property);
+            if ($property) {
+              
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+
+        //prooperty for new_commercial_property_for_rent new
+    public function new_commercial_property_for_rent(Request $request){
+    
+        $ad = new Ad(['ad_type' => 'property_commercial_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+       
+
+        if ($ad) {
+            $property = new CommercialPropertyForRent(['user_id' => Auth::id()]);
+            $ad->propertyCommercialPropertyForRent()->save($property);
+            if ($property) {
+              
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+
+       //prooperty for new_business_for_sale new
+    public function new_business_for_sale(Request $request){
+    
+        $ad = new Ad(['ad_type' => 'property_business_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+       
+
+        if ($ad) {
+            $property = new BusinessForSale(['user_id' => Auth::id()]);
+            $ad->propertyBusinessForSale()->save($property);
+            if ($property) {
+              
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
+
 //    zain
     public function complete_property($id){
         
@@ -821,6 +912,21 @@ class PropertyController extends Controller
             }else if ($ad->ad_type == 'property_for_rent') {
                     $property_for_rent1 = $ad->property;
                     return view('user-panel.property.new_add', compact('property_for_rent1'));   
+            }else if ($ad->ad_type == 'property_flat_wishes_rented') {
+                    $flat_wishes_rented1 = $ad->property;
+                return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));   
+            }else if ($ad->ad_type == 'property_holiday_home_for_sale') {
+                    $holiday_home_for_sale1 = $ad->property;
+                return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale1'));   
+            }else if ($ad->ad_type == 'property_commercial_for_sale') {
+                    $commercial_property = $ad->property;
+              return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));   
+            }else if ($ad->ad_type == 'property_commercial_for_rent') {
+                    $commercial_for_rent = $ad->property;
+              return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));   
+            }else if ($ad->ad_type == 'property_business_for_sale') {
+                    $business_for_sale = $ad->property;
+              return view('user-panel.property.business_for_sale', compact('business_for_sale'));   
             }
             else{
                 abort(404);
@@ -1497,6 +1603,59 @@ class PropertyController extends Controller
             $data['success'] = $response;
             echo json_encode($data);
     }
+           //update dummy updateDummyHomeForSaleAd
+    public function updateDummyHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id) {
+      //  DB::connection()->enableQueryLog();
+      //dd('working');
+        $property = PropertyHolidaysHomesForSale::find($id);
+        $ad = $property->ad;
+
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+          
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+          //update dummy updateDummyCommercialPropertyForSale
+    public function updateDummyCommercialPropertyForSale(AddCommercialPropertyForSale $request, $id) {
+      //  DB::connection()->enableQueryLog();
+      //dd('working');
+        $property = CommercialPropertyForSale::find($id);
+        $ad = $property->ad;
+
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+          
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+              //update dummy updateDummyCommercialPropertyForRent
+    public function updateDummyCommercialPropertyForRent(AddCommercialPropertyForRent $request, $id) {
+      //  DB::connection()->enableQueryLog();
+      //dd('working');
+        $property = CommercialPropertyForRent::find($id);
+        $ad = $property->ad;
+
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+          
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+
+    //update dummy updateDummyCommercialPropertyForRent
+    public function updateDummyBusinessForSale(AddBusinessForSale $request, $id) {
+      //  DB::connection()->enableQueryLog();
+    //   dd('working');
+        $property = BusinessForSale::find($id);
+        $ad = $property->ad;
+
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+          
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
 
     public function updateSaleAdd(Request $request, $id)
     {
@@ -2078,7 +2237,7 @@ class PropertyController extends Controller
         }
     }
 
-    public function updateCommercialPropertyForSale(AddCommercialPropertyForSale $request, $id)
+    public function updateCommercialPropertyForSale(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -2429,7 +2588,7 @@ class PropertyController extends Controller
     }
 
     // Update commercial property for rent
-    public function updateCommercialPropertyForRent(AddCommercialPropertyForRent $request, $id)
+    public function updateCommercialPropertyForRent(Request $request, $id)
     {
 
         DB::beginTransaction();
@@ -2674,7 +2833,7 @@ class PropertyController extends Controller
     }
 
     // update for business for sale ad
-    public function updateBusinessForSale(AddBusinessForSale $request, $id)
+    public function updateBusinessForSale(Request $request, $id)
     {
 
         DB::beginTransaction();

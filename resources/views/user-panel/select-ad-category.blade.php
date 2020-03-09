@@ -27,7 +27,7 @@
                     <hr class="col-6">
                     <ul class="sub-cat-list pl-3 dme-collapse" id="home">
                         <li class="" style="">
-                            <a href="{{url('/new/property/rent/ad')}}">Bolig til leie
+                            <a href="{{url('/new/property/property-for-rent')}}">Bolig til leie
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">
@@ -39,13 +39,13 @@
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/flat/wishes/rented')}}">Bolig ønskes leid
+                            <a href="{{url('/new/property/property-for-flat-wishes-rented')}}">Bolig ønskes leid
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="{{url('holiday/home/for/sale')}}">Fritidsbolig til salgs
+                            <a href="{{url('new/property/property-for-holiday-homes-for-sale')}}">Fritidsbolig til salgs
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">
@@ -56,13 +56,13 @@
                         <!-- <hr class="col-6"> -->
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/add/new/commercial/property/for/sale')}}">Næringseiendom til salgs
+                            <a href="{{url('/new/property/commercial-property-for-sale')}}">Næringseiendom til salgs
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/add/new/commercial/property/for/rent')}}">Næringseiendom til leie
+                            <a href="{{url('/new/property/commercial-property-for-rent')}}">Næringseiendom til leie
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">
@@ -74,7 +74,7 @@
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/business/for/sale')}}">Bedrifter til salgs
+                            <a href="{{url('/new/property/business-for-sale')}}">Bedrifter til salgs
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">
