@@ -30,7 +30,7 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-4 ">
-                        <input type="file" name="property_home_for_sale_sales_quote[]" id="property_home_for_sale_sales_quote">
+                     <input type="file" name="property_home_for_sale_sales_quote[]" id="property_home_for_sale_sales_quote">
                     </div>
                     <div class="col-sm-2">
                         <button class="dme-btn-outlined-blue" type="button" wt-delete="sales-information"><i class="fa fa-trash"></i></button>
@@ -178,6 +178,8 @@
             $("input").on('change', function (e) {
                 e.preventDefault();
                record_store_ajax_request('change', (this));
+                var postal = $('.zip_code').val();
+                $('#old_zip').attr('value',postal);
             });
             //click button update
             $("#publiserannonsen").click(function (e) {

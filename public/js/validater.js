@@ -341,15 +341,15 @@ $(document).ready(function () {
     });
 
     // required check box (region) on flat wishes rented page
-    $("#flat_wishes_rented_form .region").rules("add", {
-        required:true
-    });
+   // $("#flat_wishes_rented_form .region").rules("add", {
+    //    required:true
+   // });
 
 
     // required check box (property_type) on flat wishes rented page
-    $("#flat_wishes_rented_form .property_type").rules("add", {
-        required:true
-    });
+    // $("#flat_wishes_rented_form .property_type").rules("add", {
+    //     required:true
+    // });
 
     // Commercial Lot
 

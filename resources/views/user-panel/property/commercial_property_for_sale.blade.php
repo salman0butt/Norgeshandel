@@ -140,6 +140,8 @@
             $("input").on('change', function (e) {
                 e.preventDefault();
                record_store_ajax_request('change', (this));
+                var postal = $('.zip_code').val();
+                $('#old_zip').attr('value',postal);
             });
             //click button update
             $("#publiserannonsen").click(function (e) {

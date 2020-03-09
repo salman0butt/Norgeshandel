@@ -788,6 +788,28 @@ class PropertyController extends Controller
             abort(404);
         }
     }
+      //prooperty for new_property_for_flat_wishes_rented new
+        public function new_property_for_flat_wishes_rented(Request $request){
+    
+        $ad = new Ad(['ad_type' => 'property_flat_wishes_rented', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+       
+
+        if ($ad) {
+            $property = new FlatWishesRented(['user_id' => Auth::id()]);
+            $ad->propertyFlatWishesRented()->save($property);
+            if ($property) {
+              
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
     //prooperty for rent new
         public function new_property_for_rent(Request $request){
         $ad = new Ad(['ad_type' => 'property_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
@@ -897,6 +919,28 @@ class PropertyController extends Controller
             abort(404);
         }
     }
+    
+       //prooperty for new_commercial_plots new
+    public function new_commercial_plots(Request $request){
+    
+        $ad = new Ad(['ad_type' => 'property_commercial_plots', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+       
+
+        if ($ad) {
+            $property = new CommercialPlot(['user_id' => Auth::id()]);
+            $ad->propertyCommercialPlot()->save($property);
+            if ($property) {
+                return redirect(url('complete/ad/' . $ad->id));
+            }
+            else{
+                abort(404);
+            }
+        }
+        else{
+            abort(404);
+        }
+    }
 
 //    zain
     public function complete_property($id){
@@ -927,6 +971,9 @@ class PropertyController extends Controller
             }else if ($ad->ad_type == 'property_business_for_sale') {
                     $business_for_sale = $ad->property;
               return view('user-panel.property.business_for_sale', compact('business_for_sale'));   
+            }else if ($ad->ad_type == 'property_commercial_plots') {
+                $commercial_plots = $ad->property;
+                return view('user-panel.property.commercial_plots', compact('commercial_plots'));   
             }
             else{
                 abort(404);
@@ -1326,7 +1373,7 @@ class PropertyController extends Controller
     }
 
     //UpdatePropertyHolidayHomeForSale $request
-    public function updateHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id)
+    public function updateHomeForSaleAd(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -1593,7 +1640,7 @@ class PropertyController extends Controller
        //update dummy property for sale to published
     public function UpdateDummyRentAdd(AddPropertyForRent $request, $id) {
       //  DB::connection()->enableQueryLog();
-      dd('working');
+      //dd('working');
         $property = PropertyForRent::find($id);
         $ad = $property->ad;
 
@@ -1645,14 +1692,34 @@ class PropertyController extends Controller
 
     //update dummy updateDummyCommercialPropertyForRent
     public function updateDummyBusinessForSale(AddBusinessForSale $request, $id) {
-      //  DB::connection()->enableQueryLog();
-    //   dd('working');
         $property = BusinessForSale::find($id);
         $ad = $property->ad;
 
           $response = $ad->update(['status'=>'published']);
-        //  dd(DB::getQueryLog());
+     
           
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+          //update dummy property for sale to published
+    public function updateDummyFlatWishesRented(AddFlatWishesRented $request, $id) {
+      //  DB::connection()->enableQueryLog();
+        $property = FlatWishesRented::find($id);
+        $ad = $property->ad;
+
+          $response = $ad->update(['status'=>'published']);
+        //  dd(DB::getQueryLog());
+
+            $data['success'] = $response;
+            echo json_encode($data);
+    }
+    //update dummy updateDummyCommercialPropertyForRent
+    public function updateDummyCommercialPlots(AddCommercialPlot $request, $id) {
+
+        $property = CommercialPlot::find($id);
+        $ad = $property->ad;
+          $response = $ad->update(['status'=>'published']);
+
             $data['success'] = $response;
             echo json_encode($data);
     }
@@ -2077,7 +2144,7 @@ class PropertyController extends Controller
     }
 
     //update flat wishs rented
-    public function updateFlatWishesRented(AddFlatWishesRented $request, $id)
+    public function updateFlatWishesRented(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -2956,7 +3023,7 @@ class PropertyController extends Controller
         }
     }
 
-    public function updateCommercialPlots(AddCommercialPlot $request, $id)
+    public function updateCommercialPlots(Request $request, $id)
     {
         DB::beginTransaction();
         try {

@@ -18,6 +18,7 @@
     @endif
     <div class="pl-3">
         <input type="hidden" name="upload_dropzone_images_type" value="business_for_sale_temp_images">
+          <input type="hidden" id="old_zip" value="{{ (isset($business_for_sale_obj->zip_code) ? $business_for_sale_obj->zip_code : '') }}">
         <!--                            selection-->
         <div class="form-group">
             <h3 class="u-t5">Bransje</h3>

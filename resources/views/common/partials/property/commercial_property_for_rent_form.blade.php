@@ -20,6 +20,7 @@
   @method('PATCH')
   @endif
     <div class="pl-3">
+    <input type="hidden" id="old_zip" value="{{ (isset($commercial_property_for_rent->zip_code) ? $commercial_property_for_rent->zip_code : '') }}">
         <input type="hidden" name="upload_dropzone_images_type" value="commercial_property_for_rent_temp_images">
         <!-- checkbox -->
         <div class="form-group">

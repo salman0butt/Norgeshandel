@@ -22,6 +22,7 @@
         @if(Request::is('holiday/home/for/sale/*/edit') || Request::is('complete/ad/*'))
         @method('PATCH')
         @endif
+        <input type="hidden" id="old_zip" value="{{ (isset($holiday_home_for_sale->zip_code) ? $holiday_home_for_sale->zip_code : '') }}">
         <input type="hidden" name="upload_dropzone_images_type" value="holiday_home_for_sale_temp_images">
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
