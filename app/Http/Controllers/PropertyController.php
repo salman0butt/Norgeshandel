@@ -806,28 +806,6 @@ class PropertyController extends Controller
             abort(404);
         }
     }
-       //prooperty for new_property_for_flat_wishes_rented new
-        public function new_property_for_flat_wishes_rented(Request $request){
-    
-        $ad = new Ad(['ad_type' => 'property_flat_wishes_rented', 'status' => 'saved', 'user_id' => Auth::id()]);
-        $ad->save();
-       
-
-        if ($ad) {
-            $property = new FlatWishesRented(['user_id' => Auth::id()]);
-            $ad->propertyFlatWishesRented()->save($property);
-            if ($property) {
-              
-                return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
-                abort(404);
-            }
-        }
-        else{
-            abort(404);
-        }
-    }
 
         //prooperty for new_property_for_holiday_homes_for_sale new
     public function new_property_for_holiday_homes_for_sale(Request $request){
@@ -1348,7 +1326,7 @@ class PropertyController extends Controller
     }
 
     //UpdatePropertyHolidayHomeForSale $request
-    public function updateHomeForSaleAd(Request $request, $id)
+    public function updateHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -1599,18 +1577,6 @@ class PropertyController extends Controller
             exit();
         }
     }
-      //update dummy property for sale to published
-    public function updateDummyFlatWishesRented(AddFlatWishesRented $request, $id) {
-      //  DB::connection()->enableQueryLog();
-        $property = FlatWishesRented::find($id);
-        $ad = $property->ad;
-
-          $response = $ad->update(['status'=>'published']);
-        //  dd(DB::getQueryLog());
-
-            $data['success'] = $response;
-            echo json_encode($data);
-    }
 
     //update dummy property for sale to published
     public function UpdateDummySaleAdd(AddPropertyForSale $request, $id) {
@@ -1691,7 +1657,6 @@ class PropertyController extends Controller
             echo json_encode($data);
     }
 
-    
     public function updateSaleAdd(Request $request, $id)
     {
         DB::beginTransaction();
@@ -2112,7 +2077,7 @@ class PropertyController extends Controller
     }
 
     //update flat wishs rented
-    public function updateFlatWishesRented(Request $request, $id)
+    public function updateFlatWishesRented(AddFlatWishesRented $request, $id)
     {
         DB::beginTransaction();
         try {

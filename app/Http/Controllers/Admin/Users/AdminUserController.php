@@ -107,7 +107,6 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-
         $roles = Role::all();
         return view('admin.users.new_user', compact('roles', 'user'));
     }
@@ -121,6 +120,36 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->profile_submit_type && $request->profile_submit_type == 'change-password'){
+            $user = User::find($id);
+            if($user){
+                if (Hash::check($request->old_password,$user->password)) {
+                    if($request->password == $request->verify_password){
+                        $user->password = Hash::make($request->password);;
+                        $user->save();
+                        $date = date('d-m-Y G:i:s');
+                        $to_name = $user->username;
+                        $to_email = $user->email;
+                        Mail::send('mail.changed_password',compact('date'), function ($message) use ($to_name, $to_email) {
+                            $message->to($to_email, $to_name)->subject('Passord endret');
+                            $message->from('developer@digitalmx.no', 'NorgesHandel ');
+                        });
+                        $request->session()->flash('success', 'Passordet er endret.');
+                        return redirect()->back();
+                    }else{
+                        $request->session()->flash('danger', 'Passordene stemmer ikke overens.');
+                        return redirect()->back();
+                    }
+                }else{
+                    $request->session()->flash('danger', 'Ditt nåværende passord er feil. Vennligst prøv igjen med riktig passord.');
+                    return redirect()->back();
+                }
+            }
+        }
+        if($request->dob_day && $request->dob_month && $request->dob_year){
+            $birthday = $request->dob_year.'-'.$request->dob_month.'-'.$request->dob_day;
+            $request->merge(['birthday'=>$birthday]);
+        }
         $user_array = $request->all();
         if (isset($user_array['password']) && $user_array['password'] != ""){
             $user_array['password'] = Hash::make($user_array['password']);
