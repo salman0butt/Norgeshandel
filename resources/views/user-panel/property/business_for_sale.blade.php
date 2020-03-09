@@ -61,7 +61,6 @@
                 if (event == 'change') {
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
-                    console.log(old_zip);
                     if (zip_code) {
                         if (old_zip != zip_code) {
                             find_zipcode_city(zip_code);
@@ -98,7 +97,7 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        console.log(data);
+                       // console.log(data);
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
                            if (event == 'change') {
@@ -139,9 +138,9 @@
             
             $("input").on('change', function (e) {
                 e.preventDefault();
+               record_store_ajax_request('change', (this));
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
-               record_store_ajax_request('change', (this));
             });
             //click button update
             $("#publiser_annonsen").click(function (e) {

@@ -135,7 +135,6 @@
             $('.notice').html("");
             var myform = document.getElementById("property_for_sale_form");
             var fd = new FormData(myform);
-            console.log(this_obj);
             var l = Ladda.create(this_obj);
             l.start();
             $.ajax({
@@ -187,9 +186,9 @@
         }
         $("input").on('change', function (e) {
             e.preventDefault();
-             var postal = $('.zip_code').val();
-             $('#old_zip').attr('value',postal);
             record_store_ajax_request('change', (this));
+            var postal = $('.zip_code').val();
+             $('#old_zip').attr('value',postal);
         });
         //click button update
         $("#publiserannonsen").click(function (e) {
