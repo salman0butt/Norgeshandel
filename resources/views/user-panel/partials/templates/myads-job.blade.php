@@ -32,10 +32,9 @@ if ($job->company_id != 0) {
             <button type="submit" class="link" style="cursor: pointer;position: absolute;right: 0;top: 0"><span
                     class="fa fa-trash-alt text-muted"></span></button>
         </form>
-        @if($job->ad->status=='saved')
-            <a href="{{route('jobs.edit', compact('job'))}}" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm">
-                Komplett annonse</a>
-        @endif
+        <a href="{{route('jobs.edit', compact('job'))}}" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm edit-ad-button">
+            Endre
+        </a>
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{route('jobs.show', compact('job'))}}" class="dme-btn-outlined-blue mr-2 btn-sm">Se annonse</a>
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$job->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm statistics-button">Se statistikk</a>
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$job->ad->id.'/options')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Flere valg</a>

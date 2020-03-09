@@ -852,6 +852,32 @@ $(document).ready(function () {
     });
 
     // LOGIN PAGE VALIDATION
+    $("#email_management").validate({
+        lang: 'no',
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            confirm_email: {
+                required: true,
+                email: true
+            },
+        }
+    });
+
+    // LOGIN PAGE VALIDATION
+    $("#addPhoneFrm").validate({
+        lang: 'no',
+        rules: {
+            phone_number: {
+                required: true,
+                minlength: 7,
+            },
+        }
+    });
+
+    // LOGIN PAGE VALIDATION
     $("#login_page").validate({
         lang: 'no',
         rules: {

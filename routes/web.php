@@ -13,6 +13,7 @@
 
 use App\Media;
 use App\Models\Ad;
+use App\Models\Meta;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -338,8 +339,27 @@ Route::group(['middleware' => 'authverified'], function () {
             return view('user-panel.my-business.profile.account-change-password');
         });
 
+        Route::get('/account/emails', function () {
+            return view('user-panel.my-business.profile.account-emails');
+        });
+        Route::get('/account/deleteemail', function (Request $request) {
+            if( $request->email && $request->delete_email == 'yes'){
+                $email = Meta::where('key','alternative_email')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
+                if($email){
+                    $email->delete();
+                    session()->flash('success', $request->email.' ble slettet fra din profil.');
+                    return redirect('/account/emails');
+                }else{
+                    return back();
+                }
+            }
+            return view('user-panel.my-business.profile.delete-account-email');
+        });
+        Route::post('store-user-emails', 'Admin\Users\AdminUserController@store_user_alternative_email')->name('store-user-emails');
+        Route::post('store-user-contact-no', 'Admin\Users\AdminUserController@store_user_alternative_contact_no')->name('store-user-contact-no');
+
         Route::get('/account/phones', function () {
-            return view('user-panel.my-business.profile.account_phone');
+            return view('user-panel.my-business.profile.account-phone');
         });
 
 
