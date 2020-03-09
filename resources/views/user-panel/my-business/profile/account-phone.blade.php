@@ -17,15 +17,20 @@
                 <div class="col-md-6">
                     <div class="left">
                         <div>
-                            <form action="#" id="addPhoneFrm" class="feedback" method="post" novalidate="novalidate">
-                                <label><span>Land </span><br><select name="country_code" id="phoneCountryCode"
-                                        class="dme-form-control" style="width: 350px;">
-                                        <option value="NO" selected="selected">Norge (+47)</option>
-                                        <option value="SE">Sverige (+46)</option>
-                                        <option value="FI">Suomi (+358)</option>
-                                    </select></label>
-                                <label><span>Nytt telefonnummer </span><input type="tel" name="phone_number"
-                                        required="required" autofocus="autofocus" id="phonePhoneNumber" class="dme-form-control"></label>
+                            <form action="{{route('store-user-contact-no')}}" id="addPhoneFrm" class="feedback" method="post" novalidate="novalidate">
+                                @csrf @method('POST')
+                                <label>
+                                    <span>Land </span><br>
+                                    <select name="country_code" id="phoneCountryCode" class="dme-form-control" style="width: 350px;">
+                                        <option value="+47" selected="selected">Norge (+47)</option>
+                                        <option value="+46">Sverige (+46)</option>
+                                        <option value="+358">Suomi (+358)</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    <span>Nytt telefonnummer </span>
+                                    <input type="tel" name="phone_number" autofocus="autofocus" id="phonePhoneNumber" class="dme-form-control">
+                                </label>
                                 <p>Du kan skrive inn både mobilnummere og fasttelefoner.</p>
                                 <input type="submit" value="Legg til nytt telefonnummer" class="dme-btn-outlined-blue">
                             </form>

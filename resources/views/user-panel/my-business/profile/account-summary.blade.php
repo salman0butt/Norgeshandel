@@ -94,7 +94,7 @@
                                                 <td class="left">E-post</td>
                                                 <td class="right">{{Auth::user()->email}}<span
                                                             class="text-muted">(Primær)</span> <span class="l-break"><a
-                                                                href="#">Behandle e-postadresse</a></span></td>
+                                                                href="{{url('/account/emails')}}">Behandle e-postadresse</a></span></td>
                                             </tr>
                                             <tr>
                                                 <td class="left">Telefonnummer</td>

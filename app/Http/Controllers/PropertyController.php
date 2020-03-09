@@ -3246,11 +3246,15 @@ class PropertyController extends Controller
     // Store ad view when an user click on property ad
     public function store_ad_views($obj){
         if($obj && $obj->ad){
+            $view = new \App\Models\AdView(['ad_id' => $obj->ad->id, 'ip' =>  \request()->getClientIp(),'user_id' => Auth::id()]);
+            $view->save();
+            /*
             $count = $obj->ad->views()->where('ip', \request()->getClientIp())->get();
             if (count($count) == 0) {
                 $view = new \App\Models\AdView(['ad_id' => $obj->ad->id, 'ip' =>  \request()->getClientIp()]);
                 $view->save();
             }
+            */
         }
     }
 }
