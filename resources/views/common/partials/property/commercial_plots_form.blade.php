@@ -1,5 +1,5 @@
 <form action="#" method="post" id="commercial_plot_form" class="dropzone addMorePics p-0"
-      data-action="@if(Request::is('commercial/plots/*/edit')){{url('update-upload-images?ad_id='.$commercial_plots->ad->id)}}
+      data-action="@if(Request::is('commercial/plots/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$commercial_plots->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
 
@@ -16,9 +16,10 @@
 
 
 @endphp
-  @if(Request::is('commercial/plots/*/edit'))
+  @if(Request::is('commercial/plots/*/edit') || Request::is('complete/ad/*'))
   @method('PATCH')
   @endif
+    <input type="hidden" id="old_zip" value="{{ (isset($commercial_plot->zip_code) ? $commercial_plot->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="commercial_plots_temp_images">
     <div class="pl-3">
         <!--                            radio -->

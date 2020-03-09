@@ -68,7 +68,7 @@
                             <hr class="col-6">
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/commercial/plots')}}">Næringstomt
+                            <a href="{{url('/new/property/commercial-plots')}}">Næringstomt
                                 <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
                             </a>
                             <hr class="col-6">

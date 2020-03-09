@@ -303,6 +303,7 @@ Route::group(['middleware' => 'authverified'], function () {
                  Route::get('commercial-property-for-sale', 'PropertyController@new_commercial_property_for_sale');
                  Route::get('commercial-property-for-rent', 'PropertyController@new_commercial_property_for_rent');
                  Route::get('business-for-sale', 'PropertyController@new_business_for_sale');
+                 Route::get('commercial-plots', 'PropertyController@new_commercial_plots');
             });
         });
         Route::group(['prefix' => 'complete'], function () {
@@ -469,6 +470,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('/commercial/plots', 'PropertyController@commercialPlots');
     Route::get('/commercial/plots/{id}/edit', 'PropertyController@editCommercialPlots');
     Route::patch('commercial/plots/{id}', 'PropertyController@updateCommercialPlots');
+    Route::patch('commercial/plots/update/{id}', 'PropertyController@updateDummyCommercialPlots');
     Route::post('/add/commercial/plot/ad', 'PropertyController@addcommercialPlotsAd');
 
     Route::get('/commercial/plots/ads', 'PropertyController@commercialPlotsAds');
