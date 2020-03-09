@@ -92,7 +92,7 @@
                                             <tbody>
                                             <tr>
                                                 <td class="left">E-post</td>
-                                                <td class="right">maxaman945@smlmail.net <span
+                                                <td class="right">{{Auth::user()->email}}<span
                                                             class="text-muted">(Primær)</span> <span class="l-break"><a
                                                                 href="#">Behandle e-postadresse</a></span></td>
                                             </tr>
