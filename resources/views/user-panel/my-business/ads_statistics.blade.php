@@ -61,38 +61,43 @@
                 </div>
             </div>
             <div class="mt-5">
-                <h4 style="display:inline;" class="ut-5">{{$total_clicks}} klikk på annonsen</h4>
-                <form action="#" style="display:inline;">
-                <select style="display:inline;width:unset;margin-left: 20px;" class="form-control filter_ad_view">
-                    <option value="all_clicks">i hele annonseringsperioden</option>
-                    <option value="15_days_clicks">de siste 14 dagene</option>
+                <form>
+                    <h4 style="display:inline;" class="ut-5 total_clicks_count"><span>{{$total_clicks}}</span> klikk på annonsen</h4>
+                    <select style="display:inline;width:unset;margin-left: 20px;" class="form-control filter_ad_view">
+                        <option value="all_clicks">i hele annonseringsperioden</option>
+                        <option value="15_days_clicks">de siste 14 dagene</option>
                     </select>
                 </form>
+
+                <p class="d-none all_clicks_count">{{$total_clicks}} klikk i hele annonseringsperioden</p>
+
             </div>
+
         </div>
 
-       <div align="center" class="mt-4 mb-5">
+
+        <div align="center" class="mt-4 mb-5">
          <canvas id="myChart" width="800" height="600"></canvas>
        </div>
        <div class="boxed mb-5">
-       <h1><i class="far fa-user"></i> {{$total_clicks}}</h1>
+       <h1><i class="far fa-user"></i> {{$once_click_users->count() + $two_to_five_time_click_users->count() + $more_than_five_time_click_users->count()}}</h1>
        <h4>personer har klikket på annonsen</h4>
        <table>
         <thead>
             <tr>
                 <td>En gang</td>
                 <td>&emsp;</td>
-                <td class="pull-right">0 Personer</td>
+                <td class="pull-right">{{$once_click_users->count()}} Personer</td>
             </tr>
               <tr>
                 <td>To till fem ganger</td>
                 <td>&emsp;</td>
-                <td class="pull-right">0 Personer</td>
+                <td class="pull-right">{{$two_to_five_time_click_users->count()}} Personer</td>
             </tr>
               <tr>
                 <td>Mer enn fem ganger</td>
                 <td>&emsp;</td>
-                <td class="pull-right">0 Personer</td>
+                <td class="pull-right">{{$more_than_five_time_click_users->count()}} Personer</td>
             </tr>
         </thead>
        </table>
@@ -183,22 +188,31 @@
 
     $(document).on('change', '.filter_ad_view', function () {
         var val = $(this).val();
+        $('.all_clicks_count').addClass('d-none');
+
+        if(val == '15_days_clicks'){
+            $('.all_clicks_count').removeClass('d-none');
+        }
         if(val){
             $.ajax({
                 url: "{{url('my-business/my-ads/'.$ad->id.'/statistics')}}",
                 data: {'type':val},
                 type: "GET",
                 success: function (response) {
-                    // return false;
                     myChart.data.datasets[0].data = 0;
                     $( myChart.data.labels ).each(function( key, index ) {
                         myChart.data.labels[key] = '';
                     });
                     myChart.update();
+                    var obj = jQuery.parseJSON(response);
+                    var total_clicks = obj['total_clicks'];
+                    $('.total_clicks_count span').text(total_clicks);
                     if(val == '15_days_clicks'){
-                        var obj = jQuery.parseJSON(response);
-                        if(obj){
-                            $( obj ).each(function( key, index ) {
+
+                        console.log(obj['ad_views']);
+                        // return false;
+                        if(obj['ad_views']){
+                            $( obj['ad_views'] ).each(function( key, index ) {
                                 myChart.data.datasets[0].data[key] = index['count_view'];
                                 var date = new Date(index['date']);
                                 var newDate = date.toDateString().split(' ').slice(1).join(' ');
@@ -207,16 +221,14 @@
                             });
                         }
                     }else{
-                        var obj = jQuery.parseJSON(response);
-                        if(obj){
-                            $( obj ).each(function( key, index ) {
+                        if(obj['ad_views']){
+                            $( obj['ad_views'] ).each(function( key, index ) {
                                 myChart.data.datasets[0].data[key] = index['count_view'];
                                 myChart.data.labels[key] = index['month']+' '+index['year'];
                                 myChart.update();
                             });
                         }
                     }
-
                 }
             });
         }
