@@ -92,14 +92,28 @@
                                             <tbody>
                                             <tr>
                                                 <td class="left">E-post</td>
-                                                <td class="right">{{Auth::user()->email}}<span
-                                                            class="text-muted">(Primær)</span> <span class="l-break"><a
-                                                                href="{{url('/account/emails')}}">Behandle e-postadresse</a></span></td>
+                                                <td class="right">{{Auth::user()->email}}<span class="text-muted">(Primær)</span>
+                                                    @if(Auth::user()->email_meta->count() > 0)
+                                                        <span class="mb-0 d-block" style="line-height: 10px;">{{Auth::user()->email_meta->first()->value}}</span>
+                                                        @if(Auth::user()->email_meta->count() > 1)
+                                                            <small class="mb-0 text-muted">... og {{Auth::user()->email_meta->count()-1}} ubekreftede e-poster</small>
+                                                        @endif
+                                                    @endif
+                                                    <span class="l-break">
+                                                        <a href="{{url('/account/emails')}}">Behandle e-postadresse</a>
+                                                    </span>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td class="left">Telefonnummer</td>
-                                                <td class="right"><span class="l-break"><a
-                                                                href="{{url('account/phones')}}">Behandle telefonnummer</a></span></td>
+                                                <td class="right">
+                                                    @if(Auth::user()->contact_no_meta->count() > 0)
+                                                        <small class="mb-0 text-muted">... og {{Auth::user()->email_meta->count()}} ubekreftede telefonnummer</small>
+                                                    @endif
+                                                    <span class="l-break" style="line-height: 10px;">
+                                                        <a href="{{url('account/phones')}}">Behandle telefonnummer</a>
+                                                    </span>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>

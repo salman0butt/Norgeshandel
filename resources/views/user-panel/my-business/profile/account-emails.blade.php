@@ -46,7 +46,7 @@
                                     <li>
                                         <span class="float-left mb-2"> {{$user_email->value}}</span>
                                         <span class="float-right mb-2">
-                                            <a href="#" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">bekreft</a>
+                                            <a href="{{url('/account/verifyemail?email='.$user_email->value)}}" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">bekreft</a>
                                             <a href="{{url('/account/deleteemail?email='.$user_email->value)}}" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">slett</a>
                                         </span>
                                     </li>

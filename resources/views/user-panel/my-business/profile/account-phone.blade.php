@@ -13,6 +13,7 @@
             @include('user-panel.my-business.profile.account-setting-header')
             <br>
             <h4>Behandle telefonnummer</h4><br>
+            @include('common.partials.flash-messages')
             <div class="row">
                 <div class="col-md-6">
                     <div class="left">
@@ -41,7 +42,19 @@
                     <div class="list">
                         <h4>Dine telefonnummer</h4>
                         <hr>
-                        <ul>
+                        <ul class="list-unstyled pl-0">
+                            @if(Auth::user()->contact_no_meta->count() > 0)
+                                @foreach(Auth::user()->contact_no_meta as $user_contact_no)
+                                    <li>
+                                        <span class="float-left mb-2"> {{$user_contact_no->value}}</span>
+                                        <span class="float-right mb-2">
+                                            <a href="#" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">bekreft</a>
+                                            <a href="{{url('/account/deletephone?phone='.$user_contact_no->value)}}" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">slett</a>
+                                        </span>
+                                    </li>
+                                    <div class="clearfix"></div>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
