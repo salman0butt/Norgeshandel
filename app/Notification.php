@@ -9,4 +9,13 @@ class Notification extends Model
     //
     protected $guarded = [];
 
+    public function notifiable(){
+        return $this->morphTo();
+    }
+
+    public function searches(){
+        return $this->morphTo()->whereDate('created_at', '>', $this->created_at);
+    }
+
+
 }

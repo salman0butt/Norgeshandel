@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use function GuzzleHttp\Psr7\str;
 
 
 class NotificationController extends Controller
@@ -13,7 +14,36 @@ class NotificationController extends Controller
     //
     public function __construct()
     {
-        
+    }
+
+    public function index(){
+        $user = Auth::user();
+        $searches = array();
+        $searches_collection = $user->saved_searches()->where('notification_web', '=', '1')->get();
+        if (!empty($searches_collection)){
+            $searches = $searches_collection->pluck('filter');
+        }
+        foreach ($searches as $search){
+            $arr = explode('/', $search);
+            $arr_type = $arr[0];
+            $str = $arr[1];
+            $arr2 = explode('?', $str);
+            $filter = $arr2[1];
+            $array_filter = explode('&', $filter);
+            $request = new Request();
+            foreach ($array_filter as $value){
+                $pairs = explode('=', $value);
+                if (count($pairs)>1){
+                    $request->merge([$pairs[0]=>$pairs[1]]);
+                }
+            }
+            dump($request);
+//            $arr3 = explode($arr2);
+//            if(count($arr3)>1){
+//            }
+        }
+        dd('');
+        return view('common.partials.notifications.all_notifications');
     }
 
     public function create($notifiable_id,$property_type,$text)
@@ -28,7 +58,7 @@ class NotificationController extends Controller
     }
 
     public function getAllNotifications(){
-        
+
         $data['count'] = "";
         $data['html']  = "";
         if(User::find(Auth::user()->id)->is('admin'))
@@ -61,9 +91,9 @@ class NotificationController extends Controller
             }
             $data['count'] = $count;
             $data['html']  = $html;
-            
+
         }
-        
+
 
         echo json_encode($data);
     }

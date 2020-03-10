@@ -59,15 +59,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function setBirthdayAttribute($value)
-    {
-        if($value){
-            $this->attributes['birthday'] = date('Y-m-d',strtotime($value));
-        }else{
-            $this->attributes['birthday'] = null;
-        }
-
-    }
+//    public function setBirthdayAttribute($value)
+//    {
+//        if($value){
+//            $this->attributes['birthday'] = date('Y-m-d',strtotime($value));
+//        }else{
+//            $this->attributes['birthday'] = null;
+//        }
+//
+//    }
     public function getBirthdayAttribute() {
         if(!$this->attributes['birthday']){
             return '';
@@ -157,5 +157,18 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function unread_messages(){
         return Message::where('to_user_id', $this->id)->whereNull('read_at')->get();
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+    public function unread_notifications()
+    {
+        return $this->hasMany(Notification::class)->whereNull('read_at');
+    }
+    public function read_notifications()
+    {
+        return $this->hasMany(Notification::class)->whereNotNull('read_at');
     }
 }

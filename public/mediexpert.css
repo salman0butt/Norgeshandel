@@ -857,7 +857,7 @@ a > .alert-warning:hover{
     text-decoration: none;
 }
 .thread-delete-button{
-    opacity: 0;
+    opacity: 0.2;
     transition: opacity 0.5s;
 }
 .thread-delete-button:hover{

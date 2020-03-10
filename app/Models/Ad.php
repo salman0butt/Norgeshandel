@@ -8,6 +8,7 @@ use App\CommercialPlot;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\FlatWishesRented;
+use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
 use App\PropertyHolidaysHomesForSale;
@@ -97,6 +98,9 @@ class Ad extends Model
         else if($this->ad_type == 'property_holiday_home_for_sale'){
             return $this->property->ad_headline;
         }
+        else if($this->ad_type == 'job'){
+            return $this->job->name;
+        }
         return null;
 
     }
@@ -152,5 +156,9 @@ class Ad extends Model
             return false;
         }
         return false;
+    }
+
+    public function notifications(){
+        return $this->morphMany(Notification::class, 'notifiable')->orderBy('id', 'desc');
     }
 }
