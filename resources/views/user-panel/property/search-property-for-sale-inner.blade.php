@@ -1,3 +1,14 @@
+<style>
+.cgrid .trailing-border img {
+    min-height: 302px !important;
+}
+.cgrid .add-to-fav {
+    top: 55px !important;
+}
+.cgrid .location {
+    top: -341px !important;
+}
+</style>
 <div class="left-ad float-left">
     <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
 </div>
@@ -136,7 +147,7 @@
     </div>
     <!--    ended container-->
     <div class="right-ad pull-right">
-        <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
+        <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid">
     </div>
 </div>
 <script>

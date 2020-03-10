@@ -14,8 +14,8 @@
             <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
         <div class="dme-container">
-            <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
             <div class="row top-ad">
+            <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
             </div>
         </div>
         <div class="dme-container p-3">
@@ -81,7 +81,7 @@
                             $property_type = json_decode($property_data->property_type);
                         @endphp
                         <div class="col-md-6"><span class="font-weight-bold">Type lokale </span>&nbsp;<span>
-                                @if(count($property_type) > 0)
+                                @if(is_countable($property_type))
                                     <ul>
                                         @foreach($property_type as $value)
                                              <li>{{$value}}</li>

@@ -1,6 +1,6 @@
  var added = false;
  $(document).ready(function () {
-     search(urlParams.toString());
+    search(urlParams.toString());
      fix_page_links();
 
      $('.mega-menu input').change(function (e) {
