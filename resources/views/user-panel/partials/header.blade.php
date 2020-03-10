@@ -43,10 +43,13 @@
                         @include('user-panel.partials.templates.filter-flat-wishes-rented')
                     @endif
                     <li class="nav-item" id="move_to_notifications">
-                        <a class="nav-link position-relative" href="{{ url('notifications/all') }}">
-                            <span class="badge badge-primary pending position-absolute" style="left:0"></span>
-                            <i class="far fa-bell nav-icons"></i>
-                            <div class="mt-2 ml-2">Varslinger</div>
+                        <a class="nav-link position-relative" href="">
+                            @if(\Auth::check())
+{{--                                <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">786</span>--}}
+                                <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">{{count(\Auth::user()->unread_messages())>0?count(\Auth::user()->unread_messages()):""}}</span>
+                            @endif
+                                <i class="far fa-bell nav-icons"></i>
+                                <div class="mt-2 ml-2">Varslinger</div>
                         </a>
                     </li>
 

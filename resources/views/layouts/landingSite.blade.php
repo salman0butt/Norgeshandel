@@ -288,38 +288,38 @@
 </footer>
 
 <script>
-     function find_zipcode_city(val) {
+    function find_zipcode_city(val) {
         document.getElementById("zip_code_city_name").innerHTML = '';
         var zip_code = val;
         var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
         // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
         var client_url = 'localhost';
 
-        if(zip_code){
+        if (zip_code) {
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     const postalCode = JSON.parse(this.responseText);
 
-                    if(postalCode.result == "Ugyldig postnummer"){
-                        $('#zip_code-error').css('display','block');
+                    if (postalCode.result == "Ugyldig postnummer") {
+                        $('#zip_code-error').css('display', 'block');
                         console.log(postalCode.result);
-                        if(document.getElementById('zip_code-error') == null) {
-                            $( "input[name='zip_code']" ).after( "<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>" );
-                        }else{
+                        if (document.getElementById('zip_code-error') == null) {
+                            $("input[name='zip_code']").after("<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
+                        } else {
                             document.getElementById("zip_code-error").innerHTML = "Ugyldig verdi";
                         }
-                    }else{
+                    } else {
                         document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
                         console.log(postalCode.result);
                     }
                 }
             };
-            xhttp.open("GET", api_url+"?clientUrl="+client_url+"&pnr="+zip_code, true);
+            xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, true);
 
             xhttp.send();
         }
-  }
+    }
 </script>
 @yield('script')
 
@@ -386,46 +386,56 @@
         });
         //spinner ends here
 
-            @if(Auth::check())
-        var url = '{{url("notifications/all")}}';
-        getNotifications(url);
+        @if(Auth::check())
+        {{--var url = '{{url("notifications/all")}}';--}}
+        // getNotifications(url);
         @endif
 
-        $(document).on('click', "#move_to_notifications", function () {
+        // $(document).on('click', "#move_to_notifications", function () {
+        //
+        //     var ids = {};
+        {{--    window.location.href = '{{url("notifications/all")}}';--}}
+        //     console.log($.param(ids));
+        //
+        // });
 
-            var ids = {};
-            window.location.href = '{{url("notifications/all")}}';
-            console.log($.param(ids));
 
-        });
-
-        // Pusher.logToConsole = true;
-
-        @if(Auth::check())
-            var pusher = new Pusher('d4efdc4a073f0521f41e', {
-                    cluster: 'ap2',
-                    forceTLS: true
-                });
-
-            var channel = pusher.subscribe('header-chat-notification');
-            channel.bind('header-chat-notification-event', function (data) {
-                if(data.to_user_id=='{{Auth::id()}}') {
-                    var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
-                    if (isEmpty(prev)) {
-                        prev = 0;
-                    }
-                    prev++;
-                    $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
-                }
+            @if(Auth::check())
+        var pusher = new Pusher('d4efdc4a073f0521f41e', {
+                cluster: 'ap2',
+                forceTLS: true
             });
+        Pusher.logToConsole = true;
+
+        var channel = pusher.subscribe('header-chat-notification');
+        channel.bind('header-chat-notification-event', function (data) {
+            if (data.to_user_id == '{{Auth::id()}}') {
+                var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
+                if (isEmpty(prev)) {
+                    prev = 0;
+                }
+                prev++;
+                $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+            }
+        });
+        var notifications = pusher.subscribe('notification');
+        notifications.bind('notification-event', function (data) {
+            if (data.to_user_id == '{{Auth::id()}}') {
+                var n_new = 1;
+                var n_prev = $('#notification:not(.page-notifications #notification)').html();
+                if (!isEmpty(n_prev)) {
+                    n_new = (parseInt(n_new)+parseInt(n_prev));
+                    console.log(n_prev);
+                }
+                $('#notification:not(.page-notifications #notification)').html(n_new);
+            }
+        });
         @endif
     });
 
 
-
     var site_url = "<?php echo url('/'); ?>";
 </script>
-
 
 
 </body>

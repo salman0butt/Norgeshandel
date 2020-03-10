@@ -136,6 +136,12 @@
     <div class="right-ad pull-right">
         <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
     </div>
+    <script>
+            var wrapper = document.getElementById('dme-wrapper');
+            if (wrapper == null){
+                location.reload();
+            }
+    </script>
 </div>
 <script>
    $( document ).ready(function() {

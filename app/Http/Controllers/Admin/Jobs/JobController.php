@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Jobs;
 
 use App\Models\Company;
+use App\Notification;
 use App\Term;
 use App\User;
 use App\Media;
@@ -10,6 +11,7 @@ use App\Models\Ad;
 use App\Models\Search;
 use App\Admin\Jobs\Job;
 use App\Helpers\common;
+use http\QueryString;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\AbstractDecoder;
 use App\Http\Controllers\Admin\Users\AdminUserController;
+use Pusher\Pusher;
 
 //use function Sodium\compare;
 
@@ -30,6 +33,23 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    private $pusher;
+
+    public function __construct()
+    {
+        $options = array(
+            'cluster' => 'ap2',
+            'useTLS' => true
+        );
+
+        $this->pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+    }
 
     public function index()
     {
@@ -358,7 +378,15 @@ class JobController extends Controller
         try{
             $this->update_dummy($request);
             $job->ad->update(['status'=>'published']);
+
             DB::commit();
+
+            $notif = new Notification(['type'=>'App\Ad', 'user_id'=>Auth::id(), 'notifiable_id'=>$job->ad->id, 'data'=>'Ny jobb er publisert']);
+            $notif->save();
+
+            $data = array('detail'=>'Ny jobb er publisert', 'to_user_id'=>Auth::id());
+            $this->pusher->trigger('notification', 'notification-event', $data);
+
             Session::flash('success', 'Jobben er lagret');
             return back();
         }catch (\Exception $e){
@@ -442,7 +470,7 @@ class JobController extends Controller
 
     }
 
-    public function mega_menu_search(Request $request)
+    public function mega_menu_search(Request $request, $after_created = null)
     {
         $view = $request->view;
         $sort = $request->sort;
@@ -493,6 +521,11 @@ class JobController extends Controller
                 default:
                     break;
             }
+        }
+        if(!empty($after_created)){
+            $query->whereDate('created_at', '>', $after_created);
+            $jobs = $query->get();
+            return $jobs;
         }
         $jobs = $query->get();
         $html = view('user-panel.jobs.jobs_filter_page_inner', compact('jobs', 'view', 'sort'))->render();

@@ -120,6 +120,12 @@
             </div>
         </div>
     </div>
+    <script>
+        var wrapper = document.getElementById('dme-wrapper');
+        if (wrapper == null){
+            location.reload();
+        }
+    </script>
 </div>
 <!--    ended container-->
 <div class="right-ad pull-right">

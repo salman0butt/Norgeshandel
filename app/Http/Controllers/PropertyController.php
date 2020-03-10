@@ -633,7 +633,7 @@ class PropertyController extends Controller
             $html = view('user-panel.property.search-holiday-homes-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array', 'sort'));
+                        return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
@@ -831,16 +831,16 @@ class PropertyController extends Controller
 
         //prooperty for new_property_for_holiday_homes_for_sale new
     public function new_property_for_holiday_homes_for_sale(Request $request){
-    
+
         $ad = new Ad(['ad_type' => 'property_holiday_home_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
-       
+
 
         if ($ad) {
             $property = new PropertyHolidaysHomesForSale(['user_id' => Auth::id()]);
             $ad->propertyHolydaysHomesForSale()->save($property);
             if ($property) {
-              
+
                 return redirect(url('complete/ad/' . $ad->id));
             }
             else{
@@ -853,16 +853,16 @@ class PropertyController extends Controller
     }
     //prooperty for new_commercial_property_for_sale new
     public function new_commercial_property_for_sale(Request $request){
-    
+
         $ad = new Ad(['ad_type' => 'property_commercial_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
-       
+
 
         if ($ad) {
             $property = new CommercialPropertyForSale(['user_id' => Auth::id()]);
             $ad->propertyCommercialPropertyForSale()->save($property);
             if ($property) {
-              
+
                 return redirect(url('complete/ad/' . $ad->id));
             }
             else{
@@ -876,16 +876,16 @@ class PropertyController extends Controller
 
         //prooperty for new_commercial_property_for_rent new
     public function new_commercial_property_for_rent(Request $request){
-    
+
         $ad = new Ad(['ad_type' => 'property_commercial_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
-       
+
 
         if ($ad) {
             $property = new CommercialPropertyForRent(['user_id' => Auth::id()]);
             $ad->propertyCommercialPropertyForRent()->save($property);
             if ($property) {
-              
+
                 return redirect(url('complete/ad/' . $ad->id));
             }
             else{
@@ -899,16 +899,16 @@ class PropertyController extends Controller
 
        //prooperty for new_business_for_sale new
     public function new_business_for_sale(Request $request){
-    
+
         $ad = new Ad(['ad_type' => 'property_business_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
-       
+
 
         if ($ad) {
             $property = new BusinessForSale(['user_id' => Auth::id()]);
             $ad->propertyBusinessForSale()->save($property);
             if ($property) {
-              
+
                 return redirect(url('complete/ad/' . $ad->id));
             }
             else{
@@ -944,7 +944,7 @@ class PropertyController extends Controller
 
 //    zain
     public function complete_property($id){
-        
+
         $ad = Ad::find($id);
 
         if ($ad) {
@@ -955,19 +955,19 @@ class PropertyController extends Controller
                 }
             }else if ($ad->ad_type == 'property_for_rent') {
                     $property_for_rent1 = $ad->property;
-                    return view('user-panel.property.new_add', compact('property_for_rent1'));   
+                    return view('user-panel.property.new_add', compact('property_for_rent1'));
             }else if ($ad->ad_type == 'property_flat_wishes_rented') {
                     $flat_wishes_rented1 = $ad->property;
-                return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));   
+                return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));
             }else if ($ad->ad_type == 'property_holiday_home_for_sale') {
                     $holiday_home_for_sale1 = $ad->property;
-                return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale1'));   
+                return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale1'));
             }else if ($ad->ad_type == 'property_commercial_for_sale') {
                     $commercial_property = $ad->property;
-              return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));   
+              return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));
             }else if ($ad->ad_type == 'property_commercial_for_rent') {
                     $commercial_for_rent = $ad->property;
-              return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));   
+              return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));
             }else if ($ad->ad_type == 'property_business_for_sale') {
                     $business_for_sale = $ad->property;
               return view('user-panel.property.business_for_sale', compact('business_for_sale'));   
@@ -1059,7 +1059,7 @@ class PropertyController extends Controller
 
     //       $response = $ad->update(['status'=>'published']);
     //     //  dd(DB::getQueryLog());
-          
+
     //         $data['success'] = $response;
     //         echo json_encode($data);
     // }
@@ -1646,7 +1646,7 @@ class PropertyController extends Controller
 
           $response = $ad->update(['status'=>'published']);
         //  dd(DB::getQueryLog());
-          
+
             $data['success'] = $response;
             echo json_encode($data);
     }
@@ -1659,7 +1659,7 @@ class PropertyController extends Controller
 
           $response = $ad->update(['status'=>'published']);
         //  dd(DB::getQueryLog());
-          
+
             $data['success'] = $response;
             echo json_encode($data);
     }
@@ -1672,7 +1672,7 @@ class PropertyController extends Controller
 
           $response = $ad->update(['status'=>'published']);
         //  dd(DB::getQueryLog());
-          
+
             $data['success'] = $response;
             echo json_encode($data);
     }
@@ -1685,7 +1685,7 @@ class PropertyController extends Controller
 
           $response = $ad->update(['status'=>'published']);
         //  dd(DB::getQueryLog());
-          
+
             $data['success'] = $response;
             echo json_encode($data);
     }
