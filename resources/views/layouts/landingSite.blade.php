@@ -349,7 +349,10 @@
             url: url,
             type: "GET",
             success: function (response) {
-                $('#dme-wrapper').html(response);
+                if(!isEmpty($("#basicExampleModal.show"))){
+                    $('#dme-wrapper').html(response);
+                }
+               
             },
             error: function (error) {
                 console.log(error);
