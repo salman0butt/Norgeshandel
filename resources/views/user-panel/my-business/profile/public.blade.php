@@ -62,7 +62,7 @@
                     </div>
                     @foreach($active_ads as $ad)
                     <?php $ad = \App\Models\Ad::find($ad->id);?>
-                        @if($ad->ad_type=='job')
+                        @if($ad->ad_type == 'job')
                             @include('user-panel.partials.templates.job-list')
                         @else
                             {{-- @include('user-panel.partials.templates.propert-sequare') --}}

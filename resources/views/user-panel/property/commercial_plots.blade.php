@@ -53,25 +53,43 @@
                 }
             });
 
-            $("#publiserannonsen").click(function(e){
-                e.preventDefault();
+            function record_store_ajax_request(event, this_obj) {
+              if(event == 'click'){
+                 if(! $('#commercial_plot_form').valid()) return false;
+                  }
+               var url = '';
+                if (event == 'change') {
+                    var zip_code = $('.zip_code').val();
+                    var old_zip = $('#old_zip').val();
+                    console.log(old_zip);
+                    if (zip_code) {
+                        if (old_zip != zip_code) {
+                            find_zipcode_city(zip_code);
+                        }
+                    }
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                   var url = "{{url('commercial/plots/'.$commercial_plots->id)}}";
+                    @endif
+                } else {
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                   var url = "{{url('commercial/plots/update/'.$commercial_plots->id)}}";
+                    @endif
+                }
+              
+                //if (!$('#business_for_sale').valid()) return false;
 
-                if(! $('#commercial_plot_form').valid()) return false;
-
-                var l = Ladda.create(this);
-                l.start();
-
-                @if(Request::is('commercial/plots/*/edit'))
-                    var url = "{{url('commercial/plots/'.$commercial_plots->id)}}";
-                @else
-                    var url = '{{url('add/commercial/plot/ad')}}';
-                @endif
-
-
+                $("input ~ span,select ~ span").each(function (index) {
+                    $(".error-span").html('');
+                    $("input, select").removeClass("error-input");
+                });
                 $('.notice').html("");
+
                 var myform = document.getElementById("commercial_plot_form");
                 var fd = new FormData(myform);
-
+                
+                // fd.append('property_photos', $('#property_photos').get(0).files[0]);
+                var l = Ladda.create(this_obj);
+                l.start();
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -79,29 +97,57 @@
                     dataType: "json",
                     processData: false,
                     contentType: false,
-                    success: function(data){
-                            $('.notice').append('<div class="alert alert-success">Annonsen din er publisert</div>');
+                    success: function (data) {
+                        console.log(data);
+                       // document.getElementById("property_for_rent_form").reset();
+                       // document.getElementById("zip_code_city_name").innerHTML = '';
+                           if (event == 'change') {
+                        setTimeout(function () {
+                            $('.notice').show('slow');
+                        }, 2000);
+                        setTimeout(function () {
+                            $('.notice').hide('slow');
+                        }, 5000);
+                    }
+                    $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+
                     },
-                    error: function(jqXhr, json, errorThrown){// this are default for ajax errors
+                    error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+
                         var errors = jqXhr.responseJSON;
                         console.log(errors.errors);
-                        if(isEmpty(errors.errors))
-                        {
-                            $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                        if (isEmpty(errors.errors)) {
+                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
                             return false;
                         }
-                        var html="<ul>";
-                        $.each( errors.errors, function( index, value ){
-                           console.log(value);
-                           html += "<li>"+value+"</li>";
-                        });
-                        html += "</ul>";
-                        $('.notice').append('<div class="alert alert-danger">'+html+'</div>');
+                        if (!isEmpty(errors.errors)) {
+                            console.log(errors.errors);
+                            $.each(errors.errors, function (index, value) {
+                                $("." + index).html(value);
+                                $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
+                            });
+                        } else {
+                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
+                        }
                     },
-                }).always(function() { l.stop(); });
 
+                }).always(function () {
+                    l.stop();
+                });
+                return false;
+            }
+            
+            $("input").on('change', function (e) {
+                e.preventDefault();
+               record_store_ajax_request('change', (this));
+                var postal = $('.zip_code').val();
+                $('#old_zip').attr('value',postal);
             });
-
+            //click button update
+            $("#publiserannonsen").click(function (e) {
+                e.preventDefault();
+                record_store_ajax_request('click', (this));
+            });
         })
 
     </script>

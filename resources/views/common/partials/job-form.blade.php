@@ -309,6 +309,7 @@
                                     class="form-control dme-form-control zip_code">
                                 <span id="zip_code_city_name"></span>
                             </div>
+                            <input type="hidden" id="old_zip" value="{{ (isset($obj_job->zip) ? $obj_job->zip : '') }}">
 
                         </div>
                     </div>
@@ -495,98 +496,110 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
     </div>
 
 </form>
-<script type="text/javascript">
-    function readURL(input, element) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+@endsection
 
-            reader.onload = function (e) {
-                $(element).css('background-image', 'url(' + e.target.result + ')');
-            };
+@section('script')
 
-            reader.readAsDataURL(input.files[0]);
+    <script type="text/javascript">
+        function readURL(input, element) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(element).css('background-image', 'url(' + e.target.result + ')');
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
         }
-    }
 
-    $(document).ready(function (e) {
+        $(document).ready(function (e) {
 
-        $('#job-form input, #job-form select').blur(function (e) {
-            // $('#description').text(tinyMCE.get("description").getContent());
-            // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
-            var link = $('#ad_id').val().length > 0 ? '{{url('jobs/update_dummy')}}' : '{{url('jobs/store_dummy')}}';
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: link,
-                type: "POST",
-                data: $('#job-form').serialize(),
-                success: function (response) {
-                    resp = $.parseJSON(response);
-                    if ($('#ad_id').val().length < 1) {
-                        $('.notice').hide();
-                        $('.notice').append(
-                            '<div class="alert alert-success">Jobben ble lagret!</div>');
-                        setTimeout(function () {
-                            $('.notice').show('slow');
-                        }, 2000);
-                        setTimeout(function () {
-                            $('.notice').hide('slow');
-                        }, 5000);
-                        $('#job_id').val(resp.job_id);
-                        $('#ad_id').val(resp.ad_id);
+            $('#job-form input, #job-form select').blur(function (e) {
+                // $('#description').text(tinyMCE.get("description").getContent());
+                // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
+
+                var zip_code = $('.zip_code').val();
+                var old_zip = $('#old_zip').val();
+
+                if (zip_code) {
+                    if (old_zip != zip_code) {
+                        find_zipcode_city(zip_code);
                     }
                 }
 
-                //document.getElementById("contact_us").reset();
-            })
+                var postal = $('.zip_code').val();
+                $('#old_zip').attr('value',postal);
+
+                var link = $('#ad_id').val().length > 0 ? '{{url('jobs/update_dummy')}}' : '{{url('jobs/store_dummy')}}';
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: link,
+                    type: "POST",
+                    data: $('#job-form').serialize(),
+                    success: function (response) {
+                        var resp = $.parseJSON(response);
+                        if ($('#ad_id').val().length < 1) {
+                            $('.notice').hide();
+                            $('.notice').append(
+                                '<div class="alert alert-success">Jobben ble lagret!</div>');
+                            setTimeout(function () {
+                                $('.notice').show('slow');
+                            }, 2000);
+                            setTimeout(function () {
+                                $('.notice').hide('slow');
+                            }, 5000);
+                            $('#job_id').val(resp.job_id);
+                            $('#ad_id').val(resp.ad_id);
+                        }
+                    }
+
+                    //document.getElementById("contact_us").reset();
+                })
+            });
         });
-    });
 
-    $('#company_logo').change(function (e) {
-        $(this).parent().prepend(
-            '<div class="uploaded-image" style=""><a href="javascript:void(0)" class="remove"><span class="fa fa-times"></span></a></div>'
+        $('#company_logo').change(function (e) {
+            $(this).parent().prepend(
+                '<div class="uploaded-image" style=""><a href="javascript:void(0)" class="remove"><span class="fa fa-times"></span></a></div>'
             );
-        readURL(this, '.uploaded-image');
-    });
-    $(document).on('click', 'a.remove', function (e) {
-        $(this).parent().parent().find('input').val('');
-        $(this).parent().parent().find('.uploaded-image').remove();
+            readURL(this, '.uploaded-image');
+        });
+        $(document).on('click', 'a.remove', function (e) {
+            $(this).parent().parent().find('input').val('');
+            $(this).parent().parent().find('.uploaded-image').remove();
 
-        e.preventDefault();
-    });
-    $('#deadline_type').change(function (e) {
-        if ($(this).val() == 'Soonest') {
-            $(this).next().val('');
-            $(this).next().slideUp();
-        } else {
-            $(this).next().slideDown();
-        }
-        // $(this).val()
-    });
-    // tinymce.init({
-    //     selector: 'textarea.description',
-    //     width: $(this).parent().width(),
-    //     height: 250,
-    //     menubar: false,
-    //     statusbar: false
-    // });
-    // tinymce.init({
-    //     selector: 'textarea.emp_company_information',
-    //     width: $(this).parent().width(),
-    //     height: 250,
-    //     menubar: false,
-    //     statusbar: false
-    // });
+            e.preventDefault();
+        });
+        $('#deadline_type').change(function (e) {
+            if ($(this).val() == 'Soonest') {
+                $(this).next().val('');
+                $(this).next().slideUp();
+            } else {
+                $(this).next().slideDown();
+            }
+            // $(this).val()
+        });
+        // tinymce.init({
+        //     selector: 'textarea.description',
+        //     width: $(this).parent().width(),
+        //     height: 250,
+        //     menubar: false,
+        //     statusbar: false
+        // });
+        // tinymce.init({
+        //     selector: 'textarea.emp_company_information',
+        //     width: $(this).parent().width(),
+        //     height: 250,
+        //     menubar: false,
+        //     statusbar: false
+        // });
 
-</script>
-
-@endsection
-
-
-@section('script')
+    </script>
 
 <script src="{{asset('public/js/bootstrap-fileinput.js')}}"></script>
 

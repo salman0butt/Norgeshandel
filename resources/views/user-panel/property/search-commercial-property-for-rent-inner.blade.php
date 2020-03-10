@@ -17,7 +17,7 @@
     </div>
     <div class="row mt-1">
         <div class="col-md-4 pt-4">
-            <!--                    <button class="dme-btn-outlined-blue">Lagre søk</button>-->
+             @include('user-panel.inner_saved_search')
         </div>
         <div class="col-md-4 pt-4">
             <div class="pt-3 float-left" style="min-width: 53px;">

@@ -37,10 +37,9 @@
                     if(! $('#property_for_rent_form').valid()) return false;
                 }
                 if (event == 'change') {
-                    console.log('status 1');
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
-                    console.log(old_zip);
+                    
                     if (zip_code) {
                         if (old_zip != zip_code) {
                             find_zipcode_city(zip_code);
@@ -54,7 +53,7 @@
                     var url = "{{ url('add/property/for/rent/ad/update/'.$property_for_rent1->id) }}";
                     @endif
                 }
-                console.log('status 2');
+                
                 //if (!$('#property_for_rent_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function (index) {
@@ -63,7 +62,6 @@
                 });
                 $('.notice').html("");
 
-                console.log('status 3');
                 var myform = document.getElementById("property_for_rent_form");
                 var fd = new FormData(myform);
 
@@ -121,15 +119,16 @@
             $("input").on('change', function (e) {
                 e.preventDefault();
                record_store_ajax_request('change', (this));
+                var postal = $('.zip_code').val();
+                $('#old_zip').attr('value',postal);
             });
             //click button update
-            $("#publiserannonsen").click(function (e) {
+            $("#publiser_annonsen").click(function (e) {
                 e.preventDefault();
                 record_store_ajax_request('click', (this));
             });
         });
     </script>
-
 
     <!-- Dropzone script files -->
     <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
@@ -138,8 +137,6 @@
     <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
     <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
     <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
-
-
 
 @endsection
 

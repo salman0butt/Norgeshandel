@@ -191,7 +191,7 @@
                             {{$property_data->phone}}</a></span>
                 </div>
                 {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
-                <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
+                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                 <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank"
                         rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                         salgsoppgave</a></div>

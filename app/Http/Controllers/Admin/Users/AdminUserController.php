@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Helpers\common;
 use App\Http\Controllers\Controller;
 use App\Models\AllowedCompanyAd;
+use App\Models\Meta;
 use App\Role;
 use App\User;
 use App\Media;
@@ -237,7 +238,10 @@ class AdminUserController extends Controller
 
     public function public_profile($id){
         $user = User::find($id);
-        $active_ads = DB::table('ads')->where('status', '=', 'published')->where('user_id','=', $user->id)->paginate(env('PAGINATION'));
+        $active_ads = DB::table('ads')->where('status', '=', 'published')
+            ->where('user_id','=', $user->id)
+            ->whereNull('deleted_at')
+            ->paginate(env('PAGINATION'));
         return view('user-panel.my-business.profile.public', compact('user', 'active_ads'));
     }
 
@@ -270,4 +274,61 @@ class AdminUserController extends Controller
             return redirect()->back();
         }
     }
+
+
+    // Ad user email as alternative
+    public function store_user_alternative_email(Request $request){
+        $email = Meta::where('key','account_setting_alt_email')->where('value',$request->email)->where('metable_type','App\User')->first();
+        if($email){
+            session()->flash('danger', 'E-posten finnes allerede.');
+            return back();
+        }
+
+        DB::beginTransaction();
+        try{
+            Meta::create([
+                'metable_id' => Auth::id(),
+                'metable_type' => 'App\User',
+                'key' => 'account_setting_alt_email',
+                'value' => $request->email,
+            ]);
+            DB::commit();
+            session()->flash('success', $request->email.' ble lagret! Vennligst bekreft denne for bruk i SPiD ved å følge instruksjonene i e-posten du har mottatt.');
+            return back();
+
+        }catch (\Exception $e){
+            DB::rollback();
+            session()->flash('danger', 'Noe gikk galt.');
+            return back();
+        }
+    }
+
+    // Ad user contact number as alternative
+    public function store_user_alternative_contact_no(Request $request){
+        dd($request->all());
+        $email = Meta::where('key','account_setting_alt_contact_no')->where('value',$request->email)->where('metable_type','App\User')->first();
+        if($email){
+            session()->flash('danger', 'Telefonnummeret er allerede aktivt på en annen konto.');
+            return back();
+        }
+
+        DB::beginTransaction();
+        try{
+            Meta::create([
+                'metable_id' => Auth::id(),
+                'metable_type' => 'App\User',
+                'key' => 'account_setting_alt_contact_no',
+                'value' => $request->phone_number,
+            ]);
+            DB::commit();
+            return back();
+
+        }catch (\Exception $e){
+            DB::rollback();
+            session()->flash('danger', 'Noe gikk galt.');
+            return back();
+        }
+    }
+
+
 }

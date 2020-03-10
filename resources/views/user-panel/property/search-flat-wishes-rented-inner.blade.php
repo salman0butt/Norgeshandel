@@ -17,7 +17,7 @@
     </div>
     <div class="row mt-1">
         <div class="col-md-4 pt-4">
-            <!--                    <button class="dme-btn-outlined-blue">Lagre søk</button>-->
+          @include('user-panel.inner_saved_search')
         </div>
         <div class="col-md-4 pt-4">
             <div class="pt-3 float-left" style="min-width: 53px;">
@@ -123,3 +123,14 @@
 <div class="right-ad pull-right">
     <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
 </div>
+<script>
+   $( document ).ready(function() {
+        var urlParams = new URLSearchParams(location.search);
+        $('#save_search').submit(function () {
+            var param = urlParams;
+            param.delete('page');
+            $('#filter').val("property/flat-wishes-rented/search?" + param.toString());
+        });
+   });
+
+</script>

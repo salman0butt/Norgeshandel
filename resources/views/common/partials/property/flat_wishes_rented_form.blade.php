@@ -18,6 +18,7 @@
     @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
     @method('PATCH')
     @endif
+    <input type="hidden" id="old_zip" value="{{ (isset($flat_wishes_rented->zip_code) ? $flat_wishes_rented->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="flat_wishes_rented_temp_images">
     <div class="pl-3">
         <div class="form-group">

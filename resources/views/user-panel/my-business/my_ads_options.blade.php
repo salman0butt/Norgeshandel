@@ -56,10 +56,11 @@
                         </div>
                         <div style="min-width: 0;" class="ml-3">
                             <h4 class="u-truncate" >{{\App\Helpers\common::get_ad_attribute($ad,'heading')}}</h4>
-                            <p>
-                                {{--417,-&nbsp;--}}
-                                <a href="{{url('my-business/my-ads/'.$ad->id.'/statistics')}}">Se statistikk</a>
-                            </p>
+                            @if($ad->status != 'saved')
+                                <p>
+                                    <a href="{{url('my-business/my-ads/'.$ad->id.'/statistics')}}">Se statistikk</a>
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -103,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    @if(!$ad->sold_at)
+                    @if(!$ad->sold_at && $ad->status == 'published')
                         <form action="{{route('ad-sold', $ad)}}" class="mb-0" method="POST" onsubmit="javascript:return confirm('Vil du merke denne annonsen som solgt? Du vil ikke kunne endre status senere.')">
                             {{csrf_field()}}
                             <button type="submit" class="link pl-0">Merk som solgt

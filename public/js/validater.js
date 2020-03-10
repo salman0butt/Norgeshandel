@@ -341,15 +341,15 @@ $(document).ready(function () {
     });
 
     // required check box (region) on flat wishes rented page
-    $("#flat_wishes_rented_form .region").rules("add", {
-        required:true
-    });
+   // $("#flat_wishes_rented_form .region").rules("add", {
+    //    required:true
+   // });
 
 
     // required check box (property_type) on flat wishes rented page
-    $("#flat_wishes_rented_form .property_type").rules("add", {
-        required:true
-    });
+    // $("#flat_wishes_rented_form .property_type").rules("add", {
+    //     required:true
+    // });
 
     // Commercial Lot
 
@@ -849,6 +849,32 @@ $(document).ready(function () {
     // required check box (property type) on commercial property for sale page
     $("#commercial_property_for_sale .property_type").rules("add", {
         required:true
+    });
+
+    // LOGIN PAGE VALIDATION
+    $("#email_management").validate({
+        lang: 'no',
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            confirm_email: {
+                required: true,
+                email: true
+            },
+        }
+    });
+
+    // LOGIN PAGE VALIDATION
+    $("#addPhoneFrm").validate({
+        lang: 'no',
+        rules: {
+            phone_number: {
+                required: true,
+                minlength: 7,
+            },
+        }
     });
 
     // LOGIN PAGE VALIDATION

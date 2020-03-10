@@ -37,12 +37,12 @@
             });
           
             function record_store_ajax_request(event, this_obj) {
-               // if(event == 'click'){
-                 //   if(! $('#property_for_rent_form').valid()) return false;
-               // }
+                if(event == 'click'){
+                   if(! $('#flat_wishes_rented_form').valid()) return false;
+                }
                var url = '';
                 if (event == 'change') {
-                    console.log('status 1');
+
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
                     console.log(old_zip);
@@ -59,7 +59,7 @@
                     var url = "{{url('new/flat/wishes/rented/update/'.$flat_wishes_rented1->id)}}";
                     @endif
                 }
-                console.log('status 2');
+               
                 //if (!$('#property_for_rent_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function (index) {
@@ -68,7 +68,7 @@
                 });
                 $('.notice').html("");
 
-                console.log('status 3');
+            
                 var myform = document.getElementById("flat_wishes_rented_form");
                 var fd = new FormData(myform);
 
@@ -125,6 +125,8 @@
             $("input").on('change', function (e) {
                 e.preventDefault();
                record_store_ajax_request('change', (this));
+                var postal = $('.zip_code').val();
+                $('#old_zip').attr('value',postal);
             });
             //click button update
             $("#publiserannonsen").click(function (e) {

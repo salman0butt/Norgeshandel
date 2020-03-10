@@ -72,7 +72,6 @@
                         <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
                     </div>
                     @foreach($ads as $ad)
-
                         @include('user-panel.partials.templates.propert-sequare')
 
                     @endforeach

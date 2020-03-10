@@ -93,6 +93,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->morphOne('App\Media', 'mediable');
     }
 
+    //user meta
+    public function metas(){
+        return $this->morphMany('App\Models\Meta', 'metable');
+    }
+
+    //User account setting emails
+    public function email_meta(){
+        return $this->morphMany('App\Models\Meta', 'metable')->where('key','account_setting_alt_email');
+    }
+
+    //User account setting contact numbers
+    public function contact_no_meta(){
+        return $this->morphMany('App\Models\Meta', 'metable')->where('key','account_setting_alt_contact_no');
+    }
+
+
     public function cv(){
         return $this->hasOne('App\Models\Cv\Cv');
     }
