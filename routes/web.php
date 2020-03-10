@@ -344,6 +344,17 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('/account/emails', function () {
             return view('user-panel.my-business.profile.account-emails');
         });
+        Route::get('/account/verifyemail', function (Request $request) {
+            if($request && $request->email){
+                $to_email = $request->email;//$user->email;
+                $user = Auth::user();
+                Mail::send('mail.verify_user_account_setting_email',compact('user','to_email'), function ($message) use ($to_email) {
+                    $message->to($to_email)->subject('Passord endret');
+                    $message->from('developer@digitalmx.no', 'NorgesHandel ');
+                });
+            }
+            return view('user-panel.my-business.profile.verify-account-email');
+        });
         Route::get('/account/deleteemail', function (Request $request) {
             if( $request->email && $request->delete_email == 'yes'){
                 $email = Meta::where('key','alternative_email')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
@@ -362,6 +373,21 @@ Route::group(['middleware' => 'authverified'], function () {
 
         Route::get('/account/phones', function () {
             return view('user-panel.my-business.profile.account-phone');
+        });
+
+        Route::get('/account/deletephone', function (Request $request) {
+            if( $request->phone && $request->delete_phone == 'yes'){
+                $contact_no = Meta::where('key','account_setting_alt_contact_no')->where('value','+'.$request->phone)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
+                if($contact_no){
+                    session()->flash('success', '+'.$request->phone.' ble slettet fra din profil.');
+                    $contact_no->delete();
+                    session()->flash('success', '+'.$request->phone.' ble slettet fra din profil.');
+                    return redirect('/account/phones');
+                }else{
+                    return back();
+                }
+            }
+            return view('user-panel.my-business.profile.delete-account-contact-no');
         });
 
 

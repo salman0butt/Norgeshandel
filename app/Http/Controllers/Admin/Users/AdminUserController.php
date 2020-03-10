@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Users;
 
 
 use App\Helpers\common;
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\Controller;
 use App\Models\AllowedCompanyAd;
 use App\Models\Meta;
@@ -305,9 +306,8 @@ class AdminUserController extends Controller
 
     // Ad user contact number as alternative
     public function store_user_alternative_contact_no(Request $request){
-        dd($request->all());
-        $email = Meta::where('key','account_setting_alt_contact_no')->where('value',$request->email)->where('metable_type','App\User')->first();
-        if($email){
+        $contact_no = Meta::where('key','account_setting_alt_contact_no')->where('value',$request->country_code.$request->phone_number)->where('metable_type','App\User')->first();
+        if($contact_no){
             session()->flash('danger', 'Telefonnummeret er allerede aktivt på en annen konto.');
             return back();
         }
@@ -318,7 +318,7 @@ class AdminUserController extends Controller
                 'metable_id' => Auth::id(),
                 'metable_type' => 'App\User',
                 'key' => 'account_setting_alt_contact_no',
-                'value' => $request->phone_number,
+                'value' => $request->country_code.$request->phone_number,
             ]);
             DB::commit();
             return back();
