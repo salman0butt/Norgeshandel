@@ -180,6 +180,11 @@ class JobController extends Controller
 
 
     public function upload_images($request, $ad_id=''){
+        if(empty($ad_id)){
+            if($request->ad_id){
+                $ad_id = $request->ad_id;
+            }
+        }
         if ($request->file('files')) {
             $files = $request->file('files');
             if($ad_id){
@@ -280,6 +285,7 @@ class JobController extends Controller
             'app_twitter' => $request->app_twitter,
             'user_id' => Auth::user()->id,
         );
+
         $job->update($arr);
 
         if (empty($job->slug)) {
@@ -292,15 +298,9 @@ class JobController extends Controller
             $file = $request->file('company_logo');
             common::update_media($file, $job->ad->id, 'App\Models\Ad', 'logo');
         }
-//        if ($request->file('company_gallery')) {
-//            $files = $request->file('company_gallery');
-//            foreach ($files as $file) {
-//                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-//            }
-//        }
 
         $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id];
-        return response(json_encode($ids));
+        return $ids;
     }
 
     /**
@@ -347,6 +347,12 @@ class JobController extends Controller
         }
         if ($request->file('files')) {
             return $this->upload_images($request,$request->ad_id);
+        }
+
+        if($request->ajax()){
+            $ids = $this->update_dummy($request);
+            echo json_encode($ids);
+            exit();
         }
         DB::beginTransaction();
         try{
