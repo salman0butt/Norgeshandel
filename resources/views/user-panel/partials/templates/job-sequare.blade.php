@@ -10,13 +10,16 @@ elseif(isset($ad)){
     $job = $ad->job;
 }
 $media = $ad->media;
+if($ad->company_gallery->count() > 0){
+    $company_gallery = $ad->company_gallery->first();
+    if($company_gallery){
+        $gallery = \App\Helpers\common::getMediaPath($company_gallery);
+    }
+}
 if(count($media)>0){
         foreach ($media as $item){
             if ($item->type=='logo'){
-                $logo = \App\Helpers\common::getMediaPath($item, '66x66');
-            }
-            if ($item->type=='gallery'){
-                $gallery = \App\Helpers\common::getMediaPath($item, '200x200');
+                $logo = \App\Helpers\common::getMediaPath($item, '200x200');
             }
         }
     }

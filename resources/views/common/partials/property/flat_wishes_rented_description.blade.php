@@ -107,7 +107,7 @@
                             {{$property_data->phone}}</a></span>
                 </div>
                 <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
-                <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra annonsør</a></div>
+                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                 @endif
