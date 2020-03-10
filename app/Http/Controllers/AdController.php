@@ -240,48 +240,43 @@ class AdController extends Controller
                 $count_favorite = Favorite::where('ad_id',$ad->id)->count();
                 $count_thread = MessageThread::where('ad_id',$ad->id)->count();
 
-
                 // find users that have been click on ad just one time
                 $once_click_users = DB::table('ad_views')->selectRaw('user_id, count(ad_id) as count_view, count(user_id) as count_user')
-                    ->groupBy('ad_id','user_id')
                     ->where('ad_id',$id)
                     ->whereNotNull('user_id')
-                    ->orderBy('created_at','ASC')
                     ->havingRaw('count_user = 1')
+                    ->groupBy('ad_id','user_id')
                     ->get();
 
                 // find users that have been click on ad two to five times
                 $two_to_five_time_click_users = DB::table('ad_views')->selectRaw('user_id, count(ad_id) as count_view, count(user_id) as count_user')
-                    ->groupBy('ad_id','user_id')
                     ->where('ad_id',$id)
                     ->whereNotNull('user_id')
-                    ->orderBy('created_at','ASC')
                     ->havingRaw('count_user > 1 AND count_user < 6')
+                    ->groupBy('ad_id','user_id')
                     ->get();
 
                 // find users that have been click on ad more than five times
                 $more_than_five_time_click_users = DB::table('ad_views')->selectRaw('user_id, count(ad_id) as count_view, count(user_id) as count_user')
-                    ->groupBy('ad_id','user_id')
                     ->where('ad_id',$id)
                     ->whereNotNull('user_id')
-                    ->orderBy('created_at','ASC')
                     ->havingRaw('count_user > 5')
+                    ->groupBy('ad_id','user_id')
                     ->get();
 
                 // find last year ad views
                 $ad_views = DB::table('ad_views')->selectRaw('year(created_at) year, monthname(created_at) month, count(ad_id) as count_view')
-                    ->groupBy('year', 'month')
                     ->whereDate('created_at','>',$compare_date)
                     ->where('ad_id',$id)
-                    ->orderBy('created_at','ASC')
+                    ->groupBy('year', 'month')
                     ->get();
 
                 // find last 15 days ad views
                 if($request->type == '15_days_clicks'){
                     $ad_views = DB::table('ad_views')->selectRaw("COUNT(ad_id) as count_view, date(created_at) date ")
-                        ->groupBy('date')
                         ->where('ad_id',$id)
                         ->whereDate('created_at','>',$compare_date)
+                        ->groupBy('date')
                         ->get();
                 }
 
