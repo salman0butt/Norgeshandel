@@ -312,10 +312,16 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('ad/{id}', 'PropertyController@complete_property');
         });
 
-            Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
+        Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
 
-    ///Account setting pages and routes
+        //Account Setting Login
+//        Route::post('account-setting-login', 'AccountSettingController@login')->name('account-setting-login');
+//        Route::get('/account/login', function () {
+//            return view('user-panel.my-business.profile.account-setting-login');
+//        });
+
+        ///Account setting pages and routes
         Route::get('/account/products', function () {
             return view('user-panel.my-business.profile.account-products');
         });
@@ -344,21 +350,56 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('/account/emails', function () {
             return view('user-panel.my-business.profile.account-emails');
         });
+
+        //Send verification email to account setting alternative email
         Route::get('/account/verifyemail', function (Request $request) {
+
             if($request && $request->email){
-                $to_email = $request->email;//$user->email;
-                $user = Auth::user();
-                Mail::send('mail.verify_user_account_setting_email',compact('user','to_email'), function ($message) use ($to_email) {
-                    $message->to($to_email)->subject('Passord endret');
-                    $message->from('developer@digitalmx.no', 'NorgesHandel ');
-                });
+                $is_auth_user_email = Meta::where('key','account_setting_alt_email')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
+                if($is_auth_user_email){
+                    //Store verify email record in meta table against user account setting emails
+                    if($request->email_verified){
+                        $is_email_verified = Meta::where('key','account_setting_alt_email_verified')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
+                        if(!$is_email_verified){
+                            Meta::create([
+                                'metable_id' => Auth::id(),
+                                'metable_type' => 'App\User',
+                                'key' => 'account_setting_alt_email_verified',
+                                'value' => $request->email,
+                            ]);
+                            //redirect to account email after verification of an email
+                            session()->flash('success', 'Din e-post er nå verifisert.');
+                            return redirect(url('/account/emails'));
+                        }else{
+                            session()->flash('success', 'E-postadressen din er allerede bekreftet.');
+                            return redirect(url('/account/emails'));
+                        }
+                    }
+
+                    //Send email to verify
+                    $to_email = $request->email;//$user->email;
+                    $user = Auth::user();
+                    Mail::send('mail.verify_user_account_setting_email',compact('user','to_email'), function ($message) use ($to_email) {
+                        $message->to($to_email)->subject('Bekreft din e-postadresse');
+                        $message->from('developer@digitalmx.no', 'NorgesHandel ');
+                    });
+                }
             }
+
+            //Open verify account email view
             return view('user-panel.my-business.profile.verify-account-email');
         });
+
+        //Delete account setting alternative email
         Route::get('/account/deleteemail', function (Request $request) {
             if( $request->email && $request->delete_email == 'yes'){
-                $email = Meta::where('key','alternative_email')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
+                $email = Meta::where('key','account_setting_alt_email')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
                 if($email){
+                    $is_email_verified = Meta::where('metable_id',$email->metable_id)->where('metable_type',$email->metable_type)
+                        ->where('key','account_setting_alt_email_verified')->where('value',$email->value)->first();
+                    if($is_email_verified) {
+                        $is_email_verified->delete();
+                    }
                     $email->delete();
                     session()->flash('success', $request->email.' ble slettet fra din profil.');
                     return redirect('/account/emails');
