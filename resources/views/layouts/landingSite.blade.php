@@ -305,7 +305,7 @@
         if (zip_code) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
+                if (this.readyState == 4 && this.status == 200) { //
                     const postalCode = JSON.parse(this.responseText);
 
                     if (postalCode.result == "Ugyldig postnummer") {
@@ -317,6 +317,7 @@
                             document.getElementById("zip_code-error").innerHTML = "Ugyldig verdi";
                         }
                     } else {
+                        $('#zip_code-error').css('display','none');
                         document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
                         console.log(postalCode.result);
                     }
