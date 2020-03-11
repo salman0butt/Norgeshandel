@@ -391,6 +391,7 @@ class common
                 }
             }
         }
+    }
     //find account setting alternative email verified or not.
     public static function is_account_setting_alt_email_verified($obj){
         $flag = '';

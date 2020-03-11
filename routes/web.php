@@ -403,7 +403,7 @@ Route::group(['middleware' => 'authverified'], function () {
                     }
                     $email->delete();
                     session()->flash('success', $request->email.' ble slettet fra din profil.');
-                    return redirect('/account/emails');
+                    return redirect(url('/account/emails'));
                 }else{
                     return back();
                 }
