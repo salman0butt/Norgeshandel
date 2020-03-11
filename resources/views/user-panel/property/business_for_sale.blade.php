@@ -66,11 +66,11 @@
                             find_zipcode_city(zip_code);
                         }
                     }
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('add/business/for/sale/*/edit') || Request::is('complete/ad/*'))
                   var url = "{{url('add/business/for/sale/'.$business_for_sale->id)}}";
                     @endif
                 } else {
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('add/business/for/sale/*/edit') || Request::is('complete/ad/*'))
                    var url = "{{url('add/business/for/sale/update/'.$business_for_sale->id)}}";
                     @endif
                 }

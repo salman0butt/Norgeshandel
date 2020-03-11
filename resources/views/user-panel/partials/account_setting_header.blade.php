@@ -7,7 +7,7 @@
 </style>
 <header class="top-bar fixed-top">
     <div class="nav-container">
-        <nav class="navbar navbar-expand-sm mt-0 pt-0 pb-0">
+        <nav class="navbar navbar-expand-sm mt-0 pt-2 pb-0">
             <a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('public/images/NorgesHondel-logo.png')}}"
                     height="28"></a>
 
