@@ -146,6 +146,7 @@
 <script>
     var ad_id = 0;
 
+    @if(Auth::check())
     function getLists() {
         var url = $('#get_fav_url').val();
         $.ajaxSetup({
@@ -162,6 +163,8 @@
 //                    document.getElementById("contact_us").reset();
         });
     }
+
+    @endif
 
     $(document).ready(function () {
         @if(Auth::check())
@@ -374,6 +377,24 @@
             }
         });
 
+        $.ajax({
+            url: '{{url('notifications_count')}}',
+            type: "get",
+            async: false,
+            dataType: "json",
+            success: function (response) {
+                var count = parseInt(response);
+                if (count > 0) {
+                    $('#notification:not(.page-notifications #notification)').html(count);
+                } else {
+                    $('#notification:not(.page-notifications #notification)').html('');
+                }
+            }
+        }).fail(function (jqXHR, ajaxOptions, thrownError) {
+            $('#notification:not(.page-notifications #notification)').html('');
+        });
+
+
         //spinner start here
         $(document).ajaxStart(function () {
             $("#imageLoader").css("display", "block");
@@ -386,23 +407,9 @@
         });
         //spinner ends here
 
-        @if(Auth::check())
-        {{--var url = '{{url("notifications/all")}}';--}}
-        // getNotifications(url);
-        @endif
-
-        // $(document).on('click', "#move_to_notifications", function () {
-        //
-        //     var ids = {};
-        {{--    window.location.href = '{{url("notifications/all")}}';--}}
-        //     console.log($.param(ids));
-        //
-        // });
-
-
             @if(Auth::check())
-        var pusher = new Pusher('d4efdc4a073f0521f41e', {
-                cluster: 'ap2',
+        var pusher = new Pusher('f607688e883e2a04ab39', {
+                cluster: 'eu',
                 forceTLS: true
             });
         Pusher.logToConsole = true;
@@ -420,14 +427,24 @@
         });
         var notifications = pusher.subscribe('notification');
         notifications.bind('notification-event', function (data) {
+            console.log(data);
             if (data.to_user_id == '{{Auth::id()}}') {
-                var n_new = 1;
-                var n_prev = $('#notification:not(.page-notifications #notification)').html();
-                if (!isEmpty(n_prev)) {
-                    n_new = (parseInt(n_new)+parseInt(n_prev));
-                    console.log(n_prev);
-                }
-                $('#notification:not(.page-notifications #notification)').html(n_new);
+                $.ajax({
+                    url: '{{url('notifications_count')}}',
+                    type: "get",
+                    async: false,
+                    dataType: "json",
+                    success: function (response) {
+                        var count = parseInt(response);
+                        if (count > 0) {
+                            $('#notification:not(.page-notifications #notification)').html(count);
+                        } else {
+                            $('#notification:not(.page-notifications #notification)').html('');
+                        }
+                    }
+                }).fail(function (jqXHR, ajaxOptions, thrownError) {
+                    $('#notification:not(.page-notifications #notification)').html('');
+                });
             }
         });
         @endif
