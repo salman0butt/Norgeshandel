@@ -1,13 +1,26 @@
  var added = false;
  $(document).ready(function () {
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = window.location.search.substring(1),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                    }
+                }
+            };
+     
     search(urlParams.toString());
      fix_page_links();
 
      $('.mega-menu input').change(function (e) {
          var newUrl = $('#mega_menu_form').serialize();
-         urlParams = new URLSearchParams(location.search);
-         var view = urlParams.get('view');
-         var sort = urlParams.get('sort');
+         
+         var view = getUrlParameter('view');
+         var sort = getUrlParameter('sort');
          if (!isEmpty(view)) {
              newUrl += "&view=" + view;
          }
@@ -33,8 +46,8 @@
          var page_param = url.split('=');
          var page = page_param[1];
          var newUrl = $('#mega_menu_form').serialize();
-         var sort = urlParams.get('sort');
-         var view = urlParams.get('view');
+         var sort = getUrlParameter('sort');
+         var view = getUrlParameter('view');
          if (!isEmpty(sort)) {
              newUrl += "&sort=" + sort;
          }
@@ -58,8 +71,8 @@
      $(document).on('change', '#sort_by', function () {
          var newUrl = $('#mega_menu_form').serialize();
          var sort = $(this).val();
-         var view = urlParams.get('view');
-         var page = urlParams.get('page');
+         var view = getUrlParameter('view');
+         var page = getUrlParameter('page');
          if (!isEmpty(sort)) {
              newUrl += "&sort=" + sort;
          }
@@ -80,12 +93,17 @@
              history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
          }
      });
-     $(document).on('click', '#view', function (e) {
+   $(document).on('click', '#view', function (e) {
+
          e.preventDefault();
+        //   urlParams = new URLSearchParams(window.location.search)
+        //   console.log(urlParams);
          var newUrl = $('#mega_menu_form').serialize();
-         var sort = urlParams.get('sort');
+          
+         var sort = getUrlParameter('sort');
          var view = $(this).attr('data-view');
-         var page = urlParams.get('page');
+         var page = getUrlParameter('page');
+         
          if (!isEmpty(sort)) {
              newUrl += "&sort=" + sort;
          }
@@ -95,6 +113,7 @@
          if (!isEmpty(page)) {
              newUrl += "&page=" + page;
          }
+        
          // history.pushState('data', 'NorgesHandel', "?" + newUrl);
          search(newUrl);
          // fix_page_links();
