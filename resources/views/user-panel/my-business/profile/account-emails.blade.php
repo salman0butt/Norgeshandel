@@ -46,7 +46,11 @@
                                     <li>
                                         <span class="float-left mb-2"> {{$user_email->value}}</span>
                                         <span class="float-right mb-2">
-                                            <a href="#" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">bekreft</a>
+                                            @if(\App\Helpers\common::is_account_setting_alt_email_verified($user_email))
+                                                <a href="#" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">bruk</a>
+                                            @else
+                                                <a href="{{url('/account/verifyemail?email='.$user_email->value)}}" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">bekreft</a>
+                                            @endif
                                             <a href="{{url('/account/deleteemail?email='.$user_email->value)}}" type="submit" class="dme-btn-outlined-blue btn-sm" style="padding: 0 5px !important;">slett</a>
                                         </span>
                                     </li>

@@ -988,8 +988,15 @@ $(document).ready(function () {
             },
             app_receive_by: {
                 required: true
+            }, //
+            app_contact_title: {
+                required: true
+            },
+            app_contact: {
+                required: true
             },
             app_link_to_receive: {
+                required: true,
                 validUrl: true
             },
             app_email_to_receive: {
@@ -997,6 +1004,7 @@ $(document).ready(function () {
                 email: true
             },
             app_email: {
+                required: true,
                 email: true
             },
             app_linkedin: {

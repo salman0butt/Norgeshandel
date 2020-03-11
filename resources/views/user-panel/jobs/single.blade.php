@@ -148,6 +148,12 @@
                                     <span> {{$job->app_contact_title}} </span>
                                 </div>
                             @endif
+                            @if($job && $job->app_contact)
+                                <div class="mb-2 contact-name">
+                                    <span>Stillingstittel: </span>
+                                    <span> {{$job->app_contact}} </span>
+                                </div>
+                            @endif
                             @if($job && $job->app_phone)
                                 <div class="mb-2">
                                     <span class="contact-name">Telefon: </span>
@@ -160,6 +166,18 @@
                                     <span class="contact-name">Mobil: </span>
                                     <span class="contact-tel"><a
                                             href="tel:{{$job->app_mobile}}">  {{$job->app_mobile}}</a></span>
+                                </div>
+                            @endif
+                            @if($job && ($job->app_linkedin || $job->app_twitter))
+                                <div class="mb-2">
+                                    <span class="contact-name">Nettverk: </span>
+                                    @if($job->app_linkedin)
+                                        <span class="contact-tel"><a href="{{$job->app_linkedin}}">LinkedIn</a></span>
+                                    @endif
+                                    @if($job->app_linkedin && $job->app_twitter) , @endif
+                                    @if($job->app_twitter)
+                                        <span class="contact-tel"><a href="https://twitter.com/{{$job->app_twitter}}">Twitter</a></span>
+                                    @endif
                                 </div>
                             @endif
 

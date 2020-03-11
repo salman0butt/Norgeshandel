@@ -6,6 +6,7 @@ use App\Admin\Jobs\Job;
 use App\Http\Controllers\Admin\Jobs\JobController;
 use App\Media;
 use App\Notification;
+use App\Models\Meta;
 use Carbon\Carbon;
 use App\Admin\ads\Banner;
 use App\Term;
@@ -390,5 +391,16 @@ class common
                 }
             }
         }
+    //find account setting alternative email verified or not.
+    public static function is_account_setting_alt_email_verified($obj){
+        $flag = '';
+        if($obj){
+            $is_email_verified = Meta::where('metable_id',$obj->metable_id)->where('metable_type',$obj->metable_type)
+                ->where('key','account_setting_alt_email_verified')->where('value',$obj->value)->first();
+            if($is_email_verified){
+                $flag = 'success';
+            }
+        }
+        return $flag;
     }
 }

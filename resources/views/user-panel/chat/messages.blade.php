@@ -234,6 +234,14 @@
                 <div class="col-md-8 smart-scroll"
                      style="height: calc(100vh - 50px); overflow-y: scroll; position: relative;" id="thread-data">
                 </div>
+                    {{--<div class="col-md-9 m-auto">--}}
+                        {{--<h2 class="mt-4">Meldinger</h2>--}}
+                        {{--<h5 class="text-center">Du har ingen meldinger enda</h5>--}}
+                        {{--<p  class="text-center">Når du starter en ny samtale vil den dukke opp her</p>--}}
+                        {{--<div>--}}
+                            {{--<img src="{{asset('public/images/empty-background-no-message.png')}}" class="img-fluid">--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
             </div>
         </div>
 

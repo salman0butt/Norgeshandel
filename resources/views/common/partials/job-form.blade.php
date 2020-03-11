@@ -36,7 +36,7 @@
     ?>
 
 <form action="@if(Request::is('jobs/*/edit')){{route('jobs.update', $job->id)}}
-    @else {{route('jobs.store')}} @endif" name="job-form" id="job-form" method="POST" class="dropzone addMorePics p-0"
+    @else {{route('jobs.store')}} @endif" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company") class="dropzone addMorePics p-0" @endif
     data-action="@if(Request::is('jobs/*/edit')){{route('jobs.update', $job->id)}}
     @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
     {{ csrf_field() }}
@@ -202,173 +202,173 @@
                     <h4 class="text-muted pt-2">{{__('About the employer')}}</h4>
                     {{--{{dd(Auth::user()->roles->first()->name)}}--}}
                     @if(Auth::user()->roles->first()->name=="company")
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="company_id" class="col-md-2 u-t5">{{__('Select Your Company')}}</label>
-                            <div class="col-sm-10 ">
-                                <select name="company_id" id="company_id" class="form-control dme-form-control">
-                                    <option value="">{{__('Select')}}</option>
-                                    @if(is_countable(Auth::user()->job_companies) &&
-                                    count(Auth::user()->job_companies)>0)
-                                    @foreach(Auth::user()->job_companies as $company)
-                                    <option value="{{$company->id}}">{{$company->emp_name}}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="company_id" class="col-md-2 u-t5">{{__('Select Your Company')}}</label>
+                                <div class="col-sm-10 ">
+                                    <select name="company_id" id="company_id" class="form-control dme-form-control">
+                                        <option value="">{{__('Select')}}</option>
+                                        @if(is_countable(Auth::user()->job_companies) &&
+                                        count(Auth::user()->job_companies)>0)
+                                        @foreach(Auth::user()->job_companies as $company)
+                                        <option value="{{$company->id}}">{{$company->emp_name}}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @else
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="emp_name" class="col-md-2 u-t5">{{__('Employer')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="emp_name" value="{{$obj_job->emp_name}}" id="emp_name" type="text"
-                                    class="form-control dme-form-control" required>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="emp_name" class="col-md-2 u-t5">{{__('Employer')}}</label>
+                                <div class="col-sm-10 ">
+                                    <input name="emp_name" value="{{$obj_job->emp_name}}" id="emp_name" type="text"
+                                        class="form-control dme-form-control" required>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--                            text area-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="emp_company_information"
-                                class="col-md-2 u-t5">{{__('Company Information (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <textarea name="emp_company_information"
-                                    class="form-control dme-form-control emp_company_information"
-                                    id="emp_company_information" cols="30"
-                                    rows="10">{{$obj_job->emp_company_information}}</textarea>
+                        <!--                            text area-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="emp_company_information"
+                                    class="col-md-2 u-t5">{{__('Company Information (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <textarea name="emp_company_information"
+                                        class="form-control dme-form-control emp_company_information"
+                                        id="emp_company_information" cols="30"
+                                        rows="10">{{$obj_job->emp_company_information}}</textarea>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--                            full input-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="emp_website" class="col-md-2 u-t5">{{__('Website (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="emp_website" value="{{$obj_job->emp_website}}" id="emp_website" type="text"
-                                    class="form-control dme-form-control" placeholder="firmanavn.no">
+                        <!--                            full input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="emp_website" class="col-md-2 u-t5">{{__('Website (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <input name="emp_website" value="{{$obj_job->emp_website}}" id="emp_website" type="text"
+                                        class="form-control dme-form-control" placeholder="firmanavn.no">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--                            full input-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="emp_facebook"
-                                class="col-md-2 u-t5">{{__('Employer on Facebook (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="emp_facebook" value="{{$obj_job->emp_facebook}}" id="emp_facebook"
-                                    type="text" class="form-control dme-form-control"
-                                    placeholder="facebook.com/firmanavn">
+                        <!--                            full input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="emp_facebook"
+                                    class="col-md-2 u-t5">{{__('Employer on Facebook (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <input name="emp_facebook" value="{{$obj_job->emp_facebook}}" id="emp_facebook"
+                                        type="text" class="form-control dme-form-control"
+                                        placeholder="facebook.com/firmanavn">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--                            full input-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="emp_linkedin"
-                                class="col-md-2 u-t5">{{__('Employer on LinkedIn (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="emp_linkedin" value="{{$obj_job->emp_linkedin}}" id="emp_linkedin"
-                                    type="text" class="form-control dme-form-control"
-                                    placeholder="linkedin.com/company/firmanavn">
+                        <!--                            full input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="emp_linkedin"
+                                    class="col-md-2 u-t5">{{__('Employer on LinkedIn (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <input name="emp_linkedin" value="{{$obj_job->emp_linkedin}}" id="emp_linkedin"
+                                        type="text" class="form-control dme-form-control"
+                                        placeholder="linkedin.com/company/firmanavn">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--                            full input-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="emp_twitter"
-                                class="col-md-2 u-t5">{{__('Employer on Twitter  (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="emp_twitter" value="{{$obj_job->emp_twitter}}" id="emp_twitter" type="text"
-                                    class="form-control dme-form-control" placeholder="@firmanavn">
+                        <!--                            full input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="emp_twitter"
+                                    class="col-md-2 u-t5">{{__('Employer on Twitter  (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <input name="emp_twitter" value="{{$obj_job->emp_twitter}}" id="emp_twitter" type="text"
+                                        class="form-control dme-form-control" placeholder="@firmanavn">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--                            selection-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="country" class="col-md-2 u-t5">{{__('Land')}}</label>
-                            <div class="col-sm-4 ">
-                                <select class="form-control dme-form-control" id="country" name="country">
-                                    @php
-                                        $country = "Norway";
-                                        if($obj_job->country){
-                                            $country = $obj_job->country;
-                                        }
-                                    @endphp
-                                    @foreach($countries as $ctry)
-                                    <option value="{{$ctry['name']}}" {{$country == $ctry['name'] ? 'selected' : ''}}>{{$ctry['name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label for="zip" class="col-md-2 u-t5">{{__('zip code')}}</label>
-                            <div class="col-sm-4 ">
-                                <input name="zip" id="zip" value="{{$obj_job->zip}}" type="text"
-                                    class="form-control dme-form-control zip_code">
-                                <span id="zip_code_city_name"></span>
-                            </div>
-                            <input type="hidden" id="old_zip" value="{{ (isset($obj_job->zip) ? $obj_job->zip : '') }}">
-
-                        </div>
-                    </div>
-                    <!--                            full input-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="address" class="col-md-2 u-t5">{{__('Street address  (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="address" id="address" type="text" class="form-control dme-form-control"
-                                    value="{{@$obj_job->address}}">
-                            
-                            </div>
-                        </div>
-                    </div>
-                    <!--                            button-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="job_gallery" class="col-md-2 u-t5">{{__('Company logo  (optional)')}}</label>
-                            <div class="col-sm-4 ">
-                                @php $single_image_obj = $obj_job; $file_upload_name = 'company_logo'; @endphp
-                                @include('user-panel.partials.upload-single-image',compact('single_image_obj'))
-                                {{----}}
-                                {{--<input type="file" name="company_logo" id="company_logo" class=""--}}
-                                {{--value="Select logo">--}}
-                            </div>
-                            {{--<label for="job_gallery"--}}
-                            {{--class="col-md-2 u-t5">{{__('Workplace photos  (optional)')}}</label>--}}
-                            {{--<div class="col-sm-4 ">--}}
-                            {{--<input type="file" name="company_gallery[]" id="job_gallery" class="" multiple>--}}
-                            {{--</div>--}}
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="address" class="col-md-2 u-t5">{{__('Workplace (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                @php $dropzone_img_obj = $obj_job; @endphp
-                                @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
+                        <!--                            selection-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="country" class="col-md-2 u-t5">{{__('Land')}}</label>
+                                <div class="col-sm-4 ">
+                                    <select class="form-control dme-form-control" id="country" name="country">
+                                        @php
+                                            $country = "Norway";
+                                            if($obj_job->country){
+                                                $country = $obj_job->country;
+                                            }
+                                        @endphp
+                                        @foreach($countries as $ctry)
+                                        <option value="{{$ctry['name']}}" {{$country == $ctry['name'] ? 'selected' : ''}}>{{$ctry['name']}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <label for="zip" class="col-md-2 u-t5">{{__('zip code')}}</label>
+                                <div class="col-sm-4 ">
+                                    <input name="zip" id="zip" value="{{$obj_job->zip}}" type="text"
+                                        class="form-control dme-form-control zip_code">
+                                    <span id="zip_code_city_name"></span>
+                                </div>
+                                <input type="hidden" id="old_zip" value="{{ (isset($obj_job->zip) ? $obj_job->zip : '') }}">
 
                             </div>
                         </div>
-                    </div>
+                        <!--                            full input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="address" class="col-md-2 u-t5">{{__('Street address  (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <input name="address" id="address" type="text" class="form-control dme-form-control"
+                                        value="{{@$obj_job->address}}">
 
-                    <!--                            full input-->
-                    <div class="form-group">
-                        <div class="row">
-                            <label for="workplace_video"
-                                class="col-md-2 u-t5">{{__('Workplace video  (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="workplace_video" id="workplace_video" type="text"
-                                    class="form-control dme-form-control" value="{{@$obj_job->workplace_video}}">
-                                <span class="u-t5">Youtube link.</span>
-                            </div>
-                            <div class="col-md-6 offset-md-3">
-                                <hr class="p-0 mb-0">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <!--                            button-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="job_gallery" class="col-md-2 u-t5">{{__('Company logo  (optional)')}}</label>
+                                <div class="col-sm-4 ">
+                                    @php $single_image_obj = $obj_job; $file_upload_name = 'company_logo'; @endphp
+                                    @include('user-panel.partials.upload-single-image',compact('single_image_obj'))
+                                    {{----}}
+                                    {{--<input type="file" name="company_logo" id="company_logo" class=""--}}
+                                    {{--value="Select logo">--}}
+                                </div>
+                                {{--<label for="job_gallery"--}}
+                                {{--class="col-md-2 u-t5">{{__('Workplace photos  (optional)')}}</label>--}}
+                                {{--<div class="col-sm-4 ">--}}
+                                {{--<input type="file" name="company_gallery[]" id="job_gallery" class="" multiple>--}}
+                                {{--</div>--}}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="address" class="col-md-2 u-t5">{{__('Workplace (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    @php $dropzone_img_obj = $obj_job; @endphp
+                                    @include('user-panel.partials.dropzone',compact('dropzone_img_obj'))
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--                            full input-->
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="workplace_video"
+                                    class="col-md-2 u-t5">{{__('Workplace video  (optional)')}}</label>
+                                <div class="col-sm-10 ">
+                                    <input name="workplace_video" id="workplace_video" type="text"
+                                        class="form-control dme-form-control" value="{{@$obj_job->workplace_video}}">
+                                    <span class="u-t5">Youtube link.</span>
+                                </div>
+                                <div class="col-md-6 offset-md-3">
+                                    <hr class="p-0 mb-0">
+                                </div>
+                            </div>
+                        </div>
                     @endif
                     {{--end employer part--}}
 
@@ -403,31 +403,32 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
-                            <label for="app_email_to_receive"
-                                class="col-md-2 u-t5">{{__('Email to receive notification')}}</label>
-                            <div class="col-sm-4 ">
-                                <input name="app_email_to_receive" id="app_email_to_receive" type="text"
-                                    class="form-control dme-form-control" value="{{@$obj_job->app_email_to_receive}}">
-                            </div>
-                            <label for="app_contact" class="col-md-2 u-t5">{{__('Contact')}}</label>
-                            <div class="col-sm-4 ">
-                                <input name="app_contact" id="app_contact" type="text"
-                                    class="form-control dme-form-control" value="{{@$obj_job->app_contact}}">
+                            <label for="app_contact_title"
+                                   class="col-md-2 u-t5">{{__('Contact person')}}</label>
+                            <div class="col-sm-10 ">
+                                <input name="app_contact_title" id="app_contact_title" type="text"
+                                       value="{{@$obj_job->app_contact_title}}" class="form-control dme-form-control">
+
                             </div>
                         </div>
                     </div>
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
-                            <label for="app_contact_title"
-                                class="col-md-2 u-t5">{{__('Contact person (optional)')}}</label>
-                            <div class="col-sm-10 ">
-                                <input name="app_contact_title" id="app_contact_title" type="text"
-                                    value="{{@$obj_job->app_contact_title}}" class="form-control dme-form-control">
-
+                            <label for="app_email_to_receive"
+                                class="col-md-2 u-t5">{{__('Email to receive notification')}}</label>
+                            <div class="col-sm-4 ">
+                                <input name="app_email_to_receive" id="app_email_to_receive" type="text"
+                                    class="form-control dme-form-control" value="{{@$obj_job->app_email_to_receive}}">
+                            </div>
+                            <label for="app_contact" class="col-md-2 u-t5">{{__('job Title')}}</label>
+                            <div class="col-sm-4 ">
+                                <input name="app_contact" id="app_contact" type="text"
+                                    class="form-control dme-form-control" value="{{@$obj_job->app_contact}}">
                             </div>
                         </div>
                     </div>
+
                     <!--                            small input-->
                     <div class="form-group">
                         <div class="row">
@@ -450,7 +451,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
-                            <label for="app_email" class="col-md-2 u-t5">{{__('Email  (optional)')}}</label>
+                            <label for="app_email" class="col-md-2 u-t5">{{__('Email')}}</label>
                             <div class="col-sm-10 ">
                                 <input name="app_email" id="app_email" type="text" class="form-control dme-form-control"
                                     value="{{@$obj_job->app_email}}">
