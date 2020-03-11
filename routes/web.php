@@ -217,6 +217,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
 
         Route::get('notifications', 'NotificationController@index');
+        Route::get('notifications_count', 'NotificationController@notifications_count');
 
         Route::get('notifications/all', 'NotificationController@showAllNotifications');
 

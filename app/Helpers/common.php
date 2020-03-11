@@ -1,7 +1,11 @@
 <?php
+
 namespace App\Helpers;
 
+use App\Admin\Jobs\Job;
+use App\Http\Controllers\Admin\Jobs\JobController;
 use App\Media;
+use App\Notification;
 use App\Models\Meta;
 use Carbon\Carbon;
 use App\Admin\ads\Banner;
@@ -12,39 +16,42 @@ use App\Admin\Banners\BannerGroup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Session\Session;
 use Intervention\Image\ImageManagerStatic as Image;
+use \Illuminate\Http\Request;
+use Pusher\Pusher;
 
 class common
 {
-    public static function map_json($json){
+    public static function map_json($json)
+    {
         $returnable = "";
         if ($json) {
             $json_value = (json_decode($json));
-            if($json_value){
-            foreach(json_decode($json) as $key=>$val):
-                $returnable .= $val.', ';
-            endforeach;
-         return rtrim($returnable, ', ');
+            if ($json_value) {
+                foreach (json_decode($json) as $key => $val):
+                    $returnable .= $val . ', ';
+                endforeach;
+                return rtrim($returnable, ', ');
 
-            }else{
-               
-                    return rtrim($json, ', ');
+            } else {
+
+                return rtrim($json, ', ');
                 //  foreach($explod_val as $key=>$val):
-                //  $returnable = 
+                //  $returnable =
                 //   endforeach;
-               // dd($arr);
+                // dd($arr);
             }
-           
 
-            
+
         }
     }
 
-    public static function insert_term_array($arr, $taxonomy, $parent = 0){
+    public static function insert_term_array($arr, $taxonomy, $parent = 0)
+    {
         $Parent = $parent;
         foreach ($arr as $value) {
             if (!is_array($value)) {
                 $term = new Term(['name' => $value, 'slug' => Str::slug($value),
-                    'taxonomy_id'=>$taxonomy,'parent' => $parent]);
+                    'taxonomy_id' => $taxonomy, 'parent' => $parent]);
                 $term->save();
                 $Parent = $term->id;
             } else {
@@ -57,20 +64,20 @@ class common
     {
         $html = '<ul class="list list-unstyled">';
         foreach ($terms as $term) {
-            $value = $term->taxonomy->slug=='states_and_cities'?$term->serial:$term->name;
+            $value = $term->taxonomy->slug == 'states_and_cities' ? $term->serial : $term->name;
             $html .= '
             <li>
                 <div class="input-toggle">
-                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="'.$value.'" id="'.$term->taxonomy->id.'-'.$term->id.'">
-                    <label for="'.$term->taxonomy->id.'-'.$term->id.'" class="">'.$term->name . ' <span data-name="'.$term->name.'" data-title="'.$term->taxonomy->slug.'" class="count"></span></label>
+                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="' . $value . '" id="' . $term->taxonomy->id . '-' . $term->id . '">
+                    <label for="' . $term->taxonomy->id . '-' . $term->id . '" class="">' . $term->name . ' <span data-name="' . $term->name . '" data-title="' . $term->taxonomy->slug . '" class="count"></span></label>
                 </div>
                 ';
             if (!empty($terms = $term->getChildren)) {
-                $html.= common::map_nav($terms);
+                $html .= common::map_nav($terms);
             }
             $html .= '</li>';
         }
-        $html.='</ul>';
+        $html .= '</ul>';
         return $html;
     }
 
@@ -84,16 +91,16 @@ class common
             $sz = explode('x', $size);
             if (is_array($arr) && count($arr) == 2) {
                 $file = $path . $arr[0] . '-' . $size . '.' . $arr[1];
-                if(!file_exists($path . $arr[0] . '.' . $arr[1])){
-                    $return_able =  null;
+                if (!file_exists($path . $arr[0] . '.' . $arr[1])) {
+                    $return_able = null;
                 }
-                if (!file_exists($file) && file_exists($path.$file_name)) {
+                if (!file_exists($file) && file_exists($path . $file_name)) {
                     Image::make($path . $obj->name_unique)->widen($sz[0])->heighten($sz[1])->save($path . $arr[0] . '-' . $size . '.' . $arr[1]);
                 }
-                $return_able =  url('/') . '/' . $file;
+                $return_able = url('/') . '/' . $file;
             }
         }
-        if(!$return_able){
+        if (!$return_able) {
             $return_able = url('/') . '/' . $path . $file_name;
         }
         return $return_able;
@@ -105,7 +112,7 @@ class common
         $slug_to_check = $num != 0 ? $name . '-' . $num : $name;
         $slug_to_check = Str::slug($slug_to_check);
 
-        $media = $Model::where($collumn, $slug_to_check)->first();
+        $media = $Model::where($collumn, $slug_to_check)->withTrashed()->first();
         if ($media != null) {
             $num++;
             return common::slug_unique($name, $num, $Model, $collumn);
@@ -153,14 +160,14 @@ class common
 //        }
 //    }
 
-    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar',$delete_old='true',$process_image=true)
+    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar', $delete_old = 'true', $process_image = true)
     {
-        $max_old_media_order = Media::where('mediable_type',$mediable_type)->where('mediable_id',$mediable_id)->where('type',$type)->orderBy('order','DESC')->first();
-        if($delete_old == 'true') {
+        $max_old_media_order = Media::where('mediable_type', $mediable_type)->where('mediable_id', $mediable_id)->where('type', $type)->orderBy('order', 'DESC')->first();
+        if ($delete_old == 'true') {
             self::delete_media($mediable_id, $mediable_type, $type);
         }
         $order = 0;
-        if($max_old_media_order){
+        if ($max_old_media_order) {
             $order = $max_old_media_order->order;
         }
 
@@ -170,7 +177,7 @@ class common
         $names_files = array();
         $org_file_names = array();
         $file_names_encoded = array();
-        foreach ($files as $key=>$file) {
+        foreach ($files as $key => $file) {
             $unique_name = date('ymd') . '-' . time() . '-' . mt_rand(1000000, 9999999);
             $name = $file->getClientOriginalName();
             $name_unique = $unique_name . '.' . $file->getClientOriginalExtension();
@@ -198,9 +205,9 @@ class common
             $order++;
         }
         return json_encode([
-        'file_names' => $names_files,
-        'org_file_names' => $org_file_names,
-        'file_names_encoded' => $file_names_encoded,
+            'file_names' => $names_files,
+            'org_file_names' => $org_file_names,
+            'file_names_encoded' => $file_names_encoded,
         ]);
     }
 
@@ -223,81 +230,93 @@ class common
             $obj_old_media->delete();
         }
     }
-    public static function display_ad($location){
+
+    public static function display_ad($location)
+    {
         $id = 0;
-        $banner_group = BannerGroup::where('location','=',$location)->get()->first();
+        $banner_group = BannerGroup::where('location', '=', $location)->get()->first();
         if (isset($banner_group->banners)) {
 
-                $satrt = Carbon::createFromDate($banner_group->time_start);
-                $end = Carbon::createFromDate($banner_group->time_end);
-                $testdate = $satrt->diff($end);
-                // dump($testdate);
+            $satrt = Carbon::createFromDate($banner_group->time_start);
+            $end = Carbon::createFromDate($banner_group->time_end);
+            $testdate = $satrt->diff($end);
+            // dump($testdate);
 
-            foreach($banner_group->banners as $banner):
+            foreach ($banner_group->banners as $banner):
                 // dd($banner->display_time_duration);
 
                 // echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked  d-block w-100' data-id='".$id."' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media,'300x200'))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";
-                echo "<img src='".asset(\App\Helpers\common::getMediaPath($banner->media))."' class='img-fluid m-auto' style='height:100%' alt=''>";
+                echo "<img src='" . asset(\App\Helpers\common::getMediaPath($banner->media)) . "' class='img-fluid m-auto' style='height:100%' alt=''>";
                 $id++;
             endforeach;
-            }
+        }
     }
 
-    public static function get_ad_attribute($obj,$attribute){
-        if($obj){
-            if($attribute == 'heading'){
+    public static function get_ad_attribute($obj, $attribute)
+    {
+        if ($obj) {
+            if ($attribute == 'heading') {
                 $heading = '';
-                if($obj->ad_type  == 'property_for_rent' || $obj->ad_type == 'property_commercial_for_rent'){
+                if ($obj->ad_type == 'property_for_rent' || $obj->ad_type == 'property_commercial_for_rent') {
                     $heading = $obj->property->heading;
-                }if($obj->ad_type  == 'property_for_sale' || $obj->ad_type == 'property_flat_wishes_rented' || $obj->ad_type == 'property_commercial_for_sale' || $obj->ad_type == 'property_commercial_plots' || $obj->ad_type == 'property_business_for_sale'){
+                }
+                if ($obj->ad_type == 'property_for_sale' || $obj->ad_type == 'property_flat_wishes_rented' || $obj->ad_type == 'property_commercial_for_sale' || $obj->ad_type == 'property_commercial_plots' || $obj->ad_type == 'property_business_for_sale') {
                     $heading = $obj->property->headline;
-                }if($obj->ad_type  == 'property_holiday_home_for_sale'){
+                }
+                if ($obj->ad_type == 'property_holiday_home_for_sale') {
                     $heading = $obj->property->ad_headline;
-                }if($obj->ad_type == 'job'){
+                }
+                if ($obj->ad_type == 'job') {
                     $heading = $obj->job->title;
                 }
                 return $heading;
             }
 
-            if($attribute == 'price'){
+            if ($attribute == 'price') {
                 $price = '';
-                if($obj->property){
-                    if($obj->ad_type  == 'property_for_rent'){
+                if ($obj->property) {
+                    if ($obj->ad_type == 'property_for_rent') {
                         $price = $obj->property->monthly_rent;
-                    }if($obj->ad_type  == 'property_for_sale' || $obj->ad_type == 'property_commercial_plots'){
+                    }
+                    if ($obj->ad_type == 'property_for_sale' || $obj->ad_type == 'property_commercial_plots') {
                         $price = $obj->property->asking_price;
-                    }if($obj->ad_type  == 'property_holiday_home_for_sale'){
+                    }
+                    if ($obj->ad_type == 'property_holiday_home_for_sale') {
                         $price = $obj->property->total_price;
-                    }if($obj->ad_type  == 'property_flat_wishes_rented'){
+                    }
+                    if ($obj->ad_type == 'property_flat_wishes_rented') {
                         $price = $obj->property->max_rent_per_month;
-                    }if($obj->ad_type  == 'property_commercial_for_sale'){
+                    }
+                    if ($obj->ad_type == 'property_commercial_for_sale') {
                         $price = $obj->property->rental_income;
-                    }if($obj->ad_type  == 'property_commercial_for_rent'){
+                    }
+                    if ($obj->ad_type == 'property_commercial_for_rent') {
                         $price = $obj->property->rent_per_meter_per_year;
-                    }if($obj->ad_type  == 'property_business_for_sale'){
+                    }
+                    if ($obj->ad_type == 'property_business_for_sale') {
                         $price = $obj->property->price;
                     }
                 }
-                if($obj->ad_type == 'job'){
+                if ($obj->ad_type == 'job') {
                     $price = '';
                 }
                 return $price;
             }
 
-            if($attribute == 'started'){
+            if ($attribute == 'started') {
                 $started = '';
-                if($obj->ad_type  == 'property_for_rent'){
+                if ($obj->ad_type == 'property_for_rent') {
                     $started = $obj->property->rented_from;
                 }
-                if($obj->ad_type  == 'property_commercial_for_rent'){
+                if ($obj->ad_type == 'property_commercial_for_rent') {
                     $started = $obj->property->availiable_from;
                 }
                 return $started;
             }
 
-            if($attribute == 'expired'){
+            if ($attribute == 'expired') {
                 $expired = '';
-                if($obj->ad_type  == 'property_for_rent'){
+                if ($obj->ad_type == 'property_for_rent') {
                     $expired = $obj->property->rented_to;
                 }
                 return $expired;
@@ -306,12 +325,13 @@ class common
     }
 
     //Calculate favorite list total ads
-    public static function count_list_ads($list_id){
+    public static function count_list_ads($list_id)
+    {
         $total_list_ads = 0;
-        $list_ads = \App\Favorite::where('user_id',Auth::id())->where('list_id',$list_id)->get();
-        if($list_ads->count() > 0){
-            foreach ($list_ads as $list_ad){
-                if($list_ad->ad){
+        $list_ads = \App\Favorite::where('user_id', Auth::id())->where('list_id', $list_id)->get();
+        if ($list_ads->count() > 0) {
+            foreach ($list_ads as $list_ad) {
+                if ($list_ad->ad) {
                     $total_list_ads = $total_list_ads + 1;
                 }
             }
@@ -319,6 +339,58 @@ class common
         return $total_list_ads;
     }
 
+//    get filter from url
+    public static function get_request_from_search_url($url)
+    {
+        $arr = explode('/', $url);
+        $arr_type = $arr[0];
+        if ($arr_type == 'jobs') {
+            $str = $arr[1];
+            $arr2 = explode('?', $str);
+            $filter = $arr2[1];
+            $array_filter = explode('&', $filter);
+            $request = new Request();
+            foreach ($array_filter as $value) {
+                $pairs = explode('=', $value);
+                if (count($pairs) > 1) {
+                    $request->merge([$pairs[0] => $pairs[1]]);
+                }
+            }
+            return $request;
+        }
+    }
+
+//    check_job_from_search_parameters
+    public static function check_job_from_search_parameters($request, Job $job)
+    {
+        $jobController = new JobController();
+        $jobs = $jobController->mega_menu_search($request, true);
+        if ($jobs){
+            $arr = $jobs->pluck('ad_id');
+            if (in_array($job->ad_id, $arr->toArray())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+//    notification
+    public static function send_search_notification($obj, $type, $message, Pusher $pusher)
+    {
+        $searches = Auth::user()->saved_searches;
+        if ($searches) {
+            foreach ($searches as $search) {
+                $req = common::get_request_from_search_url($search->filter);
+                if ($req) {
+                    if (common::check_job_from_search_parameters($req, $obj)) {
+                        $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
+                        $notif->save();
+                        $data = array('detail' => $message, 'to_user_id' => $search->user_id);
+                        $pusher->trigger('notification', 'notification-event', $data);
+                    }
+                }
+            }
+        }
     //find account setting alternative email verified or not.
     public static function is_account_setting_alt_email_verified($obj){
         $flag = '';

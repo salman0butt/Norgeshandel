@@ -39,7 +39,7 @@ class JobController extends Controller
     public function __construct()
     {
         $options = array(
-            'cluster' => 'ap2',
+            'cluster' => 'eu',
             'useTLS' => true
         );
 
@@ -139,15 +139,15 @@ class JobController extends Controller
 
         $ad = Ad::find($request->ad_id);
 
-        $response = $ad->job->id;
-        $notifiable_id = $response;
-        $notification_obj = new \App\Http\Controllers\NotificationController();
-        $notification_response = $notification_obj->create($notifiable_id,'App\Admin\Jobs\Job','property have been added');
-        $notification_id_search = $notification_response->id;
-        //trigger event
-//        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
-
-
+//        $response = $ad->job->id;
+//        $notifiable_id = $response;
+//        $notification_obj = new \App\Http\Controllers\NotificationController();
+//        $notification_response = $notification_obj->create($notifiable_id,'App\Admin\Jobs\Job','property have been added');
+//        $notification_id_search = $notification_response->id;
+//        //trigger event
+////        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
+//
+//
 
         $ad->job->update($arr);
         $ad->update(['status' => 'published']);
@@ -155,44 +155,16 @@ class JobController extends Controller
             $file = $request->file('company_logo');
             common::update_media($file, $ad->id, 'App\Models\Ad', 'logo');
         }
-//        if ($request->file('company_gallery')) {
-//            $files = $request->file('company_gallery');
-//            common::update_media($files, $ad->job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-//        }
+
+        //            notification bellow
+        common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher);
+//            end notification
 
 
         $terms = Term::find([$request->industry, $request->job_function]);
 
         $ad->job->terms()->detach();
         $ad->job->terms()->attach($terms);
-
-//        $job = new Job($arr);
-
-//        $job->slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
-
-//        $terms = Term::find([$request->industry, $request->job_function]);
-
-//        $ad = new Ad(['ad_type'=>'job', 'status'=>'published', 'user_id'=>Auth::user()->id]);
-//        $ad->save();
-//        $ad->job()->save($job);
-
-//        $job->save();
-//        $job->terms()->attach($terms);
-
-//        if ($request->file('company_logo')) {
-//            $file = $request->file('company_logo');
-//            common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_logo');
-//        }
-//        if ($request->file('company_gallery')) {
-//            $files = $request->file('company_gallery');
-//            foreach ($files as $file)
-//            {
-//                common::update_media($file, $job->id, 'App\Admin\Jobs\Job', 'company_gallery');
-//            }
-//        }
-
-
-        //$jobs = Job::all();
 
         $request->session()->flash('success', 'Jobben er lagt til');
         return back();
@@ -305,14 +277,14 @@ class JobController extends Controller
             'app_twitter' => $request->app_twitter,
             'user_id' => Auth::user()->id,
         );
+//        if (empty($job->slug && !empty($arr['name']))) {
+//            $slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
+//            dd($arr['name']);
+//            $job->update(['slug' => $slug]);
+//        }
 
         $job->update($arr);
 
-        if (empty($job->slug)) {
-
-            $slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
-            $job->update(['slug' => $slug]);
-        }
 
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
@@ -381,11 +353,9 @@ class JobController extends Controller
 
             DB::commit();
 
-            $notif = new Notification(['type'=>'App\Ad', 'user_id'=>Auth::id(), 'notifiable_id'=>$job->ad->id, 'data'=>'Ny jobb er publisert']);
-            $notif->save();
-
-            $data = array('detail'=>'Ny jobb er publisert', 'to_user_id'=>Auth::id());
-            $this->pusher->trigger('notification', 'notification-event', $data);
+//            notification bellow
+            common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher);
+//            end notification
 
             Session::flash('success', 'Jobben er lagret');
             return back();
@@ -470,11 +440,25 @@ class JobController extends Controller
 
     }
 
-    public function mega_menu_search(Request $request, $after_created = null)
+    public function mega_menu_search(Request $request, $is_notif = false, $after_created = null)
     {
+        $req = $request->query;
+        $filter = 'jobs/search?';
+        foreach ($req as $key=>$value){
+            $filter.=$key.'='.$value.'&';
+        }
+        $filter = rtrim($filter, '&');
+        if (!$is_notif) {
+            $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
+            foreach ($search as $value) {
+                foreach ($value->unread_notifications as $notification) {
+                    $notification->update(['read_at' => now()]);
+                }
+            }
+        }
+
         $view = $request->view;
         $sort = $request->sort;
-        $req = $request->all();
         $arr = Arr::only($request->all(), ['job_function', 'industry', 'country', 'commitment_type', 'job_type',
             'sector', 'leadership_category']);
         $query = DB::table('ads')
@@ -522,8 +506,10 @@ class JobController extends Controller
                     break;
             }
         }
-        if(!empty($after_created)){
-            $query->whereDate('created_at', '>', $after_created);
+        if($is_notif){
+            if (!empty($after_created)){
+                $query->where('ads.created_at', '>', $after_created);
+            }
             $jobs = $query->get();
             return $jobs;
         }

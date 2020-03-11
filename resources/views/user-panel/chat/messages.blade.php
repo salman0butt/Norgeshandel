@@ -275,8 +275,8 @@
             // Enable pusher logging - don't include this in production
             Pusher.logToConsole = true;
 
-            var pusher = new Pusher('d4efdc4a073f0521f41e', {
-                cluster: 'ap2',
+            var pusher = new Pusher('f607688e883e2a04ab39', {
+                cluster: 'eu',
                 forceTLS: true
             });
 

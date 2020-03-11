@@ -12,4 +12,7 @@ class Search extends Model
     public function notifications(){
         return $this->morphMany(Notification::class, 'notifiable')->orderBy('id', 'desc');
     }
+    public function unread_notifications(){
+        return $this->morphMany(Notification::class, 'notifiable')->whereNull('read_at')->orderBy('id', 'desc');
+    }
 }

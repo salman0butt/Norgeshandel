@@ -19,7 +19,7 @@ class MessageController extends Controller
     public function new_thread($ad_id){
         $ad = Ad::find($ad_id);
         if($ad) {
-            $ad_threads = Auth::user()->threads->where('ad_id', $ad_id);
+            $ad_threads = Auth::user()->threads()->where('ad_id', $ad_id)->get();
             if (is_countable($ad_threads) && count($ad_threads) > 0) {
                 $active_thread = $ad_threads->first();
             } else {
@@ -87,7 +87,7 @@ class MessageController extends Controller
 
 //         pusher
         $options = array(
-            'cluster' => 'ap2',
+            'cluster' => 'eu',
             'useTLS' => true
         );
 

@@ -6,46 +6,48 @@ function isEmpty(obj) {
     return true;
 }
 
-function getDataPagination(page,sorting_value,url,stylings)
-{
-
+function getDataPagination(page, sorting_value, url, stylings) {
     var url = url;
     $.ajax(
-    {
-        url: '?page=' + page+'&filter='+sorting_value+'&style='+stylings,
-        type: "get",
-        datatype: "html"
-    }).done(function(data){
+        {
+            url: '?page=' + page + '&filter=' + sorting_value + '&style=' + stylings,
+            type: "get",
+            datatype: "html"
+        }).done(function (data) {
 
         $(".pagination_data").empty().html(data);
         location.hash = page;
 
-    }).fail(function(jqXHR, ajaxOptions, thrownError){
+    }).fail(function (jqXHR, ajaxOptions, thrownError) {
         console.log('No response from server');
     });
-
 }
 
-function getNotifications(url)
-{
+function getNotifications(url) {
     $.ajax(
         {
             url: url,
-            type: "post",
+            type: "get",
             dataType: "json",
-        }).done(function(data){
-            if(data.count > 0)
-            {
-                // $("#notification_count_pro").show();
-                $("#notification_count_pro").html(data.count);
-                $("#notifications").html(data.html);
+        }).done(function (count) {
+        return count;
+    }).fail(function (jqXHR, ajaxOptions, thrownError) {
+        console.log('No response from server');
+        return 0;
+    });
+}
+function getAjax(url) {
+    $.ajax(
+        {
+            url: url,
+            type: "get",
+            async:false,
+            dataType: "json",
+            success:function (response) {
+                return response;
             }
-            else
-            {
-                // $("#notification_count_pro").hide();
-            }
-
-        }).fail(function(jqXHR, ajaxOptions, thrownError){
-            console.log('No response from server');
-        });
+        }).fail(function (jqXHR, ajaxOptions, thrownError) {
+        console.log('No response from server');
+        return 0;
+    });
 }

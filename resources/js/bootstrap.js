@@ -61,16 +61,16 @@ Pusher.logToConsole = true;
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
   broadcaster: 'pusher',
-  key: 'd4efdc4a073f0521f41e',
-  cluster: 'ap2',
+  key: 'f607688e883e2a04ab39',
+  cluster: 'eu',
   forceTLS: true
 });
 
 var channel = window.Echo.channel('property-for-rent');
 
-channel.listen('.property-for-rent', function(data) 
-{    
- 
+channel.listen('.property-for-rent', function(data)
+{
+
     // console.log(data);
     // return false;
 
@@ -85,7 +85,7 @@ channel.listen('.property-for-rent', function(data)
         async:false,
         success: function(data){
             notify_user = data.res;
-           
+
         }
     });
 
@@ -99,4 +99,3 @@ channel.listen('.property-for-rent', function(data)
     }
 
 });
- 
