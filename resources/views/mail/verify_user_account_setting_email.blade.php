@@ -18,7 +18,7 @@
                         <b>{{$to_email}}</b><br>
                         Bekreft at dette er din korrekte e-postadresse ved å klikke på denne linken.
                     </p>
-                    <a href="#" style="  border: 2px solid #ac304a;
+                    <a href="{{url('/account/verifyemail?email_verified=yes&email='.$to_email)}}" target="_blank" style="  border: 2px solid #ac304a;
                                 background-color: #fff;
                                 border-radius: 8px;
                                 padding: 8px 12px !important;

@@ -61,7 +61,7 @@
                                         <td class="right">Ikke gitt</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"></td>
+                                        <td class="left">Hjemmeadresse</td>
                                         <td class="right"><a href="{{url('/account/setting')}}">Endre profil</a></td>
                                     </tr>
                                     </tbody>
