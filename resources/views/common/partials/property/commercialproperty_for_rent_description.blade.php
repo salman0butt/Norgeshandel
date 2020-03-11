@@ -31,7 +31,7 @@
                             </ol>
                         </div>
                         <div class="col-md-6 p-0">
-                            <ul class="breadcrumb w-100   text-right d-block"
+                            <ul class="breadcrumb w-100 text-right d-block"
                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
                                 <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
                                         href="#"> &lt; Forrige </a> @else <span
@@ -58,7 +58,7 @@
                     @include('user-panel.partials.favorite-button',compact('ad'))
 
                     <a href="#"><i class="fa fa-envelope" style="font-size: 25px; padding:7px 10px;"></i></a>
-                    <a href="#"><i class="fab fa-facebook" style="font-size: 25px; padding:7px 10px;"></i></a>
+                <a href="#"><i class="fab fa-facebook" style="font-size: 25px; padding:7px 10px;"></i></a>
                     <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
                     <div class="row single-realestate-detail p-3">
                         <div class="col-md-12">

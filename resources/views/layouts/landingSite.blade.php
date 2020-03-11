@@ -35,7 +35,11 @@
 
 </head>
 <body class="@yield('body_class')">
+@if(Request::is('account/*'))
+@include('user-panel.partials.account_setting_header')
+@else
 @include('user-panel.partials.header')
+@endif
 @yield('page_content')
 <div id="modal_select_category" class="modal fade" role="dialog">
     <div class="modal-dialog pt-5">
