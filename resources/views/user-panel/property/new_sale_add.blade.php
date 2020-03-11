@@ -64,8 +64,6 @@
 
 </main>
 
-
-
 @endsection
 
 @section('script')
