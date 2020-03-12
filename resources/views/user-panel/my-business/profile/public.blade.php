@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-md-4 pt-4 pb-4">
                     <div class="panel" aria-labelledby="profile-summary-header">
-                        <h3 class="summary font-weight-normal">Sammendrag12</h3>
+                        <h3 class="summary font-weight-normal">Sammendrag</h3>
                         <div class="about small">{{$user->about_me}}</div>
                     </div>
                 </div>

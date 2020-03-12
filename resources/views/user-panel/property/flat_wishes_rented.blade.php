@@ -51,11 +51,11 @@
                             find_zipcode_city(zip_code);
                         }
                     }
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
                       var url = "{{url('new/flat/wishes/rented/'.$flat_wishes_rented1->id)}}";
                     @endif
                 } else {
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
                     var url = "{{url('new/flat/wishes/rented/update/'.$flat_wishes_rented1->id)}}";
                     @endif
                 }

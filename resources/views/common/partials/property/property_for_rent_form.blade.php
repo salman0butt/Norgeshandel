@@ -22,7 +22,7 @@
 
 @endphp
     @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
-    @method('PATCH')
+        @method('PATCH')
     @endif
     <input type="hidden" id="old_zip" value="{{ (isset($property_for_rent->zip_code) ? $property_for_rent->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_rent_temp_images">
@@ -199,7 +199,7 @@
             <label class="u-t5">Månedsleie</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="monthly_rent" value="{{ $property_for_rent->monthly_rent }}" class="dme-form-control" placeholder="Kr.">
+                    <input type="text" id="monthly_rent" name="monthly_rent" value="{{ $property_for_rent->monthly_rent }}" class="dme-form-control" placeholder="Kr.">
                     <span class="error-span monthly_rent"></span>
                 </div>
                 <div class="col-sm-8">

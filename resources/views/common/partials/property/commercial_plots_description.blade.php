@@ -64,13 +64,19 @@
                             <h1 class="u-t2">{{$property_data->headline}}</h1>
                         </div>
                         <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
-                        <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
+
+                        @if($property_data->location_description)
+                            <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
+                        @endif
                         <!-- <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
                         <div class="col-md-12 u-t3">5 250 000 kr</div> -->
                         <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div> -->
                         <div class="col-md-6"><span class="font-weight-bold">Boligtype: </span><span>{{$property_data->plot_type}}</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Tomteareal: </span><span>{{$property_data->plot_size}} m² (eiet)</span></div>
+
+                        @if($property_data->plot_size)
+                            <div class="col-md-6"><span class="font-weight-bold">Tomteareal: </span><span>{{$property_data->plot_size}} m² (eiet)</span></div>
+                        @endif
                         <div class="col-md-12"><a href="#" class="u-strong">Pris på lån</a></div>
                         <div class="col-md-12"><a href="#" class="u-strong">Pris på forsikring</a></div>
                         <!-- <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div> -->
@@ -116,7 +122,7 @@
                         Eiendomsmegler</p>
                     <div class="mb-2">
                         <span>Mobil: </span>
-                        <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}} </a></span>
+                        <span><a href="tel:{{$property_data->contact}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->contact}} </a></span>
                     </div>
                     <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
                     <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>

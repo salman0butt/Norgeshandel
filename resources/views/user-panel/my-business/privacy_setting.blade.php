@@ -62,7 +62,7 @@ color: #474445;
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel </a></li>
                     <li class="breadcrumb-item active" aria-current="page">Mine annonser</li>
-                    <li class="breadcrumb-item active" aria-current="page">Pariatur Ut est qui</li>
+                    <li class="breadcrumb-item active" aria-current="page">Innstillinger for personvern</li>
                 </ol>
             </nav>
         </div>

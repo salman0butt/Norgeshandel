@@ -67,11 +67,11 @@
                             find_zipcode_city(zip_code);
                         }
                     }
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('commercial/plots/*/edit') || Request::is('complete/ad/*'))
                    var url = "{{url('commercial/plots/'.$commercial_plots->id)}}";
                     @endif
                 } else {
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('commercial/plots/*/edit') || Request::is('complete/ad/*'))
                    var url = "{{url('commercial/plots/update/'.$commercial_plots->id)}}";
                     @endif
                 }

@@ -104,11 +104,11 @@
                             find_zipcode_city(zip_code);
                         }
                     }
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('holiday/home/for/sale/*/edit') || Request::is('complete/ad/*'))
                        var url = '{{url('holiday/home/for/sale/'.$holiday_home_for_sale1->id)}}';
                     @endif
                 } else {
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+                    @if(Request::is('holiday/home/for/sale/*/edit') || Request::is('complete/ad/*'))
                     var url = '{{url('holiday/home/for/sale/update/'.$holiday_home_for_sale1->id)}}';
                     @endif
                 }

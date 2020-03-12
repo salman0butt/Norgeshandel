@@ -223,7 +223,7 @@
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="description" cols="30" rows="10">{{ $commercial_plot->headline }}</textarea>
+                    <textarea name="description" id="description" cols="30" rows="10">{{ $commercial_plot->description }}</textarea>
                     <span class="u-t5">Fortell gjerne litt om nabolaget og nærhet til
                         transport.</span>
                 </div>

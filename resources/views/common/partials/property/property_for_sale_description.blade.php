@@ -103,9 +103,12 @@ $name = $property_data->ad->company_gallery;
                                     :</span>&nbsp;<span>{{$property_data->expenses}} m²</span></div>
                                 <div class="col-md-12"><span class="font-weight-bold">Totalpris
                                     :</span>&nbsp;<span>{{number_format($property_data->total_price,0,""," ")}} Kr</span></div>
-                                <div class="col-md-12"><span
-                                        class="font-weight-bold">Kommunale avg :.</span>&nbsp;<span>
-                                    {{$property_data->Kommunale}} Kr</span></div>
+                                @if($property_data->Kommunale)
+                                    <div class="col-md-12">
+                                        <span class="font-weight-bold">Kommunale avg :.</span>&nbsp;
+                                        <span>{{$property_data->Kommunale}} Kr</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -123,21 +126,38 @@ $name = $property_data->ad->company_gallery;
                                 </span>&nbsp;<span>{{$property_data->year}}</span></div>
                                 <div class="col-md-6"><span class="font-weight-bold">Soverom
                                 </span>&nbsp;<span>{{$property_data->number_of_bedrooms}}</span></div>
-                                <div class="col-md-6"><span class="font-weight-bold">Energimerking
-                                </span>&nbsp;<span>{{$property_data->energy_grade}} -
-                                    {{ $property_data-> heating_character }} </span></div>
-                                <div class="col-md-6"><span class="font-weight-bold">Tomteareal
-                                </span>&nbsp;<span>{{$property_data->land}} m²</span></div>
-                                <div class="col-md-6"><span class="font-weight-bold">Bruttoareal </span>&nbsp;<span>
-                                    {{$property_data->use_area}} m² </span></div>
+
+                                @if($property_data->energy_grade)
+                                    <div class="col-md-6"><span class="font-weight-bold">Energimerking</span>&nbsp;
+                                        <span>{{$property_data->energy_grade}} - {{ $property_data-> heating_character }} </span>
+                                    </div>
+                                @endif
+
+                                @if($property_data->land)
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Tomteareal</span>&nbsp;
+                                        <span>{{$property_data->land}} m²</span>
+                                    </div>
+                                @endif
+
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Bruttoareal </span>&nbsp;
+                                    <span>{{$property_data->use_area}} m² </span>
+                                </div>
 
                                 <div class="col-md-12"><span class="font-weight-bold">Formuesverdi: </span>&nbsp;<span>
                                     {{$property_data->asset_value}} Kr</span></div>
-                                <div class="col-md-12"><span class="font-weight-bold">Verditakst: </span>&nbsp;<span>
-                                    {{$property_data->value_rate}} Kr</span></div>
+
+                                @if($property_data->value_rate)
+                                    <div class="col-md-12">
+                                        <span class="font-weight-bold">Verditakst: </span>&nbsp;
+                                        <span>{{$property_data->value_rate}} Kr</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-12 more_details_section hide mt-2 mb-2 pl-0 pr-0">
+                            @if(count($facilities))
                             <div class="col-md-12 pl-0 pr-0">
                                 <div class="bg-light-grey radius-8 col-md-12 p-3">
                                     <div class="row p-2">
@@ -156,11 +176,11 @@ $name = $property_data->ad->company_gallery;
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             @if($property_data->area_description)
                                 <span class="font-weight-bold">Arealbeskrivelse</span>
                                 <div class=""><span>
                                     {{$property_data->area_description}}</span></div>
-                                <br>
                             @endif
                             <br>
                             <span class="font-weight-bold ">Matrikkelinformasjon</span>
@@ -233,11 +253,11 @@ $name = $property_data->ad->company_gallery;
                                 </div>
                             @endif
                             <div class="mb-2">
-                                <a href="mailto:{{$property_data->user->email}}">Visning også etter avtale</a>
+                                <a href="mailto:{{$property_data->user->email}}">Visning etter avtale</a>
                             </div>
                             {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
                             <div class="mb-2">
-                                <a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra
+                                <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
                                     annonsør</a>
                             </div>
                         </div>
@@ -261,7 +281,7 @@ $name = $property_data->ad->company_gallery;
                                 </div>
                             @endif
                             {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
-                            <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra
+                            <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
                                     annonsør</a></div>
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>

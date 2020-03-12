@@ -68,12 +68,12 @@
                             find_zipcode_city(zip_code);
                         }
                     }
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-                   var url = "{{url('add/new/commercial/property/for/rent/'.$commercial_for_rent->id)}}";
+                    @if(Request::is('add/new/commercial/property/for/rent/*/edit') || Request::is('complete/ad/*'))
+                        var url = "{{url('add/new/commercial/property/for/rent/'.$commercial_for_rent->id)}}";
                     @endif
                 } else {
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-               var url = "{{url('add/new/commercial/property/for/rent/update/'.$commercial_for_rent->id)}}";
+                    @if(Request::is('add/new/commercial/property/for/rent/*/edit') || Request::is('complete/ad/*'))
+                        var url = "{{url('add/new/commercial/property/for/rent/update/'.$commercial_for_rent->id)}}";
                     @endif
                 }
                 console.log('status 2');

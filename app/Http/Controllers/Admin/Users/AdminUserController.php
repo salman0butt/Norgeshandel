@@ -238,11 +238,15 @@ class AdminUserController extends Controller
     }
 
     public function public_profile($id){
+        $pagination = 20;
+        if(env('PAGINATION')){
+            $pagination = env('PAGINATION');
+        }
         $user = User::find($id);
         $active_ads = DB::table('ads')->where('status', '=', 'published')
             ->where('user_id','=', $user->id)
             ->whereNull('deleted_at')
-            ->paginate(env('PAGINATION'));
+            ->paginate($pagination);
         return view('user-panel.my-business.profile.public', compact('user', 'active_ads'));
     }
 

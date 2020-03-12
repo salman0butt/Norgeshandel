@@ -63,7 +63,7 @@
                                 <h1 class="u-t2">{{$property_data->headline}}</h1>
                             </div>
                             <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Bransje: </span><span>{{$property_data->industry}}, {{$property_data->alternative_industry}}</span></div>
+                            <div class="col-md-12"><span class="font-weight-bold">Bransje: </span><span>{{$property_data->industry}} {{$property_data->alternative_industry}}</span></div>
                             <!-- <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Felleskost/mnd.: </span><span>4 260 kr</span></div>
@@ -108,10 +108,12 @@
                         </div>
                         <p class="mt-3">   {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                             Eiendomsmegler</p>
-                        <div class="mb-2">
-                            <span>Mobil: </span>
-                            <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS"> {{$property_data->phone}}</a></span>
-                        </div>
+                        @if($property_data->phone)
+                            <div class="mb-2">
+                                <span>Mobil: </span>
+                                <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS"> {{$property_data->phone}}</a></span>
+                            </div>
+                        @endif
                         <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
                         <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig

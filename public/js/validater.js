@@ -39,6 +39,7 @@ $(document).ready(function () {
                 required: true
             },
             monthly_rent: {
+                required: true,
                 number: true
             },
             deposit: {
@@ -49,7 +50,15 @@ $(document).ready(function () {
                 date: true
             },
             rented_to: {
+                required: true,
                 date: true
+            }
+        },
+        onfocusout: false,
+        invalidHandler: function(form, validator) {
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
             }
         }
     });
@@ -341,15 +350,15 @@ $(document).ready(function () {
     });
 
     // required check box (region) on flat wishes rented page
-   // $("#flat_wishes_rented_form .region").rules("add", {
-    //    required:true
-   // });
+   $("#flat_wishes_rented_form .region").rules("add", {
+       required:true
+   });
 
 
     // required check box (property_type) on flat wishes rented page
-    // $("#flat_wishes_rented_form .property_type").rules("add", {
-    //     required:true
-    // });
+    $("#flat_wishes_rented_form .property_type").rules("add", {
+        required:true
+    });
 
     // Commercial Lot
 

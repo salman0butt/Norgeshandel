@@ -76,10 +76,17 @@
                     <div class="mt-2 col-md-12"></div>
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
-                            <div class="col-md-12"><span class="font-weight-bold">Omkostninger
-                                    :</span>&nbsp;<span>{{$property_data->cost}} Kr</span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Totalpris
-                                    :</span>&nbsp;<span>{{$property_data->total_price}} Kr</span></div>
+
+                            @if($property_data->cost)
+                                <div class="col-md-12">
+                                    <span class="font-weight-bold">Omkostninger:</span>&nbsp;
+                                    <span>{{$property_data->cost}} Kr</span>
+                                </div>
+                            @endif
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Totalpris:</span>&nbsp;
+                                <span>{{$property_data->total_price}} Kr</span>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="col-md-6"><span class="font-weight-bold">Etasje :</span>&nbsp;<span></span></div>
@@ -92,22 +99,53 @@
                     {{-- <div class="mt-2 col-md-12"></div> --}}
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
-                            <div class="col-md-6"><span class="font-weight-bold">Beliggenhet:
-                                </span>&nbsp;<span>{{$property_data->location}} </span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Primærrom:
-                                </span>&nbsp;<span>{{$property_data->primary_room}} m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Boligtype:
-                                </span>&nbsp;<span>{{$property_data->property_type}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Bruksareal:
-                                </span>&nbsp;<span>{{$property_data->use_area}} m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Eieform:
-                                </span>&nbsp;<span>{{$property_data->ownership_type}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Byggeår:
-                                </span>&nbsp;<span>{{$property_data->year_of_construction}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Soverom:
-                                </span>&nbsp;<span>{{$property_data->number_of_bedrooms}} m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Energimerking:
-                                </span>&nbsp;<span>{{$property_data->energy_grade}}</span></div>
+
+                            <div class="col-md-6">
+                                <span class="font-weight-bold">Beliggenhet:</span>&nbsp;
+                                <span>{{$property_data->location}} </span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span class="font-weight-bold">Primærrom:</span>&nbsp;
+                                <span>{{$property_data->primary_room}} m²</span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span class="font-weight-bold">Boligtype:</span>&nbsp;
+                                <span>{{$property_data->property_type}}</span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span class="font-weight-bold">Bruksareal:</span>&nbsp;
+                                <span>{{$property_data->use_area}} m²</span>
+                            </div>
+
+                            @if($property_data->ownership_type)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Eieform:</span>&nbsp;
+                                    <span>{{$property_data->ownership_type}}</span>
+                                </div>
+                            @endif
+
+                            @if($property_data->year_of_construction)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Byggeår:</span>&nbsp;
+                                    <span>{{$property_data->year_of_construction}}</span>
+                                </div>
+                            @endif
+
+                            <div class="col-md-6">
+                                <span class="font-weight-bold">Soverom:</span>&nbsp;
+                                <span>{{$property_data->number_of_bedrooms}} m²</span>
+                            </div>
+
+                            @if($property_data->energy_grade)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Energimerking:</span>&nbsp;
+                                    <span>{{$property_data->energy_grade}}</span>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
                     <a href="#" id="more_details" class="mt-2">
@@ -143,25 +181,49 @@
 
 
                                 <div class="col-md-12 more_details_section hide pl-0">
-                                    <span class="font-weight-bold">Matrikkelinformasjon</span>
-                                    <div class="col-md-12"><span class="font-weight-bold">Kommunenr: </span> <span>
-                                            {{$property_data -> muncipal_number}}</span></div>
-                                    <div class="col-md-12"><span class="font-weight-bold">Gårdsnr: </span> <span>
-                                            {{$property_data -> farm_number }}</span></div>
-                                    <div class="col-md-12"><span class="font-weight-bold">Bruksnr: </span> <span>
-                                            {{$property_data -> usage_number }}</span></div>
+                                    @if($property_data->muncipal_number || $property_data->farm_number || $property_data->usage_number)
+                                        <span class="font-weight-bold">Matrikkelinformasjon</span>
+                                    @endif
+
+                                    @if($property_data->muncipal_number)
+                                        <div class="col-md-12">
+                                            <span class="font-weight-bold">Kommunenr: </span>
+                                            <span>{{$property_data->muncipal_number}}</span>
+                                        </div>
+                                    @endif
+
+                                    @if($property_data->farm_number)
+                                        <div class="col-md-12">
+                                            <span class="font-weight-bold">Gårdsnr: </span>
+                                            <span>{{$property_data->farm_number }}</span>
+                                        </div>
+                                    @endif
+
+                                    @if($property_data->usage_number)
+                                        <div class="col-md-12">
+                                            <span class="font-weight-bold">Bruksnr: </span>
+                                            <span>{{$property_data->usage_number }}</span>
+                                        </div>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    @if($property_data->description)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Beskrivelse</span>
+                            <p>{{ $property_data->description }}</p>
+                        </div>
+                    @endif
 
-                    <div class="col-md-12"><span class="font-weight-bold">Beskrivelse</span>
-                        <p>{{ $property_data-> description }}</p>
-                    </div>
-                    <div class="col-md-12"><span class="font-weight-bold">Vesentlige opplysninger</span>
-                        <p>{{ $property_data-> essential_information }}</p>
-                    </div>
+                    @if($property_data->essential_information)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Vesentlige opplysninger</span>
+                            <p>{{ $property_data->essential_information }}</p>
+                        </div>
+                    @endif
 
                     <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                                 eiendommen
@@ -189,11 +251,13 @@
                 </div>
                 <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }} <br>
                     Eiendomsmegler</p>
-                <div class="mb-2">
-                    <span>Mobil: </span>
-                    <span><a href="tel:+4746545247" class="u-select-all"
-                            data-controller="trackSendSMS">{{$property_data -> phone}}</a></span>
-                </div>
+                @if($property_data->phone)
+                    <div class="mb-2">
+                        <span>Mobil: </span>
+                        <span><a href="tel:+4746545247" class="u-select-all"
+                                data-controller="trackSendSMS">{{$property_data->phone}}</a></span>
+                    </div>
+                @endif
                 <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
                 <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                 @if(!$property_data->ad->is_mine())

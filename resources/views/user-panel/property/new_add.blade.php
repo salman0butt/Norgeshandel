@@ -27,6 +27,7 @@
             </div>
         </div>
     </main>
+@endsection
 @section('script')
     <script type="text/javascript">
 
@@ -36,6 +37,7 @@
                 if(event == 'click'){
                     if(! $('#property_for_rent_form').valid()) return false;
                 }
+
                 if (event == 'change') {
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
@@ -45,15 +47,15 @@
                             find_zipcode_city(zip_code);
                         }
                     }
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-                    var url = "{{ url('add/property/for/rent/ad/'.$property_for_rent1->id) }}";
+                    @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
+                        var url = "{{url('add/property/for/rent/ad/'.$property_for_rent1->id)}}";
                     @endif
                 } else {
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-                    var url = "{{ url('add/property/for/rent/ad/update/'.$property_for_rent1->id) }}";
+                    @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
+                        var url = "{{url('add/property/for/rent/ad/update/'.$property_for_rent1->id)}}";
                     @endif
                 }
-                
+
                 //if (!$('#property_for_rent_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function (index) {
@@ -79,7 +81,7 @@
                         console.log(data);
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
-                           if (event == 'change') {
+                            if (event == 'change') {
                         setTimeout(function () {
                             $('.notice').show('slow');
                         }, 2000);
@@ -137,7 +139,5 @@
     <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
     <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
     <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
-
-@endsection
 
 @endsection

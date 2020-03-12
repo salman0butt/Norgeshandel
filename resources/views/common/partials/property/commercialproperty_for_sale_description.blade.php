@@ -81,12 +81,16 @@
                         <h1 class="u-t2">{{$property_data->headline}}</h1>
                     </div>
                     <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span></div>
-                    <div class="col-md-12 mt-2">
-                        <p>{{$property_data->description_simple}}</p>
-                    </div>
-                    <div class="col-md-12 font-weight-bold mt-3">Totalpris</div>
-                    <div class="col-md-12 u-t3">{{number_format($property_data->rental_income,0,""," ")}} kr</div>
-                    <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
+                    @if($property_data->description_simple)
+                        <div class="col-md-12 mt-2">
+                            <p>{{$property_data->description_simple}}</p>
+                        </div>
+                    @endif
+                    @if($property_data->rental_income)
+                        <div class="col-md-12 font-weight-bold mt-3">Totalpris</div>
+                        <div class="col-md-12 u-t3">{{number_format($property_data->rental_income,0,""," ")}} kr</div>
+                    @endif
+                        <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Felleskost/mnd.: </span><span>4 260 kr</span></div>
@@ -110,54 +114,98 @@
                                     @endif
                                 </span>
                             </div>
-                            <div class="col-md-6"><span class="font-weight-bold">Bruksarea
-                                </span>&nbsp;<span>{{$property_data->use_area}} m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Eieform </span>&nbsp;<span>Eier
-                                    (Selveier)</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Etasje
-                                </span>&nbsp;<span>{{$property_data->floors}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Bruttoareal
-                                </span>&nbsp;<span>{{$property_data->gross_area_from}} -
-                                    {{$property_data->gross_area_to}} m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Byggeår
-                                </span>&nbsp;<span>{{$property_data->year_of_construction}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Primærrom
-                                </span>&nbsp;<span>{{$property_data->primary_room}} m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Energimerking </span>&nbsp;<span>
-                                    {{$property_data->energy_grades}} - {{$property_data->heating_character}} </span>
+
+                            @if($property_data->use_area)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Bruksarea</span>&nbsp;
+                                    <span>{{$property_data->use_area}} m²</span>
+                                </div>
+                            @endif
+
+                            <div class="col-md-6">
+                                <span class="font-weight-bold">Eieform </span>&nbsp;
+                                <span>Eier (Selveier)</span>
                             </div>
+
+                            @if($property_data->floors)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Etasje</span>&nbsp;
+                                    <span>{{$property_data->floors}}</span>
+                                </div>
+                            @endif
+
+                            <div class="col-md-6">
+                                <span class="font-weight-bold">Bruttoareal</span>&nbsp;
+                                <span>{{$property_data->gross_area_from}} - {{$property_data->gross_area_to}} m²</span>
+                            </div>
+
+                            @if($property_data->year_of_construction)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Byggeår</span>&nbsp;
+                                    <span>{{$property_data->year_of_construction}}</span>
+                                </div>
+                            @endif
+
+                            @if($property_data->primary_room)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Primærrom</span>&nbsp;
+                                    <span>{{$property_data->primary_room}} m²</span>
+                                </div>
+                            @endif
+
+                            @if($property_data->energy_grades || $property_data->heating_character)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Energimerking </span>&nbsp;
+                                    <span>{{$property_data->energy_grades}} @if($property_data->energy_grades && $property_data->heating_character) - @endif {{$property_data->heating_character}} </span>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
-                    <div class="col-md-12 more_details_section hide pl-0 pr-0">
-                        <div class="col-md-12 pl-0 pr-0 mt-3">
-                            <div class="bg-light-grey radius-8 col-md-12 p-3">
-                                <div class="row p-2">
-                                    <div class="col-md-12"><span class="font-weight-bold">Matrikkelinformasjon </div>
-                                    <div class="col-md-12"><span class="">Kommunenr:
-                                            {{$property_data->municipal_number}}</span></div>
-                                    <div class="col-md-12"><span class="">Gårdsnr: {{$property_data->usage_number}}
-                                        </span></div>
-                                    <div class="col-md-12"><span class="">Bruksnr: {{$property_data->farm_number}}
-                                        </span></div>
+                    @if($property_data->municipal_number || $property_data->usage_number || $property_data->farm_number)
+                        <div class="col-md-12 more_details_section hide pl-0 pr-0">
+                            <div class="col-md-12 pl-0 pr-0 mt-3">
+                                <div class="bg-light-grey radius-8 col-md-12 p-3">
+                                    <div class="row p-2">
+
+                                        <div class="col-md-12"><span class="font-weight-bold">Matrikkelinformasjon </span></div>
+
+                                        @if($property_data->municipal_number)
+                                            <div class="col-md-12">
+                                                <span class="">Kommunenr:{{$property_data->municipal_number}}</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->usage_number)
+                                            <div class="col-md-12">
+                                                <span class="">Gårdsnr: {{$property_data->usage_number}}</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->farm_number)
+                                            <div class="col-md-12">
+                                                <span class="">Bruksnr: {{$property_data->farm_number}}</span>
+                                            </div>
+                                        @endif
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <a href="#" id="more_details" class="mt-2">
-                        <svg width="12" height="12" viewBox="0 0 12 12">
-                            <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
-                            <line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line>
-                        </svg> Flere detaljer
-                    </a>
-                    <div class="col-md-12">
-                        <a href="#" id="less_details" class="mt-2 hide">
+                        <a href="#" id="more_details" class="mt-2">
                             <svg width="12" height="12" viewBox="0 0 12 12">
                                 <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
-                            </svg> Færre detaljer
+                                <line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line>
+                            </svg> Flere detaljer
                         </a>
-                    </div>
+                        <div class="col-md-12">
+                            <a href="#" id="less_details" class="mt-2 hide">
+                                <svg width="12" height="12" viewBox="0 0 12 12">
+                                    <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
+                                </svg> Færre detaljer
+                            </a>
+                        </div>
+                    @endif
                     <!-- <div class="col-md-12"><p>Rimelige fellesutgifter med bla. fyring, varmtvann og TV-og Internett inkludert. To garasjeplasser i oppvarmet garasjeanlegg i kjeller samt bod.</p></div>
                         <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                             eiendommen
@@ -185,11 +233,13 @@
                         </div>
                 <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                     Eiendomsmegler</p>
-                <div class="mb-2">
-                    <span>Mobil: </span>
-                    <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">
-                            {{$property_data->phone}}</a></span>
-                </div>
+                   @if($property_data->phone)
+                    <div class="mb-2">
+                        <span>Mobil: </span>
+                        <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">
+                                {{$property_data->phone}}</a></span>
+                    </div>
+                   @endif
                 {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
                 <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                 <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank"
