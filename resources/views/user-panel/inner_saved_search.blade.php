@@ -1,7 +1,7 @@
     <!-- Button trigger modal -->
     <button type="button" id="save_search_dialog_btn" class="btn bg-maroon text-white" data-toggle="modal"
-        data-target="#basicExampleModal" style="margin-top: -3%;position: absolute;z-index: 999;">
-        Lagrede søk
+       @if(Auth::check()) data-target="#basicExampleModal" @else    data-target="#modal_saved" @endif style="margin-top: -3%;position: absolute;z-index: 999;">
+        Lagre søk
     </button>
     {{--        @include('common.partials.flash-messages)--}}
     <!-- Modal -->
