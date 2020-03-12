@@ -252,9 +252,11 @@ $name = $property_data->ad->company_gallery;
                                     <span>{{date('d-m-Y', strtotime($property_data->deliver_date))}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}}</span>
                                 </div>
                             @endif
-                            <div class="mb-2">
-                                <a href="mailto:{{$property_data->user->email}}">Visning etter avtale</a>
-                            </div>
+                            @if(!$property_data->ad->is_mine())
+                                <div class="mb-2">
+                                    <a href="{{url('messages/new', $property_data->ad->id)}}">Visning etter avtale</a>
+                                </div>
+                            @endif
                             {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
                             <div class="mb-2">
                                 <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra

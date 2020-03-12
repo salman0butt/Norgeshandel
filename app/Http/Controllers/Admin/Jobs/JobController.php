@@ -431,8 +431,13 @@ class JobController extends Controller
      */
     public function search()
     {
-        $jobs = DB::table('ads')->join('jobs', 'ads.id', '=', 'jobs.ad_id')
-            ->where('ads.status', '=', 'published')->get();
+        $jobs = DB::table('ads')
+            ->join('jobs', 'ads.id', '=', 'jobs.ad_id')
+            ->where('ads.status', '=', 'published')
+            ->where('ads.ad_type', '=', 'job')
+            ->whereNull('jobs.deleted_at')
+            ->whereNull('ads.deleted_at')
+            ->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
