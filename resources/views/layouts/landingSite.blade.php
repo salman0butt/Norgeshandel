@@ -133,10 +133,37 @@
                 </div>
                 <div class="row text-center">
                     <div class="col-md-12 text-center pt-3">
-                        <a href="{{route('login')}}" class="btn btn-success">Logg inn</a>
+                        <a href="{{route('login')}}" class="btn bg-maroon text-white">Logg inn</a>
                     </div>
                     <div class="col-md-12 text-center pt-3">
-                        <a href="#" data-toggle="modal" data-dismiss="modal" data-target="#modal_select_category">Tilbake</a>
+                        <a href="#" data-toggle="modal" data-dismiss="modal" @if(Auth::check())data-target="#modal_select_category" @endif>Tilbake</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_saved" class="modal fade bd-example-modal-sm" role="dialog">
+    <div class="modal-dialog modal-sm pt-5" style="position:relative;top:20%;">
+        <div class="modal-content">
+            <div class="modal-body" id="list-body">
+                <div class="row">
+                    <div class="col-md-6">
+                    <h4>Lagre søk</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-12 text-center pt-3">
+                        <a href="{{route('login')}}" class="btn bg-maroon text-white col-md-7">Logg inn</a>
+                    </div>
+                       <div class="col-md-12 text-center pt-3 mt-2">
+                        <a href="{{route('register')}}" class="dme-btn-outlined-blue col-md-8">Opprett ny konto</a>
+                    </div>
+                    <div class="col-md-12 text-center pt-3">
+                        <a href="#" data-toggle="modal">Avbryt</a>
                     </div>
                 </div>
             </div>
@@ -270,7 +297,7 @@
         <ul class="footer-nav-ul mb-1 p-0">
             <li><a href="{{ url('/become-business') }}">Bli bedriftskunde</a></li>
             <li><a href="{{ url('/customer-admin-for-business') }}">Admin for bedrifter</a></li>
-            <li><a href="#">Om NorgesHandel.no</a></li>
+            <li><a href="{{ url('/about-us') }}">Om NorgesHandel.no</a></li>
             <li><a href="{{ url('/personvern') }}">Personvernerklæring</a></li>
             {{--<li><a href="{{ url('/personvern') }}">Cookies</a></li>--}}
             <li><a href="{{ url('/customer-services') }}"><span class="fa fa-help"></span>Kundeservice</a></li>

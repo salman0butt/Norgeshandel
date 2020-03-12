@@ -27,28 +27,33 @@
                     <hr class="col-6">
                     <ul class="sub-cat-list pl-3 dme-collapse" id="home">
                         <li class="" style="">
-                            <a href="{{url('/new/property/property-for-rent')}}">Bolig til leie
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
-                            </a>
-                            <hr class="col-6">
+                        <div class="row">
+                            <a href="{{url('/new/property/property-for-rent')}}" class="col-md-8">Bolig til leie</a><p class="text-muted col-md-4">Gratis</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('new/property/property-for-sale')}}">Bolig til salgs
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                        <div class="row">
+                            <a href="{{url('new/property/property-for-sale')}}" class="col-md-8">Bolig til salgs
                             </a>
-                            <hr class="col-6">
+                                <p class="text-muted col-md-4">990 Kr</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/property/property-for-flat-wishes-rented')}}">Bolig ønskes leid
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                        <div class="row">
+                            <a href="{{url('/new/property/property-for-flat-wishes-rented')}}" class="col-md-8">Bolig ønskes leid
                             </a>
-                            <hr class="col-6">
+                                <p class="text-muted col-md-4">Gratis</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('new/property/property-for-holiday-homes-for-sale')}}">Fritidsbolig til salgs
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
-                            </a>
-                            <hr class="col-6">
+                        <div class="row">
+                            <a href="{{url('new/property/property-for-holiday-homes-for-sale')}}" class="col-md-8">Fritidsbolig til salgs</a>
+                                <p class="text-muted col-md-4">990 Kr</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                         <!-- <a href="{{url('/add/new/realestate/business/plot')}}">Bolig- og fritidstomt til salgs
                             <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
@@ -56,49 +61,62 @@
                         <!-- <hr class="col-6"> -->
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/property/commercial-property-for-sale')}}">Næringseiendom til salgs
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                        <div class="row">
+                            <a href="{{url('/new/property/commercial-property-for-sale')}}" class="col-md-8">Næringseiendom til salgs
                             </a>
-                            <hr class="col-6">
+                                <p class="text-muted col-md-4">1490 Kr</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/property/commercial-property-for-rent')}}">Næringseiendom til leie
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
-                            </a>
-                            <hr class="col-6">
+                        <div class="row">
+                            <a href="{{url('/new/property/commercial-property-for-rent')}}" class="col-md-8">Næringseiendom til leie</a>
+                                <p class="text-muted col-md-4">1490 Kr</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/property/commercial-plots')}}">Næringstomt
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                        <div class="row">
+                            <a href="{{url('/new/property/commercial-plots')}}" class="col-md-8">Næringstomt
                             </a>
-                            <hr class="col-6">
+                                <p class="text-muted" class="col-md-4">1490 Kr</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/property/business-for-sale')}}">Bedrifter til salgs
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                        <div class="row">
+                            <a href="{{url('/new/property/business-for-sale')}}" class="col-md-8">Bedrifter til salgs
                             </a>
-                            <hr class="col-6">
+                                <p class="text-muted col-md-4">1490 Kr</p>
+                            <hr class="col-md-10">
+                            </div>
                         </li>
                     </ul>
                     <!--                -->
                     <ul class="sub-cat-list pl-3 dme-collapse" id="job">
                         <li class="" style="">
-                            <a href="{{url('/new/job/full_time')}}">Heltidsstilling
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                        <div class="row">
+                            <a href="{{url('/new/job/full_time')}}" class="col-md-8">Heltidsstilling
                             </a>
+                                <p class="text-muted col-md-4">1990 Kr</p>
                             <hr class="col-6">
+                            </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/job/part_time')}}">Deltidsstilling
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                          <div class="row">
+                            <a href="{{url('/new/job/part_time')}}" class="col-md-8">Deltidsstilling
                             </a>
-                            <hr class="col-6">
+                                <p class="text-muted col-md-4">1490 Kr</p>
+                            <hr class="col-md-10">
+                              </div>
                         </li>
                         <li class="" style="">
-                            <a href="{{url('/new/job/management')}}">Lederstilling
-                                <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
+                          <div class="row">
+                            <a href="{{url('/new/job/management')}}" class="col-md-8">Lederstilling
                             </a>
+                                <p class="text-muted col-md-4">1990 Kr</p>
                             <hr class="col-6">
+                              </div>
                         </li>
                     </ul>
                 </div>
