@@ -57,20 +57,33 @@
                     </div>
                     {{-- <div class="col-md-12 text-muted"> </div> --}}
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
-                    <div class="col-md-12 font-weight-bold mt-3">Maks månedsleie</div>
-                    <div class="col-md-12 u-t3">{{$property_data->max_rent_per_month}} Kr</div>
+                    @if($property_data->max_rent_per_month)
+                        <div class="col-md-12 font-weight-bold mt-3">Maks månedsleie</div>
+                        <div class="col-md-12 u-t3">{{$property_data->max_rent_per_month}} Kr</div>
+                    @endif
                     <div class="clearfix"></div>
                     {{-- <div class="mt-2 col-md-12"></div> --}}
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
                             <div class="col-md-12"><span class="font-weight-bold">Boligtype: </span>&nbsp;<span>
-                                    {{rtrim($property_data->property_type,",")}} </span></div>
+                                    {{rtrim($property_data->property_type)}} </span></div>
                             <div class="col-md-12"><span class="font-weight-bold">Ønsket område:
                                 </span>&nbsp;<span>{{rtrim($property_data->region)}}</span></div>
-                            <div class="col-md-12"><span class="font-weight-bold">Antall
-                                    beboere:</span>&nbsp;<span>{{rtrim($property_data->number_of_tenants)}}</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Ønskes fra: </span>&nbsp;<span>
-                                    {{date("d.m.Y", strtotime($property_data->wanted_from))}}</span></div>
+                            @if($property_data->number_of_tenants)
+                                <div class="col-md-12">
+                                    <span class="font-weight-bold">
+                                        Antall beboere:
+                                    </span>&nbsp;
+                                    <span>{{rtrim($property_data->number_of_tenants)}}</span>
+                                </div>
+                            @endif
+
+                            @if($property_data->wanted_from)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Ønskes fra: </span>&nbsp;
+                                    <span>{{date("d.m.Y", strtotime($property_data->wanted_from))}}</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -101,11 +114,16 @@
                 </div>
                 <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                     Eiendomsmegler</p>
-                <div class="mb-2">
-                    <span>Mobil: </span>
-                    <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">
-                            {{$property_data->phone}}</a></span>
-                </div>
+                @if($property_data->phone)
+                    <div class="mb-2">
+                        <span>Mobil: </span>
+                        <span>
+                            <a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">
+                                {{$property_data->phone}}
+                            </a>
+                        </span>
+                    </div>
+                @endif
                 <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
                 <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                 @if(!$property_data->ad->is_mine())

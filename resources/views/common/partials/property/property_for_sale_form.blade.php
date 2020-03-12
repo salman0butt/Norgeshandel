@@ -669,7 +669,7 @@ omkostninger.
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Mer info om felleskostander</h3>
+            <h3 class="u-t5">Mer info om felleskostander (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <textarea name="joint_debt_costs" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->joint_debt_costs }}</textarea>

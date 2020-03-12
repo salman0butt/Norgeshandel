@@ -13,16 +13,18 @@
 
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <div class="dropdown">
-                 <a href="#">test@gmail.com</a>
+                 <a href="#">{{Auth::user()->email}}</a>
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color:transparent;border:none;">
                         <i class="fas fa-sort-down" style="color:gray;"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button"><b><i class="fas fa-user"></i>  developer_dmx</b></button>
-                        <button class="dropdown-item" type="button"><i class="fas fa-cog"></i>Kontoinnstillinger</button>
-                        <button class="dropdown-item" type="button"><i class="far fa-life-ring"></i> Hjelp</button>
-                        <button class="dropdown-item" type="button"><i class="fas fa-sign-out-alt"></i> Logg ut</button>
+                        @if(Auth::user()->username)
+                            <a href="{{url('account/summary')}}" class="dropdown-item" type="button"><b><i class="fas fa-user pr-2"></i>{{Auth::user()->username}}</b></a>
+                        @endif
+                        <a href="{{url('account/setting')}}" class="dropdown-item" type="button"><i class="fas fa-cog pr-2"></i>Kontoinnstillinger</a>
+                        <button class="dropdown-item" type="button"><i class="far fa-life-ring pr-2"></i> Hjelp</button>
+                        <a href="{{url('logout')}}" class="dropdown-item" type="button"><i class="fas fa-sign-out-alt pr-2"></i> Logg ut</a>
                     </div>
                 </div>
                 </li>

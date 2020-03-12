@@ -75,23 +75,25 @@
                             <div class="col-md-12 u-t3">{{number_format($property_data->monthly_rent,0,""," ")}}Kr
                             </div>
                         @endif
-                        <div class="bg-light-grey radius-8 col-md-12 p-3">
-                            <div class="row">
-                                @if (!empty($property_data->include_in_rent))
-                                    <div class="col-md-12 mt-3">
-                                        <span class="font-weight-bold">Inkluderer: </span>
-                                        <span>{{$property_data->include_in_rent}}</span>
-                                    </div>
-                                @endif
-                                @if (!empty($property_data->deposit))
-                                    <div class="col-md-12 ">
-                                        <span class="font-weight-bold">Depositum: </span>
-                                        <span>{{number_format($property_data->deposit,0,""," ")}}</span>
-                                        Kr
-                                    </div>
-                                @endif
+                        @if($property_data->include_in_rent || $property_data->deposit)
+                            <div class="bg-light-grey radius-8 col-md-12 p-3">
+                                <div class="row">
+                                    @if (!empty($property_data->include_in_rent))
+                                        <div class="col-md-12 mt-3">
+                                            <span class="font-weight-bold">Inkluderer: </span>
+                                            <span>{{$property_data->include_in_rent}}</span>
+                                        </div>
+                                    @endif
+                                    @if (!empty($property_data->deposit))
+                                        <div class="col-md-12 ">
+                                            <span class="font-weight-bold">Depositum: </span>
+                                            <span>{{number_format($property_data->deposit,0,""," ")}}</span>
+                                            Kr
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class=" clearfix"></div>
                         <div class="col-md-12"></div>
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
@@ -152,11 +154,12 @@
                                 </div>
                             </div>
                         @endif
-
-                        <div class="col-md-12">
-                            <span class="font-weight-bold">Beskrivelse</span>
-                            <p>{{$property_data->description}}</p>
-                        </div>
+                        @if($property_data->description)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Beskrivelse</span>
+                                <p>{{$property_data->description}}</p>
+                            </div>
+                        @endif
                         <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                                     eiendommen
                                 </div> -->
@@ -203,12 +206,11 @@
                                 </div>
                             @endif
                             <div class="mb-2">
-                                <a href="mailto:{{$property_data->user->email}}">Visning også etter avtale</a>
+                                <a href="mailto:{{$property_data->user->email}}">Visning etter avtale</a>
                             </div>
                             {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
                             <div class="mb-2">
-                                <a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra
-                                    annonsør</a>
+                                <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
                             </div>
                         </div>
                     </div>
@@ -232,7 +234,7 @@
                                         <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">  465 45 247</a></span>
                                     </div> -->
                             <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
-                            <div class="mb-2"><a href="/realestate/homes/search.html?orgId=-3">Flere annonser fra
+                            <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
                                     annonsør</a></div>
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send

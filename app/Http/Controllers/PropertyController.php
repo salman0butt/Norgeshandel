@@ -2150,16 +2150,24 @@ class PropertyController extends Controller
         try {
             $flat_wishes_rented_data = $request->except('upload_dropzone_images_type');
             $regions = "";
-            foreach ($flat_wishes_rented_data['region'] as $key => $val) {
-                $regions .= $val . ",";
+            if(isset($flat_wishes_rented_data['region'])){
+                foreach ($flat_wishes_rented_data['region'] as $key => $val) {
+                    $regions .= $val . ",";
+                }
+                $flat_wishes_rented_data['region'] = $regions;
+            }else{
+                $flat_wishes_rented_data['region'] = null;
             }
-            $flat_wishes_rented_data['region'] = $regions;
 
             $property_types = "";
-            foreach ($flat_wishes_rented_data['property_type'] as $key => $val) {
-                $property_types .= $val . ",";
+            if(isset($flat_wishes_rented_data['property_type'])){
+                foreach ($flat_wishes_rented_data['property_type'] as $key => $val) {
+                    $property_types .= $val . ",";
+                }
+                $flat_wishes_rented_data['property_type'] = $property_types;
+            }else{
+                $flat_wishes_rented_data['property_type'] = null;
             }
-            $flat_wishes_rented_data['property_type'] = $property_types;
 
 
             unset($flat_wishes_rented_data['flat_wishes_rented']);
@@ -2314,7 +2322,10 @@ class PropertyController extends Controller
 
             if (isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "") {
                 $commercial_property_for_sale['property_type'] = json_encode($commercial_property_for_sale['property_type']);
+            }else{
+                $commercial_property_for_sale['property_type'] = null;
             }
+
             if (isset($commercial_property_for_sale['facilities']) && $commercial_property_for_sale['facilities'] != "") {
                 $facilities = "";
                 foreach ($commercial_property_for_sale['facilities'] as $key => $val) {
@@ -2322,6 +2333,8 @@ class PropertyController extends Controller
                 }
                 $commercial_property_for_sale['facilities'] = $facilities;
 
+            }else{
+                $commercial_property_for_sale['facilities'] = null;
             }
 
             $response = CommercialPropertyForSale::where('id', '=', $id);
@@ -2667,6 +2680,8 @@ class PropertyController extends Controller
 
             if (isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "") {
                 $commercial_property_for_rent['property_type'] = json_encode($commercial_property_for_rent['property_type']);
+            }else{
+                $commercial_property_for_rent['property_type'] = null;
             }
 
             if (isset($commercial_property_for_rent['facilities']) && $commercial_property_for_rent['facilities'] != "") {
@@ -2675,6 +2690,8 @@ class PropertyController extends Controller
                     $facilities .= $val . ",";
                 }
                 $commercial_property_for_rent['facilities'] = $facilities;
+            }else{
+                $commercial_property_for_rent['facilities'] = null;
             }
 
             $response = CommercialPropertyForRent::findOrFail($id);

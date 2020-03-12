@@ -66,9 +66,15 @@
                             <h1 class="u-t2">{{$property_data->heading}}</h1>
                         </div>
                         <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
-                        <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
-                        <div class="col-md-12 font-weight-bold mt-3">Leie pr m²/år:</div>
-                        <div class="col-md-12 u-t3">{{number_format($property_data->rent_per_meter_per_year,0,""," ")}} kr</div>
+
+                        @if($property_data->location_description)
+                            <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
+                        @endif
+
+                        @if($property_data->rent_per_meter_per_year)
+                            <div class="col-md-12 font-weight-bold mt-3">Leie pr m²/år:</div>
+                            <div class="col-md-12 u-t3">{{number_format($property_data->rent_per_meter_per_year,0,""," ")}} kr</div>
+                        @endif
                         <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
@@ -90,41 +96,56 @@
                                 @endif
                             </span> </div>
                         <div class="col-md-6"><span class="font-weight-bold">Areal </span>&nbsp;<span>{{$property_data->gross_area_from}} - {{$property_data->gross_area_to}} m²</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Ant kontorplasser </span>&nbsp;<span>{{$property_data->number_of_office_space}}</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>{{ $property_data->floors }}</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Ant p-plasser </span>&nbsp;<span>{{$property_data->number_of_parking_space}}</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Byggeår </span>&nbsp;<span>{{ $property_data -> rennovated_year }}</span></div>
-                        <div class="col-md-12"><span class="font-weight-bold">Overtakelse </span>&nbsp;<span>
 
-                                <?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y h:i", strtotime($property_data->created_at)) : "");  ?>
+                        @if($property_data->number_of_office_space)
+                            <div class="col-md-6"><span class="font-weight-bold">Ant kontorplasser </span>&nbsp;<span>{{$property_data->number_of_office_space}}</span></div>
+                        @endif
 
-                        </span></div>
+                        @if($property_data->floors)
+                            <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>{{ $property_data->floors }}</span></div>
+                        @endif
 
-                        <div class="col-md-12 more_details_section">
-                            <span class="font-weight-bold">Fasiliteter</span>
-                            <ul>
-                                @foreach($facilities as $key=>$val)
-                                    <li>
-                                        <?php
-                                            if($val != "")
-                                            {
-                                                echo $val;
-                                            }
-                                        ?>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <br>
-                        </div>
+                        @if($property_data->number_of_parking_space)
+                            <div class="col-md-6"><span class="font-weight-bold">Ant p-plasser </span>&nbsp;<span>{{$property_data->number_of_parking_space}}</span></div>
+                        @endif
 
+                        @if($property_data->rennovated_year)
+                            <div class="col-md-6"><span class="font-weight-bold">Byggeår </span>&nbsp;<span>{{ $property_data->rennovated_year }}</span></div>
+                        @endif
 
-                        <div class="col-md-12"><span class="font-weight-bold">Beskrivelse</span></div>
-                        <div class="col-md-12"><p>{{$property_data->last_description}}</p></div>
+                        @if($property_data->availiable_from)
+                            <div class="col-md-12"><span class="font-weight-bold">Overtakelse </span>&nbsp;<span>
+                                    <?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y h:i", strtotime($property_data->created_at)) : "");  ?>
+                            </span></div>
+                        @endif
 
+                        @if(count($facilities))
+                            <div class="col-md-12 more_details_section">
+                                <span class="font-weight-bold">Fasiliteter</span>
+                                <ul>
+                                    @foreach($facilities as $key=>$val)
+                                        <li>
+                                            <?php
+                                                if($val != "")
+                                                {
+                                                    echo $val;
+                                                }
+                                            ?>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <br>
+                            </div>
+                        @endif
 
-                        <div class="col-md-12">
-                            <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a>
-                        </div>
+                        @if($property_data->last_description)
+                            <div class="col-md-12"><span class="font-weight-bold">Beskrivelse</span></div>
+                            <div class="col-md-12"><p>{{$property_data->last_description}}</p></div>
+                        @endif
+
+                        {{--<div class="col-md-12">--}}
+                            {{--<a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a>--}}
+                        {{--</div>--}}
 
                         <div style="width: 500px; height: 300px;">
                             {!! Mapper::render() !!}
@@ -149,7 +170,7 @@
                         Eiendomsmegler</p>
                     <div class="mb-2">
                         <span>Mobil: </span>
-                        <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}}</a></span>
+                        <span><a href="tel:{{$property_data->contact}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->contact}}</a></span>
                     </div>
                     <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
                     <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
