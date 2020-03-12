@@ -150,8 +150,7 @@ $(document).ready(function () {
                 required: true
             },
             costs_include:{
-                required: true,
-                number: true
+                required: true
             },
             common_costs_after_interest_free_period: {
                 number: true
