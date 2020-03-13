@@ -81,7 +81,7 @@
                     $(".error-span").html('');
                     $("input, select").removeClass("error-input");
                 });
-                $('.notice').html("");
+                //$('.notice').html("");
 
                 console.log('status 3');
                 var myform = document.getElementById("commercial_property_for_sale");
@@ -101,6 +101,11 @@
                         console.log(data);
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
+                    if (event == 'change') {
+                    $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
+                   }else if(event == 'click'){
+                      $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+                   }
                            if (event == 'change') {
                         setTimeout(function () {
                             $('.notice').show('slow');
@@ -109,8 +114,7 @@
                             $('.notice').hide('slow');
                         }, 5000);
                     }
-                    $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
-
+              
                     },
                     error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
 
