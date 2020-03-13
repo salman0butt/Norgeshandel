@@ -19,11 +19,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
-
 Auth::routes(['verify' => true]);
 Route::get('clear-chat', function () {
     \App\MessageThread::where('id', '!=', 0)->delete();
     return redirect('messages');
+});
+Route::get('verify-registered', function (){
+    return view('auth.verify_email');
 });
 
 Route::get('verified', function () {

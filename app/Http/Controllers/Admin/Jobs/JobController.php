@@ -156,8 +156,12 @@ class JobController extends Controller
             common::update_media($file, $ad->id, 'App\Models\Ad', 'logo');
         }
 
-        //            notification bellow
-        common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher);
+//            notification bellow
+        $searches = \App\Model\Search::where('type', '=', 'saved')
+            ->where('filter', 'like', '%jobs/search%')
+            ->where('notification_web', '=', '1')
+            ->get();
+        common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher, $searches);
 //            end notification
 
 
@@ -354,7 +358,11 @@ class JobController extends Controller
             DB::commit();
 
 //            notification bellow
-            common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher);
+            $searches = \App\Model\Search::where('type', '=', 'saved')
+                ->where('filter', 'like', '%jobs/search%')
+                ->where('notification_web', '=', '1')
+                ->get();
+            common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher, $searches);
 //            end notification
 
             Session::flash('success', 'Jobben er lagret');

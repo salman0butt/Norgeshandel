@@ -10,7 +10,7 @@ input {
     <div class="dme-container pt-4">
         <div class="col-md-12">
             @include('user-panel.my-business.profile.account-setting-header')
-            <h3>Schibsted</h3><br>
+{{--            <h3>Schibsted</h3><br>--}}
 
             @include('common.partials.flash-messages')
             <form action="{{route('users.update', \Illuminate\Support\Facades\Auth::id())}}" method="post" id="changePasswordFrm" method="post" autocomplete="off">
@@ -27,7 +27,7 @@ input {
                 </div>
                 <div class="form-group col-md-5 pl-0">
                     <label title="Minst 8 tegn">
-                        Nytt passord for innlogging i Schibsted
+                        Nytt passord for innlogging
                         <small class="field-info">minst 8 tegn</small>
                         <input type="password" name="password" id="password" required="required" autocorrect="off"
                             spellcheck="false" class="dme-form-control" minlength="8">

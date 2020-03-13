@@ -319,7 +319,7 @@
                         var str = '' +
                             '            <div class="message receiver-message">\n' +
                             '                <div class="profile-icon">\n' +
-                            '                    <img src="' + $('#my_avatar').val() + '" class="circle"\n' +
+                            '                    <img src="' + $('#their_avatar').val() + '" class="circle"\n' +
                             '                         alt="Profile image" style="width:35px;">\n' +
                             '                </div>\n' +
                             '                <div class="message-text" style="min-height: 1em;">\n' +

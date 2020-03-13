@@ -94,9 +94,12 @@ class MessageController extends Controller
         $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
             env('PUSHER_APP_SECRET'),
-            env('PUSHER_APP_ID'),
+            getenv('PUSHER_APP_ID'),
+//            950445,
             $options
         );
+//        dd(env('PAGINATION'));
+//        dd($pusher);
 //
         $files = array();
         $media = $message->media;
