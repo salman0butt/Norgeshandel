@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Admin\Jobs\Job;
 use App\Http\Controllers\Admin\Jobs\JobController;
 use App\Media;
+use App\Model\Search;
 use App\Notification;
 use App\Models\Meta;
 use Carbon\Carbon;
@@ -375,9 +376,8 @@ class common
     }
 
 //    notification
-    public static function send_search_notification($obj, $type, $message, Pusher $pusher)
+    public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searches)
     {
-        $searches = Auth::user()->saved_searches;
         if ($searches) {
             foreach ($searches as $search) {
                 $req = common::get_request_from_search_url($search->filter);
