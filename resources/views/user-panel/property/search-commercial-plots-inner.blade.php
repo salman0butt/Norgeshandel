@@ -95,7 +95,7 @@
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 @if($commercial_plot->street_address)
-                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" style="">{{$commercial_plot->street_address}}</div>
+                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$commercial_plot->street_address}}">{{Str::limit($commercial_plot->street_address,35)}}</div>
                                 @endif
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 {{--<div class="u-t5 text-muted mt-2">Christian Krohgs gate 16, 0186 Oslo</div>--}}

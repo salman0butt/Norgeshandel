@@ -94,7 +94,7 @@
                                 <!--                                        <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>-->
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 @if($property_commercial_property_for_sale->street_address)
-                                    <div class="location u-t5 text-muted mt-2">{{$property_commercial_property_for_sale->street_address}} </div>
+                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$property_commercial_property_for_sale->street_address}}">{{Str::limit($property_commercial_property_for_sale->street_address,35)}} </div>
                                 @endif
                                 <div class="title color-grey">{{$property_commercial_property_for_sale->headline}}</div>
                                 @if($property_commercial_property_for_sale->primary_room || $property_commercial_property_for_sale-> rental_income)
