@@ -178,7 +178,7 @@ $var = json_encode($counts);
             }
         });
         $.ajax({
-            url: '{{url('checksearch')}}',
+        url: '{{url('checksearch')}}',
             data: {
                 filter: "jobs/search?" + param.toString()
             },

@@ -74,13 +74,16 @@
             <br><br>
             <p> På Norgeshandel kan privat personer selv lage annonse for eiendom og publisere annonsen.
                 Det gjelder både utleie og salg. Dette hjelper deg å selge din eiendom uten større kostnader.<br>
-                <a href="{{ url('/login') }}">Logg inn</a></p>
+                @if(!Auth::check())
+                <a href="{{ url('/login') }}">Logg inn</a>
+                @endif
+                </p>
             <p>Det er like enkelt for bedritfskunder, fordel for bedriftskunder hos Norgehandel er
                 å ha bedriftsavtale.</p>
             <p>Norgeshandel tilbyr firmaprofilering, betaling med faktura, lenke til nettside i annonse. Tett
                 dialog og oppfølging for våre bedriftskunder. Vi tilbyr også skreddersydde avtaler nettop for
                 levere best mulig til våre kunder.</p>
-                <a href="{{ url('/become-business') }}">Les mer på:</a>
+                <a href="{{ url('/become-business') }}">Les mer</a>
         </div>
     </div>
     <br><br>

@@ -63,6 +63,7 @@
                     $("input, select").removeClass("error-input");
                 });
                 
+             
 
                 var myform = document.getElementById("property_for_rent_form");
                 var fd = new FormData(myform);
@@ -123,8 +124,9 @@
                 
             }
             
-            $("input").on('change', function (e) {
+            $("input:not(input[type=date])").on('change', function (e) {
                 e.preventDefault();
+                
                record_store_ajax_request('change', (this));
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);

@@ -1,5 +1,10 @@
 @extends('layouts.landingSite')
 @section('page_content')
+<style>
+.u-t4 {
+    font-weight: normal !important;
+}
+</style>
 <main class="company_request_form pb-5">
     <div class="dme-container">
         <div class="breade-crumb">
@@ -131,7 +136,7 @@
             <div class="col-md-12">
                 <h3 class="font-weight-normal">Dette får du som bedriftskunde</h3><br>
                 <div class="row">
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <h4 class="u-t4">
                             <span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span> Gratis
                             bedriftsprofil</h4>
@@ -165,35 +170,35 @@
                         <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
                             Månedlig faktura</h4>
                         <p>Vi samler opp kjøpene dine slik at du får færre fakturaer og mer oversikt</p>
-                    </div>
-                     <div class="col-md-4">
+                    </div>--}}
+                     <div class="col-md-4"> 
                         <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
                            Vårt mål er å bidra til at din bedrift får fornøyde kunder</h4>
-                        <p>&emsp;</p>
+                        {{-- <p>&emsp;</p> --}}
                     </div>
                          <div class="col-md-4">
                         <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
                            Kredittid og en faktura på alle annonser</h4>
-                        <p>&emsp;</p>
+                        {{-- <p>&emsp;</p> --}}
                     </div>
                        <div class="col-md-4">
                         <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
                            Individuelle betingelser og priser</h4>
-                        <p>&emsp;</p>
+                        {{-- <p>&emsp;</p> --}}
                     </div>
                        <div class="col-md-4">
                         <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
                           Firmaprofilering</h4>
-                        <p>&emsp;</p>
+                        {{-- <p>&emsp;</p> --}}
                     </div>
                         <div class="col-md-6">
                         <h4 class="u-t4"><span class="fa fa-check-circle color-maroon" style="font-size: 16px;"></span>
                           Lenke til bedriftens nettside i alle annonser</h4>
-                       <p></p>
-                        <a href="{{url('price-chart')}}">Se prisoversikt
-                            her</a>
-                    </div>
+                       {{-- <p></p> --}}
+                     
+                    </div><br>
                 </div>
+                    <a href="{{url('price-chart')}}">Se prisoversikt her</a>
             </div>
         </div>
     </div>

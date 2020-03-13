@@ -487,7 +487,64 @@
 
     var site_url = "<?php echo url('/'); ?>";
 </script>
-
+<script>
+        var job = '{{ \Request::is("jobs/*") }}';
+        var property_for_rent = '{{ \Request::is("property/property-for-rent/*") }}';
+        var holiday_home_for_sale = '{{ \Request::is("property/holiday-homes-for-sale/*") }}';
+        var property_for_sale = '{{ \Request::is("property/property-for-sale/*") }}';
+        var flat_wishes_rented = '{{ \Request::is("property/flat-wishes-rented/*") }}';
+        var commercial_property_for_sale = '{{ \Request::is("property/commercial-property-for-sale/*") }}';
+        var commercial_property_for_rent = '{{ \Request::is("property/commercial-property-for-rent/*") }}';
+        var commercial_plot = '{{ \Request::is("property/commercial-plots/*") }}';
+        var businesses_for_sale  = '{{ \Request::is("property/business-for-sale/*") }}';
+        var strsearch = urlParams;
+            strsearch.delete('page');
+            var value = strsearch.toString();
+            var type = '';
+            if(job)
+            type = strsearch.get('job_type');
+            else if(property_for_rent)
+             type = 'property-for-rent';
+            else if(holiday_home_for_sale)
+             type = 'holiday-homes-for-sale';
+            else if(property_for_sale)
+             type = 'property-for-sale';
+            else if(flat_wishes_rented)
+             type = 'flat-wishes-rented';
+            else if(commercial_property_for_sale)
+             type = 'commercial-property-for-sale';
+            else if(commercial_property_for_rent)
+             type = 'commercial-property-for-rent';
+            else if(commercial_plot)
+             type = 'commercial-plots';
+            else if(businesses_for_sale)
+             type = 'business-for-sale';
+            
+          //console.log(type);
+          
+            if(!isEmpty(type)) {
+                if (!isEmpty(value)) {
+                    var url = "{{url('/recentearches')}}";
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: url + '/' + value + '/' + urlParams.get('search') + '/' + type,
+                        type: "POST",
+                        success: function (response) {
+                            return true;
+                        },
+                        error: function (error) {
+                            // console.log(error);
+                            return false;
+                        }
+                    });
+                }
+        
+            }
+</script>
 
 </body>
 </html>

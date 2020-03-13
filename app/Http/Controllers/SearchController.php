@@ -76,8 +76,30 @@ class SearchController extends Controller
 
     public function recent($value, $name, $ad_type)
     {
+        // dd($ad_type);
         if (\Illuminate\Support\Facades\Auth::check()) {
-            $value = $ad_type == "job" ? "jobs/search?" . $value : $value;
+            if($ad_type == "job"){
+                $value = "jobs/search?" . $value;
+            } else if($ad_type == 'property-for-rent'){
+                $value = "property/property-for-rent/search?" . $value;
+            }else if($ad_type == 'holiday-homes-for-sale'){
+                $value = "property/holiday-homes-for-sale/search?" . $value;
+              
+            }else if($ad_type == 'property-for-sale'){
+                $value = "property/property-for-sale/search?" . $value;
+            }else if($ad_type == 'flat-wishes-rented'){
+                $value = "property/flat-wishes-rented/search?" . $value;
+            }else if($ad_type == 'commercial-property-for-sale'){
+                $value = "property/commercial-property-for-sale/search?" . $value;
+            }else if($ad_type == 'commercial-property-for-rent'){
+                $value = "property/commercial-property-for-rent/search?" . $value;
+            }else if($ad_type == 'commercial-plots'){
+                $value = "property/commercial-plots/search?" . $value;
+            }else if($ad_type == 'business-for-sale'){
+                $value = "property/business-for-sale/search?" . $value;
+            }
+           
+       
             $check = Search::where('type', 'recent')
                 ->Where('name', '=', $name)
                 ->where('filter', '=', $value)
@@ -94,8 +116,9 @@ class SearchController extends Controller
                 'notification_sms' => 0,
                 'user_id' => auth()->user()->id
             ];
+            // dd($data);
             Search::create($data);
-            return back()->with('status', 'Search Saved Successfully');
+            // return back()->with('status', 'Search Saved Successfully');
         }
     }
 

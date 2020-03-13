@@ -1,6 +1,12 @@
 @extends('layouts.landingSite')
 
 @section('page_content')
+<style>
+hr {
+    margin-left: 0px !important;
+    margin-right:0px !important;
+}
+</style>
     <main class="select-ad-category">
         <div class="container">
             <div class="row">
@@ -24,36 +30,38 @@
                             </a>
                         </div>
                     </div>
-                    <hr class="col-6">
+                    <center><hr class="col-6"></center>
                     <ul class="sub-cat-list pl-3 dme-collapse" id="home">
                         <li class="" style="">
+                       
                         <div class="row">
                             <a href="{{url('/new/property/property-for-rent')}}" class="col-md-8">Bolig til leie</a><p class="text-muted col-md-4">Gratis</p>
-                            <hr class="col-md-10">
                             </div>
+                            <hr class="col-md-9">
+                  
                         </li>
                         <li class="" style="">
                         <div class="row">
                             <a href="{{url('new/property/property-for-sale')}}" class="col-md-8">Bolig til salgs
                             </a>
                                 <p class="text-muted col-md-4">990 Kr</p>
-                            <hr class="col-md-10">
                             </div>
+                            <hr class="col-md-9">
                         </li>
                         <li class="" style="">
                         <div class="row">
                             <a href="{{url('/new/property/property-for-flat-wishes-rented')}}" class="col-md-8">Bolig ønskes leid
                             </a>
                                 <p class="text-muted col-md-4">Gratis</p>
-                            <hr class="col-md-10">
                             </div>
+                            <hr class="col-md-9">
                         </li>
                         <li class="" style="">
                         <div class="row">
                             <a href="{{url('new/property/property-for-holiday-homes-for-sale')}}" class="col-md-8">Fritidsbolig til salgs</a>
                                 <p class="text-muted col-md-4">990 Kr</p>
-                            <hr class="col-md-10">
                             </div>
+                            <hr class="col-md-9">
                         </li>
                         <!-- <a href="{{url('/add/new/realestate/business/plot')}}">Bolig- og fritidstomt til salgs
                             <p class="text-muted">Omnesque necessitatibus pro no, vix enim dicant et, nam ut patrioque percipitur. At euismod recteque</p>
@@ -65,31 +73,31 @@
                             <a href="{{url('/new/property/commercial-property-for-sale')}}" class="col-md-8">Næringseiendom til salgs
                             </a>
                                 <p class="text-muted col-md-4">1490 Kr</p>
-                            <hr class="col-md-10">
                             </div>
+                            <hr class="col-md-9">
                         </li>
                         <li class="" style="">
                         <div class="row">
                             <a href="{{url('/new/property/commercial-property-for-rent')}}" class="col-md-8">Næringseiendom til leie</a>
                                 <p class="text-muted col-md-4">1490 Kr</p>
-                            <hr class="col-md-10">
                             </div>
+                            <hr class="col-md-9">
                         </li>
                         <li class="" style="">
                         <div class="row">
                             <a href="{{url('/new/property/commercial-plots')}}" class="col-md-8">Næringstomt
                             </a>
-                                <p class="text-muted" class="col-md-4">1490 Kr</p>
-                            <hr class="col-md-10">
+                                <p class="text-muted" class="col-md-4" style="margin-left: 2.5%;">1490 Kr</p>
                             </div>
+                            <hr class="col-md-9">
                         </li>
                         <li class="" style="">
                         <div class="row">
                             <a href="{{url('/new/property/business-for-sale')}}" class="col-md-8">Bedrifter til salgs
                             </a>
                                 <p class="text-muted col-md-4">1490 Kr</p>
-                            <hr class="col-md-10">
                             </div>
+                            <hr class="col-md-9">
                         </li>
                     </ul>
                     <!--                -->
@@ -99,24 +107,24 @@
                             <a href="{{url('/new/job/full_time')}}" class="col-md-8">Heltidsstilling
                             </a>
                                 <p class="text-muted col-md-4">1990 Kr</p>
-                            <hr class="col-6">
                             </div>
+                            <hr class="col-md-9">
                         </li>
                         <li class="" style="">
                           <div class="row">
                             <a href="{{url('/new/job/part_time')}}" class="col-md-8">Deltidsstilling
                             </a>
                                 <p class="text-muted col-md-4">1490 Kr</p>
-                            <hr class="col-md-10">
                               </div>
+                            <hr class="col-md-9">
                         </li>
                         <li class="" style="">
                           <div class="row">
                             <a href="{{url('/new/job/management')}}" class="col-md-8">Lederstilling
                             </a>
                                 <p class="text-muted col-md-4">1990 Kr</p>
-                            <hr class="col-6">
                               </div>
+                            <hr class="col-md-9">
                         </li>
                     </ul>
                 </div>
