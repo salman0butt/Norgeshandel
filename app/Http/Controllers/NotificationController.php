@@ -82,6 +82,11 @@ class NotificationController extends Controller
         echo json_encode($data);
     }
 
+    public function read_all(){
+        $notifications = Auth::user()->unread_notifications();
+        $notifications->update(['read_at'=>now()]);
+        return redirect()->back();
+    }
 
     public function showAllNotifications(Request $request)
     {
