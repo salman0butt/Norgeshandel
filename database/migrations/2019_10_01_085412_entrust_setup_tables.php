@@ -22,12 +22,6 @@ class EntrustSetupTables extends Migration
             $table->timestamps();
         });
 
-        $role = new \App\Role(['name'=>'admin', 'display_name'=>'Administrator']); $role->save();
-        $role = new \App\Role(['name'=>'manager', 'display_name'=>'Manager']); $role->save();
-        $role = new \App\Role(['name'=>'vendor', 'display_name'=>'Vendor']); $role->save();
-        $role = new \App\Role(['name'=>'company', 'display_name'=>'Company']); $role->save();
-        $role = new \App\Role(['name'=>'subscriber', 'display_name'=>'Subscriber']); $role->save();
-
         // Create table for associating roles to users (Many-to-Many)
         Schema::create('role_user', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -64,8 +58,6 @@ class EntrustSetupTables extends Migration
 //
 //            $table->primary(['permission_id', 'role_id']);
         });
-        $user = \App\User::find(1);
-        $user->roles()->attach(1);
         DB::commit();
     }
 

@@ -387,7 +387,7 @@
                 if(!isEmpty($("#basicExampleModal.show"))){
                     $('#dme-wrapper').html(response);
                 }
-               
+
             },
             error: function (error) {
                 console.log(error);
@@ -462,7 +462,6 @@
         });
         var notifications = pusher.subscribe('notification');
         notifications.bind('notification-event', function (data) {
-            console.log(data);
             if (data.to_user_id == '{{Auth::id()}}') {
                 $.ajax({
                     url: '{{url('notifications_count')}}',
