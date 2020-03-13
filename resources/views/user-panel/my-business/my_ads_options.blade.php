@@ -23,7 +23,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Mine annonser</li>
-                <li class="breadcrumb-item active" aria-current="page">Pariatur Ut est qui</li>
+                <li class="breadcrumb-item active" aria-current="page">Flere valg</li>
             </ol>
         </nav>
     </div>

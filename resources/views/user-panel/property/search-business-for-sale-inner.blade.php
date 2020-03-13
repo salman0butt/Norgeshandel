@@ -89,7 +89,7 @@
                                 <div class="trailing-border">
                                     <img
                                         src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8" style="min-height: 174.93px">
+                                        alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
@@ -108,9 +108,9 @@
                                     <br>
                                 @endif
                                 <div class="detail u-t5 mt-3 float-left text-muted">Privat</div>
-                                <div class="dealer-logo float-right mt-3">
-                                    <img src="assets/images/businessplots-logo.png" alt="" class="img-fluid">
-                                </div>
+                                {{--<div class="dealer-logo float-right mt-3">--}}
+                                    {{--<img src="assets/images/businessplots-logo.png" alt="" class="img-fluid">--}}
+                                {{--</div>--}}
                             </div>
                         </a>
                         <div>

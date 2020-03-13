@@ -89,11 +89,11 @@
                         <a href="{{url('/property/description', $value->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
-                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif" alt="" class="img-fluid radius-8" style="min-height:174.93px;">
+                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif" alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
-                                <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>
+                                {{--<div class="week-status u-t5 text-muted" style="">Betalt plassering</div>--}}
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">{{$property_for_rent->street_address}}</div>
                                 <div class="title color-grey">{{$property_for_rent->heading}}</div>
@@ -102,8 +102,14 @@
                                     <div class="price font-weight-bold float-right color-grey">{{$property_for_rent->monthly_rent}} kr</div>
                                 </div>
                                 <br>
-                                <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt"> <span>{{$property_for_rent->property_type}}</span></div>
-                                <div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>
+                                <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt">
+                                    <p>
+                                        <span class="tst"> {{$property_for_rent->property_type}} </span>
+                                        <span style="padding-left:10px;"> {{$property_for_rent-> number_of_bedrooms}} </span>
+                                        soverom
+                                    </p>
+                                </div>
+                                {{--<div class="dealer-logo float-right mt-3" ><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
 
                             </div>
                           </a>

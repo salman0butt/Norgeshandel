@@ -334,5 +334,11 @@ class AdminUserController extends Controller
         }
     }
 
+    //Saved/updated the user notification settings
+    /*
+    public function store_notifications_setting(Request $request){
+        dd($request->all());
+    } */
+
 
 }
