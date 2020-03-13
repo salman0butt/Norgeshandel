@@ -91,42 +91,45 @@
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
 
                                 <div class="trailing-border">
-                                    <img
-                                        src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8"
-                                        style="min-height:207px;max-height:207px;width:100%;">
+                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
+                                        alt="" class="img-fluid radius-8" style="min-height: 174.93px">
                                 </div>
                             </div>
                             <div
                                 class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <div class="u-t5 text-muted" style=""></div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                <div
-                                    class="location u-t5 text-muted mt-2">{{ $property_holiday_home_for_sale -> street_address}}</div>
-                                <div
-                                    class="title color-grey">{{ $property_holiday_home_for_sale -> ad_headline}}</div>
+                                @if($property_holiday_home_for_sale->street_address)
+                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$property_holiday_home_for_sale->street_address}}">{{ Str::limit($property_holiday_home_for_sale->street_address,35)}}</div>
+                                @endif
+                                <div class="title color-grey">{{ $property_holiday_home_for_sale -> ad_headline}}</div>
                                 <div class="mt-2">
                                     <div
                                         class="area font-weight-bold float-left color-grey">{{ $property_holiday_home_for_sale ->  primary_room }}
                                         m²
                                     </div>
                                     <div
-                                        class="price font-weight-bold float-right color-grey"> {{  $property_holiday_home_for_sale ->  asking_price  }}
+                                        class="price font-weight-bold float-right color-grey"> {{  number_format($property_holiday_home_for_sale->asking_price,0,""," ")}}
                                         kr
                                     </div>
                                 </div>
                                 <br>
-                                <div
-                                    class="loca u-t5 text-muted">{{  $property_holiday_home_for_sale ->  local_area_name  }}</div>
-                                <div class="loca u-t5 text-muted">
-                                    <span>TotalPris:</span><span>{{  $property_holiday_home_for_sale ->  total_price  }}</span>
+
+                                <div class="float-left">
+                                    <div
+                                            class="loca u-t5 text-muted">{{  $property_holiday_home_for_sale->local_area_name  }}</div>
+                                    <div class="loca u-t5 text-muted">
+                                        <span>TotalPris: </span><span>{{  number_format($property_holiday_home_for_sale->total_price,0,""," ")  }}</span>
+                                    </div>
+                                    <div class="loca u-t5 text-muted">
+                                        <span>{{  $property_holiday_home_for_sale->ownership_type  }}</span> •
+                                        <span>{{  $property_holiday_home_for_sale->property_type  }}</span></div>
                                 </div>
-                                <div class="loca u-t5 text-muted">
-                                    <span>{{  $property_holiday_home_for_sale ->  ownership_type  }}</span> •
-                                    <span>{{  $property_holiday_home_for_sale ->  property_type  }}</span></div>
-                                <div class="dealer-logo float-right mt-3"><img
-                                        src="{{asset('public/images/dealer-logo.png')}} " alt=""
-                                        class="img-fluid"></div>
+                                <div class="float-right">
+                                    <div class="dealer-logo float-right mt-3"><img
+                                                src="{{asset('public/images/dealer-logo.png')}} " alt=""
+                                                class="img-fluid"></div>
+                                </div>
 
                             </div>
                         </a>
