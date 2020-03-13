@@ -90,22 +90,23 @@
                                 <div class="trailing-border">
                                     <img
                                         src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8" style="min-height:207px;width:100%;">
+                                        alt="" class="img-fluid radius-8" style="min-height: 174.93px">
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
-                                <div class="week-status u-t5 text-muted"
-                                     style="">{{$commercial_plot->street_address}}</div>
+                                @if($commercial_plot->street_address)
+                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" style="">{{$commercial_plot->street_address}}</div>
+                                @endif
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                <div class="u-t5 text-muted mt-2">Christian Krohgs gate 16, 0186 Oslo</div>
+                                {{--<div class="u-t5 text-muted mt-2">Christian Krohgs gate 16, 0186 Oslo</div>--}}
                                 <div class="title color-grey">{{$commercial_plot->headline}}</div>
                                 <div class="mt-2">
-                                    <div
-                                        class="area font-weight-bold float-left color-grey">{{$commercial_plot->plot_size}}
-                                        m²
-                                    </div>
-                                    <div
-                                        class="price font-weight-bold float-right color-grey">{{$commercial_plot->asking_price}}
+                                    @if($commercial_plot->plot_size)
+                                        <div class="area font-weight-bold float-left color-grey">{{$commercial_plot->plot_size}}
+                                            m²
+                                        </div>
+                                    @endif
+                                    <div class="price font-weight-bold float-right color-grey">{{$commercial_plot->asking_price}}
                                         kr
                                     </div>
                                 </div>

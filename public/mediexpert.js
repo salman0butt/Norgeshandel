@@ -32,7 +32,7 @@ function dme_nav_collapse(){
         if(!should_visible){
             $(this).find('.shrink').remove();
             $(this).find('.expand').remove();
-            $(this).append('<a href="#" class="dynamic-check-view-all expand">Vis all</a>');
+            $(this).append('<a href="#" class="dynamic-check-view-all expand">Vis alle</a>');
         }
     });
 }
