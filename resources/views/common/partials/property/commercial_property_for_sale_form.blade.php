@@ -542,9 +542,9 @@ lenke til profilsiden.
 
         <hr>
         <div class="notice"></div>
-        <!-- <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!"> -->
+        <!-- <input type="button" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12" value="Publiser annonsen!!"> -->
         <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiserannonsen" class="dme-btn-outlined-blue mb-3 col-12 ladda-button">
-            <span class="ladda-label">Publiser annonsen!</span>
+            <span class="ladda-label">@if(Request::is('add/new/commercial/property/for/sale/*/edit')) {{'Oppdater annonsen'}} @else {{ 'Publiser annonsen!' }} @endif</span>
         </button>
 
     </div>
