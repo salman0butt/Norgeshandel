@@ -58,7 +58,7 @@
                                     <tbody>
                                     <tr>
                                         <td class="left">Om deg</td>
-                                        <td class="right">Ikke gitt</td>
+                                        <td class="right" title="{{Auth::user()->about_me}}">{{Auth::user()->about_me ? str_limit(Auth::user()->about_me,90) : Auth::user()->username ? Auth::user()->username : 'N/A' }}</td>
                                     </tr>
                                     <tr>
                                         <td class="left">Hjemmeadresse</td>

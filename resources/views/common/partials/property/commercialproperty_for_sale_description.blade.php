@@ -96,7 +96,6 @@
                         <div class="col-md-6"><span class="font-weight-bold">Felleskost/mnd.: </span><span>4 260 kr</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div> -->
                     <div class="clearfix"></div>
-                    {{-- <div class="mt-2 col-md-12"></div> --}}
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
                             @php
@@ -160,6 +159,28 @@
                                 </div>
                             @endif
                         </div>
+                    </div>
+                    <div class="mt-2 col-md-12 p-0">
+                        @if($facilities)
+                            <div class="col-md-12 p-0">
+                                <div class="bg-light-grey radius-8 col-md-12 p-3">
+                                    <div class="">
+                                        <span class="font-weight-bold">Fasiliteter &nbsp;</span>
+                                        <ul>
+                                            @foreach($facilities as $key=>$val)
+                                                <li>
+                                                    <?php
+                                                    if ($val != "") {
+                                                        echo ucfirst(strtolower(str_replace('-', ' ', str_replace('_', ' ', $val))));
+                                                    }
+                                                    ?>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     @if($property_data->municipal_number || $property_data->usage_number || $property_data->farm_number)

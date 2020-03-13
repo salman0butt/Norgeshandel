@@ -35,7 +35,7 @@
     <div class="dme-container">
         <div class="row">
             <div class="col-md-10 offset-md-1 mt-3 mb-4">
-                <h2 class="text-muted">Brio Barneseng</h2>
+                <h2 class="text-muted">{{\App\Helpers\common::get_ad_attribute($ad,'heading')}}</h2>
                 <a href="@if($ad->ad_type == 'job') {{route('jobs.show', $ad->job)}} @else {{url('general/property/description', [$ad->property->id, $ad->ad_type])}} @endif" style="float:right;margin-top: -3%;font-weight:600;">Se annonsen</a>
             </div>
         </div>
