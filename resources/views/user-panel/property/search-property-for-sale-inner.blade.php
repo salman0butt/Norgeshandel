@@ -92,15 +92,15 @@
                                     <div class="trailing-border">
                                         <img
                                             src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                            alt="" class="img-fluid radius-8 w-100 list-h">
+                                            alt="" class="img-fluid radius-8 w-100 list-h" style="min-height: 174.93px">
                                     </div>
                                 </div>
                                 <div
                                     class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                     <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>
-
-                                    <div
-                                        class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">{{$property_for_sale->street_address}}</div>
+                                    @if($property_for_sale->street_address)
+                                        <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$property_for_sale->street_address}}">{{Str::limit($property_for_sale->street_address,35)}}</div>
+                                    @endif
                                     <div class="title color-grey">{{$property_for_sale->headline}}</div>
                                     <div class="mt-2">
                                         <div

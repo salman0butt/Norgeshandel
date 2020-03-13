@@ -77,7 +77,7 @@
             </div>
             <!--        ended row-->
             <div class="row mt-5 home-grid">
-                @if($ads)
+                @if($ads && is_countable($ads) && count($ads)>0)
                     <div class="col-md-12">
                         <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
                     </div>
@@ -88,6 +88,8 @@
                             @include('user-panel.partials.templates.propert-sequare')
                         @endif
                     @endforeach
+                @else
+                    <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
                 @endif
             </div>
             <!--        ended row-->

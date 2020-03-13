@@ -34,8 +34,8 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        $user = new \App\User(['first_name'=>'Digital', 'last_name'=>'Mediexpert', 'username'=>'digitalmx', 'email'=>'zaheer@digitalmx.no', 'password'=>\Illuminate\Support\Facades\Hash::make('gujrat786'), 'status'=>'active']);
-        $user->save();
+//        $user = new \App\User(['first_name'=>'Digital', 'last_name'=>'Mediexpert', 'username'=>'digitalmx', 'email'=>'zaheer@digitalmx.no', 'password'=>\Illuminate\Support\Facades\Hash::make('gujrat786'), 'status'=>'active']);
+//        $user->save();
     }
 
     /**

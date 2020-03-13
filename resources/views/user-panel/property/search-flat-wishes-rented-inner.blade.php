@@ -86,9 +86,8 @@
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
-                                    <img
-                                        src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8" style="min-height:302px;">
+                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
+                                        alt="" class="img-fluid radius-8" style="min-height:174.93px">
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
@@ -97,12 +96,12 @@
                                 <div class="location u-t5 text-muted mt-2"></div>
                                 <div class="title color-grey">{{$property_for_flat_wishes_rented->headline}}</div>
                                 <div class="mt-2">
-                                    <div
-                                        class="area float-left color-grey">{{$property_for_flat_wishes_rented->description}}</div>
-                                    <div
-                                        class="price font-weight-bold float-right color-grey">{{$property_for_flat_wishes_rented->max_rent_per_month}}
-                                        kr
-                                    </div>
+                                    @if($property_for_flat_wishes_rented->description)
+                                        <div class="area float-left color-grey" title="{{$property_for_flat_wishes_rented->description}}">{{Str::limit($property_for_flat_wishes_rented->description,70)}}</div>
+                                    @endif
+                                    @if($property_for_flat_wishes_rented->max_rent_per_month)
+                                        <div class="price font-weight-bold float-right color-grey">{{$property_for_flat_wishes_rented->max_rent_per_month}} kr</div>
+                                    @endif
                                 </div>
                                 <br>
                                 <div

@@ -87,26 +87,31 @@
                                 <div class="trailing-border">
                                     <img
                                         src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8" style="min-height:302px">
+                                        alt="" class="img-fluid radius-8" style="min-height:174.93px">
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <!--                                        <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>-->
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                <div
-                                    class="location u-t5 text-muted mt-2">{{$property_commercial_property_for_sale->street_address}} </div>
+                                @if($property_commercial_property_for_sale->street_address)
+                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$property_commercial_property_for_sale->street_address}}">{{Str::limit($property_commercial_property_for_sale->street_address,35)}} </div>
+                                @endif
                                 <div class="title color-grey">{{$property_commercial_property_for_sale->headline}}</div>
-                                <div class="mt-2">
-                                    <div
-                                        class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_sale->primary_room}}
-                                        m²
+                                @if($property_commercial_property_for_sale->primary_room || $property_commercial_property_for_sale-> rental_income)
+                                    <div class="mt-2">
+                                        @if($property_commercial_property_for_sale->primary_room)
+                                            <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_sale->primary_room}}
+                                                m²
+                                            </div>
+                                        @endif
+                                        @if($property_commercial_property_for_sale-> rental_income)
+                                            <div class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_sale->rental_income}}
+                                                kr
+                                            </div>
+                                        @endif
                                     </div>
-                                    <div
-                                        class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_sale-> rental_income}}
-                                        kr
-                                    </div>
-                                </div>
-                                <br>
+                                    <br>
+                                @endif
                                 <div class="detail u-t5 mt-3 float-left text-muted">
                                     Eier (Selveier)
                                     • {{\App\Helpers\common::map_json($property_commercial_property_for_sale->property_type)}}</div>

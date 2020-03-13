@@ -162,7 +162,7 @@ class AdController extends Controller
                 ->where('ads.status', '=', $status)
                 ->where('ads.user_id', '=', Auth::id());
             if ($table == 'jobs') {
-                $query->where('job_type', '=', $type);
+                $query->where('job_type', '=', $type)->where('ads.ad_type','job');
             }
         } else {
             $query = DB::table('ads')->select('ads.id as ad_ad_id', 'ads.status', 'ads.ad_type')

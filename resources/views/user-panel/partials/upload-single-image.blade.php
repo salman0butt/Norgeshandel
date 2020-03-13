@@ -12,7 +12,7 @@
         <span class="btn default btn-file">
             <span class="fileinput-new dme-btn-outlined-blue btn-sm mt-5 mb-5">Velg bilde</span>
             <span class="fileinput-exists dme-btn-outlined-blue btn-sm">Endre</span>
-            <input type="file" name="{{$file_upload_name}}">
+                <input type="file" name="{{$file_upload_name}}" accept="image/*">
         </span>
         @php
             $file_name_unique = '';

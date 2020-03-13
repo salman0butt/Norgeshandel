@@ -1,33 +1,34 @@
 @extends('layouts.landingSite')
-   <style>
-        ul {
-            list-style: none;
-            padding-left: 5px !important;
-        }
+<style>
+    ul {
+        list-style: none;
+        padding-left: 5px !important;
+    }
 
-    </style>
+</style>
 @section('page_content')
-<main class="dme-wrapper">
-    <div class="left-ad float-left">
-        <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
-    </div>
-    <div class="dme-container pl-3 pr-3">
-        <div class="row top-ad">
-            <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+    <main class="dme-wrapper">
+        <div class="left-ad float-left">
+            <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
         </div>
-        <div class="row mt-4">
-            <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
-                <img src="{{asset('public/images/Jobb_ikon_maroon.svg')}}" style="max-width: 50px;" class="pt-1 pb-2 float-left">
-                <h2 class="u-t2 p-2">&nbsp; Jobb</h2>
+        <div class="dme-container pl-3 pr-3">
+            <div class="row top-ad">
+                <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
             </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-md-8">
-{{--                <div class="row">--}}
+            <div class="row mt-4">
+                <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
+                    <img src="{{asset('public/images/Jobb_ikon_maroon.svg')}}" style="max-width: 50px;"
+                         class="pt-1 pb-2 float-left">
+                    <h2 class="u-t2 p-2">&nbsp; Jobb</h2>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    {{--                <div class="row">--}}
                     <div class="input-group search-box position-relative">
                         <input type="text" name="search" id="search" class="form-control search-control"
                                placeholder="Søk her..." autocomplete="off" value="">
-{{--                               placeholder="Søk her..." autocomplete="off" value="{{$search}}">--}}
+                        {{--                               placeholder="Søk her..." autocomplete="off" value="{{$search}}">--}}
                         <label for="search"><span class="input-group-addon">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32"
                              width="32">
@@ -48,117 +49,124 @@
                             @endif
                         </div>
                     </div>
-{{--                </div>--}}
-                <div class="row">
-                    <ul class="product-sub-cat-list pl-3 pt-3 col-md-12">
-                        <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
-<!--                            --><?php //$filters = [];?>
-                            <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger ({{$ads->count()}})</a>
-                        </li>
-                        <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
-                            <?php $array = ['job_type'=>'management'];?>
-                            <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger ({{$management_jobs->count()}})</a>
-                        </li>
-                        <?php $filters = ['job_type'=>[]]; ?>
-                        <li class="col-sm-4 pl-0 pr-0" style="width: 200px;">
-                            <a href="{{ url('/companies') }}" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler ({{$companies->count()}})</a>
-                        </li>
-                    </ul>
+                    {{--                </div>--}}
+                    <div class="row">
+                        <ul class="product-sub-cat-list pl-3 pt-3 col-md-12">
+                            <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
+                                <!--                            --><?php //$filters = [];?>
+                                <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger
+                                    ({{$ads->count()}})</a>
+                            </li>
+                            <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
+                                <?php $array = ['job_type' => 'management'];?>
+                                <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger
+                                    ({{$management_jobs->count()}})</a>
+                            </li>
+                            <?php $filters = ['job_type' => []]; ?>
+                            <li class="col-sm-4 pl-0 pr-0" style="width: 200px;">
+                                <a href="{{ url('/companies') }}" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler
+                                    ({{$companies->count()}})</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--                ended row-->
                 </div>
-                <!--                ended row-->
+                <!--            ended col-->
+                <div class="col-md-4 pr-5">
+                    @include('user-panel.partials.searches-history')
+                </div>
+                <!--            ended col-->
             </div>
-            <!--            ended col-->
-            <div class="col-md-4 pr-5">
-                @include('user-panel.partials.searches-history')
-            </div>
-            <!--            ended col-->
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <section class="panel panel--info u-pa32 maroon-box text-center">
-                            <h2 class="u-t3 u-mb16">Synliggjør deg, legg inn din CV?</h2>
-                         <br>
-                            <div class="">
-                                <a href="{{ url('/my-business/cv') }}" class="dme-btn-outlined-blue">Legg inn CV</a>
-                            </div>
-                            <br>
-                            @if(!Auth::check())
-                            <p>Har du allerede en CV hos oss? <a href="{{ url('/login') }}">Logg inn og se den her.</a></p>
-                            @else
-                            <p>Har du allerede en CV hos oss? <a href="{{ url('/my-business/cv#preview') }}">og se den her.</a></p>
-                            @endif
-                        </section>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <section class="panel panel--info u-pa32 maroon-box text-center">
+                                <h2 class="u-t3 u-mb16">Synliggjør deg, legg inn din CV?</h2>
+                                <br>
+                                <div class="">
+                                    <a href="{{ url('/my-business/cv') }}" class="dme-btn-outlined-blue">Legg inn CV</a>
+                                </div>
+                                <br>
+                                @if(!Auth::check())
+                                    <p>Har du allerede en CV hos oss? <a href="{{ url('/login') }}">Logg inn og se den
+                                            her.</a></p>
+                                @else
+                                    <p>Har du allerede en CV hos oss? <a href="{{ url('/my-business/cv#preview') }}">og
+                                            se den her.</a></p>
+                                @endif
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--        ended row-->
-        <div class="row mt-5 home-grid">
-            <div class="col-md-12">
-                <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
-            </div>
-        @if($ads)
-            @foreach($ads as $ad)
-                <?php $job = $ad->job; ?>
-                @if($job != null)
-                    @include('user-panel.partials.templates.job-sequare')
+            <!--        ended row-->
+            <div class="row mt-5 home-grid">
+                <div class="col-md-12">
+                    <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
+                </div>
+                @if($ads && is_countable($ads) && count($ads)>0)
+                    @foreach($ads as $ad)
+                        <?php $job = $ad->job; ?>
+                        @if($job != null)
+                            @include('user-panel.partials.templates.job-sequare')
+                        @endif
+                    @endforeach
+                @else
+                    <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
                 @endif
-            @endforeach
-            @endif
+            </div>
+            <!--        ended row-->
         </div>
-        <!--        ended row-->
-    </div>
-    <!--    ended container-->
-    <div class="right-ad pull-right">
-        <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
-    </div>
-</main>
-<input type="hidden" id="search_url" value="{{url('job-searching')}}">
-<script>
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: $('#search_url').val() + '/' + $('#search').val(),
-            type: "GET",
-            success: function (response) {
-                $('#suggestions').html(response);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-        $('#search').on('blur', function (e) {
-            $('#suggestions').css('display', 'none');
+        <!--    ended container-->
+        <div class="right-ad pull-right">
+            <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
+        </div>
+    </main>
+    <input type="hidden" id="search_url" value="{{url('job-searching')}}">
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: $('#search_url').val() + '/' + $('#search').val(),
+                type: "GET",
+                success: function (response) {
+                    $('#suggestions').html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+            $('#search').on('blur', function (e) {
+                $('#suggestions').css('display', 'none');
+            });
+
+            $("#suggestions").hover(function () {
+                $(this).css('display', 'block');
+            });
+
+            $('#search').on('keyup', function (e) {
+                if (!isEmpty($('#search_url').val())) {
+                    $('#suggestions').css('display', 'block');
+                    $.ajax({
+                        url: $('#search_url').val() + '/' + $('#search').val(),
+                        type: "GET",
+                        success: function (response) {
+                            $('#suggestions').html(response);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    })
+                } else {
+                    $('#suggestions').html("");
+                }
+            });
         });
 
-        $("#suggestions").hover(function () {
-            $(this).css('display', 'block');
-        });
-
-        $('#search').on('keyup', function (e) {
-            if (!isEmpty($('#search_url').val())) {
-                $('#suggestions').css('display', 'block');
-                $.ajax({
-                    url: $('#search_url').val() + '/' + $('#search').val(),
-                    type: "GET",
-                    success: function (response) {
-                        $('#suggestions').html(response);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                })
-            } else {
-                $('#suggestions').html("");
-            }
-        });
-    });
-
-</script>
+    </script>
 @endsection

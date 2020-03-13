@@ -9,13 +9,13 @@
         <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
             <h2 class="u-t2 p-2 job-type">
                 @if(!isset($filters) || empty($filters))
-                Alle stillinger
+                    Alle stillinger
                 @elseif(isset($filters['job_type']) && $filters['job_type']=='management')
-                Lederstilling
+                    Lederstilling
                 @elseif(isset($filters['job_type']) && $filters['job_type']=='full_time')
-                Heltidsstilling
+                    Heltidsstilling
                 @elseif(isset($filters['job_type']) && $filters['job_type']=='part_time')
-                Deltidsstilling
+                    Deltidsstilling
                 @endif
             </h2>
         </div>
@@ -32,15 +32,15 @@
         <div class="col-md-4 pt-4">
             <div class="pt-3 float-left" style="min-width: 53px;">
                 @if(isset($view) && $view=="list")
-                <a href="{{url('jobs/search?view=grid')}}" data-name="grid" id="view"
-                    class="change_view dme-btn-rounded-back-only">
-                    <i class="fa fa-th"></i>
-                </a>
+                    <a href="{{url('jobs/search?view=grid')}}" data-name="grid" id="view"
+                       class="change_view dme-btn-rounded-back-only">
+                        <i class="fa fa-th"></i>
+                    </a>
                 @else
-                <a href="{{url('jobs/search/?view=list')}}" data-name="list" id="view"
-                    class="change_view dme-btn-rounded-back-only">
-                    <i class="fa fa-list"></i>
-                </a>
+                    <a href="{{url('jobs/search/?view=list')}}" data-name="list" id="view"
+                       class="change_view dme-btn-rounded-back-only">
+                        <i class="fa fa-list"></i>
+                    </a>
                 @endif
             </div>
             <div class="pt-3 float-left">
@@ -74,78 +74,77 @@
     @include('user-panel.inner_saved_search')
     {{-- search saved button ends --}}
     <div class="row">
-        @if(!is_countable($jobs) || count($jobs)<1) <div class="col-md-6 offset-md-3 mt-3">
-            <div class="alert alert-info">Ingen jobb funnet!</div>
+        @if($jobs && is_countable($jobs) && count($jobs)>0)
+            @foreach($jobs as $job)
+                @if($job != null)
+                    @if(isset($view) && $view == "list")
+                        @include('user-panel.partials.templates.job-list')
+                    @else
+                        @include('user-panel.partials.templates.job-sequare')
+                    @endif
+                @endif
+            @endforeach
+        @else
+            <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
+        @endif
     </div>
-    @else
-    @foreach($jobs as $job)
-    @if($job != null)
-    @if(isset($view) && $view == "list")
-    @include('user-panel.partials.templates.job-list')
-    @else
-    @include('user-panel.partials.templates.job-sequare')
-    @endif
-    @endif
-    @endforeach
-    @endif
-</div>
-<div class="row mt-3">
-    <div class="col-md-12">
-        <div style="float: right">
-            {{--                                    {{$jobs->links()}}--}}
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div style="float: right">
+                {{--                                    {{$jobs->links()}}--}}
+            </div>
         </div>
     </div>
-</div>
 </div> <!--    ended container-->
 <div class="right-ad pull-right">
     <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
 </div>
 <?php
-    $counts = array();
-    $job_function = $jobs->groupBy('job_function')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $industry = $jobs->groupBy('industry')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $country = $jobs->groupBy('country')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $commitment_type = $jobs->groupBy('commitment_type')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $job_type = $jobs->groupBy('job_type')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $sector = $jobs->groupBy('sector')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $leadership_category = $jobs->groupBy('leadership_category')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $deadline = $jobs->groupBy('deadline')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
-    $created_at = $jobs->groupBy('created_at')->map(function ($cc) {
-        return $cc->count();
-    })->toArray();
+$counts = array();
+$job_function = $jobs->groupBy('job_function')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$industry = $jobs->groupBy('industry')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$country = $jobs->groupBy('country')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$commitment_type = $jobs->groupBy('commitment_type')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$job_type = $jobs->groupBy('job_type')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$sector = $jobs->groupBy('sector')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$leadership_category = $jobs->groupBy('leadership_category')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$deadline = $jobs->groupBy('deadline')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
+$created_at = $jobs->groupBy('created_at')->map(function ($cc) {
+    return $cc->count();
+})->toArray();
 
-    foreach($created_at as $key=>$value){
-        $created_at[date('Y-m-d', strtotime($key))] = $value;
-        unset($created_at[$key]);
-    }
+foreach ($created_at as $key => $value) {
+    $created_at[date('Y-m-d', strtotime($key))] = $value;
+    unset($created_at[$key]);
+}
 
-    $counts = array_merge($counts, ["job_function" => $job_function]);
-    $counts = array_merge($counts, ["industry" => $industry]);
-    $counts = array_merge($counts, ["country" => $country]);
-    $counts = array_merge($counts, ["commitment_type" => $commitment_type]);
-    $counts = array_merge($counts, ["job_type" => $job_type]);
-    $counts = array_merge($counts, ["sector" => $sector]);
-    $counts = array_merge($counts, ["deadline" => $job_type]);
-    $counts = array_merge($counts, ["created_at" => $created_at]);
-    $counts = array_merge($counts, ["leadership_category" => $leadership_category]);
-    $var = json_encode($counts);
-    ?>
+$counts = array_merge($counts, ["job_function" => $job_function]);
+$counts = array_merge($counts, ["industry" => $industry]);
+$counts = array_merge($counts, ["country" => $country]);
+$counts = array_merge($counts, ["commitment_type" => $commitment_type]);
+$counts = array_merge($counts, ["job_type" => $job_type]);
+$counts = array_merge($counts, ["sector" => $sector]);
+$counts = array_merge($counts, ["deadline" => $job_type]);
+$counts = array_merge($counts, ["created_at" => $created_at]);
+$counts = array_merge($counts, ["leadership_category" => $leadership_category]);
+$var = json_encode($counts);
+?>
 <script>
     function GetURLParameter(url, pName) {
         var string = url.split('?');
@@ -161,6 +160,7 @@
             }
         }
     }
+
     $(document).ready(function () {
         var urlParams = new URLSearchParams(location.search);
 
@@ -192,7 +192,6 @@
                 // console.log(error);
             }
         });
-
 
 
         $.each($('.pagination .page-link'), function () {
