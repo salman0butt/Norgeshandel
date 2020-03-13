@@ -12,7 +12,7 @@
             <div id="page-results" tabindex="-1" data-controller="trackNotificationShow" data-notification-count="2">
                 <h1 class="u-screen-reader-only">Varslinger</h1>
                 <div class="panel text-right pb-5">
-                    <a href="#" class="m-2">Merk alt som lest</a>
+                    <a href="{{url('notifications-read-all')}}" class="m-2">Merk alt som lest</a>
                     <a class="m-2" href="{{ url('/setting') }}">Innstillinger</a>
                 </div>
                 <div class="row">

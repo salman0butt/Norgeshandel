@@ -156,8 +156,11 @@ class AdController extends Controller
         $query = null;
         $jobs = array();
         if ($ad_type != 'all_ads') {
-            $query = DB::table('ads')->select('ads.id as ad_ad_id', 'ads.status', 'ads.ad_type')->join($table, 'ads.id', '=', $table . '.ad_id')
-                ->where('ads.status', '=', $status)->where('ads.user_id', '=', Auth::id());
+            $query = DB::table('ads')
+                ->select('ads.id as ad_ad_id', 'ads.status', 'ads.ad_type')
+                ->join($table, 'ads.id', '=', $table . '.ad_id')
+                ->where('ads.status', '=', $status)
+                ->where('ads.user_id', '=', Auth::id());
             if ($table == 'jobs') {
                 $query->where('job_type', '=', $type);
             }
