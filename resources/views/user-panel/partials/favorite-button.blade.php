@@ -1,5 +1,5 @@
 <a href="#" style="position: initial" class="
-                        add-to-fav
+                        add-to-fav-btn
                         @if(Auth::check() && count($ad->favorite($ad->id))>0)
         fav
 @else

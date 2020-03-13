@@ -56,7 +56,7 @@
                     history.replaceState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
                     }
             });
-              
+        /*      
             var strsearch = urlParams;
             strsearch.delete('page');
             var value = strsearch.toString();
@@ -81,7 +81,7 @@
                         }
                     });
                 }
-            }
+            }*/
         });
     </script>
 @endsection

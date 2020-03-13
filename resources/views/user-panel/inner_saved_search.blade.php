@@ -37,7 +37,7 @@
                                     <label for="notify">Ja takk, varsle meg om nye treff!</label>
                                 </div>
                                 <p>
-                                    Du blir varslet på e-post, i appen på mobil og her på FINN.no
+                                   Du blir varslet på e-post og her på NorgesHandel.no
                                 </p>
 
 
