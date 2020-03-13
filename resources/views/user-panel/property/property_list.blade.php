@@ -23,7 +23,7 @@
                     <div class="row">
                         <ul class="product-sub-cat-list pl-3">
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/property-for-sale/search')}}">Bolig til salgs <span class="u-stone">(<?php echo App\PropertyForSale::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/property-for-sale/search')}}">Bolig til salgs <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_for_sale')->where('status','published')->count();// echo App\PropertyForSale::get()->count(); ?>)</span></a>
                             </li>
                             <!-- <li class="dme-btn-outlined-blue" style="">
                                 <a href="new-buildings.php?grid">Nye boliger <span class="u-stone">(19 416)</span></a>
@@ -32,28 +32,28 @@
                                 <a href="plots.php?grid">Tomter <span class="u-stone">(1 575)</span></a>
                             </li> -->
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href=" {{url('property/holiday-homes-for-sale/search')}}">Fritidsbolig til salgs <span class="u-stone">(<?php echo App\PropertyHolidaysHomesForSale::get()->count(); ?>)</span></a>
+                                <a href=" {{url('property/holiday-homes-for-sale/search')}}">Fritidsbolig til salgs <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_holiday_home_for_sale')->where('status','published')->count();// echo App\PropertyHolidaysHomesForSale::get()->count(); ?>)</span></a>
                             </li>
                             <!-- <li class="dme-btn-outlined-blue" style="">
                                 <a href="leisureplots.php?grid">Fritidstomter <span class="u-stone"></span></a>
                             </li> -->
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/property-for-rent/search')}}">Bolig til leie <span class="u-stone">(<?php echo App\PropertyForRent::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/property-for-rent/search')}}">Bolig til leie <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_for_rent')->where('status','published')->count();// echo App\PropertyForRent::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/flat-wishes-rented/search')}}">Bolig ønskes leid <span class="u-stone">(<?php echo App\FlatWishesRented::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/flat-wishes-rented/search')}}">Bolig ønskes leid <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_flat_wishes_rented')->where('status','published')->count();// echo App\FlatWishesRented::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/commercial-property-for-sale/search')}}">Næringseiendom til salgs <span class="u-stone">(<?php echo App\CommercialPropertyForSale::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/commercial-property-for-sale/search')}}">Næringseiendom til salgs <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_commercial_for_sale')->where('status','published')->count(); // echo App\CommercialPropertyForSale::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/commercial-property-for-rent/search')}}">Næringseiendom til leie <span class="u-stone">(<?php echo App\CommercialPropertyForRent::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/commercial-property-for-rent/search')}}">Næringseiendom til leie <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_commercial_for_rent')->where('status','published')->count(); //echo App\CommercialPropertyForRent::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/commercial-plots/search')}}">Næringstomter <span class="u-stone">(<?php echo App\CommercialPlot::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/commercial-plots/search')}}">Næringstomter <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_commercial_plots')->where('status','published')->count();// echo App\CommercialPlot::get()->count(); ?>)</span></a>
                             </li>
                             <li class="dme-btn-outlined-blue" style="">
-                                <a href="{{url('property/business-for-sale/search')}}">Bedrifter til salgs <span class="u-stone">(<?php echo App\BusinessForSale::get()->count(); ?>)</span></a>
+                                <a href="{{url('property/business-for-sale/search')}}">Bedrifter til salgs <span class="u-stone">(<?php echo \App\Models\Ad::where('ad_type','property_business_for_sale')->where('status','published')->count(); //echo App\BusinessForSale::get()->count(); ?>)</span></a>
                             </li>
                         </ul>
                     </div>

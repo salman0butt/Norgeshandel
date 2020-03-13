@@ -79,15 +79,14 @@
                     }
 
                     ?>
-                    <div
-                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
+                    <div class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/commercial/property/for/sale/description', $value->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
                                     <img
                                         src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8" style="min-height:174.93px">
+                                        alt="" class="img-fluid radius-8" style="height: 174.93px;!important; width:100%">
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
@@ -114,10 +113,10 @@
                                 @endif
                                 <div class="detail u-t5 mt-3 float-left text-muted">
                                     Eier (Selveier)
-                                    • {{\App\Helpers\common::map_json($property_commercial_property_for_sale->property_type)}}</div>
-                                <div class="dealer-logo float-right mt-3"><img
-                                        src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid">
+                                    • {{\App\Helpers\common::map_json($property_commercial_property_for_sale->property_type)}}
                                 </div>
+                                {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid">--}}
+                                {{--</div>--}}
                             </div>
                         </a>
                         <div>
@@ -125,7 +124,6 @@
                           @include('user-panel.partials.fav-heart-button', compact('ad'))
                         </div>
                     </div>
-                    <div class="clearfix"></div>
                 @endforeach
             </div>
         </div>

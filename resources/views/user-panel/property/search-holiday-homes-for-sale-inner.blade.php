@@ -84,15 +84,14 @@
 
                     ?>
 
-                    <div
-                        class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
+                    <div class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/holiday/home/for/sale/description', $value->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
 
                                 <div class="trailing-border">
                                     <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8" style="min-height: 174.93px">
+                                        alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
                                 </div>
                             </div>
                             <div
@@ -116,8 +115,7 @@
                                 <br>
 
                                 <div class="float-left">
-                                    <div
-                                            class="loca u-t5 text-muted">{{  $property_holiday_home_for_sale->local_area_name  }}</div>
+                                    <div class="loca u-t5 text-muted">{{  $property_holiday_home_for_sale->local_area_name  }}</div>
                                     <div class="loca u-t5 text-muted">
                                         <span>TotalPris: </span><span>{{  number_format($property_holiday_home_for_sale->total_price,0,""," ")  }}</span>
                                     </div>
@@ -126,9 +124,7 @@
                                         <span>{{  $property_holiday_home_for_sale->property_type  }}</span></div>
                                 </div>
                                 <div class="float-right">
-                                    <div class="dealer-logo float-right mt-3"><img
-                                                src="{{asset('public/images/dealer-logo.png')}} " alt=""
-                                                class="img-fluid"></div>
+                                    {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
                                 </div>
 
                             </div>

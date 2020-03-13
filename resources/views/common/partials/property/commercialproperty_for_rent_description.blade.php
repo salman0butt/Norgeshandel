@@ -115,7 +115,7 @@
 
                         @if($property_data->availiable_from)
                             <div class="col-md-12"><span class="font-weight-bold">Overtakelse </span>&nbsp;<span>
-                                    <?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y h:i", strtotime($property_data->created_at)) : "");  ?>
+                                    <?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y H:i", strtotime($property_data->created_at)) : "");  ?>
                             </span></div>
                         @endif
 
@@ -156,7 +156,7 @@
                         <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>
                         <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> 10012121 </span></div>
-                        <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span> <span><?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y h:i", strtotime($property_data->created_at)) : "");  ?></span></div>
+                        <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span> <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
                         <div class="col-md-12"><span class="font-weight-bold">Referanse: </span> <span>302190059</span></div>
                         <div class="col-md-12 u-d1">Annonsene kan være mangelfulle i forhold til lovpålagt opplysningsplikt. Før bindende avtale inngås oppfordres interessenter til å innhente komplett informasjon fra meglerforetaket, selger eller utleier.</div>
                     </div>

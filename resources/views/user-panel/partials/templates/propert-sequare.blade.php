@@ -30,32 +30,30 @@ if($property !== null)
             <div class="home-grid-box trailing-border" style="text-align:center;">
                 <img src="{{$path}}" style="max-height: 302px;min-height:302px;width:100%;" class="img-fluid product-img" alt="">
                 <div class="product-total-price">
-                    Totalpris:
+
                     <?php
-                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
-                    echo($ad->ad_type == 'property_for_sale' ? number_format($property->total_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_holiday_home_for_sale' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_rent' ? number_format($property->rent_per_meter_per_year,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_plots' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
+//                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
+                    echo(($ad->ad_type == 'property_for_sale' && $property->total_price) ? 'Totalpris: '.number_format($property->total_price,0,""," ").' KR' : "");
+                    echo(($ad->ad_type == 'property_holiday_home_for_sale' && $property->total_price) ?  'Totalpris: '.number_format($property->total_price,0,""," ").' KR' : "");
+//                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
+//                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
+                    echo(($ad->ad_type == 'property_commercial_for_rent' && $property->rent_per_meter_per_year) ? 'Totalpris: '.number_format($property->rent_per_meter_per_year,0,""," ").' KR' : "");
+                    echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? 'Totalpris: '.number_format($property->asking_price,0,""," ").' KR' : "");
+//                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
                     ?>
-                    KR
                     <!-- Totalpris: 2011 111 KR -->
                 </div>
                 <div class="product-price"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}" width="23px;">
                     <?php
-                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
-                    echo($ad->ad_type == 'property_for_sale' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_holiday_home_for_sale' ? number_format($property->total_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_rent' ? number_format($property->rent_per_meter_per_year,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_plots' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
+                    echo(($ad->ad_type == 'property_for_rent' && $property->monthly_rent) ? number_format($property->monthly_rent,0,""," ").' KR' : "");
+                    echo(($ad->ad_type == 'property_for_sale' && $property->asking_price) ? number_format($property->asking_price,0,""," ").' KR' : "");
+                    echo(($ad->ad_type == 'property_holiday_home_for_sale' && $property->asking_price) ? number_format($property->asking_price,0,""," ").' KR' : "");
+                    echo(($ad->ad_type == 'property_flat_wishes_rented' && $property->max_rent_per_month) ? number_format($property->max_rent_per_month,0,""," ").' KR' : "");
+                    echo(($ad->ad_type == 'property_commercial_for_sale' && $property->value_rate) ? number_format($property->value_rate,0,""," ").' KR' : "");
+                    echo($ad->ad_type == 'property_commercial_for_rent' ? $property->gross_area_from.' - '.$property->gross_area_to.' m²' : "");
+                    echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? number_format($property->asking_price,0,""," ").' KR' : "");
+                    echo(($ad->ad_type == 'property_business_for_sale' && $property->price) ? number_format($property->price,0,""," ").' KR' : "");
                     ?>
-                    KR
                 </div>
             </div>
             </div>
