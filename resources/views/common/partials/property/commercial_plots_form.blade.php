@@ -248,12 +248,13 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <h3 class="u-t5">Telefon (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="phone" value="{{ $commercial_plot->phone }}" type="text" class="dme-form-control">
+                    <input name="phone" value="{{ $commercial_plot->phone }}" id="phone" type="tel" class="dme-form-control">
+                     <span id="valid-msg" class="hide"></span>
+                    <span id="error-msg" class="hide"></span>
                 </div>
                 <div class="col-md-8"></div>
             </div>

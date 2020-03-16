@@ -21,7 +21,7 @@
 
 
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
-
+    
     <!--    incluedes   -->
     <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
             referrerpolicy="origin"></script>
@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
-
+<link rel="stylesheet" href="{{ asset('public/css/intlTelInput.min.css') }}">
 </head>
 <body class="@yield('body_class')">
 @if(Request::is('account/*'))
@@ -365,6 +365,7 @@
 <script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
 <script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
 <script src="{{asset('public/js/utils.js')}}"></script>
+<script src="{{asset('public/js/telPhone.js')}}"></script>
 <script src="{{asset('public/js/spin.min.js')}}"></script>
 <script src="{{asset('public/js/ladda.min.js')}}"></script>
 <script src="{{asset('public/js/common-norges.js')}}"></script>

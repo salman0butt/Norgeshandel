@@ -32,4 +32,13 @@ class AddBusinessForSale extends FormRequest
 
         ];
     }
+           public function messages()
+    {
+        return [
+            'headline.required' => 'Overskriftfeltet er påkrevd.',
+            'country.required' => 'Landsfeltet er påkrevd.',
+            'zip_code.required' => 'Postnummerfeltet er påkrevd.',
+            'industry.required' => 'Bransjefeltet er påkrevd.',
+        ];
+    }
 }
