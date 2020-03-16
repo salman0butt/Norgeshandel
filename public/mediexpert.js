@@ -230,5 +230,60 @@ $(document).ready(function (e) {
     $(document).on('click', '[wt-delete]', function() {
         $.fn.WT_COPY_DELETE($(this));
     });
+
+
+    // Property quote show/hide remove button
+    $(document).on('change', '#property_quote', function (e) {
+
+        $('.remove_property_quote').addClass('d-none');
+        if (this.files.length > 0) {
+            $('.remove_property_quote').removeClass('d-none');
+            $('#property_quote').css('pointer-events','none');
+            $('.property-quote-information-message').removeClass('d-none');
+        }
+    });
+
+    //Remove file from property quote input when click on remvoe button
+    $(document).on('click', '.remove_property_quote', function () {
+        var $el = $('#property_quote');
+        $el.wrap('<form>').closest('form').get(0).reset();
+        $el.unwrap();
+        $('.remove_property_quote').addClass('d-none');
+        $('.remove_property_quote').removeAttr('id');
+        $('#property_quote').css('pointer-events','auto');
+        $('.property-quote-information-message').addClass('d-none');
+        if($(this).parent('.property-quote-div').has('div.property-quote-value')){
+            $('.property-quote-value').fadeOut();
+        }
+
+    });
+
+
+    // Property quote show/hide remove button
+    $(document).on('change', '#property_pdf', function () {
+
+        $('.remove_property_pdf').addClass('d-none');
+
+        if (this.files.length > 0) {
+            $('.remove_property_pdf').removeClass('d-none');
+            $('#property_pdf').css('pointer-events','none');
+            $('.property-pdf-information-message').removeClass('d-none');
+        }
+    });
+
+    //Remove file from property quote input when click on remvoe button
+    $(document).on('click', '.remove_property_pdf', function () {
+        var $el = $('#property_pdf');
+        $el.wrap('<form>').closest('form').get(0).reset();
+        $el.unwrap();
+        $('.remove_property_pdf').addClass('d-none');
+        $('.remove_property_pdf').removeAttr('id');
+        $('#property_pdf').css('pointer-events','auto');
+        $('.property-pdf-information-message').addClass('d-none');
+        if($(this).parent('.property-pdf-div').has('div.property-pdf-value')){
+            $('.property-pdf-value').fadeOut();
+        }
+
+    });
 });
 

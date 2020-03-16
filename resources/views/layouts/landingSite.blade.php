@@ -201,10 +201,6 @@
         @if(Auth::check())
         getLists();
         @endif
-
-
-
-
         $(document).on('blur', 'input[type=url]', function () {
             var string = $(this).val();
             if (!~string.indexOf("http")) {

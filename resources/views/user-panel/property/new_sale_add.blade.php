@@ -27,41 +27,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Upload sales information -->
-    <div wt-copy="sales-information" style="display:none">
-        <div class="" wt-duplicate="sales-information">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-4 ">
-                        <input type="file" name="property_quote[]" id="property_quote">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="dme-btn-outlined-blue" type="button" wt-delete="sales-information"><i
-                                class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Attachment as PDF -->
-    <div wt-copy="attachment-as-pdf" style="display:none">
-        <div class="" wt-duplicate="attachment-as-pdf">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-4 ">
-                        <input type="file" name="property_pdf[]" id="property_quote" accept="application/pdf">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="dme-btn-outlined-blue" type="button" wt-delete="attachment-as-pdf"><i
-                                class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </main>
 
 @endsection
@@ -102,6 +67,8 @@
 
         });
 
+
+
         function record_store_ajax_request(event, this_obj) {
            if(event == 'click'){
                if(! $('#property_for_sale_form').valid()) return false;
@@ -122,7 +89,7 @@
                 var url = "{{ url('new/property/sale/ad/update/'.$property_for_sale1->id) }}";
                 @endif
             }
-            
+
 
             $("input ~ span,select ~ span").each(function (index) {
                 $(".error-span").html('');
@@ -132,11 +99,21 @@
             $('.notice').html("");
             var myform = document.getElementById("property_for_sale_form");
             var fd = new FormData(myform);
+
+            if($('.remove_property_quote').attr('id')){
+                fd.delete('property_quote');
+            }
+
+            if($('.remove_property_pdf').attr('id')){
+                fd.delete('property_pdf');
+            }
+
             var l = Ladda.create(this_obj);
             l.start();
             $.ajax({
                 type: "POST",
                 url: url,
+                // async: false,
                 data: fd,
                 dataType: "json",
                 processData: false,
@@ -145,9 +122,15 @@
                     // document.getElementById("property_for_sale_form").reset();
                     // document.getElementById("zip_code_city_name").innerHTML = '';
                    // $('.notice').hide();
-              
+
                     if (event == 'change') {
-                    $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
+                        if(data.property_quote){
+                            $('.remove_property_quote').attr('id',data.property_quote);
+                        }
+                        if(data.property_pdf){
+                            $('.remove_property_pdf').attr('id',data.property_pdf);
+                        }
+                        $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
                    }else if(event == 'click'){
                       $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
                    }
@@ -179,7 +162,7 @@
                             $("input[name='" + index + "'],select[name='" + index + "']")
                                 .addClass("error-input");
                         });
-                     
+
                     }
                 },
             }).always(function () {
@@ -187,12 +170,14 @@
             });
             return false;
         }
+
         $("input:not(input[type=date])").on('change', function (e) {
             e.preventDefault();
             record_store_ajax_request('change', (this));
             var postal = $('.zip_code').val();
-             $('#old_zip').attr('value',postal);
+            $('#old_zip').attr('value',postal);
         });
+
         //click button update
         $("#publiserannonsen").click(function (e) {
             e.preventDefault();

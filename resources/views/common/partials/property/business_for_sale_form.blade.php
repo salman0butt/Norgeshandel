@@ -131,33 +131,33 @@
                 </div>
             </div>
         </div>
-
+        @php
+            $business_for_sale_pdf = '';
+            if($business_for_sale_obj && $business_for_sale_obj->ad && $business_for_sale_obj->ad->pdf->count() > 0){
+                $business_for_sale_pdf = $business_for_sale_obj->ad->pdf->first();
+            }
+        @endphp
         <!-- Attachement as pdf files -->
-        <div wt-paste="attachment-as-pdf">
-            <div class="form-group">
-                <h3 class="u-t5">Legg till pdf</h3>
-                @if($business_for_sale_obj && $business_for_sale_obj->ad && $business_for_sale_obj->ad->pdf->count() > 0)
-                    @foreach($business_for_sale_obj->ad->pdf as $key=>$business_for_sale_obj_pdf_file)
-                        <div class="show-file-section">
-                            <div class="row">
-                                <p class="col-sm-4">{{($business_for_sale_obj_pdf_file->name)}}</p>
-                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$business_for_sale_obj_pdf_file->name_unique}}">Fjerne</a></p>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-                <div class="row">
-                    <div class="col-sm-4 ">
-                        <input type="file" name="business_for_sale_pdf[]" id="business_for_sale_pdf" accept="application/pdf">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
-                    </div>
+        <div class="form-group">
+            <h3 class="u-t5">Legg till pdf</h3>
+            <div class="row property-pdf-div">
+                <div class="col-sm-6">
+                    <input type="file" name="business_for_sale_pdf" id="property_pdf" class="" accept="application/pdf"  @if($business_for_sale_pdf) style="pointer-events: none" @endif>
                 </div>
+                <div class="col-sm-3 property-pdf-value">
+                    @if($business_for_sale_pdf)
+                        {{Str::limit($business_for_sale_pdf->name,20)}}
+                    @endif
+                </div>
+                <div class="col-sm-2">
+                    <span class="@if(!$business_for_sale_pdf) d-none @endif remove-selected-file-button remove_property_pdf dz-remove"  @if($business_for_sale_pdf) id="{{$business_for_sale_pdf->name_unique}}" @endif><i class="fa fa-trash fa-lg mt-1"></i></span>
+                </div>
+                <span class="col-12 property-pdf-information-message @if(!$business_for_sale_pdf) d-none @endif"><small>Fjern gammel fil før du velger en ny fil.</small></span>
+
             </div>
         </div>
 
-        <!--                            full input-->
+        <!--  full input-->
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">

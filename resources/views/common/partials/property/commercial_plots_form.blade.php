@@ -182,34 +182,35 @@
                 </div>
             </div>
         </div>
-
-
+        @php
+            $commercial_plot_pdf = '';
+            if($commercial_plot && $commercial_plot->ad && $commercial_plot->ad->pdf->count() > 0){
+                $commercial_plot_pdf = $commercial_plot->ad->pdf->first();
+            }
+        @endphp
         <!-- Attachement as pdf files -->
-        <div wt-paste="attachment-as-pdf">
-            <div class="form-group">
-                <h3 class="u-t5">Legg till pdf</h3>
-                @if($commercial_plot && $commercial_plot->ad && $commercial_plot->ad->pdf->count() > 0)
-                    @foreach($commercial_plot->ad->pdf as $key=>$commercial_plot_pdf_file)
-                        <div class="show-file-section">
-                            <div class="row">
-                                <p class="col-sm-4">{{($commercial_plot_pdf_file->name)}}</p>
-                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$commercial_plot_pdf_file->name_unique}}">Fjerne</a></p>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-                <div class="row">
-                    <div class="col-sm-4 ">
-                        <input type="file" name="commercial_plot_pdf[]" id="commercial_plot_pdf" accept="application/pdf">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
-                    </div>
+        <div class="form-group">
+            <h3 class="u-t5">Legg till PDF</h3>
+            <div class="row property-pdf-div">
+                <div class="col-sm-6">
+                    <input type="file" name="commercial_plot_pdf" id="property_pdf" class="" accept="application/pdf"  @if($commercial_plot_pdf) style="pointer-events: none" @endif>
                 </div>
+                <div class="col-sm-3 property-pdf-value">
+                    @if($commercial_plot_pdf)
+                        {{Str::limit($commercial_plot_pdf->name,20)}}
+                    @endif
+                </div>
+                <div class="col-sm-2">
+                    <span class="@if(!$commercial_plot_pdf) d-none @endif remove-selected-file-button remove_property_pdf dz-remove"  @if($commercial_plot_pdf) id="{{$commercial_plot_pdf->name_unique}}" @endif><i class="fa fa-trash fa-lg mt-1"></i></span>
+                </div>
+                <span class="col-12 property-pdf-information-message @if(!$commercial_plot_pdf) d-none @endif"><small>Fjern gammel fil før du velger en ny fil.</small></span>
+
             </div>
         </div>
+        
+        
 
-        <!--                            full input-->
+        <!-- full input-->
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
