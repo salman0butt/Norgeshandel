@@ -23,22 +23,6 @@
                  </div>
             </div>
         </div>
-
-        <!-- Attachment as PDF -->
-        <div wt-copy="attachment-as-pdf" style="display:none">
-            <div class=""  wt-duplicate="attachment-as-pdf">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-4 ">
-                            <input type="file" name="commercial_property_for_sale_pdf[]" id="commercial_property_for_sale_pdf" accept="application/pdf">
-                        </div>
-                        <div class="col-sm-2">
-                            <button class="dme-btn-outlined-blue" type="button" wt-delete="attachment-as-pdf"><i class="fa fa-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 
     <script>
@@ -57,7 +41,6 @@
                   }
                var url = '';
                 if (event == 'change') {
-                    console.log('status 1');
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
                     console.log(old_zip);
@@ -66,15 +49,14 @@
                             find_zipcode_city(zip_code);
                         }
                     }
-                    @if(Request::is('add/new/commercial/property/for/sale/*/edit') || Request::is('complete/ad/*'))
-                     var url = "{{url('add/new/commercial/property/for/sale/'.$commercial_property->id)}}";
-                    @endif
-                } else {
-                    @if(Request::is('add/new/commercial/property/for/sale/*/edit') || Request::is('complete/ad/*'))
-                  var url = "{{url('add/new/commercial/property/for/sale/update/'.$commercial_property->id)}}";
-                    @endif
-                }
-                console.log('status 2');
+                        @if(Request::is('add/new/commercial/property/for/sale/*/edit') || Request::is('complete/ad/*'))
+                            var url = "{{url('add/new/commercial/property/for/sale/'.$commercial_property->id)}}";
+                        @endif
+                    } else {
+                        @if(Request::is('add/new/commercial/property/for/sale/*/edit') || Request::is('complete/ad/*'))
+                            var url = "{{url('add/new/commercial/property/for/sale/update/'.$commercial_property->id)}}";
+                        @endif
+                    }
                 //if (!$('#property_for_rent_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function (index) {
@@ -82,11 +64,12 @@
                     $("input, select").removeClass("error-input");
                 });
                 //$('.notice').html("");
-
-                console.log('status 3');
                 var myform = document.getElementById("commercial_property_for_sale");
                 var fd = new FormData(myform);
-                
+                if($('.remove_property_pdf').attr('id')){
+                    fd.delete('commercial_property_for_sale_pdf');
+                }
+
                 // fd.append('property_photos', $('#property_photos').get(0).files[0]);
                 var l = Ladda.create(this_obj);
                 l.start();
@@ -98,10 +81,12 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        console.log(data);
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
                     if (event == 'change') {
+                        if(data.property_pdf){
+                            $('.remove_property_pdf').attr('id',data.property_pdf);
+                        }
                     $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
                    }else if(event == 'click'){
                       $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');

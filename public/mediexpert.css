@@ -1186,3 +1186,10 @@ label span.count{
     border: 1px solid #ddd;
 }
 
+.remove-selected-file-button{
+    color: #ecdfe2;
+}
+
+.remove-selected-file-button:hover{
+    color: darkgrey;
+}

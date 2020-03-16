@@ -171,14 +171,18 @@ $(document).on('click', '.dz-remove', function (e) {
     });
     */
 
-    if (confirm("Er du sikker på å slette?") == true) {
-        e.preventDefault();
-        filename = $(this).attr('id');
-        e.preventDefault();
-        ws_remove_file(filename);
-        $(this).parents('.dz-preview').fadeOut();
-        $(this).parents('.show-file-section').fadeOut();
-    }
+    // if (confirm("Er du sikker på å slette?") == true) {
+    e.preventDefault();
+    filename = $(this).attr('id');
+    e.preventDefault();
+    ws_remove_file(filename);
+    $(this).parents('.dz-preview').fadeOut();
+    $(this).parents('.show-file-section').fadeOut();
+
+
+
+
+    // }
 
 
 });

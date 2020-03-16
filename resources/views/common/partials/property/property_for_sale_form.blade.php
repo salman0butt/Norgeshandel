@@ -719,38 +719,42 @@ omkostninger.
         <div class="form-group">
             <h3 class="u-t5">Andre opplysninger (valgfritt)</h3>
             <div class="row">
-        <div class="col-sm-12 pr-md-0">
-            <textarea name="essential_information" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->essential_information }}</textarea>
+            <div class="col-sm-12 pr-md-0">
+                <textarea name="essential_information" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->essential_information }}</textarea>
                     <span class="u-t5">Informer om betydelig feil og mangler, referer evt. også til takst.</span>
                     <span class="error-span essential_information"></span>
-                </div>
+            </div>
             </div>
         </div>
+        @php
+            $property_for_sale_quote = $property_for_sale_pdf = '';
+            if($property_for_sale && $property_for_sale->ad && $property_for_sale->ad->sales_information->count() > 0){
+                $property_for_sale_quote = $property_for_sale->ad->sales_information->first();
+            }
+            if($property_for_sale && $property_for_sale->ad && $property_for_sale->ad->pdf->count() > 0){
+                $property_for_sale_pdf = $property_for_sale->ad->pdf->first();
+            }
+        @endphp
         <!-- Attachement as sales information -->
-        <div wt-paste="sales-information">
-            <div class="form-group">
-                <h3 class="u-t5">Last opp komplett salgsinformasjon</h3>
-                @if($property_for_sale && $property_for_sale->ad && $property_for_sale->ad->sales_information->count() > 0)
-                    @foreach($property_for_sale->ad->sales_information as $property_sales_information)
-                        <div class="show-file-section">
-                            <div class="row">
-                                <p class="col-sm-4">{{($property_sales_information->name)}}</p>
-                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$property_sales_information->name_unique}}">Fjerne</a></p>
-                                {{--<div class="col-sm-6"></div>--}}
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-                <div class="row">
-                    <div class="col-sm-4">
-                        <input type="file" name="property_quote[]" id="property_quote" class="">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="dme-btn-outlined-blue" type="button" wt-more="sales-information"><i class="fa fa-plus"></i></button>
-                    </div>
+        <div class="form-group">
+            <h3 class="u-t5">Last opp komplett salgsinformasjon</h3>
+            <div class="row property-quote-div">
+                <div class="col-sm-6">
+                    <input type="file" name="property_quote" id="property_quote" accept="application/pdf" @if($property_for_sale_quote) style="pointer-events: none" @endif>
                 </div>
+                <div class="col-sm-3 property-quote-value">
+                    @if($property_for_sale_quote)
+                       {{Str::limit($property_for_sale_quote->name,20)}}
+                    @endif
+                </div>
+                <div class="col-sm-2">
+                    <span class="@if(!$property_for_sale_quote) d-none @endif remove-selected-file-button remove_property_quote dz-remove" @if($property_for_sale_quote) id="{{$property_for_sale_quote->name_unique}}" @endif><i class="fa fa-trash fa-lg mt-1"></i></span>
+                </div>
+                <span class="col-12 property-quote-information-message @if(!$property_for_sale_quote) d-none @endif"><small>Fjern gammel fil før du velger en ny fil.</small></span>
             </div>
         </div>
+
+
         <div class="form-group">
             <h3 class="u-t5">Video (valgfritt)</h3>
             <div class="row">
@@ -761,33 +765,29 @@ omkostninger.
                 </div>
             </div>
         </div>
+
         @if(Auth::user()->hasRole('company'))
             <!-- Attachement as pdf files -->
-            <div wt-paste="attachment-as-pdf">
-                <div class="form-group">
-                    <h3 class="u-t5">Vedlegg som PDF</h3>
-                    @if($property_for_sale && $property_for_sale->ad && $property_for_sale->ad->pdf->count() > 0)
-                        @foreach($property_for_sale->ad->pdf as $key=>$property_pdf_file)
-                            <div class="show-file-section">
-                                <div class="row">
-                                    <p class="col-sm-4">{{($property_pdf_file->name)}}</p>
-                                    <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$property_pdf_file->name_unique}}">Fjerne</a></p>
-                                </div>
-                            </div>
-                        @endforeach
-                    @endif
-                    <div class="row">
-                        <div class="col-sm-4 ">
-                            <input type="file" name="property_pdf[]" id="property_pdf" accept="application/pdf">
-                        </div>
-                        <div class="col-sm-2">
-                            <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
-                        </div>
+            <div class="form-group">
+                <h3 class="u-t5">Vedlegg som PDF</h3>
+                <div class="row property-pdf-div">
+                    <div class="col-sm-6">
+                        <input type="file" name="property_pdf" id="property_pdf" class="" accept="application/pdf"  @if($property_for_sale_pdf) style="pointer-events: none" @endif>
                     </div>
+                    <div class="col-sm-3 property-pdf-value">
+                        @if($property_for_sale_pdf)
+                            {{Str::limit($property_for_sale_pdf->name,20)}}
+                        @endif
+                    </div>
+                    <div class="col-sm-2">
+                        <span class="@if(!$property_for_sale_pdf) d-none @endif remove-selected-file-button remove_property_pdf dz-remove"  @if($property_for_sale_pdf) id="{{$property_for_sale_pdf->name_unique}}" @endif><i class="fa fa-trash fa-lg mt-1"></i></span>
+                    </div>
+                    <span class="col-12 property-pdf-information-message @if(!$property_for_sale_pdf) d-none @endif"><small>Fjern gammel fil før du velger en ny fil.</small></span>
+
                 </div>
             </div>
-
         @endif
+
 
         <div class="form-group">
             <h3 class="u-t5">Visningsdato (valgfritt)</h3>
@@ -797,7 +797,7 @@ omkostninger.
                     <span class="error-span deliver_date"></span>
                 </div>
                 <div class="col-md-8"></div>
-                <div class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</div>
+                <div class="u-t5 col-12">Dato (eks. 31.12.2017 eller 31/12/2017)</div>
             </div>
         </div>
         <div class="form-group">
@@ -808,7 +808,7 @@ omkostninger.
                     <span class="error-span from_clock"></span>
                 </div>
                 <div class="col-md-8"></div>
-                <div class="u-t5">Tid (eksempel 18:00)</div>
+                <div class="u-t5 col-12">Tid (eksempel 18:00)</div>
             </div>
         </div>
         <div class="form-group">
@@ -819,7 +819,7 @@ omkostninger.
                     <span class="error-span clockwise"></span>
                 </div>
                 <div class="col-md-8"></div>
-                <div class="u-t5">Tid (eksempel 19:30)</div>
+                <div class="u-t5 col-12">Tid (eksempel 19:30)</div>
             </div>
         </div>
         <div class="form-group">
@@ -830,7 +830,7 @@ omkostninger.
                            placeholder="F.eks.: visning etter avtale">
                     <span class="error-span note1"></span>
                 </div>
-                <div class="u-t5">Tid (eksempel 19:30)</div>
+                <div class="u-t5 col-12">Tid (eksempel 19:30)</div>
             </div>
         </div>
 

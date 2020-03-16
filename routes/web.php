@@ -317,12 +317,12 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
         // User account settings and notification settings
-        /*
+       
         Route::get('/setting', function () {
             return view('user-panel.my-business.settings');
         });
-        Route::post('store-notifications-setting','Admin\Users\AdminUserController@store_notifications_setting')->name('store-notifications-setting');
-        */
+        Route::post('store-notifications-setting','Admin\Users\AdminUserController@store_notifications_setting')->name('store_notifications_setting');
+       
 
         //Account Setting Login
 //        Route::post('account-setting-login', 'AccountSettingController@login')->name('account-setting-login');
