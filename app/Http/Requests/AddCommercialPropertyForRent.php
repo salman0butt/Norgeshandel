@@ -45,4 +45,26 @@ class AddCommercialPropertyForRent extends FormRequest
 
         ];
     }
+        public function messages()
+    {
+        return [
+            'heading.required' => 'overskriftsfeltet er påkrevd.',
+            'property_type.required' => 'feltet for eiendomstype er påkrevd.',
+            'countrty.required' => 'landsfeltet er påkrevd.',
+            'zip_code.required' => 'postnummerfeltet er påkrevd.',
+            'gross_area_from.required' => 'bruttoareal fra felt er påkrevd.',
+            'gross_area_to.required' => 'feltet gross_area_to er påkrevd.',
+            'municipal_number.numeric' => 'kommunens nummer må være numerisk.', 
+            'usage_number.numeric' => 'bruksnummeret må være numerisk.', 
+            'farm_number.numeric' => 'gårdsnummeret må være numerisk.', 
+            'use_area.numeric' => 'Bruksområdefeltet må være numerisk.', 
+            'land.numeric' => 'landfeltet må være numerisk.', 
+            'number_of_office_space.numeric' => 'antall kontorplasser må være numeriske.', 
+            'number_of_parking_space.numeric' => 'antall parkeringsplasser må være numeriske.', 
+            'floors.numeric' => 'gulvfeltet må være numerisk.', 
+            'year_of_construction.numeric' => 'byggeårets felt må være numerisk.', 
+            'rennovated_year.numeric' => 'det gjeninnførte årsfeltet må være numerisk.', 
+            'rent_per_meter_per_year.numeric' => 'må leien per meter per år være numerisk.', 
+        ];
+    }
 }

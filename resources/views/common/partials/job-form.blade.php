@@ -435,7 +435,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                             <label for="app_mobile" class="col-md-2 u-t5">{{__('Mobile  (optional)')}}</label>
                             <div class="col-sm-4 ">
                                 <input name="app_mobile" id="phone" type="tel" class="form-control dme-form-control"
-                                    value="{{@$obj_job->app_mobile}}">
+                                    value="{{@$obj_job->app_mobile}}"><br>
                                 <span id="valid-msg" class="hide"></span>
                                 <span id="error-msg" class="hide"></span>
                             </div>

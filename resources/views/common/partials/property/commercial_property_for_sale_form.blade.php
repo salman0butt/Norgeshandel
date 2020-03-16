@@ -513,6 +513,8 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="phone" value="{{ $commercial_property_for_sale->phone }}" id="phone" type="text" class="dme-form-control">
+                     <span id="valid-msg" class="hide"></span>
+                    <span id="error-msg" class="hide"></span>
                 </div>
                 <div class="col-md-8"></div>
             </div>
