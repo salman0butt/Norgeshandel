@@ -21,6 +21,7 @@
   @endif
     <input type="hidden" id="old_zip" value="{{ (isset($commercial_plot->zip_code) ? $commercial_plot->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="commercial_plots_temp_images">
+     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_plot->zip_city) ? $commercial_plot->zip_city : '') }}">
     <div class="pl-3">
         <!--                            radio -->
         <div class="form-group">
@@ -55,7 +56,8 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="zip_code" type="text" value="{{ $commercial_plot->zip_code }}" class="dme-form-control zip_code">
-                    <span id="zip_code_city_name"></span>
+                    <span id="zip_code_city_name">{{ (isset($commercial_plot->zip_city) ? strtoupper($commercial_plot->zip_city) : '')
+                      }}</span>
                 </div>
                 <div class="col-sm-8">
                 </div>

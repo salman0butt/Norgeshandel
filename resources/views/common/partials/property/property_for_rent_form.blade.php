@@ -27,6 +27,7 @@
     <input type="hidden" id="old_zip" value="{{ (isset($property_for_rent->zip_code) ? $property_for_rent->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_rent_temp_images">
     <div class="pl-3 pr-3">
+    <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
         <div class="form-group">
             <label class="u-t5">Overskrift</label>
             <div class="row">
@@ -42,7 +43,8 @@
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="zip_code" value="{{ $property_for_rent->zip_code }}" class="dme-form-control zip_code">
                     <span class="error-span zip_code"></span>
-                     <span id="zip_code_city_name"></span>
+                     <span id="zip_code_city_name">{{ (isset($property_for_rent->zip_city) ? strtoupper($property_for_rent->zip_city) : '')
+                      }}</span>
                 </div>
                 <div class="col-sm-8">
                 </div>
