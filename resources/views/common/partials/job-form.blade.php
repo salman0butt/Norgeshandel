@@ -43,6 +43,7 @@
     @if(Request::is('jobs/*/edit')) {{method_field('PUT')}} @endif
     <input type="hidden" name="ad_id" id="ad_id" value="{{isset($obj_job->ad)?$obj_job->ad->id:""}}">
     <input type="hidden" name="job_id" id="job_id" value="{{isset($obj_job->id)?$obj_job->id:""}}">
+    <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($obj_job->zip_city) ? $obj_job->zip_city : '') }}">
     <div class="container p-3 pt-4 bg-white mt-5 shadow-10">
         <div class="row">
             <div class="col-md-12">
@@ -307,7 +308,8 @@
                                 <div class="col-sm-4 ">
                                     <input name="zip" id="zip" value="{{$obj_job->zip}}" type="text"
                                         class="form-control dme-form-control zip_code">
-                                    <span id="zip_code_city_name"></span>
+                                    <span id="zip_code_city_name">{{ (isset($obj_job->zip_city) ? strtoupper($obj_job->zip_city) : '')
+                      }}</span>
                                 </div>
                                 <input type="hidden" id="old_zip" value="{{ (isset($obj_job->zip) ? $obj_job->zip : '') }}">
 

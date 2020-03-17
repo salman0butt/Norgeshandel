@@ -20,6 +20,7 @@
     @endif
     <input type="hidden" id="old_zip" value="{{ (isset($flat_wishes_rented->zip_code) ? $flat_wishes_rented->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="flat_wishes_rented_temp_images">
+    <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($flat_wishes_rented->zip_city) ? $flat_wishes_rented->zip_city : '') }}">
     <div class="pl-3">
         <div class="form-group">
             <h3 class="u-t5">Ønsket leieområde</h3>

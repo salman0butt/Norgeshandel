@@ -338,14 +338,21 @@
                         } else {
                             document.getElementById("zip_code-error").innerHTML = "Ugyldig verdi";
                         }
+                        $('#zip_city').html('');
                     } else {
                         $('#zip_code-error').css('display','none');
                         document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
-                        console.log(postalCode.result);
+                        str = postalCode.result;
+                        res = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                        return letter.toUpperCase();
+                        });
+                   
+                        $('#zip_city').val(res);
+                        console.log(res);
                     }
                 }
             };
-            xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, true);
+            xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, false);
             xhttp.send();
         }
     }
