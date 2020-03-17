@@ -132,7 +132,6 @@
                         <span>Mobil: </span>
                         <span><a href="tel:{{$property_data->contact}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->contact}} </a></span>
                     </div>
-                    <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
                     <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                     <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                             salgsoppgave</a></div>
@@ -145,7 +144,15 @@
                     <h2 class="u-t3">Visning</h2>
                     <div class="mb-2">Ta kontakt for å avtale visning</div>
                     <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>
-                    <button class="dme-btn-outlined-blue col-12">Gi bud</button>
+                    @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
+                        <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">
+                                    PDF
+                                </font>
+                            </font>
+                        </button>
+                    @endif
                     {{-- <a href="#" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 </div>
             </div>
