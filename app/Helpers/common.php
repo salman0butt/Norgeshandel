@@ -3,7 +3,17 @@
 namespace App\Helpers;
 
 use App\Admin\Jobs\Job;
+use App\CommercialPropertyForRent;
+use App\CommercialPropertyForSale;
 use App\Http\Controllers\Admin\Jobs\JobController;
+use App\Http\Controllers\Property\BusinessForSaleController;
+use App\Http\Controllers\Property\CommercialPlotController;
+use App\Http\Controllers\Property\CommercialPropertyForRentController;
+use App\Http\Controllers\Property\CommercialPropertyForSaleController;
+use App\Http\Controllers\Property\FlatWishesRentedController;
+use App\Http\Controllers\Property\PropertyForRentController;
+use App\Http\Controllers\Property\PropertyForSaleController;
+use App\Http\Controllers\Property\PropertyHolidaysHomesForSaleController;
 use App\Http\Controllers\PropertyController;
 use App\Media;
 use App\Model\Search;
@@ -383,22 +393,29 @@ class common
 //    check_property_from_search_parameters
     public static function check_property_from_search_parameters($request, $property)
     {
-        $propertyController = new PropertyController();
         if ($property->ad->ad_type == 'property_for_sale') {
+            $propertyController = new PropertyForSaleController();
             $properties = $propertyController->search_property_for_sale($request, true);
         } elseif ($property->ad->ad_type == 'property_for_rent') {
+            $propertyController = new PropertyForRentController();
             $properties = $propertyController->search_property_for_rent($request, true);
         } elseif ($property->ad->ad_type == 'property_business_for_sale') {
+            $propertyController = new BusinessForSaleController();
             $properties = $propertyController->search_business_for_sale($request, true);
         } elseif ($property->ad->ad_type == 'property_holiday_home_for_sale') {
+            $propertyController = new PropertyHolidaysHomesForSaleController();
             $properties = $propertyController->search_holiday_homes_for_sale($request, true);
         } elseif ($property->ad->ad_type == 'property_commercial_for_rent') {
+            $propertyController = new CommercialPropertyForRentController();
             $properties = $propertyController->search_commercial_property_for_rent($request, true);
         } elseif ($property->ad->ad_type == 'property_commercial_for_sale') {
+            $propertyController = new CommercialPropertyForSaleController();
             $properties = $propertyController->search_commercial_property_for_sale($request, true);
         } elseif ($property->ad->ad_type == 'property_commercial_plots') {
+            $propertyController = new CommercialPlotController();
             $properties = $propertyController->search_commercial_plots($request, true);
         } elseif ($property->ad->ad_type == 'property_flat_wishes_rented') {
+            $propertyController = new FlatWishesRentedController();
             $properties = $propertyController->search_flat_wishes_rented($request, true);
         }
         if ($properties) {
@@ -460,4 +477,60 @@ class common
         }
         return $flag;
     }
+
+    //Upload dropzone images
+    public static function upload_dropzone_images(Request $request)
+    {
+        $mediable_id = '';
+        if ($request->ad_id) {
+            $mediable_id = $request->ad_id;
+        }
+        if ($request->file('files')) {
+            $files = $request->file('files');
+            if ($mediable_id) {
+                return common::update_media($files, $mediable_id, 'App\Models\Ad', 'gallery', 'false');
+            } else {
+                return common::update_media($files, Auth::user()->id, $request->upload_dropzone_images_type, 'gallery', 'false');
+            }
+        }
+    }
+
+    //Updated the dropzone image
+    public static function updated_dropzone_images_type($request, $mediable_type, $ad_id = '')
+    {
+        if (count($request) > 0) {
+            foreach ($request as $key => $value) {
+                if (preg_match('/image_title/', $key)) {
+                    $explode_values = explode('_', $key);
+                    $name_unique = '';
+                    if (count($explode_values) > 3) {
+                        if ($explode_values[2] && $explode_values[3]) {
+                            $name_unique = $explode_values[2] . '.' . $explode_values[3];
+                        }
+                        if ($name_unique) {
+                            $media = Media::where('name_unique', $name_unique)->first();
+                            if ($media) {
+                                $media->title = $value;
+                                $media->update();
+                            }
+                        }
+                    }
+                    unset($request[$key]);
+                }
+            }
+        }
+
+        $temp_media = Media::where('mediable_id', Auth::user()->id)->where('mediable_type', $mediable_type)->get();
+        if ($temp_media->count() > 0 && $ad_id) {
+            foreach ($temp_media as $key => $temp_media_obj) {
+                $temp_media_obj->mediable_id = $ad_id;
+                $temp_media_obj->mediable_type = 'App\Models\Ad';
+                $temp_media_obj->update();
+            }
+
+        }
+        return $request;
+    }
+
+
 }
