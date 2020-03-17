@@ -4,10 +4,13 @@ namespace App\Helpers;
 
 use App\Admin\Jobs\Job;
 use App\Http\Controllers\Admin\Jobs\JobController;
+use App\Http\Controllers\PropertyController;
 use App\Media;
 use App\Model\Search;
 use App\Notification;
 use App\Models\Meta;
+use App\PropertyForSale;
+use App\PropertyHolidaysHomesForSale;
 use Carbon\Carbon;
 use App\Admin\ads\Banner;
 use App\Term;
@@ -347,18 +350,20 @@ class common
         $arr_type = $arr[0];
         if ($arr_type == 'jobs') {
             $str = $arr[1];
-            $arr2 = explode('?', $str);
-            $filter = $arr2[1];
-            $array_filter = explode('&', $filter);
-            $request = new Request();
-            foreach ($array_filter as $value) {
-                $pairs = explode('=', $value);
-                if (count($pairs) > 1) {
-                    $request->merge([$pairs[0] => $pairs[1]]);
-                }
-            }
-            return $request;
+        } else if ($arr_type == 'property') {
+            $str = $arr[2];
         }
+        $arr2 = explode('?', $str);
+        $filter = $arr2[1];
+        $array_filter = explode('&', $filter);
+        $request = new Request();
+        foreach ($array_filter as $value) {
+            $pairs = explode('=', $value);
+            if (count($pairs) > 1) {
+                $request->merge([$pairs[0] => $pairs[1]]);
+            }
+        }
+        return $request;
     }
 
 //    check_job_from_search_parameters
@@ -366,9 +371,39 @@ class common
     {
         $jobController = new JobController();
         $jobs = $jobController->mega_menu_search($request, true);
-        if ($jobs){
+        if ($jobs) {
             $arr = $jobs->pluck('ad_id');
-            if (in_array($job->ad_id, $arr->toArray())){
+            if (in_array($job->ad_id, $arr->toArray())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+//    check_property_from_search_parameters
+    public static function check_property_from_search_parameters($request, $property)
+    {
+        $propertyController = new PropertyController();
+        if ($property->ad->ad_type == 'property_for_sale') {
+            $properties = $propertyController->search_property_for_sale($request, true);
+        } elseif ($property->ad->ad_type == 'property_for_rent') {
+            $properties = $propertyController->search_property_for_rent($request, true);
+        } elseif ($property->ad->ad_type == 'property_business_for_sale') {
+            $properties = $propertyController->search_business_for_sale($request, true);
+        } elseif ($property->ad->ad_type == 'property_holiday_home_for_sale') {
+            $properties = $propertyController->search_holiday_homes_for_sale($request, true);
+        } elseif ($property->ad->ad_type == 'property_commercial_for_rent') {
+            $properties = $propertyController->search_commercial_property_for_rent($request, true);
+        } elseif ($property->ad->ad_type == 'property_commercial_for_sale') {
+            $properties = $propertyController->search_commercial_property_for_sale($request, true);
+        } elseif ($property->ad->ad_type == 'property_commercial_plots') {
+            $properties = $propertyController->search_commercial_plots($request, true);
+        } elseif ($property->ad->ad_type == 'property_flat_wishes_rented') {
+            $properties = $propertyController->search_flat_wishes_rented($request, true);
+        }
+        if ($properties) {
+            $arr = $properties->pluck('ad_id');
+            if (in_array($property->ad_id, $arr->toArray())) {
                 return true;
             }
         }
@@ -376,29 +411,50 @@ class common
     }
 
 //    notification
-    public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searches)
+    public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searche_str)
     {
+        $searches = \App\Model\Search::where('type', '=', 'saved')
+            ->where('filter', 'like', '%' . $searche_str . '%')
+            ->where('notification_web', '=', '1')
+            ->get();
+
         if ($searches) {
             foreach ($searches as $search) {
                 $req = common::get_request_from_search_url($search->filter);
-                if ($req) {
-                    if (common::check_job_from_search_parameters($req, $obj)) {
-                        $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
-                        $notif->save();
-                        $data = array('detail' => $message, 'to_user_id' => $search->user_id);
-                        $pusher->trigger('notification', 'notification-event', $data);
-                    }
+//                if ($req) {
+                $to_be_sent = false;
+                if ($obj->ad->ad_type == 'job') {
+                    $to_be_sent = common::check_job_from_search_parameters($req, $obj);
+                } elseif ($obj->ad->ad_type == 'property_for_sale' ||
+                    $obj->ad->ad_type == 'property_for_rent' ||
+                    $obj->ad->ad_type == 'property_business_for_sale' ||
+                    $obj->ad->ad_type == 'property_holiday_home_for_sale' ||
+                    $obj->ad->ad_type == 'property_commercial_for_rent' ||
+                    $obj->ad->ad_type == 'property_commercial_for_sale' ||
+                    $obj->ad->ad_type == 'property_commercial_plots' ||
+                    $obj->ad->ad_type == 'property_flat_wishes_rented'
+                ) {
+                    $to_be_sent = common::check_property_from_search_parameters($req, $obj);
                 }
+                if ($to_be_sent) {
+                    $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
+                    $notif->save();
+                    $data = array('detail' => $message, 'to_user_id' => $search->user_id);
+                    $pusher->trigger('notification', 'notification-event', $data);
+                }
+//                }
             }
         }
     }
+
     //find account setting alternative email verified or not.
-    public static function is_account_setting_alt_email_verified($obj){
+    public static function is_account_setting_alt_email_verified($obj)
+    {
         $flag = '';
-        if($obj){
-            $is_email_verified = Meta::where('metable_id',$obj->metable_id)->where('metable_type',$obj->metable_type)
-                ->where('key','account_setting_alt_email_verified')->where('value',$obj->value)->first();
-            if($is_email_verified){
+        if ($obj) {
+            $is_email_verified = Meta::where('metable_id', $obj->metable_id)->where('metable_type', $obj->metable_type)
+                ->where('key', 'account_setting_alt_email_verified')->where('value', $obj->value)->first();
+            if ($is_email_verified) {
                 $flag = 'success';
             }
         }
