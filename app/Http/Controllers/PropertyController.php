@@ -45,8 +45,6 @@ use function foo\func;
 class PropertyController extends Controller
 {
     private $pagination;
-
-    //
     private $pusher;
 
     public function __construct()
