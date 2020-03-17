@@ -435,7 +435,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                             <label for="app_mobile" class="col-md-2 u-t5">{{__('Mobile  (optional)')}}</label>
                             <div class="col-sm-4 ">
                                 <input name="app_mobile" id="phone" type="tel" class="form-control dme-form-control"
-                                    value="{{@$obj_job->app_mobile}}">
+                                    value="{{@$obj_job->app_mobile}}"><br>
                                 <span id="valid-msg" class="hide"></span>
                                 <span id="error-msg" class="hide"></span>
                             </div>
@@ -611,5 +611,9 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
 <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
 <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
 <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
+<script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
+<script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
+<script src="{{asset('public/js/utils.js')}}"></script>
+<script src="{{asset('public/js/telPhone.js')}}"></script>
 
 @endsection

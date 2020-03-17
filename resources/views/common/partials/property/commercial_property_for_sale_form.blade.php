@@ -445,28 +445,28 @@
             </div>
         </div>
 
-        <!-- Attachement as pdf files -->
-        <div wt-paste="attachment-as-pdf">
-            <div class="form-group">
-                <h3 class="u-t5">Legg till pdf</h3>
-                @if($commercial_property_for_sale && $commercial_property_for_sale->ad && $commercial_property_for_sale->ad->pdf->count() > 0)
-                    @foreach($commercial_property_for_sale->ad->pdf as $key=>$commercial_property_for_sale_pdf)
-                        <div class="show-file-section">
-                            <div class="row">
-                                <p class="col-sm-4">{{($commercial_property_for_sale_pdf->name)}}</p>
-                                <p class="col-sm-2"><a href="javascript:void(0)" class="dz-remove" id="{{$commercial_property_for_sale_pdf->name_unique}}">Fjerne</a></p>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-                <div class="row">
-                    <div class="col-sm-4 ">
-                        <input type="file" name="commercial_property_for_sale_pdf[]" id="commercial_property_for_sale_pdf" accept="application/pdf">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="dme-btn-outlined-blue" type="button" wt-more="attachment-as-pdf"><i class="fa fa-plus"></i></button>
-                    </div>
+        @php
+            $commercial_property_for_sale_pdf = '';
+            if($commercial_property_for_sale && $commercial_property_for_sale->ad && $commercial_property_for_sale->ad->pdf->count() > 0){
+                $commercial_property_for_sale_pdf = $commercial_property_for_sale->ad->pdf->first();
+            }
+        @endphp
+        <!-- Attachement as pdf information -->
+        <div class="form-group">
+            <h3 class="u-t5">Legg till pdf</h3>
+            <div class="row property-pdf-div">
+                <div class="col-sm-6">
+                    <input type="file" name="commercial_property_for_sale_pdf" id="property_pdf" accept="application/pdf" @if($commercial_property_for_sale_pdf) style="pointer-events: none" @endif>
                 </div>
+                <div class="col-sm-3 property-pdf-value">
+                    @if($commercial_property_for_sale_pdf)
+                        {{Str::limit($commercial_property_for_sale_pdf->name,20)}}
+                    @endif
+                </div>
+                <div class="col-sm-2">
+                    <span class="@if(!$commercial_property_for_sale_pdf) d-none @endif remove-selected-file-button remove_property_pdf dz-remove" @if($commercial_property_for_sale_pdf) id="{{$commercial_property_for_sale_pdf->name_unique}}" @endif><i class="fa fa-trash fa-lg mt-1"></i></span>
+                </div>
+                <span class="col-12 property-pdf-information-message @if(!$commercial_property_for_sale_pdf) d-none @endif"><small>Fjern gammel fil før du velger en ny fil.</small></span>
             </div>
         </div>
         <!--                            full input-->
@@ -513,6 +513,8 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="phone" value="{{ $commercial_property_for_sale->phone }}" id="phone" type="text" class="dme-form-control">
+                     <span id="valid-msg" class="hide"></span>
+                    <span id="error-msg" class="hide"></span>
                 </div>
                 <div class="col-md-8"></div>
             </div>

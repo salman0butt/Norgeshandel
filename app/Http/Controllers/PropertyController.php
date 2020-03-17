@@ -1411,6 +1411,7 @@ class PropertyController extends Controller
     //UpdatePropertyHolidayHomeForSale $request
     public function updateHomeForSaleAd(Request $request, $id)
     {
+        $property_quote = $property_pdf = '';
         DB::beginTransaction();
         try {
             if (!$request->amenities) {
@@ -1492,13 +1493,21 @@ class PropertyController extends Controller
                 $property_home_for_sale_data = $this->updated_dropzone_images_type($property_home_for_sale_data, $request->upload_dropzone_images_type, $response->ad->id);
 
                 //Store property_home_for_sale_sales_quote file
-                if ($request->file('property_home_for_sale_sales_quote') && count($request->file('property_home_for_sale_sales_quote')) > 0) {
-                    common::update_media($request->file('property_home_for_sale_sales_quote'), $response->ad->id, 'App\Models\Ad', 'sales_information', 'false');
+                if($request->file('property_home_for_sale_sales_quote')){
+                    $property_quote = common::update_media($request->file('property_home_for_sale_sales_quote'), $response->ad->id, 'App\Models\Ad', 'sales_information');
+                    if($property_quote){
+                        $property_quote = json_decode($property_quote);
+                        $property_quote = $property_quote->file_names[0];
+                    }
                 }
 
                 //Store property_home_for_sale_pdf file
-                if ($request->file('property_home_for_sale_pdf') && count($request->file('property_home_for_sale_pdf')) > 0) {
-                    common::update_media($request->file('property_home_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf', 'false');
+                if($request->file('property_home_for_sale_pdf')){
+                    $property_pdf = common::update_media($request->file('property_home_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf');
+                    if($property_pdf){
+                        $property_pdf = json_decode($property_pdf);
+                        $property_pdf = $property_pdf->file_names[0];
+                    }
                 }
 
             }
@@ -1506,6 +1515,8 @@ class PropertyController extends Controller
             $response->update($property_home_for_sale_data);
             DB::commit();
             $data['success'] = $response;
+            $data['property_quote'] = $property_quote;
+            $data['property_pdf'] = $property_pdf;
             echo json_encode($data);
 
 
@@ -1624,12 +1635,12 @@ class PropertyController extends Controller
                 $property_home_for_sale_data = $this->updated_dropzone_images_type($property_home_for_sale_data, $request->upload_dropzone_images_type, $add_response->id);
 
                 //Store property_home_for_sale_sales_quote file
-                if ($request->file('property_home_for_sale_sales_quote') && count($request->file('property_home_for_sale_sales_quote')) > 0) {
+                if($request->file('property_home_for_sale_sales_quote')){
                     common::update_media($request->file('property_home_for_sale_sales_quote'), $add_response->id, 'App\Models\Ad', 'sales_information');
                 }
 
                 //Store property_home_for_sale_pdf file
-                if ($request->file('property_home_for_sale_pdf') && count($request->file('property_home_for_sale_pdf')) > 0) {
+                if($request->file('property_home_for_sale_pdf')){
                     common::update_media($request->file('property_home_for_sale_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
                 }
 
@@ -1784,6 +1795,7 @@ class PropertyController extends Controller
 
     public function updateSaleAdd(Request $request, $id)
     {
+        $property_quote = $property_pdf = '';
         DB::beginTransaction();
         try {
             if (!$request->approved_rental_part) {
@@ -1871,19 +1883,29 @@ class PropertyController extends Controller
                     $property_for_sale_data = $this->updated_dropzone_images_type($property_for_sale_data, $request->upload_dropzone_images_type, $temp_property_for_sale_obj->ad->id);
 
                     //Store property_pdf file
-                    if ($request->file('property_pdf') && count($request->file('property_pdf')) > 0) {
-                        common::update_media($request->file('property_pdf'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'pdf', 'false');
+                    if($request->file('property_pdf')){
+                        $property_pdf = common::update_media($request->file('property_pdf'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'pdf');
+                        if($property_pdf){
+                            $property_pdf = json_decode($property_pdf);
+                            $property_pdf = $property_pdf->file_names[0];
+                        }
                     }
 
                     //Store property_quote file
-                    if ($request->file('property_quote') && count($request->file('property_quote')) > 0) {
-                        common::update_media($request->file('property_quote'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'sales_information', 'false');
+                    if($request->file('property_quote')){
+                        $property_quote = common::update_media($request->file('property_quote'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'sales_information');
+                        if($property_quote){
+                            $property_quote = json_decode($property_quote);
+                            $property_quote = $property_quote->file_names[0];
+                        }
                     }
                 }
             }
 
             $response = PropertyForSale::where('id', '=', $id)->update($property_for_sale_data);
             DB::commit();
+            $data['property_quote'] = $property_quote;
+            $data['property_pdf'] = $property_pdf;
             $data['success'] = $response;
             echo json_encode($data);
 
@@ -2038,12 +2060,12 @@ class PropertyController extends Controller
             $response = PropertyForSale::create($property_for_sale_data);
 
             //Store property_pdf file
-            if ($request->file('property_pdf') && count($request->file('property_pdf')) > 0) {
+            if($request->file('property_pdf')){
                 common::update_media($request->file('property_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
             }
 
             //Store property_quote file
-            if ($request->file('property_quote') && count($request->file('property_quote')) > 0) {
+            if($request->file('property_quote')){
                 common::update_media($request->file('property_quote'), $add_response->id, 'App\Models\Ad', 'sales_information');
             }
 
@@ -2372,6 +2394,7 @@ class PropertyController extends Controller
 
     public function updateCommercialPropertyForSale(Request $request, $id)
     {
+        $property_pdf = '';
         DB::beginTransaction();
         try {
             $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type']);
@@ -2404,8 +2427,12 @@ class PropertyController extends Controller
                     $commercial_property_for_sale = $this->updated_dropzone_images_type($commercial_property_for_sale, $request->upload_dropzone_images_type, $temp_commercial_property_for_sale_obj->ad->id);
 
                     //Store property_pdf file
-                    if ($request->file('commercial_property_for_sale_pdf') && count($request->file('commercial_property_for_sale_pdf')) > 0) {
-                        common::update_media($request->file('commercial_property_for_sale_pdf'), $temp_commercial_property_for_sale_obj->ad->id, 'App\Models\Ad', 'pdf', 'false');
+                    if($request->file('commercial_property_for_sale_pdf')){
+                        $property_pdf = common::update_media($request->file('commercial_property_for_sale_pdf'), $temp_commercial_property_for_sale_obj->ad->id, 'App\Models\Ad', 'pdf');
+                        if($property_pdf){
+                            $property_pdf = json_decode($property_pdf);
+                            $property_pdf = $property_pdf->file_names[0];
+                        }
                     }
                 }
             }
@@ -2414,6 +2441,7 @@ class PropertyController extends Controller
 
             DB::commit();
             $data['success'] = $response;
+            $data['property_pdf'] = $property_pdf;
             echo json_encode($data);
         } catch (\Exception $e) {
             DB::rollback();
@@ -2727,7 +2755,7 @@ class PropertyController extends Controller
     // Update commercial property for rent
     public function updateCommercialPropertyForRent(Request $request, $id)
     {
-
+        $property_pdf = '';
         DB::beginTransaction();
         try {
             $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type']);
@@ -2757,14 +2785,19 @@ class PropertyController extends Controller
                 $commercial_property_for_rent = $this->updated_dropzone_images_type($commercial_property_for_rent, $request->upload_dropzone_images_type, $response->ad->id);
 
                 //Store property_pdf file
-                if ($request->file('commercial_property_for_rent_pdf') && count($request->file('commercial_property_for_rent_pdf')) > 0) {
-                    common::update_media($request->file('commercial_property_for_rent_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf', 'false');
+                if($request->file('commercial_property_for_rent_pdf')){
+                    $property_pdf = common::update_media($request->file('commercial_property_for_rent_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf');
+                    if($property_pdf){
+                        $property_pdf = json_decode($property_pdf);
+                        $property_pdf = $property_pdf->file_names[0];
+                    }
                 }
             }
             $response->update($commercial_property_for_rent);
 
             DB::commit();
             $data['success'] = $response;
+            $data['property_pdf'] = $property_pdf;
             echo json_encode($data);
         } catch (\Exception $e) {
             DB::rollback();
@@ -2931,7 +2964,7 @@ class PropertyController extends Controller
                 $business_for_sale = $this->updated_dropzone_images_type($business_for_sale, $request->upload_dropzone_images_type, $add_response->id);
 
                 //Store property_pdf file
-                if ($request->file('business_for_sale_pdf') && count($request->file('business_for_sale_pdf')) > 0) {
+                if($request->file('business_for_sale_pdf')){
                     common::update_media($request->file('business_for_sale_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
                 }
 
@@ -2976,7 +3009,7 @@ class PropertyController extends Controller
     // update for business for sale ad
     public function updateBusinessForSale(Request $request, $id)
     {
-
+        $property_pdf = '';
         DB::beginTransaction();
         try {
             $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type']);
@@ -2992,8 +3025,12 @@ class PropertyController extends Controller
                     $business_for_sale = $this->updated_dropzone_images_type($business_for_sale, $request->upload_dropzone_images_type, $response->ad->id);
 
                     //Store property_pdf file
-                    if ($request->file('business_for_sale_pdf') && count($request->file('business_for_sale_pdf')) > 0) {
-                        common::update_media($request->file('business_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf', 'false');
+                    if($request->file('business_for_sale_pdf')){
+                        $property_pdf = common::update_media($request->file('business_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf');
+                        if($property_pdf){
+                            $property_pdf = json_decode($property_pdf);
+                            $property_pdf = $property_pdf->file_names[0];
+                        }
                     }
                 }
                 $response->update($business_for_sale);
@@ -3009,6 +3046,7 @@ class PropertyController extends Controller
 //            //event(new PropertyForRentEvent($notifiable_id,$notification_id_search));
             DB::commit();
             $data['success'] = $response;
+            $data['property_pdf'] = $property_pdf;
             echo json_encode($data);
 
         } catch (\Exception $e) {
@@ -3098,6 +3136,7 @@ class PropertyController extends Controller
 
     public function updateCommercialPlots(Request $request, $id)
     {
+        $property_pdf = '';
         DB::beginTransaction();
         try {
             if (!$request->owned_plot_facilities) {
@@ -3114,33 +3153,21 @@ class PropertyController extends Controller
                 $commercial_plot = $this->updated_dropzone_images_type($commercial_plot, $request->upload_dropzone_images_type, $response->ad->id);
 
                 //Store commercial_plot_pdf file
-                if ($request->file('commercial_plot_pdf') && count($request->file('commercial_plot_pdf')) > 0) {
-                    common::update_media($request->file('commercial_plot_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf', 'false');
+                if($request->file('commercial_plot_pdf')){
+                    $property_pdf = common::update_media($request->file('commercial_plot_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf');
+                    if($property_pdf){
+                        $property_pdf = json_decode($property_pdf);
+                        $property_pdf = $property_pdf->file_names[0];
+                    }
                 }
             }
 
 
             $response->update($commercial_plot);
 
-            if ($request->file('commercial_plot_pdf')) {
-                $files = $request->file();
-                $files_builded_arr = array();
-                foreach ($files as $key => $val) {
-                    array_push($files_builded_arr, $val[0]);
-                }
-
-                $i = 0;
-                foreach ($files_builded_arr as $key => $val) {
-                    if ($i == 1) {
-                        common::update_media($val, $response->id, 'App\CommercialPlot', 'commercial_plot_pdf');
-                    }
-                    $i++;
-
-                }
-
-            }
             DB::commit();
             $data['success'] = $response;
+            $data['property_pdf'] = $property_pdf;
             echo json_encode($data);
 
         } catch (\Exception $e) {
@@ -3178,7 +3205,7 @@ class PropertyController extends Controller
 
 
             //Store commercial_plot_pdf file
-            if ($request->file('commercial_plot_pdf') && count($request->file('commercial_plot_pdf')) > 0) {
+            if($request->file('commercial_plot_pdf')){
                 common::update_media($request->file('commercial_plot_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
             }
 

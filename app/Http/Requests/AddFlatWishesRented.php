@@ -32,4 +32,15 @@ class AddFlatWishesRented extends FormRequest
             'headline' => 'required',
         ];
     }
+     public function messages()
+    {
+        return [
+            'headline.required' => 'overskriftfeltet er påkrevd.',
+            'property_type.required' => 'feltet field_type er påkrevd.',
+            'region.required' => 'regionfeltet er påkrevd.',
+            'max_rent_per_month.numeric' => 'feltet maks leie per måned må være numerisk.',
+            'number_of_tenants.numeric' => 'antall leietakere må være numerisk.',
+            'wanted_from.required' => 'feltet for ønsket_fra må være dato.',
+        ];
+    }
 }

@@ -21,7 +21,7 @@
 
 
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
-
+    
     <!--    incluedes   -->
     <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
             referrerpolicy="origin"></script>
@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
-
+<link rel="stylesheet" href="{{ asset('public/css/intlTelInput.min.css') }}">
 </head>
 <body class="@yield('body_class')">
 @if(Request::is('account/*'))
@@ -201,10 +201,6 @@
         @if(Auth::check())
         getLists();
         @endif
-
-
-
-
         $(document).on('blur', 'input[type=url]', function () {
             var string = $(this).val();
             if (!~string.indexOf("http")) {
@@ -320,7 +316,6 @@
         </div>
     </div>
 </footer>
-
 <script>
     function find_zipcode_city(val) {
         document.getElementById("zip_code_city_name").innerHTML = '';
@@ -351,7 +346,6 @@
                 }
             };
             xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, true);
-
             xhttp.send();
         }
     }
@@ -362,9 +356,7 @@
 {{--<script src="{{asset('public/js/app.js')}}"></script>--}}
 <script src="{{asset('public/mediexpert.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-<script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
-<script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
-<script src="{{asset('public/js/utils.js')}}"></script>
+
 <script src="{{asset('public/js/spin.min.js')}}"></script>
 <script src="{{asset('public/js/ladda.min.js')}}"></script>
 <script src="{{asset('public/js/common-norges.js')}}"></script>
