@@ -88,7 +88,14 @@ $name = $property_data->ad->company_gallery;
                                 {{--| {{$property_data->number_of_bedrooms}}--}}
                                 {{--soverom | {{$property_data->property_type}} | </h1>--}}
                         </div>
-                        <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
+                        <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}
+                            <span>
+                                @if($property_data->zip_code)
+                                    {{$property_data->zip_code}}
+                                    {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                                @endif
+                            </span>
+                        </div>
                         <div class="col-md-12 mt-2">
                             <p>{{$property_data->description}}</p>
                         </div>

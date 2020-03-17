@@ -64,9 +64,13 @@
                             <!-- <div class="u-t3 mt-3">JESSHEIM SENTRUM</div> -->
                             <h1 class="u-t2">{{$property_data->heading}}</h1>
                         </div>
-                        <div
-                            class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}
-                            <span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span>
+                        <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}
+                            <span>
+                                @if($property_data->zip_code)
+                                    {{$property_data->zip_code}}
+                                    {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                                @endif
+                            </span>
                         </div>
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                         @if (!empty($property_data->monthly_rent))

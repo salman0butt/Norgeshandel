@@ -62,7 +62,15 @@
                                 <div class="u-t3 mt-3">JESSHEIM SENTRUM</div>
                                 <h1 class="u-t2">{{$property_data->headline}}</h1>
                             </div>
-                            <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
+                            <div class="col-md-12 text-muted">
+                                {{$property_data->street_address ? $property_data->street_address.', ' : ''}}
+                                <span>
+                                    @if($property_data->zip_code)
+                                        {{$property_data->zip_code}}
+                                        {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                                    @endif
+                                </span>
+                            </div>
                             <div class="col-md-12"><span class="font-weight-bold">Bransje: </span><span>{{$property_data->industry}} {{$property_data->alternative_industry}}</span></div>
                             <!-- <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>

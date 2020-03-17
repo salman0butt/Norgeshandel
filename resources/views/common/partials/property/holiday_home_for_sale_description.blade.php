@@ -66,7 +66,14 @@
                     <div class="col-md-12">
                         <div class="u-t3 mt-3">{{$property_data->ad_headline}}</div>
                     </div>
-                    <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span></div>
+                    <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}
+                        <span>
+                            @if($property_data->zip_code)
+                                {{$property_data->zip_code}}
+                                {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                            @endif
+                        </span>
+                    </div>
 
                     <!-- <div class="col-md-12 text-muted"></div>
                             <div class="col-md-12 mt-2"><p></p></div> -->
