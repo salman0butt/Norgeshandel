@@ -358,10 +358,6 @@
 {{--<script src="{{asset('public/js/app.js')}}"></script>--}}
 <script src="{{asset('public/mediexpert.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
-<script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
-<script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
-<script src="{{asset('public/js/utils.js')}}"></script>
-<script src="{{asset('public/js/telPhone.js')}}"></script>
 <script src="{{asset('public/js/spin.min.js')}}"></script>
 <script src="{{asset('public/js/ladda.min.js')}}"></script>
 <script src="{{asset('public/js/common-norges.js')}}"></script>
