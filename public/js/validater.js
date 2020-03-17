@@ -180,6 +180,9 @@ $(document).ready(function () {
             percentage_of_common_wealth: {
                 number: true
             },
+            offer_url: {
+                validUrl: true
+            },
             video: {
                 validUrl: true
             },

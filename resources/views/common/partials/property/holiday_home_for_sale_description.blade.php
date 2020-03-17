@@ -99,8 +99,6 @@
                     <!-- <div class="col-md-6"><span class="font-weight-bold">Etasje :</span>&nbsp;<span></span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Kommunale avg :.</span>&nbsp;<span></span></div> -->
 
-                    <div class="col-md-12"><a href="#" class="u-strong">Pris på lån</a></div>
-                    <div class="col-md-12"><a href="#" class="u-strong">Pris på forsikring</a></div>
 
                     <div class="clearfix"></div>
                     {{-- <div class="mt-2 col-md-12"></div> --}}
