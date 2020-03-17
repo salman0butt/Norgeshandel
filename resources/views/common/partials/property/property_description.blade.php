@@ -47,7 +47,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    @php $name = $property_data->ad->media; @endphp
+                    @php $name = $property_data->ad->company_gallery; @endphp
                     @include('user-panel.partials.landing_page_slider',compact('name'))
                 </div>
             </div>
