@@ -97,8 +97,9 @@
                                     {{--<div class="week-status u-t5 text-muted" style="">Betalt plassering</div>--}}
                                     <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
                                         @if($property_for_sale->street_address)
-                                            <span title="{{$property_for_sale->street_address}}">{{Str::limit($property_for_sale->street_address,35)}}</span>
+                                            <span title="{{$property_for_sale->street_address}}">{{Str::limit($property_for_sale->street_address,25)}},</span>
                                         @endif
+                                        <span>{{$property_for_sale->zip_city ? $property_for_sale->zip_city : ''}}</span>
                                     </div>
 
                                     <div class="title color-grey">{{$property_for_sale->headline}}</div>

@@ -95,7 +95,12 @@
                             <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
                                 {{--<div class="week-status u-t5 text-muted" style="">Betalt plassering</div>--}}
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">{{$property_for_rent->street_address}}</div>
+                                <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
+                                    @if($property_for_rent->street_address)
+                                        <span title="{{$property_for_rent->street_address}}">{{Str::limit($property_for_rent->street_address,25)}},</span>
+                                    @endif
+                                    <span>{{$property_for_rent->zip_city ? $property_for_rent->zip_city : ''}}</span>
+                                </div>
                                 <div class="title color-grey">{{$property_for_rent->heading}}</div>
                                 <div class="mt-2">
                                     <div class="area font-weight-bold float-left color-grey">{{$property_for_rent->primary_rom}} m²</div>

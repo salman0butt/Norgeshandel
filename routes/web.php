@@ -493,7 +493,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::patch('new/property/sale/ad/update/{id}', 'PropertyController@UpdateDummySaleAdd');
     Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
 
-//Holiday home for sale
+    //Holiday home for sale
     Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
     Route::get('holiday/home/for/sale/{id}/edit', 'PropertyController@editHolidayHomeForSale');
     Route::patch('holiday/home/for/sale/{id}', 'PropertyController@updateHomeForSaleAd');

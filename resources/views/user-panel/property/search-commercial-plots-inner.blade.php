@@ -93,9 +93,12 @@
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
-                                @if($commercial_plot->street_address)
-                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$commercial_plot->street_address}}">{{Str::limit($commercial_plot->street_address,35)}}</div>
-                                @endif
+                                <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
+                                    @if($commercial_plot->street_address)
+                                        <span title="{{$commercial_plot->street_address}}">{{Str::limit($commercial_plot->street_address,25)}},</span>
+                                    @endif
+                                    <span>{{$commercial_plot->zip_city ? $commercial_plot->zip_city : ''}}</span>
+                                </div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 {{--<div class="u-t5 text-muted mt-2">Christian Krohgs gate 16, 0186 Oslo</div>--}}
                                 <div class="title color-grey">{{$commercial_plot->headline}}</div>

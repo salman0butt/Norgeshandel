@@ -98,9 +98,12 @@
                                 class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <div class="u-t5 text-muted" style=""></div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                @if($property_holiday_home_for_sale->street_address)
-                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$property_holiday_home_for_sale->street_address}}">{{ Str::limit($property_holiday_home_for_sale->street_address,35)}}</div>
-                                @endif
+                                <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
+                                    @if($property_holiday_home_for_sale->street_address)
+                                        <span title="{{$property_holiday_home_for_sale->street_address}}">{{Str::limit($property_holiday_home_for_sale->street_address,25)}},</span>
+                                    @endif
+                                    <span>{{$property_holiday_home_for_sale->zip_city ? $property_holiday_home_for_sale->zip_city : ''}}</span>
+                                </div>
                                 <div class="title color-grey">{{ $property_holiday_home_for_sale -> ad_headline}}</div>
                                 <div class="mt-2">
                                     <div

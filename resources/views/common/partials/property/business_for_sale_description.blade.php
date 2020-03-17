@@ -62,7 +62,15 @@
                                 <div class="u-t3 mt-3">JESSHEIM SENTRUM</div>
                                 <h1 class="u-t2">{{$property_data->headline}}</h1>
                             </div>
-                            <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code}}</span></div>
+                            <div class="col-md-12 text-muted">
+                                {{$property_data->street_address ? $property_data->street_address.', ' : ''}}
+                                <span>
+                                    @if($property_data->zip_code)
+                                        {{$property_data->zip_code}}
+                                        {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                                    @endif
+                                </span>
+                            </div>
                             <div class="col-md-12"><span class="font-weight-bold">Bransje: </span><span>{{$property_data->industry}} {{$property_data->alternative_industry}}</span></div>
                             <!-- <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
@@ -114,7 +122,21 @@
                                 <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS"> {{$property_data->phone}}</a></span>
                             </div>
                         @endif
-                        <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
+
+                        @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
+                            <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;">
+                                        PDF
+                                    </font>
+                                </font>
+                            </button>
+                        @endif
+                        @if($property_data->offer_url)
+                            <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                            style="vertical-align: inherit;">Gi bud</font></font></button>
+                        @endif
+                        {{--<button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>--}}
                         <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                         <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                                 salgsoppgave</a></div>

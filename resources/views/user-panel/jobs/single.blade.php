@@ -182,7 +182,7 @@
                             @endif
 
                         </div>
-                        <button class="dme-btn-maroon col-12 mb-2" onclick="location.href='{{$job->app_link_to_receive}}';">Søk her</button>
+                        <button class="dme-btn-maroon col-12 mb-2" onclick="window.location.href='{{$job->app_link_to_receive}}';">Søk her</button>
                         @if(!empty($job->company))
                             <button class="dme-btn-outlined-blue col-8 mb-2">Følg firma</button>
                             <div class="col-4"></div>

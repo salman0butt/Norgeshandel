@@ -130,6 +130,8 @@ $(document).ready(function (e) {
 
 
     // Find city name using database zip code for an add and show it front end
+    // Comment it because now we are storing the zip code city name in db
+    /*
     if($('span').hasClass('db_zip_code')){
         var db_zip_code = $('.db_zip_code').text();
         if(db_zip_code){
@@ -155,6 +157,7 @@ $(document).ready(function (e) {
             xhttp.send();
         }
     }
+    */
     //End zip code
 
     //Clear Searches like recent and saved clear_searches_link
