@@ -157,7 +157,6 @@ $(document).ready(function (e) {
     }
     //End zip code
 
-
     //Clear Searches like recent and saved clear_searches_link
     $(document).on('click', '.clear_searches_link', function () {
         var type = $(this).data('search_type');
@@ -178,59 +177,6 @@ $(document).ready(function (e) {
             });
         }
     });
-
-    // Find city name against a zip code
- /* function find_zipcode_city(val) {
-      alert('working');
-        document.getElementById("zip_code_city_name").innerHTML = '';
-        var zip_code = val;
-        var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
-        // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
-        var client_url = 'localhost';
-
-        if(zip_code){
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    const postalCode = JSON.parse(this.responseText);
-
-                    if(postalCode.result == "Ugyldig postnummer"){
-                        $('#zip_code-error').css('display','block');
-                        console.log(postalCode.result);
-                        if(document.getElementById('zip_code-error') == null) {
-                            $( "input[name='zip_code']" ).after( "<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>" );
-                        }else{
-                            document.getElementById("zip_code-error").innerHTML = "Ugyldig verdi";
-                        }
-                    }else{
-                        document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
-                        console.log(postalCode.result);
-                    }
-                }
-            };
-            xhttp.open("GET", api_url+"?clientUrl="+client_url+"&pnr="+zip_code, true);
-
-            xhttp.send();
-        }
-  }  */
-
-
-    //Add Fields
-    $.fn.WT_COPY_PASTE = function($this) {
-        var $copy = $('[wt-copy='+$this.attr('wt-more')+']');
-        $('[wt-paste='+$this.attr('wt-more')+']').append($copy.html());
-    };
-    $(document).on('click', '[wt-more]', function() {
-        $.fn.WT_COPY_PASTE($(this));
-    });
-    // DELETE COPY
-    $.fn.WT_COPY_DELETE = function($this) {
-        $this.parents('[wt-duplicate='+$this.attr('wt-delete')+']').remove();
-    };
-    $(document).on('click', '[wt-delete]', function() {
-        $.fn.WT_COPY_DELETE($(this));
-    });
-
 
     // Property quote show/hide remove button
     $(document).on('change', '#property_quote', function (e) {
@@ -283,7 +229,6 @@ $(document).ready(function (e) {
         if($(this).parent('.property-pdf-div').has('div.property-pdf-value')){
             $('.property-pdf-value').fadeOut();
         }
-
     });
 });
 

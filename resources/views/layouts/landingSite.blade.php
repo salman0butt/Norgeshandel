@@ -316,7 +316,6 @@
         </div>
     </div>
 </footer>
-
 <script>
     function find_zipcode_city(val) {
         document.getElementById("zip_code_city_name").innerHTML = '';
@@ -347,7 +346,6 @@
                 }
             };
             xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, true);
-
             xhttp.send();
         }
     }
@@ -358,6 +356,7 @@
 {{--<script src="{{asset('public/js/app.js')}}"></script>--}}
 <script src="{{asset('public/mediexpert.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
 <script src="{{asset('public/js/spin.min.js')}}"></script>
 <script src="{{asset('public/js/ladda.min.js')}}"></script>
 <script src="{{asset('public/js/common-norges.js')}}"></script>
