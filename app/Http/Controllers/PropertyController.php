@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Admin\Jobs\Job;
 use App\Media;
+use http\QueryString;
 use Mapper;
 use App\User;
 use App\Message;
@@ -46,10 +47,24 @@ class PropertyController extends Controller
     private $pagination;
 
     //
+    private $pusher;
+
     public function __construct()
     {
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true
+        );
+
+        $this->pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
         $this->pagination = getenv('PAGINATION');
-        $this->pagination = $this->pagination==0?30:$this->pagination;
+        $this->pagination = $this->pagination == 0 ? 30 : $this->pagination;
         Mapper::map(53.381128999999990000, -1.470085000000040000);
     }
 
@@ -59,7 +74,7 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function search_property_for_sale(Request $request)
+    public function search_property_for_sale(Request $request, $get_collection=false)
     {
         $table = 'property_for_sales';
         $col = 'list';
@@ -71,10 +86,10 @@ class PropertyController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join($table, $table.'.ad_id', 'ads.id')
+            ->join($table, $table . '.ad_id', 'ads.id')
             ->where('ads.status', 'published')
             ->whereNull('ads.deleted_at')
-            ->whereNull($table.'.deleted_at');
+            ->whereNull($table . '.deleted_at');
 
 
         $arr = Arr::only($request->all(), ['country']);
@@ -82,125 +97,128 @@ class PropertyController extends Controller
             $query->where('headline', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate($table.'.created_at', '=', $request->created_at);
+            $query->whereDate($table . '.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table.'.local_area_name', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table . '.local_area_name', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->asking_price_from) && !empty($request->asking_price_from)) {
-            $query->where($table.'.asking_price', '>=', (int)$request->asking_price_from);
+            $query->where($table . '.asking_price', '>=', (int)$request->asking_price_from);
         }
         if (isset($request->asking_price_to) && !empty($request->asking_price_to)) {
-            $query->where($table.'.asking_price', '<=', (int)$request->asking_price_to);
+            $query->where($table . '.asking_price', '<=', (int)$request->asking_price_to);
         }
 
         if (isset($request->total_price_from) && !empty($request->total_price_from)) {
-            $query->where($table.'.total_price', '>=', (int)$request->total_price_from);
+            $query->where($table . '.total_price', '>=', (int)$request->total_price_from);
         }
         if (isset($request->total_price_to) && !empty($request->total_price_to)) {
-            $query->where($table.'.total_price', '<=', (int)$request->total_price_to);
+            $query->where($table . '.total_price', '<=', (int)$request->total_price_to);
         }
 
         if (isset($request->rent_shared_cost_from) && !empty($request->rent_shared_cost_from)) {
-            $query->where($table.'.rent_shared_cost', '>=', (int)$request->rent_shared_cost_from);
+            $query->where($table . '.rent_shared_cost', '>=', (int)$request->rent_shared_cost_from);
         }
         if (isset($request->total_price_to) && !empty($request->total_price_to)) {
-            $query->where($table.'.rent_shared_cost', '<=', (int)$request->rent_shared_cost_to);
+            $query->where($table . '.rent_shared_cost', '<=', (int)$request->rent_shared_cost_to);
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where($table.'.use_area', '>=', (int)$request->use_area_from);
+            $query->where($table . '.use_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where($table.'.use_area', '<=', (int)$request->use_area_to);
+            $query->where($table . '.use_area', '<=', (int)$request->use_area_to);
         }
 
         if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
-            $query->where($table.'.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+            $query->where($table . '.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
         }
 
         if (isset($request->land_from) && !empty($request->land_from)) {
-            $query->where($table.'.land', '>=', (int)$request->land_from);
+            $query->where($table . '.land', '>=', (int)$request->land_from);
         }
         if (isset($request->land_to) && !empty($request->land_to)) {
-            $query->where($table.'.land', '<=', (int)$request->land_to);
+            $query->where($table . '.land', '<=', (int)$request->land_to);
         }
 
         if (isset($request->year_from) && !empty($request->year_from)) {
-            $query->where($table.'.year', '>=', (int)$request->year_from);
+            $query->where($table . '.year', '>=', (int)$request->year_from);
         }
 
         if (isset($request->year_to) && !empty($request->year_to)) {
-            $query->where($table.'.year', '<=', (int)$request->year_to);
+            $query->where($table . '.year', '<=', (int)$request->year_to);
         }
 
         if (isset($request->condition) && !empty($request->condition)) {
             if (in_array("new", $request->condition)) {
-                $query->where($table.'.year', '>=', today()->addMonths(-6)->year);
+                $query->where($table . '.year', '>=', today()->addMonths(-6)->year);
             }
             if (in_array("used", $request->condition)) {
-                $query->where($table.'.year', '<', today()->addMonths(-6)->year);
+                $query->where($table . '.year', '<', today()->addMonths(-6)->year);
             }
         }
 
         if (isset($request->display_date) && !empty($request->display_date)) {
-            $query->whereDate($table.'.deliver_date', '=', $request->display_date[0]);
+            $query->whereDate($table . '.deliver_date', '=', $request->display_date[0]);
             for ($i = 1; $i < count($request->display_date); $i++) {
-                $query->orWhereDate($table.'.deliver_date', '=', $request->display_date[$i]);
+                $query->orWhereDate($table . '.deliver_date', '=', $request->display_date[$i]);
             }
         }
 
         if (isset($request->pfs_property_type) && !empty($request->pfs_property_type)) {
-            $query->whereIn($table.'.property_type', $request->pfs_property_type);
+            $query->whereIn($table . '.property_type', $request->pfs_property_type);
         }
 
         if (isset($request->pfs_tenure) && !empty($request->pfs_tenure)) {
-            $query->whereIn($table.'.tenure', $request->pfs_tenure);
+            $query->whereIn($table . '.tenure', $request->pfs_tenure);
         }
 
         if (isset($request->facilities) && !empty($request->facilities)) {
-            $query->where($table.'.facilities', 'like', '%' . $request->facilities[0] . '%');
+            $query->where($table . '.facilities', 'like', '%' . $request->facilities[0] . '%');
             for ($i = 1; $i < count($request->facilities); $i++) {
-                $query->orWhere($table.'.facilities', 'like', '%' . $request->facilities[$i] . '%');
+                $query->orWhere($table . '.facilities', 'like', '%' . $request->facilities[$i] . '%');
             }
         }
 
         if (isset($request->floor) && !empty($request->floor)) {
-            $query->whereIn($table.'.floor', $request->floor);
+            $query->whereIn($table . '.floor', $request->floor);
             if (in_array('over 6', $request->floor)) {
-                $query->orwhere($table.'.floor', '>', 6);
+                $query->orwhere($table . '.floor', '>', 6);
             }
         }
 
         if (isset($request->energy_unit) && !empty($request->energy_unit)) {
-            $query->whereIn($table.'.energy_grade', $request->energy_unit);
+            $query->whereIn($table . '.energy_grade', $request->energy_unit);
         }
 
-            switch ($sort) {
-                case 'priced-low-high':
-                    $query->orderBy('asking_price', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('asking_price', 'DESC');
-                    break;
-                case 'p-rom-area-low-high':
-                    $query->orderBy('primary_room', 'ASC');
-                    break;
-                case 'p-rom-area-high-low':
-                    $query->orderBy('primary_room', 'DESC');
-                    break;
-                case 'total-price-low-high':
-                    $query->orderBy('total_price', 'ASC');
-                    break;
-                case 'total-price-high-low':
-                    $query->orderBy('total_price', 'DESC');
-                    break;
-            }
+        switch ($sort) {
+            case 'priced-low-high':
+                $query->orderBy('asking_price', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('asking_price', 'DESC');
+                break;
+            case 'p-rom-area-low-high':
+                $query->orderBy('primary_room', 'ASC');
+                break;
+            case 'p-rom-area-high-low':
+                $query->orderBy('primary_room', 'DESC');
+                break;
+            case 'total-price-low-high':
+                $query->orderBy('total_price', 'ASC');
+                break;
+            case 'total-price-high-low':
+                $query->orderBy('total_price', 'DESC');
+                break;
+        }
         $query->where($arr);
 
+        if ($get_collection){
+            return $query->get();
+        }
 
         $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
@@ -211,7 +229,7 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function search_commercial_property_for_sale(Request $request)
+    public function search_commercial_property_for_sale(Request $request, $get_collection = false)
     {
         $table = 'commercial_property_for_sales';
         $col = 'list';
@@ -224,10 +242,10 @@ class PropertyController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join($table, $table.'.ad_id', 'ads.id')
+            ->join($table, $table . '.ad_id', 'ads.id')
             ->where('ads.status', 'published')
-        ->whereNull('ads.deleted_at')
-        ->whereNull($table.'.deleted_at');
+            ->whereNull('ads.deleted_at')
+            ->whereNull($table . '.deleted_at');
 
         if (isset($request->country) && !empty($request->country)) {
             $query->whereIn('location', $request->country);
@@ -236,46 +254,50 @@ class PropertyController extends Controller
             $query->where('headline', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate($table.'.created_at', '=', $request->created_at);
+            $query->whereDate($table . '.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table.'.street_address', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table . '.street_address', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->price_from) && !empty($request->price_from)) {
-            $query->where($table.'.value_rate', '>=', (int)$request->price_from);
+            $query->where($table . '.value_rate', '>=', (int)$request->price_from);
         }
         if (isset($request->price_to) && !empty($request->price_to)) {
-            $query->where($table.'.value_rate', '<=', (int)$request->price_to);
+            $query->where($table . '.value_rate', '<=', (int)$request->price_to);
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where($table.'.use_area', '>=', (int)$request->use_area_from);
+            $query->where($table . '.use_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where($table.'.use_area', '<=', (int)$request->use_area_to);
+            $query->where($table . '.use_area', '<=', (int)$request->use_area_to);
         }
 
         if (isset($request->cpfs_property_type) && !empty($request->cpfs_property_type)) {
-            $query->where($table.'.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
+            $query->where($table . '.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
             for ($i = 1; $i < count($request->cpfs_property_type); $i++) {
-                $query->orWhere($table.'.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
+                $query->orWhere($table . '.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
             }
         }
 
-            switch ($sort) {
-                case 'published':
-                    $query->orderBy($table.'.created_at', 'DESC');
-                    break;
-                case 'priced-low-high':
-                    $query->orderBy('value_rate', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('value_rate', 'DESC');
-                    break;
-            }
+        switch ($sort) {
+            case 'published':
+                $query->orderBy($table . '.created_at', 'DESC');
+                break;
+            case 'priced-low-high':
+                $query->orderBy('value_rate', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('value_rate', 'DESC');
+                break;
+        }
+
+        if ($get_collection){
+            return $query->get();
+        }
 
         $add_array = $query->paginate($this->pagination);
 
@@ -287,7 +309,7 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function search_commercial_property_for_rent(Request $request)
+    public function search_commercial_property_for_rent(Request $request, $get_collection = false)
     {
         $table = 'commercial_property_for_rents';
         $col = 'list';
@@ -299,10 +321,10 @@ class PropertyController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join($table, $table.'.ad_id', 'ads.id')
+            ->join($table, $table . '.ad_id', 'ads.id')
             ->where('ads.status', 'published')
             ->whereNull('ads.deleted_at')
-            ->whereNull($table.'.deleted_at');
+            ->whereNull($table . '.deleted_at');
 
         if (isset($request->country) && !empty($request->country)) {
             $query->whereIn('country', $request->country);
@@ -311,31 +333,31 @@ class PropertyController extends Controller
             $query->where('heading', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate($table.'.created_at', '=', $request->created_at);
+            $query->whereDate($table . '.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table.'.street_address', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table . '.street_address', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where($table.'.use_area', '>=', (int)$request->use_area_from);
+            $query->where($table . '.use_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where($table.'.use_area', '<=', (int)$request->use_area_to);
+            $query->where($table . '.use_area', '<=', (int)$request->use_area_to);
         }
 
         if (isset($request->cpfs_property_type) && !empty($request->cpfs_property_type)) {
-            $query->where($table.'.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
+            $query->where($table . '.property_type', 'like', '%' . $request->cpfs_property_type[0] . '%');
             for ($i = 1; $i < count($request->cpfs_property_type); $i++) {
-                $query->orWhere($table.'.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
+                $query->orWhere($table . '.property_type', 'like', '%' . $request->cpfs_property_type[$i] . '%');
             }
         }
 
         switch ($sort) {
             case 'published':
-                $query->orderBy($table.'.created_at', 'DESC');
+                $query->orderBy($table . '.created_at', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('value_rate', 'ASC');
@@ -345,6 +367,9 @@ class PropertyController extends Controller
                 break;
         }
 
+        if ($get_collection){
+            return $query->get();
+        }
 
         $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
@@ -355,7 +380,7 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function search_commercial_plots(Request $request)
+    public function search_commercial_plots(Request $request, $get_collection = false)
     {
         $table = 'commercial_plots';
         $col = 'list';
@@ -367,10 +392,10 @@ class PropertyController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join($table, $table.'.ad_id', 'ads.id')
+            ->join($table, $table . '.ad_id', 'ads.id')
             ->where('ads.status', 'published')
             ->whereNull('ads.deleted_at')
-            ->whereNull($table.'.deleted_at');
+            ->whereNull($table . '.deleted_at');
 
         if (isset($request->country) && !empty($request->country)) {
             $query->whereIn('country', $request->country);
@@ -379,26 +404,30 @@ class PropertyController extends Controller
             $query->where('headline', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate($table.'.created_at', '=', $request->created_at);
+            $query->whereDate($table . '.created_at', '=', $request->created_at);
         }
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where($table.'.plot_size', '>=', (int)$request->use_area_from);
+            $query->where($table . '.plot_size', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where($table.'.plot_size', '<=', (int)$request->use_area_to);
+            $query->where($table . '.plot_size', '<=', (int)$request->use_area_to);
         }
 
-            switch ($sort) {
-                case 'published':
-                    $query->orderBy($table.'.created_at', 'DESC');
-                    break;
-                case 'priced-low-high':
-                    $query->orderBy('value_rate', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('value_rate', 'DESC');
-                    break;
-            }
+        switch ($sort) {
+            case 'published':
+                $query->orderBy($table . '.created_at', 'DESC');
+                break;
+            case 'priced-low-high':
+                $query->orderBy('value_rate', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('value_rate', 'DESC');
+                break;
+        }
+
+        if ($get_collection){
+            return $query->get();
+        }
 
         $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
@@ -409,7 +438,7 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function search_property_for_rent(Request $request)
+    public function search_property_for_rent(Request $request, $get_collection = false)
     {
 //        DB::enableQueryLog();
         $table = 'property_for_rent';
@@ -422,38 +451,38 @@ class PropertyController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join($table, $table.'.ad_id', 'ads.id')
+            ->join($table, $table . '.ad_id', 'ads.id')
             ->where('ads.status', 'published')
             ->whereNull('ads.deleted_at')
-            ->whereNull($table.'.deleted_at');
+            ->whereNull($table . '.deleted_at');
 
         if (isset($request->search) && !empty($request->search)) {
             $query->where('heading', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate($table.'.created_at', '=', $request->created_at);
+            $query->whereDate($table . '.created_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table.'.street_address', 'like', '%' . $request->local_area_name . '%');
+                $query->where($table . '.street_address', 'like', '%' . $request->local_area_name . '%');
             }
         }
 
         if (isset($request->monthly_rent_from) && !empty($request->monthly_rent_from)) {
-            $query->where($table.'.monthly_rent', '>=', (int)$request->monthly_rent_from);
+            $query->where($table . '.monthly_rent', '>=', (int)$request->monthly_rent_from);
         }
         if (isset($request->monthly_rent_to) && !empty($request->monthly_rent_to)) {
-            $query->where($table.'.monthly_rent', '<=', (int)$request->monthly_rent_to);
+            $query->where($table . '.monthly_rent', '<=', (int)$request->monthly_rent_to);
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
-            $query->where($table.'.gross_area', '>=', (int)$request->use_area_from);
+            $query->where($table . '.gross_area', '>=', (int)$request->use_area_from);
         }
         if (isset($request->use_area_to) && !empty($request->use_area_to)) {
-            $query->where($table.'.gross_area', '<=', (int)$request->use_area_to);
+            $query->where($table . '.gross_area', '<=', (int)$request->use_area_to);
         }
         if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
-            $query->where($table.'.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+            $query->where($table . '.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
         }
         if (isset($request->pfr_property_type) && !empty($request->pfr_property_type)) {
             $query->where(function ($query) use ($request) {
@@ -498,30 +527,33 @@ class PropertyController extends Controller
             });
         }
 //
-            switch ($sort) {
-                case 'priced-low-high':
-                    $query->orderBy('asking_price', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('asking_price', 'DESC');
-                    break;
-                case 'p-rom-area-low-high':
-                    $query->orderBy('primary_room', 'ASC');
-                    break;
-                case 'p-rom-area-high-low':
-                    $query->orderBy('primary_room', 'DESC');
-                    break;
-                case 'total-price-low-high':
-                    $query->orderBy('total_price', 'ASC');
-                    break;
-                case 'total-price-high-low':
-                    $query->orderBy('total_price', 'DESC');
-                    break;
-                default:
-                    $query->orderBy('property_for_rent.id', 'DESC');
-                    break;
+        switch ($sort) {
+            case 'priced-low-high':
+                $query->orderBy('asking_price', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('asking_price', 'DESC');
+                break;
+            case 'p-rom-area-low-high':
+                $query->orderBy('primary_room', 'ASC');
+                break;
+            case 'p-rom-area-high-low':
+                $query->orderBy('primary_room', 'DESC');
+                break;
+            case 'total-price-low-high':
+                $query->orderBy('total_price', 'ASC');
+                break;
+            case 'total-price-high-low':
+                $query->orderBy('total_price', 'DESC');
+                break;
+            default:
+                $query->orderBy('property_for_rent.id', 'DESC');
+                break;
         }
 
+        if ($get_collection){
+            return $query->get();
+        }
 
         $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
@@ -532,7 +564,7 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function search_holiday_homes_for_sale(Request $request)
+    public function search_holiday_homes_for_sale(Request $request, $get_collection = false)
     {
         DB::enableQueryLog();
         $col = 'list';
@@ -602,42 +634,45 @@ class PropertyController extends Controller
             $query->whereIn('property_holidays_homes_for_sales.property_type', $request->hhfs_property_type);
         }
         if (isset($request->display_date) && !empty($request->display_date)) {
-            $query->where(function($query) use ($request){
-                $query->where('property_holidays_homes_for_sales.delivery_date', 'like', '%'.$request->display_date[0].'%');
+            $query->where(function ($query) use ($request) {
+                $query->where('property_holidays_homes_for_sales.delivery_date', 'like', '%' . $request->display_date[0] . '%');
                 for ($i = 1; $i < count($request->display_date); $i++) {
-                    $query->orWhere('property_holidays_homes_for_sales.delivery_date', 'like', '%'.$request->display_date[$i].'%');
+                    $query->orWhere('property_holidays_homes_for_sales.delivery_date', 'like', '%' . $request->display_date[$i] . '%');
                 }
-                $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%'.$request->display_date[0].'%');
+                $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%' . $request->display_date[0] . '%');
                 for ($i = 1; $i < count($request->display_date); $i++) {
-                    $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%'.$request->display_date[$i].'%');
+                    $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%' . $request->display_date[$i] . '%');
                 }
             });
         }
 
-            $order = $request->order;
-            switch ($order) {
-                case 'published':
-                    $query->orderBy('ad.created_at', 'DESC');
-                    break;
-                case 'priced-low-high':
-                    $query->orderBy('value_rate', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('asking_price', 'DESC');
-                    break;
-            }
+        $order = $request->order;
+        switch ($order) {
+            case 'published':
+                $query->orderBy('ad.created_at', 'DESC');
+                break;
+            case 'priced-low-high':
+                $query->orderBy('value_rate', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('asking_price', 'DESC');
+                break;
+        }
 
+        if ($get_collection){
+            return $query->get();
+        }
         $add_array = $query->paginate($this->pagination);
 //        dd(DB::getQueryLog());
         if ($request->ajax()) {
             $html = view('user-panel.property.search-holiday-homes-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
             exit($html);
         }
-                        return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array', 'sort'));
+        return view('user-panel.property.search-holiday-homes-for-sale', compact('col', 'add_array', 'sort'));
     }
 
 //    zain
-    public function search_business_for_sale(Request $request)
+    public function search_business_for_sale(Request $request, $get_collection = false)
     {
         $col = 'list';
         $sort = 'published';
@@ -671,17 +706,21 @@ class PropertyController extends Controller
             $query->whereIn('business_for_sales.country', $request->country);
         }
 
-            switch ($sort) {
-                case 'published':
-                    $query->orderBy('ads.created_at', 'DESC');
-                    break;
-                case 'priced-low-high':
-                    $query->orderBy('price', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('price', 'DESC');
-                    break;
-            }
+        switch ($sort) {
+            case 'published':
+                $query->orderBy('ads.created_at', 'DESC');
+                break;
+            case 'priced-low-high':
+                $query->orderBy('price', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('price', 'DESC');
+                break;
+        }
+
+        if($get_collection){
+            return $query->get();
+        }
 
         $add_array = $query->paginate($this->pagination);
 //        dd(DB::getQueryLog());
@@ -693,7 +732,7 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function search_flat_wishes_rented(Request $request)
+    public function search_flat_wishes_rented(Request $request, $get_collection = false)
     {
         $col = 'list';
         $sort = 'published';
@@ -726,41 +765,45 @@ class PropertyController extends Controller
             $query->whereIn('flat_wishes_renteds.region', $request->country);
         }
         if (isset($request->fwr_property_type) && !empty($request->fwr_property_type)) {
-            $query->where(function($query) use ($request){
-                $query->where('flat_wishes_renteds.property_type', 'like', '%'.$request->fwr_property_type[0].'%');
-                for ($i=1; $i<count($request->fwr_property_type); $i++){
-                    $query->orWhere('flat_wishes_renteds.property_type', 'like', '%'.$request->fwr_property_type[$i].'%');
+            $query->where(function ($query) use ($request) {
+                $query->where('flat_wishes_renteds.property_type', 'like', '%' . $request->fwr_property_type[0] . '%');
+                for ($i = 1; $i < count($request->fwr_property_type); $i++) {
+                    $query->orWhere('flat_wishes_renteds.property_type', 'like', '%' . $request->fwr_property_type[$i] . '%');
                 }
             });
         }
         if (isset($request->wanted_from) && !empty($request->wanted_from)) {
-            $query->where(function($query) use ($request){
-                $query->where('flat_wishes_renteds.wanted_from', 'like', '%'.$request->wanted_from[0].'%');
-                for ($i=1; $i<count($request->wanted_from); $i++){
-                    $query->orWhere('flat_wishes_renteds.wanted_from', 'like', '%'.$request->wanted_from[$i].'%');
+            $query->where(function ($query) use ($request) {
+                $query->where('flat_wishes_renteds.wanted_from', 'like', '%' . $request->wanted_from[0] . '%');
+                for ($i = 1; $i < count($request->wanted_from); $i++) {
+                    $query->orWhere('flat_wishes_renteds.wanted_from', 'like', '%' . $request->wanted_from[$i] . '%');
                 }
             });
         }
         if (isset($request->number_of_tenants) && !empty($request->number_of_tenants)) {
-            $query->where(function($query) use ($request){
+            $query->where(function ($query) use ($request) {
                 $query->whereIn('flat_wishes_renteds.number_of_tenants', $request->number_of_tenants);
-                if(in_array(4, $request->number_of_tenants)) {
+                if (in_array(4, $request->number_of_tenants)) {
                     $query->orWhere('flat_wishes_renteds.number_of_tenants', '>=', 4);
                 }
             });
         }
 
-            switch ($sort) {
-                case 'published':
-                    $query->orderBy('flat_wishes_renteds.created_at', 'DESC');
-                    break;
-                case 'priced-low-high':
-                    $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'ASC');
-                    break;
-                case 'priced-high-low':
-                    $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'DESC');
-                    break;
-            }
+        switch ($sort) {
+            case 'published':
+                $query->orderBy('flat_wishes_renteds.created_at', 'DESC');
+                break;
+            case 'priced-low-high':
+                $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'DESC');
+                break;
+        }
+
+        if ($get_collection){
+            return $query->get();
+        }
 
         $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
@@ -771,7 +814,8 @@ class PropertyController extends Controller
     }
 
 //    zain
-    public function new_property_for_sale(Request $request){
+    public function new_property_for_sale(Request $request)
+    {
         $ad = new Ad(['ad_type' => 'property_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
         if ($ad) {
@@ -779,39 +823,39 @@ class PropertyController extends Controller
             $ad->propertyForSale()->save($property);
             if ($property) {
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
-      //prooperty for new_property_for_flat_wishes_rented new
-        public function new_property_for_flat_wishes_rented(Request $request){
-    
+
+    //prooperty for new_property_for_flat_wishes_rented new
+    public function new_property_for_flat_wishes_rented(Request $request)
+    {
+
         $ad = new Ad(['ad_type' => 'property_flat_wishes_rented', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
-       
+
 
         if ($ad) {
             $property = new FlatWishesRented(['user_id' => Auth::id()]);
             $ad->propertyFlatWishesRented()->save($property);
             if ($property) {
-              
+
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
+
     //prooperty for rent new
-        public function new_property_for_rent(Request $request){
+    public function new_property_for_rent(Request $request)
+    {
         $ad = new Ad(['ad_type' => 'property_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
         if ($ad) {
@@ -819,18 +863,17 @@ class PropertyController extends Controller
             $ad->propertyForRent()->save($property);
             if ($property) {
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
 
-        //prooperty for new_property_for_holiday_homes_for_sale new
-    public function new_property_for_holiday_homes_for_sale(Request $request){
+    //prooperty for new_property_for_holiday_homes_for_sale new
+    public function new_property_for_holiday_homes_for_sale(Request $request)
+    {
 
         $ad = new Ad(['ad_type' => 'property_holiday_home_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
@@ -842,17 +885,17 @@ class PropertyController extends Controller
             if ($property) {
 
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
+
     //prooperty for new_commercial_property_for_sale new
-    public function new_commercial_property_for_sale(Request $request){
+    public function new_commercial_property_for_sale(Request $request)
+    {
 
         $ad = new Ad(['ad_type' => 'property_commercial_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
@@ -864,18 +907,17 @@ class PropertyController extends Controller
             if ($property) {
 
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
 
-        //prooperty for new_commercial_property_for_rent new
-    public function new_commercial_property_for_rent(Request $request){
+    //prooperty for new_commercial_property_for_rent new
+    public function new_commercial_property_for_rent(Request $request)
+    {
 
         $ad = new Ad(['ad_type' => 'property_commercial_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
@@ -887,18 +929,17 @@ class PropertyController extends Controller
             if ($property) {
 
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
 
-       //prooperty for new_business_for_sale new
-    public function new_business_for_sale(Request $request){
+    //prooperty for new_business_for_sale new
+    public function new_business_for_sale(Request $request)
+    {
 
         $ad = new Ad(['ad_type' => 'property_business_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
@@ -910,40 +951,38 @@ class PropertyController extends Controller
             if ($property) {
 
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
-    
-       //prooperty for new_commercial_plots new
-    public function new_commercial_plots(Request $request){
-    
+
+    //prooperty for new_commercial_plots new
+    public function new_commercial_plots(Request $request)
+    {
+
         $ad = new Ad(['ad_type' => 'property_commercial_plots', 'status' => 'saved', 'user_id' => Auth::id()]);
         $ad->save();
-       
+
 
         if ($ad) {
             $property = new CommercialPlot(['user_id' => Auth::id()]);
             $ad->propertyCommercialPlot()->save($property);
             if ($property) {
                 return redirect(url('complete/ad/' . $ad->id));
-            }
-            else{
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
 
 //    zain
-    public function complete_property($id){
+    public function complete_property($id)
+    {
 
         $ad = Ad::find($id);
 
@@ -953,33 +992,31 @@ class PropertyController extends Controller
                 if ($property_for_sale1) {
                     return view('user-panel.property.new_sale_add', compact('property_for_sale1'));
                 }
-            }else if ($ad->ad_type == 'property_for_rent') {
-                    $property_for_rent1 = $ad->property;
-                    return view('user-panel.property.new_add', compact('property_for_rent1'));
-            }else if ($ad->ad_type == 'property_flat_wishes_rented') {
-                    $flat_wishes_rented1 = $ad->property;
+            } else if ($ad->ad_type == 'property_for_rent') {
+                $property_for_rent1 = $ad->property;
+                return view('user-panel.property.new_add', compact('property_for_rent1'));
+            } else if ($ad->ad_type == 'property_flat_wishes_rented') {
+                $flat_wishes_rented1 = $ad->property;
                 return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));
-            }else if ($ad->ad_type == 'property_holiday_home_for_sale') {
-                    $holiday_home_for_sale1 = $ad->property;
+            } else if ($ad->ad_type == 'property_holiday_home_for_sale') {
+                $holiday_home_for_sale1 = $ad->property;
                 return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale1'));
-            }else if ($ad->ad_type == 'property_commercial_for_sale') {
-                    $commercial_property = $ad->property;
-              return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));
-            }else if ($ad->ad_type == 'property_commercial_for_rent') {
-                    $commercial_for_rent = $ad->property;
-              return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));
-            }else if ($ad->ad_type == 'property_business_for_sale') {
-                    $business_for_sale = $ad->property;
-              return view('user-panel.property.business_for_sale', compact('business_for_sale'));   
-            }else if ($ad->ad_type == 'property_commercial_plots') {
+            } else if ($ad->ad_type == 'property_commercial_for_sale') {
+                $commercial_property = $ad->property;
+                return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));
+            } else if ($ad->ad_type == 'property_commercial_for_rent') {
+                $commercial_for_rent = $ad->property;
+                return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));
+            } else if ($ad->ad_type == 'property_business_for_sale') {
+                $business_for_sale = $ad->property;
+                return view('user-panel.property.business_for_sale', compact('business_for_sale'));
+            } else if ($ad->ad_type == 'property_commercial_plots') {
                 $commercial_plots = $ad->property;
-                return view('user-panel.property.commercial_plots', compact('commercial_plots'));   
-            }
-            else{
+                return view('user-panel.property.commercial_plots', compact('commercial_plots'));
+            } else {
                 abort(404);
             }
-        }
-        else{
+        } else {
             abort(404);
         }
     }
@@ -1025,7 +1062,6 @@ class PropertyController extends Controller
         }
 
 
-
         $add_array = DB::table('property_for_sales')->orderBy($order_by_thing, $order_by)->paginate($this->pagination);
 
         if ($request->ajax()) {
@@ -1051,7 +1087,7 @@ class PropertyController extends Controller
         common::delete_media(Auth::user()->id, 'property_for_rent_temp_images', 'gallery');
         return view('user-panel.property.new_add');
     }
-      //update dummy property for sale to published
+    //update dummy property for sale to published
     // public function UpdateDummyRentAdd(AddPropertyForRent $request, $id) {
     //   //  DB::connection()->enableQueryLog();
     //     $property = PropertyForRent::find($id);
@@ -1081,8 +1117,8 @@ class PropertyController extends Controller
     {
         DB::beginTransaction();
         try {
-            if(!$request->facilities2){
-                $request->merge(['facilities2'=>null]);
+            if (!$request->facilities2) {
+                $request->merge(['facilities2' => null]);
             }
             $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type']);
 
@@ -1378,11 +1414,11 @@ class PropertyController extends Controller
         $property_quote = $property_pdf = '';
         DB::beginTransaction();
         try {
-            if(!$request->amenities){
-                $request->merge(['amenities'=>null]);
+            if (!$request->amenities) {
+                $request->merge(['amenities' => null]);
             }
-            if(!$request->owned_site){
-                $request->merge(['owned_site'=>null]);
+            if (!$request->owned_site) {
+                $request->merge(['owned_site' => null]);
             }
             $property_home_for_sale_data = $request->except('upload_dropzone_images_type');
 
@@ -1477,7 +1513,6 @@ class PropertyController extends Controller
             }
 
             $response->update($property_home_for_sale_data);
-
             DB::commit();
             $data['success'] = $response;
             $data['property_quote'] = $property_quote;
@@ -1514,7 +1549,6 @@ class PropertyController extends Controller
 
         return redirect('/my-business/my-ads');
     }
-
 
     //AddPropertyHolidayHomeForSale $request
     public function addHomeForSaleAd(AddPropertyHolidayHomeForSale $request)
@@ -1614,17 +1648,15 @@ class PropertyController extends Controller
 
             $response = PropertyHolidaysHomesForSale::create($property_home_for_sale_data);
 
-
-            //Notification data
-            $notifiable_id = $response->id;
-            $notification_obj = new NotificationController();
-            $notification_response = $notification_obj->create($notifiable_id, 'App\PropertyHolidaysHomesForSale', 'property have been added');
-            $notification_id_search = $notification_response->id;
-
-            //trigger event
-            //event(new PropertyForRentEvent($notifiable_id, $notification_id_search));
             DB::commit();
             $data['success'] = $response;
+
+            if ($response) {
+//      notifications bellow
+                common::send_search_notification($response, 'saved_search', 'Ny bolig er publisert', $this->pusher, 'property/holiday-homes-for-sale');
+//      notifications ended
+            }
+
             echo json_encode($data);
 
         } catch (\Exception $e) {
@@ -1637,102 +1669,128 @@ class PropertyController extends Controller
     }
 
     //update dummy property for sale to published
-    public function UpdateDummySaleAdd(AddPropertyForSale $request, $id) {
-      //  DB::connection()->enableQueryLog();
+    public function UpdateDummySaleAdd(AddPropertyForSale $request, $id)
+    {
+        //  DB::connection()->enableQueryLog();
         $property = PropertyForSale::find($id);
-        $ad = $property->ad;
-
-          $response = $ad->update(['status'=>'published']);
-        //  dd(DB::getQueryLog());
-
+        if ($property) {
+            $message = '';
+            $ad = $property->ad;
+            if ($ad->status == 'saved') {
+                $message = 'Ny bolig er publisert';
+            } elseif ($ad->status == 'published') {
+                $message = 'Eiendommen er oppdatert';
+            }
+            $response = $ad->update(['status' => 'published']);
+            if ($response) {
+//        notifications bellow
+                common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-sale');
+//      notifications ended
+            }
             $data['success'] = $response;
             echo json_encode($data);
+        }
+        return null;
     }
-       //update dummy property for sale to published
-    public function UpdateDummyRentAdd(AddPropertyForRent $request, $id) {
-      //  DB::connection()->enableQueryLog();
-      //dd('working');
+
+    //update dummy property for sale to published
+    public function UpdateDummyRentAdd(AddPropertyForRent $request, $id)
+    {
+        //  DB::connection()->enableQueryLog();
+        //dd('working');
         $property = PropertyForRent::find($id);
         $ad = $property->ad;
 
-          $response = $ad->update(['status'=>'published']);
+        $response = $ad->update(['status' => 'published']);
         //  dd(DB::getQueryLog());
 
-            $data['success'] = $response;
-            echo json_encode($data);
+        $data['success'] = $response;
+        echo json_encode($data);
     }
-           //update dummy updateDummyHomeForSaleAd
-    public function updateDummyHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id) {
-      //  DB::connection()->enableQueryLog();
-      //dd('working');
+
+    //update dummy updateDummyHomeForSaleAd
+    public function updateDummyHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id)
+    {
         $property = PropertyHolidaysHomesForSale::find($id);
         $ad = $property->ad;
 
-          $response = $ad->update(['status'=>'published']);
-        //  dd(DB::getQueryLog());
+        $response = $ad->update(['status' => 'published']);
 
-            $data['success'] = $response;
-            echo json_encode($data);
+//            notification bellow
+        common::send_search_notification($property, 'saved_search', 'Eiendommen er oppdatert', $this->pusher, 'property/holiday-homes-for-sale');
+//            end notification
+
+        $data['success'] = $response;
+        echo json_encode($data);
     }
-          //update dummy updateDummyCommercialPropertyForSale
-    public function updateDummyCommercialPropertyForSale(AddCommercialPropertyForSale $request, $id) {
-      //  DB::connection()->enableQueryLog();
-      //dd('working');
+
+    //update dummy updateDummyCommercialPropertyForSale
+    public function updateDummyCommercialPropertyForSale(AddCommercialPropertyForSale $request, $id)
+    {
+        //  DB::connection()->enableQueryLog();
+        //dd('working');
         $property = CommercialPropertyForSale::find($id);
         $ad = $property->ad;
 
-          $response = $ad->update(['status'=>'published']);
+        $response = $ad->update(['status' => 'published']);
         //  dd(DB::getQueryLog());
 
-            $data['success'] = $response;
-            echo json_encode($data);
+        $data['success'] = $response;
+        echo json_encode($data);
     }
-              //update dummy updateDummyCommercialPropertyForRent
-    public function updateDummyCommercialPropertyForRent(AddCommercialPropertyForRent $request, $id) {
-      //  DB::connection()->enableQueryLog();
-      //dd('working');
+
+    //update dummy updateDummyCommercialPropertyForRent
+    public function updateDummyCommercialPropertyForRent(AddCommercialPropertyForRent $request, $id)
+    {
+        //  DB::connection()->enableQueryLog();
+        //dd('working');
         $property = CommercialPropertyForRent::find($id);
         $ad = $property->ad;
 
-          $response = $ad->update(['status'=>'published']);
+        $response = $ad->update(['status' => 'published']);
         //  dd(DB::getQueryLog());
 
-            $data['success'] = $response;
-            echo json_encode($data);
+        $data['success'] = $response;
+        echo json_encode($data);
     }
 
     //update dummy updateDummyCommercialPropertyForRent
-    public function updateDummyBusinessForSale(AddBusinessForSale $request, $id) {
+    public function updateDummyBusinessForSale(AddBusinessForSale $request, $id)
+    {
         $property = BusinessForSale::find($id);
         $ad = $property->ad;
 
-          $response = $ad->update(['status'=>'published']);
-     
-          
-            $data['success'] = $response;
-            echo json_encode($data);
+        $response = $ad->update(['status' => 'published']);
+
+
+        $data['success'] = $response;
+        echo json_encode($data);
     }
-          //update dummy property for sale to published
-    public function updateDummyFlatWishesRented(AddFlatWishesRented $request, $id) {
-      //  DB::connection()->enableQueryLog();
+
+    //update dummy property for sale to published
+    public function updateDummyFlatWishesRented(AddFlatWishesRented $request, $id)
+    {
+        //  DB::connection()->enableQueryLog();
         $property = FlatWishesRented::find($id);
         $ad = $property->ad;
 
-          $response = $ad->update(['status'=>'published']);
+        $response = $ad->update(['status' => 'published']);
         //  dd(DB::getQueryLog());
 
-            $data['success'] = $response;
-            echo json_encode($data);
+        $data['success'] = $response;
+        echo json_encode($data);
     }
+
     //update dummy updateDummyCommercialPropertyForRent
-    public function updateDummyCommercialPlots(AddCommercialPlot $request, $id) {
+    public function updateDummyCommercialPlots(AddCommercialPlot $request, $id)
+    {
 
         $property = CommercialPlot::find($id);
         $ad = $property->ad;
-          $response = $ad->update(['status'=>'published']);
+        $response = $ad->update(['status' => 'published']);
 
-            $data['success'] = $response;
-            echo json_encode($data);
+        $data['success'] = $response;
+        echo json_encode($data);
     }
 
     public function updateSaleAdd(Request $request, $id)
@@ -1740,18 +1798,18 @@ class PropertyController extends Controller
         $property_quote = $property_pdf = '';
         DB::beginTransaction();
         try {
-            if(!$request->approved_rental_part){
-                $request->merge(['approved_rental_part'=>null]);
+            if (!$request->approved_rental_part) {
+                $request->merge(['approved_rental_part' => null]);
             }
-            if(!$request->facilities2){
-                $request->merge(['facilities2'=>null]);
+            if (!$request->facilities2) {
+                $request->merge(['facilities2' => null]);
             }
-            if(!$request->facilities3){
-                $request->merge(['facilities3'=>null]);
+            if (!$request->facilities3) {
+                $request->merge(['facilities3' => null]);
             }
-             if(!$request->facilities4){
-                 $request->merge(['facilities4'=>null]);
-             }
+            if (!$request->facilities4) {
+                $request->merge(['facilities4' => null]);
+            }
 
             $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type']);
 
@@ -2172,22 +2230,22 @@ class PropertyController extends Controller
         try {
             $flat_wishes_rented_data = $request->except('upload_dropzone_images_type');
             $regions = "";
-            if(isset($flat_wishes_rented_data['region'])){
+            if (isset($flat_wishes_rented_data['region'])) {
                 foreach ($flat_wishes_rented_data['region'] as $key => $val) {
                     $regions .= $val . ",";
                 }
                 $flat_wishes_rented_data['region'] = $regions;
-            }else{
+            } else {
                 $flat_wishes_rented_data['region'] = null;
             }
 
             $property_types = "";
-            if(isset($flat_wishes_rented_data['property_type'])){
+            if (isset($flat_wishes_rented_data['property_type'])) {
                 foreach ($flat_wishes_rented_data['property_type'] as $key => $val) {
                     $property_types .= $val . ",";
                 }
                 $flat_wishes_rented_data['property_type'] = $property_types;
-            }else{
+            } else {
                 $flat_wishes_rented_data['property_type'] = null;
             }
 
@@ -2345,7 +2403,7 @@ class PropertyController extends Controller
 
             if (isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "") {
                 $commercial_property_for_sale['property_type'] = json_encode($commercial_property_for_sale['property_type']);
-            }else{
+            } else {
                 $commercial_property_for_sale['property_type'] = null;
             }
 
@@ -2356,7 +2414,7 @@ class PropertyController extends Controller
                 }
                 $commercial_property_for_sale['facilities'] = $facilities;
 
-            }else{
+            } else {
                 $commercial_property_for_sale['facilities'] = null;
             }
 
@@ -2432,7 +2490,7 @@ class PropertyController extends Controller
             $response = CommercialPropertyForSale::create($commercial_property_for_sale);
 
             //Store commercial_property_for_sale_pdf file
-            if($request->file('commercial_property_for_sale_pdf') && count($request->file('commercial_property_for_sale_pdf')) > 0){
+            if ($request->file('commercial_property_for_sale_pdf') && count($request->file('commercial_property_for_sale_pdf')) > 0) {
                 common::update_media($request->file('commercial_property_for_sale_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
             }
 
@@ -2673,7 +2731,6 @@ class PropertyController extends Controller
         return view('common.partials.property.commercialproperty_for_sale_description')->with(compact('property_data'));
     }
 
-
     // Add commercial property for rent
     public function commercialPropertyForRent()
     {
@@ -2708,7 +2765,7 @@ class PropertyController extends Controller
 
             if (isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "") {
                 $commercial_property_for_rent['property_type'] = json_encode($commercial_property_for_rent['property_type']);
-            }else{
+            } else {
                 $commercial_property_for_rent['property_type'] = null;
             }
 
@@ -2718,7 +2775,7 @@ class PropertyController extends Controller
                     $facilities .= $val . ",";
                 }
                 $commercial_property_for_rent['facilities'] = $facilities;
-            }else{
+            } else {
                 $commercial_property_for_rent['facilities'] = null;
             }
 
@@ -2791,7 +2848,7 @@ class PropertyController extends Controller
             $response = CommercialPropertyForRent::create($commercial_property_for_rent);
 
             //Store property_pdf file
-            if($request->file('commercial_property_for_rent_pdf') && count($request->file('commercial_property_for_rent_pdf')) > 0){
+            if ($request->file('commercial_property_for_rent_pdf') && count($request->file('commercial_property_for_rent_pdf')) > 0) {
                 common::update_media($request->file('commercial_property_for_rent_pdf'), $add_response->id, 'App\Models\Ad', 'pdf');
             }
 
@@ -3025,7 +3082,6 @@ class PropertyController extends Controller
         return view('user-panel.property.ads_business_for_sale')->with(compact('add_array'));
     }
 
-
     public function businessForSaleSortedAds(Request $request)
     {
         $data = $request->all();
@@ -3083,8 +3139,8 @@ class PropertyController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            if(!$request->owned_plot_facilities){
-                $request->merge(['owned_plot_facilities'=>null]);
+            if (!$request->owned_plot_facilities) {
+                $request->merge(['owned_plot_facilities' => null]);
             }
             $commercial_plot = $request->except('upload_dropzone_images_type');
             unset($commercial_plot['commercial_plot_pdf']);
@@ -3122,7 +3178,6 @@ class PropertyController extends Controller
             exit();
         }
     }
-
 
     public function addcommercialPlotsAd(AddCommercialPlot $request)
     {
@@ -3286,11 +3341,11 @@ class PropertyController extends Controller
         }
     }
 
-
     // Store ad view when an user click on property ad
-    public function store_ad_views($obj){
-        if($obj && $obj->ad){
-            $view = new \App\Models\AdView(['ad_id' => $obj->ad->id, 'ip' =>  \request()->getClientIp(),'user_id' => Auth::id()]);
+    public function store_ad_views($obj)
+    {
+        if ($obj && $obj->ad) {
+            $view = new \App\Models\AdView(['ad_id' => $obj->ad->id, 'ip' => \request()->getClientIp(), 'user_id' => Auth::id()]);
             $view->save();
             /*
             $count = $obj->ad->views()->where('ip', \request()->getClientIp())->get();

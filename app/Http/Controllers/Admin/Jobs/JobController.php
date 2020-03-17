@@ -93,11 +93,11 @@ class JobController extends Controller
     public function store(Request $request)
     {
         $ad_id = '';
-        if($request->ad_id && !empty($ad->id)){
+        if ($request->ad_id && !empty($ad->id)) {
             $ad_id = $request->ad_id;
         }
         if ($request->file('files')) {
-            return $this->upload_images($request,$ad_id);
+            return $this->upload_images($request, $ad_id);
         }
 
         $arr = array(
@@ -157,11 +157,7 @@ class JobController extends Controller
         }
 
 //            notification bellow
-        $searches = \App\Model\Search::where('type', '=', 'saved')
-            ->where('filter', 'like', '%jobs/search%')
-            ->where('notification_web', '=', '1')
-            ->get();
-        common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher, $searches);
+        common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher, 'jobs/search');
 //            end notification
 
 
@@ -358,11 +354,7 @@ class JobController extends Controller
             DB::commit();
 
 //            notification bellow
-            $searches = \App\Model\Search::where('type', '=', 'saved')
-                ->where('filter', 'like', '%jobs/search%')
-                ->where('notification_web', '=', '1')
-                ->get();
-            common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher, $searches);
+            common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher, 'jobs/search');
 //            end notification
 
             Session::flash('success', 'Jobben er lagret');
