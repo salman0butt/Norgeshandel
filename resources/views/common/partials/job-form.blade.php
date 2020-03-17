@@ -611,5 +611,9 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
 <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
 <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
 <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
+<script src="{{asset('public/js/intlTelInput-jquery.min.js')}}"></script>
+<script src="{{asset('public/js/intlTelInput.min.js')}}"></script>
+<script src="{{asset('public/js/utils.js')}}"></script>
+<script src="{{asset('public/js/telPhone.js')}}"></script>
 
 @endsection
