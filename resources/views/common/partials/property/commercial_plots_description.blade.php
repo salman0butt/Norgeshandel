@@ -85,8 +85,6 @@
                         @if($property_data->plot_size)
                             <div class="col-md-6"><span class="font-weight-bold">Tomteareal: </span><span>{{$property_data->plot_size}} m² (eiet)</span></div>
                         @endif
-                        <div class="col-md-12"><a href="#" class="u-strong">Pris på lån</a></div>
-                        <div class="col-md-12"><a href="#" class="u-strong">Pris på forsikring</a></div>
                         <!-- <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div> -->
                         <div class="clearfix"></div>
                         <!-- <div class="mt-2 col-md-12"></div>
