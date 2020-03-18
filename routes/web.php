@@ -537,7 +537,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::patch('commercial/plots/{id}', 'Property\CommercialPlotController@updateCommercialPlots');
     Route::patch('commercial/plots/update/{id}', 'Property\CommercialPlotController@updateDummyCommercialPlots');
     Route::get('/commercial/plots/ads/description/{id}', 'Property\CommercialPlotController@commercialPlotDescription');
-    Route::get('general/property/description/{id}/{type}', 'Property\CommercialPlotController@generalPropertyDescription');
+    Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
 
     Route::get('test', function () {
         event(new App\Events\PropertyForRent('Guest'));
