@@ -760,7 +760,7 @@ omkostninger.
             <h3 class="u-t5">Skriv nettadresse for å gi bud på nett (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="offer_url" type="text" value="{{ $property_for_sale->offer_url }}" placeholder="webside.no" class="dme-form-control">
+                    <input name="offer_url" type="text" value="{{ $property_for_sale->offer_url }}" placeholder="webside.no" class="dme-form-control url_http">
                     {{--<span class="error-span video"></span>--}}
                 </div>
             </div>
@@ -770,7 +770,7 @@ omkostninger.
             <h3 class="u-t5">Video (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="video" type="text" value="{{ $property_for_sale->video }}" class="dme-form-control">
+                    <input name="video" type="text" value="{{ $property_for_sale->video }}" class="dme-form-control url_http">
                     <div class="u-t5">Link til video</div>
                     <span class="error-span video"></span>
                 </div>

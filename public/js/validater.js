@@ -455,10 +455,10 @@ $(document).ready(function () {
             },
             link_for_information: {
                 validUrl: true
-            },
-            phone: {
-                number: true
-            }
+            }//,
+           // phone: {
+          //      number: true
+           // }
         },
         onfocusout: false,
         invalidHandler: function(form, validator) {

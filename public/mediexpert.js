@@ -233,5 +233,15 @@ $(document).ready(function (e) {
             $('.property-pdf-value').fadeOut();
         }
     });
+ 
+    $('.url_http').on('change', function(){
+    s = $(this).val();
+    if (!s.match(/^[a-zA-Z]+:\/\//))
+    {
+        s = 'http://' + s;
+    $(this).val(s);
+    }
+    });
+
 });
 

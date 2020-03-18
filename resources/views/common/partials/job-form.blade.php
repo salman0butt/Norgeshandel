@@ -248,7 +248,7 @@
                                 <label for="emp_website" class="col-md-2 u-t5">{{__('Website (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="emp_website" value="{{$obj_job->emp_website}}" id="emp_website" type="text"
-                                        class="form-control dme-form-control" placeholder="firmanavn.no">
+                                        class="form-control dme-form-control url_http" placeholder="firmanavn.no">
                                 </div>
                             </div>
                         </div>
@@ -259,7 +259,7 @@
                                     class="col-md-2 u-t5">{{__('Employer on Facebook (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="emp_facebook" value="{{$obj_job->emp_facebook}}" id="emp_facebook"
-                                        type="text" class="form-control dme-form-control"
+                                        type="text" class="form-control dme-form-control url_http"
                                         placeholder="facebook.com/firmanavn">
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                                     class="col-md-2 u-t5">{{__('Employer on LinkedIn (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="emp_linkedin" value="{{$obj_job->emp_linkedin}}" id="emp_linkedin"
-                                        type="text" class="form-control dme-form-control"
+                                        type="text" class="form-control dme-form-control url_http"
                                         placeholder="linkedin.com/company/firmanavn">
                                 </div>
                             </div>
@@ -363,7 +363,7 @@
                                     class="col-md-2 u-t5">{{__('Workplace video  (optional)')}}</label>
                                 <div class="col-sm-10 ">
                                     <input name="workplace_video" id="workplace_video" type="text"
-                                        class="form-control dme-form-control" value="{{@$obj_job->workplace_video}}">
+                                        class="form-control dme-form-control url_http" value="{{@$obj_job->workplace_video}}">
                                     <span class="u-t5">Youtube link.</span>
                                 </div>
                                 <div class="col-md-6 offset-md-3">
@@ -466,7 +466,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                             <label for="app_linkedin" class="col-md-2 u-t5">{{__('LinkedIn  (optional)')}}</label>
                             <div class="col-sm-10 ">
                                 <input name="app_linkedin" id="app_linkedin" type="text"
-                                    class="form-control dme-form-control" placeholder="linkedin.com/in/kontaktperson"
+                                    class="form-control dme-form-control url_http" placeholder="linkedin.com/in/kontaktperson"
                                     value="{{@$obj_job->app_linkedin}}">
                             </div>
                         </div>
@@ -545,8 +545,11 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                     type: "POST",
                     data: $('#job-form').serialize(),
                     success: function (response) {
-                        var resp = $.parseJSON(response);
+               
+                        var resp = JSON.parse(response);
+                        
                         if ($('#ad_id').val().length < 1) {
+                            //console.log(resp.job_id);
                             $('.notice').hide();
                             $('.notice').append(
                                 '<div class="alert alert-success">Jobben ble lagret!</div>');
