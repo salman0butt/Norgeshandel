@@ -21,7 +21,7 @@
             <h2 class="u-t2 p-2">&nbsp; Bolig ønskes leid </h2>
         </div>
         <div class="col-md-12">
-            <div class="hits fa-pull-right"><span class="font-weight-bold">{{number_format($add_array->count(),0,""," ")}}</span> treff
+            <div class="hits fa-pull-right"><span class="font-weight-bold">{{number_format($add_array->total(),0,""," ")}}</span> treff
             </div>
         </div>
     </div>

@@ -90,7 +90,7 @@ if($property !== null)
         </div>
         <div class="detailed-section col-md-8 position-relative p-2">
             <p class="product-location text-muted mb-0 mt-2 u-d1">
-                {{$property->street_address}}
+            {{$property->street_address ? Str::limit($property->street_address,40) : ''}}
 <!--                --><?php
 //                echo($ad->ad_type == 'property_for_rent' ? $property->street_address : "");
 //                echo($ad->ad_type == 'property_for_sale' ? $property->street_address : "");
@@ -102,7 +102,7 @@ if($property !== null)
 //                ?>
             </p>
             <p class="product-title u-t4">
-                {{$ad->getTitle()}}
+            {{Str::limit($ad->getTitle(),40)}}
 <!--                --><?php
 //                echo($ad->ad_type == 'property_for_rent' ? $property->heading : "");
 //                echo($ad->ad_type == 'property_for_sale' ? $property->headline : "");

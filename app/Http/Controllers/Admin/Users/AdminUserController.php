@@ -335,10 +335,37 @@ class AdminUserController extends Controller
     }
 
     //Saved/updated the user notification settings
-    /*
     public function store_notifications_setting(Request $request){
-        dd($request->all());
-    } */
+        $user = Auth::user();
+        if($user){
+            try {
+                if($request->all()){
+                    $user_notifications = Meta::where('metable_id',Auth::id())->where('metable_type','App\User')->where('key', 'like', 'notification_%')->get();
+                    if($user_notifications->count() > 0){
+                        foreach($user_notifications as $user_notification){
+                            $user_notification->value = 0;
+                            $user_notification->update();
+                        }
+                    }
+                    foreach ($request->all() as $key=>$value) {
+                        if(preg_match('/^notification_/', $key)){
+                            Meta::updateOrCreate(['metable_id' => $user->id, 'metable_type' => 'App\User','key' => $key], ['value' => $value]);
+                        }
+                    }
+
+                }
+                DB::commit();
+                Session::flash('success', 'Innstillingen blir oppdatert.');
+                return back();
+
+            } catch (\Exception $e) {
+                DB::rollback();
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
+
+        }
+    }
 
 
 }

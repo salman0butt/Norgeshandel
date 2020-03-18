@@ -57,27 +57,27 @@ if($property !== null)
             </div>
             </div>
 
-            <p class="product-location text-muted mb-0 mt-2 u-d1">
+            <p class="product-location text-muted mb-0 my-2 u-d1">
                 <?php
-                echo($ad->ad_type == 'property_for_rent' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_for_sale' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_commercial_plots' ? $property->street_address : "");
-                echo($ad->ad_type == 'property_business_for_sale' ? $property->street_address : "");
+                echo($ad->ad_type == 'property_for_rent' ? Str::limit($property->street_address,40) : "");
+                echo($ad->ad_type == 'property_for_sale' ? Str::limit($property->street_address,40) : "");
+                echo($ad->ad_type == 'property_holiday_home_for_sale' ? Str::limit($property->street_address,40) : "");
+                echo($ad->ad_type == 'property_commercial_for_sale' ? Str::limit($property->street_address,40) : "");
+                echo($ad->ad_type == 'property_commercial_for_rent' ? Str::limit($property->street_address,40) : "");
+                echo($ad->ad_type == 'property_commercial_plots' ? Str::limit($property->street_address,40) : "");
+                echo($ad->ad_type == 'property_business_for_sale' ? Str::limit($property->street_address,40) : "");
                 ?>
             </p>
             <p class="product-title u-t4">
                 <?php
-                echo($ad->ad_type == 'property_for_rent' ? $property->heading : "");
-                echo($ad->ad_type == 'property_for_sale' ? $property->headline : "");
-                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->ad_headline : "");
-                echo($ad->ad_type == 'property_flat_wishes_rented' ? $property->headline : "");
-                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->headline : "");
-                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->heading : "");
-                echo($ad->ad_type == 'property_commercial_plots' ? $property->headline : "");
-                echo($ad->ad_type == 'property_business_for_sale' ? $property->headline : "");
+                echo($ad->ad_type == 'property_for_rent' ? Str::limit($property->heading,75) : "");
+                echo($ad->ad_type == 'property_for_sale' ? Str::limit($property->headline,75) : "");
+                echo($ad->ad_type == 'property_holiday_home_for_sale' ? Str::limit($property->ad_headline,75) : "");
+                echo($ad->ad_type == 'property_flat_wishes_rented' ? Str::limit($property->headline,75) : "");
+                echo($ad->ad_type == 'property_commercial_for_sale' ? Str::limit($property->headline,75) : "");
+                echo($ad->ad_type == 'property_commercial_for_rent' ? Str::limit($property->heading,75): "");
+                echo($ad->ad_type == 'property_commercial_plots' ? Str::limit($property->headline,75): "");
+                echo($ad->ad_type == 'property_business_for_sale' ? Str::limit($property->headline,75) : "");
 
                 ?>
             </p>
