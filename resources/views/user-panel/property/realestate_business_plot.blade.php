@@ -561,7 +561,7 @@
 
                 e.preventDefault();
                 var url = '{{url('add/realestate/business/plot')}}';
-                $('.notice').html("");
+                //$('.notice').html("");
                 var myform = document.getElementById("realestate_business_plot");
                 var fd = new FormData(myform);
                 e.preventDefault();

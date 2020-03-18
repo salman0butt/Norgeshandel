@@ -62,8 +62,8 @@
                     $(".error-span").html('');
                     $("input, select").removeClass("error-input");
                 });
-                
-             
+
+
 
                 var myform = document.getElementById("property_for_rent_form");
                 var fd = new FormData(myform);
@@ -83,18 +83,19 @@
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
                         if (event == 'change') {
-                    $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
-                   }else if(event == 'click'){
-                      $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
-                   }
-                            if (event == 'change') {
-                        setTimeout(function () {
-                            $('.notice').show('slow');
-                        }, 2000);
-                        setTimeout(function () {
-                            $('.notice').hide('slow');
-                        }, 5000);
-                    }
+                            $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
+                        }else if(event == 'click'){
+                            $('.notice').css('display','block');
+                            $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+                        }
+                        if (event == 'change') {
+                            setTimeout(function () {
+                                $('.notice').show('slow');
+                            }, 2000);
+                            setTimeout(function () {
+                                $('.notice').hide('slow');
+                            }, 5000);
+                        }
                     
                  
                     },

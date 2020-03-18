@@ -89,6 +89,7 @@
                         }
                     $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
                    }else if(event == 'click'){
+                        $('.notice').css('display','block');
                       $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
                    }
                            if (event == 'change') {
