@@ -756,7 +756,6 @@ omkostninger.
             </div>
         </div>
 
-
         <div class="form-group">
             <h3 class="u-t5">Skriv nettadresse for å gi bud på nett (valgfritt)</h3>
             <div class="row">

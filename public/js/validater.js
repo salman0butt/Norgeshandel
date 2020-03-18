@@ -442,6 +442,9 @@ $(document).ready(function () {
             price: {
                 number: true
             },
+            offer_url: {
+                validUrl: true
+            },
             headline: {
                 required: true,
                 minlength: 2,
@@ -637,6 +640,9 @@ $(document).ready(function () {
             asset_value: {
                 number: true
             },
+            offer_url: {
+                validUrl: true
+            },
             asking_price: {
                 required: true,
                 number: true
@@ -823,6 +829,9 @@ $(document).ready(function () {
             },
             availiable_from: {
                 date: true
+            },
+            offer_url: {
+                validUrl: true
             },
             headline: {
                 required: true,

@@ -158,6 +158,15 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <h3 class="u-t5">Skriv nettadresse for å gi bud på nett (valgfritt)</h3>
+            <div class="row">
+                <div class="col-sm-12 pr-md-0">
+                    <input name="offer_url" type="text" value="{{ $business_for_sale_obj->offer_url }}" placeholder="webside.no" class="dme-form-control">
+                    {{--<span class="error-span video"></span>--}}
+                </div>
+            </div>
+        </div>
         <!--  full input-->
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
