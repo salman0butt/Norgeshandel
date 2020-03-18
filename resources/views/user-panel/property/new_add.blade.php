@@ -87,7 +87,7 @@
                    }else if(event == 'click'){
                       $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
                    }
-                            if (event == 'change') {
+                        if (event == 'change') {
                         setTimeout(function () {
                             $('.notice').show('slow');
                         }, 2000);
@@ -126,7 +126,7 @@
             
             $("input:not(input[type=date])").on('change', function (e) {
                 e.preventDefault();
-                
+                if(! $(this).valid()) return false;
                record_store_ajax_request('change', (this));
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
