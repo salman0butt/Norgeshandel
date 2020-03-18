@@ -74,7 +74,7 @@
                         </div>
 
                         @if($property_data->location_description)
-                            <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
+                            <div class="col-md-12 mt-2"><p style="white-space: pre-line">{{$property_data->location_description}}</p></div>
                         @endif
                         <!-- <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
                         <div class="col-md-12 u-t3">5 250 000 kr</div> -->

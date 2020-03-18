@@ -96,7 +96,7 @@
                 $("input, select").removeClass("error-input");
             });
 
-            $('.notice').html("");
+            // $('.notice').html("");
             var myform = document.getElementById("property_for_sale_form");
             var fd = new FormData(myform);
 
@@ -122,7 +122,6 @@
                     // document.getElementById("property_for_sale_form").reset();
                     // document.getElementById("zip_code_city_name").innerHTML = '';
                    // $('.notice').hide();
-
                     if (event == 'change') {
                         if(data.property_quote){
                             $('.remove_property_quote').attr('id',data.property_quote);
@@ -132,6 +131,7 @@
                         }
                         $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
                    }else if(event == 'click'){
+                        $('.notice').css('display','block');
                       $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
                    }
                     if (event == 'change') {
@@ -147,7 +147,7 @@
                 },
                 error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
                     var errors = jqXhr.responseJSON;
-                    console.log(errors.errors);
+                    //console.log(errors.errors);
                     if (isEmpty(errors.errors)) {
                         $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
                         return false;
@@ -157,7 +157,7 @@
                     } else {
                         // var html="<ul>";
                         $.each(errors.errors, function (index, value) {
-                            console.log(value);
+                            //console.log(value);
                             $("." + index).html(value);
                             $("input[name='" + index + "'],select[name='" + index + "']")
                                 .addClass("error-input");

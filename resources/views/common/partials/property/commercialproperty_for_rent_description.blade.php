@@ -148,7 +148,7 @@
 
                         @if($property_data->last_description)
                             <div class="col-md-12"><span class="font-weight-bold">Beskrivelse</span></div>
-                            <div class="col-md-12"><p>{{$property_data->last_description}}</p></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->last_description}}</p></div>
                         @endif
 
                         {{--<div class="col-md-12">--}}

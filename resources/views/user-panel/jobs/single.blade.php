@@ -113,16 +113,17 @@
                             </div>
                         </div>
 
-                        <div class="description mt-3 col-md-12">
-                            {!! html_entity_decode($job->description) !!}
+                        <div class="description mt-3 col-md-12" style="white-space: pre-line">
+                            {{(($job->description))}}
                         </div>
                         <div class="emp_company_information mt-3 col-md-12">
                             <h2 class="u-t5">Om arbeidsgiveren</h2>
-                            @if(!empty($job->company))
-                                {!! html_entity_decode($job->company->emp_company_information)!!}
-                            @else
-                                {!! html_entity_decode($job->emp_company_information)!!}
-                            @endif
+                                @if(!empty($job->company))
+                                <div style="white-space: pre-line">{!! html_entity_decode($job->company->emp_company_information)!!}</div>
+                                @else
+                                <div style="white-space: pre-line">{!! html_entity_decode($job->emp_company_information)!!}</div>
+                                @endif
+
                         </div>
                         <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span>

@@ -89,7 +89,7 @@
 
 
 
-                            <div class="col-md-12"><p>{{$property_data->description}}</p></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->description}}</p></div>
                             <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                                 eiendommen
                             </div>

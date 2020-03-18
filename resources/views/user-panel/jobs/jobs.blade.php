@@ -138,7 +138,7 @@
                     $('#suggestions').html(response);
                 },
                 error: function (error) {
-                    console.log(error);
+                    //console.log(error);
                 }
             });
             $('#search').on('blur', function (e) {
@@ -159,7 +159,7 @@
                             $('#suggestions').html(response);
                         },
                         error: function (error) {
-                            console.log(error);
+                            //console.log(error);
                         }
                     })
                 } else {
