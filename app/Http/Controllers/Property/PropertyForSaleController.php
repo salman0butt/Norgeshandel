@@ -7,6 +7,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Requests\AddPropertyForRent;
 use App\Http\Requests\AddPropertyForSale;
 use App\Models\Ad;
+use App\Models\AdView;
 use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
@@ -190,12 +191,15 @@ class PropertyForSaleController extends Controller
             return $query->get();
         }
 
+        $all = $query->get();
+        $ids = $all->pluck('id');
+        $clicks = AdView::whereIn('ad_id', $ids)->count();
         $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
+            $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col', 'sort', 'clicks'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-property-for-sale', compact('col', 'add_array', 'sort'));
+        return view('user-panel.property.search-property-for-sale', compact('col', 'add_array', 'sort', 'clicks'));
     }
 
 //    zain
