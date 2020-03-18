@@ -66,7 +66,14 @@
                     <div class="col-md-12">
                         <div class="u-t3 mt-3">{{$property_data->ad_headline}}</div>
                     </div>
-                    <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}<span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span></div>
+                    <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}
+                        <span>
+                            @if($property_data->zip_code)
+                                {{$property_data->zip_code}}
+                                {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                            @endif
+                        </span>
+                    </div>
 
                     <!-- <div class="col-md-12 text-muted"></div>
                             <div class="col-md-12 mt-2"><p></p></div> -->
@@ -92,8 +99,6 @@
                     <!-- <div class="col-md-6"><span class="font-weight-bold">Etasje :</span>&nbsp;<span></span></div>
                             <div class="col-md-6"><span class="font-weight-bold">Kommunale avg :.</span>&nbsp;<span></span></div> -->
 
-                    <div class="col-md-12"><a href="#" class="u-strong">Pris på lån</a></div>
-                    <div class="col-md-12"><a href="#" class="u-strong">Pris på forsikring</a></div>
 
                     <div class="clearfix"></div>
                     {{-- <div class="mt-2 col-md-12"></div> --}}
@@ -258,7 +263,7 @@
                                 data-controller="trackSendSMS">{{$property_data->phone}}</a></span>
                     </div>
                 @endif
-                <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>
+                {{--<button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>--}}
                 <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
@@ -285,7 +290,29 @@
                 @endif
                 <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
                 </div>
-                <button class="dme-btn-outlined-blue col-12">Gi bud</button>
+                @if($property_data && $property_data->ad && $property_data->ad->sales_information->count() > 0)
+                    <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->sales_information->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                                Se komplett salgsoppgave
+                            </font>
+                        </font>
+                    </button>
+                @endif
+                @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
+                    <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">
+                                PDF
+                            </font>
+                        </font>
+                    </button>
+                @endif
+                @if($property_data->offer_url)
+                    <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                    style="vertical-align: inherit;">Gi bud</font></font></button>
+                @endif
+                {{--<button class="dme-btn-outlined-blue col-12">Gi bud</button>--}}
                 {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
                     rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 <div class="mt-3 mb-3">

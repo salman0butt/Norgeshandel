@@ -95,9 +95,12 @@
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <!-- <div class="week-status u-t5 stext-muted" style="">Strandvegen, 2380 Brumunddal</div>-->
                                 <!--<div class="u-t5 text-muted" style="">&nbsp;</div>-->
-                                @if($business_for_sale->street_address)
-                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$business_for_sale->street_address}}">{{Str::limit($business_for_sale->street_address,35)}}</div>
-                                @endif
+                                <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
+                                    @if($business_for_sale->street_address)
+                                        <span title="{{$business_for_sale->street_address}}">{{Str::limit($business_for_sale->street_address,25)}},</span>
+                                    @endif
+                                    <span>{{$business_for_sale->zip_city ? $business_for_sale->zip_city : ''}}</span>
+                                </div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="title color-grey">{{$business_for_sale->headline}}</div>
                                 @if($business_for_sale->price)

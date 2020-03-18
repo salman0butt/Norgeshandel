@@ -23,6 +23,7 @@
     <div class="pl-3">
 <input type="hidden" id="old_zip" value="{{ (isset($commercial_property_for_sale->zip_code) ? $commercial_property_for_sale->zip_code : '') }}">
 <input type="hidden" name="upload_dropzone_images_type" value="commercial_property_for_sale_temp_images">
+<input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_sale->zip_city) ? $commercial_property_for_sale->zip_city : '') }}">
 
         <!--                            checkbox -->
         <div class="form-group">
@@ -106,7 +107,8 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="zip_code" value="{{ $commercial_property_for_sale->zip_code }}" type="text" class="dme-form-control zip_code">
-                    <span id="zip_code_city_name"></span>
+                    <span id="zip_code_city_name">{{ (isset($commercial_property_for_sale->zip_city) ? strtoupper($commercial_property_for_sale->zip_city) : '')
+                      }}</span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -467,6 +469,16 @@
                     <span class="@if(!$commercial_property_for_sale_pdf) d-none @endif remove-selected-file-button remove_property_pdf dz-remove" @if($commercial_property_for_sale_pdf) id="{{$commercial_property_for_sale_pdf->name_unique}}" @endif><i class="fa fa-trash fa-lg mt-1"></i></span>
                 </div>
                 <span class="col-12 property-pdf-information-message @if(!$commercial_property_for_sale_pdf) d-none @endif"><small>Fjern gammel fil før du velger en ny fil.</small></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h3 class="u-t5">Skriv nettadresse for å gi bud på nett (valgfritt)</h3>
+            <div class="row">
+                <div class="col-sm-12 pr-md-0">
+                    <input name="offer_url" type="text" value="{{ $commercial_property_for_sale->offer_url }}" placeholder="webside.no" class="dme-form-control">
+                    {{--<span class="error-span video"></span>--}}
+                </div>
             </div>
         </div>
         <!--                            full input-->

@@ -47,7 +47,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    @php $name = $property_data->ad->media; @endphp
+                    @php $name = $property_data->ad->company_gallery; @endphp
                     @include('user-panel.partials.landing_page_slider',compact('name'))
                 </div>
             </div>
@@ -64,9 +64,13 @@
                             <!-- <div class="u-t3 mt-3">JESSHEIM SENTRUM</div> -->
                             <h1 class="u-t2">{{$property_data->heading}}</h1>
                         </div>
-                        <div
-                            class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}
-                            <span class="db_zip_code">{{$property_data->zip_code ? $property_data->zip_code : ''}}</span>
+                        <div class="col-md-12 text-muted">{{$property_data->street_address ? $property_data->street_address.', ' : ''}}
+                            <span>
+                                @if($property_data->zip_code)
+                                    {{$property_data->zip_code}}
+                                    {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                                @endif
+                            </span>
                         </div>
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                         @if (!empty($property_data->monthly_rent))
@@ -265,7 +269,6 @@
                             <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på
                                 visning.
                             </div>
-                            <button class="dme-btn-outlined-blue col-12">Gi bud</button>
 
 
                             <div class="mt-3 mb-3">

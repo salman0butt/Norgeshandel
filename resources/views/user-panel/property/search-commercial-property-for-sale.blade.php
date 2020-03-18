@@ -1,14 +1,14 @@
 @extends('layouts.landingSite')
 <style>
-.trailing-border img {
-    min-height: 207px !important;
-}
-.clist .location {
-    position: unset !important;
-}
-.detail.u-t5.mt-3.float-left.text-muted {
-    word-break: break-word;
-}
+/*.trailing-border img {*/
+    /*min-height: 207px !important;*/
+/*}*/
+/*.clist .location {*/
+    /*position: unset !important;*/
+/*}*/
+/*.detail.u-t5.mt-3.float-left.text-muted {*/
+    /*word-break: break-word;*/
+/*}*/
 </style>
 @section('page_content')
     <main class="dme-wrapper" id="dme-wrapper">

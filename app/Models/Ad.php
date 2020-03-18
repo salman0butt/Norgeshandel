@@ -38,10 +38,12 @@ class Ad extends Model
         return $this->morphMany('App\Media', 'mediable')->where('type','gallery')->orderBy('order','ASC');
     }
 
+    // get complete quotation
     public function sales_information(){
         return $this->morphMany('App\Media', 'mediable')->where('type','sales_information')->orderBy('order','ASC');
     }
 
+    // get sales information
     public function pdf(){
         return $this->morphMany('App\Media', 'mediable')->where('type','pdf')->orderBy('order','ASC');
     }

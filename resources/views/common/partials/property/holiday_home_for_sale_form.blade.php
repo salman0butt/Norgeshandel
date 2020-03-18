@@ -24,6 +24,7 @@
         @endif
         <input type="hidden" id="old_zip" value="{{ (isset($holiday_home_for_sale->zip_code) ? $holiday_home_for_sale->zip_code : '') }}">
         <input type="hidden" name="upload_dropzone_images_type" value="holiday_home_for_sale_temp_images">
+        <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($holiday_home_for_sale->zip_city) ? $holiday_home_for_sale->zip_city : '') }}">
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
@@ -40,7 +41,8 @@
                 <div class="col-sm-4 pr-md-0">
                     <input name="zip_code" type="text" value="{{ $holiday_home_for_sale->zip_code }}"
                         class="dme-form-control zip_code">
-                    <span id="zip_code_city_name"></span>
+                    <span id="zip_code_city_name">{{ (isset($holiday_home_for_sale->zip_city) ? strtoupper($holiday_home_for_sale->zip_city) : '')
+                      }}</span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -721,6 +723,15 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <h3 class="u-t5">Skriv nettadresse for å gi bud på nett (valgfritt)</h3>
+            <div class="row">
+                <div class="col-sm-12 pr-md-0">
+                    <input name="offer_url" type="text" value="{{ $holiday_home_for_sale->offer_url }}" placeholder="webside.no" class="dme-form-control">
+                    {{--<span class="error-span video"></span>--}}
+                </div>
+            </div>
+        </div>
 
         <div class="form-group">
             <h3 class="u-t5">Video (valgfritt)</h3>

@@ -19,6 +19,7 @@
     <div class="pl-3">
         <input type="hidden" name="upload_dropzone_images_type" value="business_for_sale_temp_images">
           <input type="hidden" id="old_zip" value="{{ (isset($business_for_sale_obj->zip_code) ? $business_for_sale_obj->zip_code : '') }}">
+            <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($business_for_sale_obj->zip_city) ? $business_for_sale_obj->zip_city : '') }}">
         <!--                            selection-->
         <div class="form-group">
             <h3 class="u-t5">Bransje</h3>
@@ -76,7 +77,7 @@
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="zip_code" type="text" class="dme-form-control zip_code" value="{{$business_for_sale_obj->zip_code}}">
-                    <span id="zip_code_city_name"></span>
+                    <span id="zip_code_city_name">{{ (isset($business_for_sale_obj->zip_city) ? strtoupper($business_for_sale_obj->zip_city) : '') }}</span>
                 </div>
                 <div class="col-sm-8">
                 </div>
@@ -157,6 +158,15 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <h3 class="u-t5">Skriv nettadresse for å gi bud på nett (valgfritt)</h3>
+            <div class="row">
+                <div class="col-sm-12 pr-md-0">
+                    <input name="offer_url" type="text" value="{{ $business_for_sale_obj->offer_url }}" placeholder="webside.no" class="dme-form-control">
+                    {{--<span class="error-span video"></span>--}}
+                </div>
+            </div>
+        </div>
         <!--  full input-->
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>

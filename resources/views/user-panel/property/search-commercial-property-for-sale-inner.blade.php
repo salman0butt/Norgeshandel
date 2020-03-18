@@ -92,9 +92,12 @@
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <!--                                        <div class="week-status u-t5 text-muted" style="">Betalt plassering</div>-->
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                @if($property_commercial_property_for_sale->street_address)
-                                    <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2" title="{{$property_commercial_property_for_sale->street_address}}">{{Str::limit($property_commercial_property_for_sale->street_address,35)}} </div>
-                                @endif
+                                <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
+                                    @if($property_commercial_property_for_sale->street_address)
+                                        <span title="{{$property_commercial_property_for_sale->street_address}}">{{Str::limit($property_commercial_property_for_sale->street_address,25)}},</span>
+                                    @endif
+                                    <span>{{$property_commercial_property_for_sale->zip_city ? $property_commercial_property_for_sale->zip_city : ''}}</span>
+                                </div>
                                 <div class="title color-grey">{{$property_commercial_property_for_sale->headline}}</div>
                                 @if($property_commercial_property_for_sale->primary_room || $property_commercial_property_for_sale-> rental_income)
                                     <div class="mt-2">

@@ -110,7 +110,6 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        console.log(data);
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
                      if (event == 'change') {
