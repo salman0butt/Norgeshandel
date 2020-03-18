@@ -94,7 +94,7 @@ class MessageController extends Controller
         $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
             env('PUSHER_APP_SECRET'),
-            getenv('PUSHER_APP_ID'),
+            env('PUSHER_APP_ID'),
 //            950445,
             $options
         );

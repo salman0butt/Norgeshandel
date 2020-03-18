@@ -5,6 +5,7 @@ use App\Helpers\common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddPropertyHolidayHomeForSale;
 use App\Models\Ad;
+use App\Notification;
 use App\PropertyHolidaysHomesForSale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,11 @@ class PropertyHolidaysHomesForSaleController extends Controller
 //    zain
     public function search_holiday_homes_for_sale(Request $request, $get_collection = false)
     {
-        DB::enableQueryLog();
+        if(isset($request->search_id) && !$get_collection){
+            Notification::where('notifiable_id', '=', $request->search_id)
+                ->whereNull('read_at')->update(['read_at'=>now()]);
+        }
+//        DB::enableQueryLog();
         $col = 'list';
         $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
@@ -284,6 +289,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
 
             $response->update($property_home_for_sale_data);
             DB::commit();
+
             $data['success'] = $response;
             $data['property_quote'] = $property_quote;
             $data['property_pdf'] = $property_pdf;
@@ -323,12 +329,17 @@ class PropertyHolidaysHomesForSaleController extends Controller
     public function updateDummyHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id)
     {
         $property = PropertyHolidaysHomesForSale::find($id);
+        $message = '';
         $ad = $property->ad;
-
+        if ($ad->status == 'saved') {
+            $message = 'Ny bolig er publisert';
+        } elseif ($ad->status == 'published') {
+            $message = 'Eiendommen er oppdatert';
+        }
         $response = $ad->update(['status' => 'published']);
 
 //            notification bellow
-        common::send_search_notification($property, 'saved_search', 'Eiendommen er oppdatert', $this->pusher, 'property/holiday-homes-for-sale');
+        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/holiday-homes-for-sale');
 //            end notification
 
         $data['success'] = $response;

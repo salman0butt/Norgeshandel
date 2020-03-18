@@ -7,6 +7,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Requests\AddPropertyForRent;
 use App\Http\Requests\AddPropertyForSale;
 use App\Models\Ad;
+use App\Models\AdView;
+use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
 use Illuminate\Http\Request;
@@ -41,6 +43,10 @@ class PropertyForSaleController extends Controller
 
     public function search_property_for_sale(Request $request, $get_collection=false)
     {
+        if(isset($request->search_id) && !$get_collection){
+            Notification::where('notifiable_id', '=', $request->search_id)
+                ->whereNull('read_at')->update(['read_at'=>now()]);
+        }
         $table = 'property_for_sales';
         $col = 'list';
         $sort = 'published';
@@ -185,12 +191,15 @@ class PropertyForSaleController extends Controller
             return $query->get();
         }
 
+        $all = $query->get();
+        $ids = $all->pluck('id');
+        $clicks = AdView::whereIn('ad_id', $ids)->count();
         $add_array = $query->paginate($this->pagination);
         if ($request->ajax()) {
-            $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col', 'sort'))->render();
+            $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col', 'sort', 'clicks'))->render();
             exit($html);
         }
-        return view('user-panel.property.search-property-for-sale', compact('col', 'add_array', 'sort'));
+        return view('user-panel.property.search-property-for-sale', compact('col', 'add_array', 'sort', 'clicks'));
     }
 
 //    zain
@@ -211,17 +220,6 @@ class PropertyForSaleController extends Controller
         }
     }
 
-    public function UpdateDummyRentAdd(AddPropertyForRent $request, $id) {
-        //  DB::connection()->enableQueryLog();
-        $property = PropertyForRent::find($id);
-        $ad = $property->ad;
-
-        $response = $ad->update(['status'=>'published']);
-        //  dd(DB::getQueryLog());
-
-        $data['success'] = $response;
-        echo json_encode($data);
-    }
 
     public function editSaleAdd($id)
     {

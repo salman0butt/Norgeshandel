@@ -119,11 +119,12 @@
                                 <span class="font-weight-bold">Boligtype:</span>&nbsp;
                                 <span>{{$property_data->property_type}}</span>
                             </div>
-
-                            <div class="col-md-6">
-                                <span class="font-weight-bold">Bruksareal:</span>&nbsp;
-                                <span>{{$property_data->use_area}} m²</span>
-                            </div>
+                            @if($property_data->use_area)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Bruksareal:</span>&nbsp;
+                                    <span>{{$property_data->use_area}} m²</span>
+                                </div>
+                            @endif
 
                             @if($property_data->ownership_type)
                                 <div class="col-md-6">
@@ -141,7 +142,7 @@
 
                             <div class="col-md-6">
                                 <span class="font-weight-bold">Soverom:</span>&nbsp;
-                                <span>{{$property_data->number_of_bedrooms}} m²</span>
+                                <span>{{$property_data->number_of_bedrooms}} </span>
                             </div>
 
                             @if($property_data->energy_grade)

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
 use App\Http\Requests\AddCommercialPlot;
 use App\Models\Ad;
+use App\Notification;
 use App\PropertyForSale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,10 @@ class CommercialPlotController extends Controller
 //    zain
     public function search_commercial_plots(Request $request, $get_collection = false)
     {
+        if(isset($request->search_id) && !$get_collection){
+            Notification::where('notifiable_id', '=', $request->search_id)
+                ->whereNull('read_at')->update(['read_at'=>now()]);
+        }
         $table = 'commercial_plots';
         $col = 'list';
         $sort = 'published';
@@ -120,8 +125,18 @@ class CommercialPlotController extends Controller
     {
 
         $property = CommercialPlot::find($id);
+        $message = '';
         $ad = $property->ad;
+        if ($ad->status == 'saved') {
+            $message = 'Ny bolig er publisert';
+        } elseif ($ad->status == 'published') {
+            $message = 'Eiendommen er oppdatert';
+        }
         $response = $ad->update(['status' => 'published']);
+
+//            notification bellow
+        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/flat-wishes-rented');
+//            end notification
 
         $data['success'] = $response;
         echo json_encode($data);

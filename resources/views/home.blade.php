@@ -148,7 +148,7 @@
                                 $('#suggestions').html(response);
                             },
                             error: function (error) {
-                                console.log(error);
+                                //console.log(error);
                             }
                         });
                 }
@@ -169,10 +169,10 @@
                     type: "POST",
                     data: {banner_id: banner_id,user_id: user_id },
                     success: function (response) {
-                        console.log(response);
+                        //console.log(response);
                     },
                     error: function (error) {
-                        console.log(error);
+                        //console.log(error);
                     }
                 })
             });

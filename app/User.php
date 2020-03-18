@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Meta;
 use App\Models\Search;
 use Illuminate\Support\Facades\App;
 use App\Admin\jobs\JobPreference;
@@ -9,6 +10,7 @@ use App\Models\AllowedCompanyAd;
 use App\Models\Company;
 use App\Models\Following;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -98,6 +100,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->morphMany('App\Models\Meta', 'metable');
     }
 
+    //get notification meta against a key
+    public function notification_meta($key){
+        return Meta::where('metable_id',Auth::id())->where('metable_type','App\User')->where('key',$key)->first();
+    }
+
     //User account setting emails
     public function email_meta(){
         return $this->morphMany('App\Models\Meta', 'metable')->where('key','account_setting_alt_email');
@@ -107,7 +114,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function contact_no_meta(){
         return $this->morphMany('App\Models\Meta', 'metable')->where('key','account_setting_alt_contact_no');
     }
-
 
     public function cv(){
         return $this->hasOne('App\Models\Cv\Cv');
@@ -150,10 +156,10 @@ class User extends Authenticatable implements MustVerifyEmail
 //        return $this->hasMany(Following::class)->where('');
 //    }
     public function saved_searches(){
-        return $this->hasMany(Search::class)->where('type', '=', 'saved');
+        return $this->hasMany(Search::class)->where('type', '=', 'saved')->orderBy('id', 'desc');
     }
     public function recent_searches(){
-        return $this->hasMany(Search::class)->where('type', '=', 'recent');
+        return $this->hasMany(Search::class)->where('type', '=', 'recent')->orderBy('id', 'desc');
     }
     public function is($roleName)
     {

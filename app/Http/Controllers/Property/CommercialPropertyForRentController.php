@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
 use App\Http\Requests\AddCommercialPropertyForRent;
 use App\Models\Ad;
+use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,10 @@ class CommercialPropertyForRentController extends Controller
 //    zain
     public function search_commercial_property_for_rent(Request $request, $get_collection = false)
     {
+        if(isset($request->search_id) && !$get_collection){
+            Notification::where('notifiable_id', '=', $request->search_id)
+                ->whereNull('read_at')->update(['read_at'=>now()]);
+        }
         $table = 'commercial_property_for_rents';
         $col = 'list';
         $sort = 'published';
@@ -134,9 +139,18 @@ class CommercialPropertyForRentController extends Controller
         //  DB::connection()->enableQueryLog();
         //dd('working');
         $property = CommercialPropertyForRent::find($id);
+        $message = '';
         $ad = $property->ad;
-
+        if ($ad->status == 'saved') {
+            $message = 'Ny bolig er publisert';
+        } elseif ($ad->status == 'published') {
+            $message = 'Eiendommen er oppdatert';
+        }
         $response = $ad->update(['status' => 'published']);
+
+//            notification bellow
+        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/commercial-property-for-rent');
+//            end notification
         //  dd(DB::getQueryLog());
 
         $data['success'] = $response;
