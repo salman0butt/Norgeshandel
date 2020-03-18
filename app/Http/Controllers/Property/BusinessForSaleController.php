@@ -52,8 +52,9 @@ class BusinessForSaleController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join('business_for_sales', 'business_for_sales.ad_id', 'ads.id')
-            ->where('ads.status', 'published')
+            ->join('business_for_sales', 'business_for_sales.ad_id', '=', 'ads.id')
+            ->where('ads.status', '=','published')
+            ->where('ads.visibility', '=', 1)
             ->whereNull('ads.deleted_at')
             ->whereNull('business_for_sales.deleted_at');
 //        DB::enableQueryLog();
