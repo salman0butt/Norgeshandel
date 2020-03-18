@@ -1,0 +1,317 @@
+<?php
+
+namespace App\Http\Controllers\Property;
+use App\Helpers\common;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\NotificationController;
+use App\Http\Requests\AddPropertyForRent;
+use App\Models\Ad;
+use App\PropertyForRent;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Pusher\Pusher;
+
+class PropertyForRentController extends Controller
+{
+    //
+    private $pagination;
+    private $pusher;
+
+    public function __construct()
+    {
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true
+        );
+
+        $this->pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $this->pagination = getenv('PAGINATION');
+        $this->pagination = $this->pagination == 0 ? 30 : $this->pagination;
+    }
+//    zain
+    public function search_property_for_rent(Request $request, $get_collection = false)
+    {
+//        DB::enableQueryLog();
+        $table = 'property_for_rent';
+        $col = 'list';
+        $sort = 'published';
+        if (isset($request->view) && !empty($request->view)) {
+            $col = $request->view;
+        }
+        if (isset($request->sort) && !empty($request->sort)) {
+            $sort = $request->sort;
+        }
+        $query = DB::table('ads')
+            ->join($table, $table . '.ad_id', 'ads.id')
+            ->where('ads.status', 'published')
+            ->whereNull('ads.deleted_at')
+            ->whereNull($table . '.deleted_at');
+
+        if (isset($request->search) && !empty($request->search)) {
+            $query->where('heading', 'like', '%' . $request->search . '%');
+        }
+        if (isset($request->created_at)) {
+            $query->whereDate($table . '.created_at', '=', $request->created_at);
+        }
+        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
+            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
+                $query->where($table . '.street_address', 'like', '%' . $request->local_area_name . '%');
+            }
+        }
+
+        if (isset($request->monthly_rent_from) && !empty($request->monthly_rent_from)) {
+            $query->where($table . '.monthly_rent', '>=', (int)$request->monthly_rent_from);
+        }
+        if (isset($request->monthly_rent_to) && !empty($request->monthly_rent_to)) {
+            $query->where($table . '.monthly_rent', '<=', (int)$request->monthly_rent_to);
+        }
+
+        if (isset($request->use_area_from) && !empty($request->use_area_from)) {
+            $query->where($table . '.gross_area', '>=', (int)$request->use_area_from);
+        }
+        if (isset($request->use_area_to) && !empty($request->use_area_to)) {
+            $query->where($table . '.gross_area', '<=', (int)$request->use_area_to);
+        }
+        if (isset($request->number_of_bedrooms) && !empty($request->number_of_bedrooms)) {
+            $query->where($table . '.number_of_bedrooms', '>=', (int)$request->number_of_bedrooms);
+        }
+        if (isset($request->pfr_property_type) && !empty($request->pfr_property_type)) {
+            $query->where(function ($query) use ($request) {
+                $query->whereIn('property_for_rent.property_type', $request->pfr_property_type);
+                for ($i = 1; $i < count($request->pfr_property_type); $i++) {
+                    $query->orWhere('property_for_rent.property_type', '=', str_replace('/', '\\\/', $request->pfr_property_type[$i]));
+                }
+            });
+        }
+        if (isset($request->pfr_facilities) && !empty($request->pfr_facilities)) {
+            $query->where(function ($query) use ($request) {
+                $query->where('property_for_rent.facilities', 'like', '%"' . $request->pfr_facilities[0] . '"%');
+                for ($i = 1; $i < count($request->pfr_facilities); $i++) {
+                    $query->orWhere('property_for_rent.facilities', 'like', '%"' . $request->pfr_facilities[$i] . '"%');
+                }
+                $query->orWhere('property_for_rent.facilities', 'like', '%"' . str_replace('/', '\\\/', $request->pfr_facilities[0]) . '"%');
+                for ($i = 1; $i < count($request->pfr_facilities); $i++) {
+                    $query->orWhere('property_for_rent.facilities', 'like', '%"' . str_replace('/', '\\\/', $request->pfr_facilities[$i]) . '"%');
+                }
+            });
+        }
+
+        if (isset($request->floor) && !empty($request->floor)) {
+            $query->where(function ($query) use ($request) {
+                for ($i = 0; $i < count($request->floor); $i++) {
+                    if ($request->floor[$i] != 'over_6') {
+                        $query->orWhere('property_for_rent.floor', '=', $request->floor[$i]);
+                    }
+                }
+                if (in_array('over_6', $request->floor)) {
+                    $query->orWhere('property_for_rent.floor', '>', 6);
+                }
+            });
+        }
+
+        if (isset($request->available_from) && !empty($request->available_from)) {
+            $query->where(function ($query) use ($request) {
+                $query->where('property_for_rent.rented_from', 'LIKE', '%' . $request->available_from[0] . '%');
+                for ($i = 1; $i < count($request->available_from); $i++) {
+                    $query->orWhere('property_for_rent.rented_from', 'LIKE', '%' . $request->available_from[$i] . '%');
+                }
+            });
+        }
+//
+        switch ($sort) {
+            case 'priced-low-high':
+                $query->orderBy('asking_price', 'ASC');
+                break;
+            case 'priced-high-low':
+                $query->orderBy('asking_price', 'DESC');
+                break;
+            case 'p-rom-area-low-high':
+                $query->orderBy('primary_room', 'ASC');
+                break;
+            case 'p-rom-area-high-low':
+                $query->orderBy('primary_room', 'DESC');
+                break;
+            case 'total-price-low-high':
+                $query->orderBy('total_price', 'ASC');
+                break;
+            case 'total-price-high-low':
+                $query->orderBy('total_price', 'DESC');
+                break;
+            default:
+                $query->orderBy('property_for_rent.id', 'DESC');
+                break;
+        }
+
+        if ($get_collection){
+            return $query->get();
+        }
+
+        $add_array = $query->paginate($this->pagination);
+        if ($request->ajax()) {
+            $html = view('user-panel.property.search-property-for-rent-inner', compact('add_array', 'col', 'sort'))->render();
+            exit($html);
+        }
+        return view('user-panel.property.search-property-for-rent', compact('col', 'add_array', 'sort'));
+    }
+
+    //prooperty for rent new
+    public function new_property_for_rent(Request $request)
+    {
+        $ad = new Ad(['ad_type' => 'property_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad->save();
+        if ($ad) {
+            $property = new PropertyForRent(['user_id' => Auth::id()]);
+            $ad->propertyForRent()->save($property);
+            if ($property) {
+                return redirect(url('complete/ad/' . $ad->id));
+            } else {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
+    }
+
+    public function newAddedit($id)
+    {
+        $property_for_rent1 = PropertyForRent::findOrFail($id);
+        if ($property_for_rent1) {
+            if (!Auth::user()->hasRole('admin') && $property_for_rent1->user_id != Auth::user()->id) {
+                abort(404);
+            }
+            return view('user-panel.property.new_add', compact('property_for_rent1'));
+        } else {
+            abort(404);
+        }
+    }
+
+    public function UpdatePropertyForRentAdd(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            if (!$request->facilities2) {
+                $request->merge(['facilities2' => null]);
+            }
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type']);
+
+            //Manage Facilities
+            if (isset($property_for_rent_data['facilities'])) {
+//                $facilities = "";
+//                foreach ($property_for_rent_data['facilities'] as $key => $val) {
+//                    $facilities .= $val . ",";
+//                }
+                $property_for_rent_data['facilities'] = json_encode($property_for_rent_data['facilities']);
+            }
+
+            //Add More ViewingTimes
+            if (isset($property_for_rent_data['delivery_date']) && $property_for_rent_data['delivery_date'] != "") {
+                $property_for_rent_data['secondary_delivery_date'] = null;
+                $i = 0;
+                foreach ($property_for_rent_data['delivery_date'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['delivery_date'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_delivery_date'] .= $val . ",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_rent_data['secondary_from_clock'] = "";
+            if (isset($property_for_rent_data['from_clock'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['from_clock'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['from_clock'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_from_clock'] .= $val . ",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_rent_data['secondary_clockwise_clock'] = "";
+            if (isset($property_for_rent_data['clockwise_clock'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['clockwise_clock'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['clockwise_clock'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_clockwise_clock'] .= $val . ",";
+                    }
+                    $i++;
+                }
+            }
+
+            $property_for_rent_data['secondary_note'] = "";
+            if (isset($property_for_rent_data['note'])) {
+                $i = 0;
+                foreach ($property_for_rent_data['note'] as $key => $val) {
+                    if ($i == 0) {
+                        $property_for_rent_data['note'] = $val;
+                    } else {
+                        $property_for_rent_data['secondary_note'] .= $val . ",";
+                    }
+                    $i++;
+                }
+            }
+
+            if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
+                $property_for_rent_data['published_on'] = 1;
+            } else {
+                $property_for_rent_data['published_on'] = 0;
+            }
+
+            $property_for_rent_data['user_id'] = Auth::user()->id;
+
+            $response = PropertyForRent::findOrFail($id);
+
+            //Update media (mediable id and mediable type)
+            if ($response && $response->ad) {
+                $property_for_rent_data = common::updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
+            }
+
+            $response->update($property_for_rent_data);
+
+            DB::commit();
+
+            $data['success'] = $response;
+            echo json_encode($data);
+            exit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
+        }
+    }
+
+    //update dummy property for sale to published
+    public function UpdateDummyRentAdd(AddPropertyForRent $request, $id)
+    {
+        //  DB::connection()->enableQueryLog();
+        //dd('working');
+        $property = PropertyForRent::find($id);
+        $ad = $property->ad;
+
+        $response = $ad->update(['status' => 'published']);
+        //  dd(DB::getQueryLog());
+
+        $data['success'] = $response;
+        echo json_encode($data);
+    }
+
+    public function propertyDescription($id)
+    {
+        $property_data = PropertyForRent::where('id', $id)->first();
+        return view('common.partials.property.property_description')->with(compact('property_data'));
+    }
+}

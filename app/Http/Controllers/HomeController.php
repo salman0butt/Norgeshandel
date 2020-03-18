@@ -91,7 +91,7 @@ class HomeController extends Controller
             else if($type == 'property_flat_wishes_rented'){
                 if($ad->property) {
                     $property_data = FlatWishesRented::find($ad->property->id);
-                    return view('common.partials.property.flat_wishes_for_rented_description', compact('property_data'));
+                    return view('common.partials.property.flat_wishes_rented_description', compact('property_data'));
                 }
                 abort(404);
             }

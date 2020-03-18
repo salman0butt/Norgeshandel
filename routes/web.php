@@ -123,14 +123,14 @@ Route::group(['middleware' => 'authverified'], function () {
 
 
 //property search and filters
-    Route::get('property/property-for-sale/search', 'PropertyController@search_property_for_sale');
-    Route::get('property/property-for-rent/search', 'PropertyController@search_property_for_rent');
-    Route::get('property/commercial-property-for-sale/search', 'PropertyController@search_commercial_property_for_sale');
-    Route::get('property/commercial-property-for-rent/search', 'PropertyController@search_commercial_property_for_rent');
-    Route::get('property/commercial-plots/search', 'PropertyController@search_commercial_plots');
-    Route::get('property/holiday-homes-for-sale/search', 'PropertyController@search_holiday_homes_for_sale');
-    Route::get('property/business-for-sale/search', 'PropertyController@search_business_for_sale');
-    Route::get('property/flat-wishes-rented/search', 'PropertyController@search_flat_wishes_rented');
+    Route::get('property/property-for-sale/search', 'Property\PropertyForSaleController@search_property_for_sale');
+    Route::get('property/property-for-rent/search', 'Property\PropertyForRentController@search_property_for_rent');
+    Route::get('property/commercial-property-for-sale/search', 'Property\CommercialPropertyForSaleController@search_commercial_property_for_sale');
+    Route::get('property/commercial-property-for-rent/search', 'Property\CommercialPropertyForRentController@search_commercial_property_for_rent');
+    Route::get('property/commercial-plots/search', 'Property\CommercialPlotController@search_commercial_plots');
+    Route::get('property/holiday-homes-for-sale/search', 'Property\PropertyHolidaysHomesForSaleController@search_holiday_homes_for_sale');
+    Route::get('property/business-for-sale/search', 'Property\BusinessForSaleController@search_business_for_sale');
+    Route::get('property/flat-wishes-rented/search', 'Property\FlatWishesRentedController@search_flat_wishes_rented');
 
 
 //Banner ads mangment
@@ -300,14 +300,14 @@ Route::group(['middleware' => 'authverified'], function () {
             });
 
             Route::group(['prefix' => 'property'], function () {
-                Route::get('property-for-sale', 'PropertyController@new_property_for_sale');
-                Route::get('property-for-rent', 'PropertyController@new_property_for_rent');
-               Route::get('property-for-flat-wishes-rented', 'PropertyController@new_property_for_flat_wishes_rented');
-               Route::get('property-for-holiday-homes-for-sale', 'PropertyController@new_property_for_holiday_homes_for_sale');
-                 Route::get('commercial-property-for-sale', 'PropertyController@new_commercial_property_for_sale');
-                 Route::get('commercial-property-for-rent', 'PropertyController@new_commercial_property_for_rent');
-                 Route::get('business-for-sale', 'PropertyController@new_business_for_sale');
-                 Route::get('commercial-plots', 'PropertyController@new_commercial_plots');
+                Route::get('property-for-sale', 'Property\PropertyForSaleController@new_property_for_sale');
+                Route::get('property-for-rent', 'Property\PropertyForRentController@new_property_for_rent');
+               Route::get('property-for-flat-wishes-rented', 'Property\FlatWishesRentedController@new_property_for_flat_wishes_rented');
+               Route::get('property-for-holiday-homes-for-sale', 'Property\PropertyHolidaysHomesForSaleController@new_property_for_holiday_homes_for_sale');
+                 Route::get('commercial-property-for-sale', 'Property\CommercialPropertyForSaleController@new_commercial_property_for_sale');
+                 Route::get('commercial-property-for-rent', 'Property\CommercialPropertyForRentController@new_commercial_property_for_rent');
+                 Route::get('business-for-sale', 'Property\BusinessForSaleController@new_business_for_sale');
+                 Route::get('commercial-plots', 'Property\CommercialPlotController@new_commercial_plots');
             });
         });
         Route::group(['prefix' => 'complete'], function () {
@@ -317,12 +317,12 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
         // User account settings and notification settings
-       
+
         Route::get('/setting', function () {
             return view('user-panel.my-business.settings');
         });
         Route::post('store-notifications-setting','Admin\Users\AdminUserController@store_notifications_setting')->name('store_notifications_setting');
-       
+
 
         //Account Setting Login
 //        Route::post('account-setting-login', 'AccountSettingController@login')->name('account-setting-login');
@@ -331,114 +331,119 @@ Route::group(['middleware' => 'authverified'], function () {
 //        });
 
         ///Account setting pages and routes
-        Route::get('/account/products', function () {
-            return view('user-panel.my-business.profile.account-products');
-        });
+        Route::group(['prefix'=>'account'], function () {
+            Route::get('/products', function () {
+                return view('user-panel.my-business.profile.account-products');
+            });
 
-        Route::get('/account/purchasehistory', function () {
-            return view('user-panel.my-business.profile.account-purchase-history');
-        });
+            Route::get('/purchasehistory', function () {
+                return view('user-panel.my-business.profile.account-purchase-history');
+            });
 
-        Route::get('/account/privacy', function () {
-            return view('user-panel.my-business.profile.account-privacy');
-        });
-        Route::get('/account/summary', function () {
-            return view('user-panel.my-business.profile.account-summary');
-        });
-        Route::get('/account/redeem', function () {
-            return view('user-panel.my-business.profile.account-redeem');
-        });
-        Route::get('/account/setting', function () {
-            $user = Auth::user();
-            return view('user-panel.my-business.profile.account_setting',compact('user'));
-        });
-        Route::get('/account/chnagepassword', function () {
-            return view('user-panel.my-business.profile.account-change-password');
-        });
+            Route::get('/privacy', function () {
+                return view('user-panel.my-business.profile.account-privacy');
+            });
+            Route::get('/summary', function () {
+                return view('user-panel.my-business.profile.account-summary');
+            });
+            Route::get('/redeem', function () {
+                return view('user-panel.my-business.profile.account-redeem');
+            });
+            Route::get('/setting', function () {
+                $user = Auth::user();
+                return view('user-panel.my-business.profile.account_setting', compact('user'));
+            });
+            Route::get('/chnagepassword', function () {
+                return view('user-panel.my-business.profile.account-change-password');
+            });
 
-        Route::get('/account/emails', function () {
-            return view('user-panel.my-business.profile.account-emails');
-        });
+            Route::get('/emails', function () {
+                return view('user-panel.my-business.profile.account-emails');
+            });
 
-        //Send verification email to account setting alternative email
-        Route::get('/account/verifyemail', function (Request $request) {
+            //Send verification email to account setting alternative email
+            Route::get('/verifyemail', function (Request $request) {
 
-            if($request && $request->email){
-                $is_auth_user_email = Meta::where('key','account_setting_alt_email')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
-                if($is_auth_user_email){
-                    //Store verify email record in meta table against user account setting emails
-                    if($request->email_verified){
-                        $is_email_verified = Meta::where('key','account_setting_alt_email_verified')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
-                        if(!$is_email_verified){
-                            Meta::create([
-                                'metable_id' => Auth::id(),
-                                'metable_type' => 'App\User',
-                                'key' => 'account_setting_alt_email_verified',
-                                'value' => $request->email,
-                            ]);
-                            //redirect to account email after verification of an email
-                            session()->flash('success', 'Din e-post er nå verifisert.');
-                            return redirect(url('/account/emails'));
-                        }else{
-                            session()->flash('success', 'E-postadressen din er allerede bekreftet.');
-                            return redirect(url('/account/emails'));
+                if ($request && $request->email) {
+                    $is_auth_user_email = Meta::where('key', 'account_setting_alt_email')->where('value', $request->email)->where('metable_type', 'App\User')->where('metable_id', Auth::id())->first();
+                    if ($is_auth_user_email) {
+                        //Store verify email record in meta table against user account setting emails
+                        if ($request->email_verified) {
+                            $is_email_verified = Meta::where('key', 'account_setting_alt_email_verified')->where('value', $request->email)->where('metable_type', 'App\User')->where('metable_id', Auth::id())->first();
+                            if (!$is_email_verified) {
+                                Meta::create([
+                                    'metable_id' => Auth::id(),
+                                    'metable_type' => 'App\User',
+                                    'key' => 'account_setting_alt_email_verified',
+                                    'value' => $request->email,
+                                ]);
+                                //redirect to account email after verification of an email
+                                session()->flash('success', 'Din e-post er nå verifisert.');
+                                return redirect(url('/account/emails'));
+                            } else {
+                                session()->flash('success', 'E-postadressen din er allerede bekreftet.');
+                                return redirect(url('/account/emails'));
+                            }
                         }
+
+                        //Send email to verify
+                        $to_email = $request->email;//$user->email;
+                        $user = Auth::user();
+                        Mail::send('mail.verify_user_account_setting_email', compact('user', 'to_email'), function ($message) use ($to_email) {
+                            $message->to($to_email)->subject('Bekreft din e-postadresse');
+                            $message->from('developer@digitalmx.no', 'NorgesHandel ');
+                        });
                     }
-
-                    //Send email to verify
-                    $to_email = $request->email;//$user->email;
-                    $user = Auth::user();
-                    Mail::send('mail.verify_user_account_setting_email',compact('user','to_email'), function ($message) use ($to_email) {
-                        $message->to($to_email)->subject('Bekreft din e-postadresse');
-                        $message->from('developer@digitalmx.no', 'NorgesHandel ');
-                    });
                 }
-            }
 
-            //Open verify account email view
-            return view('user-panel.my-business.profile.verify-account-email');
+                //Open verify account email view
+                return view('user-panel.my-business.profile.verify-account-email');
+            });
+
+            //Delete account setting alternative email
+            Route::get('/deleteemail', function (Request $request) {
+                if ($request->email && $request->delete_email == 'yes') {
+                    $email = Meta::where('key', 'account_setting_alt_email')->where('value', $request->email)->where('metable_type', 'App\User')->where('metable_id', Auth::id())->first();
+                    if ($email) {
+                        $is_email_verified = Meta::where('metable_id', $email->metable_id)->where('metable_type', $email->metable_type)
+                            ->where('key', 'account_setting_alt_email_verified')->where('value', $email->value)->first();
+                        if ($is_email_verified) {
+                            $is_email_verified->delete();
+                        }
+                        $email->delete();
+                        session()->flash('success', $request->email . ' ble slettet fra din profil.');
+                        return redirect(url('/account/emails'));
+                    } else {
+                        return back();
+                    }
+                }
+                return view('user-panel.my-business.profile.delete-account-email');
+            });
+
+            Route::get('/deletephone', function (Request $request) {
+                if( $request->phone && $request->delete_phone == 'yes'){
+                    $contact_no = Meta::where('key','account_setting_alt_contact_no')->where('value','+'.$request->phone)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
+                    if($contact_no){
+                        session()->flash('success', '+'.$request->phone.' ble slettet fra din profil.');
+                        $contact_no->delete();
+                        session()->flash('success', '+'.$request->phone.' ble slettet fra din profil.');
+                        return redirect('/account/phones');
+                    }else{
+                        return back();
+                    }
+                }
+                return view('user-panel.my-business.profile.delete-account-contact-no');
+            });
+
+            Route::get('/phones', function () {
+                return view('user-panel.my-business.profile.account-phone');
+            });
         });
 
-        //Delete account setting alternative email
-        Route::get('/account/deleteemail', function (Request $request) {
-            if( $request->email && $request->delete_email == 'yes'){
-                $email = Meta::where('key','account_setting_alt_email')->where('value',$request->email)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
-                if($email){
-                    $is_email_verified = Meta::where('metable_id',$email->metable_id)->where('metable_type',$email->metable_type)
-                        ->where('key','account_setting_alt_email_verified')->where('value',$email->value)->first();
-                    if($is_email_verified) {
-                        $is_email_verified->delete();
-                    }
-                    $email->delete();
-                    session()->flash('success', $request->email.' ble slettet fra din profil.');
-                    return redirect(url('/account/emails'));
-                }else{
-                    return back();
-                }
-            }
-            return view('user-panel.my-business.profile.delete-account-email');
-        });
         Route::post('store-user-emails', 'Admin\Users\AdminUserController@store_user_alternative_email')->name('store-user-emails');
         Route::post('store-user-contact-no', 'Admin\Users\AdminUserController@store_user_alternative_contact_no')->name('store-user-contact-no');
 
-        Route::get('/account/phones', function () {
-            return view('user-panel.my-business.profile.account-phone');
-        });
 
-        Route::get('/account/deletephone', function (Request $request) {
-            if( $request->phone && $request->delete_phone == 'yes'){
-                $contact_no = Meta::where('key','account_setting_alt_contact_no')->where('value','+'.$request->phone)->where('metable_type','App\User')->where('metable_id',Auth::id())->first();
-                if($contact_no){
-                    session()->flash('success', '+'.$request->phone.' ble slettet fra din profil.');
-                    $contact_no->delete();
-                    session()->flash('success', '+'.$request->phone.' ble slettet fra din profil.');
-                    return redirect('/account/phones');
-                }else{
-                    return back();
-                }
-            }
-            return view('user-panel.my-business.profile.delete-account-contact-no');
-        });
 
 
     });
@@ -477,47 +482,26 @@ Route::group(['middleware' => 'authverified'], function () {
 
 //  zille bellow
     Route::get('property/realestate', 'PropertyController@list');
-    Route::get('property/realestate/homes', 'PropertyController@ads');
-    Route::get('new/property/rent/ad', 'PropertyController@newAdd');
-    Route::get('new/property/rent/ad/{id}/edit', 'PropertyController@newAddedit');
-    Route::patch('add/property/for/rent/ad/{id}', 'PropertyController@UpdatePropertyForRentAdd');
-    Route::patch('add/property/for/rent/ad/update/{id}', 'PropertyController@UpdateDummyRentAdd');
-    Route::post('add/property/for/rent/ad', 'PropertyController@newPropertyForRentAdd');
-    Route::delete('property/for/rent/ad/{id}', 'PropertyController@deletePropertyForRent');
-    Route::post('property/for/rent/sorted/ad', 'PropertyController@sortedAddsPropertyForRent');
-    Route::get('new/property/sale/ad', 'PropertyController@newSaleAdd');
-    Route::get('new/property/sale/ad/{id}/edit', 'PropertyController@editSaleAdd');
-    Route::get('property/for/sale', 'PropertyController@adsPropertyForSale');
-    Route::post('property/for/sale/sorted/ad', 'PropertyController@sortedAddsPropertyForSale');
-    Route::patch('new/property/sale/ad/{id}', 'PropertyController@updateSaleAdd');
-    Route::patch('new/property/sale/ad/update/{id}', 'PropertyController@UpdateDummySaleAdd');
-    Route::post('add/property/sale/ad', 'PropertyController@addSaleAdd');
+    Route::get('new/property/rent/ad/{id}/edit', 'Property\PropertyForRentController@newAddedit');
+    Route::patch('add/property/for/rent/ad/{id}', 'Property\PropertyForRentController@UpdatePropertyForRentAdd');
+    Route::patch('add/property/for/rent/ad/update/{id}', 'Property\PropertyForRentController@UpdateDummyRentAdd');
+    Route::get('new/property/sale/ad/{id}/edit', 'Property\PropertyForSaleController@editSaleAdd');
+    Route::patch('new/property/sale/ad/{id}', 'Property\PropertyForSaleController@updateSaleAdd');
+    Route::patch('new/property/sale/ad/update/{id}', 'Property\PropertyForSaleController@UpdateDummySaleAdd');
 
-    //Holiday home for sale
-    Route::get('holiday/home/for/sale', 'PropertyController@holidayHomeForSale');
-    Route::get('holiday/home/for/sale/{id}/edit', 'PropertyController@editHolidayHomeForSale');
-    Route::patch('holiday/home/for/sale/{id}', 'PropertyController@updateHomeForSaleAd');
-    Route::patch('holiday/home/for/sale/update/{id}', 'PropertyController@updateDummyHomeForSaleAd');
-    Route::post('add/property/home/for/sale/ad', 'PropertyController@addHomeForSaleAd');
-    Route::post('get/property/holiday/home/for/sale/ad', 'PropertyController@getHomeForSaleAdd');
+//Holiday home for sale
+    Route::get('holiday/home/for/sale/{id}/edit', 'Property\PropertyHolidaysHomesForSaleController@editHolidayHomeForSale');
+    Route::patch('holiday/home/for/sale/{id}', 'Property\PropertyHolidaysHomesForSaleController@updateHomeForSaleAd');
+    Route::patch('holiday/home/for/sale/update/{id}', 'Property\PropertyHolidaysHomesForSaleController@updateDummyHomeForSaleAd');
 
-    Route::get('property/for/rent', 'PropertyController@adsForRent');
-    Route::get('property/for/holidays', 'PropertyController@adsForHomeHolidays');
-    Route::get('new/flat/wishes/rented', 'PropertyController@newAddFlatWishesRented');
-    Route::get('new/flat/wishes/rented/{id}/edit', 'PropertyController@editAddFlatWishesRented');
-    Route::patch('new/flat/wishes/rented/{id}', 'PropertyController@updateFlatWishesRented');
-    Route::patch('new/flat/wishes/rented/update/{id}', 'PropertyController@updateDummyFlatWishesRented');
-    Route::delete('flat/wishes/rented/{id}', 'PropertyController@deleteFlatWishesRented');
-    Route::post('new/add/flat/wishes/rented', 'PropertyController@addFlatWishesRented');
-    Route::get('add/new/realestate/business/plot', 'PropertyController@addNewRealEstateBusinessPlot');
-    Route::post('add/realestate/business/plot', 'PropertyController@addRealEstateBusinessPlot');
-    Route::get('add/new/commercial/property/for/sale', 'PropertyController@commercialPropertyForSale');
-    Route::get('add/new/commercial/property/for/sale/{id}/edit', 'PropertyController@editcommercialPropertyForSale');
-    Route::patch('add/new/commercial/property/for/sale/{id}', 'PropertyController@updateCommercialPropertyForSale');
-    Route::patch('add/new/commercial/property/for/sale/update/{id}', 'PropertyController@updateDummyCommercialPropertyForSale');
-    Route::post('add/commercial/property/for/sale', 'PropertyController@addCommercialPropertyForSale');
-    Route::get('/property/description/{id}', ['uses' => 'PropertyController@propertyDescription']);
-    Route::get('/property/for/sale/description/{id}', ['uses' => 'PropertyController@propertyForSaleDescription']);
+    Route::get('new/flat/wishes/rented/{id}/edit', 'Property\FlatWishesRentedController@editAddFlatWishesRented');
+    Route::patch('new/flat/wishes/rented/{id}', 'Property\FlatWishesRentedController@updateFlatWishesRented');
+    Route::patch('new/flat/wishes/rented/update/{id}', 'Property\FlatWishesRentedController@updateDummyFlatWishesRented');
+    Route::get('add/new/commercial/property/for/sale/{id}/edit', 'Property\CommercialPropertyForSaleController@editCommercialPropertyForSale');
+    Route::patch('add/new/commercial/property/for/sale/{id}', 'Property\CommercialPropertyForSaleController@updateCommercialPropertyForSale');
+    Route::patch('add/new/commercial/property/for/sale/update/{id}', 'Property\CommercialPropertyForSaleController@updateDummyCommercialPropertyForSale');
+    Route::get('/property/description/{id}', ['uses' => 'Property\PropertyForRentController@propertyDescription']);
+    Route::get('/property/for/sale/description/{id}', ['uses' => 'Property\PropertyForSaleController@propertyForSaleDescription']);
 
 
     /// Upload images using dropzone
@@ -525,59 +509,34 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::patch('update-upload-images', 'PropertyController@upload_dropzone_images'); // upload images on edit form request
 
     //flatwishesrented
-    Route::get('/property/flat/wishes/rented', 'PropertyController@adsForFlatWishedRented');
-    Route::post('/property/flat/wishes/rented/sorted/ad', 'PropertyController@flatWishesRentedSortedAd');
-    Route::get('/flat/wishes/rented/description/{id}', ['uses' => 'PropertyController@flatWishesRentedDescription']);
+    Route::get('/flat/wishes/rented/description/{id}', ['uses' => 'Property\FlatWishesRentedController@flatWishesRentedDescription']);
 
     //holidayhomeforsale
-    Route::get('/holiday/home/for/sale/ads', 'PropertyController@holidayHomeForSaleAds');
-    Route::get('/holiday/home/for/sale/description/{id}', ['uses' => 'PropertyController@holidayHomeForSaleDescription']);
+    Route::get('/holiday/home/for/sale/description/{id}', ['uses' => 'Property\PropertyHolidaysHomesForSaleController@holidayHomeForSaleDescription']);
 
-    //commercialpropertyforsale
-    Route::get('/commercial/property/for/sale/ads', 'PropertyController@commercialPropertyForSaleAds');
-    Route::post('/property/commercial/for/sale/sorted/ad', 'PropertyController@commercialPropertyForSaleSortedAds');
-    Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'PropertyController@commercialForSaleDescription']);
+    //Property\CommercialPropertyForSale
+    Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'Property\CommercialPropertyForSaleController@commercialForSaleDescription']);
 
     //commercial property for rent
-    Route::get('/add/new/commercial/property/for/rent', 'PropertyController@commercialPropertyForRent');
-    Route::get('add/new/commercial/property/for/rent/{id}/edit', 'PropertyController@editCommercialPropertyForRent');
-    Route::patch('add/new/commercial/property/for/rent/{id}', 'PropertyController@updateCommercialPropertyForRent');
-    Route::patch('add/new/commercial/property/for/rent/update/{id}', 'PropertyController@updateDummyCommercialPropertyForRent');
-    Route::post('/add/commercial/property/for/rent', 'PropertyController@addCommercialPropertyForRent');
-    Route::get('/commercial/property/for/rent/ads', 'PropertyController@commercialPropertyForRentAds');
-    Route::post('property/commercial/for/rent/sorted/ad', 'PropertyController@commercialPropertyForRentSortedAds');
+    Route::get('add/new/commercial/property/for/rent/{id}/edit', 'Property\CommercialPropertyForRentController@editCommercialPropertyForRent');
+    Route::patch('add/new/commercial/property/for/rent/{id}', 'Property\CommercialPropertyForRentController@updateCommercialPropertyForRent');
+    Route::patch('add/new/commercial/property/for/rent/update/{id}', 'Property\CommercialPropertyForRentController@updateDummyCommercialPropertyForRent');
 
-    Route::get('/commercial/property/for/rent/description/{id}', 'PropertyController@commercialForRentDescription');
+    Route::get('/commercial/property/for/rent/description/{id}', 'Property\CommercialPropertyForRentController@commercialForRentDescription');
 
     // Business for sale
-    Route::get('/business/for/sale', 'PropertyController@BusinessForSale');
-    Route::post('add/business/for/sale', 'PropertyController@addBusinessForSale');
-    Route::post('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
-    Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
-    Route::patch('add/business/for/sale/update/{id}', 'PropertyController@updateDummyBusinessForSale');
-    Route::get('/business/for/sale/ads', 'PropertyController@businessForSaleAds');
-    Route::get('add/business/for/sale/{id}/edit', 'PropertyController@editBusinessForSale');
-    Route::patch('add/business/for/sale/{id}', 'PropertyController@updateBusinessForSale');
-
-    Route::post('business/for/sales/sorted/ad', 'PropertyController@businessForSaleSortedAds');
-
-    Route::get('/business/for/sale/description/{id}', 'PropertyController@businessForSaleDescription');
+    Route::post('add/business/for/sale/{id}/edit', 'Property\BusinessForSaleController@editBusinessForSale');
+    Route::patch('add/business/for/sale/{id}', 'Property\BusinessForSaleController@updateBusinessForSale');
+    Route::patch('add/business/for/sale/update/{id}', 'Property\BusinessForSaleController@updateDummyBusinessForSale');
+    Route::get('add/business/for/sale/{id}/edit', 'Property\BusinessForSaleController@editBusinessForSale');
+    Route::patch('add/business/for/sale/{id}', 'Property\BusinessForSaleController@updateBusinessForSale');
+    Route::get('/business/for/sale/description/{id}', 'Property\BusinessForSaleController@businessForSaleDescription');
 
     //Commercial Plots
-    Route::get('/commercial/plots', 'PropertyController@commercialPlots');
-    Route::get('/commercial/plots/{id}/edit', 'PropertyController@editCommercialPlots');
-    Route::patch('commercial/plots/{id}', 'PropertyController@updateCommercialPlots');
-    Route::patch('commercial/plots/update/{id}', 'PropertyController@updateDummyCommercialPlots');
-    Route::post('/add/commercial/plot/ad', 'PropertyController@addcommercialPlotsAd');
-
-    Route::get('/commercial/plots/ads', 'PropertyController@commercialPlotsAds');
-
-    Route::post('get/commercial/plot/ad', 'PropertyController@commercialPlotSortedAds');
-
-    Route::get('/commercial/plots/ads/description/{id}', 'PropertyController@commercialPlotDescription');
-
-    Route::get('/map/test', 'PropertyController@mapTest');
-
+    Route::get('/commercial/plots/{id}/edit', 'Property\CommercialPlotController@editCommercialPlots');
+    Route::patch('commercial/plots/{id}', 'Property\CommercialPlotController@updateCommercialPlots');
+    Route::patch('commercial/plots/update/{id}', 'Property\CommercialPlotController@updateDummyCommercialPlots');
+    Route::get('/commercial/plots/ads/description/{id}', 'Property\CommercialPlotController@commercialPlotDescription');
     Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
 
     Route::get('test', function () {
