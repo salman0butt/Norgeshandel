@@ -383,7 +383,7 @@
                 var attachment = $("#attachment").val();
 
                 if (message == '' && attachment == '') {
-                    console.log('no message1');
+                    //console.log('no message1');
                     return false;
                 }
                 if (message == '' && attachment != '' || message != '') {

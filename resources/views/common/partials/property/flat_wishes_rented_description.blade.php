@@ -59,7 +59,7 @@
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                     @if($property_data->max_rent_per_month)
                         <div class="col-md-12 font-weight-bold mt-3">Maks månedsleie</div>
-                        <div class="col-md-12 u-t3">{{$property_data->max_rent_per_month}} Kr</div>
+                        <div class="col-md-12 u-t3">{{number_format($property_data->max_rent_per_month,0,""," ")}} Kr</div>
                     @endif
                     <div class="clearfix"></div>
                     {{-- <div class="mt-2 col-md-12"></div> --}}
@@ -91,7 +91,7 @@
 
 
                     <div class="col-md-12">
-                        <p>{{$property_data->description}}</p>
+                        <p style="white-space: pre-line">{{$property_data->description}}</p>
                     </div>
                     <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                                 eiendommen

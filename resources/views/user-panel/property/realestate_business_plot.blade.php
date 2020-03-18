@@ -579,10 +579,10 @@
                     },
                     error: function (jqXhr, json, errorThrown) {// this are default for ajax errors
                         var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
+                        //console.log(errors.errors);
                         var html = "<ul>";
                         $.each(errors.errors, function (index, value) {
-                            console.log(value);
+                            //console.log(value);
                             html += "<li>" + value + "</li>";
                         });
                         html += "</ul>";

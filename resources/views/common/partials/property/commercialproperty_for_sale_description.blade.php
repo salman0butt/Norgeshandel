@@ -91,7 +91,7 @@
                     </div>
                     @if($property_data->description_simple)
                         <div class="col-md-12 mt-2">
-                            <p>{{$property_data->description_simple}}</p>
+                            <p style="white-space: pre-line">{{$property_data->description_simple}}</p>
                         </div>
                     @endif
                     @if($property_data->rental_income)
@@ -201,7 +201,7 @@
 
                                         @if($property_data->municipal_number)
                                             <div class="col-md-12">
-                                                <span class="">Kommunenr:{{$property_data->municipal_number}}</span>
+                                                <span class="">Kommunenr: {{$property_data->municipal_number}}</span>
                                             </div>
                                         @endif
 

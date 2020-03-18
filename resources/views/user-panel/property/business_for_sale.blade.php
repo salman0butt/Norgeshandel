@@ -107,13 +107,13 @@
                     error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
 
                         var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
+                        //console.log(errors.errors);
                         if (isEmpty(errors.errors)) {
                             $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
                             return false;
                         }
                         if (!isEmpty(errors.errors)) {
-                            console.log(errors.errors);
+                            //console.log(errors.errors);
                             $.each(errors.errors, function (index, value) {
                                 $("." + index).html(value);
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");

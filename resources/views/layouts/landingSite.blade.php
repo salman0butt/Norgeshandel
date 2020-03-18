@@ -332,7 +332,7 @@
 
                     if (postalCode.result == "Ugyldig postnummer") {
                         $('#zip_code-error').css('display', 'block');
-                        console.log(postalCode.result);
+                        //console.log(postalCode.result);
                         if (document.getElementById('zip_code-error') == null) {
                             $("input[name='zip_code']").after("<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
                         } else {
@@ -348,7 +348,7 @@
                         });
                    
                         $('#zip_city').val(res);
-                        console.log(res);
+                        //console.log(res);
                     }
                 }
             };
@@ -389,7 +389,7 @@
 
             },
             error: function (error) {
-                console.log(error);
+                //console.log(error);
             }
         });
     }

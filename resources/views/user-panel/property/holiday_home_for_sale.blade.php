@@ -66,7 +66,7 @@
             
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
-                    console.log(old_zip);
+                    //console.log(old_zip);
                     if (zip_code) {
                         if (old_zip != zip_code) {
                             find_zipcode_city(zip_code);
@@ -89,7 +89,7 @@
                 });
                 //$('.notice').html("");
 
-                console.log('status 3');
+                //console.log('status 3');
                 var myform = document.getElementById("property_holiday_home_for_sale_form");
                 var fd = new FormData(myform);
 
@@ -136,13 +136,13 @@
                     error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
 
                         var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
+                        //console.log(errors.errors);
                         if (isEmpty(errors.errors)) {
                             $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
                             return false;
                         }
                         if (!isEmpty(errors.errors)) {
-                            console.log(errors.errors);
+                            //console.log(errors.errors);
                             $.each(errors.errors, function (index, value) {
                                 $("." + index).html(value);
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");

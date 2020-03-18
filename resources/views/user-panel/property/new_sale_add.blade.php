@@ -147,7 +147,7 @@
                 },
                 error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
                     var errors = jqXhr.responseJSON;
-                    console.log(errors.errors);
+                    //console.log(errors.errors);
                     if (isEmpty(errors.errors)) {
                         $('.notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
                         return false;
@@ -157,7 +157,7 @@
                     } else {
                         // var html="<ul>";
                         $.each(errors.errors, function (index, value) {
-                            console.log(value);
+                            //console.log(value);
                             $("." + index).html(value);
                             $("input[name='" + index + "'],select[name='" + index + "']")
                                 .addClass("error-input");
