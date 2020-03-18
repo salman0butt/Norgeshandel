@@ -7,6 +7,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Requests\AddPropertyForRent;
 use App\Http\Requests\AddPropertyForSale;
 use App\Models\Ad;
+use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
 use Illuminate\Http\Request;
@@ -41,6 +42,10 @@ class PropertyForSaleController extends Controller
 
     public function search_property_for_sale(Request $request, $get_collection=false)
     {
+        if(isset($request->search_id) && !$get_collection){
+            Notification::where('notifiable_id', '=', $request->search_id)
+                ->whereNull('read_at')->update(['read_at'=>now()]);
+        }
         $table = 'property_for_sales';
         $col = 'list';
         $sort = 'published';
@@ -211,17 +216,6 @@ class PropertyForSaleController extends Controller
         }
     }
 
-    public function UpdateDummyRentAdd(AddPropertyForRent $request, $id) {
-        //  DB::connection()->enableQueryLog();
-        $property = PropertyForRent::find($id);
-        $ad = $property->ad;
-
-        $response = $ad->update(['status'=>'published']);
-        //  dd(DB::getQueryLog());
-
-        $data['success'] = $response;
-        echo json_encode($data);
-    }
 
     public function editSaleAdd($id)
     {

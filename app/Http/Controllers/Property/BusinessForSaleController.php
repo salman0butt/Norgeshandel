@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
 use App\Http\Requests\AddBusinessForSale;
 use App\Models\Ad;
+use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,10 @@ class BusinessForSaleController extends Controller
 //    zain
     public function search_business_for_sale(Request $request, $get_collection = false)
     {
+        if(isset($request->search_id) && !$get_collection){
+            Notification::where('notifiable_id', '=', $request->search_id)
+                ->whereNull('read_at')->update(['read_at'=>now()]);
+        }
         $col = 'list';
         $sort = 'published';
         if (isset($request->view) && !empty($request->view)) {
@@ -121,10 +126,18 @@ class BusinessForSaleController extends Controller
     public function updateDummyBusinessForSale(AddBusinessForSale $request, $id)
     {
         $property = BusinessForSale::find($id);
+        $message = '';
         $ad = $property->ad;
-
+        if ($ad->status == 'saved') {
+            $message = 'Ny bolig er publisert';
+        } elseif ($ad->status == 'published') {
+            $message = 'Eiendommen er oppdatert';
+        }
         $response = $ad->update(['status' => 'published']);
 
+//            notification bellow
+        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/business-for-sale');
+//            end notification
 
         $data['success'] = $response;
         echo json_encode($data);

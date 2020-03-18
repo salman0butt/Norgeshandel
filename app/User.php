@@ -150,10 +150,10 @@ class User extends Authenticatable implements MustVerifyEmail
 //        return $this->hasMany(Following::class)->where('');
 //    }
     public function saved_searches(){
-        return $this->hasMany(Search::class)->where('type', '=', 'saved');
+        return $this->hasMany(Search::class)->where('type', '=', 'saved')->orderBy('id', 'desc');
     }
     public function recent_searches(){
-        return $this->hasMany(Search::class)->where('type', '=', 'recent');
+        return $this->hasMany(Search::class)->where('type', '=', 'recent')->orderBy('id', 'desc');
     }
     public function is($roleName)
     {

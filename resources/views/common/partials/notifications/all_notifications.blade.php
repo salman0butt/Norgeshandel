@@ -20,7 +20,7 @@
                     @if(is_countable($searches) && count($searches) > 0)
                         @foreach ($searches as $search)
                             <article class="col-md-12 pl-0 pr-0 list-ad">
-                                <a href="{{url('/'.$search->filter)}}">
+                                <a href="{{url('/'.$search->filter)}}&search_id={{$search->id}}">
                                     <div class="ads__unit__img"
                                          style="max-width: 160px;display:block;width:23%;float:left; margin:5px;">
                                         <div class="ads__unit__img__ratio">
