@@ -18,7 +18,7 @@ if ($job->company_id != 0) {
 ?>
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
     <a href="{{route('jobs.show', compact('job'))}}" class="image-section col-sm-4 p-2">
-        <img src="{{asset($image_path)}}" alt="" class="img-fluid radius-8">
+        <img src="{{asset($image_path)}}" alt="" class="img-fluid radius-8" style="height: 160px; width: 100%;">
     </a>
     <div class="detailed-section col-sm-8 p-2 position-relative">
         <a href="{{route('jobs.show', compact('job'))}}" style="width:100%; display: block">
