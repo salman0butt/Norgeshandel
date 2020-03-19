@@ -133,7 +133,9 @@
             });
 
             $('#search').on('keyup', function (e) {
+                
                 if(!isEmpty($('#search_url').val())) {
+                  
                     if(e.key=='Enter') {
                         var link = $('#all-searches-page').attr('href');
                         if(!isEmpty(link)){
@@ -145,7 +147,10 @@
                             url: $('#search_url').val() + '/' + $('#search').val(),
                             type: "GET",
                             success: function (response) {
+                               
                                 $('#suggestions').html(response);
+                            var valu = $('#search').val();
+                            $('#suggestions > div > div.col-md-7 > ul > li a').prepend(valu+' ');
                             },
                             error: function (error) {
                                 //console.log(error);

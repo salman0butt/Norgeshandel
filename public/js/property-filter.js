@@ -1,5 +1,10 @@
  var added = false;
  $(document).ready(function () {
+    //   $('a.row').on('click', function (e) {
+    //       e.preventDefault();
+    //       alert('working');
+    //       history.pushState({}, null, '');
+    //   });
             var getUrlParameter = function getUrlParameter(sParam) {
                 var sPageURL = window.location.search.substring(1),
                     sURLVariables = sPageURL.split('&'),
@@ -32,10 +37,10 @@
          // fix_page_links();
          var back_url = $('#back_url').val();
          if (!added) {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
              added = true;
          } else {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
          }
          // fix_page_links();
      });
@@ -62,10 +67,10 @@
          // fix_page_links();
          var back_url = $('#back_url').val();
          if (!added) {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
              added = true;
          } else {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
          }
      });
      $(document).on('change', '#sort_by', function () {
@@ -87,10 +92,10 @@
          // fix_page_links();
          var back_url = $('#back_url').val();
          if (!added) {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
              added = true;
          } else {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
          }
      });
    $(document).on('click', '#view', function (e) {
@@ -119,13 +124,15 @@
          // fix_page_links();
          var back_url = $('#back_url').val();
          if (!added) {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
              added = true;
          } else {
-             history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
          }
      });
      $(window).on('popstate', function (e) {
          window.location.href = window.location.href.split("?")[0];
      });
+    
  });
+
