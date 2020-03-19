@@ -438,11 +438,21 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('/phones', function () {
                 return view('user-panel.my-business.profile.account-phone');
             });
+
+
         });
 
         Route::post('store-user-emails', 'Admin\Users\AdminUserController@store_user_alternative_email')->name('store-user-emails');
         Route::post('store-user-contact-no', 'Admin\Users\AdminUserController@store_user_alternative_contact_no')->name('store-user-contact-no');
 
+        Route::get('ad-visibility', function (Request $request) {
+            if($request->ad_id){
+                $ad = Ad::find($request->ad_id);
+                if($ad){
+                    return back();
+                }
+            }
+        });
 
 
 

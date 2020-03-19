@@ -84,6 +84,12 @@
                             @endif">Endre annonsen
                             </a>
                         </div>
+                        @if($ad->status == 'published')
+                            <div class="u-pv8 mt-2">
+                                <a href="{{url('ad-visibility?ad_id='.$ad->id)}}" class="link pl-0 mb-2">Skjul annonsen i søkeresultater</a>
+
+                            </div>
+                        @endif
                         <div class="u-pv8 mt-2">
                             <div>
                                 @if($ad->ad_type == 'job')
@@ -103,14 +109,17 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="u-pv8 mt-2">
+                            @if(!$ad->sold_at && $ad->status == 'published')
+                                <form action="{{route('ad-sold', $ad)}}" class="mb-0" method="POST" onsubmit="javascript:return confirm('Vil du merke denne annonsen som solgt? Du vil ikke kunne endre status senere.')">
+                                    {{csrf_field()}}
+                                    <button type="submit" class="link pl-0">Merk som solgt
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
-                    @if(!$ad->sold_at && $ad->status == 'published')
-                        <form action="{{route('ad-sold', $ad)}}" class="mb-0" method="POST" onsubmit="javascript:return confirm('Vil du merke denne annonsen som solgt? Du vil ikke kunne endre status senere.')">
-                            {{csrf_field()}}
-                            <button type="submit" class="link pl-0">Merk som solgt
-                            </button>
-                        </form>
-                    @endif
+
                     {{--<a class="u-pv8 mt-2" href="#">Merk som solgt</a>--}}
 
                 </div>
