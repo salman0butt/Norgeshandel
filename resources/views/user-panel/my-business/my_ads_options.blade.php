@@ -31,6 +31,7 @@
         <div class="grid row">
             <div class="grid__unit col-md-8">
                 <div class="panel u-mb32">
+                    @include('common.partials.flash-messages')
                     <div class="mt-1 mb-2">
                         <span class="status status--error">Påbegynt</span>
                         @php
@@ -86,8 +87,13 @@
                         </div>
                         @if($ad->status == 'published')
                             <div class="u-pv8 mt-2">
-                                <a href="{{url('ad-visibility?ad_id='.$ad->id)}}" class="link pl-0 mb-2">Skjul annonsen i søkeresultater</a>
-
+                                <a href="{{url('update-ad-visibility?ad_id='.$ad->id)}}" class="link pl-0 mb-2">
+                                    @if($ad->visibility)
+                                        Skjul annonsen i søkeresultater
+                                    @else
+                                        Vis annonsen din i søkeresultatene
+                                    @endif
+                                </a>
                             </div>
                         @endif
                         <div class="u-pv8 mt-2">
