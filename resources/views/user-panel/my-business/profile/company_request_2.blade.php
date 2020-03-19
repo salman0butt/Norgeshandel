@@ -273,7 +273,7 @@
                                 "<p style='color:red;'>Organisasjonsnummer ikke funnt</p>"
                                 );
                         } else {
-                            console.log('Noe gikk galt.');
+                            //console.log('Noe gikk galt.');
                         }
 
                     }

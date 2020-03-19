@@ -92,6 +92,7 @@
                         }
                     $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
                    }else if(event == 'click'){
+                        $('.notice').css('display','block');
                       $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
                    }
                            if (event == 'change') {
@@ -107,13 +108,13 @@
                     error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
 
                         var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
+                        //console.log(errors.errors);
                         if (isEmpty(errors.errors)) {
                             $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
                             return false;
                         }
                         if (!isEmpty(errors.errors)) {
-                            console.log(errors.errors);
+                            //console.log(errors.errors);
                             $.each(errors.errors, function (index, value) {
                                 $("." + index).html(value);
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
@@ -131,6 +132,7 @@
             
             $("input:not(input[type=date])").on('change', function (e) {
                 e.preventDefault();
+                if(! $(this).valid()) return false;
                record_store_ajax_request('change', (this));
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);

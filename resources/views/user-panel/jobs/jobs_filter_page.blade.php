@@ -21,7 +21,7 @@
                 urlParams = new URLSearchParams(location.search);
                 urlParams.delete('sort');
                 urlParams.set('sort', $(this).val());
-                console.log(urlParams.toString());
+                //console.log(urlParams.toString());
                 search(urlParams.toString());
                 history.pushState('', 'NorgesHandel', "?" + urlParams.toString());
             });

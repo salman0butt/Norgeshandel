@@ -237,7 +237,7 @@
             <h3 class="u-t5">Tekst på lenke</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="link" type="text" value="{{ $commercial_plot->link }}" class="dme-form-control">
+                    <input name="link" type="text" value="{{ $commercial_plot->link }}" class="dme-form-control url_http">
                 </div>
             </div>
         </div>
@@ -246,7 +246,7 @@
             <h3 class="u-t5">Lenke for mer informasjon</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="text_for_information" value="{{ $commercial_plot->text_for_information }}" type="text" class="dme-form-control">
+                    <input name="text_for_information" value="{{ $commercial_plot->text_for_information }}" type="text" class="dme-form-control url_http">
                 </div>
             </div>
         </div>

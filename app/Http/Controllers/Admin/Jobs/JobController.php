@@ -292,7 +292,13 @@ class JobController extends Controller
         }
 
         $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id];
-        return $ids;
+        if ($request->ajax()) {
+        echo json_encode($ids);
+         exit();
+        } else {
+            return $ids;
+        }
+
     }
 
     /**

@@ -43,10 +43,10 @@
                   }
                var url = '';
                 if (event == 'change') {
-                    console.log('status 1');
+                    //console.log('status 1');
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
-                    console.log(old_zip);
+                    //console.log(old_zip);
                     if (zip_code) {
                         if (old_zip != zip_code) {
                             find_zipcode_city(zip_code);
@@ -60,7 +60,7 @@
                         var url = "{{url('add/new/commercial/property/for/rent/update/'.$commercial_for_rent->id)}}";
                     @endif
                 }
-                console.log('status 2');
+                //console.log('status 2');
                 //if (!$('#property_for_rent_form').valid()) return false;
 
                 $("input ~ span,select ~ span").each(function (index) {
@@ -69,7 +69,7 @@
                 });
               //  $('.notice').html("");
 
-                console.log('status 3');
+                //console.log('status 3');
                 var myform = document.getElementById("commercial_property_for_rent");
                 var fd = new FormData(myform);
                 if($('.remove_property_pdf').attr('id')){
@@ -85,7 +85,7 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                       // console.log(data);
+                       // //console.log(data);
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
                  if (event == 'change') {
@@ -94,6 +94,7 @@
                      }
                     $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
                    }else if(event == 'click'){
+                     $('.notice').css('display','block');
                       $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
                    }
                            if (event == 'change') {
@@ -109,13 +110,13 @@
                     error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
 
                         var errors = jqXhr.responseJSON;
-                        console.log(errors.errors);
+                        //console.log(errors.errors);
                         if (isEmpty(errors.errors)) {
                             $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
                             return false;
                         }
                         if (!isEmpty(errors.errors)) {
-                            console.log(errors.errors);
+                            //console.log(errors.errors);
                             $.each(errors.errors, function (index, value) {
                                 $("." + index).html(value);
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
@@ -133,6 +134,7 @@
             
             $("input:not(input[type=date])").on('change', function (e) {
                 e.preventDefault();
+                if(! $(this).valid()) return false;
                record_store_ajax_request('change', (this));
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
