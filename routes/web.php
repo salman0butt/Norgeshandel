@@ -500,8 +500,8 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('add/new/commercial/property/for/sale/{id}/edit', 'Property\CommercialPropertyForSaleController@editCommercialPropertyForSale');
     Route::patch('add/new/commercial/property/for/sale/{id}', 'Property\CommercialPropertyForSaleController@updateCommercialPropertyForSale');
     Route::patch('add/new/commercial/property/for/sale/update/{id}', 'Property\CommercialPropertyForSaleController@updateDummyCommercialPropertyForSale');
-    Route::get('/property/description/{id}', ['uses' => 'Property\PropertyForRentController@propertyDescription']);
-    Route::get('/property/for/sale/description/{id}', ['uses' => 'Property\PropertyForSaleController@propertyForSaleDescription']);
+//    Route::get('/property/description/{id}', ['uses' => 'Property\PropertyForRentController@propertyDescription']);
+//    Route::get('/property/for/sale/description/{id}', ['uses' => 'Property\PropertyForSaleController@propertyForSaleDescription']);
 
 
     /// Upload images using dropzone
@@ -509,20 +509,20 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::patch('update-upload-images', 'PropertyController@upload_dropzone_images'); // upload images on edit form request
 
     //flatwishesrented
-    Route::get('/flat/wishes/rented/description/{id}', ['uses' => 'Property\FlatWishesRentedController@flatWishesRentedDescription']);
+//    Route::get('/flat/wishes/rented/description/{id}', ['uses' => 'Property\FlatWishesRentedController@flatWishesRentedDescription']);
 
     //holidayhomeforsale
-    Route::get('/holiday/home/for/sale/description/{id}', ['uses' => 'Property\PropertyHolidaysHomesForSaleController@holidayHomeForSaleDescription']);
+//    Route::get('/holiday/home/for/sale/description/{id}', ['uses' => 'Property\PropertyHolidaysHomesForSaleController@holidayHomeForSaleDescription']);
 
     //Property\CommercialPropertyForSale
-    Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'Property\CommercialPropertyForSaleController@commercialForSaleDescription']);
+//    Route::get('/commercial/property/for/sale/description/{id}', ['uses' => 'Property\CommercialPropertyForSaleController@commercialForSaleDescription']);
 
     //commercial property for rent
     Route::get('add/new/commercial/property/for/rent/{id}/edit', 'Property\CommercialPropertyForRentController@editCommercialPropertyForRent');
     Route::patch('add/new/commercial/property/for/rent/{id}', 'Property\CommercialPropertyForRentController@updateCommercialPropertyForRent');
     Route::patch('add/new/commercial/property/for/rent/update/{id}', 'Property\CommercialPropertyForRentController@updateDummyCommercialPropertyForRent');
 
-    Route::get('/commercial/property/for/rent/description/{id}', 'Property\CommercialPropertyForRentController@commercialForRentDescription');
+//    Route::get('/commercial/property/for/rent/description/{id}', 'Property\CommercialPropertyForRentController@commercialForRentDescription');
 
     // Business for sale
     Route::post('add/business/for/sale/{id}/edit', 'Property\BusinessForSaleController@editBusinessForSale');
@@ -530,14 +530,14 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::patch('add/business/for/sale/update/{id}', 'Property\BusinessForSaleController@updateDummyBusinessForSale');
     Route::get('add/business/for/sale/{id}/edit', 'Property\BusinessForSaleController@editBusinessForSale');
     Route::patch('add/business/for/sale/{id}', 'Property\BusinessForSaleController@updateBusinessForSale');
-    Route::get('/business/for/sale/description/{id}', 'Property\BusinessForSaleController@businessForSaleDescription');
+//    Route::get('/business/for/sale/description/{id}', 'Property\BusinessForSaleController@businessForSaleDescription');
 
     //Commercial Plots
     Route::get('/commercial/plots/{id}/edit', 'Property\CommercialPlotController@editCommercialPlots');
     Route::patch('commercial/plots/{id}', 'Property\CommercialPlotController@updateCommercialPlots');
     Route::patch('commercial/plots/update/{id}', 'Property\CommercialPlotController@updateDummyCommercialPlots');
-    Route::get('/commercial/plots/ads/description/{id}', 'Property\CommercialPlotController@commercialPlotDescription');
-    Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
+//    Route::get('/commercial/plots/ads/description/{id}', 'Property\CommercialPlotController@commercialPlotDescription');
+//    Route::get('general/property/description/{id}/{type}', 'PropertyController@generalPropertyDescription');
 
     Route::get('test', function () {
         event(new App\Events\PropertyForRent('Guest'));

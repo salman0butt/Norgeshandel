@@ -36,7 +36,15 @@ class HomeController extends Controller
     {
         if ($request->handel) {
             $handel = $handel!=0?$handel:$request->handel;
-            $ad = Ad::find($handel);
+            if (Auth::check()){
+                $ad = Ad::where('id', '=', $handel)->where(function ($query){
+                    $query->where('visibility', '=', 1)
+                        ->orWhere('user_id', Auth::id());
+                })->first();
+            }
+            else{
+                $ad = Ad::where('id', '=', $handel)->where('visibility', '=', 1)->first();
+            }
             if ($ad) {
                 $type = "";
                 if ($ad->ad_type == 'job') {
@@ -54,13 +62,21 @@ class HomeController extends Controller
             $saved_search = Search::where('type', 'saved')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
             $recent_search = Search::where('type', 'recent')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
         }
-        $ads = Ad::where('status', 'published')->orderBy('id', 'desc')->get();
+        $ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->get();
         return view('home', compact('ads', 'saved_search', 'recent_search'));
     }
 
     //clear search history
     public function single_ad(Request $request, $ad_type){
-        $ad = Ad::find($request->handel);
+        if (Auth::check()){
+            $ad = Ad::where('id', '=', $request->handel)->where(function ($query){
+                $query->where('visibility', '=', 1)
+                    ->orWhere('user_id', Auth::id());
+            })->first();
+        }
+        else{
+            $ad = Ad::where('id', '=', $request->handel)->where('visibility', '=', 1)->first();
+        }
         if ($ad){
             $type = $ad->ad_type;
             if ($type == 'job' && $ad_type == 'jobs'){

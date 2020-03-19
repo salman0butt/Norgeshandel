@@ -54,8 +54,9 @@ class CommercialPlotController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join($table, $table . '.ad_id', 'ads.id')
-            ->where('ads.status', 'published')
+            ->join($table, $table . '.ad_id', '=', 'ads.id')
+            ->where('ads.status', '=','published')
+            ->where('ads.visibility', '=', 1)
             ->whereNull('ads.deleted_at')
             ->whereNull($table . '.deleted_at');
 

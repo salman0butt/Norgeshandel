@@ -52,8 +52,9 @@ class FlatWishesRentedController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join('flat_wishes_renteds', 'flat_wishes_renteds.ad_id', 'ads.id')
-            ->where('ads.status', 'published')
+            ->join('flat_wishes_renteds', 'flat_wishes_renteds.ad_id', '=','ads.id')
+            ->where('ads.status', '=','published')
+            ->where('ads.visibility', '=', 1)
             ->whereNull('ads.deleted_at')
             ->whereNull('flat_wishes_renteds.deleted_at');
 //        DB::enableQueryLog();

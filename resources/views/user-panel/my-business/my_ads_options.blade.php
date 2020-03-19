@@ -67,7 +67,7 @@
             </div>
             <div class="grid__unit col-md-4">
                 <div class="sidebar u-pv8 mt-5">
-                    <a class="u-pv8 mt-2" href="@if($ad->ad_type == 'job') {{route('jobs.show', $ad->job)}} @else {{url('general/property/description', [$ad->property->id, $ad->ad_type])}} @endif">Se annonsen</a>
+                    <a class="u-pv8 mt-2" href="@if($ad->ad_type == 'job') {{route('jobs.show', $ad->job)}} @else {{url('/', $ad->id)}} @endif">Se annonsen</a>
                     <div class="u-pt8">
                         <div class="u-pv8 mt-2">
                             <a href="
