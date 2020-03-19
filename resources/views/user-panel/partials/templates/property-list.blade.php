@@ -1,23 +1,6 @@
 <?php
 if (isset($ad)) {
-    $property = "";
-    if ($ad->ad_type == 'property_for_rent') {
-        $property = $ad->propertyForRent;
-    } else if ($ad->ad_type == 'property_for_sale') {
-        $property = $ad->propertyForSale;
-    } else if ($ad->ad_type == 'property_holiday_home_for_sale') {
-        $property = $ad->propertyHolydaysHomesForSale;
-    } else if ($ad->ad_type == 'property_flat_wishes_rented') {
-        $property = $ad->propertyFlatWishesRented;
-    } else if ($ad->ad_type == 'property_commercial_for_sale') {
-        $property = $ad->propertyCommercialPropertyForSale;
-    } else if ($ad->ad_type == 'property_commercial_for_rent') {
-        $property = $ad->propertyCommercialPropertyForRent;
-    } else if ($ad->ad_type == 'property_commercial_plots') {
-        $property = $ad->propertyCommercialPlot;
-    } else if ($ad->ad_type == 'property_business_for_sale') {
-        $property = $ad->propertyBusinessForSale;
-    }
+    $property = $ad->property;
     if ($property !== null) {
         $media = $property->ad->company_gallery;
         if (count($media) > 0) {
@@ -30,11 +13,11 @@ if (isset($ad)) {
 if($property !== null)
 {
 ?>
-{{--<a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
+{{--<a href="{{url('/', $ad->id)}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
 <div class="col-sm-12 pr-0 end_fav_item" data-name="{{$ad->getTitle()}}">
     <div class="row product-list-item mr-1 p-sm-1 mt-3">
         <div class="image-section image-section col-sm-4  p-2">
-            <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" style="display: block;" class="trailing-border">
+            <a href="{{url('/', $ad->id)}}" style="display: block;" class="trailing-border">
 
                 <img src="{{$path}}" class="img-fluid radius-8 trailing-border" style=" margin: 2px; height: 130px; width: 100%"
                      alt="">

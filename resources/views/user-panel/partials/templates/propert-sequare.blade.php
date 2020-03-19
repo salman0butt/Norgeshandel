@@ -25,7 +25,7 @@ if($property !== null)
 ?>
 <div class="col-md-4 col-sm-6 product-list-item pt-sm-1" style="">
     <div class="realestate-blockk " style="">
-        <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="grid-box-ancor product-list-item">
+        <a href="{{url('/', $ad->id)}}" class="grid-box-ancor product-list-item">
             <div class="pt-2">
             <div class="home-grid-box trailing-border" style="text-align:center;">
                 <img src="{{$path}}" style="max-height: 302px;min-height:302px;width:100%;" class="img-fluid product-img" alt="">

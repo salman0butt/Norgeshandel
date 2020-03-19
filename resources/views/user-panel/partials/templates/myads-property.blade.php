@@ -18,7 +18,7 @@ if($property !== null)
 {
 
 ?>
-{{--<a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
+{{--<a href="{{url('/', $ad->id)}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
     <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="image-section col-md-4 p-2">
         <img src="{{$path}}" class="img-fluid radius-8 trailing-border" alt="" style="height: 160px;width: 100%;">
@@ -73,7 +73,7 @@ if($property !== null)
             @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$property->id.'/edit')}}
             @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$property->id.'/edit')}}
         @endif" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm p-0 edit-ad-button">Endre</a>
-        <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="dme-btn-outlined-blue mr-2 btn-sm">Se annonse</a>
+        <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('/', $ad->id)}}" class="dme-btn-outlined-blue mr-2 btn-sm">Se annonse</a>
 
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm statistics-button">Se statistikk</a>
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Flere valg</a>

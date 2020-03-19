@@ -53,8 +53,9 @@ class PropertyHolidaysHomesForSaleController extends Controller
             $sort = $request->sort;
         }
         $query = DB::table('ads')
-            ->join('property_holidays_homes_for_sales', 'property_holidays_homes_for_sales.ad_id', 'ads.id')
-            ->where('ads.status', 'published')
+            ->join('property_holidays_homes_for_sales', 'property_holidays_homes_for_sales.ad_id', '=','ads.id')
+            ->where('ads.status', '=','published')
+            ->where('ads.visibility', '=', 1)
             ->whereNull('ads.deleted_at')
             ->whereNull('property_holidays_homes_for_sales.deleted_at');
 

@@ -75,6 +75,7 @@ class PropertyController extends Controller
         $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
         $ads = Ad::where('status', 'published')
             ->where('ad_type', '!=', 'job')
+            ->where('visibility', '=', 1)
             ->orderBy('id', 'desc')->get();
 
         return view('user-panel.property.property_list', compact('ads', 'saved_search', 'recent_search'));
@@ -109,6 +110,7 @@ class PropertyController extends Controller
         }
     }
 
+//  IMPORTANT:    INSTEAD OF THIS FUNCTION JUST USE THIS ROUTE {{url('/', $ad->id)}}
     public function generalPropertyDescription($id, $type)
     {
         if ($type == 'property_for_rent') {
