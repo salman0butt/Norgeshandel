@@ -20,7 +20,7 @@ if($property !== null)
 ?>
 {{--<a href="{{url('/', $ad->id)}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
-    <a href="{{url('general/property/description', [$property->id, $ad->ad_type])}}" class="image-section col-md-4 p-2">
+    <a href="{{url('/', $ad->id)}}" class="image-section col-md-4 p-2">
         <img src="{{$path}}" class="img-fluid radius-8 trailing-border" alt="" style="height: 160px;width: 100%;">
          {{--<div class="product-total-price m-2">--}}
          <?php

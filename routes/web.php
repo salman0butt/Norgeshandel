@@ -220,9 +220,9 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('notifications_count', 'NotificationController@notifications_count');
         Route::get('notifications-read-all', 'NotificationController@read_all');
 
-        Route::get('notifications/all', 'NotificationController@showAllNotifications');
+//        Route::get('notifications/all', 'NotificationController@index');
 
-        Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+//        Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
 
         //Clear Searches
         Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
