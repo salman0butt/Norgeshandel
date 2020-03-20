@@ -8,7 +8,7 @@ use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\FlatWishesRented;
 use App\Models\Ad;
-use App\Model\Search;
+use App\Models\Search;
 use App\PropertyForRent;
 use App\PropertyForSale;
 use App\PropertyHolidaysHomesForSale;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Favorite;
+use App\Helpers\common;
 use App\MessageThread;
 use App\Models\Ad;
 use App\Models\AdView;
@@ -14,12 +15,29 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Null_;
 use PhpParser\Node\Stmt\DeclareDeclare;
+use Pusher\Pusher;
 use test\Mockery\ReturnTypeObjectTypeHint;
 use function foo\func;
 use function GuzzleHttp\Psr7\str;
 
 class AdController extends Controller
 {
+    private $pusher;
+
+    public function __construct()
+    {
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true
+        );
+
+        $this->pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+    }
     /**
      * Display a listing of the resource.
      *
@@ -218,6 +236,7 @@ class AdController extends Controller
                 $ad->sold_at = date('Y-m-d G:i');
                 $ad->status = 'sold';
                 $ad->update();
+                common::fav_mark_sold_notification($ad, $this->pusher);
                 return back();
             }else{
                 return redirect('forbidden');

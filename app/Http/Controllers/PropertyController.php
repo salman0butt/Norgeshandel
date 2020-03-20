@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use App\Models\Ad;
-use App\Model\Search;
+use App\Models\Search;
 use App\CommercialPlot;
 use App\Helpers\common;
 use App\BusinessForSale;

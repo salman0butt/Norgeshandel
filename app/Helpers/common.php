@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Admin\Jobs\Job;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
+use App\Favorite;
 use App\Http\Controllers\Admin\Jobs\JobController;
 use App\Http\Controllers\Property\BusinessForSaleController;
 use App\Http\Controllers\Property\CommercialPlotController;
@@ -16,15 +17,18 @@ use App\Http\Controllers\Property\PropertyForSaleController;
 use App\Http\Controllers\Property\PropertyHolidaysHomesForSaleController;
 use App\Http\Controllers\PropertyController;
 use App\Media;
-use App\Model\Search;
+use App\Models\Search;
+use App\Models\Ad;
 use App\Notification;
 use App\Models\Meta;
 use App\PropertyForSale;
 use App\PropertyHolidaysHomesForSale;
+use App\User;
 use Carbon\Carbon;
 use App\Admin\ads\Banner;
 use App\Term;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Admin\Banners\BannerGroup;
 use Illuminate\Database\Eloquent\Model;
@@ -430,7 +434,7 @@ class common
 //    notification
     public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searche_str)
     {
-        $searches = \App\Model\Search::where('type', '=', 'saved')
+        $searches = \App\Models\Search::where('type', '=', 'saved')
             ->where('filter', 'like', '%' . $searche_str . '%')
             ->where('notification_web', '=', '1')
             ->get();
@@ -532,5 +536,23 @@ class common
         return $request;
     }
 
+    public static function fav_mark_sold_notification(Ad $ad, Pusher $pusher){
+        $users = DB::table('favorites')
+            ->join('metas', 'metas.metable_id', '=', 'favorites.user_id')
+            ->where('metas.metable_type', '=', 'App\User')
+            ->where('favorites.ad_id', '=', $ad->id)
+            ->where('metas.key', '=', 'notification_ad_sold')
+            ->where('metas.value', '=', 1)
+            ->get();
+        if($users){
+            $ids = $users->pluck('user_id');
+            foreach ($ids as $user_id) {
+                $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'ad_sold', 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Eiendom er solgt']);
+                $notif->save();
+                $data = array('detail' => 'Eiendom er solgt', 'to_user_id' => $user_id);
+                $pusher->trigger('notification', 'notification-event', $data);
+            }
+        }
+    }
 
 }
