@@ -5,6 +5,14 @@
             list-style: none;
             padding-left: 5px !important;
         }
+                .pagination {
+        float:right;
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    .clear-fix {
+        clear: both;
+    }
     </style>
     <main class="dme-wrapper">
         <div class="left-ad float-left">
@@ -91,9 +99,18 @@
                 @else
                     <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
                 @endif
+             
             </div>
+            <div class="pagination">
+                {{ $ads->links() }}
+            </div>
+            <div class="clear-fix"></div>
             <!--        ended row-->
-        </div>
+        {{-- </div>
+        <div class="ajax-load text-center" style="display:none">
+	    <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
+        </div> --}}
+ 
         <!--    ended container-->
         <div class="right-ad pull-right">
         <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
@@ -186,4 +203,40 @@
 
 
     </script>
+    
+
+<script type="text/javascript">
+	/*var page = 1;
+	$(window).scroll(function() {
+	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+	        page++;
+	        loadMoreData(page);
+	    }
+	});
+	function loadMoreData(page){
+	  $.ajax(
+	        {
+	            url: '?page=' + page,
+	            type: "get",
+	            beforeSend: function()
+	            {
+	                $('.ajax-load').show();
+	            }
+	        })
+	        .done(function(data)
+	        {
+	            if(data.html == " "){
+	                $('.ajax-load').html("No more records found");
+	                return;
+	            }
+                console.log(data);
+	            $('.ajax-load').hide();
+	            $(".home-grid").append(data);
+	        })
+	        .fail(function(jqXHR, ajaxOptions, thrownError)
+	        {
+	              alert('server not responding...');
+	        });
+	}*/
+</script>
 @endsection

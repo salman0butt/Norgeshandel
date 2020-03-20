@@ -76,7 +76,7 @@ class PropertyController extends Controller
         $ads = Ad::where('status', 'published')
             ->where('ad_type', '!=', 'job')
             ->where('visibility', '=', 1)
-            ->orderBy('id', 'desc')->get();
+            ->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
 
         return view('user-panel.property.property_list', compact('ads', 'saved_search', 'recent_search'));
     }

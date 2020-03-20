@@ -60,7 +60,7 @@ class JobController extends Controller
         $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
 
-        $ads = Ad::where('status', 'published')->where('ad_type', 'job')->get();
+        $ads = Ad::where('status', 'published')->where('ad_type', 'job')->paginate(getenv('PAGINATION'));
 
         $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')->where('ads.status','published')->where('jobs.job_type','management')->get();
         $companies = Company::get();

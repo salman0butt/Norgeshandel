@@ -62,7 +62,7 @@ class HomeController extends Controller
             $saved_search = Search::where('type', 'saved')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
             $recent_search = Search::where('type', 'recent')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
         }
-        $ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->get();
+        $ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
         return view('home', compact('ads', 'saved_search', 'recent_search'));
     }
 
