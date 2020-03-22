@@ -195,6 +195,7 @@ class common
         $names_files = array();
         $org_file_names = array();
         $file_names_encoded = array();
+        $file_ids = array();
         foreach ($files as $key => $file) {
             $unique_name = date('ymd') . '-' . time() . '-' . mt_rand(1000000, 9999999);
             $name = $file->getClientOriginalName();
@@ -220,12 +221,14 @@ class common
             $names_files[] = $media->name_unique;
             $org_file_names[] = $media->name;
             $file_names_encoded[] = base64_encode($media->name_unique);
+            $file_ids[] = $media->id;
             $order++;
         }
         return json_encode([
             'file_names' => $names_files,
             'org_file_names' => $org_file_names,
             'file_names_encoded' => $file_names_encoded,
+            'file_ids' => $file_ids,
         ]);
     }
 

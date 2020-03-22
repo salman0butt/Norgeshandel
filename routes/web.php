@@ -211,6 +211,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');
         Route::get('messages/new/{ad_id}', 'MessageController@new_thread');
         Route::get('messages/render-thread/{thread_id}', 'MessageController@render_thread');
+        Route::post('messages/upload-media-async', 'MessageController@upload_media');
         Route::get('/messages', 'MessageController@index');
 
         Route::post('message', 'MessageController@send');

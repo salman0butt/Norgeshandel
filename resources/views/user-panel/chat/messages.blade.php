@@ -418,7 +418,7 @@
                 url: "{{url('message')}}", // need to create this post route
                 processData: false,
                 contentType: false,
-                async: false,
+                async: true,
                 data: formdata,
                 cache: false,
                 success: function (data) {

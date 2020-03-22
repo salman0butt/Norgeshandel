@@ -161,4 +161,11 @@ class MessageController extends Controller
 //        return back();
     }
 
+    public function upload_media(Request $request){
+        $resp = false;
+        if($request->attachment){
+            $resp = common::update_media($request->attachment, 0, Message::class, 'temp_attachment', true, false);
+        }
+        return $resp;
+    }
 }
