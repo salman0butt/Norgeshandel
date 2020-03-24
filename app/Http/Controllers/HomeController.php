@@ -7,8 +7,10 @@ use App\CommercialPlot;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\FlatWishesRented;
+use App\Media;
 use App\Models\Ad;
 use App\Models\Search;
+use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
 use App\PropertyHolidaysHomesForSale;
@@ -34,6 +36,8 @@ class HomeController extends Controller
      */
     public function index(Request $request, $handel=0)
     {
+        $notification = Notification::where('notifiable_type',Ad::class)->where('notifiable_id',$handel)->whereNull('read_at')->update(['read_at'=>now()]);
+
         if ($request->handel) {
             $handel = $handel!=0?$handel:$request->handel;
             if (Auth::check()){
@@ -61,8 +65,14 @@ class HomeController extends Controller
         if (Auth::check()) {
             $saved_search = Search::where('type', 'saved')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
             $recent_search = Search::where('type', 'recent')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
-        }
-        $ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->get();
+        }//where('status', 'published')->
+
+        $ads = Ad::where('visibility', '=', 1)->orderBy('id', 'desc')
+            ->where(function ($query){
+                $date = Date('y-m-d',strtotime('-7 days'));
+                $query->where('status', 'published')
+                    ->orwhereDate('sold_at','>',$date);
+            })->get();
         return view('home', compact('ads', 'saved_search', 'recent_search'));
     }
 

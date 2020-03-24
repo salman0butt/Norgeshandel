@@ -87,6 +87,9 @@
                                 <div class="trailing-border">
                                     <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
+                                    @if($property_for_flat_wishes_rented->ad && $property_for_flat_wishes_rented->ad->status == 'sold' && $property_for_flat_wishes_rented->ad->sold_at)
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
@@ -99,7 +102,7 @@
                                         <div class="area float-left color-grey" title="{{$property_for_flat_wishes_rented->description}}">{{Str::limit($property_for_flat_wishes_rented->description,70)}}</div>
                                     @endif
                                     @if($property_for_flat_wishes_rented->max_rent_per_month)
-                                        <div class="price font-weight-bold float-right color-grey">{{$property_for_flat_wishes_rented->max_rent_per_month}} kr</div>
+                                        <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_flat_wishes_rented->max_rent_per_month,0,""," ")}} kr</div>
                                     @endif
                                 </div>
                                 <br>

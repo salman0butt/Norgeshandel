@@ -21,6 +21,9 @@ if($property !== null)
 
                 <img src="{{$path}}" class="img-fluid radius-8 trailing-border" style=" margin: 2px; height: 130px; width: 100%"
                      alt="">
+                @if($ad && $ad->status == 'sold' && $ad->sold_at)
+                    <span class="badge badge-success" style="position: absolute;top: 8px;left: 8px;">selges</span>
+                @endif
                 {{--<div class="product-total-price">--}}
                 <?php
                 //                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");

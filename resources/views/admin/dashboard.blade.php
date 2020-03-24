@@ -77,7 +77,110 @@
                             <!-- column -->
                             <div class="col-lg-9">
                                 <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-line-chart" style="padding: 0px; position: relative;"><canvas class="flot-base" width="759" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 759.25px; height: 300px;"></canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 23px; text-align: center;">0</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 83px; text-align: center;">1</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 144px; text-align: center;">2</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 204px; text-align: center;">3</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 265px; text-align: center;">4</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 325px; text-align: center;">5</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 385px; text-align: center;">6</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 446px; text-align: center;">7</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 506px; text-align: center;">8</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 567px; text-align: center;">9</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 624px; text-align: center;">10</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 58px; top: 283px; left: 685px; text-align: center;">11</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"><div class="flot-tick-label tickLabel" style="position: absolute; top: 247px; left: 0px; text-align: right;">-1.0</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 191px; left: 0px; text-align: right;">-0.5</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 4px; text-align: right;">0.0</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 79px; left: 4px; text-align: right;">0.5</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 23px; left: 4px; text-align: right;">1.0</div></div></div><canvas class="flot-overlay" width="759" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 759.25px; height: 300px;"></canvas><div class="legend"><div style="position: absolute; width: 74px; height: 38px; top: 14px; right: 13px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div><table style="position:absolute;top:14px;right:13px;;font-size:smaller;color:#AFAFAF"><tbody><tr><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(238,121,81);overflow:hidden"></div></div></td><td class="legendLabel">Realestate</td></tr><tr><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(79,185,240);overflow:hidden"></div></div></td><td class="legendLabel">Jobs</td></tr></tbody></table></div></div>
+                                    <div class="flot-chart-content" id="flot-line-chart" style="padding: 0px; position: relative;">
+                                        <canvas class="flot-base" width="759" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 759.25px; height: 300px;">
+
+                                        </canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+                                            <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;">
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 23px; text-align: center;">
+                                                    0
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 83px; text-align: center;">
+                                                    1
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 144px; text-align: center;">
+                                                    2
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 204px; text-align: center;">
+                                                    3
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 265px; text-align: center;">
+                                                    4
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 325px; text-align: center;">
+                                                    5
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 385px; text-align: center;">
+                                                    6
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 446px; text-align: center;">
+                                                    7
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 506px; text-align: center;">
+                                                    8
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 567px; text-align: center;">
+                                                    9
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 624px; text-align: center;">
+                                                    10
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; max-width: 58px; top: 283px; left: 685px; text-align: center;">
+                                                    11
+                                                </div>
+                                            </div>
+                                            <div class="flot-y-axis flot-y1-axis yAxis y1Axis"
+                                                 style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;">
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; top: 247px; left: 0px; text-align: right;">
+                                                    -1.0
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; top: 191px; left: 0px; text-align: right;">
+                                                    -0.5
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; top: 135px; left: 4px; text-align: right;">
+                                                    0.0
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; top: 79px; left: 4px; text-align: right;">
+                                                    0.5
+                                                </div>
+                                                <div class="flot-tick-label tickLabel"
+                                                     style="position: absolute; top: 23px; left: 4px; text-align: right;">
+                                                    1.0
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <canvas class="flot-overlay" width="759" height="300"
+                                                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 759.25px; height: 300px;"></canvas>
+                                        <div class="legend">
+                                            <div style="position: absolute; width: 74px; height: 38px; top: 14px; right: 13px; background-color: rgb(255, 255, 255); opacity: 0.85;"></div>
+                                            <table style="position:absolute;top:14px;right:13px;;font-size:smaller;color:#AFAFAF">
+                                                <tbody>
+                                                <tr>
+                                                    <td class="legendColorBox">
+                                                        <div style="border:1px solid #ccc;padding:1px">
+                                                            <div style="width:4px;height:0;border:5px solid rgb(238,121,81);overflow:hidden"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="legendLabel">Realestate</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="legendColorBox">
+                                                        <div style="border:1px solid #ccc;padding:1px">
+                                                            <div style="width:4px;height:0;border:5px solid rgb(79,185,240);overflow:hidden"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="legendLabel">Jobs</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -85,7 +188,7 @@
                                     <div class="col-12">
                                         <div class="bg-dark p-10 text-white text-center">
                                             <!--                                                <i class="fa fa-user m-b-5 font-16"></i>-->
-                                            <h5 class="m-b-0 m-t-5">2540</h5>
+                                            <h5 class="m-b-0 m-t-5">{{\App\User::count()}}</h5>
                                             <small class="font-light">Total Users</small>
                                         </div>
                                     </div>
@@ -99,14 +202,14 @@
                                     <div class="col-12 m-t-15">
                                         <div class="bg-dark p-10 text-white text-center">
                                             <!--                                                <i class="fa fa-cart-plus m-b-5 font-16"></i>-->
-                                            <h5 class="m-b-0 m-t-5">656</h5>
+                                            <h5 class="m-b-0 m-t-5">{{\App\Models\Ad::where('ad_type','job')->withTrashed()->count()}}</h5>
                                             <small class="font-light">Total Jobs</small>
                                         </div>
                                     </div>
                                     <div class="col-12 m-t-15">
                                         <div class="bg-dark p-10 text-white text-center">
                                             <!--                                                <i class="fa fa-tag m-b-5 font-16"></i>-->
-                                            <h5 class="m-b-0 m-t-5">9540</h5>
+                                            <h5 class="m-b-0 m-t-5">{{\App\Models\Ad::where('ad_type','<>','job')->withTrashed()->count()}}</h5>
                                             <small class="font-light">Total Realestate</small>
                                         </div>
                                     </div>
@@ -133,20 +236,64 @@
                     </div>
                     <div class="comment-widgets scrollable ps-container ps-theme-default" data-ps-id="b9ffb84b-6a73-af60-1275-ae168d98020e">
                         <!-- Comment Row -->
-                        <div class="d-flex flex-row comment-row m-t-0">
-                            <div class="p-2"><img src="assets/images/users/1.jpg" alt="user" width="50" class="rounded-circle"></div>
-                            <div class="comment-text w-100">
-                                <h6 class="font-medium">James Anderson</h6>
-                                <span class="m-b-15 d-block">Lorem Ipsum is simply dummy text of the printing and type setting industry. </span>
-                                <div class="comment-footer">
-                                    <span class="text-muted float-right">April 14, 2019</span>
-                                    <button type="button" class="btn btn-cyan btn-sm">Edit</button>
-                                    <button type="button" class="btn btn-success btn-sm">Publish</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                        @if($ads->count() > 0)
+                            @foreach($ads as $key=>$ad)
+                                <div class="d-flex flex-row comment-row m-t-0">
+                                    <?php
+                                        $media = '';
+                                        if($ad->company_gallery->first()){
+                                            $media = \App\Helpers\common::getMediaPath($ad->company_gallery->first());
+                                        }else{
+                                            $media = asset('public/images/placeholder.png');
+                                        }
+                                    ?>
+                                    <div class="p-2"><img src="{{$media}}" alt="user" width="80" height="70" class=""></div>
+                                    <div class="comment-text w-100">
+                                        <h6 class="font-medium">{{$ad->user->username}}</h6>
+                                        <span class="m-b-15 d-block">
+                                            <span class="font-weight-bold">
+                                                @if($ad->ad_type == 'job')
+                                                    {{$ad->job->name}}
+                                                @else
+                                                    {{$ad->getTitle() ? Str::limit($ad->getTitle(),30) : ''}}
+                                                @endif
+                                            </span>
+                                            {{--Lorem Ipsum is simply dummy text of the printing and type setting industry. --}}
+                                        </span>
+                                        <div class="comment-footer">
+                                            <span class="text-muted float-right">{{$ad->updated_at->format('M d, Y')}}</span>
+                                            <button type="button" class="btn btn-success btn-sm">Publish</button>
+                                            @if($ad->ad_type == 'job')
+                                                <a href="{{route('jobs.edit',$ad->job->id)}}" type="button" class="btn btn-cyan btn-sm">Edit</a>
+                                                <form class="d-inline" action="{{route('admin.jobs.destroy', $ad->job)}}" method="POST"  onsubmit="jarascript:return confirm('Er du sikker på å slette denne jobben?')">
+                                                    {{ csrf_field() }} {{method_field('DELETE')}}
+                                                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
+                                                </form>
+
+                                            @else
+                                                <a href="@if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$ad->property->id.'/edit')}}
+                                                @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$ad->property->id.'/edit')}}
+                                                @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$ad->property->id.'/edit')}}
+                                                @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$ad->property->id.'/edit')}}
+                                                @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$ad->property->id.'/edit')}}
+                                                @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$ad->property->id.'/edit')}}
+                                                @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$ad->property->id.'/edit')}}
+                                                @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$ad->property->id.'/edit')}}
+                                                @endif" class="btn btn-cyan btn-sm">Edit</a>
+                                                <form class="d-inline" action="{{route('admin.delete-property', $ad)}}" method="POST" onsubmit="javascript:return confirm('Er du sikker på å slette denne egenskapen?')">
+                                                    {{csrf_field()}}
+                                                    {{method_field('DELETE')}}
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            @endif
+                                            {{--<button type="button" >Delete</button>--}}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- Comment Row -->
+                            @endforeach
+                        @endif
+
+                        <!-- Comment Row
                         <div class="d-flex flex-row comment-row">
                             <div class="p-2"><img src="assets/images/users/4.jpg" alt="user" width="50" class="rounded-circle"></div>
                             <div class="comment-text active w-100">
@@ -160,7 +307,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Comment Row -->
+                        -->
+                        <!-- Comment Row
                         <div class="d-flex flex-row comment-row">
                             <div class="p-2"><img src="assets/images/users/5.jpg" alt="user" width="50" class="rounded-circle"></div>
                             <div class="comment-text w-100">
@@ -174,6 +322,7 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                         <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
                 </div>
             </div>

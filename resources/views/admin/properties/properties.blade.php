@@ -1,19 +1,11 @@
 @extends('layouts.admin')
 @section('main_title')
-    Jobs
+    Properties
 @endsection
 @section('breadcrumb')
     <a href="#" class="text-muted">Dashboard</a> /
-    <a href="#" class="">Jobs</a>
+    <a href="#" class="">Properties</a>
 @endsection
-<?php
-$approve = 'published';
-$countries = countries();
-$industry = \App\Taxonomy::where('slug', 'industry')->first();
-$industries = $industry->terms;
-$job_function = \App\Taxonomy::where('slug', 'job_function')->first();
-$job_functions = $job_function->terms;
-?>
 @section('page_content')
     @include('common.partials.flash-messages')
     <div class="container-fluid pl-0">
@@ -23,11 +15,11 @@ $job_functions = $job_function->terms;
                     <div id="zero_config_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 pl-0">
                         <div style="position: relative; right: -20px;">
                             @if(Request()->get('trashed'))
-                                <a href="{{route('admin.jobs.index')}}">
-                                    page moved to the job
+                                <a href="{{url('admin/property/realestate')}}">
+                                    page moved to the realestates
                                 </a>
                             @else
-                                <a href="{{url('admin/jobs?trashed=jobs')}}">
+                                <a href="{{url('admin/property/realestate?trashed=properties')}}">
                                     page moved to the trash
                                 </a>
                             @endif
@@ -60,22 +52,17 @@ $job_functions = $job_function->terms;
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Category: activate to sort column ascending"
-                                                        style="width: 193px;">Industry
+                                                        style="width: 193px;">Type
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Position: activate to sort column ascending"
-                                                        style="width: 92px;">Position
+                                                        style="width: 92px;">Price
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Deadline: activate to sort column ascending"
-                                                        style="width: 56px;">Deadline
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
-                                                        rowspan="1" colspan="1"
-                                                        aria-label="Employer: activate to sort column ascending"
-                                                        style="width: 85px;">Employer
+                                                        style="width: 56px;">User
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
@@ -94,9 +81,9 @@ $job_functions = $job_function->terms;
                                                     @foreach($ads as $ad)
                                                         <?php
                                                             if(Request()->get('trashed')){
-                                                                $job = $ad->job()->withTrashed()->first();
+                                                                $property = $ad->property()->withTrashed()->first();
                                                             }else{
-                                                                $job = $ad->job;
+                                                                $property = $ad->property;
                                                             }
                                                         ?>
                                                         <tr role="row" class="odd">
@@ -107,23 +94,45 @@ $job_functions = $job_function->terms;
                                                                 </label>
                                                             </th>
                                                             <td class="sorting_1">
-                                                                {{$job->name ? Str::limit($job->name,20) : ''}}
+                                                                @if(Request()->get('trashed'))
+                                                                    {{$ad->getTitle('yes') ? Str::limit($ad->getTitle('yes'),40) : ''}}
+                                                                @else
+                                                                    {{$ad->getTitle() ? Str::limit($ad->getTitle(),40) : ''}}
+                                                                @endif
                                                                 <br>
                                                                 @if(Request()->get('trashed'))
-                                                                    <a href="{{url('admin/jobs/restore/'.$job->id)}}" class="btn-link-danger" onclick="return confirm('Er du sikker på å gjenopprette denne jobben')">Restore</a>
+                                                                    <a href="{{url('admin/property/realestate/restore/'.$ad->id)}}" class="btn-link-danger" onclick="return confirm('Er du sikker på å gjenopprette denne jobben')">Restore</a>
                                                                 @else
-                                                                    <a href="{{route('jobs.show', compact('job'))}}" class="mr-2">View</a>
-                                                                    <a href="{{route('jobs.edit', compact('job'))}}" class="mr-2">Edit</a>
-                                                                    <form action="{{route('admin.jobs.destroy', $job)}}" method="POST"  onsubmit="jarascript:return confirm('Er du sikker på å slette denne jobben: {{$job->title}}')">
-                                                                        {{ csrf_field() }} {{method_field('DELETE')}}
-                                                                        <input type="submit" name="DELETE" VALUE="Delete" class="btn-link-danger">
-                                                                    </form>
+                                                                        <a href="{{url('/', $ad->id)}}" class="mr-2">View</a>
+                                                                        <a href="@if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$property->id.'/edit')}}
+                                                                        @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}}
+                                                                        @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$property->id.'/edit')}}
+                                                                        @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}}
+                                                                        @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$property->id.'/edit')}}
+                                                                        @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$property->id.'/edit')}}
+                                                                        @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$property->id.'/edit')}}
+                                                                        @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$property->id.'/edit')}}
+                                                                        @endif" class="mr-2">Edit</a>
+                                                                        <form action="{{route('admin.delete-property', $property->ad)}}" method="POST" onsubmit="javascript:return confirm('Er du sikker på å slette denne egenskapen?')">
+                                                                            {{csrf_field()}}
+                                                                            {{method_field('DELETE')}}
+                                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                                        </form>
                                                                 @endif
                                                             </td>
-                                                            <td>{{$job->industry}}</td>
-                                                            <td>{{$job->positions}}</td>
-                                                            <td>{{!empty($job->deadline)?$job->deadline:'Soonest'}}</td>
-                                                            <td>{{$job->emp_name}}</td>
+                                                            <td>
+                                                                @if($ad->ad_type)
+                                                                    @php
+                                                                        $ad_type = array();
+                                                                        $ad_type = explode('_',$ad->ad_type);
+                                                                        foreach ($ad_type as $ad_type_obj){
+                                                                            echo $ad_type_obj.' ';
+                                                                        }
+                                                                    @endphp
+                                                                @endif
+                                                            </td>
+                                                            <td>{{\App\Helpers\common::get_ad_attribute($ad,'price')}}</td>
+                                                            <td>{{$ad->user->username}}</td>
                                                             <td>{{$ad->status}} @if($ad->status=='pending') <a href="{{route('jobs.status_change', [$ad, $approve])}}">approve</a>@endif</td>
                                                             <td>{{count($ad->views)}}</td>
                                                         </tr>
@@ -139,12 +148,12 @@ $job_functions = $job_function->terms;
                                                             <!--                                                </label>-->
                                                         </th>
                                                         <th rowspan="1" colspan="1">Title</th>
-                                                        <th rowspan="1" colspan="1">Industry</th>
-                                                        <th rowspan="1" colspan="1">Position</th>
-                                                        <th rowspan="1" colspan="1">Deadline</th>
-                                                        <th rowspan="1" colspan="1">Employer</th>
+                                                        <th rowspan="1" colspan="1">Type</th>
+                                                        <th rowspan="1" colspan="1">Price</th>
+                                                        <th rowspan="1" colspan="1">User</th>
                                                         <th rowspan="1" colspan="1">Status</th>
                                                         <th rowspan="1" colspan="1">Views</th>
+                                                        {{--<th rowspan="1" colspan="1">Views</th>--}}
                                                     </tr>
                                                 </tfoot>
                                             </table>

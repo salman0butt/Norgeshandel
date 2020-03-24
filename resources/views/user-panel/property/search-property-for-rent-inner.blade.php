@@ -90,6 +90,9 @@
                             <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
                                     <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif" alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
+                                    @if($property_for_rent->ad && $property_for_rent->ad->status == 'sold' && $property_for_rent->ad->sold_at)
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col==='grid'?'col-sm-12':'col-sm-8' ?> p-2">
@@ -104,7 +107,7 @@
                                 <div class="title color-grey">{{$property_for_rent->heading}}</div>
                                 <div class="mt-2">
                                     <div class="area font-weight-bold float-left color-grey">{{$property_for_rent->primary_rom}} m²</div>
-                                    <div class="price font-weight-bold float-right color-grey">{{$property_for_rent->monthly_rent}} kr</div>
+                                    <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_rent->monthly_rent,0,""," ")}} kr</div>
                                 </div>
                                 <br>
                                 <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt">

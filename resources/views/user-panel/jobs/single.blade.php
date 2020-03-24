@@ -219,9 +219,9 @@
 @endsection
 <?php
 $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
-if (count($count) == 0) {
+//if (count($count) == 0) {
     $view = new \App\Models\AdView(['ad_id' => $job->ad->id, 'ip' => Request::getClientIp()]);
     $view->save();
-}
+//}
 
 ?>

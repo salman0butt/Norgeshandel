@@ -96,10 +96,10 @@
    $(document).on('click', '#view', function (e) {
 
          e.preventDefault();
-        //   urlParams = new URLSearchParams(window.location.search)
-        //   console.log(urlParams);
+          // urlParams = new URLSearchParams(window.location.search)
+          // console.log(urlParams);
          var newUrl = $('#mega_menu_form').serialize();
-          
+
          var sort = getUrlParameter('sort');
          var view = $(this).attr('data-view');
          var page = getUrlParameter('page');

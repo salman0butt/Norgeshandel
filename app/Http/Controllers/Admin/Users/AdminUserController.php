@@ -242,11 +242,16 @@ class AdminUserController extends Controller
         if(env('PAGINATION')){
             $pagination = env('PAGINATION');
         }
+        $date = Date('y-m-d',strtotime('-7 days'));
         $user = User::find($id);
-        $active_ads = DB::table('ads')->where('status', '=', 'published')
+        $active_ads = DB::table('ads')
+            ->where('visibility', '=', 1)
             ->where('user_id','=', $user->id)
             ->whereNull('deleted_at')
-            ->paginate($pagination);
+            ->where(function ($query) use ($date){
+                $query->where('status', 'published')
+                    ->orwhereDate('sold_at','>',$date);
+            })->paginate($pagination);
         return view('user-panel.my-business.profile.public', compact('user', 'active_ads'));
     }
 
