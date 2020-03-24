@@ -109,7 +109,7 @@
                                             m²
                                         </div>
                                     @endif
-                                    <div class="price font-weight-bold float-right color-grey">{{$commercial_plot->asking_price}}
+                                    <div class="price font-weight-bold float-right color-grey">{{number_format($commercial_plot->asking_price,0,""," ")}}
                                         kr
                                     </div>
                                 </div>

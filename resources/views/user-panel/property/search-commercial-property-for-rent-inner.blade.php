@@ -121,7 +121,7 @@
                                     @endif
                                     @if($property_commercial_property_for_rent->rent_per_meter_per_year)
                                         <div
-                                            class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_rent->rent_per_meter_per_year}}
+                                            class="price font-weight-bold float-right color-grey">{{number_format($property_commercial_property_for_rent->rent_per_meter_per_year,0,""," ")}}
                                             kr
                                         </div>
                                     @endif

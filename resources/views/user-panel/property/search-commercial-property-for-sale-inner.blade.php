@@ -108,7 +108,7 @@
                                             </div>
                                         @endif
                                         @if($property_commercial_property_for_sale-> rental_income)
-                                            <div class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_sale->rental_income}}
+                                            <div class="price font-weight-bold float-right color-grey">{{number_format($property_commercial_property_for_sale->rental_income,0,""," ")}}
                                                 kr
                                             </div>
                                         @endif

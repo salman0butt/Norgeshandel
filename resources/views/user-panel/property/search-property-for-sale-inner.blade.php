@@ -111,7 +111,7 @@
                                             m²
                                         </div>
                                         <div
-                                            class="price font-weight-bold float-right color-grey">{{$property_for_sale->total_price}}
+                                            class="price font-weight-bold float-right color-grey">{{number_format($property_for_sale->total_price,0,""," ")}}
                                             kr
                                         </div>
                                     </div>

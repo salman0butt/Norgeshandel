@@ -102,7 +102,7 @@
                                         <div class="area float-left color-grey" title="{{$property_for_flat_wishes_rented->description}}">{{Str::limit($property_for_flat_wishes_rented->description,70)}}</div>
                                     @endif
                                     @if($property_for_flat_wishes_rented->max_rent_per_month)
-                                        <div class="price font-weight-bold float-right color-grey">{{$property_for_flat_wishes_rented->max_rent_per_month}} kr</div>
+                                        <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_flat_wishes_rented->max_rent_per_month,0,""," ")}} kr</div>
                                     @endif
                                 </div>
                                 <br>

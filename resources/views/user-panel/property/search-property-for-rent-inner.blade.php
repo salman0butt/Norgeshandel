@@ -107,7 +107,7 @@
                                 <div class="title color-grey">{{$property_for_rent->heading}}</div>
                                 <div class="mt-2">
                                     <div class="area font-weight-bold float-left color-grey">{{$property_for_rent->primary_rom}} m²</div>
-                                    <div class="price font-weight-bold float-right color-grey">{{$property_for_rent->monthly_rent}} kr</div>
+                                    <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_rent->monthly_rent,0,""," ")}} kr</div>
                                 </div>
                                 <br>
                                 <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt">

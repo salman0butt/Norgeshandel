@@ -51,10 +51,13 @@ class JobController extends Controller
         );
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if (request()->route()->getPrefix() == '/admin') {
-            $ads = Ad::all();
+            $ads = Ad::where('ad_type','job')->get();
+            if($request->trashed){
+                $ads = Ad::where('ad_type','job')->onlyTrashed()->get();
+            }
             return response()->view('admin.jobs.jobs', compact('ads'));
         }
         $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
@@ -398,10 +401,13 @@ class JobController extends Controller
                 $ad_id = $job->ad->id;
                 $job->ad()->delete();
                 $job->delete();
-                common::delete_media($ad_id, Ad::class, 'logo');
-                common::delete_media($ad_id, Ad::class, 'gallery');
+                //common::delete_media($ad_id, Ad::class, 'logo');
+                //common::delete_media($ad_id, Ad::class, 'gallery');
                 DB::commit();
                 Session::flash('success', 'Jobben er slettet');
+                if (request()->route()->getPrefix() == '/admin') {
+                    return back();
+                }
                 return redirect(url('my-business/my-ads'));
             }catch (\Exception $e){
                 DB::rollback();
@@ -412,6 +418,34 @@ class JobController extends Controller
             abort(404);
             Session::flash('danger', 'Noe gikk galt.');
             return back();
+        }
+    }
+
+
+    public function restore($id){
+        if($id){
+            $job = Job::where('id',$id)->withTrashed()->first();
+            if($job){
+                if(!Auth::user()->hasRole('admin') && $job->user_id != Auth::id()){
+                    return redirect('forbidden');
+                }
+                DB::beginTransaction();
+                try{
+                    $job->ad()->restore();
+                    $job->restore();
+                    DB::commit();
+                    Session::flash('success', 'Jobben er gjenopprettet');
+                    return back();
+                }catch (\Exception $e){
+                    DB::rollback();
+                    Session::flash('danger', 'Noe gikk galt.');
+                    return back();
+                }
+            }else{
+                abort(404);
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
         }
     }
 

@@ -107,7 +107,7 @@
                                 @if($business_for_sale->price)
                                     <div class="mt-2">
                                         <div class="area font-weight-bold float-left color-grey">&nbsp;</div>
-                                        <div class="price font-weight-bold float-right color-grey">{{$business_for_sale->price}} kr</div>
+                                        <div class="price font-weight-bold float-right color-grey">{{number_format($business_for_sale->price    ,0,""," ")}} kr</div>
                                     </div>
                                     <br>
                                 @endif
