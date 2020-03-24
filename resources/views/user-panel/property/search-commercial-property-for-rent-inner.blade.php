@@ -115,9 +115,9 @@
                                     </div>
                                     <div class="clearfix"></div>
                                     @if($property_commercial_property_for_rent->use_area)
-                                    <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->use_area}}
-                                        m²
-                                    </div>
+                                        <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->use_area}}
+                                            m²
+                                        </div>
                                     @endif
                                     @if($property_commercial_property_for_rent->rent_per_meter_per_year)
                                         <div
