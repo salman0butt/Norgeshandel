@@ -17,38 +17,62 @@
                 </div>
                 <div class="row">
                     @php($count = 0)
-                    @if(is_countable($searches) && count($searches) > 0)
-                        @foreach ($searches as $search)
-                            <article class="col-md-12 pl-0 pr-0 list-ad">
-                                <a href="{{url('/'.$search->filter)}}&search_id={{$search->id}}">
-                                    <div class="ads__unit__img"
-                                         style="max-width: 160px;display:block;width:23%;float:left; margin:5px;">
-                                        <div class="ads__unit__img__ratio">
+                    @php($added = array())
+                    @if(is_countable($notifications) && count($notifications) > 0)
+                        @foreach ($notifications as $notif)
+                            @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id)
+                            @if(!in_array($addable, $added))
+                                <article class="col-md-12 pl-0 pr-0 list-ad">
+                                    <a href="
+                                    @if($notif->notifiable_type==\App\Models\Search::class)
+                                    {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
+                                    @else
+                                    {{url('/', $notif->notifiable->id)}}
+                                    @endif
+                                        ">
+                                        <div class=""
+                                             style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
+                                            <div class="">
                                             <span>
                                             <img class="img-thumbnail w-100" style="border-radius:10px;"
                                                  src="{{asset('http://localhost/norgeshandel/public/images/placeholder.png')}}"
                                                  alt="">
                                             </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <br>
-                                    <span class="ads__unit__content__details" style="margin-top:5%;">
-                                        <span class="status status--success u-mb0" style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">Treff i lagret søk</span>
-                                            <span class="u-stone timeago" style="margin-left:10px;" title="time">
+                                        <br>
+                                        <span class="" style="margin-top:5%;">
+                                            <span class="status status--success u-mb0"
+                                                  style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">
+                                                @if($notif->notifiable_type==\App\Models\Search::class)
+                                                    Treff i lagret søk
+                                                @else
+                                                    Treff i favoritter
+                                                @endif
+                                            </span>
+                                            <span class="u-stone timeago" style="margin-left:10px;" title="{{$notif->created_at}}">
                                             &nbsp;
                                             </span>
                                         </span>
-                                        <div class="ads__unit__content" style="display:block;width:70%;float:left;">
+                                        <div class="" style="display:block;width:70%;float:left;">
                                             <h2 class="u-t3 u-mt8" style="margin-top:10px;">
-                                            <span class="">{{$search->name}}</span>
+                                                <span class="">
+                                                </span>
                                             </h2>
                                             <p class="u-stone u-t4">
                                                 <b>
-                                                {{count($search->unread_notifications)<1?"Ingen nye":count($search->unread_notifications)." nye"}}</b>
+                                                    @if($notif->notifiable_type==\App\Models\Search::class)
+                                                        {{count($notif->notifiable->first()->unread_notifications)<1?"Ingen nye":count($notif->notifiable->first()->unread_notifications)." nye"}}
+                                                    @else
+                                                        {{$notif->read_at==null?'1 Nye':'Ingen nye'}}
+                                                    @endif
+                                                </b>
                                             </p>
                                         </div>
-                                </a>
-                            </article>
+                                    </a>
+                                </article>
+                                @php(array_push($added, $addable))
+                            @endif
                         @endforeach
                     @else
                         <div style="display:block;text-align:center;margin:0 auto;margin-top:50px;">

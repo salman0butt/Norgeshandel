@@ -35,7 +35,6 @@
             <div class="grid__unit col-md-8">
                 <div class="panel u-mb32">
                     <div class="mt-1 mb-2">
-                        <span class="status status--error">Påbegynt</span>
                         @php
                             $started = \App\Helpers\common::get_ad_attribute($ad,'started');
                             $expired = \App\Helpers\common::get_ad_attribute($ad,'expired');
