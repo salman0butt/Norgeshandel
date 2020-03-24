@@ -215,7 +215,7 @@ class AdController extends Controller
     public function ad_sold($id){
         $ad = Ad::find($id);
         if($ad){
-            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
                 $ad->sold_at = date('Y-m-d G:i');
                 $ad->status = 'sold';
                 $ad->update();

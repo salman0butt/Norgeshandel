@@ -29,9 +29,11 @@
     </div>
     <div id="content-start">
         <div class="grid row">
+            <div class="col-12">
+                @include('common.partials.flash-messages')
+            </div>
             <div class="grid__unit col-md-8">
                 <div class="panel u-mb32">
-                    @include('common.partials.flash-messages')
                     <div class="mt-1 mb-2">
                         <span class="status status--error">Påbegynt</span>
                         @php
@@ -46,7 +48,7 @@
                         @endif
                     </div>
 
-                    <div style="display: flex;" class="mt-5">
+                    <div style="display: flex;" class="mt-3">
                         <div class="u-mr16">
                             <div class="img-format img-format--ratio3by2 img-format--centered image-frame u-bg-ice"
                                 style="min-width: 98px;">
@@ -116,10 +118,15 @@
                             </div>
                         </div>
                         <div class="u-pv8 mt-2">
-                            @if(!$ad->sold_at && $ad->status == 'published')
+                            @if(!$ad->sold_at && $ad->status == 'published' && $ad->ad_type != 'job')
                                 <form action="{{route('ad-sold', $ad)}}" class="mb-0" method="POST" onsubmit="javascript:return confirm('Vil du merke denne annonsen som solgt? Du vil ikke kunne endre status senere.')">
                                     {{csrf_field()}}
-                                    <button type="submit" class="link pl-0">Merk som solgt
+                                    <button type="submit" class="link pl-0">
+                                        @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent')
+                                            Merk som utleid
+                                        @else
+                                            Merk som solgt
+                                        @endif
                                     </button>
                                 </form>
                             @endif

@@ -83,9 +83,11 @@
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
-                                    <img
-                                        src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
+                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8" style="height: 174.93px;!important; width:100%">
+                                    @if($property_commercial_property_for_sale->ad && $property_commercial_property_for_sale->ad->status == 'sold' && $property_commercial_property_for_sale->ad->sold_at)
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">

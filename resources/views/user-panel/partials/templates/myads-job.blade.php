@@ -22,6 +22,9 @@ if ($job->company_id != 0) {
         @if($job && $job->ad && !$job->ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
         @endif
+        @if($job && $job->ad && $job->ad->status == 'sold' && $job->ad->sold_at)
+            <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+        @endif
     </a>
     <div class="detailed-section col-sm-8 p-2 position-relative">
         <a href="{{route('jobs.show', compact('job'))}}" style="width:100%; display: block">

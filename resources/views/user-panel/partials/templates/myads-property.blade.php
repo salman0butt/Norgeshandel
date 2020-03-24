@@ -25,6 +25,9 @@ if($property !== null)
         @if(!$ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
         @endif
+        @if($ad->status == 'sold' && $ad->sold_at)
+            <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+        @endif
          {{--<div class="product-total-price m-2">--}}
          <?php
          //                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");

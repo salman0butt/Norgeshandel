@@ -341,11 +341,12 @@ class common
     //Calculate favorite list total ads
     public static function count_list_ads($list_id)
     {
+        $date = Date('y-m-d',strtotime('-7 days'));
         $total_list_ads = 0;
         $list_ads = \App\Favorite::where('user_id', Auth::id())->where('list_id', $list_id)->get();
         if ($list_ads->count() > 0) {
             foreach ($list_ads as $list_ad) {
-                if ($list_ad->ad) {
+                if ($list_ad->ad && $list_ad->ad->visibility && (strtotime($list_ad->ad->sold_at) > strtotime($date) || !$list_ad->ad->sold_at)) {
                     $total_list_ads = $total_list_ads + 1;
                 }
             }
