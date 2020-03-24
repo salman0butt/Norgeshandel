@@ -85,7 +85,8 @@
             </div>
             <!--        ended row-->
             <div class="row mt-5 home-grid">
-                @if($ads && is_countable($ads) && count($ads)>0)
+            <div id="data-get"></div>
+            {{-- @if($ads && is_countable($ads) && count($ads)>0)
                     <div class="col-md-12">
                         <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
                     </div>
@@ -98,18 +99,20 @@
                     @endforeach
                 @else
                     <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
-                @endif
+                @endif  --}}
+
+
              
             </div>
             <div class="pagination">
-                {{ $ads->links() }}
+                {{-- {{ $ads->links() }} --}}
             </div>
             <div class="clear-fix"></div>
             <!--        ended row-->
-        {{-- </div>
+        </div>
         <div class="ajax-load text-center" style="display:none">
-	    <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif">Loading More post</p>
-        </div> --}}
+	    <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif"></p>
+        </div> 
  
         <!--    ended container-->
         <div class="right-ad pull-right">
@@ -206,7 +209,10 @@
     
 
 <script type="text/javascript">
-	/*var page = 1;
+$(document).ready(function(){
+loadMoreData(1);
+});
+	var page = 1;
 	$(window).scroll(function() {
 	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
 	        page++;
@@ -216,7 +222,7 @@
 	function loadMoreData(page){
 	  $.ajax(
 	        {
-	            url: '?page=' + page,
+	            url: '{{ url('/page') }}/' + page,
 	            type: "get",
 	            beforeSend: function()
 	            {
@@ -231,12 +237,12 @@
 	            }
                 console.log(data);
 	            $('.ajax-load').hide();
-	            $(".home-grid").append(data);
+	           $(".home-grid").append(data);
 	        })
 	        .fail(function(jqXHR, ajaxOptions, thrownError)
 	        {
 	              alert('server not responding...');
 	        });
-	}*/
+	}
 </script>
 @endsection

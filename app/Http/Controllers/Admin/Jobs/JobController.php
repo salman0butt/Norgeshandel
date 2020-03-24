@@ -443,7 +443,7 @@ class JobController extends Controller
             ->where('ads.ad_type', '=', 'job')
             ->whereNull('jobs.deleted_at')
             ->whereNull('ads.deleted_at')
-            ->get();
+            ->limit(getenv('PAGINATION'))->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
@@ -460,7 +460,7 @@ class JobController extends Controller
         }
         $filter = rtrim($filter, '&');
         if (!$is_notif) {
-            $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
+        $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
             foreach ($search as $value) {
                 foreach ($value->unread_notifications as $notification) {
                     $notification->update(['read_at' => now()]);
@@ -551,7 +551,6 @@ class JobController extends Controller
         $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
             ->where('ads.status', 'published')
             ->orderByDesc('ads.updated_at')->get();
-
 
         $jobs = Job::where('job_type', $job_type)->orderBy('name', 'asc')->get();
         if ($job_type === 'all') {

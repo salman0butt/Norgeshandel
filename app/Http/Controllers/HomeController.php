@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\BusinessForSale;
-use App\CommercialPlot;
-use App\CommercialPropertyForRent;
-use App\CommercialPropertyForSale;
-use App\FlatWishesRented;
 use App\Models\Ad;
 use App\Model\Search;
+use App\CommercialPlot;
+use App\BusinessForSale;
 use App\PropertyForRent;
 use App\PropertyForSale;
-use App\PropertyHolidaysHomesForSale;
+use App\FlatWishesRented;
 use Illuminate\Http\Request;
+use App\CommercialPropertyForRent;
+use App\CommercialPropertyForSale;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use App\PropertyHolidaysHomesForSale;
 
 class HomeController extends Controller
 {
@@ -62,10 +63,33 @@ class HomeController extends Controller
             $saved_search = Search::where('type', 'saved')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
             $recent_search = Search::where('type', 'recent')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
         }
-        $ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
-        return view('home', compact('ads', 'saved_search', 'recent_search'));
-    }
+        $ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->limit(5)->get();
 
+        return view('home', compact('ads', 'saved_search', 'recent_search'));
+
+    }
+public function paginate(Request $request,$id) {
+    $currentPage = $id;
+   Paginator::currentPageResolver(function () use ($currentPage) {
+    return $currentPage;
+});
+
+
+$ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
+$html = "";
+if ($ads && is_countable($ads) && count($ads) > 0) {
+    foreach ($ads as $ad) {
+        if ($ad->ad_type == 'job') {
+            $html .= view('user-panel.partials.templates.job-sequare', compact('ad'))->render();
+        } else {
+            $html .= view('user-panel.partials.templates.propert-sequare', compact('ad'))->render();
+        }
+    }
+    return $html;
+}
+
+
+}
     //clear search history
     public function single_ad(Request $request, $ad_type){
         if (Auth::check()){
