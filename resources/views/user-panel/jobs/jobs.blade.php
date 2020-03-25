@@ -4,6 +4,14 @@
         list-style: none;
         padding-left: 5px !important;
     }
+        .pagination {
+        float:right;
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    .clear-fix {
+        clear: both;
+    }
 
 </style>
 @section('page_content')
@@ -116,6 +124,10 @@
                     <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
                 @endif
             </div>
+              <div class="pagination">
+                {{ $ads->links() }}
+            </div>
+            <div class="clear-fix"></div>
             <!--        ended row-->
         </div>
         <!--    ended container-->

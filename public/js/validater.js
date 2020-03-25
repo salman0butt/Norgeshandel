@@ -269,10 +269,10 @@ $(document).ready(function () {
             link_for_information: {
                 validUrl: true
             },
-            phone: {
-                minlength: 8,
-                maxlength: 9
-            },
+            //phone: {
+            //    minlength: 8,
+            //    maxlength: 9
+           // },
             contact:{
                 required: true,
                 number: true
@@ -324,10 +324,10 @@ $(document).ready(function () {
             property_type: {
                 required: true,
                 min: 1
-            },
-            phone: {
-                number: true
-            }
+            }//,
+           // phone: {
+            //    number: true
+            //}
         },
         onfocusout: false,
         invalidHandler: function(form, validator) {
@@ -404,9 +404,9 @@ $(document).ready(function () {
             link: {
                 validUrl: true
             },
-            phone: {
-                number: true
-            },
+          //  phone: {
+          //      number: true
+          //  },
             contact: {
                 required: true,
                 number: true
@@ -682,12 +682,12 @@ $(document).ready(function () {
             },
             apartment_number: {
                 number: true
-            },
-            phone: {
-                number: true,
-                minlength: 8,
-                maxlength: 9,
-            }
+            }//,
+          //  phone: {
+           //     number: true,
+           //     minlength: 8,
+           //     maxlength: 9,
+           // }
         },
         onfocusout: false,
         invalidHandler: function(form, validator) {
@@ -840,12 +840,12 @@ $(document).ready(function () {
             },
             link_for_information: {
                 validUrl: true
-            },
-            phone: {
-                number: true,
-                minlength: 8,
-                maxlength: 9
-            }
+            }//,
+           // phone: {
+           //     number: true,
+           //     minlength: 8,
+           //     maxlength: 9
+           // }
         },
         onfocusout: false,
         invalidHandler: function(form, validator) {

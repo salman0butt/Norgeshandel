@@ -67,13 +67,13 @@ class JobController extends Controller
         $ads = Ad::where('ad_type', 'job')->where(function ($query) use ($date){
             $query->where('ads.status', 'published')
                 ->orwhereDate('ads.sold_at','>',$date);
-        })->where('visibility',1)->get();
+        })->where('visibility',1)->paginate(getenv('PAGINATION'));;
 
         $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->where('ads.visibility',1)->where('jobs.job_type','management')->get();
+            })->where('ads.visibility',1)->where('jobs.job_type','management')->paginate(getenv('PAGINATION'));
         $companies = Company::get();
         return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search','saved_search','management_jobs','companies'));
     }
@@ -491,8 +491,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })
-            ->get();
+            })->limit(getenv('PAGINATION'))->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
@@ -519,7 +518,7 @@ class JobController extends Controller
 
         $filter = rtrim($filter, '&');
         if (!$is_notif) {
-            $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
+        $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
             foreach ($search as $value) {
                 foreach ($value->unread_notifications as $notification) {
                     $notification->update(['read_at' => now()]);
@@ -626,7 +625,6 @@ class JobController extends Controller
         $jobs = DB::table('ads')->join('jobs', 'jobs.id', '=', 'ads.id')
             ->where('ads.status', 'published')
             ->orderByDesc('ads.updated_at')->get();
-
 
         $jobs = Job::where('job_type', $job_type)->orderBy('name', 'asc')->get();
         if ($job_type === 'all') {

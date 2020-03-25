@@ -3,6 +3,7 @@
     <main class="dme-wrapper" id="dme-wrapper">
         @include('user-panel.jobs.jobs_filter_page_inner')
     </main>
+
     <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
     <script>
         var added = false;

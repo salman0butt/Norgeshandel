@@ -648,7 +648,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="link_to_terif_documents" value="{{ $holiday_home_for_sale->link_to_terif_documents }}"
-                        type="text" class="dme-form-control">
+                        type="text" class="dme-form-control url_http">
                 </div>
             </div>
         </div>
@@ -657,7 +657,7 @@
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="task_link" type="text" value="{{ $holiday_home_for_sale->task_link }}"
-                        class="dme-form-control">
+                        class="dme-form-control url_http">
                 </div>
             </div>
         </div>

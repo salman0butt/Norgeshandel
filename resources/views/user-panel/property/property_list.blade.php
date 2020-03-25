@@ -1,9 +1,17 @@
 @extends('layouts.landingSite')
 <style>
   ul {
-            list-style: none;
-            padding-left: 5px !important;
-        }
+       list-style: none;
+        padding-left: 5px !important;
+    }
+    .pagination {
+        float:right;
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    .clear-fix {
+        clear: both;
+    }
 </style>
 @section('page_content')
 <main class="dme-wrapper">
@@ -98,6 +106,7 @@
                 </div>
                 <!--            ended col-->
             </div>
+        
             <!--        ended row-->
             <div class="row mt-5 home-grid">
                 @if($ads && is_countable($ads) && count($ads)>0)
@@ -111,6 +120,10 @@
                     <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
                 @endif
             </div>
+            <div class="pagination">
+                {{ $ads->links() }}
+            </div>
+            <div class="clear-fix"></div>
             <!--        ended row-->
         </div>
         <!--    ended container-->

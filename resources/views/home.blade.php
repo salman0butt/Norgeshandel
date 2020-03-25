@@ -5,6 +5,14 @@
             list-style: none;
             padding-left: 5px !important;
         }
+                .pagination {
+        float:right;
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    .clear-fix {
+        clear: both;
+    }
     </style>
     <main class="dme-wrapper">
         <div class="left-ad float-left">
@@ -77,7 +85,8 @@
             </div>
             <!--        ended row-->
             <div class="row mt-5 home-grid">
-                @if($ads && is_countable($ads) && count($ads)>0)
+            <div id="data-get"></div>
+            {{-- @if($ads && is_countable($ads) && count($ads)>0)
                     <div class="col-md-12">
                         <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
                     </div>
@@ -90,10 +99,21 @@
                     @endforeach
                 @else
                     <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
-                @endif
+                @endif  --}}
+
+
+             
             </div>
+            <div class="pagination">
+                {{-- {{ $ads->links() }} --}}
+            </div>
+            <div class="clear-fix"></div>
             <!--        ended row-->
         </div>
+        <div class="ajax-load text-center" style="display:none">
+	    <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif"></p>
+        </div> 
+ 
         <!--    ended container-->
         <div class="right-ad pull-right">
         <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
@@ -133,7 +153,9 @@
             });
 
             $('#search').on('keyup', function (e) {
+                
                 if(!isEmpty($('#search_url').val())) {
+                  
                     if(e.key=='Enter') {
                         var link = $('#all-searches-page').attr('href');
                         if(!isEmpty(link)){
@@ -145,7 +167,10 @@
                             url: $('#search_url').val() + '/' + $('#search').val(),
                             type: "GET",
                             success: function (response) {
+                               
                                 $('#suggestions').html(response);
+                            var valu = $('#search').val();
+                            $('#suggestions > div > div.col-md-7 > ul > li a').prepend(valu+' ');
                             },
                             error: function (error) {
                                 //console.log(error);
@@ -181,4 +206,43 @@
 
 
     </script>
+    
+
+<script type="text/javascript">
+$(document).ready(function(){
+loadMoreData(1);
+});
+	var page = 1;
+	$(window).scroll(function() {
+	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+	        page++;
+	        loadMoreData(page);
+	    }
+	});
+	function loadMoreData(page){
+	  $.ajax(
+	        {
+	            url: '{{ url('/page') }}/' + page,
+	            type: "get",
+	            beforeSend: function()
+	            {
+	                $('.ajax-load').show();
+	            }
+	        })
+	        .done(function(data)
+	        {
+	            if(data.html == " "){
+	                $('.ajax-load').html("No more records found");
+	                return;
+	            }
+                console.log(data);
+	            $('.ajax-load').hide();
+	           $(".home-grid").append(data);
+	        })
+	        .fail(function(jqXHR, ajaxOptions, thrownError)
+	        {
+	              alert('server not responding...');
+	        });
+	}
+</script>
 @endsection

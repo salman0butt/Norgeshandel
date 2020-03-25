@@ -33,6 +33,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
 <link rel="stylesheet" href="{{ asset('public/css/intlTelInput.min.css') }}">
+<style>
+    span.far.fa-heart.text-muted,span.fa.fa-heart.text-muted {
+        line-height: unset !important;
+    }
+</style>
 </head>
 <body class="@yield('body_class')">
 @if(Request::is('account/*'))
@@ -70,7 +75,7 @@
                             </div>
                         </a>
                     </div>
-                </div>
+                </div><br>
                 <button type="button" class="btn dme-btn-outlined-blue float-right" data-dismiss="modal">Lukk</button>
             </div>
         </div>
