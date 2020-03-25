@@ -192,13 +192,13 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="sold_status[]" value="available" id="navSold_status-0">
+                                        <input type="checkbox" name="for_sale" value="for_sale" id="navSold_status-0">
                                         <label for="navSold_status-0" class="">Til salgs <span data-name="available" data-title="sold_status" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="sold_status[]" value="sold" id="navSold_status-1">
+                                        <input type="checkbox" name="sold_in_three_days" value="sold_in_three_days" id="navSold_status-1">
                                         <label for="navSold_status-1" class="">Solgt siste 3 dager <span data-name="sold" data-title="sold_status" class="count"></span></label>
                                     </div>
                                 </li>
@@ -225,12 +225,12 @@
                             <h3 class="u-t5">Visningsdato</h3>
                             <ul class="list-unstyled">
                                 @for($i=0; $i<30; $i++)
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="display_date[]" value="{{now()->addDays($i)->toDateString()}}" id="navdisplaydate-{{$i}}">
-                                        <label for="navdisplaydate-{{$i}}" class="">{{now()->addDays($i)->isoFormat("dddd DD. MMMM")}} <span data-name="{{now()->addDays($i)->toDateString()}}" data-title="display_name" class="count"></span></label>
-                                    </div>
-                                </li>
+                                    <li>
+                                        <div class="input-toggle">
+                                            <input type="checkbox" name="display_date[]" value="{{now()->addDays($i)->toDateString()}}" id="navdisplaydate-{{$i}}">
+                                            <label for="navdisplaydate-{{$i}}" class="">{{now()->addDays($i)->isoFormat("dddd DD. MMMM")}} <span data-name="{{now()->addDays($i)->toDateString()}}" data-title="display_name" class="count"></span></label>
+                                        </div>
+                                    </li>
                                 @endfor
                             </ul>
                         </div>

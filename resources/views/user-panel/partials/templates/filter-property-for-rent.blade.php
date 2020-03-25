@@ -32,7 +32,7 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="created_at" value="{{today()->toDateString()}}"
+                                        <input type="checkbox" name="created_at" value="{{now()->toDateString()}}"
                                                id="published-1">
                                         <label for="published-1" class="">Nye i dag <span
                                                 data-name="{{today()->toDateString()}}"
@@ -149,12 +149,12 @@
                             <h3 class="u-t5">Ledig fra</h3>
                             <ul class="list list-unstyled">
                                 @for($i=0; $i<16; $i++)
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="available_from[]" value="{{now()->addMonths($i)->year}}-{{now()->addMonths($i)->month<10?'0'.now()->addMonths($i)->month:now()->addMonths($i)->month}}" id="available_from-{{$i}}">
-                                        <label for="available_from-{{$i}}" class="">{{now()->addMonths($i)->monthName}} <span data-name="Akershus" data-title="available_from" class="count"></span></label>
-                                    </div>
-                                </li>
+                                    <li>
+                                        <div class="input-toggle">
+                                            <input type="checkbox" name="available_from[]" value="{{now()->addMonths($i)->year}}-{{now()->addMonths($i)->month<10?'0'.now()->addMonths($i)->month:now()->addMonths($i)->month}}" id="available_from-{{$i}}">
+                                            <label for="available_from-{{$i}}" class="">{{now()->addMonths($i)->monthName}} <span data-name="Akershus" data-title="available_from" class="count"></span></label>
+                                        </div>
+                                    </li>
                                 @endfor
                             </ul>
                         </div>
