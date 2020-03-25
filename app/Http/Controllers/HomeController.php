@@ -45,10 +45,18 @@ class HomeController extends Controller
                 $ad = Ad::where('id', '=', $handel)->where(function ($query){
                     $query->where('visibility', '=', 1)
                         ->orWhere('user_id', Auth::id());
+                })->where(function ($query){
+                    $date = Date('y-m-d',strtotime('-7 days'));
+                    $query->where('status', 'published')
+                        ->orwhereDate('sold_at','>',$date);
                 })->first();
             }
             else{
-                $ad = Ad::where('id', '=', $handel)->where('visibility', '=', 1)->first();
+                $ad = Ad::where('id', '=', $handel)->where('visibility', '=', 1)->where(function ($query){
+                    $date = Date('y-m-d',strtotime('-7 days'));
+                    $query->where('status', 'published')
+                        ->orwhereDate('sold_at','>',$date);
+                })->first();
             }
             if ($ad) {
                 $type = "";
