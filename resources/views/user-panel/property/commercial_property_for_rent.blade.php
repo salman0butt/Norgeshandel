@@ -88,23 +88,22 @@
                        // //console.log(data);
                        // document.getElementById("property_for_rent_form").reset();
                        // document.getElementById("zip_code_city_name").innerHTML = '';
-                 if (event == 'change') {
+                    if (event == 'change') {
                      if(data.property_pdf){
                          $('.remove_property_pdf').attr('id',data.property_pdf);
                      }
-                    $('.notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
-                   }else if(event == 'click'){
-                     $('.notice').css('display','block');
-                      $('.notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
-                   }
-                           if (event == 'change') {
+                        $('.ad-published-notice').css('display','none');
+                        $('.ad-auto-saved-notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
                         setTimeout(function () {
-                            $('.notice').show('slow');
+                            $('.ad-auto-saved-notice').show('slow');
                         }, 2000);
                         setTimeout(function () {
-                            $('.notice').hide('slow');
+                            $('.ad-auto-saved-notice').hide('slow');
                         }, 5000);
-                    }
+                   }else if(event == 'click'){
+                     $('.ad-published-notice').css('display','block');
+                     $('.ad-published-notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+                   }
          
                     },
                     error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
@@ -112,7 +111,7 @@
                         var errors = jqXhr.responseJSON;
                         //console.log(errors.errors);
                         if (isEmpty(errors.errors)) {
-                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
+                            $('.ad-published-notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
                             return false;
                         }
                         if (!isEmpty(errors.errors)) {
@@ -122,7 +121,7 @@
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
                             });
                         } else {
-                            $('.notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
+                            $('.ad-published-notice').html('<div class="alert alert-danger">noe gikk galt!</div>');
                         }
                     },
 
