@@ -221,7 +221,7 @@ $(document).ready(function () {
             tenure: {
                 required: true
             },
-            municipality_number: {
+            municipal_number: {
                 minlength: 4,
                 maxlength: 4,
                 number: true
@@ -336,6 +336,7 @@ $(document).ready(function () {
                 validator.errorList[0].element.focus();
             }
         },
+        /*
         errorPlacement: function (error, element) {
             if (element.attr("type") == "checkbox") {
                 error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));
@@ -349,6 +350,7 @@ $(document).ready(function () {
                 error.insertAfter($(element).parents('.headline_section').after($('.headline_section')));
             }
         }
+        */
     });
 
     // required check box (region) on flat wishes rented page

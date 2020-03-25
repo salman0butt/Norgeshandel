@@ -87,12 +87,12 @@
                             @if($property_data->cost)
                                 <div class="col-md-12">
                                     <span class="font-weight-bold">Omkostninger:</span>&nbsp;
-                                    <span>{{$property_data->cost}} Kr</span>
+                                    <span>{{number_format($property_data->cost,0,""," ")}} Kr</span>
                                 </div>
                             @endif
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Totalpris:</span>&nbsp;
-                                <span>{{$property_data->total_price}} Kr</span>
+                                <span>{{number_format($property_data->total_price,0,""," ")}} Kr</span>
                             </div>
                         </div>
                     </div>

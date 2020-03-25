@@ -339,7 +339,8 @@
             <span class="error-span published_on"></span>
         </div>
         <hr>
-        <div class="notice"></div>
+        <div class="ad-auto-saved-notice"></div>
+        <div class="ad-published-notice"></div>
         <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiser_annonsen"
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label"> @if(Request::is('new/property/rent/ad/*/edit')) {{'Oppdater annonsen'}} @else {{ 'Publiser annonsen!' }} @endif</span></button>
     </div>
