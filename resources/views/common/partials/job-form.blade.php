@@ -394,7 +394,7 @@
                                 class="col-md-2 u-t5">{{__('Link to application form')}}</label>
                             <div class="col-sm-4">
                                 <input type="text" name="app_link_to_receive" id="app_link_to_receive"
-                                    class="form-control dme-form-control" value="{{@$obj_job->app_link_to_receive}}">
+                                    class="form-control dme-form-control url_http" value="{{@$obj_job->app_link_to_receive}}">
                             </div>
                             <div class="col-md-10 offset-md-2">
                                 <span class="u-t5">{{__('Du får beskjed på e-post hver gang du mottar en ny
