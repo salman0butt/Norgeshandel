@@ -45,10 +45,18 @@ class HomeController extends Controller
                 $ad = Ad::where('id', '=', $handel)->where(function ($query){
                     $query->where('visibility', '=', 1)
                         ->orWhere('user_id', Auth::id());
+                })->where(function ($query){
+                    $date = Date('y-m-d',strtotime('-7 days'));
+                    $query->where('status', 'published')
+                        ->orwhereDate('sold_at','>',$date);
                 })->first();
             }
             else{
-                $ad = Ad::where('id', '=', $handel)->where('visibility', '=', 1)->first();
+                $ad = Ad::where('id', '=', $handel)->where('visibility', '=', 1)->where(function ($query){
+                    $date = Date('y-m-d',strtotime('-7 days'));
+                    $query->where('status', 'published')
+                        ->orwhereDate('sold_at','>',$date);
+                })->first();
             }
             if ($ad) {
                 $type = "";
@@ -77,28 +85,32 @@ class HomeController extends Controller
         return view('home', compact('ads', 'saved_search', 'recent_search'));
 
     }
-public function paginate(Request $request,$id) {
-    $currentPage = $id;
-   Paginator::currentPageResolver(function () use ($currentPage) {
-    return $currentPage;
-});
+    public function paginate(Request $request,$id) {
+        $currentPage = $id;
+       Paginator::currentPageResolver(function () use ($currentPage) {
+            return $currentPage;
+        });
 
 
-$ads = Ad::where('status', 'published')->where('visibility', '=', 1)->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
-$html = "";
-if ($ads && is_countable($ads) && count($ads) > 0) {
-    foreach ($ads as $ad) {
-        if ($ad->ad_type == 'job') {
-            $html .= view('user-panel.partials.templates.job-sequare', compact('ad'))->render();
-        } else {
-            $html .= view('user-panel.partials.templates.propert-sequare', compact('ad'))->render();
+        $ads = Ad::where(function ($query){
+            $date = Date('y-m-d',strtotime('-7 days'));
+            $query->where('status', 'published')
+                ->orwhereDate('sold_at','>',$date);
+        })->where('visibility', '=', 1)->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
+        $html = "";
+        if ($ads && is_countable($ads) && count($ads) > 0) {
+            foreach ($ads as $ad) {
+                if ($ad->ad_type == 'job') {
+                    $html .= view('user-panel.partials.templates.job-sequare', compact('ad'))->render();
+                } else {
+                    $html .= view('user-panel.partials.templates.propert-sequare', compact('ad'))->render();
+                }
+            }
+            return $html;
         }
+
+
     }
-    return $html;
-}
-
-
-}
     //clear search history
     public function single_ad(Request $request, $ad_type){
         if (Auth::check()){

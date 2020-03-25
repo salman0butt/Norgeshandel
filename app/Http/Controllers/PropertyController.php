@@ -72,8 +72,11 @@ class PropertyController extends Controller
     {
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
         $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
-        $ads = Ad::where('status', 'published')
-            ->where('ad_type', '!=', 'job')
+        $ads = Ad::where(function ($query){
+            $date = Date('y-m-d',strtotime('-7 days'));
+            $query->where('status', 'published')
+                ->orwhereDate('sold_at','>',$date);
+        })->where('ad_type', '!=', 'job')
             ->where('visibility', '=', 1)
             ->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
 
