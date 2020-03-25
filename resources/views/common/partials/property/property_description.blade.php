@@ -76,7 +76,7 @@
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                         @if (!empty($property_data->monthly_rent))
                             <div class="col-md-12 font-weight-bold mt-3">Månedsleie</div>
-                            <div class="col-md-12 u-t3">{{number_format($property_data->monthly_rent,0,""," ")}}Krxxxxxxxxxxxxxxx
+                            <div class="col-md-12 u-t3">{{number_format($property_data->monthly_rent,0,""," ")}}Kr
                             </div>
                         @endif
                         @if($property_data->include_in_rent || $property_data->deposit)

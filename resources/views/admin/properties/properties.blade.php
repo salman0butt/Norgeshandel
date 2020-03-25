@@ -131,7 +131,7 @@
                                                                     @endphp
                                                                 @endif
                                                             </td>
-                                                            <td>{{\App\Helpers\common::get_ad_attribute($ad,'price')}}</td>
+                                                            <td>{{\App\Helpers\common::get_ad_attribute($ad,'price') ? number_format(\App\Helpers\common::get_ad_attribute($ad,'price'),0,""," ") : ''}}</td>
                                                             <td>{{$ad->user->username}}</td>
                                                             <td>{{$ad->status}} @if($ad->status=='pending') <a href="{{route('jobs.status_change', [$ad, $approve])}}">approve</a>@endif</td>
                                                             <td>{{count($ad->views)}}</td>
