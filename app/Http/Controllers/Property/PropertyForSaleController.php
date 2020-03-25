@@ -58,18 +58,32 @@ class PropertyForSaleController extends Controller
         }
         $query = DB::table('ads')
             ->join($table, $table . '.ad_id', '=','ads.id')
-            ->where('ads.status', '=','published')
+            ->where(function ($query){
+                $query->where('ads.status', '=','published')
+                    ->orWhere('ads.status', '=','sold');
+            })
+            ->where(function ($query){
+                $query->whereNull('ads.sold_at')
+                    ->orWhereDate('ads.sold_at', '>', now()->addDays(-7));
+            })
             ->where('ads.visibility', '=', 1)
             ->whereNull('ads.deleted_at')
             ->whereNull($table . '.deleted_at');
 
 
         $arr = Arr::only($request->all(), ['country']);
+
+        if (isset($request->for_sale) && !empty($request->for_sale)) {
+            $query->where('ads.status', '!=', 'sold');
+        }
+        if (isset($request->sold_in_three_days) && !empty($request->sold_in_three_days)) {
+            $query->whereDate('ads.sold_at', '>', now()->addDays(-3));
+        }
         if (isset($request->search) && !empty($request->search)) {
             $query->where('headline', 'like', '%' . $request->search . '%');
         }
         if (isset($request->created_at)) {
-            $query->whereDate($table . '.created_at', '=', $request->created_at);
+            $query->whereDate($table . '.updated_at', '=', $request->created_at);
         }
         if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
             if (isset($request->local_area_name) && !empty($request->local_area_name)) {
