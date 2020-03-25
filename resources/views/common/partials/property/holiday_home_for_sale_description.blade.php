@@ -154,17 +154,19 @@
 
                         </div>
                     </div>
-                    <a href="#" id="more_details" class="mt-2">
-                        <svg width="12" height="12" viewBox="0 0 12 12">
-                            <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
-                            <line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line>
-                        </svg> Flere detaljer
-                    </a>
-                    <a href="#" id="less_details" class="mt-2 hide">
-                        <svg width="12" height="12" viewBox="0 0 12 12">
-                            <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
-                        </svg> Færre detaljer
-                    </a>
+                    @if(count($facilities))
+                        <a href="#" id="more_details" class="mt-2">
+                            <svg width="12" height="12" viewBox="0 0 12 12">
+                                <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
+                                <line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line>
+                            </svg> Flere detaljer
+                        </a>
+                        <a href="#" id="less_details" class="mt-2 hide">
+                            <svg width="12" height="12" viewBox="0 0 12 12">
+                                <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
+                            </svg> Færre detaljer
+                        </a>
+                    @endif
                     <div class="col-md-12 more_details_section hide">
                         <div class="col-md-12 pl-0 pr-0">
                             <div class="bg-light-grey radius-8 col-md-12 p-3">
@@ -220,7 +222,7 @@
                     @if($property_data->description)
                         <div class="col-md-12">
                             <span class="font-weight-bold">Beskrivelse</span>
-                            <p>{{ $property_data->description }}</p>
+                            <p style="white-space:pre-line">{{ $property_data->description }}</p>
                         </div>
                     @endif
 

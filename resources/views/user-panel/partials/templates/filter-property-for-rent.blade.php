@@ -12,7 +12,7 @@
                             <label for="search" class="mb-1 font-weight-bold">Søk i Eiendom</label>
                             <div class="input-group search-box">
                                 <input type="text" id="search" name="search" class="dme-form-control search-control"
-                                       placeholder="">
+                                       placeholder="" value="{{Request::get('search') ? Request::get('search') : ''}}">
                                 <span class="input-group-addon pt-2">
                                                     <svg focusable="false" xmlns="http://www.w3.org/2000/svg"
                                                          viewBox="0 0 32 32" height="26" width="26">

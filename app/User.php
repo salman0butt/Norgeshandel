@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Ad;
 use App\Models\Meta;
 use App\Models\Search;
 use Illuminate\Support\Facades\App;
@@ -192,5 +193,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function read_notifications()
     {
         return $this->hasMany(Notification::class)->whereNotNull('read_at');
+    }
+
+
+    //Get user ads
+    public function ads(){
+        return $this->hasMany(Ad::class);
     }
 }

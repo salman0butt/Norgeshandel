@@ -212,6 +212,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');
         Route::get('messages/new/{ad_id}', 'MessageController@new_thread');
         Route::get('messages/render-thread/{thread_id}', 'MessageController@render_thread');
+        Route::post('messages/upload-media-async', 'MessageController@upload_media');
         Route::get('/messages', 'MessageController@index');
 
         Route::post('message', 'MessageController@send');
@@ -221,9 +222,9 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('notifications_count', 'NotificationController@notifications_count');
         Route::get('notifications-read-all', 'NotificationController@read_all');
 
-        Route::get('notifications/all', 'NotificationController@showAllNotifications');
+//        Route::get('notifications/all', 'NotificationController@index');
 
-        Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
+//        Route::get('show/notifications/all', 'NotificationController@showAllNotifications');
 
         //Clear Searches
         Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
@@ -439,11 +440,15 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('/phones', function () {
                 return view('user-panel.my-business.profile.account-phone');
             });
+
+
         });
 
         Route::post('store-user-emails', 'Admin\Users\AdminUserController@store_user_alternative_email')->name('store-user-emails');
         Route::post('store-user-contact-no', 'Admin\Users\AdminUserController@store_user_alternative_contact_no')->name('store-user-contact-no');
 
+        //Change the visibility of an ad
+        Route::get('update-ad-visibility','AdController@update_ad_visibility');
 
 
 
@@ -451,19 +456,26 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager']], function () {
 
-//    dashboard
+        //dashboard
         Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
-//    job custom routes
+        //job custom routes
         Route::get('/jobs/select_category', function () {
             return view('admin.jobs.jobs_select_category');
         });
+        //Restore job
+        Route::get('/jobs/restore/{id}', 'Admin\Jobs\JobController@restore')->name('job-restore');
         Route::get('/jobs/create/{type}', 'Admin\Jobs\JobController@create')->name('jobs.create');
         Route::get('/jobs/status_change/{ad}/status/{status}', 'Admin\Jobs\JobController@status_change')->name('jobs.status_change');
-//    edit user role
+        //edit user role
         Route::post('/roles/edit_role', 'Admin\Users\RoleController@edit_role')->name('roles.edit_role');
-//    route to change user role
+        //route to change user role
         Route::POST('/users/change_role', 'Admin\Users\AdminUserController@change_role')->name('users.change_role');
-//    all general resources
+        //Get all properties
+        Route::get('/property/realestate', 'PropertyController@index');
+        //Restore property
+        Route::get('/property/realestate/restore/{id}', 'PropertyController@restore')->name('property-restore');
+        Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
+        //all general resources
         Route::resources([
             'dashboard' => 'Admin\DashboardController',
             'users' => 'Admin\Users\AdminUserController',

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use App\Models\Ad;
-use App\Model\Search;
+use App\Models\Search;
 use App\CommercialPlot;
 use App\Helpers\common;
 use App\BusinessForSale;
@@ -68,8 +68,7 @@ class PropertyController extends Controller
         }
     }
 
-    public
-    function list()
+    public function list()
     {
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
         $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
@@ -98,6 +97,9 @@ class PropertyController extends Controller
                 $ad->delete();
                 DB::commit();
                 Session::flash('success', 'Eiendom ble slettet.');
+                if (request()->route()->getPrefix() == '/admin') {
+                    return back();
+                }
                 return redirect(url('my-business/my-ads'));
 
             } catch (\Exception $e) {
@@ -218,5 +220,43 @@ class PropertyController extends Controller
         return $request;
     }
 
+    //show all properties to admin
+    public function index(Request $request){
+        if (request()->route()->getPrefix() == '/admin') {
+            $ads = Ad::where('ad_type','<>','job')->get();
+            if($request->trashed){
+                $ads = Ad::where('ad_type','<>','job')->onlyTrashed()->get();
+            }
+            return response()->view('admin.properties.properties', compact('ads'));
+        }
+    }
+
+    //Restore properties
+    public function restore($id){
+        if($id){
+            $ad = Ad::where('id',$id)->withTrashed()->first();
+            if($ad){
+                if(!Auth::user()->hasRole('admin') && $ad->user_id != Auth::id()){
+                    return redirect('forbidden');
+                }
+                DB::beginTransaction();
+                try{
+                    $ad->property()->restore();
+                    $ad->restore();
+                    DB::commit();
+                    Session::flash('success', 'Eiendommen er restaurert');
+                    return back();
+                }catch (\Exception $e){
+                    DB::rollback();
+                    Session::flash('danger', 'Noe gikk galt.');
+                    return back();
+                }
+            }else{
+                abort(404);
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
+        }
+    }
 
 }

@@ -62,11 +62,13 @@
                     </div>
                     @foreach($active_ads as $ad)
                     <?php $ad = \App\Models\Ad::find($ad->id);?>
-                        @if($ad->ad_type == 'job')
-                            @include('user-panel.partials.templates.job-list')
-                        @else
-                            {{-- @include('user-panel.partials.templates.propert-sequare') --}}
-                            @include('user-panel.partials.templates.property-list')
+                        @if($ad && $ad->visibility)
+                            @if($ad->ad_type == 'job')
+                                @include('user-panel.partials.templates.job-list')
+                            @else
+                                {{-- @include('user-panel.partials.templates.propert-sequare') --}}
+                                @include('user-panel.partials.templates.property-list')
+                            @endif
                         @endif
                     @endforeach
                     <div class="row mt-3">

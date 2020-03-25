@@ -86,9 +86,11 @@
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
-                                    <img
-                                        src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
+                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
+                                    @if($business_for_sale->ad && $business_for_sale->ad->status == 'sold' && $business_for_sale->ad->sold_at)
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
@@ -105,7 +107,7 @@
                                 @if($business_for_sale->price)
                                     <div class="mt-2">
                                         <div class="area font-weight-bold float-left color-grey">&nbsp;</div>
-                                        <div class="price font-weight-bold float-right color-grey">{{$business_for_sale->price}} kr</div>
+                                        <div class="price font-weight-bold float-right color-grey">{{number_format($business_for_sale->price    ,0,""," ")}} kr</div>
                                     </div>
                                     <br>
                                 @endif

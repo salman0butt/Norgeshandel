@@ -88,9 +88,11 @@
                                 <div
                                     class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                     <div class="trailing-border">
-                                        <img
-                                            src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"
+                                        <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"
                                             alt="" class="img-fluid radius-8 w-100 list-h" style="height: 174.93px; width:100%">
+                                        @if($property_for_sale->ad && $property_for_sale->ad->status == 'sold' && $property_for_sale->ad->sold_at)
+                                            <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
@@ -109,7 +111,7 @@
                                             m²
                                         </div>
                                         <div
-                                            class="price font-weight-bold float-right color-grey">{{$property_for_sale->total_price}}
+                                            class="price font-weight-bold float-right color-grey">{{number_format($property_for_sale->total_price,0,""," ")}}
                                             kr
                                         </div>
                                     </div>

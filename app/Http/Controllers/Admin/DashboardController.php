@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Admin\Dashboard;
+use App\Models\Ad;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -15,7 +16,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $ads = Ad::where('status','published')->orderBy('updated_at','DESC')->take(3)->get();
+        return view('admin.dashboard',compact('ads'));
     }
 
     /**

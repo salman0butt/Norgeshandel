@@ -73,8 +73,8 @@
                             </span>
                         </div>
 
-                        @if($property_data->location_description)
-                            <div class="col-md-12 mt-2"><p style="white-space: pre-line">{{$property_data->location_description}}</p></div>
+                        @if($property_data->description)
+                            <div class="col-md-12 mt-2"><p style="white-space: pre-line">{{$property_data->description}}</p></div>
                         @endif
                         <!-- <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
                         <div class="col-md-12 u-t3">5 250 000 kr</div> -->
@@ -97,9 +97,9 @@
                         <div class="col-md-6"><span class="font-weight-bold">Primærrom </span>&nbsp;<span>97 m²</span></div>
                         <div class="col-md-6"><span class="font-weight-bold">Energimerking </span>&nbsp;<span> C - mørkegrønn</span></div> -->
 
-                        <div class="col-md-12">
-                            <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a>
-                        </div>
+                        {{--<div class="col-md-12">--}}
+                            {{--<a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a>--}}
+                        {{--</div>--}}
 
 
                         <div style="width: 500px; height: 300px;">

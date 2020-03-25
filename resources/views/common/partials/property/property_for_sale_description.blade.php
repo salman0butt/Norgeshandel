@@ -97,7 +97,7 @@ $name = $property_data->ad->company_gallery;
                             </span>
                         </div>
                         <div class="col-md-12 mt-2">
-                            <p>{{$property_data->description}}</p>
+                            <p style="white-space: pre-line">{{$property_data->description2}}</p>
                         </div>
 
                         <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
@@ -190,8 +190,9 @@ $name = $property_data->ad->company_gallery;
                             @endif
                             @if($property_data->area_description)
                                 <span class="font-weight-bold">Arealbeskrivelse</span>
-                                <div class=""><span>
-                                    {{$property_data->area_description}}</span></div>
+                                <div class="">
+                                    <span style="white-space: pre-line">{{$property_data->area_description}}</span>
+                                </div>
                             @endif
                             <br>
                             <span class="font-weight-bold ">Matrikkelinformasjon</span>

@@ -51,18 +51,29 @@ class JobController extends Controller
         );
     }
 
-    public function index()
+    public function index(Request $request)
     {
         if (request()->route()->getPrefix() == '/admin') {
-            $ads = Ad::all();
+            $ads = Ad::where('ad_type','job')->get();
+            if($request->trashed){
+                $ads = Ad::where('ad_type','job')->onlyTrashed()->get();
+            }
             return response()->view('admin.jobs.jobs', compact('ads'));
         }
         $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
         $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
+        $date = Date('y-m-d',strtotime('-7 days'));
 
-        $ads = Ad::where('status', 'published')->where('ad_type', 'job')->paginate(getenv('PAGINATION'));
+        $ads = Ad::where('ad_type', 'job')->where(function ($query) use ($date){
+            $query->where('ads.status', 'published')
+                ->orwhereDate('ads.sold_at','>',$date);
+        })->where('visibility',1)->get();
 
-        $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')->where('ads.status','published')->where('jobs.job_type','management')->get();
+        $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')
+            ->where(function ($query) use ($date){
+                $query->where('ads.status', 'published')
+                    ->orwhereDate('ads.sold_at','>',$date);
+            })->where('ads.visibility',1)->where('jobs.job_type','management')->paginate(getenv('PAGINATION'));
         $companies = Company::get();
         return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search','saved_search','management_jobs','companies'));
     }
@@ -390,10 +401,13 @@ class JobController extends Controller
                 $ad_id = $job->ad->id;
                 $job->ad()->delete();
                 $job->delete();
-                common::delete_media($ad_id, Ad::class, 'logo');
-                common::delete_media($ad_id, Ad::class, 'gallery');
+                //common::delete_media($ad_id, Ad::class, 'logo');
+                //common::delete_media($ad_id, Ad::class, 'gallery');
                 DB::commit();
                 Session::flash('success', 'Jobben er slettet');
+                if (request()->route()->getPrefix() == '/admin') {
+                    return back();
+                }
                 return redirect(url('my-business/my-ads'));
             }catch (\Exception $e){
                 DB::rollback();
@@ -404,6 +418,34 @@ class JobController extends Controller
             abort(404);
             Session::flash('danger', 'Noe gikk galt.');
             return back();
+        }
+    }
+
+
+    public function restore($id){
+        if($id){
+            $job = Job::where('id',$id)->withTrashed()->first();
+            if($job){
+                if(!Auth::user()->hasRole('admin') && $job->user_id != Auth::id()){
+                    return redirect('forbidden');
+                }
+                DB::beginTransaction();
+                try{
+                    $job->ad()->restore();
+                    $job->restore();
+                    DB::commit();
+                    Session::flash('success', 'Jobben er gjenopprettet');
+                    return back();
+                }catch (\Exception $e){
+                    DB::rollback();
+                    Session::flash('danger', 'Noe gikk galt.');
+                    return back();
+                }
+            }else{
+                abort(404);
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
         }
     }
 
@@ -437,13 +479,19 @@ class JobController extends Controller
      */
     public function search()
     {
+        $date = Date('y-m-d',strtotime('-7 days'));
+
         $jobs = DB::table('ads')
             ->join('jobs', 'ads.id', '=', 'jobs.ad_id')
-            ->where('ads.status', '=', 'published')
+//            ->where('ads.status', '=', 'published')
             ->where('ads.ad_type', '=', 'job')
             ->whereNull('jobs.deleted_at')
             ->whereNull('ads.deleted_at')
-            ->limit(getenv('PAGINATION'))->get();
+            ->where('ads.visibility','=',1)
+            ->where(function ($query) use ($date){
+                $query->where('ads.status', 'published')
+                    ->orwhereDate('ads.sold_at','>',$date);
+            })->limit(getenv('PAGINATION'))->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
@@ -456,8 +504,18 @@ class JobController extends Controller
         $req = $request->query;
         $filter = 'jobs/search?';
         foreach ($req as $key=>$value){
-            $filter.=$key.'='.$value.'&';
+           if(is_countable($value) && count($value)){
+              foreach($value as $value_obj){
+                  $filter.=$key.'='.$value_obj.'&';
+              }
+           }else{
+               if($value){
+                   $filter.=$key.'='.$value.'&';
+               }
+           }
+
         }
+
         $filter = rtrim($filter, '&');
         if (!$is_notif) {
         $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
@@ -472,12 +530,24 @@ class JobController extends Controller
         $sort = $request->sort;
         $arr = Arr::only($request->all(), ['job_function', 'industry', 'country', 'commitment_type', 'job_type',
             'sector', 'leadership_category']);
+        $date = Date('y-m-d',strtotime('-7 days'));
         $query = DB::table('ads')
             ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
             ->join('users', 'jobs.user_id', '=','users.id')
-            ->where('ads.status', '=', 'published');
+//            ->where('ads.status', '=', 'published')
+            ->where('ads.visibility', '=', 1)
+            ->where('ads.ad_type', '=', 'job')
+            ->whereNull('ads.deleted_at')
+            ->whereNull('jobs.deleted_at')
+            ->select('jobs.*')
+            ->where(function ($query) use ($date){
+                $query->where('ads.status', 'published')
+                    ->orwhereDate('ads.sold_at','>',$date);
+            });
+
 
         $query->where($arr);
+
         if(isset($request->created_at)){
             $query->whereDate('jobs.created_at', $request->created_at);
         }
@@ -504,7 +574,6 @@ class JobController extends Controller
             }
         }
 
-
         if(isset($sort) && !empty($sort)) {
             switch ($sort){
                 case 1:
@@ -517,6 +586,11 @@ class JobController extends Controller
                     break;
             }
         }
+
+        if($request->job_type){
+            $query = $query->where('jobs.job_type',$request->job_type);
+        }
+
         if($is_notif){
             if (!empty($after_created)){
                 $query->where('ads.created_at', '>', $after_created);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Favorite;
+use App\Helpers\common;
 use App\MessageThread;
 use App\Models\Ad;
 use App\Models\AdView;
@@ -12,14 +13,32 @@ use http\Message\Body;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\Null_;
 use PhpParser\Node\Stmt\DeclareDeclare;
+use Pusher\Pusher;
 use test\Mockery\ReturnTypeObjectTypeHint;
 use function foo\func;
 use function GuzzleHttp\Psr7\str;
 
 class AdController extends Controller
 {
+    private $pusher;
+
+    public function __construct()
+    {
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true
+        );
+
+        $this->pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+    }
     /**
      * Display a listing of the resource.
      *
@@ -214,10 +233,11 @@ class AdController extends Controller
     public function ad_sold($id){
         $ad = Ad::find($id);
         if($ad){
-            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
                 $ad->sold_at = date('Y-m-d G:i');
                 $ad->status = 'sold';
                 $ad->update();
+                common::fav_mark_sold_notification($ad, $this->pusher);
                 return back();
             }else{
                 return redirect('forbidden');
@@ -304,6 +324,38 @@ class AdController extends Controller
             abort(404);
         }
 
+    }
+
+
+    // Change the visibility of an ad from the ad option
+    public function update_ad_visibility(Request $request){
+        if($request->ad_id){
+            $ad = Ad::find($request->ad_id);
+            if($ad && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
+                try {
+                    $visibility = 1;
+                    $message = 'Annonsen din er nå synlig.';
+                    if($ad->visibility == 1){
+                        $visibility = 0;
+                        $message = 'Annonsen din er skjult nå.';
+                    }
+                    $ad->visibility = $visibility;
+                    $ad->update();
+                    DB::commit();
+                    Session::flash('success', $message);
+                    return back();
+
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    Session::flash('danger', 'Noe gikk galt.');
+                    return back();
+                }
+            }else{
+                return back();
+            }
+        }else{
+            return back();
+        }
     }
 
 }
