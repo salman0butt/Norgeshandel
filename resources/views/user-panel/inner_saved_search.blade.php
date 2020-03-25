@@ -27,7 +27,7 @@
                             <div>
                                 <div class="input input--text">
                                     <label>Navn
-                                        <input placeholder="Navn på søk" name="name" size="30" value="" required=""
+                                        <input placeholder="Navn på søk" name="name" size="30" value="{{ (isset($_GET['search'])) ? $_GET['search'] : '' }}" required=""
                                             class="form-control search-control">
                                     </label>
                                     <input type="hidden" name="filter" id="filter">

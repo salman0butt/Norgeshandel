@@ -60,6 +60,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('job-search/{search}', 'SearchController@job_global')->name('job-global');
 //    home routes
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('page/{id}', 'HomeController@paginate');
 
     Route::get('/notification', function () {
 

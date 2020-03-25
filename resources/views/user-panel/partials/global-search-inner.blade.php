@@ -45,40 +45,40 @@
         <div class="col-md-7">
             <ul class="p-1 list-unstyled">
                 @if (count($property_for_rent)> 0)
-                    <li><a href="{{url('property/property-for-rent/search?search='.$search)}}">In Property For Rent
+                    <li><a href="{{url('property/property-for-rent/search?search='.$search)}}">På Property For Rent
                             ({{count($property_for_rent)}})</a></li>
                 @endif
                 @if(count($property_for_sale) > 0)
-                    <li><a href="{{url('property/property-for-sale/search?search='.$search)}}">In Property For Sale
+                    <li><a href="{{url('property/property-for-sale/search?search='.$search)}}">På Property For Sale
                             ({{count($property_for_sale)}})</a></li>
                 @endif
                 @if(count($property_for_holiday_home_for_Sale) > 0)
-                    <li><a href="{{url('property/holiday-homes-for-sale/search?search='.$search)}}">In Property for
+                    <li><a href="{{url('property/holiday-homes-for-sale/search?search='.$search)}}">På Property for
                             holiday home for Sale
                             ({{count($property_for_holiday_home_for_Sale)}})</a></li>
                 @endif
                 @if(count($property_realstate_business) > 0)
-                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">In Property Realstate Business
+                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Property Realstate Business
                             ({{count($property_realstate_business)}})</a></li>
                 @endif
                 @if(count($property_flat_wishes) > 0)
-                    <li><a href="{{url('property/flat-wishes-rented/search?search='.$search)}}">In Property Flat Wishes
+                    <li><a href="{{url('property/flat-wishes-rented/search?search='.$search)}}">På Property Flat Wishes
                             ({{count($property_flat_wishes)}})</a></li>
                 @endif
                 @if(count($commercial_property_for_sale) > 0)
-                    <li><a href="{{url('property/commercial-property-for-sale/search?search='.$search)}}">In Commercial Property For Sale
+                    <li><a href="{{url('property/commercial-property-for-sale/search?search='.$search)}}">På Commercial Property For Sale
                             ({{count($commercial_property_for_sale)}})</a></li>
                 @endif
                 @if(count($commercial_property_for_rent) > 0)
-                    <li><a href="{{url('property/commercial-property-for-rent/search?search='.$search)}}">In Commercial Property For Rent
+                    <li><a href="{{url('property/commercial-property-for-rent/search?search='.$search)}}">På Commercial Property For Rent
                             ({{count($commercial_property_for_rent)}})</a></li>
                 @endif
                 @if(count($commercial_plot) > 0)
-                    <li><a href="{{url('property/commercial-plots/search?search='.$search)}}">In Commercial Plot
+                    <li><a href="{{url('property/commercial-plots/search?search='.$search)}}">På Commercial Plot
                             ({{count($commercial_plot)}})</a></li>
                 @endif
                 @if(count($Business_for_sale) > 0)
-                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">In Business For Sale
+                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Business For Sale
                             ({{count($Business_for_sale)}})</a></li>
                 @endif
             </ul>
