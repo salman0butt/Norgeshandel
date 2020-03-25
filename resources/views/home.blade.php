@@ -231,7 +231,7 @@ loadMoreData(1);
 	        })
 	        .done(function(data)
 	        {
-	            if(data.html == " "){
+	            if(data == ""){
 	                $('.ajax-load').html("No more records found");
 	                return;
 	            }

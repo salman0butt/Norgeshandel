@@ -24,6 +24,13 @@ foreach ($my_ads as $ad){
 }
 ?>
 @section('page_content')
+<style>
+    .pagination {
+        margin-top:10px;
+        text-align:right;
+        float:right;
+    }
+</style>
     <main>
         <div class="dme-container">
             <div class="row">
@@ -35,6 +42,7 @@ foreach ($my_ads as $ad){
         <div class="dme-container mb-5">
             @include('common.partials.flash-messages')
             <div class="row">
+             
                 <aside class="col-md-3">
                     <div class="form-group">
                         <h3 class="u-t5">Status</h3>
@@ -146,11 +154,15 @@ foreach ($my_ads as $ad){
                             {{----}}
                         {{--@endif--}}
                         {{--end repeatation--}}
+                       <div class="pagination">
+                        {{ $my_ads->links() }}
+                       </div>
                     </div>
                 </div>
+                 
             </div>
         </div>
-
+       
     </main>
     <input type="hidden" value="{{url('jobs/search/filter_my_ads/')}}" id="url">
     <input type="hidden" value="{{asset('public/images/loader.png')}}" id="loader">
