@@ -1,13 +1,23 @@
 <?php
 $logo='';
 $gallery='';
-if(isset($ad)){$ad = \App\Models\Ad::find($ad->id);}
-if(isset($job)){$ad = \App\Admin\Jobs\Job::find($job->id);}
-if(!isset($job)){
-    $job = $ad->job;
+if(isset($ad)){
+    $ad = \App\Models\Ad::find($ad->id);
+    $job =  $ad->job;
 }
-$job = \App\Admin\Jobs\Job::find($job->id);
-$media = $job->ad->media;
+if(isset($job)){
+    $job = \App\Admin\Jobs\Job::find($job->id);
+    $ad = $job->ad;
+}
+
+//if(!isset($job)){
+//    $job = $ad->job;
+//}
+//$job = \App\Admin\Jobs\Job::find($job->id);
+$media = array();
+if($job->ad && $job->ad->media){
+    $media = $job->ad->media;
+}
 if(count($media)>0){
     foreach ($media as $item){
         if ($item->type=='logo'){
@@ -24,7 +34,10 @@ if(count($media)>0){
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
         <div class="image-section col-sm-4  p-2">
             <div class="trailing-border">
-                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="height: 130px; width: 100%" alt="" class="img-fluid radius-8">
+                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="height:@if(Request()->get('view') && Request()->get('view') == 'list') 174.93px !important; @else 130px; @endif width: 100%" alt="" class="img-fluid radius-8">
+                @if($job->ad && $job->ad->status == 'sold' && $job->ad->sold_at)
+                    <span class="badge badge-success" style="position: absolute;top: 8px;left: 8px;">selges</span>
+                @endif
                 <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;"></div>
             </div>
         </div>

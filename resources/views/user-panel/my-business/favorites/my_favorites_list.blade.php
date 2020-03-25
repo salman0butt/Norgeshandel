@@ -33,11 +33,13 @@
                 <?php
                     use Illuminate\Support\Facades\Auth;
                     $fav = $list->favorites->where('user_id',Auth::id());
+                    $count = 0;
                 ?>
                 @if(isset($list->favorites) && is_countable($list->favorites) && count($list->favorites) > 0)
                     @foreach($fav as $item)
-                        <?php $ad = $item->ad;?>
-                        @if(isset($ad->ad_type))
+                        <?php $ad = $item->ad; $date = Date('y-m-d',strtotime('-7 days'));?>
+                        @if(isset($ad->ad_type) && $ad->visibility  && (strtotime($ad->sold_at) > strtotime($date) || !$ad->sold_at))
+                            <?php $count++; ?>
                             @if($ad->ad_type === "job" )
                                 @include('user-panel.partials.templates.job-list', compact('ad'))
                             @else
@@ -45,7 +47,8 @@
                             @endif
                         @endif
                     @endforeach
-                @else
+                @endif
+                @if(!$count)
                     <div class="alert alert-warning p-3">Det er ingen elementer på listen!</div>
                 @endif
             </div>

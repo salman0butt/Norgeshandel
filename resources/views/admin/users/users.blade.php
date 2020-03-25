@@ -78,18 +78,19 @@
                                 {{--{{getUrl($user->media)}}--}}
                                 <td><img style="height: 70px; width:60px;" src="@if($user->media!=null){{asset(\App\Helpers\common::getMediaPath($user->media))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
                                 <td><div class="display_name mb-2">{{$user->first_name}} {{$user->last_name}}</div>
-                                    <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-default float-left">Edit</a>
-                                    <form action="{{route('admin.users.destroy', $user->id)}}" method="POST"  onsubmit="jarascript:return confirm('Are you sure to delete the user: {{$user->name}}')">
+                                    <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-default float-left mr-2">Edit</a>
+                                    <form action="{{route('admin.users.destroy', $user->id)}}" method="POST"  onsubmit="jarascript:return confirm('Are you sure to delete the user: {{$user->username}}')">
                                         {{ csrf_field() }} {{method_field('DELETE')}}
                                         <input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger">
                                     </form>
+
 {{--                                    {{dd($user->role)}}--}}
                                 </td>
                                 <td>{{$user->username}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>{{$user->mobile_number}}</td>
                                 <td>{{@$user->roles->first()->display_name}}</td>
-                                <td>0</td>
+                                <td>{{$user->ads->count()}}</td>
                             </tr>
                             @endforeach
                             @else

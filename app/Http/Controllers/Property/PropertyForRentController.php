@@ -65,7 +65,12 @@ class PropertyForRentController extends Controller
             })
             ->where('ads.visibility', '=', 1)
             ->whereNull('ads.deleted_at')
-            ->whereNull($table . '.deleted_at');
+            ->whereNull($table . '.deleted_at')
+            ->where(function ($query){
+                $date = Date('y-m-d',strtotime('-7 days'));
+                $query->where('ads.status', 'published')
+                    ->orwhereDate('ads.sold_at','>',$date);
+            });
 
         if (isset($request->for_sale) && !empty($request->for_sale)) {
             $query->where('ads.status', '!=', 'sold');

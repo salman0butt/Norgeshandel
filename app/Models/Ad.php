@@ -84,9 +84,12 @@ class Ad extends Model
         return $this->hasOne('App\BusinessForSale');
     }
 
-    public function getTitle(){
+    public function getTitle($trashed_record = ''){
         if($this->ad_type == 'property_for_rent' ||
             $this->ad_type == 'property_commercial_for_rent'){
+            if($trashed_record){
+                return $this->property()->withTrashed()->first()->heading;
+            }
             return $this->property->heading;
         }
         else if($this->ad_type == 'property_for_sale' ||
@@ -95,12 +98,21 @@ class Ad extends Model
             $this->ad_type == 'property_commercial_plots' ||
             $this->ad_type == 'property_business_for_sale'
         ){
+            if($trashed_record){
+                return $this->property()->withTrashed()->first()->headline;
+            }
             return $this->property->headline;
         }
         else if($this->ad_type == 'property_holiday_home_for_sale'){
+            if($trashed_record){
+                return $this->property()->withTrashed()->first()->ad_headline;
+            }
             return $this->property->ad_headline;
         }
         else if($this->ad_type == 'job'){
+            if($trashed_record){
+                return $this->job()->withTrashed()->first()->name;
+            }
             return $this->job->name;
         }
         return null;

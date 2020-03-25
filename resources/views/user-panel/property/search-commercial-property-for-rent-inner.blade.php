@@ -91,9 +91,11 @@
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">
-                                    <img
-                                        src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
+                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
+                                    @if($property_commercial_property_for_rent->ad && $property_commercial_property_for_rent->ad->status == 'sold' && $property_commercial_property_for_rent->ad->sold_at)
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
@@ -113,13 +115,13 @@
                                     </div>
                                     <div class="clearfix"></div>
                                     @if($property_commercial_property_for_rent->use_area)
-                                    <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->use_area}}
-                                        m²
-                                    </div>
+                                        <div class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->use_area}}
+                                            m²
+                                        </div>
                                     @endif
                                     @if($property_commercial_property_for_rent->rent_per_meter_per_year)
                                         <div
-                                            class="price font-weight-bold float-right color-grey">{{$property_commercial_property_for_rent->rent_per_meter_per_year}}
+                                            class="price font-weight-bold float-right color-grey">{{number_format($property_commercial_property_for_rent->rent_per_meter_per_year,0,""," ")}}
                                             kr
                                         </div>
                                     @endif

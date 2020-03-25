@@ -13,6 +13,7 @@ use http\Message\Body;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\Null_;
 use PhpParser\Node\Stmt\DeclareDeclare;
 use Pusher\Pusher;
@@ -232,7 +233,7 @@ class AdController extends Controller
     public function ad_sold($id){
         $ad = Ad::find($id);
         if($ad){
-            if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
+            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
                 $ad->sold_at = date('Y-m-d G:i');
                 $ad->status = 'sold';
                 $ad->update();
@@ -323,6 +324,38 @@ class AdController extends Controller
             abort(404);
         }
 
+    }
+
+
+    // Change the visibility of an ad from the ad option
+    public function update_ad_visibility(Request $request){
+        if($request->ad_id){
+            $ad = Ad::find($request->ad_id);
+            if($ad && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
+                try {
+                    $visibility = 1;
+                    $message = 'Annonsen din er nå synlig.';
+                    if($ad->visibility == 1){
+                        $visibility = 0;
+                        $message = 'Annonsen din er skjult nå.';
+                    }
+                    $ad->visibility = $visibility;
+                    $ad->update();
+                    DB::commit();
+                    Session::flash('success', $message);
+                    return back();
+
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    Session::flash('danger', 'Noe gikk galt.');
+                    return back();
+                }
+            }else{
+                return back();
+            }
+        }else{
+            return back();
+        }
     }
 
 }

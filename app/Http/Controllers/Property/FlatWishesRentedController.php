@@ -53,10 +53,15 @@ class FlatWishesRentedController extends Controller
         }
         $query = DB::table('ads')
             ->join('flat_wishes_renteds', 'flat_wishes_renteds.ad_id', '=','ads.id')
-            ->where('ads.status', '=','published')
+//            ->where('ads.status', '=','published')
             ->where('ads.visibility', '=', 1)
             ->whereNull('ads.deleted_at')
-            ->whereNull('flat_wishes_renteds.deleted_at');
+            ->whereNull('flat_wishes_renteds.deleted_at')
+            ->where(function ($query){
+                $date = Date('y-m-d',strtotime('-7 days'));
+                $query->where('ads.status', 'published')
+                    ->orwhereDate('ads.sold_at','>',$date);
+            });
 //        DB::enableQueryLog();
 
         if (isset($request->search) && !empty($request->search)) {

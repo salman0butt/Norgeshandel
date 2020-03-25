@@ -60,6 +60,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('job-search/{search}', 'SearchController@job_global')->name('job-global');
 //    home routes
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('page/{id}', 'HomeController@paginate');
 
     Route::get('/notification', function () {
 
@@ -439,11 +440,15 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('/phones', function () {
                 return view('user-panel.my-business.profile.account-phone');
             });
+
+
         });
 
         Route::post('store-user-emails', 'Admin\Users\AdminUserController@store_user_alternative_email')->name('store-user-emails');
         Route::post('store-user-contact-no', 'Admin\Users\AdminUserController@store_user_alternative_contact_no')->name('store-user-contact-no');
 
+        //Change the visibility of an ad
+        Route::get('update-ad-visibility','AdController@update_ad_visibility');
 
 
 
@@ -451,19 +456,26 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager']], function () {
 
-//    dashboard
+        //dashboard
         Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
-//    job custom routes
+        //job custom routes
         Route::get('/jobs/select_category', function () {
             return view('admin.jobs.jobs_select_category');
         });
+        //Restore job
+        Route::get('/jobs/restore/{id}', 'Admin\Jobs\JobController@restore')->name('job-restore');
         Route::get('/jobs/create/{type}', 'Admin\Jobs\JobController@create')->name('jobs.create');
         Route::get('/jobs/status_change/{ad}/status/{status}', 'Admin\Jobs\JobController@status_change')->name('jobs.status_change');
-//    edit user role
+        //edit user role
         Route::post('/roles/edit_role', 'Admin\Users\RoleController@edit_role')->name('roles.edit_role');
-//    route to change user role
+        //route to change user role
         Route::POST('/users/change_role', 'Admin\Users\AdminUserController@change_role')->name('users.change_role');
-//    all general resources
+        //Get all properties
+        Route::get('/property/realestate', 'PropertyController@index');
+        //Restore property
+        Route::get('/property/realestate/restore/{id}', 'PropertyController@restore')->name('property-restore');
+        Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
+        //all general resources
         Route::resources([
             'dashboard' => 'Admin\DashboardController',
             'users' => 'Admin\Users\AdminUserController',

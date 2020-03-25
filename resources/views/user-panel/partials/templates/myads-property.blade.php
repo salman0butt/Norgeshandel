@@ -22,6 +22,12 @@ if($property !== null)
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
     <a href="{{url('/', $ad->id)}}" class="image-section col-md-4 p-2">
         <img src="{{$path}}" class="img-fluid radius-8 trailing-border" alt="" style="height: 160px;width: 100%;">
+        @if(!$ad->visibility)
+            <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
+        @endif
+        @if($ad->status == 'sold' && $ad->sold_at)
+            <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+        @endif
          {{--<div class="product-total-price m-2">--}}
          <?php
          //                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");

@@ -24,7 +24,7 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <link href="{{ asset('public/admin/mediexpert.css') }}" rel="stylesheet">
-
+    @yield('style')
 
     <script src="{{ asset('public/admin/js/select2.min.js') }}"></script>
     <script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>
@@ -207,8 +207,8 @@
 {{--                    @permission('manage_realestates')--}}
                     <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-home-modern"></i><span class="hide-menu">Realestate </span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
-                            <li class="sidebar-item"><a href="realestate-all.php" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Realestates')}} </span></a></li>
-                            <li class="sidebar-item"><a href="realestate-new.php" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('admin/property/realestate')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Realestates')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{url('new')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
                         </ul>
                     </li>
 {{--                    @endpermission--}}
@@ -312,7 +312,7 @@
 
 
 <!-- All Jquery -->
-
+@yield('script')
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{ asset('public/admin/js/popper.min.js') }}"></script>
 <script src="{{ asset('public/admin/js/bootstrap.min.js') }}"></script>

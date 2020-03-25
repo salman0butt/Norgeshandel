@@ -24,11 +24,14 @@ if($property !== null)
 
 ?>
 <div class="col-md-4 col-sm-6 product-list-item pt-sm-1" style="">
-    <div class="realestate-blockk " style="">
+    <div class="realestate-blockk" style="">
         <a href="{{url('/', $ad->id)}}" class="grid-box-ancor product-list-item">
             <div class="pt-2">
             <div class="home-grid-box trailing-border" style="text-align:center;">
                 <img src="{{$path}}" style="max-height: 302px;min-height:302px;width:100%;" class="img-fluid product-img" alt="">
+                @if($property && $property->ad && $property->ad->status == 'sold' && $property->ad->sold_at)
+                    <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                @endif
 
 
                     <?php
