@@ -67,7 +67,7 @@ class JobController extends Controller
         $ads = Ad::where('ad_type', 'job')->where(function ($query) use ($date){
             $query->where('ads.status', 'published')
                 ->orwhereDate('ads.sold_at','>',$date);
-        })->where('visibility',1)->get();
+        })->where('visibility',1)->paginate(getenv('PAGINATION'));;
 
         $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')
             ->where(function ($query) use ($date){
