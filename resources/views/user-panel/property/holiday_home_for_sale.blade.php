@@ -158,7 +158,7 @@
                 return false;
             }
             
-            $("input:not(input[type=date])").on('change', function (e) {
+            $("input:not(input[type=date]),textarea").on('change', function (e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
                record_store_ajax_request('change', (this));

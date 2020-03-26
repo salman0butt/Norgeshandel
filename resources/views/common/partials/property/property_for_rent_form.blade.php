@@ -233,7 +233,7 @@
             <label class="u-t5">Leies ut fra</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" value="{{ $property_for_rent->rented_from }}" name="rented_from" class="dme-form-control">
+                    <input type="date" value="{{ $property_for_rent->rented_from }}" name="rented_from" class="dme-form-control" max="2020-12-31">>
                     <span class="error-span rented_from"></span>
                 </div>
                 <div class="col-sm-8">
@@ -244,7 +244,7 @@
             <label class="u-t5">Leies ut til</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" value="{{ $property_for_rent->rented_to }}" name="rented_to" class="dme-form-control">
+                    <input type="date" value="{{ $property_for_rent->rented_to }}" name="rented_to" class="dme-form-control" max="2020-12-31">
                     <span class="error-span rented_to"></span>
                 </div>
                 <div class="col-sm-8">
@@ -274,7 +274,7 @@
             <label class="u-t5">Visningsdato (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" name="delivery_date[]" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control">
+                    <input type="date" name="delivery_date[]" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control" max="2020-12-31">
                     <span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>
                 </div>
             </div>

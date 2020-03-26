@@ -63,7 +63,7 @@ Edit Banner Ad
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="url" class="text-right control-label">Link: (Optional)</label>
-                        <input type="url" class="form-control" id="url" value="{{ $banner->link }}" autofocus name="url" placeholder="Url">
+                        <input type="url" class="form-control url_http" id="url" value="{{ $banner->link }}" autofocus name="url" placeholder="Url">
                     </div>
                 </div>
                 <div class="col-md-6">

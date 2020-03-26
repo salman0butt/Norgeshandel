@@ -78,7 +78,7 @@ Edit Banner Group
       <div class="row" style="margin-top: 20px;">
         <div class="col-md-6">
                     <label class="col-md-12 control-label" for="time-type">Page Link<span class="red">*</span></label>
-                  <input type="url" name="page_url" value="{{ $banner_group->page_url }}" id="page_url" class="form-control" placeholder="Link">
+                  <input type="url" name="page_url" value="{{ $banner_group->page_url }}" id="page_url" class="form-control url_http" placeholder="Link">
                     </div>
                    
                
