@@ -22,8 +22,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Mine annonser</li>
-                <li class="breadcrumb-item active" aria-current="page">Flere valg</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business/my-ads')}}">Mine annonser</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">Flere valg</a></li>
             </ol>
         </nav>
     </div>
@@ -72,19 +72,21 @@
                     <a class="u-pv8 mt-2" href="@if($ad->ad_type == 'job') {{route('jobs.show', $ad->job)}} @else {{url('/', $ad->id)}} @endif">Se annonsen</a>
                     <div class="u-pt8">
                         <div class="u-pv8 mt-2">
-                            <a href="
-                            @if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$ad->property->id.'/edit')}}
-                            @elseif($ad->ad_type == 'job' && $ad->status == 'saved') @php $job = $ad->job; @endphp {{route('jobs.edit', compact('job'))}}
-                            @else javascript:void(0);
-                            @endif">Endre annonsen
-                            </a>
+                            @if(!$ad->sold_at && $ad->status !='sold')
+                                <a href="
+                                @if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$ad->property->id.'/edit')}}
+                                @elseif($ad->ad_type == 'job' && $ad->status == 'saved') @php $job = $ad->job; @endphp {{route('jobs.edit', compact('job'))}}
+                                @else javascript:void(0);
+                                @endif">Endre annonsen
+                                </a>
+                            @endif
                         </div>
                         @if($ad->status == 'published')
                             <div class="u-pv8 mt-2">

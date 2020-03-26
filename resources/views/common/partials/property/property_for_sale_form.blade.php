@@ -111,7 +111,6 @@
                             <option value="{{$type->name}}" {{($property_for_sale->tenure == $type->name ? 'selected' : '')}}>{{$type->name}}</option>
                         @endforeach
                     </select>
-                    <span class="u-t5">Beskriv varen kort. Denne beskrivelsen brukes til å finne riktig kategori i feltene under.</span>
                     <br><span  class="error-span tenure"></span>
                 </div>
             </div>

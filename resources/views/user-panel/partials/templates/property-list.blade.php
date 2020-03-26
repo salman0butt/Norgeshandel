@@ -21,8 +21,14 @@ if($property !== null)
 
                 <img src="{{$path}}" class="img-fluid radius-8 trailing-border" style=" margin: 2px; height: 130px; width: 100%"
                      alt="">
-                @if($ad && $ad->status == 'sold' && $ad->sold_at)
-                    <span class="badge badge-success" style="position: absolute;top: 8px;left: 8px;">selges</span>
+                @if($ad && $ad->status == 'sold' && $ad->sold_at && $ad->ad_type != 'job')
+                    <span class="badge badge-success" style="position: absolute;top: 8px;left: 8px;">
+                        @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent')
+                            UTLEID
+                        @else
+                            SOLGT
+                        @endif
+                    </span>
                 @endif
                 {{--<div class="product-total-price">--}}
                 <?php

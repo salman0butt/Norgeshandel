@@ -59,7 +59,7 @@
                         <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
                         <div class="row single-realestate-detail p-3">
                             <div class="col-md-12">
-                                <div class="u-t3 mt-3">JESSHEIM SENTRUM</div>
+                                {{--<div class="u-t3 mt-3">JESSHEIM SENTRUM</div>--}}
                                 <h1 class="u-t2">{{$property_data->headline}}</h1>
                             </div>
                             <div class="col-md-12 text-muted">
@@ -72,31 +72,12 @@
                                 </span>
                             </div>
                             <div class="col-md-12"><span class="font-weight-bold">Bransje: </span><span>{{$property_data->industry}} {{$property_data->alternative_industry}}</span></div>
-                            <!-- <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Felleskost/mnd.: </span><span>4 260 kr</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div>
-                            <div class="clearfix"></div>
-                            <div class="mt-2 col-md-12"></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Boligtype </span>&nbsp;<span>Leilighet</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Bruksarea </span>&nbsp;<span>l115 m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Eieform </span>&nbsp;<span>Eier (Selveier)</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Etasje </span>&nbsp;<span>3</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Soverom </span>&nbsp;<span>3</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Byggeår </span>&nbsp;<span>2015</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Primærrom </span>&nbsp;<span>97 m²</span></div>
-                            <div class="col-md-6"><span class="font-weight-bold">Energimerking </span>&nbsp;<span> C - mørkegrønn</span></div> -->
-
-
-
-                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->description}}</p></div>
-                            <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
-                                eiendommen
-                            </div>
-                            <div class="col-md-12"><button class="btn btn-info btn-lg mt-2">Se komplett salgsoppgave</button></div>
-                            <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
-                            <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div> -->
-                            <!-- <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>-->
+                            @if($property_data->description)
+                                <div class="col-md-12">
+                                    <span class="font-weight-bold">Beskrivelse</span>
+                                    <p style="white-space: pre-line">{{$property_data->description}}</p>
+                                </div>
+                            @endif
 
                             <div style="width: 500px; height: 300px;">
                                 {!! Mapper::render() !!}
@@ -149,7 +130,6 @@
                         <h2 class="u-t3">Visning</h2>
                         <div class="mb-2">Ta kontakt for å avtale visning</div>
                         <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>
-                        <button class="dme-btn-outlined-blue col-12">Gi bud</button>
                         {{-- <a href="#" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                     </div>
                 </div>

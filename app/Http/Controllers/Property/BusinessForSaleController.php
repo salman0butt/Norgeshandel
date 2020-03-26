@@ -205,7 +205,7 @@ class BusinessForSaleController extends Controller
     {
         $business_for_sale = BusinessForSale::findOrFail($id);
         if ($business_for_sale) {
-            if (!Auth::user()->hasRole('admin') && $business_for_sale->user_id != Auth::user()->id) {
+            if (!Auth::user()->hasRole('admin') && ($business_for_sale->user_id != Auth::user()->id || $business_for_sale->ad->status == 'sold')) {
                 return redirect('forbidden');
             }
             return view('user-panel.property.business_for_sale', compact('business_for_sale'));

@@ -122,7 +122,7 @@ $job_functions = $job_function->terms;
                                                             </td>
                                                             <td>{{$job->industry}}</td>
                                                             <td>{{$job->positions}}</td>
-                                                            <td>{{!empty($job->deadline)?$job->deadline:'Soonest'}}</td>
+                                                            <td>{{!empty($job->deadline) ? $job->deadline:'Soonest'}}</td>
                                                             <td>{{$job->emp_name}}</td>
                                                             <td>{{$ad->status}} @if($ad->status=='pending') <a href="{{route('jobs.status_change', [$ad, $approve])}}">approve</a>@endif</td>
                                                             <td>{{count($ad->views)}}</td>

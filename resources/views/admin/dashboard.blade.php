@@ -1,12 +1,23 @@
 @extends('layouts/admin')
 
-
-
 @section('breadcrumb')
-        <a href="#" class="text-muted">Home</a> /
-        <a href="#" class="">Dashboard</a>
+    <a href="#" class="text-muted">Home</a> /
+    <a href="#" class="">Dashboard</a>
 @endsection
 
+@section('style')
+    <style>
+        .filter_dropdown_select {
+            width: 100%;
+            background: #343a40 !important;
+            color: white !important;
+            border: none;
+            text-align: center;
+            padding-left: 92px;
+            font-size: 80%;
+        }
+    </style>
+@endsection
 @section('page_content')
     <div class="container-fluid">
         <!-- ============================================================== -->
@@ -77,11 +88,16 @@
                             <!-- column -->
                             <div class="col-lg-9">
                                 <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-line-chart" style="padding: 0px; position: relative;">
-                                        <canvas class="flot-base" width="759" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 759.25px; height: 300px;">
+                                    <div class="flot-chart-content" id="flot-line-chart"
+                                         style="padding: 0px; position: relative;">
+                                        <canvas class="flot-base" width="759" height="300"
+                                                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 759.25px; height: 300px;">
 
-                                        </canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-                                            <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;">
+                                        </canvas>
+                                        <div class="flot-text"
+                                             style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+                                            <div class="flot-x-axis flot-x1-axis xAxis x1Axis"
+                                                 style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;">
                                                 <div class="flot-tick-label tickLabel"
                                                      style="position: absolute; max-width: 58px; top: 283px; left: 23px; text-align: center;">
                                                     0
@@ -193,24 +209,44 @@
                                         </div>
                                     </div>
                                     <div class="col-12 m-t-15">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <!--                                                <i class="fa fa-plus m-b-5 font-16"></i>-->
-                                            <h5 class="m-b-0 m-t-5">120</h5>
-                                            <small class="font-light">New Users</small>
+                                        <div class="bg-dark py-10 text-white text-center pt-2">
+                                            <h5 class="m-b-0 m-t-5 count_user">{{$count_users}}</h5>
+                                            <select class="form-control custom-select pt-0 user-filter filter_dropdown_select"
+                                                    name="user_filter" aria-hidden="true">
+                                                <option value="{{Date('y-m-d')}}">Today Users</option>
+                                                <option value="{{Date('y-m-d',strtotime('-6 days'))}}">This Week Users
+                                                </option>
+                                                <option value="{{Date('y-m-d',strtotime('-1 month +1 days'))}}">This
+                                                    Month Users
+                                                </option>
+                                            </select>
+                                        </div>
+                                        {{--<div class="bg-dark p-10 text-white text-center">--}}
+                                        {{--<!--                                                <i class="fa fa-plus m-b-5 font-16"></i>-->--}}
+                                        {{--<h5 class="m-b-0 m-t-5">120</h5>--}}
+                                        {{--<small class="font-light">New Users</small>--}}
+                                        {{--</div>--}}
+                                    </div>
+                                    <div class="col-12 m-t-15">
+                                        <div class="bg-dark py-10 text-white text-center pt-2">
+                                            <h5 class="m-b-0 m-t-5 count_jobs">{{$count_jobs}}</h5>
+                                            <select class="form-control custom-select pt-0 job-filter filter_dropdown_select"
+                                                    name="user_filter" aria-hidden="true">
+                                                <option value="{{Date('y-m-d')}}">Today Jobs</option>
+                                                <option value="{{Date('y-m-d',strtotime('-6 days'))}}">This Week Jobs</option>
+                                                <option value="{{Date('y-m-d',strtotime('-1 month +1 days'))}}">This Month Jobs</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-12 m-t-15">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <!--                                                <i class="fa fa-cart-plus m-b-5 font-16"></i>-->
-                                            <h5 class="m-b-0 m-t-5">{{\App\Models\Ad::where('ad_type','job')->withTrashed()->count()}}</h5>
-                                            <small class="font-light">Total Jobs</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 m-t-15">
-                                        <div class="bg-dark p-10 text-white text-center">
-                                            <!--                                                <i class="fa fa-tag m-b-5 font-16"></i>-->
-                                            <h5 class="m-b-0 m-t-5">{{\App\Models\Ad::where('ad_type','<>','job')->withTrashed()->count()}}</h5>
-                                            <small class="font-light">Total Realestate</small>
+                                        <div class="bg-dark py-10 text-white text-center pt-2">
+                                            <h5 class="m-b-0 m-t-5 count_realestates">{{$count_realestates}}</h5>
+                                            <select class="form-control custom-select pt-0 realestate-filter filter_dropdown_select"
+                                                    name="user_filter" aria-hidden="true">
+                                                <option value="{{Date('y-m-d')}}">Today Realestates</option>
+                                                <option value="{{Date('y-m-d',strtotime('-6 days'))}}">This Week Realestate</option>
+                                                <option value="{{Date('y-m-d',strtotime('-1 month +1 days'))}}">This Month Realestate</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -234,20 +270,22 @@
                     <div class="card-body">
                         <h4 class="card-title">Latest Ads</h4>
                     </div>
-                    <div class="comment-widgets scrollable ps-container ps-theme-default" data-ps-id="b9ffb84b-6a73-af60-1275-ae168d98020e">
+                    <div class="comment-widgets scrollable ps-container ps-theme-default"
+                         data-ps-id="b9ffb84b-6a73-af60-1275-ae168d98020e">
                         <!-- Comment Row -->
                         @if($ads->count() > 0)
                             @foreach($ads as $key=>$ad)
                                 <div class="d-flex flex-row comment-row m-t-0">
                                     <?php
-                                        $media = '';
-                                        if($ad->company_gallery->first()){
-                                            $media = \App\Helpers\common::getMediaPath($ad->company_gallery->first());
-                                        }else{
-                                            $media = asset('public/images/placeholder.png');
-                                        }
+                                    $media = '';
+                                    if ($ad->company_gallery->first()) {
+                                        $media = \App\Helpers\common::getMediaPath($ad->company_gallery->first());
+                                    } else {
+                                        $media = asset('public/images/placeholder.png');
+                                    }
                                     ?>
-                                    <div class="p-2"><img src="{{$media}}" alt="user" width="80" height="70" class=""></div>
+                                    <div class="p-2"><img src="{{$media}}" alt="user" width="80" height="70" class="">
+                                    </div>
                                     <div class="comment-text w-100">
                                         <h6 class="font-medium">{{$ad->user->username}}</h6>
                                         <span class="m-b-15 d-block">
@@ -264,8 +302,11 @@
                                             <span class="text-muted float-right">{{$ad->updated_at->format('M d, Y')}}</span>
                                             <button type="button" class="btn btn-success btn-sm">Publish</button>
                                             @if($ad->ad_type == 'job')
-                                                <a href="{{route('jobs.edit',$ad->job->id)}}" type="button" class="btn btn-cyan btn-sm">Edit</a>
-                                                <form class="d-inline" action="{{route('admin.jobs.destroy', $ad->job)}}" method="POST"  onsubmit="jarascript:return confirm('Er du sikker på å slette denne jobben?')">
+                                                <a href="{{route('jobs.edit',$ad->job->id)}}" type="button"
+                                                   class="btn btn-cyan btn-sm">Edit</a>
+                                                <form class="d-inline"
+                                                      action="{{route('admin.jobs.destroy', $ad->job)}}" method="POST"
+                                                      onsubmit="jarascript:return confirm('Er du sikker på å slette denne jobben?')">
                                                     {{ csrf_field() }} {{method_field('DELETE')}}
                                                     <a class="btn btn-danger btn-sm" href="#">Delete</a>
                                                 </form>
@@ -280,7 +321,9 @@
                                                 @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$ad->property->id.'/edit')}}
                                                 @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$ad->property->id.'/edit')}}
                                                 @endif" class="btn btn-cyan btn-sm">Edit</a>
-                                                <form class="d-inline" action="{{route('admin.delete-property', $ad)}}" method="POST" onsubmit="javascript:return confirm('Er du sikker på å slette denne egenskapen?')">
+                                                <form class="d-inline" action="{{route('admin.delete-property', $ad)}}"
+                                                      method="POST"
+                                                      onsubmit="javascript:return confirm('Er du sikker på å slette denne egenskapen?')">
                                                     {{csrf_field()}}
                                                     {{method_field('DELETE')}}
                                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -290,10 +333,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        @endif
+                        @endforeach
+                    @endif
 
-                        <!-- Comment Row
+                    <!-- Comment Row
                         <div class="d-flex flex-row comment-row">
                             <div class="p-2"><img src="assets/images/users/4.jpg" alt="user" width="50" class="rounded-circle"></div>
                             <div class="comment-text active w-100">
@@ -323,7 +366,13 @@
                             </div>
                         </div>
                         -->
-                        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+                        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                            <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                        </div>
+                        <div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px;">
+                            <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- column -->
@@ -332,33 +381,39 @@
                 <!-- toggle part -->
                 <div id="accordian-4">
                     <div class="card">
-                        <a class="card-header link" data-toggle="collapse" data-parent="#accordian-4" href="#Toggle-1" aria-expanded="true" aria-controls="Toggle-1">
+                        <a class="card-header link" data-toggle="collapse" data-parent="#accordian-4" href="#Toggle-1"
+                           aria-expanded="true" aria-controls="Toggle-1">
                             <i class="seticon fa fa-arrow-right" aria-hidden="true"></i>
                             <span>Personal Note 1</span>
                         </a>
                         <div id="Toggle-1" class="collapse show multi-collapse">
                             <div class="card-body widget-content">
-                                Lorem ipsum dolor sit amet, ut minim explicari honestatis pro, per ne saperet tractatos. Ut mei esse prima constituto. No has rebum possit perfecto. At sed eleifend moderatius
+                                Lorem ipsum dolor sit amet, ut minim explicari honestatis pro, per ne saperet tractatos.
+                                Ut mei esse prima constituto. No has rebum possit perfecto. At sed eleifend moderatius
                                 <a href="#" class="float-right"><span class="fa fa-pencil"></span></a>
                             </div>
                         </div>
-                        <a class="card-header link border-top" data-toggle="collapse" data-parent="#accordian-4" href="#Toggle-2" aria-expanded="true" aria-controls="Toggle-2">
+                        <a class="card-header link border-top" data-toggle="collapse" data-parent="#accordian-4"
+                           href="#Toggle-2" aria-expanded="true" aria-controls="Toggle-2">
                             <i class="seticon fa fa-arrow-right" aria-hidden="true"></i>
                             <span>Personal Note 2</span>
                         </a>
                         <div id="Toggle-2" class="collapse show" style="">
                             <div class="card-body widget-content">
-                                Lorem ipsum dolor sit amet, ut minim explicari honestatis pro, per ne saperet tractatos. Ut mei esse prima constituto. No has rebum possit perfecto. At sed eleifend moderatius
+                                Lorem ipsum dolor sit amet, ut minim explicari honestatis pro, per ne saperet tractatos.
+                                Ut mei esse prima constituto. No has rebum possit perfecto. At sed eleifend moderatius
                                 <a href="#" class="float-right"><span class="fa fa-pencil"></span></a>
                             </div>
                         </div>
-                        <a class="card-header collapsed link border-top" data-toggle="collapse" data-parent="#accordian-4" href="#Toggle-3" aria-expanded="true" aria-controls="Toggle-3">
+                        <a class="card-header collapsed link border-top" data-toggle="collapse"
+                           data-parent="#accordian-4" href="#Toggle-3" aria-expanded="true" aria-controls="Toggle-3">
                             <i class="seticon fa fa-arrow-right" aria-hidden="true"></i>
                             <span>Personal Note 3</span>
                         </a>
                         <div id="Toggle-3" class="collapse show">
                             <div class="card-body widget-content">
-                                Lorem ipsum dolor sit amet, ut minim explicari honestatis pro, per ne saperet tractatos. Ut mei esse prima constituto. No has rebum possit perfecto. At sed eleifend moderatius
+                                Lorem ipsum dolor sit amet, ut minim explicari honestatis pro, per ne saperet tractatos.
+                                Ut mei esse prima constituto. No has rebum possit perfecto. At sed eleifend moderatius
                                 <a href="#" class="float-right"><span class="fa fa-pencil"></span></a>
                             </div>
                         </div>
@@ -371,4 +426,66 @@
         <!-- Recent comment and chats -->
         <!-- ============================================================== -->
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+
+            //filter User
+            $(document).on('change', '.user-filter', function () {
+                var val = $(this).val();
+                if (val) {
+                    $.ajax({
+                        url: "{{url('admin/dashboard')}}",
+                        data: {'user_filter': val},
+                        type: "GET",
+                        success: function (response) {
+                            var obj = jQuery.parseJSON(response); //.count_user
+                            if (obj.count_users >= 0) {
+                                $('.count_user').html(obj.count_users);
+                            }
+                        }
+                    });
+                }
+            });
+
+            //filter Job
+            $(document).on('change', '.job-filter', function () {
+                var val = $(this).val();
+                if (val) {
+                    $.ajax({
+                        url: "{{url('admin/dashboard')}}",
+                        data: {'job_filter': val},
+                        type: "GET",
+                        success: function (response) {
+                            var obj = jQuery.parseJSON(response); //.count_user
+                            if (obj.count_jobs >= 0) {
+                                $('.count_jobs').html(obj.count_jobs);
+                            }
+                        }
+                    });
+                }
+            });
+
+            //filter RealState
+            $(document).on('change', '.realestate-filter', function () {
+                var val = $(this).val();
+                if (val) {
+                    $.ajax({
+                        url: "{{url('admin/dashboard')}}",
+                        data: {'realestate_filter': val},
+                        type: "GET",
+                        success: function (response) {
+                            var obj = jQuery.parseJSON(response); //.count_user
+                            if (obj.count_realestates >= 0) {
+                                $('.count_realestates').html(obj.count_realestates);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+    </script>
 @endsection

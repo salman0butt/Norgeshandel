@@ -134,16 +134,6 @@
                 </div>
             </div>
         </div>
-        <!--                            text area-->
-        <div class="form-group">
-            <h3 class="u-t5">Adkomst (valgfritt)</h3>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
-                    <textarea name="descripion_access1" id="descripion_access1" cols="30" rows="10">{{ $commercial_property_for_sale->descripion_access1 }}</textarea>
-                    <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
-                </div>
-            </div>
-        </div>
         <!--                            small input-->
         <div class="form-group">
             <h3 class="u-t5">Kommunenummer (valgfritt)</h3>

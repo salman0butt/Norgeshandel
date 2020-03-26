@@ -177,7 +177,7 @@ class FlatWishesRentedController extends Controller
     {
         $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
         if ($flat_wishes_rented1) {
-            if (!Auth::user()->hasRole('admin') && $flat_wishes_rented1->user_id != Auth::user()->id) {
+            if (!Auth::user()->hasRole('admin') && ($flat_wishes_rented1->user_id != Auth::user()->id || $flat_wishes_rented1->ad->status == 'sold')) {
                 abort(404);
             }
             return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));

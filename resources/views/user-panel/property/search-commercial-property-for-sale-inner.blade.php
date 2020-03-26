@@ -86,7 +86,7 @@
                                     <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8" style="height: 174.93px;!important; width:100%">
                                     @if($property_commercial_property_for_sale->ad && $property_commercial_property_for_sale->ad->status == 'sold' && $property_commercial_property_for_sale->ad->sold_at)
-                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">SOLGT</span>
                                     @endif
                                 </div>
                             </div>

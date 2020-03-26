@@ -55,8 +55,6 @@
 
                         <h1 class="u-t2">{{$property_data->headline}}</h1>
                     </div>
-                    {{-- <div class="col-md-12 text-muted"> </div> --}}
-                    <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                     @if($property_data->max_rent_per_month)
                         <div class="col-md-12 font-weight-bold mt-3">Maks månedsleie</div>
                         <div class="col-md-12 u-t3">{{number_format($property_data->max_rent_per_month,0,""," ")}} Kr</div>
@@ -90,9 +88,12 @@
                     <!-- <a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a> -->
 
 
-                    <div class="col-md-12">
-                        <p style="white-space: pre-line">{{$property_data->description}}</p>
-                    </div>
+                    @if($property_data->description)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Beliggenhet</span>
+                            <p style="white-space: pre-line">{{$property_data->description}}</p>
+                        </div>
+                    @endif
                     <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
                                 eiendommen
                             </div> -->

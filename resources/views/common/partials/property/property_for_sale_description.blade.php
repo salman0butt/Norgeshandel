@@ -96,10 +96,6 @@ $name = $property_data->ad->company_gallery;
                                 @endif
                             </span>
                         </div>
-                        <div class="col-md-12 mt-2">
-                            <p style="white-space: pre-line">{{$property_data->description2}}</p>
-                        </div>
-
                         <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
                         <div class="col-md-12 u-t3">{{number_format($property_data->asking_price,0,""," ")}} Kr</div>
                         <div class="clearfix"></div>
@@ -188,12 +184,6 @@ $name = $property_data->ad->company_gallery;
                                 </div>
                             </div>
                             @endif
-                            @if($property_data->area_description)
-                                <span class="font-weight-bold">Arealbeskrivelse</span>
-                                <div class="">
-                                    <span style="white-space: pre-line">{{$property_data->area_description}}</span>
-                                </div>
-                            @endif
                             <br>
                             <span class="font-weight-bold ">Matrikkelinformasjon</span>
                             <div class="col-md-12"><span class="">Kommunenr: </span>&nbsp;<span>
@@ -203,6 +193,7 @@ $name = $property_data->ad->company_gallery;
                             <div class="col-md-12"><span class="">Bruksnr: </span>&nbsp;<span>
                                 {{$property_data->usage_number}}</span></div>
                         </div>
+
                         <div class="col-md-12">
                             <a href="#" id="more_details" class="mt-2">
                                 <svg width="12" height="12" viewBox="0 0 12 12">
@@ -218,6 +209,48 @@ $name = $property_data->ad->company_gallery;
                                 Færre detaljer
                             </a>
                         </div>
+                        @if($property_data->description2)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Beskrivelse</span>
+                                <p style="white-space: pre-line">{{$property_data->description2}}</p>
+                            </div>
+                        @endif
+                        @if($property_data->area_description)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Arealbeskrivelse</span>
+                                <p style="white-space: pre-line">{{$property_data->area_description}}</p>
+                            </div>
+                        @endif
+                        @if($property_data->access)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Adkomst</span>
+                                <p style="white-space: pre-line">{{$property_data->access}}</p>
+                            </div>
+                        @endif
+                        @if($property_data->location)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Beliggenhet</span>
+                                <p style="white-space: pre-line">{{$property_data->location}}</p>
+                            </div>
+                        @endif
+                        @if($property_data->character)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Beskaffenhet</span>
+                                <p style="white-space: pre-line">{{$property_data->character}}</p>
+                            </div>
+                        @endif
+                        @if($property_data->joint_debt_costs)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Mer info om felleskostander</span>
+                                <p style="white-space: pre-line">{{$property_data->joint_debt_costs}}</p>
+                            </div>
+                        @endif
+                        @if($property_data->essential_information)
+                            <div class="col-md-12">
+                                <span class="font-weight-bold">Andre opplysninger</span>
+                                <p style="white-space: pre-line">{{$property_data->essential_information}}</p>
+                            </div>
+                        @endif
 
                     <!-- <div class="col-md-12"><p>{{ $property_data-> essential_information}}</p></div> -->
                         <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
