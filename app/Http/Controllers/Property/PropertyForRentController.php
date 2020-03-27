@@ -207,7 +207,7 @@ class PropertyForRentController extends Controller
     {
         $property_for_rent1 = PropertyForRent::findOrFail($id);
         if ($property_for_rent1) {
-            if (!Auth::user()->hasRole('admin') && $property_for_rent1->user_id != Auth::user()->id) {
+            if (!Auth::user()->hasRole('admin') && ($property_for_rent1->user_id != Auth::user()->id || $property_for_rent1->ad->status == 'sold')) {
                 abort(404);
             }
             return view('user-panel.property.new_add', compact('property_for_rent1'));

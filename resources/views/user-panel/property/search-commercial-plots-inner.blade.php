@@ -89,7 +89,7 @@
                                     <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
                                     @if($commercial_plot->ad && $commercial_plot->ad->status == 'sold' && $commercial_plot->ad->sold_at)
-                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">SOLGT</span>
                                     @endif
                                 </div>
                             </div>

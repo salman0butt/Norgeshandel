@@ -66,7 +66,6 @@ Add new Banner Group
                             <option value="">Select</option>
                             <option value="jobs">Jobs</option>
                             <option value="real-estate">Real Estate</option>
-                        
                         </select>
                     </div>
                 </div>

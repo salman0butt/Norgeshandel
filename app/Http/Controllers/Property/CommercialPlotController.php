@@ -152,8 +152,8 @@ class CommercialPlotController extends Controller
     {
         $commercial_plots = CommercialPlot::findOrFail($id);
         if ($commercial_plots) {
-            if (!Auth::user()->hasRole('admin') && $commercial_plots->user_id != Auth::user()->id) {
-                return redirect('forbidden');
+            if (!Auth::user()->hasRole('admin') && ($commercial_plots->user_id != Auth::user()->id || $commercial_plots->ad->status == 'sold')) {
+                abort(404);
             }
             return view('user-panel.property.commercial_plots', compact('commercial_plots'));
         } else {

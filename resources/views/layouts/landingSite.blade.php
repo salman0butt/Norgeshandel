@@ -38,6 +38,9 @@
         line-height: unset !important;
     }
 </style>
+    @php
+        header("Location: http://www.google.com");
+    @endphp
 </head>
 <body class="@yield('body_class')">
 @if(Request::is('account/*'))

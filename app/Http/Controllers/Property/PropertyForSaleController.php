@@ -245,7 +245,7 @@ class PropertyForSaleController extends Controller
     {
         $property_for_sale1 = PropertyForSale::findOrFail($id);
         if ($property_for_sale1) {
-            if (!Auth::user()->hasRole('admin') && $property_for_sale1->user_id != Auth::user()->id) {
+            if (!Auth::user()->hasRole('admin') && ($property_for_sale1->user_id != Auth::user()->id || $property_for_sale1->ad->status == 'sold')) {
                 abort(404);
             }
             return view('user-panel.property.new_sale_add', compact('property_for_sale1'));

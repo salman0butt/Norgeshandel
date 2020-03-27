@@ -35,9 +35,6 @@ if(count($media)>0){
         <div class="image-section col-sm-4  p-2">
             <div class="trailing-border">
                 <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="height:@if(Request()->get('view') && Request()->get('view') == 'list') 174.93px !important; @else 130px; @endif width: 100%" alt="" class="img-fluid radius-8">
-                @if($job->ad && $job->ad->status == 'sold' && $job->ad->sold_at)
-                    <span class="badge badge-success" style="position: absolute;top: 8px;left: 8px;">selges</span>
-                @endif
                 <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;"></div>
             </div>
         </div>

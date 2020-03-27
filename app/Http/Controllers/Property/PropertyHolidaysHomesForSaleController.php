@@ -180,8 +180,8 @@ class PropertyHolidaysHomesForSaleController extends Controller
     {
         $holiday_home_for_sale1 = PropertyHolidaysHomesForSale::findOrFail($id);
         if ($holiday_home_for_sale1) {
-            if (!Auth::user()->hasRole('admin') && $holiday_home_for_sale1->user_id != Auth::user()->id) {
-                return redirect('forbidden');
+            if (!Auth::user()->hasRole('admin') && ($holiday_home_for_sale1->user_id != Auth::user()->id || $holiday_home_for_sale1->ad->status == 'sold')) {
+                abort(404);
             }
             return view('user-panel.property.holiday_home_for_sale', compact('holiday_home_for_sale1'));
         } else {

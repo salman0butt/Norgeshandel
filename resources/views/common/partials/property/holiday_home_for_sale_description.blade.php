@@ -226,20 +226,40 @@
                         </div>
                     @endif
 
-                    @if($property_data->essential_information)
+                    @if($property_data->area_description)
                         <div class="col-md-12">
-                            <span class="font-weight-bold">Vesentlige opplysninger</span>
-                            <p>{{ $property_data->essential_information }}</p>
+                            <span class="font-weight-bold">Arealbeskrivelse</span>
+                            <p style="white-space:pre-line">{{ $property_data->area_description }}</p>
                         </div>
                     @endif
 
-                    <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
-                                eiendommen
-                            </div> -->
-                    <!-- <div class="col-md-12"><button class="btn btn-info btn-lg mt-2">Se komplett salgsoppgave</button></div> -->
-                    <!-- <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
-                            <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
-                            <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div> -->
+                    @if($property_data->standard)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Standard</span>
+                            <p style="white-space:pre-line">{{ $property_data->standard }}</p>
+                        </div>
+                    @endif
+
+                    @if($property_data->character_description)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Beskaffenhet</span>
+                            <p style="white-space:pre-line">{{ $property_data->character_description }}</p>
+                        </div>
+                    @endif
+
+                    @if($property_data->essential_information)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Andre opplysninger</span>
+                            <p style="white-space:pre-line">{{ $property_data->essential_information }}</p>
+                        </div>
+                    @endif
+
+                    @if($property_data->access_and_location)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Adkomst og beliggenhet</span>
+                            <p style="white-space:pre-line">{{ $property_data->access_and_location }}</p>
+                        </div>
+                    @endif
 
                     <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span> <span> 140424636</span>
                     </div>

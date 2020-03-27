@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Admin\Dashboard;
 use App\Models\Ad;
+use App\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,10 +15,30 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $count_users = User::whereDate('created_at','>=',Date('y-m-d'))->count();
+        $count_jobs = Ad::whereDate('created_at','>=',Date('y-m-d'))->where('ad_type','job')->count();
+        $count_realestates = Ad::whereDate('created_at','>=',Date('y-m-d'))->where('ad_type','<>','job')->count();
+        if(count($request->all()) && $request->ajax()){
+            if($request->user_filter){
+                $count_users = User::whereDate('created_at','>=',$request->user_filter)->count();
+                return response(json_encode(array('count_users'=>$count_users)));
+                exit();
+            }
+            if($request->job_filter){
+                $count_jobs = Ad::whereDate('created_at','>=',$request->job_filter)->where('ad_type','job')->count();
+                return response(json_encode(array('count_jobs'=>$count_jobs)));
+                exit();
+            }
+            if($request->realestate_filter){
+                $count_realestates = Ad::whereDate('created_at','>=',$request->realestate_filter)->where('ad_type','<>','job')->count();
+                return response(json_encode(array('count_realestates'=>$count_realestates)));
+                exit();
+            }
+        }
         $ads = Ad::where('status','published')->orderBy('updated_at','DESC')->take(3)->get();
-        return view('admin.dashboard',compact('ads'));
+        return view('admin.dashboard',compact('ads','count_users','count_jobs','count_realestates'));
     }
 
     /**

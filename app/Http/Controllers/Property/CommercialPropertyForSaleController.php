@@ -176,7 +176,7 @@ class CommercialPropertyForSaleController extends Controller
     {
         $commercial_property = CommercialPropertyForSale::findOrFail($id);
         if ($commercial_property) {
-            if (!Auth::user()->hasRole('admin') && $commercial_property->user_id != Auth::user()->id) {
+            if (!Auth::user()->hasRole('admin') && ($commercial_property->user_id != Auth::user()->id || $commercial_property->ad->status == 'sold')) {
                 abort(404);
             }
             return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));

@@ -168,7 +168,7 @@ class CommercialPropertyForRentController extends Controller
     {
         $commercial_for_rent = CommercialPropertyForRent::findOrFail($id);
         if ($commercial_for_rent) {
-            if (!Auth::user()->hasRole('admin') && $commercial_for_rent->user_id != Auth::user()->id) {
+            if (!Auth::user()->hasRole('admin') && ($commercial_for_rent->user_id != Auth::user()->id || $commercial_for_rent->ad->status == 'sold')) {
                 abort(404);
             }
             return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));

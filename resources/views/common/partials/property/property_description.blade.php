@@ -164,13 +164,6 @@
                                 <p style="white-space: pre-line">{{$property_data->description}}</p>
                             </div>
                         @endif
-                        <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
-                                    eiendommen
-                                </div> -->
-                        <!-- <div class="col-md-12"><button class="btn btn-info btn-lg mt-2">Se komplett salgsoppgave</button></div>
-                                <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div> -->
-                        <!-- <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
-                                <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>!-->
                         <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handel: </span>
                             <span> {{$property_data->ad ? $property_data->ad->id : ''}}</span></div>

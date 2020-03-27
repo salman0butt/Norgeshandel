@@ -62,7 +62,7 @@
                     <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
                     <div class="row single-realestate-detail p-3">
                         <div class="col-md-12">
-                            <div class="u-t3 mt-3">JESSHEIM SENTRUM</div>
+                            {{--<div class="u-t3 mt-3">JESSHEIM SENTRUM</div>--}}
                             <h1 class="u-t2">{{$property_data->heading}}</h1>
                         </div>
                         <div class="col-md-12 text-muted">
@@ -74,11 +74,6 @@
                                 @endif
                             </span>
                         </div>
-
-                        @if($property_data->location_description)
-                            <div class="col-md-12 mt-2"><p>{{$property_data->location_description}}</p></div>
-                        @endif
-
                         @if($property_data->rent_per_meter_per_year)
                             <div class="col-md-12 font-weight-bold mt-3">Leie pr m²/år:</div>
                             <div class="col-md-12 u-t3">{{number_format($property_data->rent_per_meter_per_year,0,""," ")}} kr</div>
@@ -145,22 +140,23 @@
                                 <br>
                             </div>
                         @endif
-
                         @if($property_data->last_description)
                             <div class="col-md-12"><span class="font-weight-bold">Beskrivelse</span></div>
                             <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->last_description}}</p></div>
                         @endif
-
-                        {{--<div class="col-md-12">--}}
-                            {{--<a href="#" class="mt-2"><svg width="12" height="12" viewBox="0 0 12 12"><line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line><line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line></svg> Flere detaljer</a>--}}
-                        {{--</div>--}}
+                        @if($property_data->location_description)
+                            <div class="col-md-12"><span class="font-weight-bold">Beliggenhet</span></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->location_description}}</p></div>
+                        @endif
+                        @if($property_data->venue_description)
+                            <div class="col-md-12"><span class="font-weight-bold">Adkomst</span></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->venue_description}}</p></div>
+                        @endif
 
                         <div style="width: 500px; height: 300px;">
                             {!! Mapper::render() !!}
                         </div>
 
-                        <!-- <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
-                        <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div> -->
                         <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>
                         <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> 10012121 </span></div>
@@ -189,8 +185,6 @@
                         <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                     @endif
 
-                <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
-                    <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                     <h2 class="u-t3">Visning</h2>
                     <div class="mb-2">Ta kontakt for å avtale visning</div>
                     <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>

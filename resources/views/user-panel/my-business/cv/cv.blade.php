@@ -43,7 +43,7 @@ $cvlanguages = $cv->languages;
             <div class="breade-crumb">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">Min handel</li> <!-- ('cv.breadcrumb.sub') -->
+                        <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business')}}">Min handel</a></li> <!-- ('cv.breadcrumb.sub') -->
                         <li class="breadcrumb-item"><a href="#">Din CV</a></li> <!-- ('cv.breadcrumb.main') -->
                     </ol>
                 </nav>

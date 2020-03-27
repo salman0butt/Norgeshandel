@@ -88,7 +88,7 @@
                                     <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
                                         alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
                                     @if($property_for_flat_wishes_rented->ad && $property_for_flat_wishes_rented->ad->status == 'sold' && $property_for_flat_wishes_rented->ad->sold_at)
-                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+                                        <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">UTLEID</span>
                                     @endif
                                 </div>
                             </div>

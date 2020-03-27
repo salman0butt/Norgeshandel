@@ -77,7 +77,7 @@
                 <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
                 <div class="row single-realestate-detail p-3">
                     <div class="col-md-12">
-                        <div class="u-t3 mt-3">JESSHEIM SENTRUM</div>
+                        {{--<div class="u-t3 mt-3">JESSHEIM SENTRUM</div>--}}
                         <h1 class="u-t2">{{$property_data->headline}}</h1>
                     </div>
                     <div class="col-md-12 text-muted">
@@ -89,11 +89,6 @@
                             @endif
                         </span>
                     </div>
-                    @if($property_data->description_simple)
-                        <div class="col-md-12 mt-2">
-                            <p style="white-space: pre-line">{{$property_data->description_simple}}</p>
-                        </div>
-                    @endif
                     @if($property_data->rental_income)
                         <div class="col-md-12 font-weight-bold mt-3">Totalpris</div>
                         <div class="col-md-12 u-t3">{{number_format($property_data->rental_income,0,""," ")}} kr</div>
@@ -235,14 +230,24 @@
                             </a>
                         </div>
                     @endif
-                    <!-- <div class="col-md-12"><p>Rimelige fellesutgifter med bla. fyring, varmtvann og TV-og Internett inkludert. To garasjeplasser i oppvarmet garasjeanlegg i kjeller samt bod.</p></div>
-                        <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
-                            eiendommen
-                        </div> -->
-                    <!-- <div class="col-md-12"><button class="btn btn-info btn-lg mt-2">Se komplett salgsoppgave</button></div>
-                        <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div>
-                        <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
-                        <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div> -->
+                    @if($property_data->description_simple)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Beskrivelse</span>
+                            <p style="white-space: pre-line">{{$property_data->description_simple}}</p>
+                        </div>
+                    @endif
+                    @if($property_data->descripion_access)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Adkomst</span>
+                            <p style="white-space: pre-line">{{$property_data->descripion_access}}</p>
+                        </div>
+                    @endif
+                    @if($property_data->standard_technica_information)
+                        <div class="col-md-12">
+                            <span class="font-weight-bold">Standard/Tekniske opplysninger</span>
+                            <p style="white-space: pre-line">{{$property_data->standard_technica_information}}</p>
+                        </div>
+                    @endif
 
                     <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
                     <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span> <span> 140424636</span></div>

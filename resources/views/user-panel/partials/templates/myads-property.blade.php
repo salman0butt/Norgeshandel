@@ -25,8 +25,14 @@ if($property !== null)
         @if(!$ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
         @endif
-        @if($ad->status == 'sold' && $ad->sold_at)
-            <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">selges</span>
+        @if($ad->status == 'sold' && $ad->sold_at && $ad->ad_type != 'job')
+            <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">
+                @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent')
+                    UTLEID
+                @else
+                    SOLGT
+                @endif
+            </span>
         @endif
          {{--<div class="product-total-price m-2">--}}
          <?php
@@ -66,16 +72,19 @@ if($property !== null)
         <p class="product-title u-t4">
             {{Str::limit($ad->getTitle(),100)}}
         </p>
-        <a href="
-            @if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$property->id.'/edit')}}
-            @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}}
-            @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$property->id.'/edit')}}
-            @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}}
-            @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$property->id.'/edit')}}
-            @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$property->id.'/edit')}}
-            @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$property->id.'/edit')}}
-            @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$property->id.'/edit')}}
-        @endif" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm p-0 edit-ad-button">Endre</a>
+        @if(!$ad->sold_at && $ad->status !='sold')
+            <a href="
+                @if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$property->id.'/edit')}}
+                @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}}
+                @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$property->id.'/edit')}}
+                @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}}
+                @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$property->id.'/edit')}}
+                @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$property->id.'/edit')}}
+                @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$property->id.'/edit')}}
+                @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$property->id.'/edit')}}
+            @endif" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm p-0 edit-ad-button">Endre</a>
+        @endif
+
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('/', $ad->id)}}" class="dme-btn-outlined-blue mr-2 btn-sm">Se annonse</a>
 
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm statistics-button">Se statistikk</a>
