@@ -266,7 +266,7 @@ $(document).ready(function () {
             year_of_construction: {
                 number: true,
                 date: true,
-                maxlenght:4
+                maxlength:4
             },
             renovated_year: {
                 number: true,
