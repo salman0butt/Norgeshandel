@@ -266,7 +266,7 @@ $(document).ready(function () {
             year_of_construction: {
                 number: true,
                 date: true,
-                maxlenght:4
+                maxlength:4
             },
             renovated_year: {
                 number: true,
@@ -292,6 +292,7 @@ $(document).ready(function () {
                 email: true
             }
         },
+
         errorPlacement: function (error, element) {
             if (element.attr("type") == "checkbox") {
                 error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));

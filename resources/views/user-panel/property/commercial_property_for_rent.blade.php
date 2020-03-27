@@ -39,7 +39,7 @@
 
         function record_store_ajax_request(event, this_obj) {
                if(event == 'click'){
-                 if(! $('#commercial_property_for_rent').valid()) return false;
+                   if(! $('#commercial_property_for_rent').valid()) return false;
                   }
                var url = '';
                 if (event == 'change') {
