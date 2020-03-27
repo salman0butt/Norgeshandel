@@ -33,8 +33,9 @@ if(count($media)>0){
 
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
         <div class="image-section col-sm-4  p-2">
-            <div class="trailing-border">
-                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="height:@if(Request()->get('view') && Request()->get('view') == 'list') 174.93px !important; @else 130px; @endif width: 100%" alt="" class="img-fluid radius-8">
+            <div class="trailing-border" style="height:{{(Request()->get('view') && Request()->get('view') == 'list')? '174.93px !important;':'130px;'}}; width: 100%;
+                background-image: url('@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif'); background-size: cover; background-position: center;">
+{{--                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="" alt="" class="img-fluid radius-8">--}}
                 <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;"></div>
             </div>
         </div>
