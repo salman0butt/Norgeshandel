@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Session;
 use Intervention\Image\AbstractDecoder;
 use App\Http\Controllers\Admin\Users\AdminUserController;
 use Pusher\Pusher;
+use const http\Client\Curl\AUTH_ANY;
 
 //use function Sodium\compare;
 
@@ -517,8 +518,8 @@ class JobController extends Controller
         }
 
         $filter = rtrim($filter, '&');
-        if (!$is_notif) {
-        $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
+        if (!$is_notif && Auth::check()) {
+            $search = Auth::user()->saved_searches()->where('filter', '=', $filter)->get();
             foreach ($search as $value) {
                 foreach ($value->unread_notifications as $notification) {
                     $notification->update(['read_at' => now()]);
