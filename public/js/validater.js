@@ -292,6 +292,7 @@ $(document).ready(function () {
                 email: true
             }
         },
+
         errorPlacement: function (error, element) {
             if (element.attr("type") == "checkbox") {
                 error.insertAfter($(element).parents('.property_type_section').after($('.property_type_section')));

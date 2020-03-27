@@ -31,7 +31,6 @@ class CreateBusinessForSalesTable extends Migration
             
             $table->string('headline')->nullable();
             $table->string('description')->nullable();
-
               
             $table->string('link')->nullable();
             $table->string('link_for_information')->nullable();
