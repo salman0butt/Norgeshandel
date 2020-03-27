@@ -352,6 +352,14 @@
     if($('#zero_config')){
         $('#zero_config').DataTable();
     }
+       $('.url_http').on('change', function(){
+    s = $(this).val();
+    if (!s.match(/^[a-zA-Z]+:\/\//))
+    {
+        s = 'http://' + s;
+    $(this).val(s);
+    }
+    });
 </script>
 
 

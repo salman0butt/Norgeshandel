@@ -378,6 +378,7 @@
 <script src="{{asset('public/js/validater.js')}}"></script>
 <script src="{{asset('public/js/additional-methods.min.js')}}"></script>
 <script src="{{asset('public/js/messages_no.min.js')}}"></script>
+<script src="{{asset('public/js/fslightbox.js')}}"></script>
 
 <script>
     var urlParams = new URLSearchParams(location.search);
