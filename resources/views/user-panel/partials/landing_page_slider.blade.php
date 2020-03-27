@@ -25,7 +25,7 @@
                     @if(!file_exists($file_path.$unique_name))
                         <img class="d-block w-100" src="{{ asset('/public/uploads/banners/1280x720.png') }}" alt="First slide">
                     @else
-                        <img class="d-block w-100" src="{{$full_path}}" alt="First slide" style="width: 100%;max-height: 500px!important;">
+                       <a data-fslightbox="gallery1" href="{{$full_path}}"> <img class="d-block w-100" src="{{$full_path}}" alt="First slide" style="width: 100%;max-height: 500px!important;"></a>
                     @endif
                     <div class="single-realestate-caption text-center carousel_image_slide_text" style="width:50%;margin:auto;margin-top: -20px;">
                        {{$val->title ? $val->title : ''}} ({{($key+1).'/'.$name->count()}})
