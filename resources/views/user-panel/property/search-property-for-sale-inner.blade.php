@@ -81,15 +81,18 @@
                         } else {
                             $full_path_photos = "";
                         }
+                        $image_path = !empty($full_path_photos)? $full_path_photos : asset('public/images/placeholder.png');
                         ?>
                         <div class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position: relative">
                             <a href="{{url('/', $property_for_sale->ad->id)}}"
                                class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                 <div
                                     class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
-                                    <div class="trailing-border">
-                                        <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                            alt="" class="img-fluid radius-8 w-100 list-h" style="height: 174.93px; width:100%">
+                                    <div class="trailing-border"
+                                         style="background-image: url('{{$image_path}}'); background-position: center; background-size: cover;height: 175px; width:100%"
+                                    >
+{{--                                        <img src="@if(!empty($full_path_photos)){{$full_path_photos}}@else{{asset('public/images/placeholder.png')}}@endif"--}}
+{{--                                            alt="" class="img-fluid radius-8 w-100 list-h" style="height: 174.93px; width:100%">--}}
                                         @if($property_for_sale->ad && $property_for_sale->ad->status == 'sold' && $property_for_sale->ad->sold_at)
                                             <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">SOLGT</span>
                                         @endif
