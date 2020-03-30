@@ -200,7 +200,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('us/{p}', function () {
         echo 'hello';
     });
-
+    Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
@@ -316,7 +316,6 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('ad/{id}', 'PropertyController@complete_property');
         });
 
-        Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 
         // User account settings and notification settings
 

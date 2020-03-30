@@ -23,21 +23,22 @@
                             <ol class="breadcrumb w-100 "
                                 style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property</a></li>
-                                <li class="breadcrumb-item active"><a href="#">Commercial Plots</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/realestate')}}">Eiendom</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/commercial-plots/search')}}">Næringstomt</a></li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0">
                             <ul class="breadcrumb w-100   text-right d-block"
                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
-                                        href="#"> &lt; Forrige </a> @else <span
-                                        class="text-muted">Forrige</span>@endif</li>
-                                <li class="breadcrumb-item active d-inline-block"><a href="#">Til
-                                        søket</a></li>
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a
-                                        href="#"> Neste ></a> @else <span
-                                        class="text-muted">Neste</span>@endif</li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($prev) ? url('/', $prev->id) : url('property/commercial-plots/search')}}"> &lt; Forrige </a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="#">Til søket</a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($next) ? url('/', $next->id) : url('property/commercial-plots/search')}}"> Neste ></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -72,16 +73,38 @@
                                 @endif
                             </span>
                         </div>
-                        <!-- <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
-                        <div class="col-md-12 u-t3">5 250 000 kr</div> -->
-                        <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div> -->
+                        @if($property_data->asking_price)
+                            <div class="col-md-12 font-weight-bold mt-3">Prisantydning</div>
+                            <div class="col-md-12 u-t3">{{number_format($property_data->asking_price,0,""," ")}} Kr</div>
+                        @endif
                         <div class="col-md-6"><span class="font-weight-bold">Boligtype: </span><span>{{$property_data->plot_type}}</span></div>
+                        <div class="col-md-6"><span class="font-weight-bold">Land: </span><span>{{$property_data->country}}</span></div>
 
                         @if($property_data->plot_size)
                             <div class="col-md-6"><span class="font-weight-bold">Tomteareal: </span><span>{{$property_data->plot_size}} m² (eiet)</span></div>
                         @endif
-                        <!-- <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div> -->
+
+                        @if($property_data->municipal_number)
+                            <div class="col-md-6"><span class="font-weight-bold">Kommunenummer: </span><span>{{$property_data->municipal_number}}</span></div>
+                        @endif
+
+                        @if($property_data->usage_number)
+                            <div class="col-md-6"><span class="font-weight-bold">Bruksnummer: </span><span>{{$property_data->usage_number}}</span></div>
+                        @endif
+
+                        @if($property_data->farm_number)
+                            <div class="col-md-6"><span class="font-weight-bold">Gårdsnummer: </span><span>{{$property_data->farm_number}}</span></div>
+                        @endif
+
+
+                        @if($property_data->verditakst)
+                            <div class="col-md-6"><span class="font-weight-bold">Verditakst: </span><span>{{number_format($property_data->verditakst,0,""," ").' Kr'}}</span></div>
+                        @endif
+
+                        @if($property_data->display_information)
+                            <div class="col-md-12"><span class="font-weight-bold">Visningsinformasjon: </span><span>{{$property_data->display_information}}</span></div>
+                        @endif
+
                         @if($property_data->description)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Beskrivelse</span>

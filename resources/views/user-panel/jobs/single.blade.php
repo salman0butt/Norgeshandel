@@ -72,6 +72,14 @@
                         <div class="col-md-12">
                             <h1 class="u-t2 name">{{$job->name}}</h1>
                         </div>
+                        <div class="col-md-12 text-muted">{{$job->address ? $job->address.', ' : ''}}
+                            <span>
+                                @if($job->zip)
+                                    {{$job->zip}}
+                                    {{$job->zip_city ? $job->zip_city : ''}}
+                                @endif
+                            </span>
+                        </div>
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
                             <div class="row">
                                 <div class="col-md-6 emp_name"><span
@@ -105,24 +113,33 @@
                                         </span>
                                     </div>
                                 @endif
-                                @if($job_function)
+                                @if($job->job_function)
                                     <div class="col-md-6 job-function"><span
-                                            class="font-weight-bold">Stillingsfunksjon: </span>&nbsp;<span>{{$job_function}}</span>
+                                            class="font-weight-bold">Jobbfunksjon: </span>&nbsp;<span>{{$job->job_function}}</span>
+                                    </div>
+                                @endif
+                                @if($job->keywords)
+                                    <div class="col-md-6 job-function">
+                                        <span class="font-weight-bold">Nøkkelord: </span>&nbsp;
+                                        <span>{{$job->keywords}}</span>
                                     </div>
                                 @endif
                             </div>
                         </div>
-
-                        <div class="description mt-3 col-md-12" style="white-space: pre-line">
-                            {{(($job->description))}}
-                        </div>
+                        @if($job->description)
+                            <div class="description mt-3 col-md-12" style="white-space: pre-line">
+                                <span class="font-weight-bold">Stillingsbeskrivelse</span>
+                                {{(($job->description))}}
+                            </div>
+                        @endif
                         <div class="emp_company_information mt-3 col-md-12">
-                            <h2 class="u-t5">Om arbeidsgiveren</h2>
-                                @if(!empty($job->company))
+                            @if(!empty($job->company))
+                                <span class="font-weight-bold">Om arbeidsgiveren</span>
                                 <div style="white-space: pre-line">{!! html_entity_decode($job->company->emp_company_information)!!}</div>
-                                @else
+                            @else
+                                <span class="font-weight-bold">Om arbeidsgiveren</span>
                                 <div style="white-space: pre-line">{!! html_entity_decode($job->emp_company_information)!!}</div>
-                                @endif
+                            @endif
 
                         </div>
                         <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
