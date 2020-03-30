@@ -129,24 +129,16 @@
                         if(data.property_pdf){
                             $('.remove_property_pdf').attr('id',data.property_pdf);
                         }
-                        $('.ad-published-notice').css('display','none');
-                        $('.ad-auto-saved-notice').html('<div class="alert alert-success">Annonsen din er lagret</div>');
-                        setTimeout(function () {
-                            $('.ad-auto-saved-notice').show('slow');
-                        }, 2000);
-                        setTimeout(function () {
-                            $('.ad-auto-saved-notice').hide('slow');
-                        }, 5000);
+                       notify("info","Annonsen din er lagret","lagrede");
                    }else if(event == 'click'){
-                        $('.ad-published-notice').css('display','block');
-                        $('.ad-published-notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+                        notify("success","Annonsen din er publisert","publisert");
                    }
                 },
                 error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
                     var errors = jqXhr.responseJSON;
                     //console.log(errors.errors);
                     if (isEmpty(errors.errors)) {
-                        $('.ad-published-notice').append('<div class="alert alert-danger">noe gikk galt!</div>');
+                      notify("error","noe gikk galt!","mislyktes");
                         return false;
                     }
                     if (event == 'change') {

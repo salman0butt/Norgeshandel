@@ -8,6 +8,26 @@ function formate_date(date) {
     str_date += "."+year;
     return str_date;
 }
+function notify(type,msg,title) {
+    Command: toastr[type](msg, title)
+    toastr.options = {
+        "closeButton": true,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+    
+}
+
 function readFileURL(input, img) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

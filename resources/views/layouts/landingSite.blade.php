@@ -21,6 +21,7 @@
 
 
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/toastr.min.css')}}">
     
     <!--    incluedes   -->
     <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
@@ -36,6 +37,9 @@
 <style>
     span.far.fa-heart.text-muted,span.fa.fa-heart.text-muted {
         line-height: unset !important;
+    }
+    #toast-container {
+        top:8%;
     }
 </style>
     @php
@@ -379,6 +383,7 @@
 <script src="{{asset('public/js/additional-methods.min.js')}}"></script>
 <script src="{{asset('public/js/messages_no.min.js')}}"></script>
 <script src="{{asset('public/js/fslightbox.js')}}"></script>
+<script src="{{asset('public/js/toastr.min.js')}}"></script>
 
 <script>
     var urlParams = new URLSearchParams(location.search);
@@ -552,6 +557,8 @@
                 }
         
             }
+          
+                
 </script>
 
 </body>
