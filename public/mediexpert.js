@@ -263,5 +263,24 @@ $(document).ready(function (e) {
     }
     });
 
+
+    $("#more_details").click(function (e) {
+
+        e.preventDefault();
+        $(".more_details_section").removeClass('hide');
+        $("#more_details").addClass('hide');
+        $("#less_details").removeClass('hide');
+
+    });
+
+    $("#less_details").click(function (e) {
+
+        e.preventDefault();
+        $(".more_details_section").addClass('hide');
+        $("#more_details").removeClass('hide');
+        $("#less_details").addClass('hide');
+
+    });
+
 });
 

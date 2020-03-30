@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\common;
 use App\Models\Ad;
+use App\Media;
+use App\Models\Search;
+use App\Notification;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use App\PropertyHolidaysHomesForSale;
 use App\CommercialPlot;
 use App\BusinessForSale;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\FlatWishesRented;
-use App\Media;
-use App\Models\Search;
-use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Auth;
-use App\PropertyHolidaysHomesForSale;
+
 
 class HomeController extends Controller
 {
@@ -131,56 +133,72 @@ class HomeController extends Controller
             else if($type == 'property_for_rent'){
                 if ($ad->property) {
                     $property_data = PropertyForRent::find($ad->property->id);
-                    return view('common.partials.property.property_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.property_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }
             else if($type == 'property_for_sale'){
                 if($ad->property) {
                     $property_data = PropertyForSale::find($ad->property->id);
-                    return view('common.partials.property.property_for_sale_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.property_for_sale_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }
             else if($type == 'property_holiday_home_for_sale'){
                 if($ad->property) {
                     $property_data = PropertyHolidaysHomesForSale::find($ad->property->id);
-                    return view('common.partials.property.holiday_home_for_sale_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.holiday_home_for_sale_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }
             else if($type == 'property_flat_wishes_rented'){
                 if($ad->property) {
                     $property_data = FlatWishesRented::find($ad->property->id);
-                    return view('common.partials.property.flat_wishes_rented_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.flat_wishes_rented_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }
             else if($type == 'property_commercial_for_sale'){
                 if($ad->property) {
                     $property_data = CommercialPropertyForSale::find($ad->property->id);
-                    return view('common.partials.property.commercialproperty_for_sale_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.commercialproperty_for_sale_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }
             else if($type == 'property_commercial_for_rent'){
                 if($ad->property) {
                     $property_data = CommercialPropertyForRent::find($ad->property->id);
-                    return view('common.partials.property.commercialproperty_for_rent_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.commercialproperty_for_rent_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }
             else if($type == 'property_commercial_plots'){
                 if($ad->property) {
                     $property_data = CommercialPlot::find($ad->property->id);
-                    return view('common.partials.property.commercial_plots_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.commercial_plots_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }
             else if($type == 'property_business_for_sale'){
                 if($ad->property) {
                     $property_data = BusinessForSale::find($ad->property->id);
-                    return view('common.partials.property.business_for_sale_description', compact('property_data'));
+                    $prev = common::previous_ad($property_data);
+                    $next = common::next_ad($property_data);
+                    return view('common.partials.property.business_for_sale_description', compact('property_data','prev','next'));
                 }
                 abort(404);
             }

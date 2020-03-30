@@ -36,6 +36,10 @@ use Illuminate\Contracts\Session\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 use \Illuminate\Http\Request;
 use Pusher\Pusher;
+use App\CommercialPlot;
+use App\BusinessForSale;
+use App\FlatWishesRented;
+use App\PropertyForRent;
 
 class common
 {
@@ -557,6 +561,38 @@ class common
                 $pusher->trigger('notification', 'notification-event', $data);
             }
         }
+    }
+
+    //find previous ad
+    public static function previous_ad($obj){
+        $prev = '';
+        if($obj && $obj->ad){
+            $ad = $obj->ad;
+            $date = Date('y-m-d',strtotime('-7 days'));
+            $prev = Ad::where('ad_type',$ad->ad_type)
+                ->where(function ($query) use ($date){
+                    $query->where('ads.status', 'published')
+                        ->orwhereDate('ads.sold_at','>',$date);
+                })->where('visibility',1)
+                ->where('id', '<', $ad->id)->orderBy('id', 'desc')->first();
+        }
+        return $prev;
+    }
+
+    //find previous ad
+    public static function next_ad($obj){
+        $next = '';
+        if($obj && $obj->ad){
+            $ad = $obj->ad;
+            $date = Date('y-m-d',strtotime('-7 days'));
+            $next = Ad::where('ad_type',$ad->ad_type)
+                ->where(function ($query) use ($date){
+                    $query->where('ads.status', 'published')
+                        ->orwhereDate('ads.sold_at','>',$date);
+                })->where('visibility',1)
+                ->where('id', '>', $ad->id)->orderBy('id', 'asc')->first();
+        }
+        return $next;
     }
 
 }

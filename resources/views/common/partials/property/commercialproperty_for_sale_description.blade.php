@@ -2,28 +2,13 @@
 @section('page_content')
 
 <?php
-
-        $facilities = array();
-        if(isset($property_data->facilities) && !empty($property_data->facilities))
-        {
-
-            $facilities = explode(",",rtrim($property_data->facilities, ","));
-
-        }
-
-        $name       = $property_data->ad->company_gallery;
-        // if($name != null)
-        // {
-        //     $name       =    $name->name_unique;
-        //     $path       =    \App\Helpers\common::getMediaPath($property_data);
-        //     $full_path  =    $path."".$name;
-        // }
-        // else
-        // {
-        //     $full_path  = "";
-        // }
-
-    ?>
+    $facilities = array();
+    if(isset($property_data->facilities) && !empty($property_data->facilities))
+    {
+        $facilities = explode(",",rtrim($property_data->facilities, ","));
+    }
+    $name       = $property_data->ad->company_gallery;
+?>
 
 <main>
     <div class="left-ad float-left">
@@ -42,21 +27,22 @@
                             <ol class="breadcrumb w-100 "
                                 style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property</a></li>
-                                <li class="breadcrumb-item active"><a href="#">Commercial Property For Sale</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/realestate')}}">Eiendom</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/commercial-property-for-sale/search')}}">Næringseiendom til salgs</a></li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0">
                             <ul class="breadcrumb w-100   text-right d-block"
                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
-                                        href="#"> &lt; Forrige </a> @else <span
-                                        class="text-muted">Forrige</span>@endif</li>
-                                <li class="breadcrumb-item active d-inline-block"><a href="#">Til
-                                        søket</a></li>
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a
-                                        href="#"> Neste ></a> @else <span
-                                        class="text-muted">Neste</span>@endif</li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($prev) ? url('/', $prev->id) : url('property/commercial-property-for-sale/search')}}"> &lt; Forrige </a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="#">Til søket</a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($next) ? url('/', $next->id) : url('property/commercial-property-for-sale/search')}}"> Neste ></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -69,7 +55,7 @@
         </div>
         <div class="row mt-4">
             <div class="col-md-8">
-                @php $ad = $property_data->ad; @endphp
+                @php $ad = $property_data->ad;@endphp
                 @include('user-panel.partials.favorite-button',compact('ad'))
 
                 <a href="#"><i class="fa fa-envelope" style="font-size: 25px; padding:7px 10px;"></i></a>
@@ -93,11 +79,6 @@
                         <div class="col-md-12 font-weight-bold mt-3">Totalpris</div>
                         <div class="col-md-12 u-t3">{{number_format($property_data->rental_income,0,""," ")}} kr</div>
                     @endif
-                        <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Felleskost/mnd.: </span><span>4 260 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div> -->
                     <div class="clearfix"></div>
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
@@ -105,13 +86,13 @@
                                 $property_type = array();
                                 $property_type = json_decode($property_data->property_type);
                             @endphp
-                            <div class="col-md-6"><span class="font-weight-bold">Type lokale </span>&nbsp;<span
+                            <div class="col-md-12"><span class="font-weight-bold">Type lokale </span>&nbsp;<span
                                    >
                                  @if(count($property_type) > 0)
-                                        <ul>
+                                    <ul class="row">
                                         @foreach($property_type as $value)
-                                                <li>{{$value}}</li>
-                                            @endforeach
+                                            <li class="col-md-6">{{$value}}</li>
+                                        @endforeach
                                     </ul>
                                     @endif
                                 </span>
@@ -147,6 +128,12 @@
                                     <span>{{$property_data->year_of_construction}}</span>
                                 </div>
                             @endif
+                            @if($property_data->rennovated_year)
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Renovert år</span>&nbsp;
+                                    <span>{{$property_data->rennovated_year}}</span>
+                                </div>
+                            @endif
 
                             @if($property_data->primary_room)
                                 <div class="col-md-6">
@@ -167,11 +154,11 @@
                         @if($facilities)
                             <div class="col-md-12 p-0">
                                 <div class="bg-light-grey radius-8 col-md-12 p-3">
-                                    <div class="">
+                                    <div>
                                         <span class="font-weight-bold">Fasiliteter &nbsp;</span>
-                                        <ul>
+                                        <ul class="row">
                                             @foreach($facilities as $key=>$val)
-                                                <li>
+                                                <li class="col-6">
                                                     <?php
                                                     if ($val != "") {
                                                         echo ucfirst(strtolower(str_replace('-', ' ', str_replace('_', ' ', $val))));
@@ -186,29 +173,100 @@
                         @endif
                     </div>
 
-                    @if($property_data->municipal_number || $property_data->usage_number || $property_data->farm_number)
+                    @if($property_data->location)
                         <div class="col-md-12 more_details_section hide pl-0 pr-0">
                             <div class="col-md-12 pl-0 pr-0 mt-3">
                                 <div class="bg-light-grey radius-8 col-md-12 p-3">
-                                    <div class="row p-2">
+                                    <div class="row">
+                                        @if($property_data->location)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Land</span>&nbsp;
+                                                <span>{{$property_data->location}}</span>
+                                            </div>
+                                        @endif
+                                        @if($property_data->use_area)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Bruksareal</span>&nbsp;
+                                                <span>{{$property_data->use_area}} m²</span>
+                                            </div>
+                                        @endif
 
-                                        <div class="col-md-12"><span class="font-weight-bold">Matrikkelinformasjon </span></div>
+                                        @if($property_data->land)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Tomteareal</span>&nbsp;
+                                                <span>{{$property_data->land}} m²</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->number_of_office_space)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Antall kontorplasser</span>&nbsp;
+                                                <span>{{$property_data->number_of_office_space}}</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->energy_grade)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Energikarakter </span>&nbsp;
+                                                <span>{{$property_data->energy_grade}}</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->heating_character)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Oppvarmingskarakter</span>&nbsp;
+                                                <span>{{$property_data->heating_character}}</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->value_rate)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Verditakst</span>&nbsp;
+                                                <span>{{number_format($property_data->value_rate,0,""," ")}} Kr</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->loan_rate)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Lånetakst</span>&nbsp;
+                                                <span>{{number_format($property_data->loan_rate,0,""," ")}} Kr</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->availiable_from)
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Ledig fra</span>&nbsp;
+                                                <span>{{$property_data->availiable_from}}</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property_data->display_information)
+                                            <div class="col-md-12">
+                                                <span class="font-weight-bold">Visningsinformasjon</span>&nbsp;
+                                                <span>{{$property_data->display_information}}</span>
+                                            </div>
+                                        @endif
+
+                                        <div class="col-md-12 pt-2"><span class="font-weight-bold">Matrikkelinformasjon </span></div>
 
                                         @if($property_data->municipal_number)
-                                            <div class="col-md-12">
-                                                <span class="">Kommunenr: {{$property_data->municipal_number}}</span>
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Kommunenr</span>
+                                                <span>{{$property_data->municipal_number}}</span>
                                             </div>
                                         @endif
 
                                         @if($property_data->usage_number)
-                                            <div class="col-md-12">
-                                                <span class="">Gårdsnr: {{$property_data->usage_number}}</span>
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Gårdsnr</span>
+                                                <span>{{$property_data->usage_number}}</span>
                                             </div>
                                         @endif
 
                                         @if($property_data->farm_number)
-                                            <div class="col-md-12">
-                                                <span class="">Bruksnr: {{$property_data->farm_number}}</span>
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Bruksnr</span>
+                                                <span>{{$property_data->farm_number}}</span>
                                             </div>
                                         @endif
 
@@ -326,30 +384,4 @@
         <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
     </div>
 </main>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#more_details").click(function (e) {
-
-            e.preventDefault();
-            $(".more_details_section").removeClass('hide');
-            $("#more_details").addClass('hide');
-            $("#less_details").removeClass('hide');
-
-        });
-
-        $("#less_details").click(function (e) {
-
-            e.preventDefault();
-            $(".more_details_section").addClass('hide');
-            $("#more_details").removeClass('hide');
-            $("#less_details").addClass('hide');
-
-        });
-
-
-    });
-
-</script>
 @endsection

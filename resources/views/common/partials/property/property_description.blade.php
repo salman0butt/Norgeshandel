@@ -27,20 +27,22 @@
                             <ol class="breadcrumb w-100 "
                                 style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property</a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property For Rent</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/realestate')}}">Eiendom</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/property-for-rent/search')}}">Bolig til leie</a></li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0">
                             <ul class="breadcrumb w-100 text-right d-block"
                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a href="#"> &lt;
-                                        Forrige </a> @else <span class="text-muted">Forrige</span>@endif</li>
-                                <li class="breadcrumb-item active d-inline-block"><a href="#">Til
-                                        søket</a></li>
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a href="#"> Neste
-                                        ></a>
-                                    @else <span class="text-muted">Neste</span>@endif</li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($prev) ? url('/', $prev->id) : url('property/property-for-rent/search')}}"> &lt; Forrige </a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="#">Til søket</a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($next) ? url('/', $next->id) : url('property/property-for-rent/search')}}"> Neste ></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -114,10 +116,22 @@
                                         <span>{{$property_data->number_of_bedrooms}}</span>
                                     </div>
                                 @endif
+                                @if (!empty($property_data->gross_area))
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Bruttoareal</span>
+                                        <span>{{$property_data->gross_area}} m²</span>
+                                    </div>
+                                @endif
                                 @if (!empty($property_data->floor))
                                     <div class="col-md-6">
                                         <span class="font-weight-bold">Etasje</span>
                                         <span>{{$property_data->floor}}</span>
+                                    </div>
+                                @endif
+                                @if (!empty($property_data->area_of_use))
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Bruksareal</span>&nbsp;
+                                        <span>{{$property_data->area_of_use}}</span>
                                     </div>
                                 @endif
                                 @if (!empty($property_data->property_type))
@@ -126,6 +140,25 @@
                                         <span>{{$property_data->property_type}}</span>
                                     </div>
                                 @endif
+                                @if (!empty($property_data->furnishing))
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Møblering</span>&nbsp;
+                                        <span>{{$property_data->furnishing}}</span>
+                                    </div>
+                                @endif
+                                @if (!empty($property_data->energy_label_class))
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Energikarakter</span>&nbsp;
+                                        <span>{{$property_data->energy_label_class}}</span>
+                                    </div>
+                                @endif
+                                    @if (!empty($property_data->energy_label_color))
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold">Oppvarmingskarakter</span>&nbsp;
+                                            <span>{{$property_data->energy_label_color}}</span>
+                                        </div>
+                                    @endif
+
                                 @if (!empty($property_data->rented_from))
                                     <div class="col-md-6">
                                         <span class="font-weight-bold">Leieperiode</span>

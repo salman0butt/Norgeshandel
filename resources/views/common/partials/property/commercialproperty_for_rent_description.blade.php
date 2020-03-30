@@ -26,21 +26,22 @@
                             <ol class="breadcrumb w-100 "
                                 style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property</a></li>
-                                <li class="breadcrumb-item active"><a href="#">Commercial Property For Rent</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/realestate')}}">Eiendom</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/commercial-property-for-rent/search')}}">Næringseiendom til leie</a></li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0">
                             <ul class="breadcrumb w-100 text-right d-block"
                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
-                                        href="#"> &lt; Forrige </a> @else <span
-                                        class="text-muted">Forrige</span>@endif</li>
-                                <li class="breadcrumb-item active d-inline-block"><a href="#">Til
-                                        søket</a></li>
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a
-                                        href="#"> Neste ></a> @else <span
-                                        class="text-muted">Neste</span>@endif</li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($prev) ? url('/', $prev->id) : url('property/commercial-property-for-rent/search')}}"> &lt; Forrige </a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="#">Til søket</a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($next) ? url('/', $next->id) : url('property/commercial-property-for-rent/search')}}"> Neste ></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -78,13 +79,6 @@
                             <div class="col-md-12 font-weight-bold mt-3">Leie pr m²/år:</div>
                             <div class="col-md-12 u-t3">{{number_format($property_data->rent_per_meter_per_year,0,""," ")}} kr</div>
                         @endif
-                        <!-- <div class="col-md-6"><span class="font-weight-bold">Fellesgjeld: </span><span>1 861 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Omkostninger: </span><span>138 222 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Totalpris: </span><span>5 390 083 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Felleskost/mnd.: </span><span>4 260 kr</span></div>
-                        <div class="col-md-6"><span class="font-weight-bold">Kommunale avg.: </span><span>8 490 kr per år</span></div>
-                        <div class="clearfix"></div> -->
-                        <div class="mt-2 col-md-12"></div>
                         @php
                             $property_type = array();
                             $property_type = json_decode($property_data->property_type);
@@ -112,15 +106,75 @@
                             <div class="col-md-6"><span class="font-weight-bold">Ant p-plasser </span>&nbsp;<span>{{$property_data->number_of_parking_space}}</span></div>
                         @endif
 
+                        @if($property_data->year_of_construction)
+                            <div class="col-md-6"><span class="font-weight-bold">Byggeår </span>&nbsp;<span>{{ $property_data->year_of_construction }}</span></div>
+                        @endif
+
                         @if($property_data->rennovated_year)
-                            <div class="col-md-6"><span class="font-weight-bold">Byggeår </span>&nbsp;<span>{{ $property_data->rennovated_year }}</span></div>
+                            <div class="col-md-6"><span class="font-weight-bold">Renovert år </span>&nbsp;<span>{{ $property_data->rennovated_year }}</span></div>
                         @endif
 
                         @if($property_data->availiable_from)
                             <div class="col-md-12"><span class="font-weight-bold">Overtakelse </span>&nbsp;<span>
-                                    <?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y H:i", strtotime($property_data->created_at)) : "");  ?>
+                                    <?php echo  (!empty($property_data->availiable_from) ? date("d.m.Y H:i", strtotime($property_data->availiable_from)) : "");  ?>
                             </span></div>
                         @endif
+
+                        @if($property_data->countrty)
+                            <a href="#" id="more_details" class="mt-2 col-12 pl-0">
+                                <svg width="12" height="12" viewBox="0 0 12 12">
+                                    <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
+                                    <line x1="6" y1="0" x2="6" y2="12" stroke-width="2" stroke="currentColor"></line>
+                                </svg> Flere detaljer
+                            </a>
+                            <a href="#" id="less_details" class="mt-2 hide  col-12 pl-0">
+                                <svg width="12" height="12" viewBox="0 0 12 12">
+                                    <line x1="0" y1="6" x2="12" y2="6" stroke-width="2" stroke="currentColor"></line>
+                                </svg> Færre detaljer
+                            </a>
+                        @endif
+
+                        <div class="row more_details_section single-realestate-detail hide" style="padding-left: 15px">
+                            @if($property_data->countrty)
+                                <div class="col-md-6"><span class="font-weight-bold">Land </span>&nbsp;<span>{{ $property_data->countrty }}</span></div>
+                            @endif
+
+                            @if($property_data->municipal_number)
+                                <div class="col-md-6"><span class="font-weight-bold">Kommunenummer </span>&nbsp;<span>{{ $property_data->municipal_number }}</span></div>
+                            @endif
+
+                            @if($property_data->usage_number)
+                                <div class="col-md-6"><span class="font-weight-bold">Bruksnummer </span>&nbsp;<span>{{ $property_data->usage_number }}</span></div>
+                            @endif
+
+                            @if($property_data->farm_number)
+                                <div class="col-md-6"><span class="font-weight-bold">Gårdsnummer </span>&nbsp;<span>{{ $property_data->farm_number }}</span></div>
+                            @endif
+
+                            @if($property_data->use_area)
+                                <div class="col-md-6"><span class="font-weight-bold">Bruksareal </span>&nbsp;<span>{{ $property_data->use_area.' m²'}}</span></div>
+                            @endif
+
+                            @if($property_data->land)
+                                <div class="col-md-6"><span class="font-weight-bold">Tomteareal </span>&nbsp;<span>{{ $property_data->land.' m²'}}</span></div>
+                            @endif
+
+                            @if($property_data->energy_grade)
+                                <div class="col-md-6"><span class="font-weight-bold">Energikarakter </span>&nbsp;<span>{{ $property_data->energy_grade }}</span></div>
+                            @endif
+
+                            @if($property_data->heating_character)
+                                <div class="col-md-6"><span class="font-weight-bold">Oppvarmingskarakter </span>&nbsp;<span>{{ $property_data->heating_character }}</span></div>
+                            @endif
+
+                            @if($property_data->rent_per_meter_per_year)
+                                <div class="col-md-6"><span class="font-weight-bold">Husleie per m² per år </span>&nbsp;<span>{{ number_format($property_data->rent_per_meter_per_year,0,""," ").' Kr'}}</span></div>
+                            @endif
+
+                            @if($property_data->display_information)
+                                <div class="col-md-12"><span class="font-weight-bold">Visningsinformasjon </span><span>{{ $property_data->display_information }}</span></div>
+                            @endif
+                        </div>
 
                         @if(count($facilities))
                             <div class="col-md-12 more_details_section">
@@ -137,7 +191,6 @@
                                         </li>
                                     @endforeach
                                 </ul>
-                                <br>
                             </div>
                         @endif
                         @if($property_data->last_description)
@@ -151,6 +204,10 @@
                         @if($property_data->venue_description)
                             <div class="col-md-12"><span class="font-weight-bold">Adkomst</span></div>
                             <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->venue_description}}</p></div>
+                        @endif
+                        @if($property_data->standard_technical_information)
+                            <div class="col-md-12"><span class="font-weight-bold">Standard/Tekniske opplysninger</span></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->standard_technical_information}}</p></div>
                         @endif
 
                         <div style="width: 500px; height: 300px;">
@@ -176,6 +233,10 @@
                         <span>Mobil: </span>
                         <span><a href="tel:{{$property_data->contact}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->contact}}</a></span>
                     </div>
+                    {{--<div class="mb-2">--}}
+                        {{--<span>Telefon: </span>--}}
+                        {{--<span><a href="tel:{{$property_data->phone}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}}</a></span>--}}
+                    {{--</div>--}}
 
 
                     <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
@@ -206,10 +267,4 @@
             <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
         </div>
     </main>
-
-
-
-
-
-
 @endsection

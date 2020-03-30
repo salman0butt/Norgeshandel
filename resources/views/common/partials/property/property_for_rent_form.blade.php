@@ -107,7 +107,7 @@
             <label class="u-t5">Antall soverom</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="number_of_bedrooms" value="{{ $property_for_rent->number_of_bedrooms }}" class="dme-form-control" placeholder="m²">
+                    <input type="text" name="number_of_bedrooms" value="{{ $property_for_rent->number_of_bedrooms }}" class="dme-form-control" placeholder="">
                     <span class="error-span number_of_bedrooms"></span>
                 </div>
             </div>

@@ -16,16 +16,6 @@
     }
 
 $name = $property_data->ad->company_gallery;
-    // if($name != null)
-    // {
-    //     $name       =    $name->name_unique;
-    //     $path       = \App\Helpers\common::getMediaPath($property_data);
-    //     $full_path  = $path."".$name;
-    // }
-    // else
-    // {
-    //     $full_path  = "";
-    // }
 ?>
 
     <main>
@@ -45,21 +35,22 @@ $name = $property_data->ad->company_gallery;
                             <ol class="breadcrumb w-100"
                                 style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property</a></li>
-                                <li class="breadcrumb-item active"><a href="#">Property For Sale</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/realestate')}}">Eiendom</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/property-for-sale/search')}}">Bolig til Salgs</a></li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0">
                             <ul class="breadcrumb w-100   text-right d-block"
                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
-                                        href="#"> &lt; Forrige </a> @else <span
-                                        class="text-muted">Forrige</span>@endif</li>
-                                <li class="breadcrumb-item active d-inline-block"><a href="#">Til
-                                        søket</a></li>
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a
-                                        href="#"> Neste ></a> @else <span
-                                        class="text-muted">Neste</span>@endif</li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($prev) ? url('/', $prev->id) : url('property/property-for-sale/search')}}"> &lt; Forrige </a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="#">Til søket</a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($next) ? url('/', $next->id) : url('property/property-for-sale/search')}}"> Neste ></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -163,35 +154,204 @@ $name = $property_data->ad->company_gallery;
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-12 more_details_section hide mt-2 mb-2 pl-0 pr-0">
-                            @if(count($facilities))
+                            @if($property_data->municipality_number)
                             <div class="col-md-12 pl-0 pr-0">
                                 <div class="bg-light-grey radius-8 col-md-12 p-3">
-                                    <div class="row p-2">
-                                        <span class="font-weight-bold">Fasiliteter</span>
-                                        <ul>
-                                            @foreach($facilities as $key=>$val)
-                                                <li>
-                                                    <?php
-                                                    if ($val != "") {
-                                                        echo ucfirst(strtolower(str_replace('-', ' ', str_replace('_', ' ', $val))));
-                                                    }
-                                                    ?>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                    <div>
+                                        @if(count($facilities))
+                                            <span class="font-weight-bold">Fasiliteter</span>
+                                            <ul class="row">
+                                                @foreach($facilities as $key=>$val)
+                                                    <li class="col-6">
+                                                        <?php
+                                                        if ($val != "") {
+                                                            echo ucfirst(strtolower(str_replace('-', ' ', str_replace('_', ' ', $val))));
+                                                        }
+                                                        ?>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                        <div class="row">
+                                            @if($property_data->local_area_name)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Navn på lokalområde:</span>&nbsp;
+                                                    <span>{{$property_data->local_area_name}}</span>
+                                                </div>
+                                            @endif
+                                            @if($property_data->renovated_year)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Renovert år:</span>&nbsp;
+                                                    <span>{{$property_data->renovated_year}}</span>
+                                                </div>
+                                            @endif
+                                            @if($property_data->number_of_rooms)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Antall rom:</span>&nbsp;
+                                                    <span>{{$property_data->number_of_rooms}}</span>
+                                                </div>
+                                            @endif
+                                            @if($property_data->floor)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Etasje:</span>&nbsp;
+                                                    <span>{{$property_data->floor}}</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->housing_team)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Borettslagets navn:</span>&nbsp;
+                                                    <span>{{$property_data->housing_team}}</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->owner_of_housing)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Borettslagets eier:</span>&nbsp;
+                                                    <span>{{$property_data->owner_of_housing}}</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->housing_type_org_number)
+                                                <div class="col-md-12">
+                                                    <span class="font-weight-bold">Borettslagets org.nummer:</span>&nbsp;
+                                                    <span>{{$property_data->housing_type_org_number}}</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->housing_cooperative_share_number)
+                                                <div class="col-md-12">
+                                                    <span class="font-weight-bold">Borettslagets andelsnummer:</span>&nbsp;
+                                                    <span>{{$property_data->housing_cooperative_share_number}}</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->holiday_year)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Festeår:</span>&nbsp;
+                                                    <span>{{$property_data->holiday_year}}</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->party_fee)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Festeavgift:</span>&nbsp;
+                                                    <span>{{number_format($property_data->party_fee,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->rent_shared_cost)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Husleie/felleskost:</span>&nbsp;
+                                                    <span>{{number_format($property_data->rent_shared_cost,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->shared_costs_include)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Felleskostnader inkluderer:</span>&nbsp;
+                                                    <span>{{number_format($property_data->shared_costs_include,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->common_costs_after_interest_free_period)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Felleskostnader etter avdragsfri periode:</span>&nbsp;
+                                                    <span>{{number_format($property_data->common_costs_after_interest_free_period,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->asset_value)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Formuesverdi:</span>&nbsp;
+                                                    <span>{{number_format($property_data->asset_value,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->percentage_of_public_debt)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Andel fellesgjeld:</span>&nbsp;
+                                                    <span>{{number_format($property_data->percentage_of_public_debt,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->value_rate)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Verditakst:</span>&nbsp;
+                                                    <span>{{number_format($property_data->value_rate,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->loan_rate)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Lånetakst:</span>&nbsp;
+                                                    <span>{{number_format($property_data->loan_rate,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->percentage_of_common_wealth)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Andel fellesformue:</span>&nbsp;
+                                                    <span>{{number_format($property_data->percentage_of_common_wealth,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->muncipal_fees_per_year)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Kommunale avgifter pr. år:</span>&nbsp;
+                                                    <span>{{number_format($property_data->muncipal_fees_per_year,0,""," ")}} Kr</span>
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->pre_empt_right)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Forkjøpsrett:</span>&nbsp;
+                                                    <span>{{$property_data->pre_empt_right}}</span>
+                                                </div>
+                                            @endif
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                             @endif
                             <br>
-                            <span class="font-weight-bold ">Matrikkelinformasjon</span>
-                            <div class="col-md-12"><span class="">Kommunenr: </span>&nbsp;<span>
-                                {{$property_data->municipality_number}}</span></div>
-                            <div class="col-md-12"><span class="">Gårdsnr: </span>&nbsp;<span>
-                                {{$property_data->farm_number}}</span></div>
-                            <div class="col-md-12"><span class="">Bruksnr: </span>&nbsp;<span>
-                                {{$property_data->usage_number}}</span></div>
+                            <span class="font-weight-bold col-md-12">Matrikkelinformasjon</span>
+                                <div class="row pl-3">
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Kommunenr: </span>
+                                        <span>{{$property_data->municipality_number}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Gårdsnr: </span>
+                                        <span>{{$property_data->farm_number}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">Bruksnr: </span>
+                                        <span>{{$property_data->usage_number}}</span>
+                                    </div>
+                                    @if($property_data->party_number)
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold">Festenummer: </span>
+                                            <span>{{$property_data->party_number}}</span>
+                                        </div>
+                                    @endif
+                                    @if($property_data->section_number)
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold">Seksjonsnummer: </span>
+                                            <span>{{$property_data->section_number}}</span>
+                                        </div>
+                                    @endif
+                                    @if($property_data->apartment_number)
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold">Leilighetsnummer: </span>
+                                            <span>{{$property_data->apartment_number}}</span>
+                                        </div>
+                                    @endif
+                                </div>
+
                         </div>
 
                         <div class="col-md-12">
@@ -294,7 +454,7 @@ $name = $property_data->ad->company_gallery;
                             @if($property_data->deliver_date)
                                 <div class="mb-2">
                                     <span>Visning: </span>
-                                    <span>{{date('d-m-Y', strtotime($property_data->deliver_date))}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}}</span>
+                                    <span>{{date('d-m-Y', strtotime($property_data->deliver_date))}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}} {{$property_data->note1 ? $property_data->note1 : ''}}</span>
                                 </div>
                             @endif
                             @if(!$property_data->ad->is_mine())
@@ -403,29 +563,4 @@ $name = $property_data->ad->company_gallery;
         </div>
     </main>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $("#more_details").click(function (e) {
-
-                e.preventDefault();
-                $(".more_details_section").removeClass('hide');
-                $("#more_details").addClass('hide');
-                $("#less_details").removeClass('hide');
-
-            });
-
-            $("#less_details").click(function (e) {
-
-                e.preventDefault();
-                $(".more_details_section").addClass('hide');
-                $("#more_details").removeClass('hide');
-                $("#less_details").addClass('hide');
-
-            });
-
-
-        });
-
-    </script>
 @endsection
