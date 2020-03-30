@@ -177,7 +177,7 @@ class JobController extends Controller
         $ad->job->terms()->detach();
         $ad->job->terms()->attach($terms);
 
-        $request->session()->flash('success', 'Jobben er lagt til');
+        $request->session()->flash('success', ' ');
         return back();
     }
 

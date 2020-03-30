@@ -232,7 +232,7 @@ loadMoreData(1);
 	        .done(function(data)
 	        {
 	            if(data == ""){
-	                $('.ajax-load').html("No more records found");
+	                $('.ajax-load').html("Ingen flere poster ble funnet");
 	                return;
 	            }
                 console.log(data);

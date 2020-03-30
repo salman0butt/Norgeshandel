@@ -49,8 +49,15 @@
             <div class="col-md-12">
                 <h4 class="text-muted pl-3 pr-3">{{__('About the position')}}</h4>
                 <div class="pl-3">
-                    @include('common.partials.flash-messages')
-                    <div class="notice"></div>
+        @if ($message = Session::get('success'))
+        <script>
+        $(function(){
+            notify("success","Jobben er lagt til","publisert");
+        });
+        
+        </script>
+        @endif
+                    {{-- <div class="notice"></div> --}}
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
@@ -550,15 +557,8 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                         
                         if ($('#ad_id').val().length < 1) {
                             //console.log(resp.job_id);
-                            $('.notice').hide();
-                            $('.notice').append(
-                                '<div class="alert alert-success">Jobben ble lagret!</div>');
-                            setTimeout(function () {
-                                $('.notice').show('slow');
-                            }, 2000);
-                            setTimeout(function () {
-                                $('.notice').hide('slow');
-                            }, 5000);
+                            notify("info","Jobben ble lagret!","lagrede");
+
                             $('#job_id').val(resp.job_id);
                             $('#ad_id').val(resp.ad_id);
                         }
