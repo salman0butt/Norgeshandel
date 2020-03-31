@@ -21,7 +21,8 @@ if($property !== null)
 {{--<a href="{{url('/', $ad->id)}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
     <a href="{{url('/', $ad->id)}}" class="image-section col-md-4 p-2">
-        <img src="{{$path}}" class="img-fluid radius-8 trailing-border" alt="" style="height: 160px;width: 100%;">
+        <div class="img-fluid radius-8 trailing-border" style="height: 160px;width: 100%;background-image: url('{{$path}}'); background-size: cover; background-position: center;"></div>
+        {{--        <img src="{{$path}}" class="img-fluid radius-8 trailing-border" alt="" style="height: 160px;width: 100%;">--}}
         @if(!$ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
         @endif
@@ -34,17 +35,17 @@ if($property !== null)
                 @endif
             </span>
         @endif
-         {{--<div class="product-total-price m-2">--}}
-         <?php
-         //                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
-         echo(($ad->ad_type == 'property_for_sale' && $property->total_price) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
-         echo(($ad->ad_type == 'property_holiday_home_for_sale' && $property->total_price) ?  '<div class="product-total-price m-2">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
-         //                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
-         //                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
-         echo(($ad->ad_type == 'property_commercial_for_rent' && $property->rent_per_meter_per_year) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->rent_per_meter_per_year,0,""," ").' KR</div>' : "");
-         echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->asking_price,0,""," ").' KR</div>' : "");
-         //                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
-         ?>
+        {{--<div class="product-total-price m-2">--}}
+        <?php
+        //                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
+        echo(($ad->ad_type == 'property_for_sale' && $property->total_price) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
+        echo(($ad->ad_type == 'property_holiday_home_for_sale' && $property->total_price) ?  '<div class="product-total-price m-2">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
+        //                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
+        //                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
+        echo(($ad->ad_type == 'property_commercial_for_rent' && $property->rent_per_meter_per_year) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->rent_per_meter_per_year,0,""," ").' KR</div>' : "");
+        echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->asking_price,0,""," ").' KR</div>' : "");
+        //                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
+        ?>
 
         <div class="product-price m-2"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}" width="23px;">
             <?php
@@ -60,7 +61,7 @@ if($property !== null)
         </div>
     </a>
     <div class="detailed-section col-md-8 position-relative p-2">
-{{--        <form action=" @if($ad->ad_type == 'property_for_rent') {{ url('property/for/rent/ad/'.$property->id)}}  @elseif($ad->ad_type == 'property_for_sale') {{ url('property/for/sale/ad/'.$property->id)}} @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id)}} @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('flat/wishes/rented/'.$property->id)}} @endif" method="POST" onsubmit="javascript:return confirm('Vil du slette denne annonsen?')">--}}
+        {{--        <form action=" @if($ad->ad_type == 'property_for_rent') {{ url('property/for/rent/ad/'.$property->id)}}  @elseif($ad->ad_type == 'property_for_sale') {{ url('property/for/sale/ad/'.$property->id)}} @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id)}} @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('flat/wishes/rented/'.$property->id)}} @endif" method="POST" onsubmit="javascript:return confirm('Vil du slette denne annonsen?')">--}}
         <form action="{{route('delete-property', $property->ad)}}" method="POST" onsubmit="javascript:return confirm('Vil du slette denne annonsen?')">
             {{csrf_field()}}
             {{method_field('DELETE')}}
@@ -75,13 +76,13 @@ if($property !== null)
         @if(!$ad->sold_at && $ad->status !='sold')
             <a href="
                 @if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$property->id.'/edit')}}
-                @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}}
-                @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$property->id.'/edit')}}
-                @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}}
-                @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$property->id.'/edit')}}
-                @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$property->id.'/edit')}}
-                @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$property->id.'/edit')}}
-                @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_business_for_sale') {{ url('add/business/for/sale/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_holiday_home_for_sale') {{ url('holiday/home/for/sale/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_flat_wishes_rented') {{ url('new/flat/wishes/rented/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_commercial_plots') {{ url('commercial/plots/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_commercial_for_sale') {{ url('add/new/commercial/property/for/sale/'.$property->id.'/edit')}}
+            @elseif($ad->ad_type == 'property_commercial_for_rent') {{ url('add/new/commercial/property/for/rent/'.$property->id.'/edit')}}
             @endif" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm p-0 edit-ad-button">Endre</a>
         @endif
 
@@ -90,10 +91,10 @@ if($property !== null)
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm statistics-button">Se statistikk</a>
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Flere valg</a>
         {{--<div class="buttons position-absolute p-2" style="bottom: 0;right: 0">--}}
-            {{--<a href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue float-right">Flere valg</a>--}}
-            {{--@if($property->ad->status=='saved')--}}
-                {{--<a href="" class="dme-btn-outlined-blue float-right mr-2">Fullfør annonsen</a>--}}
-            {{--@endif--}}
+        {{--<a href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue float-right">Flere valg</a>--}}
+        {{--@if($property->ad->status=='saved')--}}
+        {{--<a href="" class="dme-btn-outlined-blue float-right mr-2">Fullfør annonsen</a>--}}
+        {{--@endif--}}
         {{--</div>--}}
     </div>
 </div>
