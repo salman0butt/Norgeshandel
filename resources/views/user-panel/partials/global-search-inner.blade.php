@@ -14,15 +14,15 @@
     <div class="col-md-7">
         <ul class="p-1 list-unstyled">
             @if (count($job_parttime)> 0)
-                <li><a href="{{url('jobs/search?search='.$search.'&job_type=part_time')}}">På deltid
+                <li><a href="{{url('jobs/search?search='.$search.'&job_type=part_time')}}">i deltid
                         ({{count($job_parttime)}})</a></li>
             @endif
             @if(count($job_fulltime) > 0)
-                <li><a href="{{url('jobs/search?search='.$search.'&job_type=full_time')}}">På heltid
+                <li><a href="{{url('jobs/search?search='.$search.'&job_type=full_time')}}">i heltid
                         ({{count($job_fulltime)}})</a></li>
             @endif
             @if(count($job_management) > 0)
-                <li><a href="{{url('jobs/search?search='.$search.'&job_type=management')}}">På ledelse
+                <li><a href="{{url('jobs/search?search='.$search.'&job_type=management')}}">i ledelse
                         ({{count($job_management)}})</a></li>
             @endif
         </ul>
@@ -45,39 +45,39 @@
         <div class="col-md-7">
             <ul class="p-1 list-unstyled">
                 @if (count($property_for_rent)> 0)
-                    <li><a href="{{url('property/property-for-rent/search?search='.$search)}}">På Bolig til leie
+                    <li><a href="{{url('property/property-for-rent/search?search='.$search)}}">i Bolig til leie
                             ({{count($property_for_rent)}})</a></li>
                 @endif
                 @if(count($property_for_sale) > 0)
-                    <li><a href="{{url('property/property-for-sale/search?search='.$search)}}">På Bolig til salgs
+                    <li><a href="{{url('property/property-for-sale/search?search='.$search)}}">i Bolig til salgs
                             ({{count($property_for_sale)}})</a></li>
                 @endif
                 @if(count($property_for_holiday_home_for_Sale) > 0)
-                    <li><a href="{{url('property/holiday-homes-for-sale/search?search='.$search)}}">På Fritidsbolig til salgs
+                    <li><a href="{{url('property/holiday-homes-for-sale/search?search='.$search)}}">i Fritidsbolig til salgs
                             ({{count($property_for_holiday_home_for_Sale)}})</a></li>
                 @endif
                 @if(count($property_realstate_business) > 0)
-                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Eiendom Realstate Business
+                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">i Eiendom Realstate Business
                             ({{count($property_realstate_business)}})</a></li>
                 @endif
                 @if(count($property_flat_wishes) > 0)
-                    <li><a href="{{url('property/flat-wishes-rented/search?search='.$search)}}">På Bolig ønskes leid
+                    <li><a href="{{url('property/flat-wishes-rented/search?search='.$search)}}">i Bolig ønskes leid
                             ({{count($property_flat_wishes)}})</a></li>
                 @endif
                 @if(count($commercial_property_for_sale) > 0)
-                    <li><a href="{{url('property/commercial-property-for-sale/search?search='.$search)}}">På Næringseiendom til salgs
+                    <li><a href="{{url('property/commercial-property-for-sale/search?search='.$search)}}">i Næringseiendom til salgs
                             ({{count($commercial_property_for_sale)}})</a></li>
                 @endif
                 @if(count($commercial_property_for_rent) > 0)
-                    <li><a href="{{url('property/commercial-property-for-rent/search?search='.$search)}}">På Næringseiendom til leie
+                    <li><a href="{{url('property/commercial-property-for-rent/search?search='.$search)}}">i Næringseiendom til leie
                             ({{count($commercial_property_for_rent)}})</a></li>
                 @endif
                 @if(count($commercial_plot) > 0)
-                    <li><a href="{{url('property/commercial-plots/search?search='.$search)}}">På Næringstomt
+                    <li><a href="{{url('property/commercial-plots/search?search='.$search)}}">i Næringstomt
                             ({{count($commercial_plot)}})</a></li>
                 @endif
                 @if(count($Business_for_sale) > 0)
-                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Bedrifter til salgs
+                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">i Bedrifter til salgs
                             ({{count($Business_for_sale)}})</a></li>
                 @endif
             </ul>

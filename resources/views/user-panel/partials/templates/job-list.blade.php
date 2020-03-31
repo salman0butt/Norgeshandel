@@ -40,16 +40,19 @@ if(count($media)>0){
             </div>
         </div>
         <div class="detailed-section col-sm-8 p-2">
+            <div class="product-location text-muted mb-0 mt-2 u-d1" style="font-size: 16px; color: #6c757d!important;">{{$job->address ? Str::limit($job->address,30).', ' : ''}}{{$job->zip_city ? $job->zip_city : ''}}</div>
             <div class="location u-t5 text-muted mt-2 float-left">{{$job->sector}}</div>
-            <div class="float-right mr-5" style="font-size: 16px; color: #6c757d!important;">{{$job->zip_city ? $job->zip_city : ''}}</div>
             <div class="clearfix"></div>
             <div class="title color-grey">{{$job->title}}</div>
-            <div class="detail u-t5 mt-2 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>
-            <div class="dealer-logo float-right mt-3" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>
+            <div class="detail u-t5 mt-1 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>
+            <div class="dealer-logo float-right mt-1" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>
         </div>
     </a>
     @if(Request::is('my-business/favorite-list/*'))
-        <a href="#" data-id="{{$item_id ? $item_id : ''}}" data-target="#ad_note_for_fav" data-toggle="modal" class="ad_note_link" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil-alt"></span></a>
+        <p class="product-location text-muted mb-0 mt-2 u-d1" style="position: absolute;bottom: 15px;left: 231px;">
+            {{$fav_item && $fav_item->note ? Str::limit($fav_item->note,60) : ''}}
+        </p>
+        <a href="#" data-id="{{$fav_item && $fav_item->id ? $fav_item->id : ''}}" data-target="#ad_note_for_fav" data-toggle="modal" class="ad_note_link" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil-alt"></span></a>
     @endif
     @include('user-panel.partials.fav-heart-button', compact('ad'))
 </div>
