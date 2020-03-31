@@ -56,11 +56,16 @@ $name = $property_data->ad->company_gallery;
                     </div>
                 </nav>
             </div>
-        <div class="row">
-            <div class="col-md-12">
-                @include('user-panel.partials.landing_page_slider',compact('name'))
+            <div class="row">
+                <div class="col-md-12">
+                    @include('user-panel.partials.landing_page_slider',compact('name'))
+                    @if($property_data->video)
+                        <div style="position: absolute;bottom: 0;right: 30px;">
+                            <button class="btn btn-light radius-8 video-button" onclick="window.open('{{$property_data->video}}', '_blank');" style="color: #ac304a; background: white">
+                                <i class="far fa-play-circle fa-lg pr-1"></i>Video</button>
+                        </div>
+                    @endif
                 </div>
-
             </div>
             <div class="row mt-4">
                 <div class="col-md-8">
