@@ -150,6 +150,9 @@ class PropertyForRentController extends Controller
         }
 //
         switch ($sort) {
+            case 'published':
+                $query->orderBy('ads.updated_at', 'DESC');
+                break;
             case 'priced-low-high':
                 $query->orderBy('asking_price', 'ASC');
                 break;

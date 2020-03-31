@@ -83,7 +83,7 @@ class BusinessForSaleController extends Controller
 
         switch ($sort) {
             case 'published':
-                $query->orderBy('ads.created_at', 'DESC');
+                $query->orderBy('ads.updated_at', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('price', 'ASC');
