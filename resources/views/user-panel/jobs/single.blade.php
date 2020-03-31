@@ -61,13 +61,6 @@
                 <div class="col-md-8">
                     @php $ad = $job->ad; @endphp
                     @include('user-panel.partials.favorite-button',compact('ad'))
-
-                    <a href="#" class=""><i class="hover-zoom fa fa-envelope"
-                                            style="color: #E43732; font-size: 25px; padding:7px 10px;"></i></a>
-                    <a href="#" class=""><i class="hover-zoom fab fa-facebook"
-                                            style="color: #3C56A0;font-size: 25px; padding:7px 10px;"></i></a>
-                    <a href="#" class=""><i class="hover-zoom fab fa-twitter"
-                                            style="color: #5BBCF6;font-size: 25px; padding:7px 10px;"></i></a>
                     <div class="row single-realestate-detail p-3">
                         <div class="col-md-12">
                             <h1 class="u-t2 name">{{$job->name}}</h1>
