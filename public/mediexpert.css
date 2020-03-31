@@ -1193,3 +1193,6 @@ label span.count{
 .remove-selected-file-button:hover{
     color: darkgrey;
 }
+.box-image{
+    background-position: center; background-size: cover;
+}

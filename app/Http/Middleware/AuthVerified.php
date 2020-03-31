@@ -16,6 +16,9 @@ class AuthVerified
      */
     public function handle($request, Closure $next)
     {
+//        if (!Auth::check()){
+//            dd($request->url());
+//        }
         if (
             (Auth::check() && Auth::user()->hasVerifiedEmail()) ||
             !Auth::check()

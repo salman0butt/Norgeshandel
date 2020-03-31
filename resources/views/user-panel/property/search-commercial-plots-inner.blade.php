@@ -85,9 +85,9 @@
                         <a href="{{url('/', $commercial_plot->ad->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
-                                <div class="trailing-border">
-                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"
-                                        alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">
+                                <div class="trailing-border box-image" style="height: 174.93px; width:100%;background-image: url('@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif')">
+{{--                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"--}}
+{{--                                        alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">--}}
                                     @if($commercial_plot->ad && $commercial_plot->ad->status == 'sold' && $commercial_plot->ad->sold_at)
                                         <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">SOLGT</span>
                                     @endif
