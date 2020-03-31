@@ -22,6 +22,10 @@
 
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/toastr.min.css')}}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{{asset('public/css/jssocials.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/jssocials-theme-flat.css')}}">
     
     <!--    incluedes   -->
     <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
@@ -41,6 +45,7 @@
     #toast-container {
         top:8%;
     }
+    .jssocials-share-link { border-radius: 50%; }
 </style>
 </head>
 <body class="@yield('body_class')">
@@ -381,6 +386,7 @@
 <script src="{{asset('public/js/messages_no.min.js')}}"></script>
 <script src="{{asset('public/js/fslightbox.js')}}"></script>
 <script src="{{asset('public/js/toastr.min.js')}}"></script>
+<script src="{{asset('public/js/jssocials.min.js')}}"></script>
 
 <script>
     var urlParams = new URLSearchParams(location.search);
@@ -556,6 +562,13 @@
             }
           
                 
+</script>
+<script>
+    $("#shareRoundIcons").jsSocials({
+        showLabel: false,
+        showCount: false,
+        shares: ["email", "twitter", "facebook"]
+    });
 </script>
 
 </body>

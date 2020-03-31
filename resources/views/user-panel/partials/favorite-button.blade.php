@@ -1,3 +1,4 @@
+ <div class="row pl-4 pr4">
 <a href="#" style="position: initial" class="add-to-fav-btn
 @if(Auth::check() && count($ad->favorite($ad->id))>0)
     fav
@@ -25,3 +26,5 @@
         Legg til favoritt
     </button>
 </a>
+     <div id="shareRoundIcons" class="ml-4"></div>
+                    </div>

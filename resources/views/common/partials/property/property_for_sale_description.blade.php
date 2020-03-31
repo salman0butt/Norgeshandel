@@ -70,11 +70,8 @@ $name = $property_data->ad->company_gallery;
             <div class="row mt-4">
                 <div class="col-md-8">
                     @php $ad = $property_data->ad; @endphp
-                    @include('user-panel.partials.favorite-button',compact('ad'))
-
-                    <a href="#"><i class="fa fa-envelope" style="font-size: 25px; padding:7px 10px;"></i></a>
-                    <a href="#"><i class="fab fa-facebook" style="font-size: 25px; padding:7px 10px;"></i></a>
-                    <a href="#"><i class="fab fa-twitter" style="font-size: 25px; padding:7px 10px;"></i></a>
+                        @include('user-panel.partials.favorite-button',compact('ad'))
+              
                     <div class="row single-realestate-detail p-3">
                         <div class="col-md-12">
 
@@ -88,7 +85,7 @@ $name = $property_data->ad->company_gallery;
                             <span>
                                 @if($property_data->zip_code)
                                     {{$property_data->zip_code}}
-                                    {{$property_data->zip_city ? $property_data->zip_city : ''}}
+                                    {{$property_data->zip_city ? Str::ucfirst(Str::lower($property_data->zip_city)) : ''}}
                                 @endif
                             </span>
                         </div>
