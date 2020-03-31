@@ -25,7 +25,7 @@ function notify(type,msg,title) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    
+
 }
 
 function readFileURL(input, img) {
@@ -110,7 +110,12 @@ $(document).ready(function (e) {
 
     });
     $(document).click(function (e) {
-        // console.log(e.target);
+        if(isEmpty(e.target.closest('header'))){
+            $('.mega-menu').slideUp();
+            isDown = false;
+            $(this).find('span').addClass('fa-bars');
+            $(this).find('span').removeClass('fa-times');
+        }
     });
 
     $('.side-menu-button').click(function (e) {
@@ -253,7 +258,7 @@ $(document).ready(function (e) {
             $('.property-pdf-value').fadeOut();
         }
     });
- 
+
     $('.url_http').on('change', function(){
     s = $(this).val();
     if (!s.match(/^[a-zA-Z]+:\/\//))
