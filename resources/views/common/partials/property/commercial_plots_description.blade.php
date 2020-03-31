@@ -1,4 +1,3 @@
-
 @extends('layouts.landingSite')
 @section('page_content')
 

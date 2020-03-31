@@ -18,7 +18,8 @@ if ($job->company_id != 0) {
 ?>
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
     <a href="{{route('jobs.show', compact('job'))}}" class="image-section col-sm-4 p-2">
-        <img src="{{asset($image_path)}}" alt="" class="img-fluid radius-8" style="height: 160px; width: 100%;">
+        <div class="img-fluid radius-8" style="height: 160px; width: 100%;background-image: url('{{asset($image_path)}}'); background-position: center; background-size: cover;"></div>
+        {{--        <img src="{{asset($image_path)}}" alt="" class="img-fluid radius-8" style="height: 160px; width: 100%;">--}}
         @if($job && $job->ad && !$job->ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
         @endif

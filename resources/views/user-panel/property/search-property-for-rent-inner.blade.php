@@ -6,7 +6,8 @@
     top: 55px !important;
 }
 .cgrid .location {
-    top: -341px !important;
+    top: -5px !important;
+    left: 10px;
 }
 </style>
 <div class="left-ad float-left">
@@ -89,8 +90,8 @@
                     <div class="<?php echo $col==='grid'?'col-sm-4 pr-0':'' ?> <?php echo $col==='grid'?'cgrid':'clist' ?>" style="position:relative">
                         <a href="{{url('/', $property_for_rent->ad->id)}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col==='grid'?'col-sm-12':'col-sm-4' ?>  p-2">
-                                <div class="trailing-border"
-                                     style="background-image: url('{{$image_path}}'); background-position: center; background-size: cover;height: 175px; width:100%"
+                                <div class="trailing-border box-image"
+                                     style="background-image: url('{{$image_path}}');height: 175px; width:100%"
                                 >
 {{--                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif" alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">--}}
                                     @if($property_for_rent->ad && $property_for_rent->ad->status == 'sold' && $property_for_rent->ad->sold_at)
