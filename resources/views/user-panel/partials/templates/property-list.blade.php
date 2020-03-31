@@ -66,6 +66,9 @@ if($property !== null)
             <p class="product-title u-t4">
             {{Str::limit($ad->getTitle(),40)}}
             </p>
+            @if(Request::is('my-business/favorite-list/*'))
+            <a href="#" data-id="{{$item_id? $item_id : ''}}" data-target="#ad_note_for_fav" data-toggle="modal" class="ad_note_link" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil-alt"></span></a>
+            @endif
         </div>
         @include('user-panel.partials.fav-heart-button', compact('ad'))
     </div>
