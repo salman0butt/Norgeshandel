@@ -83,7 +83,7 @@ class CommercialPlotController extends Controller
 
         switch ($sort) {
             case 'published':
-                $query->orderBy($table . '.created_at', 'DESC');
+                $query->orderBy($table . '.updated_at', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('value_rate', 'ASC');

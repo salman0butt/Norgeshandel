@@ -132,7 +132,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
         $order = $request->order;
         switch ($order) {
             case 'published':
-                $query->orderBy('ad.created_at', 'DESC');
+                $query->orderBy('ads.updated_at', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('value_rate', 'ASC');

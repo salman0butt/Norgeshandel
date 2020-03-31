@@ -106,7 +106,7 @@ class FlatWishesRentedController extends Controller
 
         switch ($sort) {
             case 'published':
-                $query->orderBy('flat_wishes_renteds.created_at', 'DESC');
+                $query->orderBy('flat_wishes_renteds.updated_at', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'ASC');
