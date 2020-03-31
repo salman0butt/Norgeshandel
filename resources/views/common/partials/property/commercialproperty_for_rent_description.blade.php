@@ -75,10 +75,6 @@
                                 @endif
                             </span>
                         </div>
-                        @if($property_data->rent_per_meter_per_year)
-                            <div class="col-md-12 font-weight-bold mt-3">Leie pr m²/år:</div>
-                            <div class="col-md-12 u-t3">{{number_format($property_data->rent_per_meter_per_year,0,""," ")}} kr</div>
-                        @endif
                         @php
                             $property_type = array();
                             $property_type = json_decode($property_data->property_type);
@@ -229,10 +225,12 @@
                     <p class="mt-3">
                         {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                         Eiendomsmegler</p>
-                    <div class="mb-2">
-                        <span>Mobil: </span>
-                        <span><a href="tel:{{$property_data->contact}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->contact}}</a></span>
-                    </div>
+                    @if($property_data->phone)
+                        <div class="mb-2">
+                            <span>Telefon : </span>
+                            <span><a href="tel:{{$property_data->phone}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}}</a></span>
+                        </div>
+                    @endif
                     {{--<div class="mb-2">--}}
                         {{--<span>Telefon: </span>--}}
                         {{--<span><a href="tel:{{$property_data->phone}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}}</a></span>--}}
@@ -257,6 +255,9 @@
                                 </font>
                             </font>
                         </button>
+                    @endif
+                    @if($property_data->link && $property_data->link_for_information)
+                        <div class="mb-2"><a href="{{$property_data->link_for_information}}" target="_blank">{{$property_data->link}}</a></div>
                     @endif
                     {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 </div>

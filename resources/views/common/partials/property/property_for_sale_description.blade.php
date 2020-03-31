@@ -252,7 +252,7 @@ $name = $property_data->ad->company_gallery;
                                             @if($property_data->shared_costs_include)
                                                 <div class="col-md-6">
                                                     <span class="font-weight-bold">Felleskostnader inkluderer:</span>&nbsp;
-                                                    <span>{{number_format($property_data->shared_costs_include,0,""," ")}} Kr</span>
+                                                    <span>{{$property_data->shared_costs_include}}</span>
                                                 </div>
                                             @endif
 
