@@ -82,7 +82,7 @@
 
                     <div
                         class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
-                        <a href="{{url('/business/for/sale/description', $value->id)}}"
+                        <a href="{{$business_for_sale->ad && $business_for_sale->ad->id ? url('/', $business_for_sale->ad->id) : ''}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
                                 <div class="trailing-border">

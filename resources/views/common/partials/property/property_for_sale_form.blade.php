@@ -499,7 +499,7 @@
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Husleie/felleskost.</h3>
+            <h3 class="u-t5">Husleie/felleskost (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="rent_shared_cost" type="text" value="{{ $property_for_sale->rent_shared_cost }}"  class="dme-form-control" placeholder="Kr.">
@@ -585,7 +585,7 @@
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Andel fellesgjeld</h3>
+            <h3 class="u-t5">Andel fellesgjeld (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                 <input name="percentage_of_public_debt" value="{{ $property_for_sale->percentage_of_public_debt }}" type="text"

@@ -36,14 +36,10 @@ if($property !== null)
         @endif
          {{--<div class="product-total-price m-2">--}}
          <?php
-         //                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
          echo(($ad->ad_type == 'property_for_sale' && $property->total_price) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
-         echo(($ad->ad_type == 'property_holiday_home_for_sale' && $property->total_price) ?  '<div class="product-total-price m-2">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
-         //                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
-         //                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
+         echo(($ad->ad_type == 'property_holiday_home_for_sale' && is_numeric($property->total_price)) ?  '<div class="product-total-price m-2">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
          echo(($ad->ad_type == 'property_commercial_for_rent' && $property->rent_per_meter_per_year) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->rent_per_meter_per_year,0,""," ").' KR</div>' : "");
          echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? '<div class="product-total-price m-2">Totalpris: '.number_format($property->asking_price,0,""," ").' KR</div>' : "");
-         //                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
          ?>
 
         <div class="product-price m-2"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}" width="23px;">
