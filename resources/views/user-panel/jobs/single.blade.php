@@ -30,14 +30,15 @@
                         <div class="col-md-6 p-0">
                             <ul class="breadcrumb w-100   text-right d-block"
                                 style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a
-                                        href="{{url('jobs', compact('prev'))}}"> &lt; Forrige </a> @else <span
-                                        class="text-muted">Forrige</span>@endif</li>
-                                <li class="breadcrumb-item active d-inline-block"><a href="{{url('jobs')}}">Til
-                                        søket</a></li>
-                                <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a
-                                        href="{{url('jobs', compact('next'))}}"> Neste ></a> @else <span
-                                        class="text-muted">Neste</span>@endif</li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($prev) ? url('/', $prev->id) : url('jobs')}}"> &lt; Forrige </a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{url('jobs')}}">Til søket</a>
+                                </li>
+                                <li class="breadcrumb-item active d-inline-block">
+                                    <a href="{{($next) ? url('/', $next->id) : url('jobs')}}"> Neste ></a>
+                                </li>
                             </ul>
                         </div>
                     </div>

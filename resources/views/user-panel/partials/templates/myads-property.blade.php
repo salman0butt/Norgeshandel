@@ -62,9 +62,13 @@ if($property !== null)
             {{method_field('DELETE')}}
             <button type="submit" class="link float-right" style="cursor: pointer;"><span class="fa fa-trash-alt text-muted"></span></button>
         </form>
-        <p class="product-location text-muted mb-0 mt-2 u-d1">
-            {{$property->street_address ? Str::limit($property->street_address,60) : ''}}
+        <p class="product-location text-muted mb-0 mt-2 u-d1 float-left">
+            {{$property->street_address ? Str::limit($property->street_address,45) : ''}}
         </p>
+        <p class="product-location text-muted mb-0 mt-2 u-d1 float-right mr-3">
+            {{$property->zip_city ? $property->zip_city : ''}}
+        </p>
+        <div class="clearfix"></div>
         <p class="product-title u-t4">
             {{Str::limit($ad->getTitle(),100)}}
         </p>

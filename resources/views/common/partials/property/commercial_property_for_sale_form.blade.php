@@ -495,7 +495,7 @@
             <h3 class="u-t5">Tekst på lenke (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="line_text" value="{{ $commercial_property_for_sale->line_text }}" type="text" class="dme-form-control url_http">
+                    <input name="line_text" value="{{ $commercial_property_for_sale->line_text }}" type="text" class="dme-form-control">
                 </div>
             </div>
         </div>

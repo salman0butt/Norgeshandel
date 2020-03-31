@@ -128,7 +128,9 @@ class HomeController extends Controller
             $type = $ad->ad_type;
             if ($type == 'job' && $ad_type == 'jobs'){
                 $job = $ad->job;
-                return view('user-panel.jobs.single', compact('job'));
+                $prev = common::previous_ad($job);
+                $next = common::next_ad($job);
+                return view('user-panel.jobs.single', compact('job','prev','next'));
             }
             else if($type == 'property_for_rent'){
                 if ($ad->property) {

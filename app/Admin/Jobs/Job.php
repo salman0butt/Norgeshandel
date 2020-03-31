@@ -31,6 +31,7 @@ class Job extends Model
         'emp_twitter',
         'country',
         'zip',
+        'zip_city',
         'address',
         'workplace_video',
         'app_receive_by',

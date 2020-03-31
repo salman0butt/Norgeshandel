@@ -34,7 +34,7 @@
                                     <a href="{{($prev) ? url('/', $prev->id) : url('property/commercial-plots/search')}}"> &lt; Forrige </a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
-                                    <a href="#">Til søket</a>
+                                    <a href="{{url('property/commercial-plots/search')}}">Til søket</a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
                                     <a href="{{($next) ? url('/', $next->id) : url('property/commercial-plots/search')}}"> Neste ></a>

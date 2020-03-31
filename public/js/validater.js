@@ -461,9 +461,6 @@ $(document).ready(function () {
                 minlength: 2,
                 maxlength: 120
             },
-            link: {
-                validUrl: true
-            },
             link_for_information: {
                 validUrl: true
             }//,
