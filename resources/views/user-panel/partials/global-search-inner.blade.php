@@ -8,7 +8,7 @@
 <div class="row m-2 search-result-topic" style="margin-bottom: 0 !important;">
     <div class="col-md-3 p1 offset-1">
         @if (count($job_parttime) > 0 || count($job_fulltime) > 0 || count($job_management) >0)
-            Jobs
+            Jobb
         @endif
     </div>
     <div class="col-md-7">
@@ -40,45 +40,44 @@
         (isset($Business_for_sale)) && count($Business_for_sale)>0)
 
         <div class="col-md-3 p1 offset-1">
-            Property
+            Eiendom
         </div>
         <div class="col-md-7">
             <ul class="p-1 list-unstyled">
                 @if (count($property_for_rent)> 0)
-                    <li><a href="{{url('property/property-for-rent/search?search='.$search)}}">På Property For Rent
+                    <li><a href="{{url('property/property-for-rent/search?search='.$search)}}">På Bolig til leie
                             ({{count($property_for_rent)}})</a></li>
                 @endif
                 @if(count($property_for_sale) > 0)
-                    <li><a href="{{url('property/property-for-sale/search?search='.$search)}}">På Property For Sale
+                    <li><a href="{{url('property/property-for-sale/search?search='.$search)}}">På Bolig til salgs
                             ({{count($property_for_sale)}})</a></li>
                 @endif
                 @if(count($property_for_holiday_home_for_Sale) > 0)
-                    <li><a href="{{url('property/holiday-homes-for-sale/search?search='.$search)}}">På Property for
-                            holiday home for Sale
+                    <li><a href="{{url('property/holiday-homes-for-sale/search?search='.$search)}}">På Fritidsbolig til salgs
                             ({{count($property_for_holiday_home_for_Sale)}})</a></li>
                 @endif
                 @if(count($property_realstate_business) > 0)
-                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Property Realstate Business
+                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Eiendom Realstate Business
                             ({{count($property_realstate_business)}})</a></li>
                 @endif
                 @if(count($property_flat_wishes) > 0)
-                    <li><a href="{{url('property/flat-wishes-rented/search?search='.$search)}}">På Property Flat Wishes
+                    <li><a href="{{url('property/flat-wishes-rented/search?search='.$search)}}">På Bolig ønskes leid
                             ({{count($property_flat_wishes)}})</a></li>
                 @endif
                 @if(count($commercial_property_for_sale) > 0)
-                    <li><a href="{{url('property/commercial-property-for-sale/search?search='.$search)}}">På Commercial Property For Sale
+                    <li><a href="{{url('property/commercial-property-for-sale/search?search='.$search)}}">På Næringseiendom til salgs
                             ({{count($commercial_property_for_sale)}})</a></li>
                 @endif
                 @if(count($commercial_property_for_rent) > 0)
-                    <li><a href="{{url('property/commercial-property-for-rent/search?search='.$search)}}">På Commercial Property For Rent
+                    <li><a href="{{url('property/commercial-property-for-rent/search?search='.$search)}}">På Næringseiendom til leie
                             ({{count($commercial_property_for_rent)}})</a></li>
                 @endif
                 @if(count($commercial_plot) > 0)
-                    <li><a href="{{url('property/commercial-plots/search?search='.$search)}}">På Commercial Plot
+                    <li><a href="{{url('property/commercial-plots/search?search='.$search)}}">På Næringstomt
                             ({{count($commercial_plot)}})</a></li>
                 @endif
                 @if(count($Business_for_sale) > 0)
-                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Business For Sale
+                    <li><a href="{{url('property/business-for-sale/search?search='.$search)}}">På Bedrifter til salgs
                             ({{count($Business_for_sale)}})</a></li>
                 @endif
             </ul>

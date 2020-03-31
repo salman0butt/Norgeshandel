@@ -39,7 +39,7 @@
                                     <a href="{{($prev) ? url('/', $prev->id) : url('property/holiday-homes-for-sale/search')}}"> &lt; Forrige </a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
-                                    <a href="#">Til søket</a>
+                                    <a href="{{url('property/holiday-homes-for-sale/search')}}">Til søket</a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
                                     <a href="{{($next) ? url('/', $next->id) : url('property/holiday-homes-for-sale/search')}}"> Neste ></a>

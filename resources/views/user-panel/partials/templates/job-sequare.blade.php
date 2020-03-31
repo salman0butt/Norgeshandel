@@ -36,7 +36,9 @@ background-size: cover; background-position: center">
             </div>
         </div>
         <div class="detailed-section col-sm-12 p-2">
-            <div class="location u-t5 text-muted mt-2">{{$job->sector}}</div>
+            <div class="location u-t5 text-muted mt-2 float-left">{{$job->sector}}</div>
+            <div class="location u-t5 text-muted mt-2 float-right">{{$job->zip_city}}</div>
+            <div class="clearfix"></div>
             <div class="title color-grey">{{$job->title}}</div>
             <div class="detail u-t5 mt-2 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>
             <div class="dealer-logo float-right mt-3" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>

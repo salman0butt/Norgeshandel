@@ -275,6 +275,7 @@ class JobController extends Controller
             'emp_twitter' => $request->emp_twitter,
             'country' => $request->country,
             'zip' => $request->zip,
+            'zip_city' => $request->zip_city,
             'address' => $request->address,
             'workplace_video' => $request->workplace_video,
             'app_receive_by' => $request->app_receive_by,

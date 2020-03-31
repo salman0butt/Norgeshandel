@@ -26,7 +26,7 @@
         <div class="dme-container pl-3 pr-3">
             <div class="row top-ad">
 
-<img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+            <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">

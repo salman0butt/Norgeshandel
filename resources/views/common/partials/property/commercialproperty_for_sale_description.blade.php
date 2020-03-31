@@ -38,7 +38,7 @@
                                     <a href="{{($prev) ? url('/', $prev->id) : url('property/commercial-property-for-sale/search')}}"> &lt; Forrige </a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
-                                    <a href="#">Til søket</a>
+                                    <a href="{{url('property/commercial-property-for-sale/search')}}">Til søket</a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
                                     <a href="{{($next) ? url('/', $next->id) : url('property/commercial-property-for-sale/search')}}"> Neste ></a>
@@ -327,7 +327,7 @@
                     Eiendomsmegler</p>
                    @if($property_data->phone)
                     <div class="mb-2">
-                        <span>Mobil: </span>
+                        <span>Telefon: </span>
                         <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">
                                 {{$property_data->phone}}</a></span>
                     </div>
@@ -372,6 +372,9 @@
                         </font><br>
                     </h5>
                 </div>
+                @if($property_data->line_text && $property_data->link_for_information)
+                    <div class="mb-2"><a href="{{$property_data->link_for_information}}" target="_blank">{{$property_data->line_text}}</a></div>
+                @endif
                 <div style="width: 306px; height: 153px;">
                     {!! Mapper::render() !!}
                 </div>
