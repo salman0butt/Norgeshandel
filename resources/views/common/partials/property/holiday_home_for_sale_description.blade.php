@@ -53,9 +53,9 @@
             <div class="col-md-12">
                 @include('user-panel.partials.landing_page_slider',compact('name'))
                 @if($property_data->video)
-                    <div style="position: absolute;bottom: 0;right: 30px;">
-                        <button class="btn btn-light radius-8 video-button" onclick="window.open('{{$property_data->video}}', '_blank');" style="color: #ac304a; background: white">
-                            <i class="far fa-play-circle fa-lg pr-1"></i>Video</button>
+                    <div style="position: absolute;bottom: 0;left: 30px;">
+                        <a data-fslightbox="gallery1" href="{{$property_data->video}}" class="btn btn-light radius-8 video-button" style="color: #ac304a; background: white">
+                            <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
                     </div>
                 @endif
             </div>
