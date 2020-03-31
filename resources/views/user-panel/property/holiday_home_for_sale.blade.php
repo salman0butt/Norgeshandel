@@ -35,25 +35,22 @@
             }
         });
 
-        $(document).on('keyup', '.asking_price,.cost_includes,.prcentage_of_joint_debt', function() {
+        $(document).on('keyup', '.asking_price,.prcentage_of_joint_debt', function() {
 
             var asking_price    = $(".asking_price").val();
-            var costs_include   = $(".cost_includes").val();
+            // var costs_include   = $(".cost_includes").val();
             var percentage_of_public_debt = $(".prcentage_of_joint_debt").val();
             if(asking_price == "")
             {
                 asking_price = 0;
             }
-            if(costs_include == "")
-            {
-                costs_include = 0;
-            }
+
             if(percentage_of_public_debt == "")
             {
                 percentage_of_public_debt = 0;
             }
-
-            var total_price = parseInt(asking_price) + parseInt(costs_include) + parseInt(percentage_of_public_debt);
+            // + parseInt(costs_include)
+            var total_price = parseInt(asking_price) + parseInt(percentage_of_public_debt);
             $("#total_price").val(total_price);
 
         });          

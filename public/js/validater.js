@@ -146,7 +146,6 @@ $(document).ready(function () {
                 number: true
             },
             rent_shared_cost: {
-                required: true,
                 number: true
             },
             shared_costs_include: {
@@ -171,7 +170,6 @@ $(document).ready(function () {
                 number: true
             },
             percentage_of_public_debt: {
-                required: true,
                 number: true
             },
             value_rate: {
@@ -283,14 +281,14 @@ $(document).ready(function () {
             //    minlength: 8,
             //    maxlength: 9
            // },
-            contact:{
-                required: true,
-                number: true
-            },
-            email:{
-                required:true,
-                email: true
-            }
+           //  contact:{
+           //      required: true,
+           //      number: true
+           //  },
+           //  email:{
+           //      required:true,
+           //      email: true
+           //  }
         },
 
         errorPlacement: function (error, element) {
@@ -414,20 +412,20 @@ $(document).ready(function () {
                 minlength: 2,
                 maxlength: 120
             },
-            link: {
-                validUrl: true
-            },
+            // link: {
+            //     validUrl: true
+            // },
           //  phone: {
           //      number: true
           //  },
-            contact: {
-                required: true,
-                number: true
-            },
-            e_post: {
-                required: true,
-                email: true
-            }
+          //   contact: {
+          //       required: true,
+          //       number: true
+          //   },
+          //   e_post: {
+          //       required: true,
+          //       email: true
+          //   }
         },
         onfocusout: false,
         invalidHandler: function(form, validator) {
@@ -462,9 +460,6 @@ $(document).ready(function () {
                 required: true,
                 minlength: 2,
                 maxlength: 120
-            },
-            link: {
-                validUrl: true
             },
             link_for_information: {
                 validUrl: true

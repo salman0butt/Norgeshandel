@@ -35,8 +35,8 @@ class AddCommercialPlot extends FormRequest
             'verditakst'            => 'nullable|numeric',
             'headline'              => 'required',
             'phone'                 => 'sometimes|nullable|numeric',
-            'contact'               => 'required',
-            'e_post'               => 'required',
+//            'contact'               => 'required',
+//            'e_post'               => 'required',
         
         ];
     }
@@ -62,8 +62,8 @@ class AddCommercialPlot extends FormRequest
             'verditakst.required' => 'Verditakst-feltet er påkrevd.',
             'link.required' => 'Koblingsfeltet er påkrevd.',
             'text_for_information.required' => 'Teksten for informasjonsfeltet er obligatorisk.',
-            'contact.required' => 'Kontaktfeltet er påkrevd.',
-            'e_post.required' => 'E-postfeltet er påkrevd.'
+//            'contact.required' => 'Kontaktfeltet er påkrevd.',
+//            'e_post.required' => 'E-postfeltet er påkrevd.'
         ];
     }
 }

@@ -41,20 +41,6 @@ if($property !== null)
                 echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? '<div class="product-total-price">Totalpris: '.number_format($property->asking_price,0,""," ").' KR</div>' : "");
                 //                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
                 ?>
-
-                    <?php /* Totalpris:
-                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
-                    echo($ad->ad_type == 'property_for_sale' ? number_format($property->total_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_holiday_home_for_sale' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_rent' ? number_format($property->rent_per_meter_per_year,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_plots' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
-                    KR */ ?>
-
-                    <!-- Totalpris: 2011 111 KR -->
-                {{--</div>--}}
                 <div class="product-price"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}" width="23px;">
                     <?php
                     echo(($ad->ad_type == 'property_for_rent' && $property->monthly_rent) ? number_format($property->monthly_rent,0,""," ").' KR' : "");
@@ -66,45 +52,19 @@ if($property !== null)
                     echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? number_format($property->asking_price,0,""," ").' KR' : "");
                     echo(($ad->ad_type == 'property_business_for_sale' && $property->price) ? number_format($property->price,0,""," ").' KR' : "");
                     ?>
-                    <?php /*
-                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
-                    echo($ad->ad_type == 'property_for_sale' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_holiday_home_for_sale' ? number_format($property->total_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_for_rent' ? number_format($property->rent_per_meter_per_year,0,""," ") : "");
-                    echo($ad->ad_type == 'property_commercial_plots' ? number_format($property->asking_price,0,""," ") : "");
-                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price ,0,""," "): "");
-                    KR */?>
-
                 </div>
             </a>
         </div>
         <div class="detailed-section col-md-8 position-relative p-2">
-            <p class="product-location text-muted mb-0 mt-2 u-d1">
-            {{$property->street_address ? Str::limit($property->street_address,40) : ''}}
-<!--                --><?php
-//                echo($ad->ad_type == 'property_for_rent' ? $property->street_address : "");
-//                echo($ad->ad_type == 'property_for_sale' ? $property->street_address : "");
-//                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->street_address : "");
-//                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->street_address : "");
-//                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->street_address : "");
-//                echo($ad->ad_type == 'property_commercial_plots' ? $property->street_address : "");
-//                echo($ad->ad_type == 'property_business_for_sale' ? $property->street_address : "");
-//                ?>
+            <p class="product-location text-muted mb-0 mt-2 u-d1 float-left">
+            {{$property->street_address ? Str::limit($property->street_address,20) : ''}}
             </p>
+            <p class="product-location text-muted mb-0 mt-2 u-d1 float-right mr-5">
+                {{$property->zip_city ? $property->zip_city : ''}}
+            </p>
+            <div class="clearfix"></div>
             <p class="product-title u-t4">
             {{Str::limit($ad->getTitle(),40)}}
-<!--                --><?php
-//                echo($ad->ad_type == 'property_for_rent' ? $property->heading : "");
-//                echo($ad->ad_type == 'property_for_sale' ? $property->headline : "");
-//                echo($ad->ad_type == 'property_holiday_home_for_sale' ? $property->ad_headline : "");
-//                echo($ad->ad_type == 'property_flat_wishes_rented' ? $property->headline : "");
-//                echo($ad->ad_type == 'property_commercial_for_sale' ? $property->headline : "");
-//                echo($ad->ad_type == 'property_commercial_for_rent' ? $property->heading : "");
-//                echo($ad->ad_type == 'property_commercial_plots' ? $property->headline : "");
-//                echo($ad->ad_type == 'property_business_for_sale' ? $property->headline : "");
-//                ?>
             </p>
         </div>
         @include('user-panel.partials.fav-heart-button', compact('ad'))

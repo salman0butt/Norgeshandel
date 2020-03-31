@@ -237,7 +237,7 @@
             <h3 class="u-t5">Tekst på lenke</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="link" type="text" value="{{ $commercial_plot->link }}" class="dme-form-control url_http">
+                    <input name="link" type="text" value="{{ $commercial_plot->link }}" class="dme-form-control">
                 </div>
             </div>
         </div>
@@ -263,26 +263,26 @@
             </div>
             <br>
         </div>
-        <div class="form-group">
-            <h3 class="u-t5">Kontaktperson</h3>
-            <div class="row">
-                <div class="col-sm-4 pr-md-0">
-                    <input name="contact" value="{{ $commercial_plot->contact }}" type="text" class="dme-form-control">
-                </div>
-                <div class="col-md-8"></div>
-            </div>
-            <br>
-        </div>
-        <div class="form-group">
-            <h3 class="u-t5">E-post</h3>
-            <div class="row">
-                <div class="col-sm-4 pr-md-0">
-                    <input name="e_post" value="{{ $commercial_plot->e_post }}" type="text" class="dme-form-control">
-                </div>
-                <div class="col-md-8"></div>
-            </div>
-            <br>
-        </div>
+        {{--<div class="form-group">--}}
+            {{--<h3 class="u-t5">Kontaktperson</h3>--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-4 pr-md-0">--}}
+                    {{--<input name="contact" value="{{ $commercial_plot->contact }}" type="text" class="dme-form-control">--}}
+                {{--</div>--}}
+                {{--<div class="col-md-8"></div>--}}
+            {{--</div>--}}
+            {{--<br>--}}
+        {{--</div>--}}
+        {{--<div class="form-group">--}}
+            {{--<h3 class="u-t5">E-post</h3>--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-4 pr-md-0">--}}
+                    {{--<input name="e_post" value="{{ $commercial_plot->e_post }}" type="text" class="dme-form-control">--}}
+                {{--</div>--}}
+                {{--<div class="col-md-8"></div>--}}
+            {{--</div>--}}
+            {{--<br>--}}
+        {{--</div>--}}
 
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">

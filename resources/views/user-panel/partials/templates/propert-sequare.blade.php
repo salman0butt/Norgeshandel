@@ -42,14 +42,10 @@ background-image: url('{{$path}}'); background-position: center; background-size
 
 
                     <?php
-//                    echo($ad->ad_type == 'property_for_rent' ? number_format($property->monthly_rent,0,""," ") : "");
                     echo(($ad->ad_type == 'property_for_sale' && $property->total_price) ? '<div class="product-total-price">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
                     echo(($ad->ad_type == 'property_holiday_home_for_sale' && $property->total_price) ?  '<div class="product-total-price">Totalpris: '.number_format($property->total_price,0,""," ").' KR</div>' : "");
-//                    echo($ad->ad_type == 'property_flat_wishes_rented' ? number_format($property->max_rent_per_month,0,""," ") : "");
-//                    echo($ad->ad_type == 'property_commercial_for_sale' ? number_format($property->rental_income,0,""," ") : "");
                     echo(($ad->ad_type == 'property_commercial_for_rent' && $property->rent_per_meter_per_year) ? '<div class="product-total-price">Totalpris: '.number_format($property->rent_per_meter_per_year,0,""," ").' KR</div>' : "");
                     echo(($ad->ad_type == 'property_commercial_plots' && $property->asking_price) ? '<div class="product-total-price">Totalpris: '.number_format($property->asking_price,0,""," ").' KR</div>' : "");
-//                    echo($ad->ad_type == 'property_business_for_sale' ? number_format($property->price,0,""," ") : "");
                     ?>
                     <!-- Totalpris: 2011 111 KR -->
                 <div class="product-price"><img src="{{asset('public/images/Eiendom_ikon_white.svg')}}" width="23px;">
@@ -67,11 +63,13 @@ background-image: url('{{$path}}'); background-position: center; background-size
             </div>
             </div>
 
-            <p class="product-location text-muted mb-0 my-2 u-d1">
-                <?php
-                echo(Str::limit($property->street_address,40));
-                ?>
+            <p class="product-location text-muted mb-0 my-2 u-d1 float-left">
+                {{$property->street_address ? Str::limit($property->street_address,30) : ''}}
             </p>
+            <p class="product-location text-muted mb-0 my-2 u-d1 float-right">
+                {{$property->zip_city}}
+            </p>
+            <div class="clearfix"></div>
             <p class="product-title u-t4">
                 <?php
                 echo(Str::limit($ad->getTitle(),75));

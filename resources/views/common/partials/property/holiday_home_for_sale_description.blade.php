@@ -39,7 +39,7 @@
                                     <a href="{{($prev) ? url('/', $prev->id) : url('property/holiday-homes-for-sale/search')}}"> &lt; Forrige </a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
-                                    <a href="#">Til søket</a>
+                                    <a href="{{url('property/holiday-homes-for-sale/search')}}">Til søket</a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
                                     <a href="{{($next) ? url('/', $next->id) : url('property/holiday-homes-for-sale/search')}}"> Neste ></a>
@@ -52,9 +52,15 @@
         <div class="row">
             <div class="col-md-12">
                 @include('user-panel.partials.landing_page_slider',compact('name'))
+                @if($property_data->video)
+                    <div style="position: absolute;bottom: 0;right: 30px;">
+                        <button class="btn btn-light radius-8 video-button" onclick="window.open('{{$property_data->video}}', '_blank');" style="color: #ac304a; background: white">
+                            <i class="far fa-play-circle fa-lg pr-1"></i>Video</button>
+                    </div>
+                @endif
             </div>
-
         </div>
+
         <div class="row mt-4">
             <div class="col-md-8">
                 @php $ad = $property_data->ad; @endphp
@@ -310,7 +316,7 @@
                                     @if($property_data->shared_costs_include)
                                         <div class="col-md-6">
                                             <span class="font-weight-bold">Felleskostnader inkluderer: </span>
-                                            <span>{{number_format($property_data->shared_costs_include,0,""," ")}} Kr</span>
+                                            <span>{{$property_data->shared_costs_include}}</span>
                                         </div>
                                     @endif
 
@@ -324,7 +330,7 @@
                                     @if($property_data->cost_includes)
                                         <div class="col-md-6">
                                             <span class="font-weight-bold">Omkostninger inkluderer: </span>
-                                            <span>{{number_format($property_data->cost_includes,0,""," ")}} Kr</span>
+                                            <span>{{$property_data->cost_includes}}</span>
                                         </div>
                                     @endif
 
@@ -423,9 +429,10 @@
                     Eiendomsmegler</p>
                 @if($property_data->phone)
                     <div class="mb-2">
-                        <span>Mobil: </span>
-                        <span><a href="tel:+4746545247" class="u-select-all"
-                                data-controller="trackSendSMS">{{$property_data->phone}}</a></span>
+                        <span>Telefon: </span>
+                        <span>
+                            <a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">{{$property_data->phone}}</a>
+                        </span>
                     </div>
                 @endif
                 {{--<button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>--}}
@@ -477,9 +484,18 @@
                     <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
                                     style="vertical-align: inherit;">Gi bud</font></font></button>
                 @endif
-                {{--<button class="dme-btn-outlined-blue col-12">Gi bud</button>--}}
-                {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
+                @if($property_data->state_report_link)
+                    <button onclick="window.open('{{$property_data->state_report_link}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                    style="vertical-align: inherit;">Tilstandsrapport</font></font></button>
+                @endif
+                @if($property_data->link_to_terif_documents)
+                    <button onclick="window.open('{{$property_data->link_to_terif_documents}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                    style="vertical-align: inherit;">Takstdokumenter</font></font></button>
+                @endif
+                @if($property_data->task_link)
+                    <button onclick="window.open('{{$property_data->task_link}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                    style="vertical-align: inherit;">Salgsoppgave</font></font></button>
+                @endif
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

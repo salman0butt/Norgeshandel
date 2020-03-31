@@ -18,7 +18,7 @@
                             style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
                             <li class="breadcrumb-item active"><a href="{{url('property/realestate')}}">Eiendom</a></li>
-                            <li class="breadcrumb-item active"><a href="#">Bolig ønskes leid</a></li>
+                            <li class="breadcrumb-item active"><a href="{{url('property/flat-wishes-rented/search')}}">Bolig ønskes leid</a></li>
                         </ol>
                     </div>
                     <div class="col-md-6 p-0">
@@ -26,7 +26,7 @@
                             style="border-top-left-radius: 0px;border-bottom-left-radius: 0px;">
                             <li class="breadcrumb-item active d-inline-block">@if(!empty($prev))<a href="#"> &lt;
                                     Forrige </a> @else <span class="text-muted">Forrige</span>@endif</li>
-                            <li class="breadcrumb-item active d-inline-block"><a href="#">Til
+                            <li class="breadcrumb-item active d-inline-block"><a href="{{url('property/flat-wishes-rented/search')}}">Til
                                     søket</a></li>
                             <li class="breadcrumb-item active d-inline-block">@if(!empty($next))<a href="#"> Neste ></a>
                                 @else <span class="text-muted">Neste</span>@endif</li>

@@ -33,7 +33,7 @@
                                 <a href="{{($prev) ? url('/', $prev->id) : url('property/business-for-sale/search')}}"> &lt; Forrige </a>
                             </li>
                             <li class="breadcrumb-item active d-inline-block">
-                                <a href="#">Til søket</a>
+                                <a href="{{url('property/business-for-sale/search')}}">Til søket</a>
                             </li>
                             <li class="breadcrumb-item active d-inline-block">
                                 <a href="{{($next) ? url('/', $next->id) : url('property/business-for-sale/search')}}"> Neste ></a>
@@ -125,8 +125,8 @@
                         Eiendomsmegler</p>
                     @if($property_data->phone)
                         <div class="mb-2">
-                            <span>Mobil: </span>
-                            <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS"> {{$property_data->phone}}</a></span>
+                            <span>Telefon: </span>
+                            <span><a href="{{$property_data->phone}}" class="u-select-all" data-controller="trackSendSMS"> {{$property_data->phone}}</a></span>
                         </div>
                     @endif
 
@@ -143,20 +143,18 @@
                         <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
                                         style="vertical-align: inherit;">Gi bud</font></font></button>
                     @endif
-                    {{--<button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>--}}
                     <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                     <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                             salgsoppgave</a></div>
                     @if(!$property_data->ad->is_mine())
                         <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                     @endif
-
-                <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
-                    <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                     <h2 class="u-t3">Visning</h2>
                     <div class="mb-2">Ta kontakt for å avtale visning</div>
                     <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>
-                    {{-- <a href="#" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
+                    @if($property_data->link && $property_data->link_for_information)
+                        <div class="mb-2"><a href="{{$property_data->link_for_information}}" target="_blank">{{$property_data->link}}</a></div>
+                    @endif
                 </div>
             </div>
         </div>

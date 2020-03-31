@@ -33,7 +33,7 @@
                                     <a href="{{($prev) ? url('/', $prev->id) : url('property/commercial-plots/search')}}"> &lt; Forrige </a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
-                                    <a href="#">Til søket</a>
+                                    <a href="{{url('property/commercial-plots/search')}}">Til søket</a>
                                 </li>
                                 <li class="breadcrumb-item active d-inline-block">
                                     <a href="{{($next) ? url('/', $next->id) : url('property/commercial-plots/search')}}"> Neste ></a>
@@ -133,10 +133,12 @@
                     </div>
                     <p class="mt-3">  {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
                         Eiendomsmegler</p>
-                    <div class="mb-2">
-                        <span>Mobil: </span>
-                        <span><a href="tel:{{$property_data->contact}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->contact}} </a></span>
-                    </div>
+                    @if($property_data->phone)
+                        <div class="mb-2">
+                            <span>Telefon : </span>
+                            <span><a href="tel:{{$property_data->phone}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}} </a></span>
+                        </div>
+                    @endif
                     <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                     <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                             salgsoppgave</a></div>
@@ -157,6 +159,9 @@
                                 </font>
                             </font>
                         </button>
+                    @endif
+                    @if($property_data->link && $property_data->text_for_information)
+                        <div class="mb-2"><a href="{{$property_data->text_for_information}}" target="_blank">{{$property_data->link}}</a></div>
                     @endif
                     {{-- <a href="#" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 </div>
