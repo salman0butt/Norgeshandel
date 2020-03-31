@@ -7,6 +7,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2>{{$list->name}}</h2>
+                        @include('common.partials.flash-messages')
                     </div>
                 </div>
             </div>
@@ -37,13 +38,13 @@
                 ?>
                 @if(isset($list->favorites) && is_countable($list->favorites) && count($list->favorites) > 0)
                     @foreach($fav as $item)
-                        <?php $ad = $item->ad; $date = Date('y-m-d',strtotime('-7 days'));?>
+                        <?php $ad = $item->ad; $date = Date('y-m-d',strtotime('-7 days')); $item_id = $item->id;?>
                         @if(isset($ad->ad_type) && $ad->visibility  && (strtotime($ad->sold_at) > strtotime($date) || !$ad->sold_at))
                             <?php $count++; ?>
                             @if($ad->ad_type === "job" )
-                                @include('user-panel.partials.templates.job-list', compact('ad'))
+                                @include('user-panel.partials.templates.job-list', compact('ad','item_id'))
                             @else
-                                @include('user-panel.partials.templates.property-list', compact('ad'))
+                                @include('user-panel.partials.templates.property-list', compact('ad','item_id'))
                             @endif
                         @endif
                     @endforeach
@@ -55,8 +56,69 @@
             <div class="col-md-4"></div>
         </div>
     </div>
+    <div id="ad_note_for_fav" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg pt-5">
+            <div class="modal-content">
+                <div class="modal-body" id="list-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="u-t2">Merk</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <form action="{{url('store-fav-note')}}" method="POST" id="fav_note_form">
+                                @csrf
+                                <input type="hidden" name="fav_id" class="fav_id">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label for="landing_list_name">Legg inn noen lapp</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea class="dme-form-control note" name="note"></textarea>
+                                    </div>
+                                    <div class="col-md-12 mt-3">
+                                        <button type="submit" class="dme-btn-outlined-blue float-right">Lagre</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <button class="dme-btn-outlined-blue float-right mr-3" data-dismiss="modal">Ferdig</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <script>
+    $(document).on('click', '.ad_note_link', function () {
+        var fav_id = $(this).attr('data-id');
+        if(fav_id){
+            $.ajax({
+                url: "{{url('fav-note')}}",
+                type:'GET',
+                data: {'fav_id':fav_id},
+                dataType:'json',
+                success: function (data) {
+                    if(data && data.id){
+                        $('#fav_note_form .fav_id').val(data.id);
+                    }
+                    if(data && data.note){
+                        $('#fav_note_form .note').val(data.note);
+                    }else{
+                        $('#fav_note_form .note').val('');
+                    }
+                }
+            });
+        }
+    });
+
+
+
     $('#landing_list_search').keyup(function (e) {
         if($(this).val().length>0){
             $.each($('.end_fav_item'), function(){
