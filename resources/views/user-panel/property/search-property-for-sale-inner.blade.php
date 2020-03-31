@@ -6,7 +6,8 @@
     top: 55px !important;
 }
 .cgrid .location {
-    top: -341px !important;
+    top: -5px !important;
+    left: 10px !important;
 }
 </style>
 <div class="left-ad float-left">

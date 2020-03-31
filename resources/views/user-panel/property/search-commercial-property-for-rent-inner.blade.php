@@ -6,7 +6,8 @@
     top: 55px !important;
 }
 .cgrid .location {
-    top: -341px !important;
+    top: -10px !important;
+    left: 7px;
 }
 .detail {
     width:100% !important;
