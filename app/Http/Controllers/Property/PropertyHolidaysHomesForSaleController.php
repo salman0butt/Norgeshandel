@@ -292,6 +292,11 @@ class PropertyHolidaysHomesForSaleController extends Controller
                 }
 
             }
+            if (isset($property_home_for_sale_data['published_on']) && $property_home_for_sale_data['published_on'] == 'on') {
+                $property_home_for_sale_data['published_on'] = 1;
+            } else {
+                $property_home_for_sale_data['published_on'] = 0;
+            }
 
             $response->update($property_home_for_sale_data);
             DB::commit();

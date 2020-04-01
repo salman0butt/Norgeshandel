@@ -851,7 +851,7 @@
         <div class="form-group ">
             <h3 class="u-t5">Publisert</h3>
             <label class="mb-2 form-check-label" for="published-on">
-                <input id="published-on" name="published_on" type="checkbox">Ikke vis profilbilde og
+                <input id="published-on" name="published_on" type="checkbox" {{$holiday_home_for_sale->published_on ? 'checked' : ''}}>Ikke vis profilbilde og
                 lenke til profilsiden.
             </label>
         </div>

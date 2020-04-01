@@ -210,9 +210,10 @@
                 </div>
                 @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
                     <div class="col-md-4">
-                        <div
-                            style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
-                            <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}</p>
+                        <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                            @if(!$property_data->published_on)
+                                <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}</p>
+                            @endif
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send
                                         melding</a></div>
@@ -237,10 +238,11 @@
                                     <a href="{{url('messages/new', $property_data->ad->id)}}">Visning etter avtale</a>
                                 </div>
                             @endif
-                            {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
-                            <div class="mb-2">
-                                <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
-                            </div>
+                            @if(!$property_data->published_on)
+                                <div class="mb-2">
+                                    <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @else
@@ -251,28 +253,22 @@
                                 <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;"
                                      alt="">
                             </div>
-                            <p class="mt-3">
-                            <span>
-                                {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
-                            </span>
-                                <br>Eiendomsmegler
-                            </p>
-
-                            <!-- <div class="mb-2">
-                                        <span>Mobil: </span>
-                                        <span><a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">  465 45 247</a></span>
-                                    </div> -->
-                            <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
-                            <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
+                            @if(!$property_data->published_on)
+                                <p class="mt-3">
+                                <span>
+                                    {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
+                                </span>
+                                    <br>Eiendomsmegler
+                                </p>
+                            @endif
+                            @if(!$property_data->published_on)
+                                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
                                     annonsør</a></div>
+                            @endif
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send
                                         melding</a></div>
                             @endif
-                        <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
-                            salgsoppgave</a></div>
-                        <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
-                        <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                             <h2 class="u-t3">Visning</h2>
                             @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
                             !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||

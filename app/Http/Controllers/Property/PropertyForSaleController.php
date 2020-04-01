@@ -391,6 +391,11 @@ class PropertyForSaleController extends Controller
                     }
                 }
             }
+            if (isset($property_for_sale_data['published-on']) && $property_for_sale_data['published-on'] == 'on') {
+                $property_for_sale_data['published-on'] = 1;
+            } else {
+                $property_for_sale_data['published-on'] = 0;
+            }
 
             $response = PropertyForSale::where('id', '=', $id)->update($property_for_sale_data);
             DB::commit();

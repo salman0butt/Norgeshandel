@@ -204,6 +204,12 @@ class CommercialPropertyForRentController extends Controller
                 $commercial_property_for_rent['facilities'] = null;
             }
 
+            if (isset($commercial_property_for_rent['published-on']) && $commercial_property_for_rent['published-on'] == 'on') {
+                $commercial_property_for_rent['published-on'] = 1;
+            } else {
+                $commercial_property_for_rent['published-on'] = 0;
+            }
+
             $response = CommercialPropertyForRent::findOrFail($id);
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {

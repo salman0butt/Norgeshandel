@@ -422,8 +422,10 @@
                 <div class="text-center">
                     <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                 </div>
-                <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }} <br>
-                    Eiendomsmegler</p>
+                @if(!$property_data->published_on)
+                    <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }} <br>
+                        Eiendomsmegler</p>
+                @endif
                 @if($property_data->phone)
                     <div class="mb-2">
                         <span>Telefon: </span>
@@ -433,7 +435,9 @@
                     </div>
                 @endif
                 {{--<button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>--}}
-                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                @if(!$property_data->published_on)
+                    <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                @endif
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                 @endif

@@ -885,7 +885,7 @@ omkostninger.
         <div class="form-group ">
             <h3 class="u-t5">Publisert</h3>
             <label class="mb-2 form-check-label" for="published-on">
-                <input id="published-on" name="published-on" type="checkbox" class="pub_validate">Ikke vis profilbilde og
+                <input id="published-on" name="published-on" type="checkbox" class="pub_validate" {{$property_for_sale['published-on'] ? 'checked' : ''}}>Ikke vis profilbilde og
                 lenke til profilsiden.
             </label>
             <span class="error-span published-on"></span>

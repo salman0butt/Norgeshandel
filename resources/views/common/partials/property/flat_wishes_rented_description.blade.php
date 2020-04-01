@@ -120,8 +120,11 @@
                 <div class="text-center">
                     <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                 </div>
-                <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
-                    Eiendomsmegler</p>
+                @if(!$property_data['published-on'])
+                    <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
+                        Eiendomsmegler</p>
+                @endif
+
                 @if($property_data->phone)
                     <div class="mb-2">
                         <span>Mobil: </span>
@@ -132,22 +135,16 @@
                         </span>
                     </div>
                 @endif
-                <!-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> -->
-                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                @if(!$property_data['published-on'])
+                    <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                @endif
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                 @endif
-
-            <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
-                                salgsoppgave</a></div>
-                        <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
-                        <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
                 <h2 class="u-t3">Visning</h2>
                 <div class="mb-2">Ta kontakt for å avtale visning</div>
                 <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
                 </div>
-                {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                    rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">
