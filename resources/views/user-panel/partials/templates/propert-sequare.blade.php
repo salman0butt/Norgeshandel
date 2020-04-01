@@ -63,13 +63,9 @@ background-image: url('{{$path}}'); background-position: center; background-size
             </div>
             </div>
 
-            <p class="product-location text-muted mb-0 my-2 u-d1 float-left">
-                {{$property->street_address ? Str::limit($property->street_address,30) : ''}}
+            <p class="product-location text-muted mb-0 my-2 u-d1">
+                {{$property->street_address ? Str::limit($property->street_address,25).', ' : ''}}{{$property->zip_city}}
             </p>
-            <p class="product-location text-muted mb-0 my-2 u-d1 float-right">
-                {{$property->zip_city}}
-            </p>
-            <div class="clearfix"></div>
             <p class="product-title u-t4">
                 <?php
                 echo(Str::limit($ad->getTitle(),75));

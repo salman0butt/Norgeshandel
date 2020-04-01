@@ -194,7 +194,7 @@
                                 <p style="white-space: pre-line">{{$property_data->description}}</p>
                             </div>
                         @endif
-                        <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
+                        <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handel: </span>
                             <span> {{$property_data->ad ? $property_data->ad->id : ''}}</span></div>
                         <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span>

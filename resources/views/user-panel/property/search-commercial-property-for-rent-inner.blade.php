@@ -128,9 +128,9 @@
                                     @endif
                                 </div>
                                 <br>
-                                <div class="detail u-t5 mt-3 float-left text-muted">Private
-                                    <br>Kontor
-                                </div>
+                                {{--<div class="detail u-t5 mt-3 float-left text-muted">Private--}}
+                                    {{--<br>Kontor--}}
+                                {{--</div>--}}
                                 {{--<div class="dealer-logo float-right mt-3"><img--}}
 {{--                                        src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid">--}}
                                 {{--</div>--}}

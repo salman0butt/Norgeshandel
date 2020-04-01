@@ -110,9 +110,11 @@
                                             m²
                                         </div>
                                     @endif
-                                    <div class="price font-weight-bold float-right color-grey">{{number_format($commercial_plot->asking_price,0,""," ")}}
-                                        kr
-                                    </div>
+                                    @if($commercial_plot->asking_price)
+                                        <div class="price font-weight-bold float-right color-grey">{{number_format($commercial_plot->asking_price,0,""," ")}}
+                                            kr
+                                        </div>
+                                    @endif
                                 </div>
                                 <br>
                                 <div class="detail u-t5 mt-3 float-left text-muted">Innlandet Næringsmegling AS</div>

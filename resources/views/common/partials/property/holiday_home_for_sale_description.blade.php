@@ -53,9 +53,9 @@
             <div class="col-md-12">
                 @include('user-panel.partials.landing_page_slider',compact('name'))
                 @if($property_data->video)
-                    <div style="position: absolute;bottom: 0;right: 30px;">
-                        <button class="btn btn-light radius-8 video-button" onclick="window.open('{{$property_data->video}}', '_blank');" style="color: #ac304a; background: white">
-                            <i class="far fa-play-circle fa-lg pr-1"></i>Video</button>
+                    <div style="position: absolute;bottom: 0;left: 30px;">
+                        <a data-fslightbox="gallery1" href="{{$property_data->video}}" class="btn btn-light radius-8 video-button" style="color: #ac304a; background: white">
+                            <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
                     </div>
                 @endif
             </div>
@@ -412,7 +412,7 @@
                         <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
                     <div class="col-md-12"><span class="font-weight-bold">Referanse: </span> <span>302190059</span>
                     </div>
-                    <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
+                    <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                     <div class="col-md-12 u-d2">Annonsene kan være mangelfulle i forhold til lovpålagt opplysningsplikt.
                         Før bindende avtale inngås oppfordres interessenter til å innhente komplett informasjon fra
                         meglerforetaket, selger eller utleier.</div>

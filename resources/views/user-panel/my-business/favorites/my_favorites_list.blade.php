@@ -38,13 +38,13 @@
                 ?>
                 @if(isset($list->favorites) && is_countable($list->favorites) && count($list->favorites) > 0)
                     @foreach($fav as $item)
-                        <?php $ad = $item->ad; $date = Date('y-m-d',strtotime('-7 days')); $item_id = $item->id;?>
+                        <?php $ad = $item->ad; $date = Date('y-m-d',strtotime('-7 days')); $fav_item = $item;?>
                         @if(isset($ad->ad_type) && $ad->visibility  && (strtotime($ad->sold_at) > strtotime($date) || !$ad->sold_at))
                             <?php $count++; ?>
                             @if($ad->ad_type === "job" )
-                                @include('user-panel.partials.templates.job-list', compact('ad','item_id'))
+                                @include('user-panel.partials.templates.job-list', compact('ad','fav_item'))
                             @else
-                                @include('user-panel.partials.templates.property-list', compact('ad','item_id'))
+                                @include('user-panel.partials.templates.property-list', compact('ad','fav_item'))
                             @endif
                         @endif
                     @endforeach

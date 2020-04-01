@@ -51,7 +51,7 @@
                                     <div class="detail u-t5 text-muted">{{\App\Helpers\common::count_list_ads($list->id)}} annonser</div>
                                 </div>
                             </a>
-                            <a href="#" data-id="{{$list->id}}" data-name="{{$list->name}}" data-share-link="{{url('shared-lists/'.$list->share_link)}}" data-target="#modal_landing_edit_category" data-toggle="modal" class="edit_list" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil-alt"></span></a>
+                            <a href="#" data-id="{{$list->id}}" data-name="{{$list->name}}" data-share-link="{{url('shared-lists/'.$list->share_link)}}" data-target="#modal_landing_edit_category" data-toggle="modal" class="edit_list" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil"></span></a>
                         </div>
                     @endforeach
                 @endif
