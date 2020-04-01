@@ -114,8 +114,8 @@ $(document).ready(function (e) {
         if(isEmpty(e.target.closest('header'))){
             $('.mega-menu').slideUp();
             isDown = false;
-            $(this).find('.mega-menu-button span').addClass('fa-bars');
-            $(this).find('.mega-menu-button span').removeClass('fa-times');
+            $('#mega-menu-button span').addClass('fa-bars');
+            $('#mega-menu-button span').removeClass('fa-times');
         }
     });
 

@@ -66,37 +66,37 @@ foreach ($my_ads as $ad){
                         <div class="form-group">
                             <h3 class="u-t5 mt-5">Annonsetyper</h3>
                             <div class="pl-3 pr-3">
-                                <label for="ad-type" class="radio-lbl">Alle annonsetyper
+                                <label for="ad-type" class="radio-lbl">Alle annonsetyper <span class="total_ads">({{$all_ads_count}})</span>
                                     <input type="radio" checked="" id="ad-type" class="ad_type" name="ad_type" value="all_ads">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="ad-type-1" class="radio-lbl">Heltidsstilling
+                                <label for="ad-type-1" class="radio-lbl">Heltidsstilling <span class="full_time_job">({{$full_time_job}})</span>
                                     <input type="radio" id="ad-type-1" class="ad_type" name="ad_type" value="jobs-full_time">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="ad-type-2" class="radio-lbl">Deltidsstilling
+                                <label for="ad-type-2" class="radio-lbl">Deltidsstilling <span class="part_time_job">({{$part_time_job}})</span>
                                     <input type="radio" id="ad-type-2" class="ad_type" name="ad_type" value="jobs-part_time">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="ad-type-3" class="radio-lbl">Lederstilling
+                                <label for="ad-type-3" class="radio-lbl">Lederstilling <span class="management_job">({{$management_job}})</span>
                                     <input type="radio" id="ad-type-3" class="ad_type" name="ad_type" value="jobs-management">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="property-property_for_rent" class="radio-lbl">Bolig til leie
+                                <label for="property-property_for_rent" class="radio-lbl">Bolig til leie <span class="property_for_rent">({{$property_for_rent}})</span>
                                     <input type="radio" id="property-property_for_rent" class="ad_type" name="ad_type" value="property-property_for_rent">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="property-property_for_sales" class="radio-lbl">Bolig til salgs
+                                <label for="property-property_for_sales" class="radio-lbl">Bolig til salgs <span class="property_for_sale">({{$property_for_sale}})</span>
                                     <input type="radio" id="property-property_for_sales" class="ad_type" name="ad_type" value="property-property_for_sales">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="property-property_holidays_homes_for_sales" class="radio-lbl">Fritidsbolig til salgs
+                                <label for="property-property_holidays_homes_for_sales" class="radio-lbl">Fritidsbolig til salgs <span class="property_holiday_home_for_sale">({{$holiday_home_for_sale}})</span>
                                     <input type="radio" id="property-property_holidays_homes_for_sales" class="ad_type" name="ad_type" value="property-property_holidays_homes_for_sales">
                                     <span class="checkmark"></span>
                                 </label>
@@ -111,17 +111,17 @@ foreach ($my_ads as $ad){
                                 {{--                                    <span class="checkmark"></span>--}}
                                 {{--                                </label>--}}
 
-                                <label for="property-business_for_sales" class="radio-lbl">Bedrifter til salgs
+                                <label for="property-business_for_sales" class="radio-lbl">Bedrifter til salgs <span class="property_business_for_sale">({{$property_business_for_sale}})</span>
                                     <input type="radio" id="property-business_for_sales" class="ad_type" name="ad_type" value="property-business_for_sales">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="property-commercial_property_for_rents" class="radio-lbl">Næringseiendom til leie
+                                <label for="property-commercial_property_for_rents" class="radio-lbl">Næringseiendom til leie <span class="property_commercial_for_rent">({{$property_commercial_for_rent}})</span>
                                     <input type="radio" id="property-commercial_property_for_rents" class="ad_type" name="ad_type" value="property-commercial_property_for_rents">
                                     <span class="checkmark"></span>
                                 </label>
 
-                                <label for="property-commercial_property_for_sales" class="radio-lbl">Næringseiendom til salgs
+                                <label for="property-commercial_property_for_sales" class="radio-lbl">Næringseiendom til salgs <span class="property_commercial_for_sale">({{$property_commercial_for_sale}})</span>
                                     <input type="radio" id="property-commercial_property_for_sales" class="ad_type" name="ad_type" value="property-commercial_property_for_sales">
                                     <span class="checkmark"></span>
                                 </label>
@@ -181,10 +181,16 @@ foreach ($my_ads as $ad){
                     url: url+'/'+status+'/'+ad_type,
                     type: "GET",
                     success: function (response) {
-                        // json_jobs = $.parseJSON(response);
-                        // if(json_jobs.length>0) {
-                        if(response.length > 0) {
-                            $('#ads-list').html(response);
+                        jQuery.each(response, function(index, item) {
+                            if(index != 'html'){
+                                if($("span").hasClass( index )){
+                                    $('.'+index).text('('+item+')');
+                                }
+                            }
+                        });
+
+                        if(response.html.length > 0) {
+                            $('#ads-list').html(response.html);
 
                             if(status == 'saved'){
                                 $('.statistics-button').addClass('d-none');

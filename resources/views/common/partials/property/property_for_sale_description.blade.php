@@ -60,9 +60,9 @@ $name = $property_data->ad->company_gallery;
                 <div class="col-md-12">
                     @include('user-panel.partials.landing_page_slider',compact('name'))
                     @if($property_data->video)
-                        <div style="position: absolute;bottom: 0;right: 30px;">
-                            <button class="btn btn-light radius-8 video-button" onclick="window.open('{{$property_data->video}}', '_blank');" style="color: #ac304a; background: white">
-                                <i class="far fa-play-circle fa-lg pr-1"></i>Video</button>
+                        <div style="position: absolute;bottom: 0;left: 30px;">
+                            <a data-fslightbox="gallery1" href="{{$property_data->video}}" class="btn btn-light radius-8 video-button" style="color: #ac304a; background: white">
+                                <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
                         </div>
                     @endif
                 </div>
@@ -430,7 +430,7 @@ $name = $property_data->ad->company_gallery;
                             <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
                         <div class="col-md-12"><span class="font-weight-bold">Referanse: </span> <span>302190059</span>
                         </div>
-                        <div class="col-md-12"><a href="#" class="u-strong">Rapporter annonse</a></div>
+                        <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12 u-d2">Annonsene kan være mangelfulle i forhold til lovpålagt
                             opplysningsplikt.
                             Før bindende avtale inngås oppfordres interessenter til å innhente komplett informasjon fra
@@ -442,7 +442,9 @@ $name = $property_data->ad->company_gallery;
                 <div class="col-md-4">
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
-                            <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}</p>
+                            @if(!$property_data['published-on'])
+                                <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}</p>
+                            @endif
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                             @endif
@@ -464,23 +466,25 @@ $name = $property_data->ad->company_gallery;
                                     <a href="{{url('messages/new', $property_data->ad->id)}}">Visning etter avtale</a>
                                 </div>
                             @endif
-                            {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
-                            <div class="mb-2">
-                                <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
-                                    annonsør</a>
-                            </div>
+                            @if(!$property_data['published-on'])
+                                <div class="mb-2">
+                                    <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
+                                        annonsør</a>
+                                </div>
+                            @endif
                         </div>
                     @else
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                             <div class="text-center">
                                 <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                             </div>
-
-                            <p class="mt-3">
-                                {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
-                                <br>
-                                Eiendomsmegler
-                            </p>
+                            @if(!$property_data['published-on'])
+                                <p class="mt-3">
+                                    {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
+                                    <br>
+                                    Eiendomsmegler
+                                </p>
+                            @endif
                             @if($property_data->phone)
                                 <div class="mb-2">
                                     <span>Mobil: </span>
@@ -490,8 +494,10 @@ $name = $property_data->ad->company_gallery;
                                 </div>
                             @endif
                             {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
-                            <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
+                            @if(!$property_data['published-on'])
+                                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
                                     annonsør</a></div>
+                            @endif
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                             @endif
