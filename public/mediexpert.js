@@ -8,8 +8,9 @@ function formate_date(date) {
     str_date += "."+year;
     return str_date;
 }
-function notify(type,msg,title) {
-    Command: toastr[type](msg, title)
+function notify(type,msg) {
+    
+    Command: toastr[type](msg)
     toastr.options = {
         "closeButton": true,
         "newestOnTop": true,
@@ -18,7 +19,7 @@ function notify(type,msg,title) {
         "preventDuplicates": true,
         "showDuration": "300",
         "hideDuration": "1000",
-        "timeOut": "5000",
+        "timeOut": "12000",
         "extendedTimeOut": "1000",
         "showEasing": "swing",
         "hideEasing": "linear",

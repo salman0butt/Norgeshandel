@@ -52,7 +52,7 @@
         @if ($message = Session::get('success'))
         <script>
         $(function(){
-            notify("success","Jobben er lagt til","publisert");
+            notify("success","Jobben er lagt til");
         });
         
         </script>
@@ -557,7 +557,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                         
                         if ($('#ad_id').val().length < 1) {
                             //console.log(resp.job_id);
-                            notify("info","Jobben ble lagret!","lagrede");
+                            notify("info","Jobben ble lagret!");
 
                             $('#job_id').val(resp.job_id);
                             $('#ad_id').val(resp.ad_id);
