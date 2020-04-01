@@ -19,7 +19,35 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
+use \Illuminate\Support\Facades\DB;
+
 Auth::routes(['verify' => true]);
+Route::get('states', function (){
+//    $file = fopen('public/postnummer.csv', 'r');
+//    dump(fgetcsv($file));
+//    while ($line = fgetcsv($file)){
+//        \Illuminate\Support\Facades\DB::table('dummy')
+//            ->insert(['zip_code'=>$line[0], 'zip_city'=>$line[1], 'municipal_code'=>$line[2], 'municipal_number'=>$line[3]]);
+//        dump($line);
+//    }
+    $results = DB::table('dummy')->select('municipal_name')->limit(15)->distinct()->get();
+    echo '<div style="max-width: 100%;">';
+    foreach ($results as $result){
+        echo '<div><strong style="font-size: 1.3em">'.$result->municipal_name.'</strong></div>';
+        $cities = DB::table('dummy')->select('zip_city')->distinct()->where('municipal_name', $result->municipal_name)->get()->pluck('zip_city');
+        foreach ($cities as $city){
+            echo '<div>...<span style="font-weight:bold;display:inline-block;min-width: 150px;">'.$city.'</span>';
+            echo ':';
+            $codes = DB::table('dummy')->select('zip_code')->where('zip_city', $city)->pluck('zip_code');
+            foreach ($codes as $code) {
+                echo $code.', ';
+            }
+            echo '</div>';
+        }
+        echo '<br>';
+    }
+    echo '</div>';
+});
 Route::get('clear-chat', function () {
     \App\MessageThread::where('id', '!=', 0)->delete();
     return redirect('messages');
