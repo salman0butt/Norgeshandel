@@ -64,7 +64,7 @@ background-image: url('{{$path}}'); background-position: center; background-size
             </div>
 
             <p class="product-location text-muted mb-0 my-2 u-d1">
-                {{$property->street_address ? Str::limit($property->street_address,25).', ' : ''}}{{$property->zip_city}}
+                {{$property->street_address ? Str::limit($property->street_address,25).', ' : ''}} {{$property->zip_city ? Str::ucfirst(Str::lower($property->zip_city)) : ''}}
             </p>
             <p class="product-title u-t4">
                 <?php

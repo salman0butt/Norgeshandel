@@ -99,7 +99,7 @@
                                     @if($commercial_plot->street_address)
                                         <span title="{{$commercial_plot->street_address}}">{{Str::limit($commercial_plot->street_address,25)}},</span>
                                     @endif
-                                    <span>{{$commercial_plot->zip_city ? $commercial_plot->zip_city : ''}}</span>
+                                    <span>{{$commercial_plot->zip_city ? Str::ucfirst(Str::lower($commercial_plot->zip_city)) : ''}}</span>
                                 </div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 {{--<div class="u-t5 text-muted mt-2">Christian Krohgs gate 16, 0186 Oslo</div>--}}

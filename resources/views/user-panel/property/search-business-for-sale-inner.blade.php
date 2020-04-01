@@ -101,7 +101,7 @@
                                     @if($business_for_sale->street_address)
                                         <span title="{{$business_for_sale->street_address}}">{{Str::limit($business_for_sale->street_address,25)}},</span>
                                     @endif
-                                    <span>{{$business_for_sale->zip_city ? $business_for_sale->zip_city : ''}}</span>
+                                    <span>{{$business_for_sale->zip_city ? Str::ucfirst(Str::lower($business_for_sale->zip_city)) : ''}}</span>
                                 </div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="title color-grey">{{$business_for_sale->headline}}</div>

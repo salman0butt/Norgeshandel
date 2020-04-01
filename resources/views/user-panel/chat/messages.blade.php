@@ -386,7 +386,7 @@
                     //console.log('no message1');
                     return false;
                 }
-                if (message == '' && attachment != '' || message != '') {
+                if (message == '' && attachment != '' || message != '' ||) {
                     send_message();
 
                 }
