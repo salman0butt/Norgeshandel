@@ -15,7 +15,10 @@ class CreatedummyTable extends Migration
     {
         Schema::create('dummy', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('detail')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('zip_city')->nullable();
+            $table->string('municipal_code')->nullable();
+            $table->string('municipal_number')->nullable();
             $table->timestamps();
         });
     }
