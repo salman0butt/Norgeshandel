@@ -211,6 +211,12 @@ class CommercialPropertyForSaleController extends Controller
                 $commercial_property_for_sale['facilities'] = null;
             }
 
+            if (isset($commercial_property_for_sale['published-on']) && $commercial_property_for_sale['published-on'] == 'on') {
+                $commercial_property_for_sale['published-on'] = 1;
+            } else {
+                $commercial_property_for_sale['published-on'] = 0;
+            }
+
             $response = CommercialPropertyForSale::where('id', '=', $id);
 
             //Update media (mediable id and mediable type)

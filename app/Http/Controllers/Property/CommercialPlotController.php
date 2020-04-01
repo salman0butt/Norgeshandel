@@ -173,6 +173,12 @@ class CommercialPlotController extends Controller
             unset($commercial_plot['commercial_plot_pdf']);
             $commercial_plot['user_id'] = Auth::user()->id;
 
+            if (isset($commercial_plot['published_on']) && $commercial_plot['published_on'] == 'on') {
+                $commercial_plot['published_on'] = 1;
+            } else {
+                $commercial_plot['published_on'] = 0;
+            }
+
             $response = CommercialPlot::findOrFail($id);
 
             //Update media (mediable id and mediable type)

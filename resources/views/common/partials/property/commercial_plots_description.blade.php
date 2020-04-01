@@ -127,15 +127,21 @@
                     <div class="text-center">
                         <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                     </div>
-                    <p class="mt-3">  {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
-                        Eiendomsmegler</p>
+                    @if(!$property_data->published_on)
+                        <p class="mt-3">
+                            {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
+                            Eiendomsmegler
+                        </p>
+                    @endif
                     @if($property_data->phone)
                         <div class="mb-2">
                             <span>Telefon : </span>
                             <span><a href="tel:{{$property_data->phone}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}} </a></span>
                         </div>
                     @endif
-                    <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                    @if(!$property_data->published_on)
+                        <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                    @endif
                     <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                             salgsoppgave</a></div>
                     @if(!$property_data->ad->is_mine())

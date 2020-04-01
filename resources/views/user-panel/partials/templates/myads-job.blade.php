@@ -34,7 +34,7 @@ if ($job->company_id != 0) {
             {{csrf_field()}}
             {{method_field('DELETE')}}
             <button type="submit" class="link" style="cursor: pointer;position: absolute;right: 0;top: 0"><span
-                    class="fa fa-trash-alt text-muted"></span></button>
+                    class="fa fa-trash text-muted"></span></button>
         </form>
         <a href="{{route('jobs.edit', compact('job'))}}" style="color:#ac304a !important; padding: 4px !important;" class="dme-btn-outlined-blue mr-2 btn-sm edit-ad-button">
             Endre

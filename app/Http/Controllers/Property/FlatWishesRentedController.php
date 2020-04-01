@@ -211,6 +211,11 @@ class FlatWishesRentedController extends Controller
                 $flat_wishes_rented_data['property_type'] = null;
             }
 
+            if (isset($flat_wishes_rented_data['published-on']) && $flat_wishes_rented_data['published-on'] == 'on') {
+                $flat_wishes_rented_data['published-on'] = 1;
+            } else {
+                $flat_wishes_rented_data['published-on'] = 0;
+            }
 
             unset($flat_wishes_rented_data['flat_wishes_rented']);
             $flat_wishes_rented_data['user_id'] = Auth::user()->id;

@@ -225,6 +225,11 @@ class BusinessForSaleController extends Controller
             unset($business_for_sale['business_for_sale_pdf']);
             $business_for_sale['user_id'] = Auth::user()->id;
 
+            if (isset($business_for_sale['published_on']) && $business_for_sale['published_on'] == 'on') {
+                $business_for_sale['published_on'] = 1;
+            } else {
+                $business_for_sale['published_on'] = 0;
+            }
 
             $response = BusinessForSale::find($id);
             if ($response) {
