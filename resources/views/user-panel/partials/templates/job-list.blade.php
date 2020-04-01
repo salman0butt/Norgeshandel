@@ -52,7 +52,7 @@ if(count($media)>0){
         <p class="product-location text-muted mb-0 mt-2 u-d1" style="position: absolute;bottom: 15px;left: 231px;">
             {{$fav_item && $fav_item->note ? Str::limit($fav_item->note,60) : ''}}
         </p>
-        <a href="#" data-id="{{$fav_item && $fav_item->id ? $fav_item->id : ''}}" data-target="#ad_note_for_fav" data-toggle="modal" class="ad_note_link" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil-alt"></span></a>
+        <a href="#" data-id="{{$fav_item && $fav_item->id ? $fav_item->id : ''}}" data-target="#ad_note_for_fav" data-toggle="modal" class="ad_note_link" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil"></span></a>
     @endif
     @include('user-panel.partials.fav-heart-button', compact('ad'))
 </div>

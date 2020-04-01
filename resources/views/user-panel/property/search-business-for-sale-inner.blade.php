@@ -112,7 +112,7 @@
                                     </div>
                                     <br>
                                 @endif
-                                <div class="detail u-t5 mt-3 float-left text-muted">Privat</div>
+                                {{--<div class="detail u-t5 mt-3 float-left text-muted">Privat</div>--}}
                                 {{--<div class="dealer-logo float-right mt-3">--}}
                                     {{--<img src="assets/images/businessplots-logo.png" alt="" class="img-fluid">--}}
                                 {{--</div>--}}
