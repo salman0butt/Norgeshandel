@@ -42,10 +42,7 @@
     span.far.fa-heart.text-muted,span.fa.fa-heart.text-muted {
         line-height: unset !important;
     }
-    #toast-container {
-        top:8%;
-    }
-    .jssocials-share-link { border-radius: 50%; }
+
 </style>
 </head>
 <body class="@yield('body_class')">

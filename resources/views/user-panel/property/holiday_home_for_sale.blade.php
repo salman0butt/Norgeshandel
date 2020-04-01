@@ -117,10 +117,10 @@
                              $('.remove_property_pdf').attr('id',data.property_pdf);
                          }
 
-                        notify("info","Annonsen din er lagret","lagrede");
+                        notify("info","Annonsen din er lagret");
                      
                      }else if(event == 'click'){
-                        notify("success","Annonsen din er publisert","publisert");
+                        notify("success","Annonsen din er publisert");
                      }
             
                     },
@@ -129,7 +129,7 @@
                         var errors = jqXhr.responseJSON;
                         //console.log(errors.errors);
                         if (isEmpty(errors.errors)) {
-                            notify("error","noe gikk galt!","mislyktes");
+                            notify("error","noe gikk galt!");
                             return false;
                         }
                         if (!isEmpty(errors.errors)) {
@@ -139,7 +139,7 @@
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
                             });
                         } else {
-                            notify("error","noe gikk galt!","mislyktes");
+                            notify("error","noe gikk galt!");
                         }
                     },
 
