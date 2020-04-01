@@ -1,5 +1,5 @@
 <li class="nav-item filter-btn">
-    <a class="nav-link mega-menu-button" href="#">
+    <a class="nav-link mega-menu-button" id="mega-menu-button" href="#">
         <span class="fas fa-sliders-h float-left mt-2 color-maroon fa-bars" style="font-size: 1.5em;"></span>
         <div class="mt-2 ml-2">Filtrer</div>
     </a>
