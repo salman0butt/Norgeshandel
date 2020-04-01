@@ -147,9 +147,27 @@ class AdController extends Controller
     public function my_ads($status = [])
     {
         DB::enableQueryLog();
-
         $my_ads = Ad::where('user_id', Auth::user()->id)->where('status','=','published')->orderByDesc('ads.updated_at')->paginate(getenv('PAGINATION'));
-        return view('user-panel/my-business.my_ads', compact('my_ads'));
+
+        $property_for_rent = Ad::where('ad_type','property_for_rent')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $property_for_sale = Ad::where('ad_type','property_for_sale')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $holiday_home_for_sale = Ad::where('ad_type','property_holiday_home_for_sale')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $property_commercial_for_sale = Ad::where('ad_type','property_commercial_for_sale')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $property_commercial_for_rent = Ad::where('ad_type','property_commercial_for_rent')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $property_commercial_plots = Ad::where('ad_type','property_commercial_plots')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $property_business_for_sale = Ad::where('ad_type','property_business_for_sale')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $property_flat_wishes_rented = Ad::where('ad_type','property_flat_wishes_rented')->where('status','published')->where('user_id',Auth::user()->id)->count();
+        $all_ads_count = Ad::where('status','published')->where('user_id',Auth::user()->id)->count();
+
+        $full_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','full_time')->where('ads.status','published')->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+        $part_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','part_time')->where('ads.status','published')->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+        $management_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','management')->where('ads.status','published')->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+
+
+        return view('user-panel/my-business.my_ads', compact('my_ads','all_ads_count','property_for_rent','property_business_for_sale','property_for_sale'
+        ,'holiday_home_for_sale','property_commercial_for_rent','property_commercial_for_sale','property_commercial_plots','property_flat_wishes_rented',
+            'full_time_job','part_time_job','management_job'));
+
     }
 
     public function filter_my_ads($status, $ad_type)
@@ -203,7 +221,6 @@ class AdController extends Controller
                         $html.= view('user-panel.partials.templates.myads-property', compact('ad'))->render();
                     }
                 }
-
             }
         }
         else {
@@ -212,7 +229,33 @@ class AdController extends Controller
                         <h5 class=" text-center col-md-12">Dine andre annonser kan du finne ved å endre på filteret.</h5>
                     </div>';
         }
-        exit($html);
+
+        if($status == 'expired'){
+            $status = 'sold';
+        }
+
+        $property_for_rent = Ad::where('ad_type','property_for_rent')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_for_sale = Ad::where('ad_type','property_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $holiday_home_for_sale = Ad::where('ad_type','property_holiday_home_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_commercial_for_sale = Ad::where('ad_type','property_commercial_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_commercial_for_rent = Ad::where('ad_type','property_commercial_for_rent')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_commercial_plots = Ad::where('ad_type','property_commercial_plots')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_business_for_sale = Ad::where('ad_type','property_business_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_flat_wishes_rented = Ad::where('ad_type','property_flat_wishes_rented')->where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $all_ads_count = Ad::where('status',$status)->where('user_id',Auth::user()->id)->count();
+
+        $full_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','full_time')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+        $part_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','part_time')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+        $management_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','management')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+
+
+        $ads_count = array('total_ads'=>$all_ads_count,'property_for_rent'=>$property_for_rent,'property_for_sale'=>$property_for_sale,'property_holiday_home_for_sale'=>$holiday_home_for_sale,
+            'property_commercial_plots'=>$property_commercial_plots, 'property_commercial_for_sale'=>$property_commercial_for_sale,'property_commercial_for_rent'=>$property_commercial_for_rent,
+            'full_time_job'=>$full_time_job,'part_time_job'=>$part_time_job,'management_job'=>$management_job,
+            'property_business_for_sale'=>$property_business_for_sale,'property_flat_wishes_rented'=>$property_flat_wishes_rented,'html'=>$html);
+
+        return $ads_count;
+        exit();
     }
 
     // Show the options against an ad
