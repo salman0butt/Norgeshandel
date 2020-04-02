@@ -11,6 +11,15 @@
 @endsection
 
 @section('page_content')
+    @php
+        $property_status = '';
+        if(Request()->id){
+            $property = \App\PropertyForSale::find(Request()->id);
+            if($property && $property->ad){
+                $property_status = $property->ad->status;
+            }
+        }
+    @endphp
 
 <!-- property for sale -->
 <main>
@@ -165,7 +174,7 @@
             e.preventDefault();
             if(! $(this).valid()) return false;
 
-            @if(Request::is('complete/ad/*'))
+            @if(Request::is('complete/ad/*') || $property_status == 'saved')
                 record_store_ajax_request('change', (this));
             @else
                 var zip_code = $('.zip_code').val();

@@ -53,7 +53,7 @@
             <h3 class="u-t5">Gateadresse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input name="street_address" value="{{ $holiday_home_for_sale->ad_headline }}" type="text"
+                    <input name="street_address" value="{{ $holiday_home_for_sale->street_address }}" type="text"
                         class="dme-form-control">
                 </div>
             </div>
