@@ -111,7 +111,7 @@
             <!--        ended row-->
         </div>
         <div class="ajax-load text-center" style="display:none">
-	    <p><img src="http://demo.itsolutionstuff.com/plugin/loader.gif"></p>
+	    <p><img src="{{ asset('public/images/loaderMore.gif') }}"></p>
         </div> 
  
         <!--    ended container-->
@@ -244,5 +244,7 @@ loadMoreData(1);
 	              alert('server not responding...');
 	        });
 	}
+
 </script>
+
 @endsection

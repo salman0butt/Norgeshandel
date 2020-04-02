@@ -70,7 +70,7 @@
                             <span>
                                 @if($job->zip)
                                     {{$job->zip}}
-                                    {{$job->zip_city ? $job->zip_city : ''}}
+                                    {{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}
                                 @endif
                             </span>
                         </div>
