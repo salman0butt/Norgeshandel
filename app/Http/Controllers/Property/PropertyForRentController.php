@@ -219,7 +219,7 @@ class PropertyForRentController extends Controller
         }
     }
 
-    public function UpdatePropertyForRentAdd(Request $request, $id)
+    public function UpdatePropertyForRentAdd(Request $request, $id,$call_by='')
     {
         DB::beginTransaction();
         try {
@@ -306,9 +306,10 @@ class PropertyForRentController extends Controller
             }
 
             $response->update($property_for_rent_data);
-
             DB::commit();
-
+            if($call_by){
+                return 'success';
+            }
             $data['success'] = $response;
             echo json_encode($data);
             exit();
@@ -316,6 +317,9 @@ class PropertyForRentController extends Controller
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
+            if($call_by){
+                return json_encode($data);
+            }
             echo json_encode($data);
             exit();
         }
@@ -324,26 +328,33 @@ class PropertyForRentController extends Controller
     //update dummy property for sale to published
     public function UpdateDummyRentAdd(AddPropertyForRent $request, $id)
     {
-        //  DB::connection()->enableQueryLog();
-        //dd('working');
-        $property = PropertyForRent::find($id);
-        $message = '';
-        $ad = $property->ad;
-        if ($ad->status == 'saved') {
-            $message = 'Ny bolig er publisert';
-        } elseif ($ad->status == 'published') {
-            $message = 'Eiendommen er oppdatert';
-        }
-        $response = $ad->update(['status' => 'published']);
-        if ($response) {
+        $msg = $this->UpdatePropertyForRentAdd($request,$id,'controller');
+        if($msg == 'success'){
+            //  DB::connection()->enableQueryLog();
+            $property = PropertyForRent::find($id);
+            $message = '';
+            $ad = $property->ad;
+            if ($ad && $ad->status == 'saved') {
+                $message = 'Annonsen din er publisert.';
+            } elseif ($ad && $ad->status == 'published') {
+                $message = 'Annonsen din er oppdatert.';
+            }
+            $response = $ad->update(['status' => 'published']);
+            if ($response) {
 //        notifications bellow
-            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-rent');
+                common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-rent');
 //      notifications ended
-        }
+            }
 //  dd(DB::getQueryLog());
 
-        $data['success'] = $response;
-        echo json_encode($data);
+            $data['success'] = $response;
+            $data['message'] = $message;
+            echo json_encode($data);
+        }else{
+            echo $msg;
+            exit();
+        }
+
     }
 
     public function propertyDescription($id)

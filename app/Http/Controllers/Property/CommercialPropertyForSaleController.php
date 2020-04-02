@@ -151,41 +151,34 @@ class CommercialPropertyForSaleController extends Controller
     //update dummy updateDummyCommercialPropertyForSale
     public function updateDummyCommercialPropertyForSale(AddCommercialPropertyForSale $request, $id)
     {
-        //  DB::connection()->enableQueryLog();
-        //dd('working');
-        $property = CommercialPropertyForSale::find($id);
-        $message = '';
-        $ad = $property->ad;
-        if ($ad->status == 'saved') {
-            $message = 'Ny bolig er publisert';
-        } elseif ($ad->status == 'published') {
-            $message = 'Eiendommen er oppdatert';
-        }
-        $response = $ad->update(['status' => 'published']);
+        $msg = $this->updateCommercialPropertyForSale($request,$id,'controller');
+        if($msg['flag'] == 'success'){
+            //  DB::connection()->enableQueryLog();
+            //dd('working');
+            $property = CommercialPropertyForSale::find($id);
+            $message = '';
+            $ad = $property->ad;
+            if ($ad && $ad->status == 'saved') {
+                $message = 'Annonsen din er publisert.';
+            } elseif ($ad && $ad->status == 'published') {
+                $message = 'Annonsen din er oppdatert.';
+            }
+            $response = $ad->update(['status' => 'published']);
 
 //            notification bellow
-        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/commercial-property-for-sale');
+            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/commercial-property-for-sale');
 //            end notification
-        //  dd(DB::getQueryLog());
-
-        $data['success'] = $response;
-        echo json_encode($data);
-    }
-
-    public function editcommercialPropertyForSale($id)
-    {
-        $commercial_property = CommercialPropertyForSale::findOrFail($id);
-        if ($commercial_property) {
-            if (!Auth::user()->hasRole('admin') && ($commercial_property->user_id != Auth::user()->id || $commercial_property->ad->status == 'sold')) {
-                abort(404);
-            }
-            return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));
-        } else {
-            abort(404);
+            //  dd(DB::getQueryLog());
+            $msg['message'] = $message;
+//                $data['success'] = $response;
+            echo json_encode($msg);
+        }else{
+            echo json_encode($msg);
+            exit();
         }
     }
 
-    public function updateCommercialPropertyForSale(Request $request, $id)
+    public function updateCommercialPropertyForSale(Request $request, $id,$call_by='')
     {
         $property_pdf = '';
         DB::beginTransaction();
@@ -241,15 +234,36 @@ class CommercialPropertyForSaleController extends Controller
             DB::commit();
             $data['success'] = $response;
             $data['property_pdf'] = $property_pdf;
+            if($call_by){
+                $data['flag'] = 'success';
+                return $data;
+            }
             echo json_encode($data);
         } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
+            if($call_by){
+                $data['flag'] = 'failure';
+                return $data;
+            }
             echo json_encode($data);
             exit();
         }
 
+    }
+
+    public function editcommercialPropertyForSale($id)
+    {
+        $commercial_property = CommercialPropertyForSale::findOrFail($id);
+        if ($commercial_property) {
+            if (!Auth::user()->hasRole('admin') && ($commercial_property->user_id != Auth::user()->id || $commercial_property->ad->status == 'sold')) {
+                abort(404);
+            }
+            return view('user-panel.property.commercial_property_for_sale', compact('commercial_property'));
+        } else {
+            abort(404);
+        }
     }
 
     public function commercialForSaleDescription($id)

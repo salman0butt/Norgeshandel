@@ -117,7 +117,6 @@
                                     <br>
                                 @endif
                                 <div class="detail u-t5 mt-3 float-left text-muted">
-                                    Eier (Selveier)
                                     • {{\App\Helpers\common::map_json($property_commercial_property_for_sale->property_type)}}
                                 </div>
                                 {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid">--}}

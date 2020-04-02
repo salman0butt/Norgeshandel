@@ -75,7 +75,7 @@
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                         @if (!empty($property_data->monthly_rent))
                             <div class="col-md-12 font-weight-bold mt-3">Månedsleie</div>
-                            <div class="col-md-12 u-t3">{{number_format($property_data->monthly_rent,0,""," ")}}Kr
+                            <div class="col-md-12 u-t3">{{number_format($property_data->monthly_rent,0,""," ")}} Kr
                             </div>
                         @endif
                         @if($property_data->include_in_rent || $property_data->deposit)
@@ -173,9 +173,9 @@
                                 <div class="bg-light-grey radius-8 col-md-12 p-3">
                                     <div class="">
                                         <span class="font-weight-bold">Fasiliteter &nbsp;</span>
-                                        <ul>
+                                        <ul class="row">
                                             @foreach($facilities as $key=>$val)
-                                                <li>
+                                                <li class="col-6">
                                                     <?php
                                                     if ($val != "") {
                                                         echo ucfirst(strtolower(str_replace('-', ' ', str_replace('_', ' ', $val))));

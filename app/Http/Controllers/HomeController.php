@@ -69,6 +69,10 @@ class HomeController extends Controller
                 } else {
                     $type = "properties";
                 }
+
+                $view = new \App\Models\AdView(['ad_id' => $ad->id, 'ip' => \request()->getClientIp(), 'user_id' => Auth::id()]);
+                $view->save();
+
                 return redirect($type . '/ad?handel=' . $ad->id);
             }
             abort(404);

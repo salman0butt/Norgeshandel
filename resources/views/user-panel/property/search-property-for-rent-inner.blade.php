@@ -115,7 +115,7 @@
                                 <br>
                                 <div class="detail u-t5 mt-3 float-left text-muted col-md-12 ttt">
                                     <p>
-                                        <span class="tst"> {{$property_for_rent->property_type}} </span>
+                                        <span class="tst pl-0"> {{$property_for_rent->property_type}} </span>
                                         <span style="padding-left:10px;"> {{$property_for_rent-> number_of_bedrooms}} </span>
                                         soverom
                                     </p>

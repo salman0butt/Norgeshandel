@@ -79,29 +79,25 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        //console.log(data);
-                       // document.getElementById("property_for_rent_form").reset();
-                       // document.getElementById("zip_code_city_name").innerHTML = '';
                         if (event == 'change') {
                             notify("info","Annonsen din er lagret");
         
                         }else if(event == 'click'){
-                              notify("success","Annonsen din er publisert");
-                
-                            //$('.ad-published-notice').css('display','block');
-                           // $('.ad-published-notice').html('<div class="alert alert-success">Annonsen din er publisert</div>');
+                            var message = 'Annonsen din er publisert';
+                            if(data.message){
+                                message = data.message;
+                            }
+                            notify("success",message);
                         }
                     },
                     error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
 
                         var errors = jqXhr.responseJSON;
-                        //console.log(errors.errors);
                         if (isEmpty(errors.errors)) {
                              notify("error","noe gikk galt!");
                             return false;
                         }
                         if (!isEmpty(errors.errors)) {
-                            //console.log(errors.errors);
                             $.each(errors.errors, function (index, value) {
                                 $("." + index).html(value);
                                 $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
@@ -121,7 +117,18 @@
             $("input:not(input[type=date]),textarea").on('change', function (e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
-               record_store_ajax_request('change', (this));
+                @if(Request::is('complete/ad/*'))
+                    record_store_ajax_request('change', (this));
+                @else
+                    var zip_code = $('.zip_code').val();
+                    var old_zip = $('#old_zip').val();
+
+                    if (zip_code) {
+                        if (old_zip != zip_code) {
+                            find_zipcode_city(zip_code);
+                        }
+                    }
+                @endif
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
             });

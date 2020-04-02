@@ -142,43 +142,35 @@ class CommercialPropertyForRentController extends Controller
     //update dummy updateDummyCommercialPropertyForRent
     public function updateDummyCommercialPropertyForRent(AddCommercialPropertyForRent $request, $id)
     {
-        //  DB::connection()->enableQueryLog();
-        //dd('working');
-        $property = CommercialPropertyForRent::find($id);
-        $message = '';
-        $ad = $property->ad;
-        if ($ad->status == 'saved') {
-            $message = 'Ny bolig er publisert';
-        } elseif ($ad->status == 'published') {
-            $message = 'Eiendommen er oppdatert';
-        }
-        $response = $ad->update(['status' => 'published']);
+        $msg = $this->updateCommercialPropertyForRent($request,$id,'controller');
+        if($msg['flag'] == 'success'){
+            //  DB::connection()->enableQueryLog();
+            $property = CommercialPropertyForRent::find($id);
+            $message = '';
+            $ad = $property->ad;
+            if ($ad && $ad->status == 'saved') {
+                $message = 'Annonsen din er publisert.';
+            } elseif ($ad && $ad->status == 'published') {
+                $message = 'Annonsen din er oppdatert.';
+            }
+            $response = $ad->update(['status' => 'published']);
 
 //            notification bellow
-        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/commercial-property-for-rent');
+            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/commercial-property-for-rent');
 //            end notification
-        //  dd(DB::getQueryLog());
+            //  dd(DB::getQueryLog());
 
-        $data['success'] = $response;
-        echo json_encode($data);
-    }
-
-    // Edit commercial property for rent
-    public function editCommercialPropertyForRent($id)
-    {
-        $commercial_for_rent = CommercialPropertyForRent::findOrFail($id);
-        if ($commercial_for_rent) {
-            if (!Auth::user()->hasRole('admin') && ($commercial_for_rent->user_id != Auth::user()->id || $commercial_for_rent->ad->status == 'sold')) {
-                abort(404);
-            }
-            return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));
-        } else {
-            abort(404);
+            $msg['message'] = $message;
+//                $data['success'] = $response;
+            echo json_encode($msg);
+        }else{
+            echo json_encode($msg);
+            exit();
         }
     }
 
     // Update commercial property for rent
-    public function updateCommercialPropertyForRent(Request $request, $id)
+    public function updateCommercialPropertyForRent(Request $request, $id,$call_by='')
     {
         $property_pdf = '';
         DB::beginTransaction();
@@ -229,15 +221,37 @@ class CommercialPropertyForRentController extends Controller
             DB::commit();
             $data['success'] = $response;
             $data['property_pdf'] = $property_pdf;
+            if($call_by){
+                $data['flag'] = 'success';
+                return $data;
+            }
             echo json_encode($data);
         } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
+            if($call_by){
+                $data['flag'] = 'failure';
+                return $data;
+            }
             echo json_encode($data);
             exit();
         }
 
+    }
+
+    // Edit commercial property for rent
+    public function editCommercialPropertyForRent($id)
+    {
+        $commercial_for_rent = CommercialPropertyForRent::findOrFail($id);
+        if ($commercial_for_rent) {
+            if (!Auth::user()->hasRole('admin') && ($commercial_for_rent->user_id != Auth::user()->id || $commercial_for_rent->ad->status == 'sold')) {
+                abort(404);
+            }
+            return view('user-panel.property.commercial_property_for_rent', compact('commercial_for_rent'));
+        } else {
+            abort(404);
+        }
     }
 
     public function commercialForRentDescription($id)
