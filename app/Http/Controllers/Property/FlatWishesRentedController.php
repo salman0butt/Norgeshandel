@@ -65,7 +65,8 @@ class FlatWishesRentedController extends Controller
 //        DB::enableQueryLog();
 
         if (isset($request->search) && !empty($request->search)) {
-            $query->where('flat_wishes_renteds.headline', 'like', '%' . $request->search . '%');
+//            $query->where('flat_wishes_renteds.headline', 'like', '%' . $request->search . '%');
+            common::table_search($query, common::get_model_columns(FlatWishesRented::class), $request->search, 'flat_wishes_renteds');
         }
         if (isset($request->created_at)) {
             $query->whereDate('flat_wishes_renteds.created_at', '=', $request->created_at);

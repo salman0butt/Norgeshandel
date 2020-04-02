@@ -79,7 +79,8 @@ class PropertyForRentController extends Controller
             $query->whereDate('ads.sold_at', '>', now()->addDays(-3));
         }
         if (isset($request->search) && !empty($request->search)) {
-            $query->where('heading', 'like', '%' . $request->search . '%');
+//            $query->where('heading', 'like', '%' . $request->search . '%');
+            common::table_search($query, common::get_model_columns(PropertyForRent::class), $request->search, 'property_for_rent');
         }
         if (isset($request->created_at)) {
             $query->whereDate($table . '.updated_at', '=', $request->created_at);

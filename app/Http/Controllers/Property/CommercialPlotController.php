@@ -69,7 +69,8 @@ class CommercialPlotController extends Controller
             $query->whereIn('country', $request->country);
         }
         if (isset($request->search) && !empty($request->search)) {
-            $query->where('headline', 'like', '%' . $request->search . '%');
+//            $query->where('headline', 'like', '%' . $request->search . '%');
+            common::table_search($query, common::get_model_columns(CommercialPlot::class), $request->search, 'commercial_plots');
         }
         if (isset($request->created_at)) {
             $query->whereDate($table . '.created_at', '=', $request->created_at);

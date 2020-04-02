@@ -69,7 +69,8 @@ class PropertyHolidaysHomesForSaleController extends Controller
 //        }
 //        DB::enableQueryLog();
         if (isset($request->search) && !empty($request->search)) {
-            $query->where('property_holidays_homes_for_sales.ad_headline', 'like', '%' . $request->search . '%');
+//            $query->where('property_holidays_homes_for_sales.ad_headline', 'like', '%' . $request->search . '%');
+            common::table_search($query, common::get_model_columns(PropertyHolidaysHomesForSale::class), $request->search, 'property_holidays_homes_for_sales');
         }
         if (isset($request->created_at)) {
             $query->whereDate('property_holidays_homes_for_sales.created_at', '=', $request->created_at);

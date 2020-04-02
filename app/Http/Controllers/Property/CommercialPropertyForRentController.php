@@ -68,7 +68,8 @@ class CommercialPropertyForRentController extends Controller
             $query->whereIn('country', $request->country);
         }
         if (isset($request->search) && !empty($request->search)) {
-            $query->where('heading', 'like', '%' . $request->search . '%');
+//            $query->where('heading', 'like', '%' . $request->search . '%');
+            common::table_search($query, common::get_model_columns(CommercialPropertyForRent::class), $request->search, 'commercial_property_for_rents');
         }
         if (isset($request->created_at)) {
             $query->whereDate($table . '.created_at', '=', $request->created_at);
