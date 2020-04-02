@@ -82,11 +82,11 @@
                     }
                 }
                 @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-                var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
+                    var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
                 @endif
             } else {
                 @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-                var url = "{{ url('new/property/sale/ad/update/'.$property_for_sale1->id) }}";
+                    var url = "{{ url('new/property/sale/ad/update/'.$property_for_sale1->id) }}";
                 @endif
             }
 
@@ -119,20 +119,21 @@
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                    // document.getElementById("property_for_sale_form").reset();
-                    // document.getElementById("zip_code_city_name").innerHTML = '';
-                   // $('.notice').hide();
                     if (event == 'change') {
-                        if(data.property_quote){
-                            $('.remove_property_quote').attr('id',data.property_quote);
-                        }
-                        if(data.property_pdf){
-                            $('.remove_property_pdf').attr('id',data.property_pdf);
-                        }
                        notify("info","Annonsen din er lagret");
                    }else if(event == 'click'){
-                        notify("success","Annonsen din er publisert");
+                        var message = 'Annonsen din er publisert';
+                        if(data.message){
+                            message = data.message;
+                        }
+                        notify("success",message);
                    }
+                    if(data.property_quote){
+                        $('.remove_property_quote').attr('id',data.property_quote);
+                    }
+                    if(data.property_pdf){
+                        $('.remove_property_pdf').attr('id',data.property_pdf);
+                    }
                 },
                 error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
                     var errors = jqXhr.responseJSON;
@@ -163,7 +164,19 @@
         $("input:not(input[type=date]),textarea").on('change', function (e) {
             e.preventDefault();
             if(! $(this).valid()) return false;
-            record_store_ajax_request('change', (this));
+
+            @if(Request::is('complete/ad/*'))
+                record_store_ajax_request('change', (this));
+            @else
+                var zip_code = $('.zip_code').val();
+                var old_zip = $('#old_zip').val();
+                if (zip_code) {
+                    if (old_zip != zip_code) {
+                        find_zipcode_city(zip_code);
+                    }
+                }
+            @endif
+
             var postal = $('.zip_code').val();
             $('#old_zip').attr('value',postal);
         });

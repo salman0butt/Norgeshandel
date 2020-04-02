@@ -190,7 +190,36 @@ class PropertyHolidaysHomesForSaleController extends Controller
 
     }
 
-    public function updateHomeForSaleAd(Request $request, $id)
+    //update dummy updateDummyHomeForSaleAd
+    public function updateDummyHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id)
+    {
+        $msg = $this->updateHomeForSaleAd($request,$id,'controller');
+        if($msg['flag'] == 'success'){
+            $property = PropertyHolidaysHomesForSale::find($id);
+            $message = '';
+            $ad = $property->ad;
+            if ($ad && $ad->status == 'saved') {
+                $message = 'Annonsen din er publisert.';
+            } elseif ($ad && $ad->status == 'published') {
+                $message = 'Annonsen din er oppdatert.';
+            }
+            $response = $ad->update(['status' => 'published']);
+
+//            notification bellow
+            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/holiday-homes-for-sale');
+//            end notification
+
+            $msg['message'] = $message;
+//                $data['success'] = $response;
+            echo json_encode($msg);
+        }else{
+            echo json_encode($msg);
+            exit();
+        }
+
+    }
+
+    public function updateHomeForSaleAd(Request $request, $id,$call_by='')
     {
         $property_quote = $property_pdf = '';
         DB::beginTransaction();
@@ -304,6 +333,10 @@ class PropertyHolidaysHomesForSaleController extends Controller
             $data['success'] = $response;
             $data['property_quote'] = $property_quote;
             $data['property_pdf'] = $property_pdf;
+            if($call_by){
+                $data['flag'] = 'success';
+                return $data;
+            }
             echo json_encode($data);
 
 
@@ -311,6 +344,10 @@ class PropertyHolidaysHomesForSaleController extends Controller
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
+            if($call_by){
+                $data['flag'] = 'failure';
+                return $data;
+            }
             echo json_encode($data);
             exit();
         }
@@ -335,28 +372,6 @@ class PropertyHolidaysHomesForSaleController extends Controller
 
         return redirect('/my-business/my-ads');
     }
-
-    //update dummy updateDummyHomeForSaleAd
-    public function updateDummyHomeForSaleAd(AddPropertyHolidayHomeForSale $request, $id)
-    {
-        $property = PropertyHolidaysHomesForSale::find($id);
-        $message = '';
-        $ad = $property->ad;
-        if ($ad->status == 'saved') {
-            $message = 'Ny bolig er publisert';
-        } elseif ($ad->status == 'published') {
-            $message = 'Eiendommen er oppdatert';
-        }
-        $response = $ad->update(['status' => 'published']);
-
-//            notification bellow
-        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/holiday-homes-for-sale');
-//            end notification
-
-        $data['success'] = $response;
-        echo json_encode($data);
-    }
-
 
     public function holidayHomeForSaleDescription($id)
     {

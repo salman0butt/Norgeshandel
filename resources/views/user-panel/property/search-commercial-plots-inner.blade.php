@@ -117,7 +117,7 @@
                                     @endif
                                 </div>
                                 <br>
-                                <div class="detail u-t5 mt-3 float-left text-muted">Innlandet Næringsmegling AS</div>
+                                {{--<div class="detail u-t5 mt-3 float-left text-muted">Innlandet Næringsmegling AS</div>--}}
                                 {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid">--}}
                             </div>
                         </a>

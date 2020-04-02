@@ -153,40 +153,33 @@ class FlatWishesRentedController extends Controller
     //update dummy property for sale to published
     public function updateDummyFlatWishesRented(AddFlatWishesRented $request, $id)
     {
-        //  DB::connection()->enableQueryLog();
-        $property = FlatWishesRented::find($id);
-        $message = '';
-        $ad = $property->ad;
-        if ($ad->status == 'saved') {
-            $message = 'Ny bolig er publisert';
-        } elseif ($ad->status == 'published') {
-            $message = 'Eiendommen er oppdatert';
-        }
-        $response = $ad->update(['status' => 'published']);
+        $msg = $this->updateFlatWishesRented($request,$id,'controller');
+        if($msg['flag'] == 'success'){
+            //  DB::connection()->enableQueryLog();
+            $property = FlatWishesRented::find($id);
+            $message = '';
+            $ad = $property->ad;
+            if ($ad && $ad->status == 'saved') {
+                $message = 'Annonsen din er publisert.';
+            } elseif ($ad && $ad->status == 'published') {
+                $message = 'Annonsen din er oppdatert.';
+            }
+            $response = $ad->update(['status' => 'published']);
 
 //            notification bellow
-        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/flat-wishes-rented');
+            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/flat-wishes-rented');
 //            end notification
-        //  dd(DB::getQueryLog());
+            //  dd(DB::getQueryLog());
 
-        $data['success'] = $response;
-        echo json_encode($data);
-    }
-
-    public function editAddFlatWishesRented($id)
-    {
-        $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
-        if ($flat_wishes_rented1) {
-            if (!Auth::user()->hasRole('admin') && ($flat_wishes_rented1->user_id != Auth::user()->id || $flat_wishes_rented1->ad->status == 'sold')) {
-                abort(404);
-            }
-            return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));
-        } else {
-            abort(404);
+            $msg['message'] = $message;
+            echo json_encode($msg);
+        }else{
+            echo json_encode($msg);
+            exit();
         }
     }
 
-    public function updateFlatWishesRented(Request $request, $id)
+    public function updateFlatWishesRented(Request $request, $id,$call_by='')
     {
         DB::beginTransaction();
         try {
@@ -229,16 +222,36 @@ class FlatWishesRentedController extends Controller
 
             $response->update($flat_wishes_rented_data);
             DB::commit();
-
             $data['success'] = $response;
+            if($call_by){
+                $data['flag'] = 'success';
+                return $data;
+            }
             echo json_encode($data);
 
         } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
+            if($call_by){
+                $data['flag'] = 'failure';
+                return $data;
+            }
             echo json_encode($data);
             exit();
+        }
+    }
+
+    public function editAddFlatWishesRented($id)
+    {
+        $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
+        if ($flat_wishes_rented1) {
+            if (!Auth::user()->hasRole('admin') && ($flat_wishes_rented1->user_id != Auth::user()->id || $flat_wishes_rented1->ad->status == 'sold')) {
+                abort(404);
+            }
+            return view('user-panel.property.flat_wishes_rented', compact('flat_wishes_rented1'));
+        } else {
+            abort(404);
         }
     }
 

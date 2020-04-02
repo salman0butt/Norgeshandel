@@ -83,13 +83,14 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        //console.log(data);
-                       // document.getElementById("property_for_rent_form").reset();
-                       // document.getElementById("zip_code_city_name").innerHTML = '';
                        if (event == 'change') {
                             notify("info","Annonsen din er lagret");
                        }else if(event == 'click'){
-                            notify("success","Annonsen din er publisert");
+                           var message = 'Annonsen din er publisert';
+                           if(data.message){
+                               message = data.message;
+                           }
+                           notify("success",message);
                        }
                    
                     },
@@ -121,7 +122,17 @@
             $("input:not(input[type=date]),textarea").on('change', function (e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
-               record_store_ajax_request('change', (this));
+                @if(Request::is('complete/ad/*'))
+                    record_store_ajax_request('change', (this));
+                @else
+                    var zip_code = $('.zip_code').val();
+                    var old_zip = $('#old_zip').val();
+                    if (zip_code) {
+                        if (old_zip != zip_code) {
+                            find_zipcode_city(zip_code);
+                        }
+                    }
+                @endif
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
             });

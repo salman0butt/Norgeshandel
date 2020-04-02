@@ -126,27 +126,6 @@ class CommercialPlotController extends Controller
         }
     }
 
-    //update dummy updateDummyCommercialPropertyForRent
-    public function updateDummyCommercialPlots(AddCommercialPlot $request, $id)
-    {
-
-        $property = CommercialPlot::find($id);
-        $message = '';
-        $ad = $property->ad;
-        if ($ad->status == 'saved') {
-            $message = 'Ny bolig er publisert';
-        } elseif ($ad->status == 'published') {
-            $message = 'Eiendommen er oppdatert';
-        }
-        $response = $ad->update(['status' => 'published']);
-
-//            notification bellow
-        common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/flat-wishes-rented');
-//            end notification
-
-        $data['success'] = $response;
-        echo json_encode($data);
-    }
 
     public function editCommercialPlots($id)
     {
@@ -161,7 +140,35 @@ class CommercialPlotController extends Controller
         }
     }
 
-    public function updateCommercialPlots(Request $request, $id)
+    //update dummy updateDummyCommercialPropertyForRent
+    public function updateDummyCommercialPlots(AddCommercialPlot $request, $id)
+    {
+        $msg = $this->updateCommercialPlots($request,$id,'controller');
+        if($msg['flag'] == 'success'){
+            $property = CommercialPlot::find($id);
+            $message = '';
+            $ad = $property->ad;
+            if ($ad && $ad->status == 'saved') {
+                $message = 'Annonsen din er publisert.';
+            } elseif ($ad && $ad->status == 'published') {
+                $message = 'Annonsen din er oppdatert.';
+            }
+            $response = $ad->update(['status' => 'published']);
+
+//            notification bellow
+            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/flat-wishes-rented');
+//            end notification
+
+            $msg['message'] = $message;
+//                $data['success'] = $response;
+            echo json_encode($msg);
+        }else{
+            echo json_encode($msg);
+            exit();
+        }
+    }
+
+    public function updateCommercialPlots(Request $request, $id,$call_by='')
     {
         $property_pdf = '';
         DB::beginTransaction();
@@ -195,18 +202,24 @@ class CommercialPlotController extends Controller
                 }
             }
 
-
             $response->update($commercial_plot);
-
             DB::commit();
             $data['success'] = $response;
             $data['property_pdf'] = $property_pdf;
+            if($call_by){
+                $data['flag'] = 'success';
+                return $data;
+            }
             echo json_encode($data);
 
         } catch (\Exception $e) {
             DB::rollback();
             (header("HTTP/1.0 404 Not Found"));
             $data['failure'] = $e->getMessage();
+            if($call_by){
+                $data['flag'] = 'failure';
+                return $data;
+            }
             echo json_encode($data);
             exit();
         }
