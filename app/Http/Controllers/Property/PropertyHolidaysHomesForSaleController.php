@@ -69,7 +69,8 @@ class PropertyHolidaysHomesForSaleController extends Controller
 //        }
 //        DB::enableQueryLog();
         if (isset($request->search) && !empty($request->search)) {
-            $query->where('property_holidays_homes_for_sales.ad_headline', 'like', '%' . $request->search . '%');
+//            $query->where('property_holidays_homes_for_sales.ad_headline', 'like', '%' . $request->search . '%');
+            common::table_search($query, common::get_model_columns(PropertyHolidaysHomesForSale::class), $request->search, 'property_holidays_homes_for_sales');
         }
         if (isset($request->created_at)) {
             $query->whereDate('property_holidays_homes_for_sales.created_at', '=', $request->created_at);
@@ -127,6 +128,10 @@ class PropertyHolidaysHomesForSaleController extends Controller
                     $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%' . $request->display_date[$i] . '%');
                 }
             });
+        }
+
+        if (isset($request->user_id) && !empty($request->user_id)) {
+            $query->where('ads.user_id', $request->user_id);
         }
 
         $order = $request->order;

@@ -85,7 +85,8 @@ class PropertyForSaleController extends Controller
             $query->whereDate('ads.sold_at', '>', now()->addDays(-3));
         }
         if (isset($request->search) && !empty($request->search)) {
-            $query->where('headline', 'like', '%' . $request->search . '%');
+//            $query->where('headline', 'like', '%' . $request->search . '%');
+            common::table_search($query, common::get_model_columns(PropertyForSale::class), $request->search, 'property_for_sales');
         }
         if (isset($request->created_at)) {
             $query->whereDate($table . '.updated_at', '=', $request->created_at);
@@ -185,6 +186,9 @@ class PropertyForSaleController extends Controller
             $query->whereIn($table . '.energy_grade', $request->energy_unit);
         }
 
+        if (isset($request->user_id) && !empty($request->user_id)) {
+            $query->where('ads.user_id', $request->user_id);
+        }
         switch ($sort) {
             case 'published':
                 $query->orderBy('ads.updated_at', 'DESC');
@@ -208,6 +212,7 @@ class PropertyForSaleController extends Controller
                 $query->orderBy('total_price', 'DESC');
                 break;
         }
+
         $query->where($arr);
 
         if ($get_collection){

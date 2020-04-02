@@ -140,7 +140,9 @@
                         </div>
                     @endif
                     @if(!$property_data->published_on)
-                        <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                        <div class="mb-2">
+                            <a href="{{url('property/commercial-plots/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                        </div>
                     @endif
                     <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
                             salgsoppgave</a></div>

@@ -136,7 +136,9 @@
                     </div>
                 @endif
                 @if(!$property_data['published-on'])
-                    <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                    <div class="mb-2">
+                        <a href="{{url('property/flat-wishes-rented/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                    </div>
                 @endif
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
