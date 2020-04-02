@@ -12,7 +12,9 @@ class Media extends Model
         'mediable_type',
         'name',
         'name_unique',
-        'type'
+        'type',
+        'title',
+        'order'
     ];
 
     public function mediable(){
