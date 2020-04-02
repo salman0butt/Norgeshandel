@@ -9,7 +9,6 @@
 @endsection
 
 @section('page_content')
-<main>
     @php
         $property_status = '';
         if(Request()->id){
@@ -19,6 +18,7 @@
             }
         }
     @endphp
+<main>
     <div class="dme-container">
         <div class="row">
             <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
