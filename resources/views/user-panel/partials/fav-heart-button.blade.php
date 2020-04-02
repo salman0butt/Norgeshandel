@@ -5,7 +5,7 @@
     @if(Auth::check())
     data-toggle="modal" data-id="{{$ad->id}}"
     @else
-    data-toggle="modal" data-target="#modal_login"
+    data-toggle="modal" data-target="#modal_login" data-id="{{$ad->id}}"
     @endif
     >
     <span
@@ -16,4 +16,3 @@
         @endif
     ></span>
 </a>
-

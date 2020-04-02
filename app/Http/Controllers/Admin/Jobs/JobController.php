@@ -555,11 +555,12 @@ class JobController extends Controller
             $query->whereDate('jobs.created_at', $request->created_at);
         }
         if (isset($request->search) && !empty($request->search)){
-            $query->where(function ($query) use ($request){
-                $query->where('jobs.name', 'like', "%".$request->search."%");
-                $query->orWhere('jobs.keywords', 'like', "%".$request->search."%");
-                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
-            });
+            common::table_search($query, common::get_model_columns(Job::class), $request->search, 'jobs');
+//            $query->where(function ($query) use ($request){
+//                $query->where('jobs.name', 'like', "%".$request->search."%");
+//                $query->orWhere('jobs.keywords', 'like', "%".$request->search."%");
+//                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
+//            });
         }
 
         if (isset($request->deadline)) {

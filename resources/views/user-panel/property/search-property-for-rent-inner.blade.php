@@ -105,7 +105,7 @@
                                     @if($property_for_rent->street_address)
                                         <span title="{{$property_for_rent->street_address}}">{{Str::limit($property_for_rent->street_address,25)}},</span>
                                     @endif
-                                    <span>{{$property_for_rent->zip_city ? $property_for_rent->zip_city : ''}}</span>
+                                    <span>{{$property_for_rent->zip_city ? Str::ucfirst(Str::lower($property_for_rent->zip_city)) : ''}}</span>
                                 </div>
                                 <div class="title color-grey">{{$property_for_rent->heading}}</div>
                                 <div class="mt-2">

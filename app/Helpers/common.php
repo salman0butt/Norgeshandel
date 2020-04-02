@@ -40,9 +40,28 @@ use App\CommercialPlot;
 use App\BusinessForSale;
 use App\FlatWishesRented;
 use App\PropertyForRent;
+use function foo\func;
 
 class common
 {
+    public static function get_model_columns($Model)
+    {
+        $result = $Model::first();
+        if($result){
+            return array_keys($result->toArray());
+        }
+        return [];
+    }
+    public static function table_search(&$query, $columns, $search_key, $table)
+    {
+        $query->where(function ($query) use ($columns, $search_key, $table){
+            $query->where($table.'.'.$columns[0], 'LIKE', '%' . $search_key . '%');
+            for($i=1; $i<count($columns); $i++){
+                $query->orWhere($table.'.'.$columns[$i], 'LIKE', '%' . $search_key . '%');
+            }
+        });
+//        dd($query);
+    }
     public static function map_json($json)
     {
         $returnable = "";
