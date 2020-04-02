@@ -12,7 +12,7 @@
     @php
         $property_status = '';
         if(Request()->id){
-            $property = \App\PropertyHolidaysHomesForSale::find(Request()->id);
+            $property = \App\CommercialPropertyForRent::find(Request()->id);
             if($property && $property->ad){
                 $property_status = $property->ad->status;
             }
