@@ -10,6 +10,15 @@
 
 @section('page_content')
 <main>
+    @php
+        $property_status = '';
+        if(Request()->id){
+            $property = \App\PropertyHolidaysHomesForSale::find(Request()->id);
+            if($property && $property->ad){
+                $property_status = $property->ad->status;
+            }
+        }
+    @endphp
     <div class="dme-container">
         <div class="row">
             <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
@@ -157,7 +166,7 @@
                 e.preventDefault();
                 if(! $(this).valid()) return false;
 
-                @if(Request::is('complete/ad/*'))
+                @if(Request::is('complete/ad/*') || $property_status == 'saved')
                     record_store_ajax_request('change', (this));
                 @else
                     var zip_code = $('.zip_code').val();
