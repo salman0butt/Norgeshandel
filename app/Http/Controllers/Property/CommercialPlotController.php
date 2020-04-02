@@ -81,6 +81,10 @@ class CommercialPlotController extends Controller
             $query->where($table . '.plot_size', '<=', (int)$request->use_area_to);
         }
 
+        if (isset($request->user_id) && !empty($request->user_id)) {
+            $query->where('ads.user_id', $request->user_id);
+        }
+
         switch ($sort) {
             case 'published':
                 $query->orderBy($table . '.updated_at', 'DESC');

@@ -129,6 +129,10 @@ class PropertyHolidaysHomesForSaleController extends Controller
             });
         }
 
+        if (isset($request->user_id) && !empty($request->user_id)) {
+            $query->where('ads.user_id', $request->user_id);
+        }
+
         $order = $request->order;
         switch ($order) {
             case 'published':

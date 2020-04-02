@@ -81,6 +81,10 @@ class BusinessForSaleController extends Controller
             $query->whereIn('business_for_sales.country', $request->country);
         }
 
+        if (isset($request->user_id) && !empty($request->user_id)) {
+            $query->where('ads.user_id', $request->user_id);
+        }
+
         switch ($sort) {
             case 'published':
                 $query->orderBy('ads.updated_at', 'DESC');

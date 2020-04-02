@@ -1,9 +1,8 @@
 @extends('layouts.landingSite')
-
-@section('page_content')
 @section('main_title')
     NorgesHandel - Property For Sale
 @endsection
+@section('page_content')
 
 <?php
 
@@ -71,7 +70,7 @@ $name = $property_data->ad->company_gallery;
                 <div class="col-md-8">
                     @php $ad = $property_data->ad; @endphp
                         @include('user-panel.partials.favorite-button',compact('ad'))
-              
+
                     <div class="row single-realestate-detail p-3">
                         <div class="col-md-12">
 
@@ -468,15 +467,14 @@ $name = $property_data->ad->company_gallery;
                             @endif
                             @if(!$property_data['published-on'])
                                 <div class="mb-2">
-                                    <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
-                                        annonsør</a>
+                                    <a href="{{url('property/property-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
                                 </div>
                             @endif
                         </div>
                     @else
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                             <div class="text-center">
-                                <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
+{{--                                <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">--}}
                             </div>
                             @if(!$property_data['published-on'])
                                 <p class="mt-3">
@@ -495,8 +493,9 @@ $name = $property_data->ad->company_gallery;
                             @endif
                             {{-- <button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button> --}}
                             @if(!$property_data['published-on'])
-                                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
-                                    annonsør</a></div>
+                                <div class="mb-2">
+                                    <a href="{{url('property/property-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                                </div>
                             @endif
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>

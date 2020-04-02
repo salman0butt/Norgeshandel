@@ -149,6 +149,10 @@ class PropertyForRentController extends Controller
             });
         }
 //
+        if (isset($request->user_id) && !empty($request->user_id)) {
+            $query->where('ads.user_id', $request->user_id);
+        }
+
         switch ($sort) {
             case 'published':
                 $query->orderBy('ads.updated_at', 'DESC');

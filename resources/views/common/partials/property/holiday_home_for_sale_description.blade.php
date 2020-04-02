@@ -65,7 +65,7 @@
             <div class="col-md-8">
                 @php $ad = $property_data->ad; @endphp
                 @include('user-panel.partials.favorite-button',compact('ad'))
-            
+
                 <div class="row single-realestate-detail p-3">
                     <div class="col-md-12">
                         <div class="u-t3 mt-3">{{$property_data->ad_headline}}</div>
@@ -436,7 +436,9 @@
                 @endif
                 {{--<button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>--}}
                 @if(!$property_data->published_on)
-                    <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
+                    <div class="mb-2">
+                        <a href="{{url('property/holiday-homes-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                    </div>
                 @endif
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>

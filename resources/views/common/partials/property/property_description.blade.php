@@ -240,7 +240,7 @@
                             @endif
                             @if(!$property_data->published_on)
                                 <div class="mb-2">
-                                    <a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                                    <a href="{{url('property/property-for-rent/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
                                 </div>
                             @endif
                         </div>
