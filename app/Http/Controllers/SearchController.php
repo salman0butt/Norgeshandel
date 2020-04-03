@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\common;
 use App\Models\Search;
 use App\Admin\Jobs\Job;
 use App\CommercialPlot;
@@ -84,7 +85,7 @@ class SearchController extends Controller
                 $value = "property/property-for-rent/search?" . $value;
             }else if($ad_type == 'holiday-homes-for-sale'){
                 $value = "property/holiday-homes-for-sale/search?" . $value;
-              
+
             }else if($ad_type == 'property-for-sale'){
                 $value = "property/property-for-sale/search?" . $value;
             }else if($ad_type == 'flat-wishes-rented'){
@@ -98,8 +99,8 @@ class SearchController extends Controller
             }else if($ad_type == 'business-for-sale'){
                 $value = "property/business-for-sale/search?" . $value;
             }
-           
-       
+
+
             $check = Search::where('type', 'recent')
                 ->Where('name', '=', $name)
                 ->where('filter', '=', $value)
@@ -354,7 +355,9 @@ class SearchController extends Controller
                 })->where(function ($query) use ($date){
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at','>',$date);
-                })->get();
+                });
+                common::table_search($query, common::get_model_columns(Job::class), $search, 'jobs');
+                $query->get();
             $job_fulltime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'full_time')
@@ -365,7 +368,9 @@ class SearchController extends Controller
                 })->where(function ($query) use ($date){
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at','>',$date);
-                })->get();
+                });
+                common::table_search($query, common::get_model_columns(Job::class), $search, 'jobs');
+                $query->get();
             $job_management = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'management')
@@ -376,7 +381,9 @@ class SearchController extends Controller
                 })->where(function ($query) use ($date){
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at','>',$date);
-                })->get();
+                });
+                common::table_search($query, common::get_model_columns(Job::class), $search, 'jobs');
+                $query->get();
             $html = "";
             $html .= view('user-panel.partials.job-search-inner',
                 compact('search','job_parttime', 'job_fulltime', 'job_management'))->render();
