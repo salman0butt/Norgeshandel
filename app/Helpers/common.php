@@ -60,7 +60,6 @@ class common
                 $query->orWhere($table.'.'.$columns[$i], 'LIKE', '%' . $search_key . '%');
             }
         });
-//        dd($query);
     }
     public static function map_json($json)
     {

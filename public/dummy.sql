@@ -1,0 +1,52 @@
+select * from `jobs` inner join `ads` on `jobs`.`ad_id` = `ads`.`id` where `ads`.`visibility` = "%1%"
+and `jobs`.`job_type` = "%1%"
+and (`jobs`.`title` LIKE "%1%" or `jobs`.`name` LIKE "%1%" or `jobs`.`keywords` like "%1%")
+and (`ads`.`status` = "published" or date(`ads`.`sold_at`) > "%1%")
+and (
+`jobs`.`id` LIKE "%1%"
+or `jobs`.`name` LIKE "%1%"
+or `jobs`.`title` LIKE "%1%"
+or `jobs`.`job_type` LIKE "%1%"
+or `jobs`.`slug` LIKE "%1%"
+or `jobs`.`positions` LIKE "%1%"
+or `jobs`.`commitment_type` LIKE "%1%"
+or `jobs`.`job_function` LIKE "%1%"
+or `jobs`.`industry` LIKE "%1%"
+or `jobs`.`sect
+or` LIKE "%1%"
+or `jobs`.`leadership_categ
+ory` LIKE "%1%"
+or `jobs`.`keyw
+ords` LIKE "%1%"
+or `jobs`.`description` LIKE "%1%"
+or `jobs`.`deadline` LIKE "%1%"
+or `jobs`.`accession` LIKE "%1%"
+or `jobs`.`emp_name` LIKE "%1%"
+or `jobs`.`emp_company_inf
+ormation` LIKE "%1%"
+or `jobs`.`emp_website` LIKE "%1%"
+or `jobs`.`emp_facebook` LIKE "%1%"
+or `jobs`.`emp_linkedin` LIKE "%1%"
+or `jobs`.`emp_twitter` LIKE "%1%"
+or `jobs`.`country` LIKE "%1%"
+or `jobs`.`zip` LIKE "%1%"
+or `jobs`.`zip_city` LIKE "%1%"
+or `jobs`.`address` LIKE "%1%"
+or `jobs`.`w
+orkplace_video` LIKE "%1%"
+or `jobs`.`app_receive_by` LIKE "%1%"
+or `jobs`.`app_link_to_receive` LIKE "%1%"
+or `jobs`.`app_email_to_receive` LIKE "%1%"
+or `jobs`.`app_contact` LIKE "%1%"
+or `jobs`.`app_contact_title` LIKE "%1%"
+or `jobs`.`app_mobile` LIKE "%1%"
+or `jobs`.`app_phone` LIKE "%1%"
+or `jobs`.`app_email` LIKE "%1%"
+or `jobs`.`app_linkedin` LIKE "%1%"
+or `jobs`.`app_twitter` LIKE "%1%"
+or `jobs`.`ad_id` LIKE "%1%"
+or `jobs`.`company_id` LIKE "%1%"
+or `jobs`.`user_id` LIKE "%1%"
+or `jobs`.`created_at` LIKE "%1%"
+or `jobs`.`updated_at` LIKE "%1%"
+or `jobs`.`deleted_at` LIKE "%1%")
