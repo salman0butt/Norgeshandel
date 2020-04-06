@@ -11,13 +11,19 @@
 @section('page_content')
     @php
         $property_status = '';
-        if(Request()->id){
+        if(Request()->id && Request::is('add/business/for/sale/*/edit')){
             $property = \App\BusinessForSale::find(Request()->id);
             if($property && $property->ad){
                 $property_status = $property->ad->status;
             }
+        }elseif(Request()->id && Request::is('complete/ad/*')){
+            $ad = \App\Models\Ad::find(Request()->id);
+            if($ad){
+                $property_status = $ad->status;
+            }
         }
     @endphp
+    <input type="hidden" class="ad_status" value="{{$property_status}}">
 <!-- property for rent -->
 <main>
     <div class="dme-container">
@@ -94,6 +100,9 @@
                         if (event == 'change') {
                             notify("info","Annonsen din er lagret");
                        }else if(event == 'click'){
+                            $('.deleted_media').val('');
+                            $('.media_position').val('');
+                            $('.ad_status').val(data.status);
                             var message = 'Annonsen din er publisert';
                             if(data.message){
                                 message = data.message;
@@ -136,17 +145,19 @@
                 e.preventDefault();
                 if(! $(this).valid()) return false;
 
-                @if(Request::is('complete/ad/*') || $property_status == 'saved')
+                var ad_status = $('.ad_status').val();
+                if(ad_status == 'saved'){
                     record_store_ajax_request('change', (this));
-                @else
+                }else{
                     var zip_code = $('.zip_code').val();
                     var old_zip = $('#old_zip').val();
+
                     if (zip_code) {
                         if (old_zip != zip_code) {
                             find_zipcode_city(zip_code);
                         }
                     }
-                @endif
+                }
 
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);

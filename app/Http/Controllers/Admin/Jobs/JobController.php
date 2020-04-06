@@ -61,8 +61,14 @@ class JobController extends Controller
             }
             return response()->view('admin.jobs.jobs', compact('ads'));
         }
-        $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
-        $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
+
+        $saved_search = null;
+        $recent_search = null;
+        if (Auth::check()) {
+            $saved_search = Search::where('type', 'saved')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
+            $recent_search = Search::where('type', 'recent')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
+        }
+
         $date = Date('y-m-d',strtotime('-7 days'));
 
         $ads = Ad::where('ad_type', 'job')->where(function ($query) use ($date){

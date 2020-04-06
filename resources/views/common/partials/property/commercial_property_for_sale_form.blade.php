@@ -21,9 +21,11 @@
 @method('PATCH')
 @endif
     <div class="pl-3">
-<input type="hidden" id="old_zip" value="{{ (isset($commercial_property_for_sale->zip_code) ? $commercial_property_for_sale->zip_code : '') }}">
-<input type="hidden" name="upload_dropzone_images_type" value="commercial_property_for_sale_temp_images">
-<input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_sale->zip_city) ? $commercial_property_for_sale->zip_city : '') }}">
+        <input type="hidden" id="old_zip" value="{{ (isset($commercial_property_for_sale->zip_code) ? $commercial_property_for_sale->zip_code : '') }}">
+        <input type="hidden" name="upload_dropzone_images_type" value="commercial_property_for_sale_temp_images">
+        <input type="hidden" name="media_position" class="media_position">
+        <input type="hidden" name="deleted_media" class="deleted_media">
+        <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_sale->zip_city) ? $commercial_property_for_sale->zip_city : '') }}">
 
         <!--                            checkbox -->
         <div class="form-group">

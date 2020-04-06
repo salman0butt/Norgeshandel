@@ -14,7 +14,8 @@ class Media extends Model
         'name_unique',
         'type',
         'title',
-        'order'
+        'order',
+        'media_order'
     ];
 
     public function mediable(){

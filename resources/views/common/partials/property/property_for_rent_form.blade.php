@@ -26,6 +26,8 @@
     @endif
     <input type="hidden" id="old_zip" value="{{ (isset($property_for_rent->zip_code) ? $property_for_rent->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_rent_temp_images">
+    <input type="hidden" name="media_position" class="media_position">
+    <input type="hidden" name="deleted_media" class="deleted_media">
     <div class="pl-3 pr-3">
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
         <div class="form-group">

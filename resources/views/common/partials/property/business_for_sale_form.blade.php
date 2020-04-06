@@ -18,6 +18,8 @@
     @endif
     <div class="pl-3">
         <input type="hidden" name="upload_dropzone_images_type" value="business_for_sale_temp_images">
+        <input type="hidden" name="media_position" class="media_position">
+        <input type="hidden" name="deleted_media" class="deleted_media">
           <input type="hidden" id="old_zip" value="{{ (isset($business_for_sale_obj->zip_code) ? $business_for_sale_obj->zip_code : '') }}">
             <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($business_for_sale_obj->zip_city) ? $business_for_sale_obj->zip_city : '') }}">
         <!--                            selection-->

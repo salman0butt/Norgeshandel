@@ -213,6 +213,7 @@ class PropertyForRentController extends Controller
 
     public function newAddedit($id)
     {
+        common::delete_media(Auth::user()->id, 'property_for_rent_temp_images', 'gallery');
         $property_for_rent1 = PropertyForRent::findOrFail($id);
         if ($property_for_rent1) {
             if (!Auth::user()->hasRole('admin') && ($property_for_rent1->user_id != Auth::user()->id || $property_for_rent1->ad->status == 'sold')) {
@@ -231,7 +232,7 @@ class PropertyForRentController extends Controller
             if (!$request->facilities2) {
                 $request->merge(['facilities2' => null]);
             }
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -337,11 +338,21 @@ class PropertyForRentController extends Controller
         if($msg == 'success'){
             //  DB::connection()->enableQueryLog();
             $property = PropertyForRent::find($id);
+            if($request->media_position){
+                $media_position_arr = $request->media_position;
+            }
             $message = '';
             $ad = $property->ad;
             if ($ad && $ad->status == 'saved') {
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
+                $media = common::updated_dropzone_images_type($request->all(),'property_for_rent_temp_images',$ad->id);
+                if($request->media_position){
+                    $media_position = common::update_media_position($media_position_arr);
+                }
+                if($request->deleted_media){
+                    $delete_media = common::delete_json_media($request->deleted_media);
+                }
                 $message = 'Annonsen din er oppdatert.';
             }
             $response = $ad->update(['status' => 'published']);
@@ -354,6 +365,7 @@ class PropertyForRentController extends Controller
 
             $data['success'] = $response;
             $data['message'] = $message;
+            $data['status'] = $ad->status;
             echo json_encode($data);
         }else{
             echo $msg;
