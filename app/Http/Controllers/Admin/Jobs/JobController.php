@@ -191,19 +191,34 @@ class JobController extends Controller
 
 
     public function upload_images($request, $ad_id=''){
-        if(empty($ad_id)){
-            if($request->ad_id){
-                $ad_id = $request->ad_id;
-            }
+        $mediable_id = '';
+        $ad_status = '';
+        if ($request->ad_id) {
+            $ad = Ad::find($request->ad_id);
+            $ad_status = $ad && $ad->status ? $ad->status : '';
+            $mediable_id = $request->ad_id;
         }
         if ($request->file('files')) {
             $files = $request->file('files');
-            if($ad_id){
-                return common::update_media($files, $ad_id, 'App\Models\Ad', 'gallery','false');
-            }else{
-                return common::update_media($files, Auth::user()->id, 'temp_job_image', 'gallery','false');
+            if ($mediable_id && $ad_status == 'saved') {
+                return common::update_media($files, $mediable_id, 'App\Models\Ad', 'gallery', 'false');
+            } else {
+                return common::update_media($files, Auth::user()->id, $request->upload_dropzone_images_type, 'gallery', 'false');
             }
         }
+//        if(empty($ad_id)){
+//            if($request->ad_id){
+//                $ad_id = $request->ad_id;
+//            }
+//        }
+//        if ($request->file('files')) {
+//            $files = $request->file('files');
+//            if($ad_id){
+//                return common::update_media($files, $ad_id, 'App\Models\Ad', 'gallery','false');
+//            }else{
+//                return common::update_media($files, Auth::user()->id, 'temp_job_image', 'gallery','false');
+//            }
+//        }
     }
 
     /**
@@ -342,6 +357,7 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
+        common::delete_media(Auth::user()->id, 'job_temp_images', 'gallery');
         if(!Auth::user()->hasRole('admin') && $job->user_id != Auth::id()){
             return redirect('forbidden');
         }
@@ -376,6 +392,15 @@ class JobController extends Controller
         try{
             $this->update_dummy($request);
             $job->ad->update(['status'=>'published']);
+
+            $media = common::updated_dropzone_images_type($request->all(),'job_temp_images',$job->ad->id);
+            if($request->media_position){
+                $media_position = common::update_media_position($request->media_position);
+            }
+            if($request->deleted_media){
+                $delete_media = common::delete_json_media($request->deleted_media);
+            }
+            $message = 'Annonsen din er oppdatert.';
 
             DB::commit();
 

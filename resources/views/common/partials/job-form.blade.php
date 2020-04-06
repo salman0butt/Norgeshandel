@@ -10,6 +10,17 @@
 @endsection
 
 @section('page_content')
+    @php
+        $job_status = '';
+        if(Request::is('jobs/*/edit')){
+            if($job && $job->ad){
+                $job_status = $job->ad->status;
+            }
+        }elseif(Request::is('new/job/*')){
+            $job_status = 'saved';
+        }
+    @endphp
+    <input type="hidden" class="ad_status" value="{{$job_status}}">
 
 <?php
     $job_fun = "";
@@ -41,6 +52,11 @@
     @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
     {{ csrf_field() }}
     @if(Request::is('jobs/*/edit')) {{method_field('PUT')}} @endif
+
+    <input type="hidden" name="upload_dropzone_images_type" value="job_temp_images">
+    <input type="hidden" name="media_position" class="media_position">
+    <input type="hidden" name="deleted_media" class="deleted_media">
+
     <input type="hidden" name="ad_id" id="ad_id" value="{{isset($obj_job->ad)?$obj_job->ad->id:""}}">
     <input type="hidden" name="job_id" id="job_id" value="{{isset($obj_job->id)?$obj_job->id:""}}">
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($obj_job->zip_city) ? $obj_job->zip_city : '') }}">
@@ -547,25 +563,28 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
-                $.ajax({
-                    url: link,
-                    type: "POST",
-                    data: $('#job-form').serialize(),
-                    success: function (response) {
-               
-                        var resp = JSON.parse(response);
-                        
-                        if ($('#ad_id').val().length < 1) {
-                            //console.log(resp.job_id);
-                            notify("info","Jobben ble lagret!");
+                var ad_status = $('.ad_status').val();
+                if(ad_status == 'saved'){
+                    $.ajax({
+                        url: link,
+                        type: "POST",
+                        data: $('#job-form').serialize(),
+                        success: function (response) {
 
-                            $('#job_id').val(resp.job_id);
-                            $('#ad_id').val(resp.ad_id);
+                            var resp = JSON.parse(response);
+
+                            if ($('#ad_id').val().length < 1) {
+                                //console.log(resp.job_id);
+                                notify("info","Jobben ble lagret!");
+
+                                $('#job_id').val(resp.job_id);
+                                $('#ad_id').val(resp.ad_id);
+                            }
                         }
-                    }
 
-                    //document.getElementById("contact_us").reset();
-                })
+                        //document.getElementById("contact_us").reset();
+                    })
+                }
             });
         });
 
