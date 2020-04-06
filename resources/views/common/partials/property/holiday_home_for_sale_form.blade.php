@@ -24,6 +24,8 @@
         @endif
         <input type="hidden" id="old_zip" value="{{ (isset($holiday_home_for_sale->zip_code) ? $holiday_home_for_sale->zip_code : '') }}">
         <input type="hidden" name="upload_dropzone_images_type" value="holiday_home_for_sale_temp_images">
+        <input type="hidden" name="media_position" class="media_position">
+        <input type="hidden" name="deleted_media" class="deleted_media">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($holiday_home_for_sale->zip_city) ? $holiday_home_for_sale->zip_city : '') }}">
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>

@@ -120,11 +120,14 @@
                 <div class="text-center">
                     <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                 </div>
-                @if(!$property_data['published-on'])
-                    <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
-                        Eiendomsmegler</p>
-                @endif
-
+                <p class="mt-3">
+                    @if(!$property_data['published-on'])
+                        {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
+                        Eiendomsmegler
+                    @else
+                        NH-Bruker
+                    @endif
+                </p>
                 @if($property_data->phone)
                     <div class="mb-2">
                         <span>Mobil: </span>

@@ -183,6 +183,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
 
     public function editHolidayHomeForSale($id)
     {
+        common::delete_media(Auth::user()->id, 'holiday_home_for_sale_temp_images', 'gallery');
         $holiday_home_for_sale1 = PropertyHolidaysHomesForSale::findOrFail($id);
         if ($holiday_home_for_sale1) {
             if (!Auth::user()->hasRole('admin') && ($holiday_home_for_sale1->user_id != Auth::user()->id || $holiday_home_for_sale1->ad->status == 'sold')) {
@@ -207,6 +208,13 @@ class PropertyHolidaysHomesForSaleController extends Controller
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
+                $media = common::updated_dropzone_images_type($request->all(),'holiday_home_for_sale_temp_images',$ad->id);
+                if($request->media_position){
+                    $media_position = common::update_media_position($request->media_position);
+                }
+                if($request->deleted_media){
+                    $delete_media = common::delete_json_media($request->deleted_media);
+                }
             }
             $response = $ad->update(['status' => 'published']);
 
@@ -216,6 +224,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
 
             $msg['message'] = $message;
 //                $data['success'] = $response;
+            $msg['status'] = $ad->status;
             echo json_encode($msg);
         }else{
             echo json_encode($msg);
@@ -235,7 +244,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
             if (!$request->owned_site) {
                 $request->merge(['owned_site' => null]);
             }
-            $property_home_for_sale_data = $request->except('upload_dropzone_images_type');
+            $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media']);
 
             //Add More ViewingTimes
             if (isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "") {

@@ -202,13 +202,13 @@ class common
 
     public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar', $delete_old = 'true', $process_image = true)
     {
-        $max_old_media_order = Media::where('mediable_type', $mediable_type)->where('mediable_id', $mediable_id)->where('type', $type)->orderBy('order', 'DESC')->first();
+        $max_old_media_order = Media::where('mediable_type', $mediable_type)->where('mediable_id', $mediable_id)->where('type', $type)->orderBy('media_order', 'DESC')->first();
         if ($delete_old == 'true') {
             self::delete_media($mediable_id, $mediable_type, $type);
         }
         $order = 0;
         if ($max_old_media_order) {
-            $order = $max_old_media_order->order;
+            $order = $max_old_media_order->media_order;
         }
 
         if (!is_array($files)) {
@@ -238,7 +238,7 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
             }
             $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
-            $media->order = $order + 1;
+            $media->media_order = $order + 1;
             $media->save();
             $names_files[] = $media->name_unique;
             $org_file_names[] = $media->name;
@@ -552,10 +552,18 @@ class common
 
         $temp_media = Media::where('mediable_id', Auth::user()->id)->where('mediable_type', $mediable_type)->get();
         if ($temp_media->count() > 0 && $ad_id) {
+            $max_old_media_order = Media::where('mediable_type', 'App\Models\Ad')->where('mediable_id', $ad_id)->where('type', 'gallery')->orderBy('media_order', 'DESC')->first();
+
+            $order = 0;
+            if ($max_old_media_order) {
+                $order = $max_old_media_order->media_order;
+            }
             foreach ($temp_media as $key => $temp_media_obj) {
                 $temp_media_obj->mediable_id = $ad_id;
                 $temp_media_obj->mediable_type = 'App\Models\Ad';
+                $temp_media_obj->media_order = $order+1;
                 $temp_media_obj->update();
+                $order++;
             }
 
         }
@@ -611,6 +619,45 @@ class common
                 ->where('id', '>', $ad->id)->orderBy('id', 'asc')->first();
         }
         return $next;
+    }
+
+    //Update media position
+    public static function update_media_position($arr){
+        if (isset($arr)) {
+            $data = json_decode($arr);
+            foreach ($data as $data_arr) {
+                $response['flag'] = 'success';
+                $media = Media::where('name_unique', $data_arr[0])->first();
+                if ($media) {
+                    $media->media_order = $data_arr[1];
+                    $media->save();
+                }
+            }
+        }
+        return 'success';
+    }
+
+    //Delete Media using edit form
+    public static function delete_json_media($arr){
+        if($arr){
+            $arr = json_decode($arr);
+            if($arr){
+                foreach ($arr as $arr_obj){
+                    $media = Media::where('name_unique', $arr_obj)->first();
+                    if ($media) {
+                        $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+                        $arr = explode('.', $media->name_unique);
+
+                        foreach (glob($path . $arr[0] . '*.*') as $file) {
+                            unlink($file);
+                        }
+                        $media->delete();
+                    }
+                }
+                return 'success';
+            }
+        }
+        return '';
     }
 
 }

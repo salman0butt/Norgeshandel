@@ -21,7 +21,9 @@
   @endif
     <input type="hidden" id="old_zip" value="{{ (isset($commercial_plot->zip_code) ? $commercial_plot->zip_code : '') }}">
     <input type="hidden" name="upload_dropzone_images_type" value="commercial_plots_temp_images">
-     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_plot->zip_city) ? $commercial_plot->zip_city : '') }}">
+    <input type="hidden" name="media_position" class="media_position">
+    <input type="hidden" name="deleted_media" class="deleted_media">
+    <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_plot->zip_city) ? $commercial_plot->zip_city : '') }}">
     <div class="pl-3">
         <!--                            radio -->
         <div class="form-group">

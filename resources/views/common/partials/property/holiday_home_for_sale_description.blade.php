@@ -410,8 +410,6 @@
                     </div>
                     <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span>
                         <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
-                    <div class="col-md-12"><span class="font-weight-bold">Referanse: </span> <span>302190059</span>
-                    </div>
                     <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                     <div class="col-md-12 u-d2">Annonsene kan være mangelfulle i forhold til lovpålagt opplysningsplikt.
                         Før bindende avtale inngås oppfordres interessenter til å innhente komplett informasjon fra
@@ -422,10 +420,14 @@
                 <div class="text-center">
                     <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">
                 </div>
-                @if(!$property_data->published_on)
-                    <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }} <br>
-                        Eiendomsmegler</p>
-                @endif
+                <p class="mt-3">
+                    @if(!$property_data->published_on)
+                        {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
+                        Eiendomsmegler
+                    @else
+                        NH-Bruker
+                    @endif
+                </p>
                 @if($property_data->phone)
                     <div class="mb-2">
                         <span>Telefon: </span>

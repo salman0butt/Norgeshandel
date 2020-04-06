@@ -70,7 +70,7 @@
                 @foreach ($add_array as $key => $value)
                     <?php
                     $property_for_rent = App\PropertyForRent::find($value->id);
-                    $name       = $property_for_rent->ad->media->first();
+                    $name       = $property_for_rent->ad->company_gallery->first();
                     if($name != null)
                     {
                         $name       =    $name->name_unique;

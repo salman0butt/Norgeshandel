@@ -187,6 +187,7 @@ class BusinessForSaleController extends Controller
     // Edit form for business for sale ad
     public function editBusinessForSale($id)
     {
+        common::delete_media(Auth::user()->id, 'business_for_sale_temp_images', 'gallery');
         $business_for_sale = BusinessForSale::findOrFail($id);
         if ($business_for_sale) {
             if (!Auth::user()->hasRole('admin') && ($business_for_sale->user_id != Auth::user()->id || $business_for_sale->ad->status == 'sold')) {
@@ -210,6 +211,13 @@ class BusinessForSaleController extends Controller
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
+                $media = common::updated_dropzone_images_type($request->all(),'business_for_sale_temp_images',$ad->id);
+                if($request->media_position){
+                    $media_position = common::update_media_position($request->media_position);
+                }
+                if($request->deleted_media){
+                    $delete_media = common::delete_json_media($request->deleted_media);
+                }
             }
             $response = $ad->update(['status' => 'published']);
 
@@ -219,6 +227,7 @@ class BusinessForSaleController extends Controller
 
             $msg['message'] = $message;
 //                $data['success'] = $response;
+            $msg['status'] = $ad->status;
             echo json_encode($msg);
         }else{
             echo json_encode($msg);
@@ -233,7 +242,7 @@ class BusinessForSaleController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type']);
+            $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
 
             unset($business_for_sale['business_for_sale_pdf']);
             $business_for_sale['user_id'] = Auth::user()->id;

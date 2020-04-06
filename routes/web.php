@@ -593,17 +593,31 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::get('/delete-media-dz', function () {
         $media = Media::where('name_unique', $_GET['filename'])->first();
+        $delete = 'no';
         if ($media) {
-            $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
-            $arr = explode('.', $media->name_unique);
-
-            foreach (glob($path . $arr[0] . '*.*') as $file) {
-                unlink($file);
+            if(preg_match("/^.*\_temp_images$/", $media->mediable_type)){
+                $delete = 'yes';
+            }else{
+                if($media->mediable_type = 'App\Models\Ad' && $media->mediable && $media->mediable->status == 'saved'){
+                    $delete = 'yes';
+                }
             }
-            $media->delete();
+            if($delete == 'yes'){
+                $path = 'public/uploads/' . date('Y', strtotime($media->updated_at)) . '/' . date('m', strtotime($media->updated_at)) . '/';
+                $arr = explode('.', $media->name_unique);
+
+                foreach (glob($path . $arr[0] . '*.*') as $file) {
+                    unlink($file);
+                }
+                $media->delete();
+            }
         }
         $response = array();
         $response['flag'] = 'success';
+        if($delete == 'no'){
+            $response['file_name'] = $_GET['filename'];
+            return ($response);
+        }
         return json_encode($response);
     });
     Route::post('/update-media-positions', function (Request $request) {
@@ -615,7 +629,7 @@ Route::group(['middleware' => 'authverified'], function () {
                 $response['flag'] = 'success';
                 $media = Media::where('name_unique', $data_arr[0])->first();
                 if ($media) {
-                    $media->order = $data_arr[1];
+                    $media->media_order = $data_arr[1];
                     $media->save();
                 }
             }

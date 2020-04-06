@@ -134,6 +134,7 @@ class CommercialPlotController extends Controller
 
     public function editCommercialPlots($id)
     {
+        common::delete_media(Auth::user()->id, 'commercial_plots_temp_images', 'gallery');
         $commercial_plots = CommercialPlot::findOrFail($id);
         if ($commercial_plots) {
             if (!Auth::user()->hasRole('admin') && ($commercial_plots->user_id != Auth::user()->id || $commercial_plots->ad->status == 'sold')) {
@@ -157,6 +158,13 @@ class CommercialPlotController extends Controller
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
+                $media = common::updated_dropzone_images_type($request->all(),'commercial_plots_temp_images',$ad->id);
+                if($request->media_position){
+                    $media_position = common::update_media_position($request->media_position);
+                }
+                if($request->deleted_media){
+                    $delete_media = common::delete_json_media($request->deleted_media);
+                }
             }
             $response = $ad->update(['status' => 'published']);
 
@@ -166,6 +174,7 @@ class CommercialPlotController extends Controller
 
             $msg['message'] = $message;
 //                $data['success'] = $response;
+            $msg['status'] = $ad->status;
             echo json_encode($msg);
         }else{
             echo json_encode($msg);
@@ -181,7 +190,7 @@ class CommercialPlotController extends Controller
             if (!$request->owned_plot_facilities) {
                 $request->merge(['owned_plot_facilities' => null]);
             }
-            $commercial_plot = $request->except('upload_dropzone_images_type');
+            $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media');
             unset($commercial_plot['commercial_plot_pdf']);
             $commercial_plot['user_id'] = Auth::user()->id;
 

@@ -31,21 +31,21 @@ class Ad extends Model
     }
 
     public function company_logo(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','logo')->orderBy('order','ASC');
+        return $this->morphMany('App\Media', 'mediable')->where('type','logo')->orderBy('media_order','ASC');
     }
 
     public function company_gallery(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','gallery')->orderBy('order','ASC');
+        return $this->morphMany('App\Media', 'mediable')->where('type','gallery')->orderBy('media_order','ASC');
     }
 
     // get complete quotation
     public function sales_information(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','sales_information')->orderBy('order','ASC');
+        return $this->morphMany('App\Media', 'mediable')->where('type','sales_information')->orderBy('media_order','ASC');
     }
 
     // get sales information
     public function pdf(){
-        return $this->morphMany('App\Media', 'mediable')->where('type','pdf')->orderBy('order','ASC');
+        return $this->morphMany('App\Media', 'mediable')->where('type','pdf')->orderBy('media_order','ASC');
     }
 
     public function user(){

@@ -170,7 +170,7 @@
 
                                 $('#suggestions').html(response);
                             var valu = $('#search').val();
-                            $('#suggestions > div > div.col-md-7 > ul > li a').prepend(valu+' ');
+                            $('#suggestions > div > div.col-md-7 > ul > li > a span').prepend(valu+' ');
                             },
                             error: function (error) {
                                 //console.log(error);

@@ -21,10 +21,11 @@
   @endif
     <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_sale_temp_images">
+    <input type="hidden" name="media_position" class="media_position">
+    <input type="hidden" name="deleted_media" class="deleted_media">
+
     <input type="hidden" id="old_zip" value="{{ (isset($property_for_sale->zip_code) ? $property_for_sale->zip_code : '') }}">
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_sale->zip_city) ? $property_for_sale->zip_city : '') }}">
-
-
 
     <div class="pl-3 pr-3">
         <div class="form-group">
