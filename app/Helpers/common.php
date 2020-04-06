@@ -246,12 +246,12 @@ class common
             $file_ids[] = $media->id;
             $order++;
         }
-        return json_encode([
+        return [
             'file_names' => $names_files,
             'org_file_names' => $org_file_names,
             'file_names_encoded' => $file_names_encoded,
             'file_ids' => $file_ids,
-        ]);
+        ];
     }
 
     public static function delete_media($mediable_id, $mediable_type, $type)
