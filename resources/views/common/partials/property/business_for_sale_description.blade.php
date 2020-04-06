@@ -149,8 +149,8 @@
                             <a href="{{url('property/business-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
                         </div>
                     @endif
-                    <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
-                            salgsoppgave</a></div>
+                    {{--<div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig--}}
+                            {{--salgsoppgave</a></div>--}}
                     @if(!$property_data->ad->is_mine())
                         <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                     @endif
