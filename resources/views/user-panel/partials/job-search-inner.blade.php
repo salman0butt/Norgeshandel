@@ -3,25 +3,28 @@
         margin-bottom: 0;
     }
 </style>
-
-{{--@dd(count($job_fulltime));--}}
+{{--@dump($job_parttime,$job_fulltime,$job_management)--}}
 <div class="row m-2 search-result-topic" style="margin-bottom: 0 !important;">
     <div class="col-md-3 p1 offset-1">
-        @if (count($job_parttime) > 0 || count($job_fulltime) > 0 || count($job_management) >0)
+        @if (
+        (is_countable($job_parttime) && count($job_parttime)) > 0 ||
+        (is_countable($job_fulltime) && count($job_fulltime)) > 0 ||
+        (is_countable($job_management) && count($job_management)) >0
+        )
             Jobs
         @endif
     </div>
     <div class="col-md-7">
         <ul class="p-1 list-unstyled">
-            @if (count($job_parttime)> 0)
+            @if (is_countable($job_parttime) && count($job_parttime)> 0)
                 <li><a href="{{url('jobs/search?search='.$search.'&job_type=part_time')}}">På deltid
                         ({{count($job_parttime)}})</a></li>
             @endif
-            @if(count($job_fulltime) > 0)
+            @if(is_countable($job_fulltime) && count($job_fulltime) > 0)
                 <li><a href="{{url('jobs/search?search='.$search.'&job_type=full_time')}}">På heltid
                         ({{count($job_fulltime)}})</a></li>
             @endif
-            @if(count($job_management) > 0)
+            @if(is_countable($job_management) && count($job_management) > 0)
                 <li><a href="{{url('jobs/search?search='.$search.'&job_type=management')}}">På ledelse
                         ({{count($job_management)}})</a></li>
             @endif

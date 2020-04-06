@@ -9,7 +9,7 @@ function formate_date(date) {
     return str_date;
 }
 function notify(type,msg) {
-    
+
     Command: toastr[type](msg)
     toastr.options = {
         "closeButton": true,
@@ -111,7 +111,7 @@ $(document).ready(function (e) {
 
     });
     $(document).click(function (e) {
-        if(isEmpty(e.target.closest('header'))){
+        if(e.target.closest('header') == null){
             $('.mega-menu').slideUp();
             isDown = false;
             $('#mega-menu-button span').addClass('fa-bars');

@@ -406,7 +406,7 @@
                         </div>
                     @endif
 
-                    <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span> <span> 140424636</span>
+                    <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> {{$property_data->ad->id}}</span>
                     </div>
                     <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span>
                         <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
