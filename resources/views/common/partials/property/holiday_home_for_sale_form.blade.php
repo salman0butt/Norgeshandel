@@ -772,7 +772,7 @@
             <div class="row">
                 <div class="col-md-4 pr-md-0">
                     <input name="delivery_date[]" value="{{ $holiday_home_for_sale->delivery_date }}" type="date"
-                        class="dme-form-control" max="2020-12-31">
+                        class="dme-form-control">
                 </div>
                 <div class="col-md-8"></div>
                 <div class="col-md-12 u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</div>

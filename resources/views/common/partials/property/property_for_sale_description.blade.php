@@ -439,13 +439,14 @@ $name = $property_data->ad->company_gallery;
                 <div class="col-md-4">
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
-                            <p class="mt-3">
-                                @if(!$property_data['published-on'])
-                                    {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
-                                @else
-                                    NH-Bruker
-                                @endif
-                            </p>
+                            @if(!$property_data['published-on'])
+                            <center>
+                                <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
+                                alt="Profile image" style="width:100px;">
+                                
+                                        <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
+                            </center>
+                            @endif
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                             @endif
@@ -478,9 +479,12 @@ $name = $property_data->ad->company_gallery;
                             <div class="text-center">
 {{--                                <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt="">--}}
                             </div>
-                            <p class="mt-3">
-                                @if(!$property_data['published-on'])
-                                    {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}<br>
+                             
+                            @if(!$property_data['published-on'])
+                          
+                                <p class="mt-3">
+                                    {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
+                                    <br>
                                     Eiendomsmegler
                                 @else
                                     NH-Bruker

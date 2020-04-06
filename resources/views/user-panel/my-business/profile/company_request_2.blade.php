@@ -40,9 +40,9 @@
                         <div class="col-md-3">
                             <button type="button" class="btn dme-btn-outlined-blue find_detail_button">Gå videre
                             </button>
-                            <div id="imageLoader" style="display:none; margin-top:15%; padding-bottom: 15%">
-                                <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader"
-                                    height="50px">
+                            <div id="0" style="display:none; margin-top:15%; padding-bottom: 15%">
+                             {{-- <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader"
+                                    height="50px">  --}}
                             </div>
                         </div><br>
 
@@ -247,7 +247,7 @@
                     url: api_url + org_number,
                     success: function (response) {
                         $('#form_org_number #btn_manual_entry').click();
-                        $('.org-number #imageLoader').css('display', 'inline');
+                        //$('.org-number #imageLoader').css('display', 'inline');
                         var registration_number = response[
                         'organisasjonsnummer']; //  get the company registration number
                         var company_name = response['navn']; //get the company name
