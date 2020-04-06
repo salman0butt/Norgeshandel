@@ -212,6 +212,11 @@ $(document).on('click', '.dz-remove', function (e) {
     e.preventDefault();
     filename = $(this).attr('id');
     delete_media(filename);
+    if($("div").hasClass("input_type_file")){
+        $('.input_type_file').removeClass('fileinput-exists ').addClass('fileinput-new');
+        // var $el = $('.input_type_file');//fileinput fileinput-new
+        // $el.wrap('<form>').closest('form').get(0).reset();
+    }
     e.preventDefault();
 
     // if(!$(this).parents('.dz-preview')){

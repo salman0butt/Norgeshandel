@@ -1,4 +1,4 @@
-<div class="fileinput fileinput-@if(isset($single_image_obj) && $single_image_obj->ad && $single_image_obj->ad->company_logo->count() > 0){{trim('exists')}}@else{{trim('new')}}@endif " data-provides="fileinput">
+<div class="input_type_file fileinput fileinput-@if(isset($single_image_obj) && $single_image_obj->ad && $single_image_obj->ad->company_logo->count() > 0){{trim('exists')}}@else{{trim('new')}}@endif " data-provides="fileinput">
 {{--<div class="fileinput fileinput-{{trim('new')}}" data-provides="fileinput">--}}
     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
         <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
@@ -12,7 +12,7 @@
         <span class="btn default btn-file">
             <span class="fileinput-new dme-btn-outlined-blue btn-sm mt-5 mb-5">Velg bilde</span>
             <span class="fileinput-exists dme-btn-outlined-blue btn-sm">Endre</span>
-                <input type="file" name="{{$file_upload_name}}" accept="image/*">
+            <input type="file" name="{{$file_upload_name}}" class="input_type_file" accept="image/*">
         </span>
         @php
             $file_name_unique = '';
