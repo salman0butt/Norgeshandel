@@ -410,7 +410,7 @@
             <h3 class="u-t5">Ledig fra (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="availiable_from" value="{{ $commercial_property_for_sale->availiable_from }}" type="date" class="dme-form-control" max="2020-12-31">
+                    <input name="availiable_from" value="{{ $commercial_property_for_sale->availiable_from }}" type="date" class="dme-form-control">
                 </div>
                 <div class="col-sm-8">
                 </div>

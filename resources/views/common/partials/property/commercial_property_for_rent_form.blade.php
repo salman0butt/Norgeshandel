@@ -369,7 +369,7 @@
             <h3 class="u-t5">Ledig fra / Leies ut fra (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" value="{{ $commercial_property_for_rent->availiable_from }}" name="availiable_from" class="dme-form-control" max="2020-12-31">
+                    <input type="date" value="{{ $commercial_property_for_rent->availiable_from }}" name="availiable_from" class="dme-form-control">
                 </div>
                 <div class="col-sm-8">
                 </div>

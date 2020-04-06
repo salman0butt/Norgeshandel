@@ -72,6 +72,8 @@
                                 @endif
                             </span>
                         </div>
+                       
+                        {{-- {{ dd($property_data->user->avatar) }} --}}
                     <!-- <div class="col-md-12 mt-2"><p>{{$property_data->description}}</p></div> -->
                         @if (!empty($property_data->monthly_rent))
                             <div class="col-md-12 font-weight-bold mt-3">Månedsleie</div>
@@ -211,9 +213,15 @@
                 @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
                     <div class="col-md-4">
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
-                            @if(!$property_data->published_on)
-                                <p class="mt-3"> {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}</p>
-                            @endif
+                     @if(!$property_data->published_on)
+                    <center>
+                        <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
+                        alt="Profile image" style="width:100px;">
+                           
+                                <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
+                    </center>
+                         @endif
+                      
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send
                                         melding</a></div>

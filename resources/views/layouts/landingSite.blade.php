@@ -444,7 +444,7 @@
 
 
         //spinner start here
-        $(document).ajaxStart(function () {
+       /* $(document).ajaxStart(function () {
             $("#imageLoader").css("display", "block");
             $(".pagination_data").css("display", "none");
         });
@@ -452,7 +452,7 @@
         $(document).ajaxComplete(function () {
             $("#imageLoader").css("display", "none");
             $(".pagination_data").css("display", "block");
-        });
+        });*/
         //spinner ends here
 
             @if(Auth::check())
