@@ -167,6 +167,13 @@ class CommercialPropertyForSaleController extends Controller
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
+                $media = common::updated_dropzone_images_type($request->all(),'commercial_property_for_sale_temp_images',$ad->id);
+                if($request->media_position){
+                    $media_position = common::update_media_position($request->media_position);
+                }
+                if($request->deleted_media){
+                    $delete_media = common::delete_json_media($request->deleted_media);
+                }
             }
             $response = $ad->update(['status' => 'published']);
 
@@ -176,6 +183,7 @@ class CommercialPropertyForSaleController extends Controller
             //  dd(DB::getQueryLog());
             $msg['message'] = $message;
 //                $data['success'] = $response;
+            $msg['status'] = $ad->status;
             echo json_encode($msg);
         }else{
             echo json_encode($msg);
@@ -188,7 +196,7 @@ class CommercialPropertyForSaleController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type']);
+            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
             unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
             $commercial_property_for_sale['user_id'] = Auth::user()->id;
 
@@ -260,6 +268,7 @@ class CommercialPropertyForSaleController extends Controller
 
     public function editcommercialPropertyForSale($id)
     {
+        common::delete_media(Auth::user()->id, 'commercial_property_for_sale_temp_images', 'gallery');
         $commercial_property = CommercialPropertyForSale::findOrFail($id);
         if ($commercial_property) {
             if (!Auth::user()->hasRole('admin') && ($commercial_property->user_id != Auth::user()->id || $commercial_property->ad->status == 'sold')) {

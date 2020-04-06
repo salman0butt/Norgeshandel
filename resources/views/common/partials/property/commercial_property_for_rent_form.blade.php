@@ -23,6 +23,8 @@
     <input type="hidden" id="old_zip" value="{{ (isset($commercial_property_for_rent->zip_code) ? $commercial_property_for_rent->zip_code : '') }}">
         <input type="hidden" name="upload_dropzone_images_type" value="commercial_property_for_rent_temp_images">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_rent->zip_city) ? $commercial_property_for_rent->zip_city : '') }}">
+        <input type="hidden" name="media_position" class="media_position">
+        <input type="hidden" name="deleted_media" class="deleted_media">
         <!-- checkbox -->
         <div class="form-group">
             <h3 class="u-t5">Type lokale</h3>

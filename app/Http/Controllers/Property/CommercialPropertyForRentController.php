@@ -157,6 +157,13 @@ class CommercialPropertyForRentController extends Controller
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
+                $media = common::updated_dropzone_images_type($request->all(),'commercial_property_for_rent_temp_images',$ad->id);
+                if($request->media_position){
+                    $media_position = common::update_media_position($request->media_position);
+                }
+                if($request->deleted_media){
+                    $delete_media = common::delete_json_media($request->deleted_media);
+                }
             }
             $response = $ad->update(['status' => 'published']);
 
@@ -167,6 +174,7 @@ class CommercialPropertyForRentController extends Controller
 
             $msg['message'] = $message;
 //                $data['success'] = $response;
+            $msg['status'] = $ad->status;
             echo json_encode($msg);
         }else{
             echo json_encode($msg);
@@ -180,7 +188,7 @@ class CommercialPropertyForRentController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type']);
+            $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
 
             unset($commercial_property_for_rent['commercial_property_for_rent_pdf']);
             $commercial_property_for_rent['user_id'] = Auth::user()->id;
@@ -248,6 +256,7 @@ class CommercialPropertyForRentController extends Controller
     // Edit commercial property for rent
     public function editCommercialPropertyForRent($id)
     {
+        common::delete_media(Auth::user()->id, 'commercial_property_for_rent_temp_images', 'gallery');
         $commercial_for_rent = CommercialPropertyForRent::findOrFail($id);
         if ($commercial_for_rent) {
             if (!Auth::user()->hasRole('admin') && ($commercial_for_rent->user_id != Auth::user()->id || $commercial_for_rent->ad->status == 'sold')) {

@@ -35,7 +35,7 @@ $name = $property_data->ad->company_gallery;
                                 style="border-top-right-radius: 0px;border-bottom-right-radius: 0px;">
                                 <li class="breadcrumb-item"><a href="{{ url('/') }}">NorgesHandel </a></li>
                                 <li class="breadcrumb-item active"><a href="{{url('property/realestate')}}">Eiendom</a></li>
-                                <li class="breadcrumb-item active"><a href="{{url('property/property-for-sale/search')}}">Bolig til Salgs</a></li>
+                                <li class="breadcrumb-item active"><a href="{{url('property/property-for-sale/search')}}">Bolig til salgs</a></li>
                             </ol>
                         </div>
                         <div class="col-md-6 p-0">
@@ -422,13 +422,11 @@ $name = $property_data->ad->company_gallery;
                                 <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
                                 <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div> -->
 
-                        <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span>
-                            <span> 140424636</span>
+                        <div class="col-md-12"><span class="font-weight-bold">Handel: </span>
+                            <span> {{$property_data->ad->id}}</span>
                         </div>
                         <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span>
                             <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
-                        <div class="col-md-12"><span class="font-weight-bold">Referanse: </span> <span>302190059</span>
-                        </div>
                         <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12 u-d2">Annonsene kan være mangelfulle i forhold til lovpålagt
                             opplysningsplikt.
@@ -488,8 +486,10 @@ $name = $property_data->ad->company_gallery;
                                     {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
                                     <br>
                                     Eiendomsmegler
-                                </p>
-                            @endif
+                                @else
+                                    NH-Bruker
+                                @endif
+                            </p>
                             @if($property_data->phone)
                                 <div class="mb-2">
                                     <span>Mobil: </span>

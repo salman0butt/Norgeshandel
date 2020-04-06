@@ -23,9 +23,9 @@ if(count($media)>0){
         if ($item->type=='logo'){
             $logo = \App\Helpers\common::getMediaPath($item, '66x66');
         }
-        if ($item->type=='gallery'){
-            $gallery = \App\Helpers\common::getMediaPath($item, '200x200');
-        }
+    }
+    if ($job && $job->ad && $job->ad->company_gallery && $job->ad->company_gallery->first()){
+        $gallery = \App\Helpers\common::getMediaPath($job->ad->company_gallery->first(), '200x200');
     }
 }
 ?>

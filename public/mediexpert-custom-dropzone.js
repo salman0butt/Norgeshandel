@@ -61,7 +61,7 @@ function createDropZone(id, ajax_url) {
                     $("#dropzoneErrors .errors ul").append("<li>" + message[i] + "</li>")
                 });
             });
-            myDropzone.options.dictRemoveFileConfirmation = "Er du sikker på å slette?";
+            // myDropzone.options.dictRemoveFileConfirmation = "Er du sikker på å slette?";
             this.on("completemultiple", function(file) {
                 // myDropzone.removeFile(file);
             });
@@ -83,6 +83,7 @@ $(document).ready(function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
     $(".dropzone-previews.sortable").sortable(
 
         {
@@ -112,20 +113,31 @@ $(document).ready(function() {
                 var child_position = $(this).index() + 1;
                 dataArr[$(this).index()] = [child_id, child_position];
             });
+            var ad_status = $('.ad_status').val();
+
+            if(ad_status == 'saved'){
+                $.ajax({
+                    type: 'POST',
+                    url: site_url+'/update-media-positions',
+                    dataType: "json",
+                    data: {"dataArr": JSON.stringify(dataArr)},
+                    success: function (response) {
+                        if (response.flag == "success") {
+                            console.log('success');
+                            // $("#image_audition_" + id + "").slideUp().remove();
+                        }
+                    }
+                });
+            }else{
+
+                var dataArr = JSON.stringify(dataArr);
+
+                $('form .media_position').val('');
+                $('form .media_position').val(dataArr);
+            }
             // alert(JSON.stringify(dataArr));
             // console.log(JSON.stringify({dataArr})); //$.parseJSON(JSON.stringify(response));
-            $.ajax({
-                type: 'POST',
-                url: site_url+'/update-media-positions',
-                dataType: "json",
-                data: {"dataArr": JSON.stringify(dataArr)},
-                success: function (response) {
-                    if (response.flag == "success") {
-                        console.log('success');
-                        // $("#image_audition_" + id + "").slideUp().remove();
-                    }
-                }
-            });
+
 
         }
     }
@@ -141,9 +153,33 @@ function ws_remove_file(filename) {
         url: site_url+'/delete-media-dz?filename='+filename, // +'&folder_name='+folder_name
         dataType :"json",
         success:function(data) {
-
+            if(data.file_name){
+                delete_media(data.file_name);
+            }
         }
     });
+}
+
+function delete_media(filename){
+    var ad_status = $('.ad_status').val();
+    if(ad_status == 'saved'){
+        ws_remove_file(filename);
+    }else{
+        var delete_media = $('.deleted_media').val();
+        var dataArr = [];
+        if(delete_media){
+            delete_media = JSON.parse(delete_media);
+            if(delete_media){
+                dataArr[0] = [filename];
+                $.each(delete_media, function (index, value) {
+                    dataArr[index+1] = [value];
+                });
+            }
+        }else{
+            dataArr[0] = [filename]; //JSON.stringify(filename);
+        }
+        $('.deleted_media').val(JSON.stringify(dataArr));
+    }
 }
 
 $(document).on('click', '.dz-remove', function (e) {
@@ -170,18 +206,19 @@ $(document).on('click', '.dz-remove', function (e) {
         }
     });
     */
+    var ad_status = $('.ad_status').val();
 
     // if (confirm("Er du sikker på å slette?") == true) {
     e.preventDefault();
     filename = $(this).attr('id');
+    delete_media(filename);
     e.preventDefault();
-    ws_remove_file(filename);
+
+    // if(!$(this).parents('.dz-preview')){
+    //     ws_remove_file(filename);
+    // }
     $(this).parents('.dz-preview').fadeOut();
     $(this).parents('.show-file-section').fadeOut();
-
-
-
-
     // }
 
 

@@ -251,6 +251,7 @@ class PropertyForSaleController extends Controller
 
     public function editSaleAdd($id)
     {
+        common::delete_media(Auth::user()->id, 'property_for_sale_temp_images', 'gallery');
         $property_for_sale1 = PropertyForSale::findOrFail($id);
         if ($property_for_sale1) {
             if (!Auth::user()->hasRole('admin') && ($property_for_sale1->user_id != Auth::user()->id || $property_for_sale1->ad->status == 'sold')) {
@@ -277,6 +278,13 @@ class PropertyForSaleController extends Controller
                     $message = 'Annonsen din er publisert.';
                 } elseif ($ad && $ad->status == 'published') {
                     $message = 'Annonsen din er oppdatert.';
+                    $media = common::updated_dropzone_images_type($request->all(),'property_for_sale_temp_images',$ad->id);
+                    if($request->media_position){
+                        $media_position = common::update_media_position($request->media_position);
+                    }
+                    if($request->deleted_media){
+                        $delete_media = common::delete_json_media($request->deleted_media);
+                    }
                 }
                 $response = $ad->update(['status' => 'published']);
                 if ($response) {
@@ -286,6 +294,7 @@ class PropertyForSaleController extends Controller
                 }
                 $msg['message'] = $message;
 //                $data['success'] = $response;
+                $msg['status'] = $ad->status;
                 echo json_encode($msg);
             }
         }else{
@@ -312,7 +321,7 @@ class PropertyForSaleController extends Controller
                 $request->merge(['facilities4' => null]);
             }
 
-            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type']);
+            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
 
             //Add More ViewingTimes
             if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {

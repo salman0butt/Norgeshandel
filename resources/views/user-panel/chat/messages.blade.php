@@ -201,7 +201,7 @@
                                                         {{--src="{{asset('public/images/placeholder.png')}}"--}}
                                                      class="profile-post-image" alt="">
                                                 <img
-                                                    src="{{$thread_user->media!=null?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
+                                                    src="{{($thread_user->media!=null && $thread_user!=null)?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
                                                     class="profile-image" alt="Profile image"
                                                     style="border: 1px solid #f7f7f7; @if($thread->ad->deleted_at) bottom:35px !important; @endif">
                                             </div>

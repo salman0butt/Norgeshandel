@@ -70,8 +70,12 @@ class PropertyController extends Controller
 
     public function list()
     {
-        $saved_search = Search::where('type', 'saved')->orderBy('id', 'desc')->limit(5)->get();
-        $recent_search = Search::where('type', 'recent')->orderBy('id', 'desc')->limit(5)->get();
+        $saved_search = null;
+        $recent_search = null;
+        if (Auth::check()) {
+            $saved_search = Search::where('type', 'saved')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
+            $recent_search = Search::where('type', 'recent')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
+        }
         $ads = Ad::where(function ($query){
             $date = Date('y-m-d',strtotime('-7 days'));
             $query->where('status', 'published')
@@ -173,12 +177,15 @@ class PropertyController extends Controller
     public static function upload_dropzone_images(Request $request)
     {
         $mediable_id = '';
+        $ad_status = '';
         if ($request->ad_id) {
+            $ad = Ad::find($request->ad_id);
+            $ad_status = $ad && $ad->status ? $ad->status : '';
             $mediable_id = $request->ad_id;
         }
         if ($request->file('files')) {
             $files = $request->file('files');
-            if ($mediable_id) {
+            if ($mediable_id && $ad_status == 'saved') {
                 return common::update_media($files, $mediable_id, 'App\Models\Ad', 'gallery', 'false');
             } else {
                 return common::update_media($files, Auth::user()->id, $request->upload_dropzone_images_type, 'gallery', 'false');

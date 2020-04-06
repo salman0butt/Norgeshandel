@@ -168,6 +168,13 @@ class FlatWishesRentedController extends Controller
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
+                $media = common::updated_dropzone_images_type($request->all(),'flat_wishes_rented_temp_images',$ad->id);
+                if($request->media_position){
+                    $media_position = common::update_media_position($request->media_position);
+                }
+                if($request->deleted_media){
+                    $delete_media = common::delete_json_media($request->deleted_media);
+                }
             }
             $response = $ad->update(['status' => 'published']);
 
@@ -177,6 +184,8 @@ class FlatWishesRentedController extends Controller
             //  dd(DB::getQueryLog());
 
             $msg['message'] = $message;
+//                $data['success'] = $response;
+            $msg['status'] = $ad->status;
             echo json_encode($msg);
         }else{
             echo json_encode($msg);
@@ -188,7 +197,7 @@ class FlatWishesRentedController extends Controller
     {
         DB::beginTransaction();
         try {
-            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type');
+            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type','media_position','deleted_media');
             $regions = "";
             if (isset($flat_wishes_rented_data['region'])) {
                 foreach ($flat_wishes_rented_data['region'] as $key => $val) {
@@ -249,6 +258,7 @@ class FlatWishesRentedController extends Controller
 
     public function editAddFlatWishesRented($id)
     {
+        common::delete_media(Auth::user()->id, 'flat_wishes_rented_temp_images', 'gallery');
         $flat_wishes_rented1 = FlatWishesRented::findOrFail($id);
         if ($flat_wishes_rented1) {
             if (!Auth::user()->hasRole('admin') && ($flat_wishes_rented1->user_id != Auth::user()->id || $flat_wishes_rented1->ad->status == 'sold')) {

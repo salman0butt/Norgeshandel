@@ -109,7 +109,7 @@
                     <!-- <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
                             <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>!-->
 
-                    <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span> <span> 140424636</span>
+                    <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> {{$property_data->ad->id}}</span>
                     </div>
                     <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span> <span>
                             {{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
@@ -128,7 +128,6 @@
                                 <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
                       </center>
                 @endif
-
                 @if($property_data->phone)
                     <div class="mb-2">
                         <span>Mobil: </span>
