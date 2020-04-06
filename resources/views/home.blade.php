@@ -102,7 +102,7 @@
                 @endif  --}}
 
 
-             
+
             </div>
             <div class="pagination">
                 {{-- {{ $ads->links() }} --}}
@@ -112,8 +112,8 @@
         </div>
         <div class="ajax-load text-center" style="display:none">
 	    <p><img src="{{ asset('public/images/loaderMore.gif') }}"></p>
-        </div> 
- 
+        </div>
+
         <!--    ended container-->
         <div class="right-ad pull-right">
         <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
@@ -153,9 +153,9 @@
             });
 
             $('#search').on('keyup', function (e) {
-                
+
                 if(!isEmpty($('#search_url').val())) {
-                  
+
                     if(e.key=='Enter') {
                         var link = $('#all-searches-page').attr('href');
                         if(!isEmpty(link)){
@@ -167,7 +167,7 @@
                             url: $('#search_url').val() + '/' + $('#search').val(),
                             type: "GET",
                             success: function (response) {
-                               
+
                                 $('#suggestions').html(response);
                             var valu = $('#search').val();
                             $('#suggestions > div > div.col-md-7 > ul > li > a span').prepend(valu+' ');
@@ -206,7 +206,7 @@
 
 
     </script>
-    
+
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -235,13 +235,13 @@ loadMoreData(1);
 	                $('.ajax-load').html("Ingen flere poster ble funnet");
 	                return;
 	            }
-                console.log(data);
+                // console.log(data);
 	            $('.ajax-load').hide();
 	           $(".home-grid").append(data);
 	        })
 	        .fail(function(jqXHR, ajaxOptions, thrownError)
 	        {
-	              alert('server not responding...');
+	              console.log('Server not responding...');
 	        });
 	}
 

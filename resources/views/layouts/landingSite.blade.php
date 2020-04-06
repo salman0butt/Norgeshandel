@@ -26,7 +26,7 @@
 
     <link rel="stylesheet" href="{{asset('public/css/jssocials.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/jssocials-theme-flat.css')}}">
-    
+
     <!--    incluedes   -->
     <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
             referrerpolicy="origin"></script>
@@ -357,7 +357,7 @@
                         res = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
                         return letter.toUpperCase();
                         });
-                   
+
                         $('#zip_city').val(res);
                         //console.log(res);
                     }
@@ -424,6 +424,7 @@
                 //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        @if(Auth::check())
 
         $.ajax({
             url: '{{url('notifications_count')}}',
@@ -441,10 +442,10 @@
         }).fail(function (jqXHR, ajaxOptions, thrownError) {
             $('#notification:not(.page-notifications #notification)').html('');
         });
-
+        @endif
 
         //spinner start here
-        $(document).ajaxStart(function () {
+       /* $(document).ajaxStart(function () {
             $("#imageLoader").css("display", "block");
             $(".pagination_data").css("display", "none");
         });
@@ -452,7 +453,7 @@
         $(document).ajaxComplete(function () {
             $("#imageLoader").css("display", "none");
             $(".pagination_data").css("display", "block");
-        });
+        });*/
         //spinner ends here
 
             @if(Auth::check())
@@ -532,9 +533,9 @@
              type = 'commercial-plots';
             else if(businesses_for_sale)
              type = 'business-for-sale';
-            
+
           //console.log(type);
-          
+
             if(!isEmpty(type)) {
                 if (!isEmpty(value)) {
                     var url = "{{url('/recentearches')}}";
@@ -555,10 +556,10 @@
                         }
                     });
                 }
-        
+
             }
-          
-                
+
+
 </script>
 <script>
     $("#shareRoundIcons").jsSocials({

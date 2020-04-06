@@ -122,13 +122,13 @@ $(document).ready(function () {
             year: {
                 required: true,
                 number: true,
-                date: true,
-                maxlength:4
+                date: true
+               
             },
             renovated_year: {
                 number: true,
                 date: true,
-                maxlength: 4
+              
             },
             number_of_bedrooms: {
                 required: true,
@@ -139,8 +139,8 @@ $(document).ready(function () {
             },
             holiday_year: {
                 number: true,
-                date: true,
-                maxlength: 4
+                date: true
+            
             },
             party_fee: {
                 number: true
@@ -192,8 +192,7 @@ $(document).ready(function () {
             },
              deliver_date:{
                  number: true,
-                 date: true,
-                 maxlength: 4
+                 date: true
             }
         },
         onfocusout: false,
@@ -263,13 +262,12 @@ $(document).ready(function () {
             },
             year_of_construction: {
                 number: true,
-                date: true,
-                maxlength:4
+                date: true
+               
             },
             renovated_year: {
                 number: true,
-                date: true,
-                maxlength:4
+                date: true 
             },
             rent_per_meter_per_year:{
                 number: true,
@@ -601,13 +599,11 @@ $(document).ready(function () {
             },
             year_of_construction: {
                 number: true,
-                date: true,
-                maxlength:4
+                date: true
             },
             renovated_year: {
                 number: true,
-                date: true,
-                maxlength: 4
+                date: true
             },
             number_of_bedrooms: {
                 required: true,
@@ -633,8 +629,7 @@ $(document).ready(function () {
             },
             holiday_year: {
                 number: true,
-                date: true,
-                maxlength:4
+                date: true
             },
             party_fee: {
                 number: true
@@ -823,13 +818,11 @@ $(document).ready(function () {
             },
             year_of_construction: {
                 number: true,
-                date: true,
-                maxlength:4
+                date: true
             },
             rennovated_year: {
                 number: true,
-                date: true,
-                maxlength: 4
+                date: true
             },
             rental_income: {
                 number: true
