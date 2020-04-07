@@ -276,7 +276,7 @@
             <label class="u-t5">Visningsdato (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" name="delivery_date[]" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control">
+                    <input type="date" name="delivery_date[]" data-select="datepicker" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control">
                     <span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>
                 </div>
             </div>

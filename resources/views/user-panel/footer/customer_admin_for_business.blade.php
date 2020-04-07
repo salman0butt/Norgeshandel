@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="col-md-6 pr-0 pl-0">
-                <img src="{{ url('public/uploads/banners/1280x720.png') }}" alt="banner" class="w-100">
+                <img src="{{ url('public/images/1280x720.png') }}" alt="banner" class="w-100">
             </div>
         </div>
     </div>
