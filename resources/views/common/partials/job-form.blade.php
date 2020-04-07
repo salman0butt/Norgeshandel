@@ -160,7 +160,7 @@
                     @if(isset($job_type) && $job_type=="management")
                     <div class="form-group">
                         <div class="row">
-                            <label for="leadership_category" class="col-md-2 u-t5">{{__('Leadership Category')}}</label>
+                            <label for="leadership_category" class="col-md-2 u-t5">Lederkategori</label>
                             <div class="col-sm-10 ">
                                 <select name="leadership_category" id="leadership_category"
                                     data-input-name="leadership_category" class="form-control dme-form-control">
@@ -414,7 +414,7 @@
                                 </select>
                             </div>
                             <label for="app_link_to_receive"
-                                class="col-md-2 u-t5">{{__('Link to application form')}}</label>
+                                class="col-md-2 u-t5">{{__('Link to application form')}} (valgfritt)</label>
                             <div class="col-sm-4">
                                 <input type="text" name="app_link_to_receive" id="app_link_to_receive"
                                     class="form-control dme-form-control url_http" value="{{@$obj_job->app_link_to_receive}}">

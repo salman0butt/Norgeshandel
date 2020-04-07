@@ -320,8 +320,8 @@ class PropertyHolidaysHomesForSaleController extends Controller
                 if($request->file('property_home_for_sale_sales_quote')){
                     $property_quote = common::update_media($request->file('property_home_for_sale_sales_quote'), $response->ad->id, 'App\Models\Ad', 'sales_information');
                     if($property_quote){
-                        $property_quote = json_decode($property_quote);
-                        $property_quote = $property_quote->file_names[0];
+//                        $property_quote = json_decode($property_quote);
+                        $property_quote = $property_quote['file_names'][0];//$property_quote->file_names[0];
                     }
                 }
 
@@ -329,8 +329,8 @@ class PropertyHolidaysHomesForSaleController extends Controller
                 if($request->file('property_home_for_sale_pdf')){
                     $property_pdf = common::update_media($request->file('property_home_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf');
                     if($property_pdf){
-                        $property_pdf = json_decode($property_pdf);
-                        $property_pdf = $property_pdf->file_names[0];
+//                        $property_pdf = json_decode($property_pdf);
+                        $property_pdf = $property_pdf['file_names'][0]; //$property_pdf->file_names[0];
                     }
                 }
 

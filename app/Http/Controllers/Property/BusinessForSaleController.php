@@ -263,8 +263,8 @@ class BusinessForSaleController extends Controller
                     if($request->file('business_for_sale_pdf')){
                         $property_pdf = common::update_media($request->file('business_for_sale_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf');
                         if($property_pdf){
-                            $property_pdf = json_decode($property_pdf);
-                            $property_pdf = $property_pdf->file_names[0];
+//                            $property_pdf = json_decode($property_pdf);
+                            $property_pdf = $property_pdf['file_names'][0];//$property_pdf->file_names[0];
                         }
                     }
                 }

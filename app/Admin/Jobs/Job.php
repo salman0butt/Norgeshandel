@@ -48,7 +48,8 @@ class Job extends Model
         'updated_at',
         'user_id',
         'company_id',
-        'slug'
+        'slug',
+        'leadership_category'
     ];
 
     public function user(){
