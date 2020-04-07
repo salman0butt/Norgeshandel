@@ -74,11 +74,11 @@
         <div class="gallery mt-4 mb-5">
             <div class="row row-eq-height">
                 <div class="col-md-8">
-                    <img src="{{asset('/public/uploads/banners/1280x720.png')}}" alt="" class="img-fluid w-100 h-100">
+                    <img src="{{asset('/public/images/1280x720.png')}}" alt="" class="img-fluid w-100 h-100">
                 </div>
                 <div class="col-md-4">
-                    <img src="{{asset('/public/uploads/banners/1280x720.png')}}" alt="" class="img-fluid mb-4">
-                    <img src="{{asset('/public/uploads/banners/1280x720.png')}}" alt="" class="img-fluid">
+                    <img src="{{asset('/public/images/1280x720.png')}}" alt="" class="img-fluid mb-4">
+                    <img src="{{asset('/public/images/1280x720.png')}}" alt="" class="img-fluid">
                 </div>
                 <div class="col-12 text-center mt-4"><a href="#" class="btn btn btn-outline-primary">
                         <font style="vertical-align: inherit;">

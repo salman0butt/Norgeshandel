@@ -13,3 +13,4 @@ yarn-error.log
 /.idea/*
 *.zip
 /public/uploads/*
+composer.lock

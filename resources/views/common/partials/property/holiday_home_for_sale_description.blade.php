@@ -464,7 +464,7 @@
                 !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
                 !empty($property_data->note))
                 <div class="mb-2">
-                    <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
+                    <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span><br>
                     <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?>
                     </span>
                     <span><?php echo (!empty($property_data->clockwise) ?  $property_data->clockwise : ""); ?>

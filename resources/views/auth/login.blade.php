@@ -1,3 +1,8 @@
+{{--{{dd(session()->token())}}--}}
+<?php
+    $link = \Illuminate\Support\Facades\DB::table('metas')->select('value')->where('key', session()->token())->orderByDesc('id')->first();
+//    dd($link->value);
+?>
 <html lang="nb">
 <head>
     <title>NorgesHandel</title>
@@ -66,7 +71,8 @@
                             <label for="remember" aria-label="Husk meg på denne enheten">Husk meg på denne enheten</label>
                         </div>
                     </div>
-
+                    <input type="hidden" name="redirectTo" value="{{$link->value}}">
+                    <input type="hidden" name="previousToken" value="{{session()->token()}}">
                     <div class="form-group">
                         <button type="submit" class="dme-btn-outlined-blue">
                             Logg inn
