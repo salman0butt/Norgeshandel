@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="fav-list row mt-5">
-            <div class="col-md-8">
+            <div class="col-md-11">
                 <?php
                     use Illuminate\Support\Facades\Auth;
                     $fav = $list->favorites->where('user_id',Auth::id());
@@ -95,6 +95,20 @@
     </div>
 </main>
 <script>
+
+    $(document).on('click', '.plus_note_button', function () {
+        $(this).addClass('d-none');
+    });
+
+    $(document).on('click', '.close_button', function () {
+        var id = $(this).attr('data-target');
+        $('a[data-target="'+id+'"]').removeClass('d-none');
+        // $(this).closest('a').hasClass('plus_note_button').removeClass('d-none');
+    });
+
+
+
+
     $(document).on('click', '.ad_note_link', function () {
         var fav_id = $(this).attr('data-id');
         if(fav_id){

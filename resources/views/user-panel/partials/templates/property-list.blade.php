@@ -16,7 +16,7 @@ if($property !== null)
 {{--<a href="{{url('/', $ad->id)}}" class="row bg-hover-maroon-lighter radius-8 p-2">--}}
 <div class="col-sm-12 pr-0 end_fav_item" data-name="{{$ad->getTitle()}}">
     <div class="row product-list-item mr-1 p-sm-1 mt-3">
-        <div class="image-section image-section col-sm-4  p-2">
+        <div class="image-section image-section @if(Request::is('my-business/favorite-list/*')) col-sm-3 @else col-sm-4 @endif  p-2">
             <a href="{{url('/', $ad->id)}}" style="display: block;" class="trailing-border">
 
                 <img src="{{$path}}" class="img-fluid radius-8 trailing-border" style=" margin: 2px; height: 130px; width: 100%"
@@ -55,7 +55,7 @@ if($property !== null)
                 </div>
             </a>
         </div>
-        <div class="detailed-section col-md-8 position-relative p-2">
+        <div class="detailed-section @if(Request::is('my-business/favorite-list/*')) col-md-9 @else col-md-8 @endif position-relative p-2">
             <p class="product-location text-muted mb-0 mt-2 u-d1">
             {{$property->street_address ? Str::limit($property->street_address,30).', ' : ''}}{{$property->zip_city ? Str::ucfirst(Str::lower($property->zip_city)) : ''}}
             </p>
@@ -63,10 +63,21 @@ if($property !== null)
                 {{Str::limit($ad->getTitle(),40)}}
             </p>
             @if(Request::is('my-business/favorite-list/*'))
-                <p class="product-location text-muted mb-0 mt-2 u-d1">
-                    {{$fav_item && $fav_item->note ? Str::limit($fav_item->note,260) : ''}}
-                </p>
-                <a href="#" data-id="{{$fav_item && $fav_item->id ? $fav_item->id : ''}}" data-target="#ad_note_for_fav" data-toggle="modal" class="ad_note_link" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil"></span></a>
+                <a class="btn btn-info btn-sm plus_note_button" data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}"><i class="fa fa-plus mr-2"></i>Skriv notat til deg selv</a>
+                <div id="note_{{$property->ad ? $property->ad->id : ''}}" class="collapse" style="background-color: #fff5cb; border-radius:10px">
+                    <form class="p-3">
+                        <textarea class="form-control bg-transparent border-0"></textarea>
+                        <div class="float-right">
+                            <a class="btn btn-warning btn-sm close_button" data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}">Lagre</a>
+                            <input type="submit" value="Avbryt" class="btn btn-success btn-sm">
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+                {{--<p class="product-location text-muted mb-0 mt-2 u-d1">--}}
+                    {{--{{$fav_item && $fav_item->note ? Str::limit($fav_item->note,260) : ''}}--}}
+                {{--</p>--}}
+                {{--<a href="#" data-id="{{$fav_item && $fav_item->id ? $fav_item->id : ''}}" data-target="#ad_note_for_fav" data-toggle="modal" class="ad_note_link" style="position: absolute;right: 25px;bottom: 15px;"><span class="fa fa-pencil"></span></a>--}}
             @endif
         </div>
         @include('user-panel.partials.fav-heart-button', compact('ad'))
