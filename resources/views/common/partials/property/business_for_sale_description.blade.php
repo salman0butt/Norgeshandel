@@ -102,9 +102,9 @@
                             </div>
                         @endif
 
-                        <div style="width: 500px; height: 300px;">
-                            {!! Mapper::render() !!}
-                        </div>
+                        {{--<div style="width: 500px; height: 300px;">--}}
+                            {{--{!! Mapper::render() !!}--}}
+                        {{--</div>--}}
 
 
                         <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>

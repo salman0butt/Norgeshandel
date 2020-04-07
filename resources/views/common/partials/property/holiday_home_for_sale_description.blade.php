@@ -359,6 +359,18 @@
                                         </div>
                                     @endif
 
+                                    @if($property_data->owned_site)
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold">Eiet tomt </span>
+                                        </div>
+                                    @endif
+
+                                    @if($property_data->amenities)
+                                        <div class="col-md-6">
+                                            <span class="font-weight-bold">Punktfeste </span>
+                                        </div>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
