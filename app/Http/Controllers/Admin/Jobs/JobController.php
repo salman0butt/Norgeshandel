@@ -312,21 +312,15 @@ class JobController extends Controller
             'app_twitter' => $request->app_twitter,
             'user_id' => Auth::user()->id,
         );
-//        if (empty($job->slug && !empty($arr['name']))) {
-//            $slug = common::slug_unique($arr['name'], 0, 'App\Admin\Jobs\Job', 'slug');
-//            dd($arr['name']);
-//            $job->update(['slug' => $slug]);
-//        }
-
         $job->update($arr);
-
-
+        $company_logo_id = '';
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
-            common::update_media($file, $job->ad->id, 'App\Models\Ad', 'logo');
+            $company_logo = common::update_media($file, $job->ad->id, 'App\Models\Ad', 'logo');
+            $company_logo_id = $company_logo['file_names'][0];
         }
 
-        $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id];
+        $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id,'company_logo_id'=>$company_logo_id];
         if ($request->ajax()) {
         echo json_encode($ids);
          exit();

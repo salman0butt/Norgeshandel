@@ -100,6 +100,10 @@
                             <div class="col-md-12"><span class="font-weight-bold">Visningsinformasjon: </span><span>{{$property_data->display_information}}</span></div>
                         @endif
 
+                        @if($property_data->owned_plot_facilities)
+                            <div class="col-md-12"><span class="font-weight-bold">Eiet tomt </span></div>
+                        @endif
+
                         @if($property_data->description)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Beskrivelse</span>
@@ -113,9 +117,9 @@
                             </div>
                         @endif
                         <div class="clearfix"></div>
-                        <div style="width: 500px; height: 300px;">
-                            {!! Mapper::render() !!}
-                        </div>
+                        {{--<div style="width: 500px; height: 300px;">--}}
+                            {{--{!! Mapper::render() !!}--}}
+                        {{--</div>--}}
                         <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> {{$property_data->ad->id}}</span></div>
                         <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span> <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>

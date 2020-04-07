@@ -146,13 +146,18 @@ $name = $property_data->ad->company_gallery;
                                 @if($property_data->value_rate)
                                     <div class="col-md-6">
                                         <span class="font-weight-bold">Verditakst: </span>&nbsp;
-                                        <span>{{$property_data->value_rate}} Kr</span>
+                                        <span>{{number_format($property_data->value_rate,0,""," ")}} Kr</span>
                                     </div>
                                 @endif
                                 <div class="col-md-6">
                                     <span class="font-weight-bold">Primærrom </span>&nbsp;
                                     <span>{{$property_data->primary_room}} m² </span>
                                 </div>
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Eierskifteforsikring </span>&nbsp;
+                                    <span>{{$property_data->facilities4 ? 'Ja' : 'Nei'}} </span>
+                                </div>
+
                             </div>
                         </div>
 
@@ -160,6 +165,13 @@ $name = $property_data->ad->company_gallery;
                             @if($property_data->municipality_number)
                             <div class="col-md-12 pl-0 pr-0">
                                 <div class="bg-light-grey radius-8 col-md-12 p-3">
+                                    @if($property_data->approved_rental_part)
+                                        <div class = "row">
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Godkjent utleiedel </span>&nbsp;
+                                            </div>
+                                        </div>
+                                    @endif
                                     <div>
                                         @if(count($facilities))
                                             <span class="font-weight-bold">Fasiliteter</span>
@@ -312,6 +324,19 @@ $name = $property_data->ad->company_gallery;
                                                     <span>{{$property_data->pre_empt_right}}</span>
                                                 </div>
                                             @endif
+
+                                            @if($property_data->facilities3)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Borettslaget har sikringsordning</span>&nbsp;
+                                                </div>
+                                            @endif
+
+                                            @if($property_data->facilities2)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Eiet tomt</span>&nbsp;
+                                                </div>
+                                            @endif
+
                                         </div>
 
                                     </div>

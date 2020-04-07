@@ -203,9 +203,9 @@
                             <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->standard_technical_information}}</p></div>
                         @endif
 
-                        <div style="width: 500px; height: 300px;">
-                            {!! Mapper::render() !!}
-                        </div>
+                        {{--<div style="width: 500px; height: 300px;">--}}
+                            {{--{!! Mapper::render() !!}--}}
+                        {{--</div>--}}
 
                         <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>
                         <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>

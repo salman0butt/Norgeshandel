@@ -563,22 +563,33 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+                var myform = document.getElementById("job-form");
+                var fd = new FormData(myform);
+                if($('.input_type_file .dz-remove').attr('id')){
+                    fd.delete('company_logo');
+                }
                 var ad_status = $('.ad_status').val();
                 if(ad_status == 'saved'){
                     $.ajax({
                         url: link,
                         type: "POST",
-                        data: $('#job-form').serialize(),
+                        data: fd,//$('#job-form').serialize(),
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
                         success: function (response) {
 
-                            var resp = JSON.parse(response);
+                            // var resp = JSON.parse(response);
+                            if(response.company_logo_id){
+                                $('.input_type_file .dz-remove').attr('id',response.company_logo_id);
+                            }
 
                             if ($('#ad_id').val().length < 1) {
                                 //console.log(resp.job_id);
                                 notify("info","Jobben ble lagret!");
 
-                                $('#job_id').val(resp.job_id);
-                                $('#ad_id').val(resp.ad_id);
+                                $('#job_id').val(response.job_id);
+                                $('#ad_id').val(response.ad_id);
                             }
                         }
 

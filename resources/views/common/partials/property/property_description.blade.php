@@ -165,6 +165,10 @@
                                             {{ date("d.m.Y", strtotime($property_data-> rented_to)) }}</span>
                                     </div>
                                 @endif
+                                <div class="col-md-6">
+                                    <span class="font-weight-bold">Dyrehold tillatt</span>
+                                    <span>{{$property_data->facilities2 ? 'Ja' : 'Nei'}}</span>
+                                </div>
                             </div>
                         </div>
 
