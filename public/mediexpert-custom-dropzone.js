@@ -211,11 +211,12 @@ $(document).on('click', '.dz-remove', function (e) {
     // if (confirm("Er du sikker på å slette?") == true) {
     e.preventDefault();
     filename = $(this).attr('id');
-    delete_media(filename);
-    if($("div").hasClass("input_type_file")){
-        $('.input_type_file').removeClass('fileinput-exists ').addClass('fileinput-new');
-        // var $el = $('.input_type_file');//fileinput fileinput-new
-        // $el.wrap('<form>').closest('form').get(0).reset();
+    if(filename){
+        delete_media(filename);
+        if($("div").hasClass("input_type_file")){
+            $('.input_type_file').removeClass('fileinput-exists ').addClass('fileinput-new');
+            $('.input_type_file .dz-remove').attr('id','');
+        }
     }
     e.preventDefault();
 
