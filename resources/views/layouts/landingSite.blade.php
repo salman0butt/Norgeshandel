@@ -26,6 +26,7 @@
 
     <link rel="stylesheet" href="{{asset('public/css/jssocials.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/jssocials-theme-flat.css')}}">
+    {{-- <link rel="stylesheet" href="{{asset('public/css/jquery.datepicker2.css')}}"> --}}
 
     <!--    incluedes   -->
     <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
@@ -384,6 +385,8 @@
 <script src="{{asset('public/js/fslightbox.js')}}"></script>
 <script src="{{asset('public/js/toastr.min.js')}}"></script>
 <script src="{{asset('public/js/jssocials.min.js')}}"></script>
+{{-- <script src="{{asset('public/js/jquery.datepicker2.min.js')}}"></script> --}}
+
 
 <script>
     var urlParams = new URLSearchParams(location.search);
@@ -567,6 +570,7 @@
         showCount: false,
         shares: ["email", "twitter", "facebook"]
     });
+    
 </script>
 
 </body>

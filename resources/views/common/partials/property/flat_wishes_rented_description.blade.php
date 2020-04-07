@@ -146,10 +146,12 @@
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                 @endif
-                <h2 class="u-t3">Visning</h2>
-                <div class="mb-2">Ta kontakt for å avtale visning</div>
-                <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
-                </div>
+                 
+                                <div class="mb-2">
+                                    <span>Visning: </span>
+                                    <span>{{date('d-m-Y', strtotime($property_data->delivery_date))}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
+                                </div>
+                       
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

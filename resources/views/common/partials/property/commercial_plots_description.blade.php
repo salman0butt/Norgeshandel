@@ -153,9 +153,10 @@
 
                 <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
                     <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
-                    <h2 class="u-t3">Visning</h2>
-                    <div class="mb-2">Ta kontakt for å avtale visning</div>
-                    <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.</div>
+                             <div class="mb-2">
+                                    <span>Visning: </span>
+                                    <span>{{date('d-m-Y', strtotime($property_data->delivery_date))}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
+                                </div>
                     @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
                         <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
                             <font style="vertical-align: inherit;">
