@@ -76,16 +76,14 @@
                         </div>
                         <div class="bg-light-grey radius-8 col-md-12 p-3">
                             <div class="row">
+                                <div class="col-md-12 title"><span
+                                            class="font-weight-bold">Stillingstittel: </span><span>{{$job->title}}</span>
+                                </div>
                                 <div class="col-md-6 emp_name"><span
                                         class="font-weight-bold">Arbeidsgiver: </span><span>{{$job->emp_name}}</span>
                                 </div>
-                                <div class="col-md-6 title"><span
-                                        class="font-weight-bold">Stillingstittel: </span><span>{{$job->title}}</span>
-                                </div>
                                 <div class="col-md-6 place"><span
                                         class="font-weight-bold">Sted: </span><span>{{$job->country}}</span></div>
-                                <div class="col-md-6 deadline"><span class="font-weight-bold">Frist: </span><span>@if(empty($job->deadline))
-                                            Snarset @else {{$job->deadline}} @endif</span></div>
                                 <div class="col-md-6 commitment_type"><span
                                         class="font-weight-bold">Varighet: </span><span>{{$job->commitment_type}}</span>
                                 </div>
@@ -116,6 +114,36 @@
                                     <div class="col-md-6 job-function">
                                         <span class="font-weight-bold">Nøkkelord: </span>&nbsp;
                                         <span>{{$job->keywords}}</span>
+                                    </div>
+                                @endif
+                                @if($job->leadership_category)
+                                    <div class="col-md-6 job-function">
+                                        <span class="font-weight-bold">Lederkategori: </span>&nbsp;
+                                        <span>{{$job->leadership_category}}</span>
+                                    </div>
+                                @endif
+                                @if($job->deadline_type)
+                                    <div class="col-md-6 job-function">
+                                        <span class="font-weight-bold">Frist: </span>&nbsp;
+                                        <span>{{$job->deadline_type}}</span>
+                                    </div>
+                                @endif
+                                @if($job->deadline)
+                                    <div class="col-md-6 job-function">
+                                        <span class="font-weight-bold">Frist: </span>&nbsp;
+                                        <span>{{date('d-m-Y',strtotime($job->deadline))}}</span>
+                                    </div>
+                                @endif
+                                @if($job->accession)
+                                    <div class="col-md-6 job-function">
+                                        <span class="font-weight-bold">Tiltredelse: </span>&nbsp;
+                                        <span>{{date('d-m-Y',strtotime($job->accession))}}</span>
+                                    </div>
+                                @endif
+                                @if($job->app_receive_by)
+                                    <div class="col-md-6 job-function">
+                                        <span class="font-weight-bold">Motta søknader via: </span>&nbsp;
+                                        <span>{{ucfirst($job->app_receive_by)}}</span>
                                     </div>
                                 @endif
                             </div>
@@ -194,7 +222,9 @@
                             @endif
 
                         </div>
-                        <button class="dme-btn-maroon col-12 mb-2" onclick="window.location.href='{{$job->app_link_to_receive}}';">Søk her</button>
+                        @if($job->app_link_to_receive)
+                            <button class="dme-btn-maroon col-12 mb-2" onclick="window.location.href='{{$job->app_link_to_receive}}';">Søk her</button>
+                        @endif
                         @if(!empty($job->company))
                             <button class="dme-btn-outlined-blue col-8 mb-2">Følg firma</button>
                             <div class="col-4"></div>

@@ -224,8 +224,8 @@ class CommercialPropertyForRentController extends Controller
                 if($request->file('commercial_property_for_rent_pdf')){
                     $property_pdf = common::update_media($request->file('commercial_property_for_rent_pdf'), $response->ad->id, 'App\Models\Ad', 'pdf');
                     if($property_pdf){
-                        $property_pdf = json_decode($property_pdf);
-                        $property_pdf = $property_pdf->file_names[0];
+//                        $property_pdf = json_decode($property_pdf);
+                        $property_pdf = $property_pdf['file_names'][0];// $property_pdf->file_names[0];
                     }
                 }
             }

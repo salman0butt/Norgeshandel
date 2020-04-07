@@ -1022,7 +1022,7 @@ $(document).ready(function () {
                 required: true
             },
             app_link_to_receive: {
-                required: true,
+                // required: true,
                 validUrl: true
             },
             app_email_to_receive: {
