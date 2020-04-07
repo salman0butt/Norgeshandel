@@ -28,14 +28,14 @@ class AuthVerified
                 'updated_at'=>now(),
             ]);
         }
-        if (
-            (Auth::check() && Auth::user()->hasVerifiedEmail()) ||
-            !Auth::check()
-        ){
+//        if (
+//            (Auth::check() && Auth::user()->hasVerifiedEmail()) ||
+//            !Auth::check()
+//        ){
             return $next($request);
-        }
-        else{
-            return redirect('email/verify');
-        }
+//        }
+//        else{
+//            return redirect('email/verify');
+//        }
     }
 }
