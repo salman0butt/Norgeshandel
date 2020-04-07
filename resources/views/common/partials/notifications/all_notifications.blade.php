@@ -21,7 +21,7 @@
                     @if(is_countable($notifications) && count($notifications) > 0)
                         @foreach ($notifications as $notif)
                             @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id)
-                            @if(!in_array($addable, $added))
+                            @if(!in_array($addable, $added) && !empty($notif->notifiable))
                                 <article class="col-md-12 pl-0 pr-0 list-ad">
                                     <a href="
                                     @if($notif->notifiable_type==\App\Models\Search::class)
