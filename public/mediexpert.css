@@ -1135,11 +1135,18 @@ label span.count{
     width: 200px !important;
 }
 .dropzone .dz-preview .dz-image {
-    width: 200px !important;
-}
-.dz-image img{
+    /*width: 200px !important;*/
     width: 200px !important;
     height: 125px !important;
+}
+.dz-image img{
+    height: 100%;
+    margin: auto;
+    border-radius: 20px;
+    /*
+    width: 200px !important;
+    height: 125px !important;
+    */
 }
 
 .page-messages footer{
