@@ -26,7 +26,7 @@
 
     <link rel="stylesheet" href="{{asset('public/css/jssocials.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/jssocials-theme-flat.css')}}">
-    {{-- <link rel="stylesheet" href="{{asset('public/css/jquery.datepicker2.css')}}"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
     <!--    incluedes   -->
     <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
@@ -385,7 +385,7 @@
 <script src="{{asset('public/js/fslightbox.js')}}"></script>
 <script src="{{asset('public/js/toastr.min.js')}}"></script>
 <script src="{{asset('public/js/jssocials.min.js')}}"></script>
-{{-- <script src="{{asset('public/js/jquery.datepicker2.min.js')}}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 
 <script>
@@ -569,6 +569,12 @@
         showLabel: false,
         showCount: false,
         shares: ["email", "twitter", "facebook"]
+    });
+    $(function() {
+        $('input[type="date"]').datepicker({
+            format: "yyyy/mm/dd",
+        });
+        $('input[type="date"]').attr('type','text');
     });
     
 </script>
