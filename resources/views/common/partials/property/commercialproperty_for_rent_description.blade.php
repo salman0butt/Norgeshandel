@@ -76,15 +76,16 @@
                             $property_type = array();
                             $property_type = json_decode($property_data->property_type);
                         @endphp
-                        <div class="col-md-6"><span class="font-weight-bold">Type lokale </span>&nbsp;<span>
+                        <div class="col-md-12"><span class="font-weight-bold">Type lokale </span>&nbsp;<span>
                                 @if(is_countable($property_type))
-                                    <ul>
+                                    <ul class="row">
                                         @foreach($property_type as $value)
-                                             <li>{{$value}}</li>
+                                             <li class="col-6">{{$value}}</li>
                                         @endforeach
                                     </ul>
                                 @endif
-                            </span> </div>
+                            </span>
+                        </div>
                         <div class="col-md-6"><span class="font-weight-bold">Areal </span>&nbsp;<span>{{$property_data->gross_area_from}} - {{$property_data->gross_area_to}} m²</span></div>
 
                         @if($property_data->number_of_office_space)
@@ -172,9 +173,9 @@
                         @if(count($facilities))
                             <div class="col-md-12 more_details_section">
                                 <span class="font-weight-bold">Fasiliteter</span>
-                                <ul>
+                                <ul class="row">
                                     @foreach($facilities as $key=>$val)
-                                        <li>
+                                        <li class="col-6">
                                             <?php
                                                 if($val != "")
                                                 {
@@ -247,10 +248,13 @@
                     @if(!$property_data->ad->is_mine())
                         <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                     @endif
-                                <div class="mb-2">
-                                    <span>Visning: </span>
-                                    <span>{{date('d-m-Y', strtotime($property_data->delivery_date))}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
-                                </div>
+
+                    @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
+                        <div class="mb-2">
+                            <span>Visning: </span>
+                            <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
+                        </div>
+                    @endif
                            
                     @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
                         <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">

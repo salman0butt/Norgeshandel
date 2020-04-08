@@ -482,11 +482,13 @@ $name = $property_data->ad->company_gallery;
                                              data-controller="trackSendSMS">{{ $property_data->phone }}</a></p>
                                 </div>
                             @endif
-                    
+
+                            @if($property_data->deliver_date || $property_data->from_clock || $property_data->clockwise || $property_data->note1)
                                 <div class="mb-2">
                                     <span>Visning: </span>
-                                    <span>{{date('d-m-Y', strtotime($property_data->deliver_date))}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}} {{$property_data->note1 ? $property_data->note1 : ''}}</span>
+                                    <span>{{$property_data->deliver_date ? date('d-m-Y', strtotime($property_data->deliver_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}}{{$property_data->note1 ? $property_data->note1 : ''}}</span>
                                 </div>
+                            @endif
               
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2">

@@ -61,11 +61,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Boligtype: </span>&nbsp;
-                                <span>{{rtrim($property_data->property_type)}} </span>
+                                <span>{{rtrim($property_data->property_type,',')}} </span>
                             </div>
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Ønsket område:
-                                </span>&nbsp;<span>{{rtrim($property_data->region)}}</span>
+                                </span>&nbsp;<span>{{rtrim($property_data->region,',')}}</span>
                             </div>
                             @if($property_data->number_of_tenants)
                                 <div class="col-md-6">
@@ -146,11 +146,13 @@
                 @if(!$property_data->ad->is_mine())
                     <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                 @endif
-                 
-                                <div class="mb-2">
-                                    <span>Visning: </span>
-                                    <span>{{date('d-m-Y', strtotime($property_data->delivery_date))}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
-                                </div>
+
+                @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
+                    <div class="mb-2">
+                        <span>Visning: </span>
+                        <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
+                    </div>
+                @endif
                        
                 <div class="mt-3 mb-3">
                     <h5>
