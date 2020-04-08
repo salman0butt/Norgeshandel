@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="fav-list row mt-5">
-            <div class="col-md-11">
+            <div class="col-md-12">
                 <?php
                     use Illuminate\Support\Facades\Auth;
                     $fav = $list->favorites->where('user_id',Auth::id());
@@ -56,7 +56,7 @@
             <div class="col-md-4"></div>
         </div>
     </div>
-    <div id="ad_note_for_fav" class="modal fade" role="dialog">
+    <div id="ad_note_for_fav" class="modal fade d-none" role="dialog">
         <div class="modal-dialog modal-lg pt-5">
             <div class="modal-content">
                 <div class="modal-body" id="list-body">
@@ -103,32 +103,74 @@
     $(document).on('click', '.close_button', function () {
         var id = $(this).attr('data-target');
         $('a[data-target="'+id+'"]').removeClass('d-none');
-        // $(this).closest('a').hasClass('plus_note_button').removeClass('d-none');
     });
 
 
+    $(document).on('click', '.close_button_for_note', function () {
+        $(this).closest('form').find('textarea').attr( 'disabled', 'disabled');
 
+        $(this).closest('form').find('.float-right').addClass('d-none');
+        $(this).closest('form').find('.remove_button_area').addClass('d-none');
+        $(this).closest('form').find('.ad_note_link').removeClass('d-none');
+        // $(this).addClass('d-none');
+    });
 
     $(document).on('click', '.ad_note_link', function () {
-        var fav_id = $(this).attr('data-id');
-        if(fav_id){
-            $.ajax({
-                url: "{{url('fav-note')}}",
-                type:'GET',
-                data: {'fav_id':fav_id},
-                dataType:'json',
-                success: function (data) {
-                    if(data && data.id){
-                        $('#fav_note_form .fav_id').val(data.id);
+        $(this).closest('form').find('textarea').removeAttr("disabled");
+
+        var searchInput = $(this).closest('form').find('textarea');
+        var strLength =  searchInput.val().length * 2;
+        searchInput.focus();
+        searchInput[0].setSelectionRange(strLength, strLength);
+
+        $(this).closest('form').find('div').removeClass('d-none');
+        $(this).closest('form').find('.remove_button_area').removeClass('d-none');
+        $(this).addClass('d-none');
+
+    });
+
+
+    //Remove Note
+    $(document).on('click', '.remove_note_button', function () {
+        if (confirm("Er du sikker på å fjerne dette notatet?") == true) {
+            var id = $(this).closest('form').find('input[name="id"]').val();
+            if(id){
+                $.ajax({
+                    url: "{{url('remove-fav-note')}}",
+                    type: "GET",
+                    data: {id:id},
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        location.reload();
                     }
-                    if(data && data.note){
-                        $('#fav_note_form .note').val(data.note);
-                    }else{
-                        $('#fav_note_form .note').val('');
-                    }
-                }
-            });
+                })
+            }
         }
+    });
+
+    //Store Note
+    $(document).on('click', '.submit_button', function (e) {
+        var val =  $(this).closest('form').find('textarea').val();
+        if(!val){
+            alert("Skriv inn et notat.");
+            return false;
+        }
+        e.preventDefault();
+        var form_id = $(this).data('target');
+        var myform = document.getElementById(form_id);
+        var fd = new FormData(myform);
+        $.ajax({
+            url: "{{url('store-fav-note')}}",
+            type: "POST",
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                location.reload();
+            }
+        })
     });
 
 
