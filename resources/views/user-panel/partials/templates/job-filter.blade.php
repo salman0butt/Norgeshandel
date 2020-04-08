@@ -13,7 +13,11 @@
                             <div class="input-group search-box">
                                 <input type="text" id="search" name="search" class="dme-form-control search-control"
                                        placeholder="">
+                                @if(Request::get('job_type'))
+                                    <input type="hidden" name="job_type" value="{{Request::get('job_type') ? Request::get('job_type') : ''}}" >
+                                @endif
                                 <span class="input-group-addon pt-2">
+
                                 <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
                                      height="26" width="26">
                                 <path fill="currentColor" fill-rule="evenodd" d="M22.412
