@@ -251,7 +251,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('notifications-read-all', 'NotificationController@read_all');
 
 
-        Route::get('fav-note', 'FavoriteController@find_fav_note');
+        Route::get('remove-fav-note', 'FavoriteController@remove_fav_note');
         Route::post('store-fav-note', 'FavoriteController@store_fav_note');
 
 

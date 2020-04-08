@@ -174,45 +174,47 @@ class FavoriteController extends Controller
         Favorite::where('ad_id', $ad_id)->where('user_id', Auth::user()->id)->delete();
     }
 
-    //Find fav note
-    public function find_fav_note(Request $request)
+    //Remove fav note
+    public function remove_fav_note(Request $request)
     {
-        $fav_arr = array();
-        if ($request->fav_id) {
-            $fav = Favorite::find($request->fav_id);
+        if ($request->id) {
+            $fav = Favorite::find($request->id);
             if ($fav) {
-                $fav_arr = array(
-                    'id' => $fav->id,
-                    'note' => $fav->note
-                );
+                $fav->note = null;
+                $fav->update();
             }
         }
-        return $fav_arr;
+        return array('success');
         exit();
     }
 
     //Store fav note
     public function store_fav_note(Request $request){
-        if($request->fav_id){
-            $fav = Favorite::find($request->fav_id);
+        if($request->id){
+            $fav = Favorite::find($request->id);
             if($fav && $request->note){
                 DB::beginTransaction();
                 try{
                     $fav->note = $request->note;
                     $fav->update();
                     DB::commit();
-                    $request->session()->flash('success', 'Notatet er lagt til.');
-                    return redirect()->back();
+                    $data = array('note'=>$fav->note);
 
+                    return $data;
                 }catch (\Exception $e){
                     DB::rollback();
-                    $request->session()->flash('danger', 'Noe gikk galt.');
-                    return redirect()->back();
+                    (header("HTTP/1.0 404 Not Found"));
+                    $data['failure'] = $e->getMessage();
+                    echo json_encode($data);
+                    exit();
                 }
             }
         }else{
-            $request->session()->flash('danger', 'Posten ble ikke funnet.');
-            return redirect()->back();
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = ['Posten ble ikke funnet'];
+            echo json_encode($data);
+            exit();
         }
     }
 }
