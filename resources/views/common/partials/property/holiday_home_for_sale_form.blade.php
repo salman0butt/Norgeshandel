@@ -67,9 +67,9 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="location" id="situation" class="dme-form-control" data-selector="">
                         <option value=""></option>
-                        <option value="INLAND" {{ $holiday_home_for_sale->location == "Innlandet" ? 'selected' : ''}}>Innlandet</option>
-                        <option value="MOUNTAINS" {{ $holiday_home_for_sale->location == "På fjellet" ? 'selected' : ''}}>På fjellet</option>
-                        <option value="COAST" {{ $holiday_home_for_sale->location == "Ved sjøen" ? 'selected' : ''}}>Ved sjøen</option>
+                        <option value="Innlandet" {{ $holiday_home_for_sale->location == "Innlandet" ? 'selected' : ''}}>Innlandet</option>
+                        <option value="På fjellet" {{ $holiday_home_for_sale->location == "På fjellet" ? 'selected' : ''}}>På fjellet</option>
+                        <option value="Ved sjøen" {{ $holiday_home_for_sale->location == "Ved sjøen" ? 'selected' : ''}}>Ved sjøen</option>
                     </select>
                 </div>
             </div>
