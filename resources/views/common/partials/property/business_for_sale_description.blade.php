@@ -155,11 +155,12 @@
                         <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                     @endif
   
-                           
-                                <div class="mb-2">
-                                    <span>Visning: </span>
-                                    <span>{{date('d-m-Y', strtotime($property_data->delivery_date))}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
-                                </div>
+                    @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
+                        <div class="mb-2">
+                            <span>Visning: </span>
+                            <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
+                        </div>
+                    @endif
                          
                     @if($property_data->link && $property_data->link_for_information)
                         <div class="mb-2"><a href="{{$property_data->link_for_information}}" target="_blank">{{$property_data->link}}</a></div>
