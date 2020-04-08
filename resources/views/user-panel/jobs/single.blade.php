@@ -55,6 +55,12 @@
                 <div class="col-md-12">
                     @php $name = $job->ad->company_gallery; $obj = $job; @endphp
                     @include('user-panel.partials.landing_page_slider',compact('name'))
+                    @if($job->workplace_video)
+                        <div style="position: absolute;bottom: 0;left: 30px;">
+                            <a data-fslightbox="gallery1" href="{{$job->workplace_video}}" class="btn btn-light radius-8 video-button" style="color: #ac304a; background: white">
+                                <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
+                        </div>
+                    @endif
                     {{--<img src="{{asset('public/images/home.jpg')}}" alt="" class="img-fluid">--}}
                 </div>
             </div>
@@ -217,6 +223,22 @@
                                     @if($job->app_linkedin && $job->app_twitter) , @endif
                                     @if($job->app_twitter)
                                         <span class="contact-tel"><a href="https://twitter.com/{{$job->app_twitter}}">Twitter</a></span>
+                                    @endif
+                                </div>
+                            @endif
+                            @if($job && ($job->emp_facebook || $job->emp_linkedin || $job->emp_twitter))
+                                <div class="mb-2">
+                                    <span class="contact-name">Arbeidsgiver Nettverk: </span>
+                                    @if($job->emp_linkedin)
+                                        <span class="contact-tel"><a href="{{$job->emp_linkedin}}">LinkedIn</a></span>
+                                    @endif
+                                    @if($job->emp_linkedin && ($job->emp_twitter || $job->emp_facebook)) , @endif
+                                    @if($job->emp_twitter)
+                                        <span class="contact-tel"><a href="https://twitter.com/{{$job->emp_twitter}}">Twitter</a></span>
+                                    @endif
+                                    @if($job->emp_facebook && ($job->emp_twitter || $job->emp_linkedin)) , @endif
+                                    @if($job->emp_facebook)
+                                        <span class="contact-tel"><a href="{{$job->emp_facebook}}">Facebook</a></span>
                                     @endif
                                 </div>
                             @endif
