@@ -42,7 +42,8 @@
                         @if(isset($ad->ad_type) && $ad->visibility  && (strtotime($ad->sold_at) > strtotime($date) || !$ad->sold_at))
                             <?php $count++; ?>
                             @if($ad->ad_type === "job" )
-                                @include('user-panel.partials.templates.job-list', compact('ad','fav_item'))
+{{--                                @include('user-panel.partials.templates.job-list', compact('ad','fav_item'))--}}
+                                @include('user-panel.partials.templates.fav-job-list', compact('ad','fav_item'))
                             @else
                                 @include('user-panel.partials.templates.property-list', compact('ad','fav_item'))
                             @endif
@@ -96,16 +97,19 @@
 </main>
 <script>
 
+    //Collapse button
     $(document).on('click', '.plus_note_button', function () {
         $(this).addClass('d-none');
+        $(this).closest('div').find('textarea').val('');
     });
 
+    //close button
     $(document).on('click', '.close_button', function () {
         var id = $(this).attr('data-target');
         $('a[data-target="'+id+'"]').removeClass('d-none');
     });
 
-
+    //close button when an note is exist
     $(document).on('click', '.close_button_for_note', function () {
         $(this).closest('form').find('textarea').attr( 'disabled', 'disabled');
 
@@ -115,6 +119,7 @@
         // $(this).addClass('d-none');
     });
 
+    //Edit link for note
     $(document).on('click', '.ad_note_link', function () {
         $(this).closest('form').find('textarea').removeAttr("disabled");
 
@@ -131,7 +136,8 @@
 
 
     //Remove Note
-    $(document).on('click', '.remove_note_button', function () {
+    $(document).on('click', '.remove_note_button', function (e) {
+        e.preventDefault();
         if (confirm("Er du sikker på å fjerne dette notatet?") == true) {
             var id = $(this).closest('form').find('input[name="id"]').val();
             if(id){

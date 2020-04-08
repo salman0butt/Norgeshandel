@@ -63,29 +63,31 @@ if($property !== null)
                 {{Str::limit($ad->getTitle(),40)}}
             </p>
             @if(Request::is('my-business/favorite-list/*'))
-                @if($fav_item && $fav_item->id && !$fav_item->note)
-                    <a style="color: black;background: #E0F0FD;border: #E0F0FD;" class="btn btn-info btn-sm plus_note_button" data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}"><i class="fa fa-plus mr-2"></i>Skriv notat til deg selv</a>
-                @endif
-                <div id="note_{{$property->ad ? $property->ad->id : ''}}" class="{{$fav_item && $fav_item->id && !$fav_item->note ? 'collapse' : ''}}" style="background-color: #fff5cb; border-radius:10px">
-                    <form class="p-3" id="note_form_{{$property->ad ? $property->ad->id : ''}}">
-                        @method('POST') @csrf
+                <div>
+                    @if($fav_item && $fav_item->id && !$fav_item->note)
+                        <a style="color: black;background: #E0F0FD;border: #E0F0FD;" class="btn btn-info btn-sm plus_note_button" data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}"><i class="fa fa-plus mr-2"></i>Skriv notat til deg selv</a>
+                    @endif
+                    <div id="note_{{$property->ad ? $property->ad->id : ''}}" class="{{$fav_item && $fav_item->id && !$fav_item->note ? 'collapse' : ''}}" style="background-color: #fff5cb; border-radius:10px">
+                        <form class="p-3" id="note_form_{{$property->ad ? $property->ad->id : ''}}">
+                            @method('POST') @csrf
 
-                        <input type="hidden" name="id" value="{{$fav_item && $fav_item->id ? $fav_item->id : ''}}"/>
-                        <textarea class="form-control bg-transparent border-0" name="note" {{$fav_item && $fav_item->id && $fav_item->note ? 'disabled' : ''}}>{{$fav_item && $fav_item->id ? $fav_item->note : ''}}</textarea>
+                            <input type="hidden" name="id" value="{{$fav_item && $fav_item->id ? $fav_item->id : ''}}"/>
+                            <textarea class="form-control bg-transparent border-0" name="note" {{$fav_item && $fav_item->id && $fav_item->note ? 'disabled' : ''}}>{{$fav_item && $fav_item->id ? $fav_item->note : ''}}</textarea>
 
-                        <div class="mt-3 float-left d-none remove_button_area">
-                            <a href="#" class="remove_note_button" style="color:red;">Slett</a>
-                        </div>
+                            <div class="mt-3 float-left d-none remove_button_area">
+                                <a href="#" class="remove_note_button" style="color:red;">Slett</a>
+                            </div>
 
-                        <div class="mt-3 float-right {{$fav_item && $fav_item->id && $fav_item->note ? 'd-none' : ''}}">
-                            <a class="btn btn-warning btn-sm close_button {{$fav_item && $fav_item->id && $fav_item->note ? 'close_button_for_note' : ''}}" @if($fav_item && $fav_item->id && !$fav_item->note) data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}" @endif>Lagre</a>
-                            <input type="submit" value="Avbryt" data-target="note_form_{{$property->ad ? $property->ad->id : ''}}" class="btn btn-success btn-sm submit_button">
-                        </div>
+                            <div class="mt-3 float-right {{$fav_item && $fav_item->id && $fav_item->note ? 'd-none' : ''}}">
+                                <a class="btn btn-warning btn-sm close_button {{$fav_item && $fav_item->id && $fav_item->note ? 'close_button_for_note' : ''}}" @if($fav_item && $fav_item->id && !$fav_item->note) data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}" @endif>Lagre</a>
+                                <input type="submit" value="Avbryt" data-target="note_form_{{$property->ad ? $property->ad->id : ''}}" class="btn btn-success btn-sm submit_button">
+                            </div>
 
-                        <a href="#" data-toggle="modal" class="ad_note_link float-right pr-1 {{$fav_item && $fav_item->id && !$fav_item->note ? 'd-none' : ''}}"><span class="fa fa-pencil"></span></a>
+                            <a href="#" data-toggle="modal" class="ad_note_link float-right pr-1 {{$fav_item && $fav_item->id && !$fav_item->note ? 'd-none' : ''}}"><span class="fa fa-pencil"></span></a>
 
-                        <div class="clearfix"></div>
-                    </form>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
                 </div>
             @endif
         </div>
