@@ -6,7 +6,7 @@ $(document).ready(function () {
             heading: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             zip_code: {
                 required: true,
@@ -70,7 +70,7 @@ $(document).ready(function () {
             headline: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             zip_code: {
                 required: true,
@@ -211,7 +211,7 @@ $(document).ready(function () {
             heading: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             zip_code: {
                 required: true,
@@ -322,7 +322,7 @@ $(document).ready(function () {
             headline: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             region: {
                 required: true,
@@ -408,7 +408,7 @@ $(document).ready(function () {
             headline: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             // link: {
             //     validUrl: true
@@ -457,7 +457,7 @@ $(document).ready(function () {
             headline: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             link_for_information: {
                 validUrl: true
@@ -549,7 +549,7 @@ $(document).ready(function () {
             ad_headline: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             zip_code: {
                 required: true,
@@ -726,7 +726,7 @@ $(document).ready(function () {
             head_line: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             muncipal_number: {
                 number: true,
@@ -842,7 +842,7 @@ $(document).ready(function () {
             headline: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             link_for_information: {
                 validUrl: true
@@ -962,12 +962,12 @@ $(document).ready(function () {
             name: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             title: {
                 required: true,
                 minlength: 2,
-                maxlength: 120
+                maxlength: 150
             },
             positions: {
                 required: true,
