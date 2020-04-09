@@ -268,6 +268,12 @@ $name = $property_data->ad->company_gallery;
                                                     <span>{{$property_data->shared_costs_include}}</span>
                                                 </div>
                                             @endif
+                                            @if($property_data->costs_include)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Omkostninger inkluderer:</span>&nbsp;
+                                                    <span>{{$property_data->costs_include}}</span>
+                                                </div>
+                                            @endif
 
                                             @if($property_data->common_costs_after_interest_free_period)
                                                 <div class="col-md-6">

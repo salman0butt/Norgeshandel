@@ -130,7 +130,7 @@
                                 @if (!empty($property_data->area_of_use))
                                     <div class="col-md-6">
                                         <span class="font-weight-bold">Bruksareal</span>&nbsp;
-                                        <span>{{$property_data->area_of_use}}</span>
+                                        <span>{{$property_data->area_of_use}} m²</span>
                                     </div>
                                 @endif
                                 @if (!empty($property_data->property_type))

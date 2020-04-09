@@ -470,18 +470,18 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <h3 class="u-t5">Antall leietagere (valgfritt)</h3>
-            <div class="row">
-                <div class="col-sm-4 pr-md-0">
-                    <input name="number_of_tenants" value="{{ $holiday_home_for_sale->number_of_tenants }}" type="text"
-                        class="dme-form-control">
-                </div>
-                <div class="col-md-8"></div>
-                <div class="col-md-12 u-t5">Hva er dagens festeavgift for tomten</div>
-                <br>
-            </div>
-        </div>
+        {{--<div class="form-group">--}}
+            {{--<h3 class="u-t5">Antall leietagere (valgfritt)</h3>--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-4 pr-md-0">--}}
+                    {{--<input name="number_of_tenants" value="{{ $holiday_home_for_sale->number_of_tenants }}" type="text"--}}
+                        {{--class="dme-form-control">--}}
+                {{--</div>--}}
+                {{--<div class="col-md-8"></div>--}}
+                {{--<div class="col-md-12 u-t5">Hva er dagens festeavgift for tomten</div>--}}
+                {{--<br>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
         <div class="form-group">
             <h3 class="u-t5">Beskaffenhet (valgfritt)</h3>

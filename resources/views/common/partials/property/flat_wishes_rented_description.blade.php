@@ -56,16 +56,38 @@
                         <div class="col-md-12 font-weight-bold mt-3">Maks månedsleie</div>
                         <div class="col-md-12 u-t3">{{number_format($property_data->max_rent_per_month,0,""," ")}} Kr</div>
                     @endif
+                    @php
+                        $property_type = $property_region = array();
+                        if($property_data->property_type){
+                            $property_type = explode(',',$property_data->property_type);
+                            $property_type = array_filter($property_type);
+                        }
+                        if($property_data->region){
+                            $property_region = explode(',',$property_data->region);
+                            $property_region = array_filter($property_region);
+                        }
+                    @endphp
                     <div class="clearfix"></div>
                     <div class="bg-light-grey radius-8 col-md-12 p-3">
                         <div class="row">
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Boligtype: </span>&nbsp;
-                                <span>{{rtrim($property_data->property_type,',')}} </span>
+                                {{--<span>--}}
+                                @if(count($property_type) > 0)
+                                    @foreach($property_type as $key=>$property_type_obj)
+                                        <span>{{ucfirst($property_type_obj)}}{{count($property_type) == ($key+1) ? '' : ', '}}</span>
+                                    @endforeach
+                                @endif
+                                    {{--{{rtrim($property_data->property_type,',')}} </span>--}}
                             </div>
                             <div class="col-md-12">
-                                <span class="font-weight-bold">Ønsket område:
-                                </span>&nbsp;<span>{{rtrim($property_data->region,',')}}</span>
+                                <span class="font-weight-bold">Ønsket område:</span>&nbsp;
+                                @if(count($property_region) > 0)
+                                    @foreach($property_region as $key=>$property_region_obj)
+                                        <span>{{ucfirst($property_region_obj)}}{{count($property_region) == ($key+1) ? '' : ', '}}</span>
+                                    @endforeach
+                                @endif
+                                {{--<span>{{rtrim($property_data->region,',')}}</span>--}}
                             </div>
                             @if($property_data->number_of_tenants)
                                 <div class="col-md-6">

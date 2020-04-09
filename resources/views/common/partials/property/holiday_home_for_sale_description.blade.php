@@ -186,7 +186,7 @@
                             <div class="bg-light-grey radius-8 col-md-12 p-3">
                                 @if(count($facilities))
                                     <div class="row p-2">
-                                        <span class="font-weight-bold col-12">Facilities</span>
+                                        <span class="font-weight-bold col-12">Fasiliteter</span>
                                         <ul class="row ml-2">
                                             @foreach($facilities as $key=>$val)
                                             <li class="col-6">
