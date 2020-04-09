@@ -253,6 +253,7 @@
         var message_thread_id = 0;
 
         $(document).ready(function () {
+    
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -260,6 +261,7 @@
             });
             $(".thread.active").find('.pending').remove();
             message_thread_id = $(".thread.active").attr('id');
+         // setInterval(function(){ },1000);
             $.ajax({
                 type: "get",
                 url: "{{url('messages/render-thread')}}/" + message_thread_id, // need to create this route
@@ -270,6 +272,7 @@
                     scrollToBottomFunc();
                 }
             });
+            
 
             // $('.thread.active').first().trigger('click');
             // Enable pusher logging - don't include this in production
