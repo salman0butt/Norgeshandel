@@ -556,11 +556,6 @@ $name = $property_data->ad->company_gallery;
                         @endif
                     @endif
 
-                    <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
-                                    salgsoppgave</a></div>
-                            <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
-                            <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
-
                     <div class="mb-2" style="font-weight:500">Husk å bestille/laste ned salgsoppgave så du kan stille
                         godt forberedt på visning.
                     </div>
@@ -586,10 +581,6 @@ $name = $property_data->ad->company_gallery;
                             <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
                                             style="vertical-align: inherit;">Gi bud</font></font></button>
                     @endif
-
-                    {{-- <button class="dme-btn-outlined-blue col-12">Gi bud</button> --}}
-                    {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank"
-                        rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                     <div class="mt-3 mb-3">
                         <h5>
                             <font style="vertical-align: inherit;">

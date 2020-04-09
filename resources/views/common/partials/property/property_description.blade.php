@@ -257,8 +257,9 @@
                     </div>
                 @else
                     <div class="col-md-4">
-                        <div
-                            style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                        {{--@php $show_more_ad_url = url('property/property-for-rent/search?user_id='.$property_data->ad->user->id); @endphp--}}
+                        {{--@include('user-panel.partials.templates.landing_page_company_information')--}}
+                        <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px;margin-bottom: 20px; border-radius: 5px;">
                             <div class="text-center">
                                 <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;"
                                      alt="">
@@ -271,12 +272,10 @@
                                 @endif
                             </p>
                             @if(!$property_data->published_on)
-                                <div class="mb-2"><a href="{{route('public_profile',$property_data->ad->user->id)}}">Flere annonser fra
-                                    annonsør</a></div>
+                                <div class="mb-2"><a href="{{url('property/property-for-rent/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
                             @endif
                             @if(!$property_data->ad->is_mine())
-                                <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send
-                                        melding</a></div>
+                                <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
                             @endif
                             <h2 class="u-t3">Visning</h2>
                             @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
