@@ -239,7 +239,7 @@
                             @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
                                 <div class="mb-2">
                                     <span>Visning: </span>
-                                    <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
+                                    <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}} <br>{{$property_data->note ? $property_data->note : ''}}</span>
                                 </div>
                             @endif
                     

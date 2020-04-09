@@ -130,6 +130,7 @@
                     <div class="text-center">
                         {{-- <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt=""> --}}
                     </div>
+                     <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;"> 
                     @if(!$property_data->published_on)
                        <center>
                         <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
@@ -157,7 +158,7 @@
                     @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
                         <div class="mb-2">
                             <span>Visning: </span>
-                            <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
+                            <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}} <br>{{$property_data->note ? $property_data->note : ''}}</span>
                         </div>
                     @endif
 
@@ -176,6 +177,7 @@
                     {{-- <a href="#" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 </div>
             </div>
+        </div>
         </div>
 
         <div class="right-ad pull-right">

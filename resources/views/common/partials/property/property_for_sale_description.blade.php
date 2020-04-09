@@ -486,7 +486,7 @@ $name = $property_data->ad->company_gallery;
                             @if($property_data->deliver_date || $property_data->from_clock || $property_data->clockwise || $property_data->note1)
                                 <div class="mb-2">
                                     <span>Visning: </span>
-                                    <span>{{$property_data->deliver_date ? date('d-m-Y', strtotime($property_data->deliver_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}}{{$property_data->note1 ? $property_data->note1 : ''}}</span>
+                                    <span>{{$property_data->deliver_date ? date('d-m-Y', strtotime($property_data->deliver_date)) : ''}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise ? ' - ' : '').$property_data->clockwise}}<br>{{$property_data->note1 ? $property_data->note1 : ''}}</span>
                                 </div>
                             @endif
               

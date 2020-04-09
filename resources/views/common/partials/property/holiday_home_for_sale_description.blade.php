@@ -429,6 +429,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                     @if(!$property_data->published_on)
                      <center>
                         <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
@@ -464,11 +465,11 @@
                 !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
                 !empty($property_data->note))
                 <div class="mb-2">
-                    <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span><br>
+                    <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
                     <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?>
                     </span>
                     <span><?php echo (!empty($property_data->clockwise) ?  $property_data->clockwise : ""); ?>
-                    </span>
+                    </span><br>
                     <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?></span>
                 </div>
                 @else
@@ -523,6 +524,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="right-ad pull-right">
