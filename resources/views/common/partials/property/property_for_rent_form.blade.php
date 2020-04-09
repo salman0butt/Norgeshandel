@@ -118,7 +118,7 @@
             <label class="u-t5">Etasje (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="floor" value="{{ $property_for_rent->floor }}" class="dme-form-control" placeholder="m²">
+                    <input type="text" name="floor" value="{{ $property_for_rent->floor }}" class="dme-form-control" placeholder="">
                     <span class="error-span floor"></span>
                 </div>
             </div>

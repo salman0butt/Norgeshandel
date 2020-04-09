@@ -120,6 +120,7 @@
                                         soverom
                                     </p>
                                 </div>
+                                {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
 
                             </div>
                           </a>

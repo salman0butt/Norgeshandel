@@ -82,7 +82,7 @@
                     <label class="smalltext" for="property_type-LEARNINGFACILITY"> Undervisning/Arrangement</label>
                 </div>
                 <div class="col-md-4 input-toggle">
-                    <input data-selector="" id="property_type-OTHER" type="checkbox" value="OTHER" name="property_type[]" class="property_type"  {{ (in_array("OTHER", $property_type))?"checked":"" }}>
+                    <input data-selector="" id="property_type-OTHER" type="checkbox" value="Andre" name="property_type[]" class="property_type"  {{ (in_array("Andre", $property_type))?"checked":"" }}>
                     <label class="smalltext" for="property_type-OTHER"> Andre</label>
                 </div>
             </div>
