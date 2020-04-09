@@ -219,8 +219,7 @@
                     <center>
                         <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
                         alt="Profile image" style="width:100px;">
-                           
-                                <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
+                        <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
                     </center>
                          @endif
                             @if(!$property_data->ad->is_mine())
@@ -257,26 +256,14 @@
                     </div>
                 @else
                     <div class="col-md-4">
-                        {{--@php $show_more_ad_url = url('property/property-for-rent/search?user_id='.$property_data->ad->user->id); @endphp--}}
-                        {{--@include('user-panel.partials.templates.landing_page_company_information')--}}
+                        @php
+                            $show_more_ad_url = url('property/property-for-rent/search?user_id='.$property_data->ad->user->id);
+                            $property_published_on = $property_data->published_on;
+                        @endphp
+                        @include('user-panel.partials.templates.landing_page_company_information')
+
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px;margin-bottom: 20px; border-radius: 5px;">
-                            <div class="text-center">
-                                <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;"
-                                     alt="">
-                            </div>
-                            <p class="mt-3">
-                                @if(!$property_data->published_on)
-                                    {{ $property_data->user->first_name }} {{ $property_data->user->last_name }}
-                                @else
-                                    NH-Bruker
-                                @endif
-                            </p>
-                            @if(!$property_data->published_on)
-                                <div class="mb-2"><a href="{{url('property/property-for-rent/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a></div>
-                            @endif
-                            @if(!$property_data->ad->is_mine())
-                                <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
-                            @endif
+
                             <h2 class="u-t3">Visning</h2>
                             @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
                             !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
@@ -297,21 +284,12 @@
                             <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på
                                 visning.
                             </div>
-
-
-                            <div class="mt-3 mb-3">
-                                <h5><span class="db_zip_code"></span><br>
-                                </h5>
-
-                            </div>
-                            <div style="width: 306px;height:153px;">
-                                {!! Mapper::render() !!}
-                            </div>
                         </div>
-
                     </div>
                 @endif
-
+                <div style="width: 306px;height:153px;">
+                    {!! Mapper::render() !!}
+                </div>
 
             </div>
         </div>

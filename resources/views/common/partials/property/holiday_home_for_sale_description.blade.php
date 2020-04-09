@@ -429,87 +429,100 @@
                 </div>
             </div>
             <div class="col-md-4">
-                    @if(!$property_data->published_on)
-                     <center>
-                        <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
-                        alt="Profile image" style="width:100px;">
-                           
+                @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company')
+                    @php
+                        $show_more_ad_url = url('property/holiday-homes-for-sale/search?user_id='.$property_data->ad->user->id);
+                        $property_published_on = $property_data->published_on;
+                    @endphp
+                    @include('user-panel.partials.templates.landing_page_company_information')
+                @endif
+                <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                    @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
+                        @if(!$property_data->published_on)
+                            <center>
+                                <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
+                                     alt="Profile image" style="width:100px;">
+
                                 <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
-                      </center>
-                         @endif
-                @if($property_data->phone)
-                    <div class="mb-2">
-                        <span>Telefon: </span>
-                        <span>
-                            <a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">{{$property_data->phone}}</a>
+                            </center>
+                        @endif
+                        @if($property_data->phone)
+                            <div class="mb-2">
+                                <span>Telefon: </span>
+                                <span>
+                                <a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">{{$property_data->phone}}</a>
+                            </span>
+                            </div>
+                        @endif
+                        @if(!$property_data->published_on)
+                            <div class="mb-2">
+                                <a href="{{url('property/holiday-homes-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                            </div>
+                        @endif
+                        @if(!$property_data->ad->is_mine())
+                            <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                        @endif
+                    @endif
+
+                    <h2 class="u-t3">Visning</h2>
+
+                    @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
+                    !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
+                    !empty($property_data->note))
+                        <div class="mb-2">
+                            <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span><br>
+                            <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?>
                         </span>
+                            <span><?php echo (!empty($property_data->clockwise) ?  $property_data->clockwise : ""); ?>
+                        </span>
+                            <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?></span>
+                        </div>
+                    @else
+                        <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
+                    @endif
+
+                    <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
                     </div>
-                @endif
-                {{--<button class="btn btn-info btn-lg mb-2">Se komplett salgsoppgave</button>--}}
-                @if(!$property_data->published_on)
-                    <div class="mb-2">
-                        <a href="{{url('property/holiday-homes-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
-                    </div>
-                @endif
-                @if(!$property_data->ad->is_mine())
-                    <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                </div>
+
+                @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
+                    @if($property_data && $property_data->ad && $property_data->ad->sales_information->count() > 0)
+                        <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->sales_information->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">
+                                    Se komplett salgsoppgave
+                                </font>
+                            </font>
+                        </button>
+                    @endif
+                    @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
+                        <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
+                            <font style="vertical-align: inherit;">
+                                <font style="vertical-align: inherit;">
+                                    PDF
+                                </font>
+                            </font>
+                        </button>
+                    @endif
+                    @if($property_data->offer_url)
+                        <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">Gi bud</font></font></button>
+                    @endif
+
+                    @if($property_data->state_report_link)
+                        <button onclick="window.open('{{$property_data->state_report_link}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">Tilstandsrapport</font></font></button>
+                    @endif
+                    @if($property_data->link_to_terif_documents)
+                        <button onclick="window.open('{{$property_data->link_to_terif_documents}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">Takstdokumenter</font></font></button>
+                    @endif
+                    @if($property_data->task_link)
+                        <button onclick="window.open('{{$property_data->task_link}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">Salgsoppgave</font></font></button>
+                    @endif
                 @endif
 
-            <!-- <div class="mb-2"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Bestill komplett, utskriftsvennlig
-                                salgsoppgave</a></div>
-                        <div class="mb-2"><a href="https://www.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Se komplett salgsoppgave</a></div>
-                        <div class="mb-2"><a href="https://bud.dnbeiendom.no/302190059" target="_blank" rel="noopener external" data-controller="trackCustomerLink">Gi bud</a></div> -->
-                <h2 class="u-t3">Visning</h2>
-                @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
-                !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
-                !empty($property_data->note))
-                <div class="mb-2">
-                    <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span><br>
-                    <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?>
-                    </span>
-                    <span><?php echo (!empty($property_data->clockwise) ?  $property_data->clockwise : ""); ?>
-                    </span>
-                    <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?></span>
-                </div>
-                @else
-                <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
-                @endif
-                <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
-                </div>
-                @if($property_data && $property_data->ad && $property_data->ad->sales_information->count() > 0)
-                    <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->sales_information->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">
-                                Se komplett salgsoppgave
-                            </font>
-                        </font>
-                    </button>
-                @endif
-                @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
-                    <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">
-                                PDF
-                            </font>
-                        </font>
-                    </button>
-                @endif
-                @if($property_data->offer_url)
-                    <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
-                                    style="vertical-align: inherit;">Gi bud</font></font></button>
-                @endif
-                @if($property_data->state_report_link)
-                    <button onclick="window.open('{{$property_data->state_report_link}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
-                                    style="vertical-align: inherit;">Tilstandsrapport</font></font></button>
-                @endif
-                @if($property_data->link_to_terif_documents)
-                    <button onclick="window.open('{{$property_data->link_to_terif_documents}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
-                                    style="vertical-align: inherit;">Takstdokumenter</font></font></button>
-                @endif
-                @if($property_data->task_link)
-                    <button onclick="window.open('{{$property_data->task_link}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
-                                    style="vertical-align: inherit;">Salgsoppgave</font></font></button>
-                @endif
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">

@@ -123,13 +123,6 @@
                             <p style="white-space: pre-line">{{$property_data->description}}</p>
                         </div>
                     @endif
-                    <!-- <div class="col-md-12">Salgsoppgaven beskriver vesentlig og lovpålagt informasjon om
-                                eiendommen
-                            </div> -->
-                    <!-- <div class="col-md-12"><button class="btn btn-info btn-lg mt-2">Se komplett salgsoppgave</button></div>
-                            <div class="col-md-12"><a href="https://www.dnbeiendom.no/Autoprospekt/302190059" class="" target="_blank">Bestill komplett, utskriftsvennlig salgsoppgave</a></div> -->
-                    <!-- <div class="col-md-12"><h2 class="u-t3">Gjestadtoppen 28, 2050 Jessheim</h2></div>
-                            <div class="col-md-12"><img src="assets/images/staticmap.png" alt=""></div>!-->
 
                     <div class="col-md-12"><span class="font-weight-bold">Handel: </span> <span> {{$property_data->ad->id}}</span>
                     </div>
@@ -139,50 +132,43 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="text-center">
-                    {{-- <img src="assets/images/dnb-logo.jpg" class="img-fluid" style="max-width: 150px;" alt=""> --}}
-                </div>
-                @if(!$property_data['published-on'])
-                       <center>
-                        <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
-                        alt="Profile image" style="width:100px;">
-                           
+                @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
+                    <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                        @if(!$property_data['published-on'])
+                            <center>
+                                <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
+                                     alt="Profile image" style="width:100px;">
                                 <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
-                      </center>
-                @endif
-                @if($property_data->phone)
-                    <div class="mb-2">
-                        <span>Mobil: </span>
-                        <span>
+                            </center>
+                        @else
+                            <p class="mt-3">NH-Bruker</p>
+                        @endif
+                        @if($property_data->phone)
+                            <div class="mb-2">
+                                <span>Mobil: </span>
+                                <span>
                             <a href="tel:+4746545247" class="u-select-all" data-controller="trackSendSMS">
                                 {{$property_data->phone}}
                             </a>
                         </span>
+                            </div>
+                        @endif
+                        @if(!$property_data['published-on'])
+                            <div class="mb-2">
+                                <a href="{{url('property/flat-wishes-rented/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                            </div>
+                        @endif
+                        @if(!$property_data->ad->is_mine())
+                            <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                        @endif
                     </div>
+                @else
+                    @php
+                        $show_more_ad_url = url('property/flat-wishes-rented/search?user_id='.$property_data->ad->user->id);
+                        $property_published_on = $property_data['published-on'];
+                    @endphp
+                    @include('user-panel.partials.templates.landing_page_company_information')
                 @endif
-                @if(!$property_data['published-on'])
-                    <div class="mb-2">
-                        <a href="{{url('property/flat-wishes-rented/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
-                    </div>
-                @endif
-                @if(!$property_data->ad->is_mine())
-                    <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
-                @endif
-
-                @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
-                    <div class="mb-2">
-                        <span>Visning: </span>
-                        <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} <br>{{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}}</span>
-                    </div>
-                @endif
-                       
-                <div class="mt-3 mb-3">
-                    <h5>
-                        <font style="vertical-align: inherit;">
-                            <font style="vertical-align: inherit;">{{$property_data->street_address}}</font>
-                        </font><br>
-                    </h5>
-                </div>
                 <div style="width: 306px; height: 153px;">
                     {!! Mapper::render() !!}
                 </div>

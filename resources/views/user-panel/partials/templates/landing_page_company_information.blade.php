@@ -31,14 +31,15 @@
         <div class="expandable-area">
             <div>
                 <div class="text-center">
-
-                    <div>
-                        <img class="user-profile-picture" src="https://images.finncdn.no/dynamic/default/2020/4/vertical-2/07/3/174/995/393_1949884964.jpg" alt="">
-                    </div>
+                    @if(!$property_published_on)
+                        <div>
+                            <img class="user-profile-picture" src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="">
+                        </div>
+                    @endif
 
                     <h5 class="mt-2">
-                        @if(!$property_data->published_on)
-                            Eirik Finne
+                        @if(!$property_published_on)
+                            {{$property_data->user && $property_data->user->username ? $property_data->user->username : 'NH-Bruker'}}
                         @else
                             NH-Bruker
                         @endif
@@ -48,7 +49,7 @@
 
                     <ul class="list-unstyled">
 
-                        @if(Auth::user()->mobile)
+                        @if(Auth::user() && Auth::user()->mobile)
                             <li class="py-2"><a  href="tel:{{Auth::user()->mobile}}">Mobil  {{Auth::user()->mobile}}</a></li>
                         @endif
 
@@ -56,7 +57,7 @@
                             <li class="py-2"><a  href="tel:{{$property_data->phone}}">Telefon  {{$property_data->phone}}</a></li>
                         @endif
 
-                        @if(!$property_data->published_on && $show_more_ad_url)
+                        @if(!$property_published_on && $show_more_ad_url)
                             <li class="py-2"><a  href="{{$show_more_ad_url}}">Flere annonser fra annonsør</a></li>
                         @endif
 
@@ -74,6 +75,30 @@
 
                         @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
                             <li class="py-2"><a  href="{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}" target="_blank">PDF</a></li>
+                        @endif
+
+                        @if($property_data->state_report_link)
+                            <li class="py-2"><a  href="{{$property_data->state_report_link}}" target="_blank">Tilstandsrapport</a></li>
+                        @endif
+
+                        @if($property_data->link_to_terif_documents)
+                            <li class="py-2"><a  href="{{$property_data->link_to_terif_documents}}" target="_blank">Takstdokumenter</a></li>
+                        @endif
+
+                        @if($property_data->task_link)
+                            <li class="py-2"><a  href="{{$property_data->task_link}}" target="_blank">Salgsoppgave</a></li>
+                        @endif
+
+                        @if($property_data->link && $property_data->link_for_information)
+                            <li class="py-2"><a href="{{$property_data->link_for_information}}" target="_blank">{{$property_data->link}}</a></li>
+                        @endif
+
+                        @if($property_data->line_text && $property_data->link_for_information)
+                            <li class="py-2"><a href="{{$property_data->link_for_information}}" target="_blank">{{$property_data->line_text}}</a></li>
+                        @endif
+
+                        @if($property_data->link && $property_data->text_for_information)
+                            <li class="py-2"><a href="{{$property_data->text_for_information}}" target="_blank">{{$property_data->link}}</a></li>
                         @endif
 
                     </ul>
