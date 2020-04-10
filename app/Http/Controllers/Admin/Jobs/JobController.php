@@ -75,7 +75,7 @@ class JobController extends Controller
             $query->where('ads.status', 'published')
                 ->orwhereDate('ads.sold_at','>',$date);
         })->where('visibility',1)
-            ->orderByDesc('updated_at')
+            ->orderBy('id', 'desc')
             ->paginate(getenv('PAGINATION'));;
         $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')
             ->where(function ($query) use ($date){
@@ -519,7 +519,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->limit(getenv('PAGINATION'))->get();
+            })->orderBy('ads.id','DESC')->limit(getenv('PAGINATION'))->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
@@ -571,7 +571,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            });
+            })->orderBy('ads.id','DESC');
 
 
         $query->where($arr);
