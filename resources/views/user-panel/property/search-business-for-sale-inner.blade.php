@@ -104,7 +104,7 @@
                                     <span>{{$business_for_sale->zip_city ? Str::ucfirst(Str::lower($business_for_sale->zip_city)) : ''}}</span>
                                 </div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                <div class="title color-grey">{{$business_for_sale->headline}}</div>
+                                <div class="title color-grey">{{(Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($business_for_sale->headline,35) : $business_for_sale->headline}}</div>
                                 @if($business_for_sale->price)
                                     <div class="mt-2">
                                         <div class="area font-weight-bold float-left color-grey">&nbsp;</div>

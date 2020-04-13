@@ -100,7 +100,7 @@
                                     @endif
                                     <span>{{$property_commercial_property_for_sale->zip_city ? Str::ucfirst(Str::lower($property_commercial_property_for_sale->zip_city)) : ''}}</span>
                                 </div>
-                                <div class="title color-grey">{{$property_commercial_property_for_sale->headline}}</div>
+                                <div class="title color-grey">{{(Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($property_commercial_property_for_sale->headline,35) : $property_commercial_property_for_sale->headline}}</div>
                                 @if($property_commercial_property_for_sale->primary_room || $property_commercial_property_for_sale-> rental_income)
                                     <div class="mt-2">
                                         @if($property_commercial_property_for_sale->primary_room)

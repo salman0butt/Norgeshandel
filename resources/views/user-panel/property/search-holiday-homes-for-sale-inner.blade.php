@@ -106,7 +106,7 @@
                                     @endif
                                     <span>{{$property_holiday_home_for_sale->zip_city ? Str::ucfirst(Str::lower($property_holiday_home_for_sale->zip_city)) : ''}}</span>
                                 </div>
-                                <div class="title color-grey">{{ $property_holiday_home_for_sale -> ad_headline}}</div>
+                                <div class="title color-grey">{{ (Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($property_holiday_home_for_sale->ad_headline,35) : $property_holiday_home_for_sale->ad_headline}}</div>
                                 <div class="mt-2">
                                     <div
                                         class="area font-weight-bold float-left color-grey">{{ $property_holiday_home_for_sale ->  primary_room }}

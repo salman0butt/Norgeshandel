@@ -108,7 +108,7 @@
                                     @endif
                                     <span>{{$property_commercial_property_for_rent->zip_city ? Str::ucfirst(Str::lower($property_commercial_property_for_rent->zip_city)) : ''}}</span>
                                 </div>
-                                <div class="title color-grey mt-1">{{$property_commercial_property_for_rent->heading}}</div>
+                                <div class="title color-grey mt-1">{{(Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($property_commercial_property_for_rent->heading,35) : $property_commercial_property_for_rent->heading}}</div>
                                 <div class="mt-2">
                                     <div
                                         class="area font-weight-bold float-left color-grey">{{$property_commercial_property_for_rent->gross_area_from}}

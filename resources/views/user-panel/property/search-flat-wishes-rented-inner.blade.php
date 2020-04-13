@@ -95,18 +95,18 @@
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
 
-                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
-                                <div class="location u-t5 text-muted mt-2"></div>
-                                <div class="title color-grey">{{$property_for_flat_wishes_rented->headline}}</div>
-                                <div class="mt-2">
-                                    @if($property_for_flat_wishes_rented->description)
-                                        <div class="area float-left color-grey" title="{{$property_for_flat_wishes_rented->description}}">{{Str::limit($property_for_flat_wishes_rented->description,70)}}</div>
-                                    @endif
-                                    @if($property_for_flat_wishes_rented->max_rent_per_month)
-                                        <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_flat_wishes_rented->max_rent_per_month,0,""," ")}} kr</div>
-                                    @endif
-                                </div>
-                                <br>
+                                {{-- Request()->get('view') <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
+                                <div class="title color-grey">{{(Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($property_for_flat_wishes_rented->headline,35) : $property_for_flat_wishes_rented->headline}}</div>
+                                @if($property_for_flat_wishes_rented->description || $property_for_flat_wishes_rented->max_rent_per_month)
+                                    <div class="mt-2">
+                                        @if($property_for_flat_wishes_rented->description)
+                                            <div class="area float-left color-grey" title="{{$property_for_flat_wishes_rented->description}}">{{Str::limit($property_for_flat_wishes_rented->description,70)}}</div>
+                                        @endif
+                                        @if($property_for_flat_wishes_rented->max_rent_per_month)
+                                            <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_flat_wishes_rented->max_rent_per_month,0,""," ")}} kr</div>
+                                        @endif
+                                    </div>
+                                @endif
                                 <div
                                     class="detail u-t5 mt-3 float-left text-muted">{{rtrim($property_for_flat_wishes_rented->property_type,",")}}</div>
                                 {{--<div class="dealer-logo float-right mt-3"><img src="assets/images/dealer-logo.png" alt="" class="img-fluid"></div>--}}

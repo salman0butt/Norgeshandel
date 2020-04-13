@@ -103,7 +103,7 @@
                                 </div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 {{--<div class="u-t5 text-muted mt-2">Christian Krohgs gate 16, 0186 Oslo</div>--}}
-                                <div class="title color-grey">{{$commercial_plot->headline}}</div>
+                                <div class="title color-grey">{{(Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($commercial_plot->headline,35) : $commercial_plot->headline}}</div>
                                 <div class="mt-2">
                                     @if($commercial_plot->plot_size)
                                         <div class="area font-weight-bold float-left color-grey">{{$commercial_plot->plot_size}}

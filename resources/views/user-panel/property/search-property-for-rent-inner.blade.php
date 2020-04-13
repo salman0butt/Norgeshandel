@@ -107,7 +107,7 @@
                                     @endif
                                     <span>{{$property_for_rent->zip_city ? Str::ucfirst(Str::lower($property_for_rent->zip_city)) : ''}}</span>
                                 </div>
-                                <div class="title color-grey">{{$property_for_rent->heading}}</div>
+                                <div class="title color-grey">{{(Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($property_for_rent->heading,35) : $property_for_rent->heading}}</div>
                                 <div class="mt-2">
                                     <div class="area font-weight-bold float-left color-grey">{{$property_for_rent->primary_rom}} m²</div>
                                     <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_rent->monthly_rent,0,""," ")}} kr</div>
