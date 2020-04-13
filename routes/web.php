@@ -197,6 +197,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
     Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
     Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
+    Route::patch('jobs/update/{id}', 'Admin\Jobs\JobController@update')->name('update');
     Route::patch('jobs/store', 'Admin\Jobs\JobController@store');
     Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
 

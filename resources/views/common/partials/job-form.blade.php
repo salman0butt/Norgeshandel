@@ -623,11 +623,13 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                     var link = '{{url('jobs/update_dummy')}}';
                 @endif
             } else {
-                @if(Request::is('jobs/*/edit') || Request::is('complete/job/*'))
+                @if(Request::is('complete/job/*'))
                     var link = '{{url('jobs/store')}}';
+                @elseif (Request::is('jobs/*/edit'))
+                    var link = '{{url('jobs/update/'.$obj_job->id)}}';
                 @endif
             }
-
+             
 
           $("input ~ span,select ~ span").each(function (index) {
                 $(".error-span").html('');
