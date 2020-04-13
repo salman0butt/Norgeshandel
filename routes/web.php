@@ -314,6 +314,7 @@ Route::group(['middleware' => 'authverified'], function () {
             });
             Route::resource('company', 'CompanyController');
             Route::get('cv/extend', 'Cv\CvController@extend');
+          
             Route::resource('job-preferences', 'JobPreferenceController');
             Route::resource('following', 'FollowingController');
         });
@@ -363,6 +364,9 @@ Route::group(['middleware' => 'authverified'], function () {
 
         Route::get('/setting', function () {
             return view('user-panel.my-business.settings');
+        });
+          Route::get('cv-list', function() {
+            return view('user-panel.my-business.cv.cv_list');
         });
         Route::post('store-notifications-setting','Admin\Users\AdminUserController@store_notifications_setting')->name('store_notifications_setting');
 
