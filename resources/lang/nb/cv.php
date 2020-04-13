@@ -106,7 +106,7 @@ return [
     'din-cv' => 'Din CV er',
     'published' => 'Publisert',
     'inactive' => 'Inaktiv',
-    'pub-p' => 'Som publisert vil din CV kunne bli søkt opp av FINN.nos kunder. Din CV kan først publiseres når du har registrert minst en gyldig utdanning eller erfaring.',
+    'pub-p' => 'Som publisert vil din CV kunne bli søkt opp av NorgesHandel kunder. Din CV kan først publiseres når du har registrert minst en gyldig utdanning eller erfaring.',
     'view-persnol' => 'Vis personalia',
     'view-option1' => 'Personalia synlig',
     'view-option2' => 'Anonym',

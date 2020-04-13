@@ -1092,9 +1092,9 @@ $cvlanguages = $cv->languages;
                                         class="text-dark ">{{date('d.m.Y', strtotime($cv->user->created_at))}}</p></div>
                             </div>
                             <div class="row row-border ">
-                                <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.register-view') }}</p></div>
+                                <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.last-update') }}</p></div>
                                 <div class="col-md-8 pt-2"><p
-                                        class="text-dark ">{{date('d.m.Y', strtotime($cv->created_at))}}</p></div>
+                                        class="text-dark ">{{date('d.m.Y', strtotime($cv->updated_at))}}</p></div>
                             </div>
                             <div class="row row-border ">
                                 <div class="col-md-4 pt-2"><p class="text-dark ">{{ __('cv.cv-id') }}</p></div>
