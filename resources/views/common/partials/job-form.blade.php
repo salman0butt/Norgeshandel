@@ -16,7 +16,7 @@
             if($job && $job->ad){
                 $job_status = $job->ad->status;
             }
-        }elseif(Request::is('new/job/*')){
+        }else if(Request::is('complete/job/*')){
             $job_status = 'saved';
         }
     @endphp
@@ -46,12 +46,13 @@
     }
     ?>
 
-<form action="@if(Request::is('jobs/*/edit')){{route('jobs.update', $job->id)}}
-    @else {{route('jobs.store')}} @endif" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company") class="dropzone addMorePics p-0" @endif
-    data-action="@if(Request::is('jobs/*/edit')){{route('jobs.update', $job->id)}}
+<form action="" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company") class="dropzone addMorePics p-0" @endif
+    data-action="@if(Request::is('jobs/*/edit') || Request::is('complete/job/*')){{route('jobs.update', $job->id)}}
     @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
     {{ csrf_field() }}
-    @if(Request::is('jobs/*/edit')) {{method_field('PUT')}} @endif
+ @if(Request::is('jobs/*/edit') || Request::is('complete/job/*'))
+   @method('PATCH')
+  @endif
 
     <input type="hidden" name="upload_dropzone_images_type" value="job_temp_images">
     <input type="hidden" name="media_position" class="media_position">
@@ -65,14 +66,14 @@
             <div class="col-md-12">
                 <h4 class="text-muted pl-3 pr-3">{{__('About the position')}}</h4>
                 <div class="pl-3">
-        @if ($message = Session::get('success'))
+        {{-- @if ($message = Session::get('success'))
         <script>
         $(function(){
             notify("success","Jobben er lagt til");
         });
         
         </script>
-        @endif
+        @endif --}}
                     {{-- <div class="notice"></div> --}}
                     <!--                            full input-->
                     <div class="form-group">
@@ -508,8 +509,10 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
 
                     <hr>
 
-                    <input type="submit" class="dme-btn-outlined-blue mb-3 col-12" id="publiserannonsen"
-                        value="@if(Request::is('jobs/*/edit'))  Oppdater annonsen @else Publiser annonsen! @endif">
+                    {{-- <input type="submit" class="dme-btn-outlined-blue mb-3 col-12" id="publiserannonsen"
+                        value="@if(Request::is('jobs/*/edit'))  Oppdater annonsen @else Publiser annonsen! @endif"> --}}
+            <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiserannonsen"
+                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">@if(Request::is('jobs/*/edit'))  Oppdater annonsen @else Publiser annonsen! @endif</span></button>
                     {{--                        <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" class="btn btn-primary mb-3 col-12 ladda-button" id="publiserannonsen" data-style="expand-left"><span class="ladda-label">Publiser annonsen!</span></button>--}}
 
                     <p class="u-t5 text-center">By moving forward, the <a href="#">rules for advertising</a>are
@@ -541,7 +544,13 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
 
         $(document).ready(function (e) {
 
-            $('#job-form input, #job-form select').blur(function (e) {
+               $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+           /* $('#job-form input, #job-form select').blur(function (e) {
                 // $('#description').text(tinyMCE.get("description").getContent());
                 // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
 
@@ -557,7 +566,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
 
-                var link = $('#ad_id').val().length > 0 ? '{{url('jobs/update_dummy')}}' : '{{url('jobs/store_dummy')}}';
+                var link = '{{url('jobs/update_dummy')}}';
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -568,8 +577,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                 if($('.input_type_file .dz-remove').attr('id')){
                     fd.delete('company_logo');
                 }
-                var ad_status = $('.ad_status').val();
-                if(ad_status == 'saved'){
+
                     $.ajax({
                         url: link,
                         type: "POST",
@@ -578,7 +586,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                         processData: false,
                         contentType: false,
                         success: function (response) {
-
+                                console.log('gfhf');
                             // var resp = JSON.parse(response);
                             if(response.company_logo_id){
                                 $('.input_type_file .dz-remove').attr('id',response.company_logo_id);
@@ -594,9 +602,135 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                         }
 
                         //document.getElementById("contact_us").reset();
-                    })
+                    });
+            
+            });*/
+
+        //new function starts here
+        function record_store_ajax_request(event, this_obj) {
+           if(event == 'click'){
+               if(! $('#job-form').valid()) return false;
+           }
+            if (event == 'change') {
+                var zip_code = $('.zip_code').val();
+                var old_zip = $('#old_zip').val();
+                if (zip_code) {
+                    if (old_zip != zip_code) {
+                        find_zipcode_city(zip_code);
+                    }
                 }
+                @if(Request::is('jobs/*/edit') || Request::is('complete/job/*'))
+                    var link = '{{url('jobs/update_dummy')}}';
+                @endif
+            } else {
+                @if(Request::is('complete/job/*'))
+                    var link = '{{url('jobs/store')}}';
+                @elseif (Request::is('jobs/*/edit'))
+                    var link = '{{url('jobs/update/'.$obj_job->id)}}';
+                @endif
+            }
+             
+
+          $("input ~ span,select ~ span").each(function (index) {
+                $(".error-span").html('');
+                $("input, select").removeClass("error-input");
             });
+
+            var myform = document.getElementById("job-form");
+            var fd = new FormData(myform);
+            if($('.input_type_file .dz-remove').attr('id')){
+                fd.delete('company_logo');
+            }
+            console.log(link);
+               var l = Ladda.create(this_obj);
+            l.start();
+            $.ajax({
+                url: link,
+                type: "POST",
+                data: fd,//$('#job-form').serialize(),
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                     console.log(response);
+                    // var resp = JSON.parse(response);
+                    if(response.company_logo_id){
+                        $('.input_type_file .dz-remove').attr('id',response.company_logo_id);
+                    }
+                    if (event == 'change') {
+                      notify("info","Jobben ble lagret!");
+                   }else if(event == 'click'){
+                      /*  $('.ad_status').val(data.status);
+                        var message = 'Job din er publisert';
+                        if(data.message){
+                            message = data.message;
+                        }*/
+                        notify("success",'Job din er publisert');
+                   }
+
+                    if ($('#ad_id').val().length < 1) {
+                        $('#job_id').val(response.job_id);
+                        $('#ad_id').val(response.ad_id);
+                    }
+                },
+                error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                    var errors = jqXhr.responseJSON;
+                    //console.log(errors.errors);
+                      notify("error","noe gikk galt!");
+                      /* if (isEmpty(errors.errors)) {
+                      notify("error","noe gikk galt!");
+                        return false;
+                    }
+                    if (event == 'change') {
+                     notify("error","noe gikk galt!");
+                    }else {
+                        // var html="<ul>";
+                     $.each(errors.errors, function (index, value) {
+                            //console.log(value);
+                            $("." + index).html(value);
+                            $("input[name='" + index + "'],select[name='" + index + "']")
+                                .addClass("error-input");
+                        });
+
+                    }*/
+                },
+            }).always(function () {
+                l.stop();
+            });
+            return false;
+        }
+
+        $("input:not(input[type=date]),textarea").on('change', function (e) {
+            e.preventDefault();
+            if(! $(this).valid()) return false;
+
+            var ad_status = $('.ad_status').val();
+            if(ad_status == 'saved'){
+                record_store_ajax_request('change', (this));
+            }else{
+                var zip_code = $('.zip_code').val();
+                var old_zip = $('#old_zip').val();
+
+                if (zip_code) {
+                    if (old_zip != zip_code) {
+                        find_zipcode_city(zip_code);
+                    }
+                }
+            }
+
+            var postal = $('.zip_code').val();
+            $('#old_zip').attr('value',postal);
+        });
+
+        //click button update
+        $("#publiserannonsen").click(function (e) {
+            e.preventDefault();
+            record_store_ajax_request('click', (this));
+        });
+        
+
+
+         //new function ends here
         });
 
         $('#company_logo').change(function (e) {

@@ -291,7 +291,7 @@
                                         <span class="m-b-15 d-block">
                                             <span class="font-weight-bold">
                                                 @if($ad->ad_type == 'job')
-                                                    {{$ad->job->name}}
+                                                   {{$ad->job && $ad->job->name ? $ad->job->name : ''}}
                                                 @else
                                                     {{$ad->getTitle() ? Str::limit($ad->getTitle(),30) : ''}}
                                                 @endif

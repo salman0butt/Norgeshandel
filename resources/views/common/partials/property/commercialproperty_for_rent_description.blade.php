@@ -216,6 +216,9 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+
+                      <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company')
                         @php
                             $show_more_ad_url = url('property/commercial-property-for-rent/search?user_id='.$property_data->ad->user->id);
@@ -240,6 +243,11 @@
                                     <span><a href="tel:{{$property_data->phone}}" class="u-select-all" data-controller="trackSendSMS">  {{$property_data->phone}}</a></span>
                                 </div>
                             @endif
+
+                    @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
+                        <div class="mb-2">
+                            <span>Visning: </span>
+                            <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}} <br> {{$property_data->note ? $property_data->note : ''}}</span>
 
                             @if(!$property_data['published-on'])
                                 <div class="mb-2">
@@ -266,6 +274,7 @@
                     {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                 </div>
             </div>
+        </div>
         </div>
 
         <div class="right-ad pull-right">

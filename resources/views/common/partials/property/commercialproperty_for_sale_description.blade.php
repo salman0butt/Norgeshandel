@@ -321,7 +321,7 @@
                             <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
                             alt="Profile image" style="width:100px;">
 
-                                    <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
+                             <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
                           </center>
                        @else
                            <p class="mt-3">NH-Bruker</p>
@@ -338,7 +338,6 @@
                                <a href="{{url('property/commercial-property-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
                            </div>
                        @endif
-
 
                        @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
                            <div class="mb-2">
