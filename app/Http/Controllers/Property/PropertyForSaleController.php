@@ -267,6 +267,7 @@ class PropertyForSaleController extends Controller
     //update dummy property for sale to published
     public function UpdateDummySaleAdd(AddPropertyForSale $request, $id)
     {
+
         $msg = $this->updateSaleAdd($request,$id,'controller');
         if($msg['flag'] == 'success'){
             //  DB::connection()->enableQueryLog();
