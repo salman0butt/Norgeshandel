@@ -114,6 +114,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+              <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company')
                         @php
                             $show_more_ad_url = url('property/business-for-sale/search?user_id='.$property_data->ad->user->id);
@@ -154,6 +156,7 @@
                             @if($property_data->link && $property_data->link_for_information)
                                 <div class="mb-2"><a href="{{$property_data->link_for_information}}" target="_blank">{{$property_data->link}}</a></div>
                             @endif
+
                         </div>
                         @if($property_data && $property_data->ad && $property_data->ad->pdf->count() > 0)
                             <button onclick="window.open('{{\App\Helpers\common::getMediaPath($property_data->ad->pdf->first())}}', '_blank');" class="dme-btn-maroon col-12 mb-2">
@@ -168,10 +171,12 @@
                             <button onclick="window.open('{{$property_data->offer_url}}', '_blank');" class="dme-btn-maroon col-12 mb-2"><font style="vertical-align: inherit;"><font
                                             style="vertical-align: inherit;">Gi bud</font></font></button>
                         @endif
+
                     @endif
 
                 </div>
             </div>
+        </div>
         </div>
 
         <div class="right-ad pull-right">

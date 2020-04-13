@@ -197,6 +197,8 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('jobs/search/filter_my_ads/{status}/{ad_type}', 'AdController@filter_my_ads');
     Route::post('jobs/store_dummy', 'Admin\Jobs\JobController@store_dummy')->name('store_dummy');
     Route::post('jobs/update_dummy', 'Admin\Jobs\JobController@update_dummy')->name('update_dummy');
+    Route::patch('jobs/update/{id}', 'Admin\Jobs\JobController@update')->name('update');
+    Route::patch('jobs/store', 'Admin\Jobs\JobController@store');
     Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
 
     Route::get('shared-lists/{link_id}', function ($link_id) {
@@ -323,17 +325,17 @@ Route::group(['middleware' => 'authverified'], function () {
             });
 
 //        new job routes
-            Route::group(['prefix' => 'job'], function () {
-                Route::get('full_time', function () {
-                    return view('user-panel.jobs.new_full_time');
-                });
-                Route::get('part_time', function () {
-                    return view('user-panel.jobs.new_part_time');
-                });
-                Route::get('management', function () {
-                    return view('user-panel.jobs.new_management');
-                });
-            });
+            // Route::group(['prefix' => 'job'], function () {
+            //     Route::get('full_time', function () {
+            //         return view('user-panel.jobs.new_full_time');
+            //     });
+            //     Route::get('part_time', function () {
+            //         return view('user-panel.jobs.new_part_time');
+            //     });
+            //     Route::get('management', function () {
+            //         return view('user-panel.jobs.new_management');
+            //     });
+            // });
 
             Route::group(['prefix' => 'property'], function () {
                 Route::get('property-for-sale', 'Property\PropertyForSaleController@new_property_for_sale');
@@ -345,9 +347,15 @@ Route::group(['middleware' => 'authverified'], function () {
                  Route::get('business-for-sale', 'Property\BusinessForSaleController@new_business_for_sale');
                  Route::get('commercial-plots', 'Property\CommercialPlotController@new_commercial_plots');
             });
+        Route::get('job/full_time', 'Admin\Jobs\JobController@new_job');
+        Route::get('job/management', 'Admin\Jobs\JobController@new_job');
+        Route::get('job/part_time', 'Admin\Jobs\JobController@new_job');
         });
         Route::group(['prefix' => 'complete'], function () {
             Route::get('ad/{id}', 'PropertyController@complete_property');
+        });
+        Route::group(['prefix' => 'complete'], function () {
+            Route::get('job/{id}', 'Admin\Jobs\JobController@complete_job');
         });
 
 

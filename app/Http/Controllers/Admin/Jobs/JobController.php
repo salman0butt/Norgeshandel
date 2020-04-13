@@ -111,6 +111,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+     
         $ad_id = '';
         if ($request->ad_id && !empty($ad->id)) {
             $ad_id = $request->ad_id;
@@ -167,13 +168,16 @@ class JobController extends Controller
 ////        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
 //
 //
+           
 
         $ad->job->update($arr);
         $ad->update(['status' => 'published']);
+     
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
             common::update_media($file, $ad->id, 'App\Models\Ad', 'logo');
         }
+
 
 //            notification bellow
         common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher, 'jobs/search');
@@ -181,12 +185,12 @@ class JobController extends Controller
 
 
         $terms = Term::find([$request->industry, $request->job_function]);
-
         $ad->job->terms()->detach();
         $ad->job->terms()->attach($terms);
+        return json_encode([
+            'success'=>'true'
+        ]);
 
-        $request->session()->flash('success', ' ');
-        return back();
     }
 
 
@@ -227,15 +231,77 @@ class JobController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store_dummy(Request $request)
-    {
+    // public function store_dummy(Request $request)
+    // {
+    //     $ad = new Ad(['ad_type' => 'job', 'status' => 'saved', 'user_id' => Auth::user()->id]);
+    //     $ad->save();
+    //     $job = new Job(['job_type' => $request->job_type, 'user_id' => Auth::user()->id]);
+    //     $ad->job()->save($job);
+    //     $ids = ['ad_id' => $ad->id, 'job_id' => $ad->job->id];
+    //     return response(json_encode($ids));
+    // }
+
+      public function new_job(Request $request)
+    {   
+        $type = '';
+         if($request->is('*/job/full_time')){
+            $type = 'full_time';
+         }else if($request->is('*/job/management')){
+            $type = 'management';
+         }else if($request->is('*/job/part_time')){
+            $type = 'part_time';
+         }
+        if($request->is('*/job/full_time') || $request->is('*/job/management') || $request->is('*/job/part_time')){
         $ad = new Ad(['ad_type' => 'job', 'status' => 'saved', 'user_id' => Auth::user()->id]);
         $ad->save();
-        $job = new Job(['job_type' => $request->job_type, 'user_id' => Auth::user()->id]);
-        $ad->job()->save($job);
-        $ids = ['ad_id' => $ad->id, 'job_id' => $ad->job->id];
-        return response(json_encode($ids));
+        if ($ad) {
+           $job = new Job(['job_type' => $request->job_type, 'user_id' => Auth::user()->id]);
+            $ad->job()->save($job);
+            if ($job) {
+                return redirect(url('complete/job/' . $ad->id))->with('type',$type);
+            } else {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
+    } else {
+            abort(404);
+        }
     }
+
+      public function complete_job($id)
+    {
+        $ad_type = session('type');
+ 
+        $ad = Ad::find($id);
+        if ($ad) {
+            if ($ad->ad_type == 'job' && $ad_type == 'full_time') {
+                common::delete_media(Auth::user()->id, 'temp_job_image', 'gallery');
+                $job = $ad->job;
+                if ($job) {
+                    return view('user-panel.jobs.new_full_time', compact('job'));
+                }
+            } else if ($ad->ad_type == 'job' && $ad_type == 'part_time') {
+                common::delete_media(Auth::user()->id, 'temp_job_image', 'gallery');
+                $job = $ad->job;
+                return view('user-panel.jobs.new_part_time', compact('job'));
+            } else if ($ad->ad_type == 'job' && $ad_type == 'management') {
+                common::delete_media(Auth::user()->id, 'temp_job_image', 'gallery');
+                $job = $ad->job;
+                return view('user-panel.jobs.new_management', compact('job'));
+            }
+            
+             else {
+                abort(404);
+            }
+        } else {
+            abort(404);
+        }
+    }
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -246,6 +312,7 @@ class JobController extends Controller
      */
     public function update_dummy(Request $request)
     {
+        
         foreach ($request->all() as $key=>$value){
             if(preg_match('/image_title/',$key)){
                 $explode_values = explode('_',$key);
@@ -312,6 +379,7 @@ class JobController extends Controller
             'app_twitter' => $request->app_twitter,
             'user_id' => Auth::user()->id,
         );
+        
         $job->update($arr);
         $company_logo_id = '';
         if ($request->file('company_logo')) {

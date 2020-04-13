@@ -132,6 +132,9 @@
                 </div>
             </div>
             <div class="col-md-4">
+
+                    <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+
                 @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
                     <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                         @if(!$property_data['published-on'])
@@ -169,11 +172,37 @@
                     @endphp
                     @include('user-panel.partials.templates.landing_page_company_information')
                 @endif
+
+                @if(!$property_data['published-on'])
+                    <div class="mb-2">
+                        <a href="{{url('property/flat-wishes-rented/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
+                    </div>
+                @endif
+                @if(!$property_data->ad->is_mine())
+                    <div class="mb-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></div>
+                @endif
+
+                @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
+                    <div class="mb-2">
+                        <span>Visning: </span>
+                        <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}} <br>{{$property_data->note ? $property_data->note : ''}}</span>
+                    </div>
+                @endif
+                       
+                <div class="mt-3 mb-3">
+                    <h5>
+                        <font style="vertical-align: inherit;">
+                            <font style="vertical-align: inherit;">{{$property_data->street_address}}</font>
+                        </font><br>
+                    </h5>
+                </div>
+
                 <div style="width: 306px; height: 153px;">
                     {!! Mapper::render() !!}
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="right-ad pull-right">
