@@ -188,7 +188,8 @@ class JobController extends Controller
         $ad->job->terms()->detach();
         $ad->job->terms()->attach($terms);
         return json_encode([
-            'success'=>'true'
+            'success'=>'true',
+            'status' => $ad->status
         ]);
 
     }
@@ -310,9 +311,8 @@ class JobController extends Controller
      * @param \App\Admin\Jobs\Job $job ->id
      * @return \Illuminate\Http\Response
      */
-    public function update_dummy(Request $request)
+    public function update_dummy(Request $request,$call_by = '')
     {
-        
         foreach ($request->all() as $key=>$value){
             if(preg_match('/image_title/',$key)){
                 $explode_values = explode('_',$key);
@@ -387,13 +387,12 @@ class JobController extends Controller
             $company_logo = common::update_media($file, $job->ad->id, 'App\Models\Ad', 'logo');
             $company_logo_id = $company_logo['file_names'][0];
         }
-
         $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id,'company_logo_id'=>$company_logo_id];
-        if ($request->ajax()) {
-        echo json_encode($ids);
-         exit();
+        if ($call_by) {
+           return $ids;
         } else {
-            return $ids;
+            echo json_encode($ids);
+            exit();
         }
 
     }
@@ -444,17 +443,14 @@ class JobController extends Controller
         if ($request->file('files')) {
             return $this->upload_images($request,$request->ad_id);
         }
-
-        if($request->ajax()){
-            $ids = $this->update_dummy($request);
-            echo json_encode($ids);
-            exit();
-        }
-        DB::beginTransaction();
+//        DB::beginTransaction();
         try{
-            $this->update_dummy($request);
-            $job->ad->update(['status'=>'published']);
-
+            $call_by = '';
+            if($request->click_button && $request->click_button == 'yes'){
+                $call_by  = 'controller';
+            }
+            $ids = $this->update_dummy($request,$call_by);
+            $response = $job->ad->update(['status'=>'published']);
             $media = common::updated_dropzone_images_type($request->all(),'job_temp_images',$job->ad->id);
             if($request->media_position){
                 $media_position = common::update_media_position($request->media_position);
@@ -464,18 +460,24 @@ class JobController extends Controller
             }
             $message = 'Annonsen din er oppdatert.';
 
-            DB::commit();
+//            DB::commit();
 
 //            notification bellow
             common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher, 'jobs/search');
+
+            $msg['message'] = $message;
+//                $data['success'] = $response;
+            $msg['status'] = $job->ad->status;
+            $msg['company_logo_id']  = $ids['company_logo_id'];
+            echo json_encode($msg);
 //            end notification
 
-            Session::flash('success', 'Jobben er lagret');
-            return back();
+//            Session::flash('success', 'Jobben er lagret');
+//            return back();
         }catch (\Exception $e){
-            DB::rollback();
-            Session::flash('danger', 'Noe gikk galt.');
-            return back();
+//            DB::rollback();
+//            Session::flash('danger', 'Noe gikk galt.');
+//            return back();
         }
 
     }

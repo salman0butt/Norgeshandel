@@ -46,7 +46,7 @@
     }
     ?>
 
-<form action="" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company") class="dropzone addMorePics p-0" @endif
+<form action="#" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company") class="dropzone addMorePics p-0" @endif
     data-action="@if(Request::is('jobs/*/edit') || Request::is('complete/job/*')){{route('jobs.update', $job->id)}}
     @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
     {{ csrf_field() }}
@@ -508,11 +508,12 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                     </div>
 
                     <hr>
+            <input type="hidden" name="click_button" class="click_button" value="no">
 
                     {{-- <input type="submit" class="dme-btn-outlined-blue mb-3 col-12" id="publiserannonsen"
                         value="@if(Request::is('jobs/*/edit'))  Oppdater annonsen @else Publiser annonsen! @endif"> --}}
             <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" id="publiserannonsen"
-                class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label">@if(Request::is('jobs/*/edit'))  Oppdater annonsen @else Publiser annonsen! @endif</span></button>
+                class="dme-btn-outlined-blue mb-3 col-12 ladda-button" value="this is button" name="submit-button"><span class="ladda-label">@if(Request::is('jobs/*/edit'))  Oppdater annonsen @else Publiser annonsen! @endif</span></button>
                     {{--                        <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" class="btn btn-primary mb-3 col-12 ladda-button" id="publiserannonsen" data-style="expand-left"><span class="ladda-label">Publiser annonsen!</span></button>--}}
 
                     <p class="u-t5 text-center">By moving forward, the <a href="#">rules for advertising</a>are
@@ -652,7 +653,6 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                     console.log(response);
                     // var resp = JSON.parse(response);
                     if(response.company_logo_id){
                         $('.input_type_file .dz-remove').attr('id',response.company_logo_id);
@@ -660,12 +660,15 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                     if (event == 'change') {
                       notify("info","Jobben ble lagret!");
                    }else if(event == 'click'){
-                      /*  $('.ad_status').val(data.status);
+                        $('.deleted_media').val('');
+                        $('.media_position').val('');
+                        $('.click_button').val('no');
+                        $('.ad_status').val(response.status);
                         var message = 'Job din er publisert';
-                        if(data.message){
-                            message = data.message;
-                        }*/
-                        notify("success",'Job din er publisert');
+                        if(response.message){
+                            message = response.message;
+                        }
+                        notify("success",message);
                    }
 
                     if ($('#ad_id').val().length < 1) {
@@ -725,6 +728,7 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
         //click button update
         $("#publiserannonsen").click(function (e) {
             e.preventDefault();
+            $('.click_button').val('yes');
             record_store_ajax_request('click', (this));
         });
         

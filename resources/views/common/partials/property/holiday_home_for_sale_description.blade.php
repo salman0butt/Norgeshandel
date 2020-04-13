@@ -429,15 +429,34 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
-
                 @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company')
                     @php
                         $show_more_ad_url = url('property/holiday-homes-for-sale/search?user_id='.$property_data->ad->user->id);
                         $property_published_on = $property_data->published_on;
                     @endphp
                     @include('user-panel.partials.templates.landing_page_company_information')
-                @endif
+
+                    <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
+                        @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
+                        !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
+                        !empty($property_data->note))
+                            <h2 class="u-t3">Visning</h2>
+                            <div class="mb-2">
+                                <span><?php echo (!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span><br>
+                                <span><?php echo (!empty($property_data->from_clock) ?  $property_data->from_clock : ""); ?>
+                            </span>
+                                <span><?php echo (!empty($property_data->clockwise) ?  $property_data->clockwise : ""); ?>
+                            </span>
+                                <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?></span>
+                            </div>
+                        @else
+                            <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
+                        @endif
+
+                        <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
+                        </div>
+                </div>
+                @else
                 <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
                         @if(!$property_data->published_on)
@@ -447,6 +466,8 @@
 
                                 <p class="mt-3"> {{ $property_data->user->username ? $property_data->user->username : 'NH-Bruker' }}</p>
                             </center>
+                        @else
+                            <p class="mt-3">NH-Bruker</p>
                         @endif
                         @if($property_data->phone)
                             <div class="mb-2">
@@ -486,6 +507,7 @@
                     <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
                     </div>
                 </div>
+                @endif
 
                 @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
                     @if($property_data && $property_data->ad && $property_data->ad->sales_information->count() > 0)
