@@ -148,17 +148,17 @@ $(document).ready(function () {
             rent_shared_cost: {
                 number: true
             },
-            shared_costs_include: {
-                required: true
-            },
-            costs_include:{
-                required: true
-            },
+            // shared_costs_include: {
+            //     required: true
+            // },
+            // costs_include:{
+            //     required: true
+            // },
             common_costs_after_interest_free_period: {
                 number: true
             },
             asset_value: {
-                required: true,
+                // required: true,
                 number: true
             },
             asking_price: {
@@ -624,9 +624,9 @@ $(document).ready(function () {
             land: {
                 number: true
             },
-            number_of_tenants: {
-                number: true
-            },
+            // number_of_tenants: {
+            //     number: true
+            // },
             holiday_year: {
                 number: true,
                 date: true

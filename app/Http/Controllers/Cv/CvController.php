@@ -28,25 +28,30 @@ class CvController extends Controller
     {
         if (Auth::check()){
             $cv = Cv::where('user_id', Auth::user()->id)->get()->first();
-            if($cv==null){
+
+            if($cv == null){
                 $cv = new Cv(['user_id'=>Auth::user()->id, 'expiry'=>date('Y-m-d', strtotime("+6 months"))]);
                 $cv->save();
             }
+
             $cvpersonal = $cv->personal;
             if($cvpersonal==null){
                 $cvpersonal = new CvPersonal(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvpersonal->save();
             }
+
             $cvexperiences = $cv->experiences;
             if($cvexperiences==null){
                 $cvexperience = new CvExperience(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvexperience->save();
             }
+
             $cvpreference = $cv->preference;
             if($cvpreference==null){
                 $cvpreference = new CvPreference(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvpreference->save();
             }
+
             $cveducations = $cv->educations;;
             if($cveducations==null){
                 $cveducation = new CvEducation(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);

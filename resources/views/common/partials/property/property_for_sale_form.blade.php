@@ -511,7 +511,7 @@
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Felleskostnader inkluderer</h3>
+            <h3 class="u-t5">Felleskostnader inkluderer (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="shared_costs_include" value="{{ $property_for_sale->shared_costs_include }}" type="text" class="dme-form-control"
@@ -534,7 +534,7 @@
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Formuesverdi</h3>
+            <h3 class="u-t5">Formuesverdi (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="asset_value" value="{{ $property_for_sale->asset_value }}"   type="text" class="dme-form-control total_price_constants"
@@ -574,7 +574,7 @@
             </div>
         </div>
         <div class="form-group">
-            <h3 class="u-t5">Omkostninger inkluderer</h3>
+            <h3 class="u-t5">Omkostninger inkluderer (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input name="costs_include" value="{{ $property_for_sale->costs_include }}" type="text" class="dme-form-control total_price_constants">

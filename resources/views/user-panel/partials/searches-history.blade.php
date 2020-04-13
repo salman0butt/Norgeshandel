@@ -16,13 +16,20 @@
 
 <h2 class="u-t4">Siste søk</h2>
 <ul>
+    @php $recent_searches = 0; @endphp
     @if (Auth::check())
         @if (isset($recent_search) && $recent_search->count() > 0)
             @foreach($recent_search as $recent)
-                <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ $recent->name }}</a></li>
+                @if($recent->name && $recent->name != 'null')
+                    @php $recent_searches++; @endphp
+                    <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ $recent->name }}</a></li>
+                @endif
             @endforeach
+            @if($recent_searches)
                 <li><a href="javascript:void(0);" class="clear_searches_link" data-search_type="recent" data-action="{{route('clear-searches')}}" style="font-weight: 500">Tøm lista</a></li>
-        @else
+            @endif
+        @endif
+        @if(!$recent_searches)
             <p class="u-d1">Det er ingen nylig søk</p>
         @endif
     @else

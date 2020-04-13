@@ -67,9 +67,9 @@
                 <div class="col-sm-12 pr-md-0">
                     <select name="location" id="situation" class="dme-form-control" data-selector="">
                         <option value=""></option>
-                        <option value="INLAND" {{ $holiday_home_for_sale->location == "Innlandet" ? 'selected' : ''}}>Innlandet</option>
-                        <option value="MOUNTAINS" {{ $holiday_home_for_sale->location == "På fjellet" ? 'selected' : ''}}>På fjellet</option>
-                        <option value="COAST" {{ $holiday_home_for_sale->location == "Ved sjøen" ? 'selected' : ''}}>Ved sjøen</option>
+                        <option value="Innlandet" {{ $holiday_home_for_sale->location == "Innlandet" ? 'selected' : ''}}>Innlandet</option>
+                        <option value="På fjellet" {{ $holiday_home_for_sale->location == "På fjellet" ? 'selected' : ''}}>På fjellet</option>
+                        <option value="Ved sjøen" {{ $holiday_home_for_sale->location == "Ved sjøen" ? 'selected' : ''}}>Ved sjøen</option>
                     </select>
                 </div>
             </div>
@@ -470,18 +470,18 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <h3 class="u-t5">Antall leietagere (valgfritt)</h3>
-            <div class="row">
-                <div class="col-sm-4 pr-md-0">
-                    <input name="number_of_tenants" value="{{ $holiday_home_for_sale->number_of_tenants }}" type="text"
-                        class="dme-form-control">
-                </div>
-                <div class="col-md-8"></div>
-                <div class="col-md-12 u-t5">Hva er dagens festeavgift for tomten</div>
-                <br>
-            </div>
-        </div>
+        {{--<div class="form-group">--}}
+            {{--<h3 class="u-t5">Antall leietagere (valgfritt)</h3>--}}
+            {{--<div class="row">--}}
+                {{--<div class="col-sm-4 pr-md-0">--}}
+                    {{--<input name="number_of_tenants" value="{{ $holiday_home_for_sale->number_of_tenants }}" type="text"--}}
+                        {{--class="dme-form-control">--}}
+                {{--</div>--}}
+                {{--<div class="col-md-8"></div>--}}
+                {{--<div class="col-md-12 u-t5">Hva er dagens festeavgift for tomten</div>--}}
+                {{--<br>--}}
+            {{--</div>--}}
+        {{--</div>--}}
 
         <div class="form-group">
             <h3 class="u-t5">Beskaffenhet (valgfritt)</h3>

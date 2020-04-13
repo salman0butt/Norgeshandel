@@ -132,7 +132,7 @@
                     <label class="smalltext" for="region-vestfold" data-has-area-subarea="true">Vestfold</label>
                 </div>
                 <div class="input-toggle col-md-4">
-                    <input type="checkbox" value="østfold" name="region[]" class="region" id="region-østfold" {{ (in_array("østfold", $region) ? "checked" : "") }}>
+                    <input type="checkbox" value="Østfold" name="region[]" class="region" id="region-østfold" {{ (in_array("Østfold", $region) ? "checked" : "") }}>
                     <label class="smalltext" for="region-østfold" data-has-area-subarea="true">Østfold</label>
                 </div>
             </div>

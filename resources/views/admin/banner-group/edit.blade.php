@@ -67,6 +67,7 @@ Edit Banner Group
                         <select class="form-control custom-select" id="post_category" name="post_category"
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
+                            <option value="home" {{ ($banner_group->post_category == 'home' ? 'selected' : '')}}>Home</option>
                             <option value="jobs" {{ ($banner_group->post_category == 'jobs' ? 'selected' : '')}}>Jobs</option>
                             <option value="real-estate" {{ ($banner_group->post_category == 'real-estate' ? 'selected' : '')}}>Real Estate</option>
                         
@@ -80,18 +81,17 @@ Edit Banner Group
                     <label class="col-md-12 control-label" for="time-type">Page Link<span class="red">*</span></label>
                   <input type="url" name="page_url" value="{{ $banner_group->page_url }}" id="page_url" class="form-control url_http" placeholder="Link">
                     </div>
-                   
-               
+
                  <div class="col-md-3">
                     <label class="col-md-12 control-label" for="time-start">Start Time<span class="red">*</span></label>
                     <div class="col-md-12">
-                  <input type="datetime-local" name="time_start" value="{{ $banner_group->time_start }}" placeholder="Start time" class="form-control">
+                        <input type="datetime-local" name="time_start" value="{{date('Y-m-d\TH:i:s',strtotime($banner_group->time_start))}}" placeholder="Start time" class="form-control">
                     </div>
                 </div>
                   <div class="col-md-3">
                     <label class="col-md-12 control-label" for="time-end">End Time<span class="red">*</span></label>
                     <div class="col-md-12">
-                  <input type="datetime-local" name="time_end" placeholder="End Time" value="{{ $banner_group->time_start }}" class="form-control">
+                  <input type="datetime-local" name="time_end" placeholder="End Time" value="{{date('Y-m-d\TH:i:s',strtotime($banner_group->time_end))}}" class="form-control">
                     </div>
                 </div>
       </div>
