@@ -260,6 +260,7 @@
                     <input name="phone" value="{{ $commercial_plot->phone }}" id="phone" type="tel" class="dme-form-control">
                      <span id="valid-msg" class="hide"></span>
                     <span id="error-msg" class="hide"></span>
+                    <span class="error-span phone"></span>
                 </div>
                 <div class="col-md-8"></div>
             </div>

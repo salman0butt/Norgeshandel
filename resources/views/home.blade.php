@@ -15,18 +15,14 @@
     }
     </style>
     <main class="dme-wrapper">
-        <div class="left-ad float-left">
-        <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
-        {{-- <div id="slideshow">
-                {{(\App\Helpers\common::display_ad('left') ? \App\Helpers\common::display_ad('left') : '')}}
-
-        </div> --}}
-
+        @php $banner_ad_category = 'home'; @endphp
+        <div class="left-ad float-left" id="left_banner_ad">
+            @include('user-panel.banner-ads.left-banner')
         </div>
         <div class="dme-container pl-3 pr-3">
-            <div class="row top-ad">
 
-            <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+            <div class="row top-ad" id="top_banner_ad">
+                @include('user-panel.banner-ads.top-banner')
             </div>
             <div class="row pt-4"></div>
             <div class="row pl-3">
@@ -115,12 +111,8 @@
         </div>
 
         <!--    ended container-->
-        <div class="right-ad pull-right">
-        <img src="http://localhost/norgeshandel/public/images/right-ad.png" class="img-fluid" alt="">
-         {{-- <div id="slideshow">
-            {{(\App\Helpers\common::display_ad('right') ? \App\Helpers\common::display_ad('right') : '')}}
-        </div> --}}
-
+        <div class="right-ad pull-right" id="right_banner_ad">
+            @include('user-panel.banner-ads.right-banner')
         </div>
     </main>
     <input type="hidden" id="search_url" value="{{url('searching')}}">
@@ -203,14 +195,13 @@
             });
         });
 
-
-
     </script>
 
 
 <script type="text/javascript">
 $(document).ready(function(){
-loadMoreData(1);
+    loadMoreData(1);
+    // show_divs();
 });
 	var page = 1;
 	$(window).scroll(function() {
@@ -245,6 +236,7 @@ loadMoreData(1);
 	        });
 	}
 
+    //$('#messagecontainer').data('time')
 </script>
 
 @endsection

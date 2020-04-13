@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin\Banners\BannerGroup;
 use App\Helpers\common;
 use App\Models\Ad;
 use App\Media;

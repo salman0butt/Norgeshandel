@@ -11,6 +11,7 @@ class BannerGroup extends Model
     //
     protected $table = 'banner_groups';
     protected $guarded = [];
+
        public function banners() {
         return $this->belongsToMany(Banner::class, 'banners_banner_groups');
     }

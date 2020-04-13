@@ -89,7 +89,7 @@ Add new Banner Ad
                         <select class="form-control custom-select" id="time-type" name="display_time_type"
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
-                            <option value="n">Numbers</option>
+                            <option value="h">Hours</option>
                             <option value="m">Minutes</option>
                             <option value="s">Seconds</option>
                         </select>

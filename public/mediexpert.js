@@ -288,5 +288,114 @@ $(document).ready(function (e) {
 
     });
 
+    //Show left banner in a page
+    if ($("#left_banner_ad").length > 0) {
+        left_banner_ad();
+    }
+
+    //Show top banner in a page
+    if ($("#top_banner_ad").length > 0) {
+        top_banner_ad();
+    }
+
+    //Show right banner in a page
+    if ($("#right_banner_ad").length > 0) {
+        right_banner_ad();
+    }
+
+
 });
+
+//Show left banner in a page
+function left_banner_ad() {
+    $( "#left_banner_ad a" ).each(function( key,index ) {
+        var top_level_div = document.getElementById('left_banner_ad');
+        var divs = top_level_div.getElementsByTagName('img');
+        if(divs.length > 1){
+            if($(this).hasClass('show_left_banner_img')){
+                var time = $(this).data('time');
+                var this_obj = $(this);
+                setTimeout(function(){
+
+                    this_obj.removeClass('d-none');
+                    this_obj.removeClass('show_left_banner_img');
+
+                    if(key+1 === divs.length){
+                        divs[0].parentNode.classList.add("show_left_banner_img");
+                        divs[0].parentNode.classList.remove("d-none");
+                    }else{
+                        divs[key+1].parentNode.classList.add("show_left_banner_img");
+                        divs[key+1].parentNode.classList.remove("d-none");
+                    }
+
+                    this_obj.addClass('d-none');
+
+                    left_banner_ad();
+                }, time);
+            }
+        }
+    });
+}
+
+//Show top banner in a page
+function top_banner_ad() {
+    $( "#top_banner_ad a" ).each(function( key,index ) {
+        var top_level_div = document.getElementById('top_banner_ad');
+        var divs = top_level_div.getElementsByTagName('img');
+        if(divs.length > 1){
+            if($(this).hasClass('show_top_banner_img')){
+                var time = $(this).data('time');
+                var this_obj = $(this);
+                setTimeout(function(){
+
+                    this_obj.removeClass('d-none');
+                    this_obj.removeClass('show_top_banner_img');
+
+                    if(key+1 === divs.length){
+                        divs[0].parentNode.classList.add("show_top_banner_img");
+                        divs[0].parentNode.classList.remove("d-none");
+                    }else{
+                        divs[key+1].parentNode.classList.add("show_top_banner_img");
+                        divs[key+1].parentNode.classList.remove("d-none");
+                    }
+
+                    this_obj.addClass('d-none');
+
+                    top_banner_ad();
+                }, time);
+            }
+        }
+    });
+}
+
+//Show left banner in a page
+function right_banner_ad() {
+    $( "#right_banner_ad a" ).each(function( key,index ) {
+        var top_level_div = document.getElementById('right_banner_ad');
+        var divs = top_level_div.getElementsByTagName('img');
+        if(divs.length > 1){
+            if($(this).hasClass('show_right_banner_img')){
+                var time = $(this).data('time');
+                var this_obj = $(this);
+                setTimeout(function(){
+
+                    this_obj.removeClass('d-none');
+                    this_obj.removeClass('show_right_banner_img');
+
+                    if(key+1 === divs.length){
+                        divs[0].parentNode.classList.add("show_right_banner_img");
+                        divs[0].parentNode.classList.remove("d-none");
+                    }else{
+                        divs[key+1].parentNode.classList.add("show_right_banner_img");
+                        divs[key+1].parentNode.classList.remove("d-none");
+                    }
+
+                    this_obj.addClass('d-none');
+
+                    right_banner_ad();
+                }, time);
+            }
+        }
+    });
+}
 

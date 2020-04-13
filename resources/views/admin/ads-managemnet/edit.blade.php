@@ -89,7 +89,7 @@ Edit Banner Ad
                         <select class="form-control custom-select" id="time-type" name="display_time_type"
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
-                            <option value="n" {{ ($banner->display_time_type == 'n' ? 'selected' : '') }}>Numbers</option>
+                            <option value="h" {{ ($banner->display_time_type == 'h' ? 'selected' : '') }}>Hours</option>
                             <option value="m" {{ ($banner->display_time_type == 'm' ? 'selected' : '') }}>Minutes</option>
                             <option value="s" {{ ($banner->display_time_type == 's' ? 'selected' : '') }}>Seconds</option>
                         </select>

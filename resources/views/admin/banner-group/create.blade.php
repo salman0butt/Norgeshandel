@@ -64,6 +64,7 @@ Add new Banner Group
                         <select class="form-control custom-select" id="post_category" name="post_category"
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
+                            <option value="home">Home</option>
                             <option value="jobs">Jobs</option>
                             <option value="real-estate">Real Estate</option>
                         </select>
