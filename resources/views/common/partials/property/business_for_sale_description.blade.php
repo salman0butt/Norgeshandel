@@ -114,8 +114,6 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-              <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
-
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company')
                         @php
                             $show_more_ad_url = url('property/business-for-sale/search?user_id='.$property_data->ad->user->id);
@@ -173,8 +171,6 @@
                         @endif
 
                     @endif
-
-                </div>
             </div>
         </div>
         </div>

@@ -127,9 +127,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                     <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;"> 
-
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
+                        <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                         @if(!$property_data->published_on)
                             <center>
                                 <img src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif"
@@ -175,6 +174,7 @@
                         @if($property_data->link && $property_data->text_for_information)
                             <div class="mb-2"><a href="{{$property_data->text_for_information}}" target="_blank">{{$property_data->link}}</a></div>
                         @endif
+                        </div>
                     @else
                         @php
                             $show_more_ad_url = url('property/commercial-plots/search?user_id='.$property_data->ad->user->id);
@@ -182,7 +182,7 @@
                         @endphp
                         @include('user-panel.partials.templates.landing_page_company_information')
                     @endif
-                </div>
+
             </div>
         </div>
         </div>
