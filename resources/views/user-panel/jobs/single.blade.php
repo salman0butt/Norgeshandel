@@ -91,7 +91,7 @@
                                 <div class="col-md-6 place"><span
                                         class="font-weight-bold">Sted: </span><span>{{$job->country}}</span></div>
                                 <div class="col-md-6 commitment_type"><span
-                                        class="font-weight-bold">Varighet: </span><span>{{$job->commitment_type}}</span>
+                                        class="font-weight-bold">Stillingstype: </span><span>{{$job->commitment_type}}</span>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -146,12 +146,12 @@
                                         <span>{{date('d-m-Y',strtotime($job->accession))}}</span>
                                     </div>
                                 @endif
-                                @if($job->app_receive_by)
-                                    <div class="col-md-6 job-function">
-                                        <span class="font-weight-bold">Motta søknader via: </span>&nbsp;
-                                        <span>{{ucfirst($job->app_receive_by)}}</span>
-                                    </div>
-                                @endif
+                                {{--@if($job->app_receive_by)--}}
+                                    {{--<div class="col-md-6 job-function">--}}
+                                        {{--<span class="font-weight-bold">Motta søknader via: </span>&nbsp;--}}
+                                        {{--<span>{{ucfirst($job->app_receive_by)}}</span>--}}
+                                    {{--</div>--}}
+                                {{--@endif--}}
                             </div>
                         </div>
                         @if($job->description)
@@ -220,7 +220,7 @@
                                     @if($job->app_linkedin)
                                         <span class="contact-tel"><a href="{{$job->app_linkedin}}">LinkedIn</a></span>
                                     @endif
-                                    @if($job->app_linkedin && $job->app_twitter) , @endif
+                                    @if($job->app_linkedin && $job->app_twitter)<span>,</span>@endif
                                     @if($job->app_twitter)
                                         <span class="contact-tel"><a href="https://twitter.com/{{$job->app_twitter}}">Twitter</a></span>
                                     @endif
@@ -228,7 +228,7 @@
                             @endif
                             @if($job && ($job->emp_facebook || $job->emp_linkedin || $job->emp_twitter))
                                 <div class="mb-2">
-                                    <span class="contact-name">Arbeidsgiver Nettverk: </span>
+                                    <span class="contact-name">Bedriftens nettverk: </span>
                                     @if($job->emp_linkedin)
                                         <span class="contact-tel"><a href="{{$job->emp_linkedin}}">LinkedIn</a></span>
                                     @endif

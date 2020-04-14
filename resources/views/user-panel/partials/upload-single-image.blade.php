@@ -15,7 +15,7 @@
                 $file_name_unique = $single_image_obj->ad->company_logo->first()->name_unique;
             }
         @endphp
-        <a href="javascript:;" class="red fileinput-exists dme-btn-outlined-blue btn-sm dz-remove " id="{{$file_name_unique}}" data-dismiss="fileinput">Fjerne</a>
+        <a href="javascript:;" class="red fileinput-exists dme-btn-outlined-blue btn-sm dz-remove " id="{{$file_name_unique}}" data-dismiss="fileinput">Fjern</a>
         <span class="btn default btn-file">
             <span class="fileinput-new dme-btn-outlined-blue btn-sm mt-5 mb-5">Velg bilde</span>
             {{--<span class="fileinput-exists dme-btn-outlined-blue btn-sm">Endre</span>--}}

@@ -408,7 +408,7 @@
                                     data-selector="">
                                     <option value="email"
                                         {{$obj_job && $obj_job->app_receive_by == 'email' ? 'selected' : ''}}>
-                                        Søkerhåndtering</option>
+                                        NorgesHandel Søknadsskjema</option>
                                     <option value="url"
                                         {{$obj_job && $obj_job->app_receive_by == 'url' ? 'selected' : ''}}>Eget
                                         søknadsskjema</option>
@@ -420,10 +420,10 @@
                                 <input type="text" name="app_link_to_receive" id="app_link_to_receive"
                                     class="form-control dme-form-control url_http" value="{{@$obj_job->app_link_to_receive}}">
                             </div>
-                            <div class="col-md-10 offset-md-2">
-                                <span class="u-t5">{{__('Du får beskjed på e-post hver gang du mottar en ny
-søknad og får oversikt her på Norgeshandel.')}}</span>
-                            </div>
+                            {{--<div class="col-md-10 offset-md-2">--}}
+                                {{--<span class="u-t5">{{__('Du får beskjed på e-post hver gang du mottar en ny--}}
+{{--søknad og får oversikt her på Norgeshandel.')}}</span>--}}
+                            {{--</div>--}}
                         </div>
                     </div>
                     <!--                            full input-->
@@ -516,8 +516,8 @@ søknad og får oversikt her på Norgeshandel.')}}</span>
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button" value="this is button" name="submit-button"><span class="ladda-label">@if(Request::is('jobs/*/edit'))  Oppdater annonsen @else Publiser annonsen! @endif</span></button>
                     {{--                        <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" class="btn btn-primary mb-3 col-12 ladda-button" id="publiserannonsen" data-style="expand-left"><span class="ladda-label">Publiser annonsen!</span></button>--}}
 
-                    <p class="u-t5 text-center">By moving forward, the <a href="#">rules for advertising</a>are
-                        also accepted</p>
+                    {{--<p class="u-t5 text-center">By moving forward, the <a href="#">rules for advertising</a>are--}}
+                        {{--also accepted</p>--}}
 
 
                 </div>
