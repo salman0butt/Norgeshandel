@@ -184,6 +184,9 @@
                     @endif
 
             </div>
+            <div style="width: 306px; height: 153px;">
+                {!! Mapper::render() !!}
+            </div>
         </div>
         </div>
 

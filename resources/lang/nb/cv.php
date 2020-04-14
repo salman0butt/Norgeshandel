@@ -130,7 +130,7 @@ return [
     'Status' => 'Status',
     'delete' => 'Slett',
     'preview' => 'CV preview',
-    'preview-p' => 'Denne forhåndsvisningen viser hvordan din CV vil fremstå for rekrutteringsbyråer og bedrifter som benytter seg av FINNs CV-database.',
+    'preview-p' => 'Denne forhåndsvisningen viser hvordan din CV vil fremstå for rekrutteringsbyråer og bedrifter som benytter seg av NorgesHandel CV-database.',
     'open-cv' => 'Forhåndsvis åpen CV',
     'persnol-cv' => 'Forhåndsvis anonym CV',
     'pdf-download' => 'Last ned PDF',

@@ -30,7 +30,7 @@
     <script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>
 
 
-    <script src="{{asset('public/js/tinymce.min.js')}}"></script>
+    {{--<script src="{{asset('public/js/tinymce.min.js')}}"></script>--}}
     <!--[if lt IE 9]>
     <script src="{{ asset('public/admin/js/html5shiv.js') }}"></script>
     <script src="{{ asset('public/admin/js/respond.min.js') }}"></script>
