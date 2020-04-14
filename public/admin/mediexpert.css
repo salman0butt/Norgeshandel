@@ -77,3 +77,8 @@
     right: -3px;
     background: white;
 }
+
+.select2-container--default .select2-selection--multiple{
+    height: 100% !important;
+    padding-bottom: 5px !important;
+}

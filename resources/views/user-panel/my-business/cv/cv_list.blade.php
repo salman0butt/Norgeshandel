@@ -46,77 +46,102 @@
         <thead>
             <tr>
                 <th>id</th>
+                <th>Title</th>
                 <th>Name</th>
                 <th>Username</th>
                 <th>Email</th>
-                <th>Date</th>
-                <th>View</th>
-                <th>Request</th>
-                <th>Delete</th>
+                <th>CV Created</th>
+                <th>CV Expiry</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>1</td>
+                <td>Laravel Developer</td>
                 <td>Clark</td>
                 <td>Kent</td>
                 <td>clarkkent@mail.com</td>
                 <td>12/04/2019</td>
-                <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                <td><a href="#"><i class="fas fa-share"></i></a></td>
-                <td><a href="#"><i class="fas fa-trash"></i></a></td>
+                <td>12/04/2021</td>
+                <td>
+                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                </td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>John</td>
-                <td>Carter</td>
-                <td>johncarter@mail.com</td>
+                <td>Laravel Developer</td>
+                <td>Clark</td>
+                <td>Kent</td>
+                <td>clarkkent@mail.com</td>
                 <td>12/04/2019</td>
-                <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                <td><a href="#"><i class="fas fa-share"></i></a></td>
-                <td><a href="#"><i class="fas fa-trash"></i></a></td>
-                
+                <td>12/04/2021</td>
+                <td>
+                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                </td>
             </tr>
             <tr>
                 <td>3</td>
-                <td>Peter</td>
-                <td>Parker</td>
-                <td>peterparker@mail.com</td>
+                <td>Laravel Developer</td>
+                <td>Clark</td>
+                <td>Kent</td>
+                <td>clarkkent@mail.com</td>
                 <td>12/04/2019</td>
-                <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                <td><a href="#"><i class="fas fa-share"></i></a></td>
-                <td><a href="#"><i class="fas fa-trash"></i></a></td>
-            </tr>  
-                        <tr>
+                <td>12/04/2021</td>
+                <td>
+                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                </td>
+            </tr>
+
+            <tr>
                 <td>4</td>
-                <td>Peter</td>
-                <td>Parker</td>
-                <td>peterparker@mail.com</td>
+                <td>Laravel Developer</td>
+                <td>Clark</td>
+                <td>Kent</td>
+                <td>clarkkent@mail.com</td>
                 <td>12/04/2019</td>
-                <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                <td><a href="#"><i class="fas fa-share"></i></a></td>
-                <td><a href="#"><i class="fas fa-trash"></i></a></td>
-            </tr>  
-                        <tr>
+                <td>12/04/2021</td>
+                <td>
+                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                </td>
+            </tr>
+            <tr>
                 <td>5</td>
-                <td>Peter</td>
-                <td>Parker</td>
-                <td>peterparker@mail.com</td>
+                <td>Laravel Developer</td>
+                <td>Clark</td>
+                <td>Kent</td>
+                <td>clarkkent@mail.com</td>
                 <td>12/04/2019</td>
-                <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                <td><a href="#"><i class="fas fa-share"></i></a></td>
-                <td><a href="#"><i class="fas fa-trash"></i></a></td>
-            </tr> 
-                        <tr>
+                <td>12/04/2021</td>
+                <td>
+                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                </td>
+            </tr>
+            <tr>
                 <td>6</td>
-                <td>Peter</td>
-                <td>Parker</td>
-                <td>peterparker@mail.com</td>
+                <td>Laravel Developer</td>
+                <td>Clark</td>
+                <td>Kent</td>
+                <td>clarkkent@mail.com</td>
                 <td>12/04/2019</td>
-                <td><a href="#"><i class="fas fa-eye"></i></a></td>
-                <td><a href="#"><i class="fas fa-share"></i></a></td>
-                <td><a href="#"><i class="fas fa-trash"></i></a></td>
-            </tr>             
+                <td>12/04/2021</td>
+                <td>
+                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                </td>
+            </tr>
+
         </tbody>
     </table>
 

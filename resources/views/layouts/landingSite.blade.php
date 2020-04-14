@@ -572,7 +572,7 @@
     });
     $(function() {
         $('input[type="date"]').datepicker({
-            format: "yyyy/mm/dd",
+            format: "yyyy-mm-dd",
         });
         $('input[type="date"]').attr('type','text');
     });
