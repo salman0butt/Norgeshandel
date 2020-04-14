@@ -2,6 +2,11 @@
 <?php
     $link = \Illuminate\Support\Facades\DB::table('metas')->select('value')->where('key', session()->token())->orderByDesc('id')->first();
 //    dd($link->value);
+ 
+ if(isset($_GET['fav-id'])){
+     session(['fav_id' => $_GET['fav-id'] ]);
+ }
+
 ?>
 <html lang="nb">
 <head>

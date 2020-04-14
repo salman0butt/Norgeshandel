@@ -223,11 +223,17 @@
         });
         $(document).on('click', 'a.not-fav', function () {
             ad_id = $(this).attr('data-id');
+            var base = '{{route('login')}}';
+            var url = base+'?fav-id='+ad_id ;
+            $('#modal_login .modal-body a:first').attr('href',url)
+ 
         });
         $(document).on('click', 'a.fav', function (e) {
+    
             e.preventDefault();
             var url = $('#remove_fav_url').val();
             ad_id = $(this).attr('data-id');
+        
             $(this).find('span').removeClass('fa');
             $(this).find('span').addClass('far');
             $(this).addClass('not-fav');
@@ -254,6 +260,10 @@
             $('#modal_select_category').modal('hide');
             var url = $('#add_fav_url').val();
             var list_id = $(this).attr('data-id');
+            @if(session('fav_id'))
+            var ad_id = {{ session('fav_id')}};
+            @endif
+            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -267,6 +277,7 @@
                     window.location.reload();
                 }
             });
+           
 
             // $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
             // $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
@@ -578,6 +589,13 @@
     });
     
 </script>
-
+@if(session('fav_id'))
+<script>
+$(function() {
+    $('#modal_select_category').modal('show');
+});
+</script>
+@endif
+ {{ session()->forget('fav_id') }}
 </body>
 </html>
