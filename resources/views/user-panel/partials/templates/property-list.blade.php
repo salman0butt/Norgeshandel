@@ -79,8 +79,8 @@ if($property !== null)
                             </div>
 
                             <div class="mt-3 float-right {{$fav_item && $fav_item->id && $fav_item->note ? 'd-none' : ''}}">
-                                <a class="btn btn-warning btn-sm close_button {{$fav_item && $fav_item->id && $fav_item->note ? 'close_button_for_note' : ''}}" @if($fav_item && $fav_item->id && !$fav_item->note) data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}" @endif>Lagre</a>
-                                <input type="submit" value="Avbryt" data-target="note_form_{{$property->ad ? $property->ad->id : ''}}" class="btn btn-success btn-sm submit_button">
+                                <a class="btn btn-warning btn-sm close_button {{$fav_item && $fav_item->id && $fav_item->note ? 'close_button_for_note' : ''}}" @if($fav_item && $fav_item->id && !$fav_item->note) data-toggle="collapse" data-target="#note_{{$property->ad ? $property->ad->id : ''}}" @endif>Avbryt</a>
+                                <input type="submit" value="Lagre" data-target="note_form_{{$property->ad ? $property->ad->id : ''}}" class="btn btn-success btn-sm submit_button">
                             </div>
 
                             <a href="#" data-toggle="modal" class="ad_note_link float-right pr-1 {{$fav_item && $fav_item->id && !$fav_item->note ? 'd-none' : ''}}"><span class="fa fa-pencil"></span></a>
