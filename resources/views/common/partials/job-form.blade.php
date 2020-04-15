@@ -406,19 +406,17 @@
                             <div class="col-sm-4">
                                 <select class="form-control dme-form-control" id="app_receive_by" name="app_receive_by"
                                     data-selector="">
-                                    <option value="email"
-                                        {{$obj_job && $obj_job->app_receive_by == 'email' ? 'selected' : ''}}>
-                                        NorgesHandel Søknadsskjema</option>
-                                    <option value="url"
-                                        {{$obj_job && $obj_job->app_receive_by == 'url' ? 'selected' : ''}}>Eget
+                                    <option value="url" {{$obj_job && $obj_job->app_receive_by == 'url' ? 'selected' : ''}}>Eget
                                         søknadsskjema</option>
+                                    <option value="email" {{$obj_job && $obj_job->app_receive_by == 'email' ? 'selected' : ''}}>
+                                        NorgesHandel Søknadsskjema</option>
                                 </select>
                             </div>
                             <label for="app_link_to_receive"
-                                class="col-md-2 u-t5">{{__('Link to application form')}} (valgfritt)</label>
-                            <div class="col-sm-4">
+                                   class="col-md-2 u-t5 apply_link {{$obj_job && $obj_job->app_receive_by == 'email' ? 'd-none' : ''}}">{{__('Link to application form')}} (valgfritt)</label>
+                            <div class="col-sm-4 apply_link {{$obj_job && $obj_job->app_receive_by == 'email' ? 'd-none' : ''}}">
                                 <input type="text" name="app_link_to_receive" id="app_link_to_receive"
-                                    class="form-control dme-form-control url_http" value="{{@$obj_job->app_link_to_receive}}">
+                                       class="form-control dme-form-control url_http " value="{{@$obj_job->app_link_to_receive}}" required>
                             </div>
                             {{--<div class="col-md-10 offset-md-2">--}}
                                 {{--<span class="u-t5">{{__('Du får beskjed på e-post hver gang du mottar en ny--}}
@@ -735,6 +733,17 @@
 
 
          //new function ends here
+        });
+
+        $(document).on('change', '#app_receive_by', function (e) {
+            var val = $(this).val(); //apply_link
+            if(val == 'email'){
+                $('.apply_link').addClass('d-none');
+                $('#app_link_to_receive').removeAttr('required');
+            }else{
+                $('.apply_link').removeClass('d-none');
+                $('#app_link_to_receive').prop('required','true')
+            }
         });
 
         $('#company_logo').change(function (e) {
