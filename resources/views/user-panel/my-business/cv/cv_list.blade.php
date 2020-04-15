@@ -42,7 +42,7 @@
             </div>
             @include('common.partials.flash-messages')
             <div class="mt-5 mb-5">
-      <table class="table table-hover table-bordered table-striped">
+      <table class="table table-hover table-bordered table-striped" id="cv_list">
         <thead>
             <tr>
                 <th>id</th>
@@ -150,5 +150,10 @@
 
         </div>
     </main>
+<script>
+$(document).ready( function () {
+    $('#cv_list').DataTable();
+} );    
+</script>
 
 @endsection

@@ -12,6 +12,8 @@ var errorMap = [
     "Ikke gyldig",
     "Ikke gyldig",
 ];
+
+
 // initialise plugin
 var iti = window.intlTelInput(input, {
     utilsScript: "public/js/utils.js?1562189064761",
@@ -29,6 +31,15 @@ var reset = function() {
 input.addEventListener('blur', function() {
     reset();
     if (input.value.trim()) {
+     
+        if (isNaN(Number(this.value))) {
+            console.log('not number working');
+            errorMsg.classList.remove("hide");
+            errorMsg.classList.add("error");
+            document.querySelector("#error-msg").innerHTML = "Ikke gyldig";
+            return;
+
+        }
         if (iti.isValidNumber()) {
             validMsg.classList.remove("hide");
             document.querySelector("#valid-msg").innerHTML = "✓ Gyldig";

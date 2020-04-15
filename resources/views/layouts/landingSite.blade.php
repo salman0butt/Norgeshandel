@@ -35,6 +35,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
             integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
             crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
@@ -43,6 +45,9 @@
     span.far.fa-heart.text-muted,span.fa.fa-heart.text-muted {
         line-height: unset !important;
     }
+    th.dow {
+    padding: 8px;
+}
 
 </style>
 </head>
@@ -397,6 +402,8 @@
 <script src="{{asset('public/js/toastr.min.js')}}"></script>
 <script src="{{asset('public/js/jssocials.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('public/js/bootstrap-datepicker.no.js') }}"></script>
+<script src="http://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
 
 <script>
@@ -583,12 +590,13 @@
     });
     $(function() {
         $('input[type="date"]').datepicker({
-            format: "yyyy-mm-dd",
-            autoclose: true
+            format: "dd-mm-yyyy",
+             autoclose: true,
+             language: 'no',
         });
         $('input[type="date"]').attr('type','text');
     });
-    
+
 </script>
 @if(session('fav_id'))
 <script>
