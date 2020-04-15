@@ -955,7 +955,7 @@ $(document).ready(function () {
     });
 
 
-  //  LOGIN PAGE VALIDATION
+  //  Job form validation
     $("#job-form").validate({
         lang: 'no',
         rules: {
@@ -1100,6 +1100,33 @@ $(document).ready(function () {
                 minlength: 2,
                 maxlength: 20
             }
+        }
+    });
+
+    // Apply CV on Job Validation
+    $("#applied_job").validate({
+        lang: ' no',
+        rules: {
+            name: {
+                required: true
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            telephone: {
+                required: true,
+                digits: true
+            },
+            dob: {
+                required: true
+            },
+            education: {
+                required: true
+            },
+            current_position: {
+                required: true
+            },
         }
     });
 

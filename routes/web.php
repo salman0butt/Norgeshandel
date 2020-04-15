@@ -95,6 +95,9 @@ Route::group(['middleware' => 'authverified'], function () {
         return view('notification');
     });
 
+    Route::get('/apply-job', function () {
+        return view('user-panel.jobs.apply-job');
+    });
 
     Route::get('/price-chart', function () {
         return view('user-panel.my-business.price_chart');
@@ -233,6 +236,12 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
+
+        //Apply Job
+        Route::get('recruitment/hired/frontend/applynow/{id}', 'AppliedJobController@edit')->name('apply-job');
+        Route::resource('applied-jobs', 'AppliedJobController');
+
+
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         Route::get('my-business/my-ads/{id}/options', 'AdController@ad_option');
         Route::get('my-business/my-ads/{id}/statistics', 'AdController@ad_statistics');
@@ -302,6 +311,7 @@ Route::group(['middleware' => 'authverified'], function () {
                 Route::post('update_languages/{cv_id}', 'Cv\CvController@update_languages')->name('update_languages');
                 Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
                 Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
+                Route::get('view_pdf_cv/{cv_id}', 'Cv\CvController@view_pdf_cv')->name('view_pdf_cv');
             });
             Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
             Route::post('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
