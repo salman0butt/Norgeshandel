@@ -32,7 +32,7 @@ if(count($media)>0){
     }
 }
 ?>
-<div class="col-sm-12 pr-0 end_fav_item">
+<div class="col-sm-12 pr-0 end_fav_item" data-name="{{$job->title}}">
     <div class="row product-list-item mr-1 p-sm-1 mt-3">
         <div class="image-section image-section @if(Request::is('my-business/favorite-list/*')) col-sm-3 @else col-sm-4 @endif  p-2">
             <a href="{{url('jobs', compact('job'))}}" style="display: block;" class="trailing-border">

@@ -187,4 +187,12 @@ class CvController extends Controller
 //        return $pdf->stream('document.pdf');
 //        return view('user-panel.my-business.cv.download_pdf', compact('cv'));
     }
+
+    public function view_pdf_cv($cv_id){
+        $cv =   Cv::find($cv_id);
+        $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
+        $pdf = new Pdf($html);
+        return $pdf->stream('NorgesHandel-CV-'.$cv_id.'pdf');
+    }
+
 }

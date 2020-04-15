@@ -247,9 +247,9 @@
                         @if($job->app_link_to_receive && $job->app_receive_by == 'url')
                             <button class="dme-btn-maroon col-12 mb-2" onclick="window.location.href='{{$job->app_link_to_receive}}';">Søk her</button>
                         @endif
-                        {{--@if($job->app_receive_by == 'email')--}}
-                            {{--<button class="dme-btn-maroon col-12 mb-2" onclick="window.location.href='{{$job->app_link_to_receive}}';">Søk her1</button>--}}
-                        {{--@endif--}}
+                        @if($job->app_receive_by == 'email')
+                            <button class="dme-btn-maroon col-12 mb-2" onclick="window.open('{{route('apply-job',$job->id)}}', '_blank');">Søk her</button>
+                        @endif
                         @if(!empty($job->company))
                             <button class="dme-btn-outlined-blue col-8 mb-2">Følg firma</button>
                             <div class="col-4"></div>

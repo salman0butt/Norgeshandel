@@ -57,43 +57,6 @@
             <div class="col-md-4"></div>
         </div>
     </div>
-    <div id="ad_note_for_fav" class="modal fade d-none" role="dialog">
-        <div class="modal-dialog modal-lg pt-5">
-            <div class="modal-content">
-                <div class="modal-body" id="list-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="u-t2">Merk</h3>
-                        </div>
-                        <div class="col-md-6">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <form action="{{url('store-fav-note')}}" method="POST" id="fav_note_form">
-                                @csrf
-                                <input type="hidden" name="fav_id" class="fav_id">
-                                <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <label for="landing_list_name">Legg inn noen lapp</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <textarea class="dme-form-control note" name="note"></textarea>
-                                    </div>
-                                    <div class="col-md-12 mt-3">
-                                        <button type="submit" class="dme-btn-outlined-blue float-right">Lagre</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <button class="dme-btn-outlined-blue float-right mr-3" data-dismiss="modal">Ferdig</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 <script>
 
