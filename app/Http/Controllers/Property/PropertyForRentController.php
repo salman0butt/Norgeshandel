@@ -355,7 +355,10 @@ class PropertyForRentController extends Controller
                 }
                 $message = 'Annonsen din er oppdatert.';
             }
-            $response = $ad->update(['status' => 'published']);
+            $published_date = date("Y-m-d H:i:s");
+
+            $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+           
             if ($response) {
 //        notifications bellow
                 common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-rent');
@@ -366,6 +369,7 @@ class PropertyForRentController extends Controller
             $data['success'] = $response;
             $data['message'] = $message;
             $data['status'] = $ad->status;
+            $data['date'] = $published_date;
             echo json_encode($data);
         }else{
             echo $msg;
