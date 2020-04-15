@@ -261,6 +261,9 @@ $(document).ready(function (e) {
     });
 
     $('.url_http').on('change', function(){
+        if ($(this).val() == ''){
+            return;
+        }
     s = $(this).val();
     if (!s.match(/^[a-zA-Z]+:\/\//))
     {
