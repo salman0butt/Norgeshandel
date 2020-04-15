@@ -593,7 +593,6 @@
             format: "dd-mm-yyyy",
              autoclose: true,
              language: 'no',
-
         });
         $('input[type="date"]').attr('type','text');
     });
