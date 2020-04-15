@@ -43,6 +43,9 @@
     span.far.fa-heart.text-muted,span.fa.fa-heart.text-muted {
         line-height: unset !important;
     }
+    th.dow {
+    padding: 8px;
+}
 
 </style>
 </head>
@@ -397,6 +400,7 @@
 <script src="{{asset('public/js/toastr.min.js')}}"></script>
 <script src="{{asset('public/js/jssocials.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="{{ asset('public/js/bootstrap-datepicker.no.js') }}"></script>
 
 
 <script>
@@ -583,11 +587,14 @@
     });
     $(function() {
         $('input[type="date"]').datepicker({
-            format: "yyyy-mm-dd",
+            format: "dd-mm-yyyy",
+             autoclose: true,
+             language: 'no',
+
         });
         $('input[type="date"]').attr('type','text');
     });
-    
+
 </script>
 @if(session('fav_id'))
 <script>

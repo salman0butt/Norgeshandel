@@ -46,12 +46,10 @@ $(document).ready(function () {
                 number: true
             },
             rented_from: {
-                required: true,
-                date: true
+                required: true
             },
             rented_to: {
-                required: true,
-                date: true
+                required: true
             }
         },
         onfocusout: false,
@@ -122,12 +120,10 @@ $(document).ready(function () {
             year: {
                 required: true,
                 number: true,
-                date: true
                
             },
             renovated_year: {
-                number: true,
-                date: true,
+                number: true
               
             },
             number_of_bedrooms: {
@@ -138,8 +134,7 @@ $(document).ready(function () {
                 number: true
             },
             holiday_year: {
-                number: true,
-                date: true
+                number: true
             
             },
             party_fee: {
@@ -191,8 +186,7 @@ $(document).ready(function () {
                 number: true
             },
              deliver_date:{
-                 number: true,
-                 date: true
+                 number: true
             }
         },
         onfocusout: false,
@@ -261,13 +255,11 @@ $(document).ready(function () {
                 number: true
             },
             year_of_construction: {
-                number: true,
-                date: true
+                number: true
                
             },
             renovated_year: {
-                number: true,
-                date: true 
+                number: true
             },
             rent_per_meter_per_year:{
                 number: true,
@@ -519,7 +511,7 @@ $(document).ready(function () {
                 number: true
             },
             date0: {
-                date: true
+               number: true
             },
             time_from0: {
                 number: true
@@ -598,12 +590,10 @@ $(document).ready(function () {
                 number: true
             },
             year_of_construction: {
-                number: true,
-                date: true
+                number: true
             },
             renovated_year: {
-                number: true,
-                date: true
+                number: true
             },
             number_of_bedrooms: {
                 required: true,
@@ -628,8 +618,7 @@ $(document).ready(function () {
             //     number: true
             // },
             holiday_year: {
-                number: true,
-                date: true
+                number: true
             },
             party_fee: {
                 number: true
@@ -678,7 +667,7 @@ $(document).ready(function () {
                 validUrl: true
             },
             delivery_date: {
-                date: true
+                number: true
             },
             from_clock: {
                 number: true
@@ -817,12 +806,10 @@ $(document).ready(function () {
                 number: true
             },
             year_of_construction: {
-                number: true,
-                date: true
+                number: true
             },
             rennovated_year: {
-                number: true,
-                date: true
+                number: true
             },
             rental_income: {
                 number: true
@@ -834,7 +821,7 @@ $(document).ready(function () {
                 number: true
             },
             availiable_from: {
-                date: true
+                number: true
             },
             offer_url: {
                 validUrl: true
@@ -1118,12 +1105,10 @@ $(document).ready(function () {
                 zipcode: true
             },
             period_from: {
-                required: true,
-                date: true
+                required: true
             },
             period_to: {
-                required: true,
-                date: true
+                required: true
             },
             subject: {
                 required: true
@@ -1145,12 +1130,10 @@ $(document).ready(function () {
                 maxlength: 120
             },
             period_from: {
-                required: true,
-                date: true
+                required: true
             },
             period_to: {
-                required: true,
-                date: true
+                required: true
             },
             job_title: {
                 required: true,

@@ -633,7 +633,8 @@ meldingstjeneste og i dine annonser.</p>
                 $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
             });
             $('.datepicker').datepicker({
-                dateFormat: 'dd-mm-yy'
+                dateFormat: 'dd-mm-yy',
+                autoclose: true
             });
 
         });
