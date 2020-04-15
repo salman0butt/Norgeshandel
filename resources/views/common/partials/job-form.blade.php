@@ -417,6 +417,7 @@
                             <div class="col-sm-4 apply_link {{$obj_job && $obj_job->app_receive_by == 'email' ? 'd-none' : ''}}">
                                 <input type="text" name="app_link_to_receive" id="app_link_to_receive"
                                        class="form-control dme-form-control url_http " value="{{@$obj_job->app_link_to_receive}}" required>
+
                             </div>
                             {{--<div class="col-md-10 offset-md-2">--}}
                                 {{--<span class="u-t5">{{__('Du får beskjed på e-post hver gang du mottar en ny--}}
@@ -656,13 +657,13 @@
                         $('.input_type_file .dz-remove').attr('id',response.company_logo_id);
                     }
                     if (event == 'change') {
-                      notify("info","Jobben ble lagret!");
+                       notify("info","Annonsen din er lagret");
                    }else if(event == 'click'){
                         $('.deleted_media').val('');
                         $('.media_position').val('');
                         $('.click_button').val('no');
                         $('.ad_status').val(response.status);
-                        var message = 'Job din er publisert';
+                        var message = 'Annonsen din er publisert';
                         if(response.message){
                             message = response.message;
                         }
@@ -677,7 +678,7 @@
                 error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
                     var errors = jqXhr.responseJSON;
                     //console.log(errors.errors);
-                      notify("error","noe gikk galt!");
+                       notify("error","noe gikk galt!");
                       /* if (isEmpty(errors.errors)) {
                       notify("error","noe gikk galt!");
                         return false;
