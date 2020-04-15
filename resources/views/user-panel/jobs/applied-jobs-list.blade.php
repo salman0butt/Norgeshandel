@@ -113,6 +113,7 @@
 @section('script')
     <script>
 
+
         $('#landing_list_search').keyup(function(){
 
             $('.not-found').addClass('d-none');

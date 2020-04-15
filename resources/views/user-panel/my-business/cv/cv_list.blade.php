@@ -42,110 +42,110 @@
             </div>
             @include('common.partials.flash-messages')
             <div class="mt-5 mb-5">
-      <table class="table table-hover table-bordered table-striped" id="cv_list">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Title</th>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>CV Created</th>
-                <th>CV Expiry</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Laravel Developer</td>
-                <td>Clark</td>
-                <td>Kent</td>
-                <td>clarkkent@mail.com</td>
-                <td>12/04/2019</td>
-                <td>12/04/2021</td>
-                <td>
-                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
-                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Laravel Developer</td>
-                <td>Clark</td>
-                <td>Kent</td>
-                <td>clarkkent@mail.com</td>
-                <td>12/04/2019</td>
-                <td>12/04/2021</td>
-                <td>
-                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
-                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Laravel Developer</td>
-                <td>Clark</td>
-                <td>Kent</td>
-                <td>clarkkent@mail.com</td>
-                <td>12/04/2019</td>
-                <td>12/04/2021</td>
-                <td>
-                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
-                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
-                </td>
-            </tr>
+                  <table class="table table-hover table-bordered table-striped" id="cv_list">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>Title</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>CV Created</th>
+                            <th>CV Expiry</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Laravel Developer</td>
+                            <td>Clark</td>
+                            <td>Kent</td>
+                            <td>clarkkent@mail.com</td>
+                            <td>12/04/2019</td>
+                            <td>12/04/2021</td>
+                            <td>
+                                <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Laravel Developer</td>
+                            <td>Clark</td>
+                            <td>Kent</td>
+                            <td>clarkkent@mail.com</td>
+                            <td>12/04/2019</td>
+                            <td>12/04/2021</td>
+                            <td>
+                                <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Laravel Developer</td>
+                            <td>Clark</td>
+                            <td>Kent</td>
+                            <td>clarkkent@mail.com</td>
+                            <td>12/04/2019</td>
+                            <td>12/04/2021</td>
+                            <td>
+                                <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                            </td>
+                        </tr>
 
-            <tr>
-                <td>4</td>
-                <td>Laravel Developer</td>
-                <td>Clark</td>
-                <td>Kent</td>
-                <td>clarkkent@mail.com</td>
-                <td>12/04/2019</td>
-                <td>12/04/2021</td>
-                <td>
-                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
-                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Laravel Developer</td>
-                <td>Clark</td>
-                <td>Kent</td>
-                <td>clarkkent@mail.com</td>
-                <td>12/04/2019</td>
-                <td>12/04/2021</td>
-                <td>
-                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
-                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>Laravel Developer</td>
-                <td>Clark</td>
-                <td>Kent</td>
-                <td>clarkkent@mail.com</td>
-                <td>12/04/2019</td>
-                <td>12/04/2021</td>
-                <td>
-                    <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
-                    <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
-                    <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
-                </td>
-            </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Laravel Developer</td>
+                            <td>Clark</td>
+                            <td>Kent</td>
+                            <td>clarkkent@mail.com</td>
+                            <td>12/04/2019</td>
+                            <td>12/04/2021</td>
+                            <td>
+                                <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Laravel Developer</td>
+                            <td>Clark</td>
+                            <td>Kent</td>
+                            <td>clarkkent@mail.com</td>
+                            <td>12/04/2019</td>
+                            <td>12/04/2021</td>
+                            <td>
+                                <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Laravel Developer</td>
+                            <td>Clark</td>
+                            <td>Kent</td>
+                            <td>clarkkent@mail.com</td>
+                            <td>12/04/2019</td>
+                            <td>12/04/2021</td>
+                            <td>
+                                <a href="#" class="mr-1"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                <a href="#"><i class="fas fa-arrow-circle-down"></i></a>
+                            </td>
+                        </tr>
 
-        </tbody>
-    </table>
+                    </tbody>
+                </table>
 
-              
+
             </div>
 
         </div>
