@@ -77,7 +77,7 @@
         <tbody>
             @if($applied_jobs_cv->count() > 0)
                 @foreach($applied_jobs_cv as $key=>$applied_job_cv)
-                    <tr class="end_fav_item" data-name="{{$applied_job_cv->name}}">
+                    <tr class="cv-item" data-name="{{$applied_job_cv->name}}">
                         <td>{{$applied_job_cv->id}}</td>
                         <td title="{{$applied_job_cv->job && $applied_job_cv->job->title ? $applied_job_cv->job->title : ''}}">{{$applied_job_cv->job && $applied_job_cv->job->title ? Str::limit($applied_job_cv->job->title,25) : ''}}</td>
                         <td>{{$applied_job_cv->name}}</td>
@@ -98,8 +98,7 @@
             @else
                 <tr><td colspan="9"><p class="alert alert-warning">Det er ingen elementer på listen!.</p></td></tr>
             @endif
-
-            <tr class="not"><td colspan="9"><p class="alert alert-warning">Det er ingen elementer på listen!.</p></td></tr>
+            <tr class="not-found d-none"><td colspan="9"><p class="alert alert-warning">Det er ingen elementer på listen!.</p></td></tr>
 
 
         </tbody>
@@ -114,36 +113,28 @@
 @section('script')
     <script>
 
-        $('#landing_list_search12').keyup(function (e) {
-            if($(this).val().length > 0){
-                $.each($('.end_fav_item'), function(){
-                    if($(this).attr('data-name').toLowerCase().search($('#landing_list_search').val().toLowerCase())<0){
-                        $(this).hide()
-                    }
-                    else{
-                        $(this).show();
-                    }
-                });
-            }
-            else{
-                $('.end_fav_item').show();
-            }
-        });
 
         $('#landing_list_search').keyup(function(){
 
+            $('.not-found').addClass('d-none');
             // Search Text
             var search = $(this).val().toUpperCase();
 
-
-            $("table > tbody > tr").each(function() {
+            $("table > tbody > tr:not(.not-found)").each(function() {
                 if ($(this).text().toUpperCase().search(search) > -1) {
                     $(this).show();
-                }
-                else {
+                    $(this).addClass('record-found');
+                } else {
                     $(this).hide();
+                    $(this).removeClass('record-found');
                 }
             });
+
+            if(!($('.cv-item').hasClass('record-found'))){
+               $('.not-found').removeClass('d-none');
+            }
+
+
         });
 
     </script>
