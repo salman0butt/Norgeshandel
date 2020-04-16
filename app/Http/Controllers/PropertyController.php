@@ -82,7 +82,7 @@ class PropertyController extends Controller
                 ->orwhereDate('sold_at','>',$date);
         })->where('ad_type', '!=', 'job')
             ->where('visibility', '=', 1)
-            ->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
+            ->orderBy('published_on', 'desc')->paginate(getenv('PAGINATION'));
 
         return view('user-panel.property.property_list', compact('ads', 'saved_search', 'recent_search'));
     }

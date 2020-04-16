@@ -153,6 +153,7 @@ class PropertyForRentController extends Controller
         if (isset($request->user_id) && !empty($request->user_id)) {
             $query->where('ads.user_id', $request->user_id);
         }
+        $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
             case 'published':
@@ -180,6 +181,7 @@ class PropertyForRentController extends Controller
                 $query->orderBy('property_for_rent.id', 'DESC');
                 break;
         }
+     
 
         if ($get_collection){
             return $query->get();

@@ -108,6 +108,7 @@ class FlatWishesRentedController extends Controller
         if (isset($request->user_id) && !empty($request->user_id)) {
             $query->where('ads.user_id', $request->user_id);
         }
+        $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
             case 'published':
@@ -120,6 +121,7 @@ class FlatWishesRentedController extends Controller
                 $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'DESC');
                 break;
         }
+      
 
         if ($get_collection){
             return $query->get();
@@ -176,7 +178,9 @@ class FlatWishesRentedController extends Controller
                     $delete_media = common::delete_json_media($request->deleted_media);
                 }
             }
-            $response = $ad->update(['status' => 'published']);
+            $published_date = date("Y-m-d H:i:s");
+
+            $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
 //            notification bellow
             common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/flat-wishes-rented');

@@ -85,7 +85,7 @@ class HomeController extends Controller
             $recent_search = Search::where('type', 'recent')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->limit(5)->get();
         }//where('status', 'published')->
 
-        $ads = Ad::where('visibility', '=', 1)->orderBy('id', 'desc')
+        $ads = Ad::where('visibility', '=', 1)->orderBy('published_on', 'desc')
             ->where(function ($query){
                 $date = Date('y-m-d',strtotime('-7 days'));
                 $query->where('status', 'published')

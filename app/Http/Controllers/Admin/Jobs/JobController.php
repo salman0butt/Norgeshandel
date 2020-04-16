@@ -75,7 +75,7 @@ class JobController extends Controller
             $query->where('ads.status', 'published')
                 ->orwhereDate('ads.sold_at','>',$date);
         })->where('visibility',1)
-            ->orderBy('id', 'desc')
+            ->orderBy('published_on', 'desc')
             ->paginate(getenv('PAGINATION'));;
         $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')
             ->where(function ($query) use ($date){
@@ -168,10 +168,12 @@ class JobController extends Controller
 ////        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
 //
 //
+
            
+        $published_date = date("Y-m-d H:i:s");
 
         $ad->job->update($arr);
-        $ad->update(['status' => 'published']);
+        $ad->update(['status' => 'published', 'published_on' => $published_date]);
      
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
@@ -405,8 +407,8 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        $prev = Job::where('id', '<', $job->id)->orderBy('id', 'desc')->first();
-        $next = Job::where('id', '>', $job->id)->orderBy('id', 'asc')->first();
+        $prev = Job::where('id', '<', $job->id)->orderBy('published_on', 'desc')->first();
+        $next = Job::where('id', '>', $job->id)->orderBy('published_on', 'asc')->first();
         return view('user-panel/jobs/single', compact('job', 'prev', 'next'));
     }
 
@@ -450,7 +452,9 @@ class JobController extends Controller
                 $call_by  = 'controller';
             }
             $ids = $this->update_dummy($request,$call_by);
-            $response = $job->ad->update(['status'=>'published']);
+            $published_date = date("Y-m-d H:i:s");
+
+            $response = $job->ad->update(['status'=>'published', 'published_on' => $published_date]);
             $media = common::updated_dropzone_images_type($request->all(),'job_temp_images',$job->ad->id);
             if($request->media_position){
                 $media_position = common::update_media_position($request->media_position);
@@ -589,7 +593,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->orderBy('ads.id','DESC')->limit(getenv('PAGINATION'))->get();
+            })->orderBy('ads.published_on','DESC')->limit(getenv('PAGINATION'))->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
@@ -641,7 +645,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->orderBy('ads.id','DESC');
+            })->orderBy('ads.published_on','DESC');
 
 
         $query->where($arr);
