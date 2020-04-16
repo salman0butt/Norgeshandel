@@ -44,7 +44,7 @@
             <div class="mt-5 mb-5">
                 <div class="col-4 float-right mb-2 pr-0">
                     <div class="input-group search-box ">
-                        <input type="text" name="landing_list_search" id="landing_list_search" class="form-control search-control" placeholder="Filtrer..." autofocus="">
+                        <input type="text" name="landing_list_search" id="landing_list_search" class="form-control search-control" placeholder="Filtrer..." autofocus="" @if(!($applied_jobs_cv->count() > 0)) disabled @endif >
                         <label for="search"><span class="input-group-addon">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32" width="32">
                         <path fill="currentColor" fill-rule="evenodd" d="M22.412
@@ -61,49 +61,48 @@
                 </div>
 
               <table class="table table-hover table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Jobb</th>
-                <th>Bruker</th>
-                <th>Epost</th>
-                <th>Telefon</th>
-                <th>Fødselsår</th>
-                <th>Utdannelse</th>
-                <th>Nåværende stilling</th>
-                <th>Utsikt</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if($applied_jobs_cv->count() > 0)
-                @foreach($applied_jobs_cv as $key=>$applied_job_cv)
-                    <tr class="end_fav_item" data-name="{{$applied_job_cv->name}}">
-                        <td>{{$applied_job_cv->id}}</td>
-                        <td title="{{$applied_job_cv->job && $applied_job_cv->job->title ? $applied_job_cv->job->title : ''}}">{{$applied_job_cv->job && $applied_job_cv->job->title ? Str::limit($applied_job_cv->job->title,25) : ''}}</td>
-                        <td>{{$applied_job_cv->name}}</td>
-                        <td>{{$applied_job_cv->email}}</td>
-                        <td>{{$applied_job_cv->telephone}}</td>
-                        <td>{{$applied_job_cv->dob}}</td>
-                        <td>{{$applied_job_cv->education}}</td>
-                        <td title="{{$applied_job_cv->current_position}}">{{Str::limit($applied_job_cv->current_position,25)}}</td>
-                        <td>
-                            @if($applied_job_cv->cv_type == 'external-cv' && $applied_job_cv->media)
-                                <a href="{{\App\Helpers\common::getMediaPath($applied_job_cv->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
-                            @else
-                                <a href="{{$applied_job_cv->user && $applied_job_cv->user->cv ? url('my-business/cv/view_pdf_cv', $applied_job_cv->user->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
-                            @endif
-                        </td>
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Jobb</th>
+                        <th>Bruker</th>
+                        <th>Epost</th>
+                        <th>Telefon</th>
+                        <th>Fødselsår</th>
+                        <th>Utdannelse</th>
+                        <th>Nåværende stilling</th>
+                        <th>Utsikt</th>
                     </tr>
-                @endforeach
-            @else
-                <tr><td colspan="9"><p class="alert alert-warning">Det er ingen elementer på listen!.</p></td></tr>
-            @endif
+                </thead>
+                <tbody>
+                    @if($applied_jobs_cv->count() > 0)
+                        @foreach($applied_jobs_cv as $key=>$applied_job_cv)
+                            <tr class="cv-item" data-name="{{$applied_job_cv->name}}">
+                                <td>{{$applied_job_cv->id}}</td>
+                                <td title="{{$applied_job_cv->job && $applied_job_cv->job->title ? $applied_job_cv->job->title : ''}}">{{$applied_job_cv->job && $applied_job_cv->job->title ? Str::limit($applied_job_cv->job->title,25) : ''}}</td>
+                                <td>{{$applied_job_cv->name}}</td>
+                                <td>{{$applied_job_cv->email}}</td>
+                                <td>{{$applied_job_cv->telephone}}</td>
+                                <td>{{$applied_job_cv->dob}}</td>
+                                <td>{{$applied_job_cv->education}}</td>
+                                <td title="{{$applied_job_cv->current_position}}">{{Str::limit($applied_job_cv->current_position,25)}}</td>
+                                <td>
+                                    @if($applied_job_cv->cv_type == 'external-cv' && $applied_job_cv->media)
+                                        <a href="{{\App\Helpers\common::getMediaPath($applied_job_cv->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                    @else
+                                        <a href="{{$applied_job_cv->user && $applied_job_cv->user->cv ? url('my-business/cv/view_pdf_cv', $applied_job_cv->user->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr><td colspan="9"><p class="alert alert-warning">Det er ingen elementer på listen!.</p></td></tr>
+                    @endif
+                    <tr class="not-found d-none"><td colspan="9"><p class="alert alert-warning">Det er ingen elementer på listen!.</p></td></tr>
 
-            <tr class="not"><td colspan="9"><p class="alert alert-warning">Det er ingen elementer på listen!.</p></td></tr>
 
-
-        </tbody>
-    </table>
+                </tbody>
+            </table>
 
               
             </div>
@@ -114,36 +113,28 @@
 @section('script')
     <script>
 
-        $('#landing_list_search12').keyup(function (e) {
-            if($(this).val().length > 0){
-                $.each($('.end_fav_item'), function(){
-                    if($(this).attr('data-name').toLowerCase().search($('#landing_list_search').val().toLowerCase())<0){
-                        $(this).hide()
-                    }
-                    else{
-                        $(this).show();
-                    }
-                });
-            }
-            else{
-                $('.end_fav_item').show();
-            }
-        });
 
         $('#landing_list_search').keyup(function(){
 
+            $('.not-found').addClass('d-none');
             // Search Text
             var search = $(this).val().toUpperCase();
 
-
-            $("table > tbody > tr").each(function() {
+            $("table > tbody > tr:not(.not-found)").each(function() {
                 if ($(this).text().toUpperCase().search(search) > -1) {
                     $(this).show();
-                }
-                else {
+                    $(this).addClass('record-found');
+                } else {
                     $(this).hide();
+                    $(this).removeClass('record-found');
                 }
             });
+
+            if(!($('.cv-item').hasClass('record-found'))){
+               $('.not-found').removeClass('d-none');
+            }
+
+
         });
 
     </script>
