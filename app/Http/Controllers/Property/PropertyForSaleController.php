@@ -189,6 +189,8 @@ class PropertyForSaleController extends Controller
         if (isset($request->user_id) && !empty($request->user_id)) {
             $query->where('ads.user_id', $request->user_id);
         }
+        $query->orderBy('ads.published_on', 'DESC');
+
         switch ($sort) {
             case 'published':
                 $query->orderBy('ads.updated_at', 'DESC');
@@ -212,6 +214,8 @@ class PropertyForSaleController extends Controller
                 $query->orderBy('total_price', 'DESC');
                 break;
         }
+       
+
 
         $query->where($arr);
 
@@ -287,7 +291,8 @@ class PropertyForSaleController extends Controller
                         $delete_media = common::delete_json_media($request->deleted_media);
                     }
                 }
-                $response = $ad->update(['status' => 'published']);
+                $published_date = date("Y-m-d H:i:s");
+                $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
                 if ($response) {
 //        notifications bellow
                     common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-sale');

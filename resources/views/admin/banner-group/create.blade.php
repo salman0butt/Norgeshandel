@@ -49,15 +49,27 @@ Add new Banner Group
                   <div class="col-md-6">
                     <label class="col-md-12 control-label" for="Location">Location<span class="red">*</span></label>
                     <div class="col-md-12">
-                        <select class="form-control custom-select" id="Location" name="location"
-                            style="width: 100%;" aria-hidden="true" required>
-                            <option value="">Select</option>
+                        <select class="select2 form-control custom-select" id="Location" id="position" name="location"
+                            style="width: 100%;" multiple="" data-select2-id="1" " aria-hidden="true" required>
                             <option value="left">Left</option>
                             <option value="right">Right</option>
                             <option value="top">Top</option>
                         </select>
                     </div>
-                </div>
+                    <script>
+                 
+                        $('select').on('select2:select', function (e) {
+                            var data = e.params.data;
+                         
+                            if(data.id == 'top'){
+                             this.children[0].setAttribute('disabled','disabled');
+                              this.children[1].setAttribute('disabled','disabled');
+                             $(".select2").select2();
+                            }
+                        });
+
+                    </script>
+                </div>=
               <div class="col-md-6">
                     <label class="col-md-12 control-label" for="category">Category<span class="red">*</span></label>
                     <div class="col-md-12">
