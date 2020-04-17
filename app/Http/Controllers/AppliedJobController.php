@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Mail;
 
 class AppliedJobController extends Controller
 {
@@ -99,10 +100,11 @@ class AppliedJobController extends Controller
             DB::beginTransaction();
             try{
                 $cv_type = 'norgeshandel-cv';
+                $file_name = 'Norgeshandel-cv.pdf';
 
                 if($request->file('cv')){
                     $cv_type = 'external-cv';
-                    $file = $request->file('cv');
+                    $file_name = $request->file('cv')->getClientOriginalName();
                 }
 
                 $apply_job = new AppliedJob($request->except('cv'));
@@ -114,6 +116,14 @@ class AppliedJobController extends Controller
                 if($request->file('cv')){
                     $cv_pdf = common::update_media($request->file('cv'), $apply_job->id, 'App\AppliedJob', 'applied_job_cv');
                 }
+
+                $to_name = $apply_job->name;
+                $to_email = $apply_job->email;
+                $subject = 'Takk for søknaden din på stillingen "'.$apply_job->job->title.'"';
+                Mail::send('mail.cv_applied_on_job',compact('apply_job','file_name'), function ($message) use ($to_name, $to_email,$subject) {
+                    $message->to($to_email, $to_name)->subject($subject);
+                    $message->from('developer@digitalmx.no', 'NorgesHandel');
+                });
 
                 DB::commit();
                 session()->flash('success', 'Du har søkt på denne jobben.');
