@@ -20,7 +20,7 @@
             </h2>
         </div>
         <div class="col-md-12">
-            <div class="hits fa-pull-right"><span class="font-weight-bold">36 331</span> treff på <span
+            <div class="hits fa-pull-right"><span class="font-weight-bold">{{count($jobs) ? $jobs->sum('positions') : '0'}}</span> stillinger i <span
                     class="font-weight-bold">{{count($jobs)}}</span> annonser
             </div>
         </div>

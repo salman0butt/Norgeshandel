@@ -240,7 +240,10 @@ Route::group(['middleware' => 'authverified'], function () {
         //Apply Job
         Route::get('recruitment/hired/frontend/applynow/{id}', 'AppliedJobController@edit')->name('apply-job');
         Route::resource('applied-jobs', 'AppliedJobController');
-
+        //View all applied jobs list to users
+        Route::get('applied/jobs/list', 'AppliedJobController@applied_jobs_list')->name('apply-jobs-list');
+        //View All CVs to company users
+        Route::get('users/cv/list', 'Cv\CvController@cv_list')->name('cv-list');
 
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         Route::get('my-business/my-ads/{id}/options', 'AdController@ad_option');
@@ -274,9 +277,9 @@ Route::group(['middleware' => 'authverified'], function () {
         //Clear Searches
         Route::post('clear-searches', 'HomeController@clearSearches')->name('clear-searches');
 
-//    Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
+        //Route::get('my-business', function () {return view('user-panel.my_business');})->name('my-business');
 
-//    my business/min handel page routes
+        //my business/min handel page routes
         Route::group(['prefix' => 'my-business'], function () {
             Route::get('savedsearches', 'SearchController@index');
             Route::resource('search', 'SearchController');
@@ -375,9 +378,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('/setting', function () {
             return view('user-panel.my-business.settings');
         });
-          Route::get('cv-list', function() {
-            return view('user-panel.my-business.cv.cv_list');
-        });
+
         Route::post('store-notifications-setting','Admin\Users\AdminUserController@store_notifications_setting')->name('store_notifications_setting');
 
 
@@ -506,7 +507,22 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('update-ad-visibility','AdController@update_ad_visibility');
 
 
-
+        Route::get('company-follow', function (Request $request) {
+            if($request->company_id){
+                $company_follow = \App\Models\Following::where('company_id',$request->company_id)->where('user_id',Auth::id())->first();
+                if($company_follow){
+                    $company_follow->delete();
+                }else{
+                    $company_follow = new \App\Models\Following();
+                    $company_follow->user_id = Auth::id();
+                    $company_follow->company_id = $request->company_id;
+                    $company_follow->save();
+                }
+                return json_encode('success');
+            }else{
+                return json_encode('success');
+            }
+        });
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager']], function () {
