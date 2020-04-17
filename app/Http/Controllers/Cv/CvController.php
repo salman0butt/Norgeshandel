@@ -178,21 +178,32 @@ class CvController extends Controller
         return back();
     }
 
+    //Download is CV in Pdf
     public function download_pdf($cv_id){
         $cv =   Cv::find($cv_id);
         $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
         $pdf = new Pdf($html);
         $pdf->download('NorgesHandel-CV-'.$cv_id.'-'.$cv->user->first_name.' '.$cv->user->last_name.'.pdf');
         return back();
-//        return $pdf->stream('document.pdf');
-//        return view('user-panel.my-business.cv.download_pdf', compact('cv'));
     }
 
+    //View is CV in Pdf
     public function view_pdf_cv($cv_id){
         $cv =   Cv::find($cv_id);
         $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
         $pdf = new Pdf($html);
         return $pdf->stream('NorgesHandel-CV-'.$cv_id.'pdf');
+    }
+
+    //list all cvs to comapny users
+    public function cv_list(){
+        $date = Date('Y-m-d');
+        if(Auth::user()->hasRole('company')){
+            $cvs = Cv::where('status','published')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
+            return view('user-panel.my-business.cv.cv-list',compact('cvs'));
+        }else{
+            return redirect('forbidden');
+        }
     }
 
 }

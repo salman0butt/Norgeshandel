@@ -36,7 +36,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business')}}">Min handel</a></li> <!-- ('cv.breadcrumb.sub') -->
-                        <li class="breadcrumb-item"><a href="#">Liste over anvendte jobber</a></li> <!-- ('cv.breadcrumb.main') -->
+                        <li class="breadcrumb-item"><a href="#">liste CV</a></li> <!-- ('cv.breadcrumb.main') -->
                     </ol>
                 </nav>
             </div>
@@ -48,36 +48,33 @@
                         <th>id</th>
                         <th>Jobb</th>
                         <th>Bruker</th>
-                        <th>By</th>
-                        <th>Stillingstype</th>
-                        <th>Sektor</th>
-                        {{--<th>Industri</th>--}}
-                        <th>Jobbfunksjon</th>
-                        <th>Bruk dato</th>
+                        <th>Epost</th>
+                        <th>Telefon</th>
+                        <th>Fødselsår</th>
+                        <th>Utdannelse</th>
+                        <th>Nåværende stilling</th>
                         <th>Utsikt</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @if($applied_jobs->count() > 0)
-                        @foreach($applied_jobs as $key=>$applied_job)
-                            @php
-                                $job_obj = '';
-                                if($applied_job->job){
-                                    $job_obj = $applied_job->job;
-                                }
-                            @endphp
-                            <tr class="cv-item" data-name="{{$applied_job->name}}">
-                                <td>{{$applied_job->id}}</td>
-                                <td title="{{$job_obj ? $job_obj->title : ''}}">{{$job_obj ? Str::limit($job_obj->title,25) : ''}}</td>
-                                <td>{{$job_obj && $job_obj->user && $job_obj->user->username ? $job_obj->user->username : ''}}</td>
-                                <td>{{$job_obj && $job_obj->zip_city ? $job_obj->zip_city : ''}}</td>
-                                <td>{{$job_obj && $job_obj->commitment_type ? $job_obj->commitment_type : ''}}</td>
-                                <td>{{$job_obj && $job_obj->sector ? $job_obj->sector : ''}}</td>
-{{--                                <td>{{$job_obj && $job_obj->industry ? $job_obj->industry : ''}}</td>--}}
-                                <td>{{$job_obj && $job_obj->job_function ? $job_obj->job_function : ''}}</td>
-                                <td>{{$applied_job->created_at->format('d-m-Y')}}</td>
+                    @if($applied_jobs_cv_list->count() > 0)
+                        @foreach($applied_jobs_cv_list as $key=>$applied_jobs_cv_list_obj)
+                            <tr>
+                                <td>{{$applied_jobs_cv_list_obj->id}}</td>
+                                <td title="{{$applied_jobs_cv_list_obj->job && $applied_jobs_cv_list_obj->job->title ? $applied_jobs_cv_list_obj->job->title : ''}}">{{$applied_jobs_cv_list_obj->job && $applied_jobs_cv_list_obj->job->title ? Str::limit($applied_jobs_cv_list_obj->job->title,25) : ''}}</td>
+                                <td>{{$applied_jobs_cv_list_obj->name}}</td>
+                                <td>{{$applied_jobs_cv_list_obj->email}}</td>
+                                <td>{{$applied_jobs_cv_list_obj->telephone}}</td>
+                                <td>{{$applied_jobs_cv_list_obj->dob}}</td>
+                                <td>{{$applied_jobs_cv_list_obj->education}}</td>
+                                <td title="{{$applied_jobs_cv_list_obj->current_position}}">{{Str::limit($applied_jobs_cv_list_obj->current_position,25)}}</td>
                                 <td>
-                                    <a href="{{route('jobs.show',$applied_job->job_id)}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                    <a href="#" class="mr-1"><i class="far fa-heart"></i></a>
+                                    @if($applied_jobs_cv_list_obj->cv_type == 'external-cv' && $applied_jobs_cv_list_obj->media)
+                                        <a href="{{\App\Helpers\common::getMediaPath($applied_jobs_cv_list_obj->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                    @else
+                                        <a href="{{$applied_jobs_cv_list_obj->user && $applied_jobs_cv_list_obj->user->cv ? url('my-business/cv/view_pdf_cv', $applied_jobs_cv_list_obj->user->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

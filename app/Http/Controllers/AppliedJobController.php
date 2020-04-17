@@ -19,11 +19,14 @@ class AppliedJobController extends Controller
      */
     public function index()
     {
-        $applied_jobs_cv = AppliedJob::whereHas('job', function (Builder $query) {
-            $query->where('user_id', Auth::id());
-        })->get();
-
-        return view('user-panel.jobs.applied-jobs-list',compact('applied_jobs_cv'));
+        if(Auth::user()->hasRole('company')){
+            $applied_jobs_cv_list = AppliedJob::whereHas('job', function (Builder $query) {
+                $query->where('user_id', Auth::id());
+            })->orderBy('id','DESC')->get();
+            return view('user-panel.jobs.applied-jobs-cv-list',compact('applied_jobs_cv_list'));
+        }else{
+            return redirect('forbidden');
+        }
     }
 
     /**
@@ -135,5 +138,11 @@ class AppliedJobController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //
+    public function applied_jobs_list(){
+        $applied_jobs = AppliedJob::where('user_id', Auth::id())->orderBy('id','DESC')->get();
+        return view('user-panel.jobs.applied-jobs-list',compact('applied_jobs'));
     }
 }

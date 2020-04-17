@@ -53,11 +53,26 @@
                     <span class="font-weight-bold">Firmaer jeg følger</span>
                 </a>
             </li>
+
+            @if(Auth::user()->hasRole('company'))
+                <li class="dme-btn-outlined-blue mb-1">
+                    <a href="{{route('applied-jobs.index')}}" style="text-decoration: none;">
+                        <span class="font-weight-bold">Anvendte jobber CV</span>
+                    </a>
+                </li>
+                <li class="dme-btn-outlined-blue mb-1">
+                    <a href="{{route('cv-list')}}" style="text-decoration: none;">
+                        <span class="font-weight-bold">CV liste</span>
+                    </a>
+                </li>
+            @endif
+
             <li class="dme-btn-outlined-blue mb-1">
-                <a href="{{route('applied-jobs.index')}}" style="text-decoration: none;">
-                    <span class="font-weight-bold">Anvendte jobber CV</span>
+                <a href="{{route('apply-jobs-list')}}" style="text-decoration: none;">
+                    <span class="font-weight-bold">Anvendte jobber</span>
                 </a>
             </li>
+
         </ul>
         <ul class="list-unstyled col-md-4">
             <li class="dme-btn-outlined-blue mb-1">
