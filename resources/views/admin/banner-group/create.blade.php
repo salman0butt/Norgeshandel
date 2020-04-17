@@ -49,7 +49,7 @@ Add new Banner Group
                   <div class="col-md-6">
                     <label class="col-md-12 control-label" for="Location">Location<span class="red">*</span></label>
                     <div class="col-md-12">
-                        <select class="select2 form-control custom-select" id="Location" id="position" name="location"
+                        <select class="select2 form-control custom-select" id="Location" id="position" name="location[]"
                             style="width: 100%;" multiple="" data-select2-id="1" " aria-hidden="true" required>
                             <option value="left">Left</option>
                             <option value="right">Right</option>
@@ -65,11 +65,25 @@ Add new Banner Group
                              this.children[0].setAttribute('disabled','disabled');
                               this.children[1].setAttribute('disabled','disabled');
                              $(".select2").select2();
+                            }else if(data.id == 'left' || data.id == 'right') {
+                            this.children[2].setAttribute('disabled','disabled');
+                             $(".select2").select2();
+                            }
+                        });
+                            $('select').on('select2:unselect', function (e) {
+                            var data = e.params.data;
+                            if(data.id == 'top'){
+                              this.children[0].removeAttribute('disabled');
+                              this.children[1].removeAttribute('disabled');
+                              $(".select2").select2();
+                            }  else if(data.id == 'left' || data.id == 'right') {
+                              this.children[2].removeAttribute('disabled');
+                               $(".select2").select2();
                             }
                         });
 
                     </script>
-                </div>=
+                </div>
               <div class="col-md-6">
                     <label class="col-md-12 control-label" for="category">Category<span class="red">*</span></label>
                     <div class="col-md-12">

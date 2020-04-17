@@ -44,9 +44,9 @@ class BannerGroupController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->location);
         $data = [
             'title' => $request->title,
-            'location' => $request->location,
             'post_category' => $request->post_category,
             'page_url' => $request->page_url,
             'time_start' => $request->time_start,
@@ -54,9 +54,12 @@ class BannerGroupController extends Controller
         ];
 //   dd($data);
     $bannerGroup = new BannerGroup($data);
+    $bannerGroup->positions()->attach($request->location);
+
     $bannerGroup->save();
     $bannerGroup->banners()->detach();
     $bannerGroup->banners()->attach($request->banners);
+
 
      
      
