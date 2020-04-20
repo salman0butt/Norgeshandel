@@ -73,7 +73,7 @@
                                     @if($applied_jobs_cv_list_obj->cv_type == 'external-cv' && $applied_jobs_cv_list_obj->media)
                                         <a href="{{\App\Helpers\common::getMediaPath($applied_jobs_cv_list_obj->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
                                     @else
-                                        <a href="{{$applied_jobs_cv_list_obj->user && $applied_jobs_cv_list_obj->user->cv ? url('my-business/cv/view_pdf_cv', $applied_jobs_cv_list_obj->user->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                        <a href="{{$applied_jobs_cv_list_obj->cv ? url('my-business/cv/view_pdf_cv', $applied_jobs_cv_list_obj->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
                                     @endif
                                 </td>
                             </tr>
@@ -90,7 +90,9 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#applied_job_table').DataTable();
+            $('#applied_job_table').DataTable({
+                "order": [[ 0, "desc" ]]
+            });
         } );
     </script>
 @endsection

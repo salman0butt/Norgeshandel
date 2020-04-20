@@ -199,7 +199,7 @@ class CvController extends Controller
     public function cv_list(){
         $date = Date('Y-m-d');
         if(Auth::user()->hasRole('company')){
-            $cvs = Cv::where('status','published')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
+            $cvs = Cv::where('status','published')->whereNull('job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
             return view('user-panel.my-business.cv.cv-list',compact('cvs'));
         }else{
             return redirect('forbidden');

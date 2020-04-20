@@ -1071,7 +1071,7 @@ $(document).ready(function () {
                 number: true
             },
             birthday: {
-                date: true
+                required: true,
             },
             gender: {
                 required: true
@@ -1106,7 +1106,10 @@ $(document).ready(function () {
                 digits: true
             },
             dob: {
-                required: true
+                required: true,
+                digits: true,
+                min: 1920,
+                max: 2010
             },
             education: {
                 required: true

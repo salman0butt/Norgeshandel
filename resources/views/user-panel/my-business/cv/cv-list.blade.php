@@ -47,11 +47,12 @@
                         <tr>
                             <th>id</th>
                             <th>Tittel</th>
+                            <th>Industri</th>
                             <th>Navn</th>
                             <th>E-post</th>
                             <th>Sist oppdatert</th>
                             <th>Utløper</th>
-                            <th>Action</th>
+                            <th>Handling</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,10 +61,21 @@
                                 <tr>
                                     <td>{{$cv->id}}</td>
                                     <td>
-                                        @if($cv->visibility == 'anonymous')
-                                            Anonym
-                                        @else
-                                            {{$cv->personal && $cv->personal->title ? $cv->personal->title : ''}}
+                                        {{$cv->personal && $cv->personal->title ? $cv->personal->title : ''}}
+                                    </td>
+                                    @php
+                                        $cv_industries = array();
+                                            if($cv->personal->industries){
+                                                $cv_industries = json_decode($cv->personal->industries);
+                                            }
+                                    @endphp
+                                    <td>
+                                        @if(count($cv_industries))
+                                            <ul class="pl-4">
+                                                @foreach($cv_industries as $cv_industry)
+                                                    <li>{{$cv_industry}}</li>
+                                                @endforeach
+                                            </ul>
                                         @endif
                                     </td>
                                     <td>
@@ -104,7 +116,9 @@
     </main>
 <script>
 $(document).ready( function () {
-    $('#cv_list').DataTable();
+    $('#cv_list').DataTable({
+        "order": [[ 0, "desc" ]]
+    });
 } );    
 </script>
 

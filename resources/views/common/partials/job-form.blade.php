@@ -413,7 +413,7 @@
                                 </select>
                             </div>
                             <label for="app_link_to_receive"
-                                   class="col-md-2 u-t5 apply_link {{$obj_job && $obj_job->app_receive_by == 'email' ? 'd-none' : ''}}">{{__('Link to application form')}} (valgfritt)</label>
+                                   class="col-md-2 u-t5 apply_link {{$obj_job && $obj_job->app_receive_by == 'email' ? 'd-none' : ''}}">{{__('Link to application form')}}</label>
                             <div class="col-sm-4 apply_link {{$obj_job && $obj_job->app_receive_by == 'email' ? 'd-none' : ''}}">
                                 <input type="text" name="app_link_to_receive" id="app_link_to_receive"
                                        class="form-control dme-form-control url_http " value="{{@$obj_job->app_link_to_receive}}" required>
