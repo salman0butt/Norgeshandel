@@ -200,7 +200,7 @@ class common
 //        }
 //    }
 
-    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar', $delete_old = 'true', $process_image = true)
+    public static function update_media($files, $mediable_id, $mediable_type, $type = 'avatar', $delete_old = 'true', $process_image = true,$banner_size = false)
     {
         $max_old_media_order = Media::where('mediable_type', $mediable_type)->where('mediable_id', $mediable_id)->where('type', $type)->orderBy('media_order', 'DESC')->first();
         if ($delete_old == 'true') {
@@ -236,6 +236,12 @@ class common
                 Image::make(asset($path . '/' . $name_unique))->heighten(570)->widen(570)->save($path . '/' . $unique_name . '-570x570.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(768)->widen(768)->save($path . '/' . $unique_name . '-768x768.' . $file->getClientOriginalExtension());
                 Image::make(asset($path . '/' . $name_unique))->heighten(1024)->widen(1024)->save($path . '/' . $unique_name . '-1024x1024.' . $file->getClientOriginalExtension());
+                if ($banner_size) {
+                   Image::make(asset($path . '/' . $name_unique))->heighten(150)->widen(1000)->save($path . '/' . $unique_name . '-1000x150.' . $file->getClientOriginalExtension());
+                   Image::make(asset($path . '/' . $name_unique))->heighten(600)->widen(160)->save($path . '/' . $unique_name . '-160x600.' . $file->getClientOriginalExtension());
+
+
+                }
             }
             $media = new Media(['mediable_id' => $mediable_id, 'mediable_type' => $mediable_type, 'name' => $name, 'name_unique' => $name_unique, 'type' => $type,]);
             $media->media_order = $order + 1;
