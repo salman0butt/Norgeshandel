@@ -265,18 +265,24 @@ class common
         $obj_old_media = Media::where('mediable_id', $mediable_id)
             ->where('mediable_type', $mediable_type)
             ->where('type', $type);
-//        dd($obj_old_media);
+
         $old_media = $obj_old_media->get();
         if ($old_media) {
-            foreach ($old_media as $obj) {
-                $path = 'public/uploads/' . date('Y', strtotime($obj->updated_at)) . '/' . date('m', strtotime($obj->updated_at)) . '/';
-                $arr = explode('.', $obj->name_unique);
 
-                foreach (glob($path . $arr[0] . '*.*') as $file) {
-                    unlink($file);
+            if($mediable_type != 'App\Models\Cv\Cv'){
+                foreach ($old_media as $obj) {
+                    $path = 'public/uploads/' . date('Y', strtotime($obj->updated_at)) . '/' . date('m', strtotime($obj->updated_at)) . '/';
+                    $arr = explode('.', $obj->name_unique);
+
+                    foreach (glob($path . $arr[0] . '*.*') as $file) {
+                        unlink($file);
+                    }
                 }
             }
+
+
             $obj_old_media->delete();
+
         }
     }
 

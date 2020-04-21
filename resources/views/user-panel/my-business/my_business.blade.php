@@ -57,7 +57,7 @@
             @if(Auth::user()->hasRole('company'))
                 <li class="dme-btn-outlined-blue mb-1">
                     <a href="{{route('applied-jobs.index')}}" style="text-decoration: none;">
-                        <span class="font-weight-bold">Anvendte jobber CV</span>
+                        <span class="font-weight-bold">Mottatte søknader</span>
                     </a>
                 </li>
                 <li class="dme-btn-outlined-blue mb-1">
@@ -69,7 +69,7 @@
 
             <li class="dme-btn-outlined-blue mb-1">
                 <a href="{{route('apply-jobs-list')}}" style="text-decoration: none;">
-                    <span class="font-weight-bold">Anvendte jobber</span>
+                    <span class="font-weight-bold">Mine søkte jobber</span>
                 </a>
             </li>
 

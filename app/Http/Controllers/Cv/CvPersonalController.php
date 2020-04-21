@@ -83,7 +83,8 @@ class CvPersonalController extends Controller
     public function update(Request $request, $id)
     {
         $cvpersonal = CvPersonal::where('id', $id)->get()->first();
-        $cvpersonal->update($request->all());
+        $cvpersonal->industries = json_encode($request->industries);
+        $cvpersonal->update($request->except('industries'));
         Session::flash('success', 'Cv er oppdatert');
         return back();
     }

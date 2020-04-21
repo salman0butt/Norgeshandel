@@ -306,7 +306,8 @@ Route::group(['middleware' => 'authverified'], function () {
                 Route::resources([
                     'cvpersonal' => 'Cv\CvPersonalController',
                     'cvexperience' => 'Cv\CvExperienceController',
-                    'cveducation' => 'Cv\CvEducationController'
+                    'cveducation' => 'Cv\CvEducationController',
+                    'metas' => 'Cv\CvMetaController',
                 ]);
                 Route::post('upload_cv_profile', 'Cv\CvController@upload_cv_profile')->name('upload_cv_profile');
 //            Route::post('update_skills', 'Cv\CvController@update_skills')->name('update_skills');

@@ -25,6 +25,7 @@ return [
         'title' => 'CV title *',
         'para' => 'For example, "Bachelor with 4 years experience as an accountant" or "Anesthesia nurse with significant experience in emergency medicine, ambulance service and surgery performed on outpatient patients"',  
     ],
+    'industry' => 'Industri',
     'fname' => 'first name*',
     'lname' => 'last name*',
     'address' => 'Address*',

@@ -7,7 +7,13 @@ $education_levels = ['Vgs/Yrkesskole', 'Folkehøgskole', 'Etatsutdannelse', 'Fag
 $cvexperiences = $cv->experiences;
 $cveducations = $cv->educations;
 $cvlanguages = $cv->languages;
+$industry = \App\Taxonomy::where('slug', 'industry')->first();
+$industries = $industry->terms;
+
 ?>
+@section('style')
+    <link href="{{ asset('public/admin/css/select2.min.css') }}" rel="stylesheet">
+@endsection
 @section('page_content')
     <style type="text/css" id="cv_style">
         a.edit-btn {
@@ -111,6 +117,23 @@ $cvlanguages = $cv->languages;
                                                 <input type="text" class="form-control" id="personal_title" name="title"
                                                        value="{{$cvpersonal->title}}" required>
                                                 <small id="emailHelp" class="form-text text-muted">{{ __('cv.cv-title.para') }}</small>
+                                            </div>
+                                            @php
+                                                $cv_industries = array();
+                                                if($cvpersonal->industries){
+                                                    $cv_industries = json_decode($cvpersonal->industries);
+                                                }
+                                            @endphp
+                                            <div class="form-group">
+                                                <label for="industry">{{ __('cv.industry') }}</label>
+                                                <select class="form-control select2" id="industry" name="industries[]"
+                                                        required multiple="">
+                                                    @if($industries->count())
+                                                        @foreach($industries as $key=>$industry)
+                                                            <option value="{{$industry->name}}" @if(count($cv_industries)) {{in_array($industry->name,$cv_industries) ? 'selected' : ''}} @endif>{{$industry->name}}</option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_first_name">{{ __('cv.fname') }}</label>
@@ -1334,6 +1357,18 @@ $cvlanguages = $cv->languages;
                                                     <th class="th_row" scope="row">{{ __('cv.pre-license') }}</th>
                                                     <td id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
                                                 </tr>
+                                                @if(count($cv_industries))
+                                                    <tr>
+                                                        <th class="th_row" scope="row">{{ __('cv.industry') }}</th>
+                                                        <td id="cvdetails-driverslicense">
+                                                            <ul class="pl-3">
+                                                                @foreach($cv_industries as $industry)
+                                                                    <li>{{$industry}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                                 </tbody>
                                             </table>
 
@@ -1516,6 +1551,18 @@ $cvlanguages = $cv->languages;
                                                     <th class="th_row" scope="row">{{ __('cv.pre-license') }}</th>
                                                     <td id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
                                                 </tr>
+                                                @if(count($cv_industries))
+                                                    <tr>
+                                                        <th class="th_row" scope="row">{{ __('cv.industry') }}</th>
+                                                        <td id="cvdetails-driverslicense">
+                                                            <ul class="pl-3">
+                                                                @foreach($cv_industries as $industry)
+                                                                    <li>{{$industry}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1767,5 +1814,12 @@ $cvlanguages = $cv->languages;
 
             });
         });
+    </script>
+@endsection
+@section('script')
+    <script src="{{ asset('public/admin/js/select2.min.js') }}"></script>
+    <script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>
+    <script>
+        $(".select2").select2();
     </script>
 @endsection

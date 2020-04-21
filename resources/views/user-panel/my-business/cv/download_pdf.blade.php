@@ -118,6 +118,24 @@
                         <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Førerkort</th>
                         <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
                     </tr>
+                    @php
+                        $cv_industries = array();
+                        if($cv->personal->industries){
+                            $cv_industries = json_decode($cv->personal->industries);
+                        }
+                    @endphp
+                    @if(count($cv_industries))
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">{{ __('cv.industry') }}</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-driverslicense">
+                                <ul class="pl-3">
+                                    @foreach($cv_industries as $industry)
+                                        <li>{{$industry}}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                        </tr>
+                    @endif
                     </tbody>
                 </table>
 

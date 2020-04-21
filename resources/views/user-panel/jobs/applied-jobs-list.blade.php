@@ -36,7 +36,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business')}}">Min handel</a></li> <!-- ('cv.breadcrumb.sub') -->
-                        <li class="breadcrumb-item"><a href="#">Liste over anvendte jobber</a></li> <!-- ('cv.breadcrumb.main') -->
+                        <li class="breadcrumb-item"><a href="#">Liste over mine søkte jobber</a></li> <!-- ('cv.breadcrumb.main') -->
                     </ol>
                 </nav>
             </div>
@@ -47,13 +47,13 @@
                     <tr>
                         <th>id</th>
                         <th>Jobb</th>
-                        <th>Bruker</th>
+                        <th>Arbeidsgiver</th>
                         <th>By</th>
                         <th>Stillingstype</th>
                         <th>Sektor</th>
                         {{--<th>Industri</th>--}}
                         <th>Jobbfunksjon</th>
-                        <th>Bruk dato</th>
+                        <th>Dato</th>
                         <th>Utsikt</th>
                     </tr>
                     </thead>
@@ -69,7 +69,7 @@
                             <tr class="cv-item" data-name="{{$applied_job->name}}">
                                 <td>{{$applied_job->id}}</td>
                                 <td title="{{$job_obj ? $job_obj->title : ''}}">{{$job_obj ? Str::limit($job_obj->title,25) : ''}}</td>
-                                <td>{{$job_obj && $job_obj->user && $job_obj->user->username ? $job_obj->user->username : ''}}</td>
+                                <td>{{$job_obj && $job_obj->emp_name ? $job_obj->emp_name : ''}}</td>
                                 <td>{{$job_obj && $job_obj->zip_city ? $job_obj->zip_city : ''}}</td>
                                 <td>{{$job_obj && $job_obj->commitment_type ? $job_obj->commitment_type : ''}}</td>
                                 <td>{{$job_obj && $job_obj->sector ? $job_obj->sector : ''}}</td>
@@ -93,7 +93,9 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#applied_job_table').DataTable();
+            $('#applied_job_table').DataTable({
+                "order": [[ 0, "desc" ]]
+            });
         } );
     </script>
 @endsection

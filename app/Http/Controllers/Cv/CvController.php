@@ -10,6 +10,7 @@ use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
 use App\Models\Cv\CvPreference;
 use App\Models\Language;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -199,8 +200,12 @@ class CvController extends Controller
     public function cv_list(){
         $date = Date('Y-m-d');
         if(Auth::user()->hasRole('company')){
-            $cvs = Cv::where('status','published')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
-            return view('user-panel.my-business.cv.cv-list',compact('cvs'));
+            $cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
+            $shortlisted_cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
+                ->whereHas('meta', function (Builder $query) {
+                    $query->where('user_id', Auth::id())->orderBy('id','DESC');
+                })->get();
+            return view('user-panel.my-business.cv.cv-list',compact('cvs','shortlisted_cvs'));
         }else{
             return redirect('forbidden');
         }

@@ -63,7 +63,7 @@
                         <label title="Fødselsår">
                             Fødselsår
                         </label>
-                        <input type="date" name="dob" class="dme-form-control col-md-12"  />
+                        <input type="text" name="dob" class="dme-form-control col-md-12"  />
                     </div>
 
 

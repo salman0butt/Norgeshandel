@@ -42,69 +42,253 @@
             </div>
             @include('common.partials.flash-messages')
             <div class="mt-5 mb-5">
-                  <table class="table table-hover table-bordered table-striped" id="cv_list">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Tittel</th>
-                            <th>Navn</th>
-                            <th>E-post</th>
-                            <th>Sist oppdatert</th>
-                            <th>Utløper</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if($cvs->count() > 0)
-                            @foreach($cvs as $key=>$cv)
+                <ul class="nav nav-tabs mb-5" id="cv_tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="cv-tab" data-toggle="tab" href="#cvs" role="tab"
+                           aria-controls="home" aria-selected="true">Cvs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="shortlisted-tab" data-toggle="tab" href="#shortlisted_cv" role="tab"
+                           aria-controls="profile" aria-selected="false">Nominert</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="cvs" role="tabpanel" aria-labelledby="cv-tab">
+                        <div class="inner-tab">
+                            <table class="table table-hover table-bordered table-striped" id="cv_list">
+                                <thead>
                                 <tr>
-                                    <td>{{$cv->id}}</td>
-                                    <td>
-                                        @if($cv->visibility == 'anonymous')
-                                            Anonym
-                                        @else
-                                            {{$cv->personal && $cv->personal->title ? $cv->personal->title : ''}}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($cv->visibility == 'anonymous')
-                                            Anonym
-                                        @else
-                                            {{$cv->personal && ($cv->personal->first_name || $cv->personal->last_name) ? $cv->personal->first_name.' '.$cv->personal->last_name : ''}}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($cv->visibility == 'anonymous')
-                                            Anonym
-                                        @else
-                                            {{$cv->personal && $cv->personal->email ? $cv->personal->email : ''}}
-                                        @endif
-                                    </td>
-                                    <td>{{$cv->updated_at ? date('d-m-Y', strtotime($cv->updated_at)) : ''}}</td>
-                                    <td>{{$cv->expiry ? date('d-m-Y',strtotime($cv->expiry)) : ''}}</td>
-                                    <td>
-                                        <a href="#" class="mr-1"><i class="far fa-heart"></i></a>
-                                        @if($cv->visibility == 'anonymous')
-                                            <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
-                                        @else
-                                            <a href="{{ url('my-business/cv/view_pdf_cv', $cv->id)}}" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
-                                            <a href="{{ url('my-business/cv/download_pdf', $cv->id)}}"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
-                                        @endif
-                                    </td>
+                                    <th>id</th>
+                                    <th>Tittel</th>
+                                    <th>Industri</th>
+                                    <th>Navn</th>
+                                    <th>E-post</th>
+                                    <th>Sist oppdatert</th>
+                                    <th>Utløper</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        @else
-                            <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty">Ingen opptak funnet</td></tr>
-                        @endif
-                    </tbody>
-                </table>
+                                </thead>
+                                <tbody>
+                                @if($cvs->count() > 0)
+                                    @foreach($cvs as $key=>$cv)
+                                        @if(!$cv->meta)
+                                            <tr>
+                                                <td>{{$cv->id}}</td>
+                                                <td>
+                                                    {{$cv->personal && $cv->personal->title ? $cv->personal->title : ''}}
+                                                </td>
+                                                <td>
+                                                    @if($cv->personal && $cv->personal->industries)
+                                                        @php
+                                                            $industries = array();
+                                                            $industries = json_decode($cv->personal->industries);
+                                                        @endphp
+
+                                                        @if(count($industries))
+                                                            <ul class="pl-4">
+                                                                @foreach($industries as $industry)
+                                                                    <li>{{$industry}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($cv->visibility == 'anonymous')
+                                                        Anonym
+                                                    @else
+                                                        {{$cv->personal && ($cv->personal->first_name || $cv->personal->last_name) ? $cv->personal->first_name.' '.$cv->personal->last_name : ''}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($cv->visibility == 'anonymous')
+                                                        Anonym
+                                                    @else
+                                                        {{$cv->personal && $cv->personal->email ? $cv->personal->email : ''}}
+                                                    @endif
+                                                </td>
+                                                <td>{{$cv->updated_at ? date('d-m-Y', strtotime($cv->updated_at)) : ''}}</td>
+                                                <td>{{$cv->expiry ? date('d-m-Y',strtotime($cv->expiry)) : ''}}</td>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="mr-1 shortlist-cv" data-id="{{$cv->id}}"><i class="far fa-heart"></i></a>
+                                                    @if($cv->visibility == 'anonymous')
+                                                        <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                                    @else
+                                                        <a href="{{ url('my-business/cv/view_pdf_cv', $cv->id)}}" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{ url('my-business/cv/download_pdf', $cv->id)}}"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty text-center">Ingen opptak funnet</td></tr>
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="shortlisted_cv" role="tabpanel" aria-labelledby="shortlisted-tab">
+                        <div class="inner-tab">
+                            <table class="table table-hover table-bordered table-striped" id="shortlisted_cv_list">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Tittel</th>
+                                    <th>Industri</th>
+                                    <th>Navn</th>
+                                    <th>E-post</th>
+                                    <th>Sist oppdatert</th>
+                                    <th>Utløper</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if($shortlisted_cvs->count() > 0)
+                                    @foreach($shortlisted_cvs as $key=>$shortlisted_cv)
+                                        @if($shortlisted_cv->meta)
+                                            <tr>
+                                                <td>{{$shortlisted_cv->meta->id}}</td>
+                                                <td>
+                                                    {{$shortlisted_cv->personal && $shortlisted_cv->personal->title ? $shortlisted_cv->personal->title : ''}}
+                                                </td>
+                                                <td>
+                                                    @if($shortlisted_cv->personal && $shortlisted_cv->personal->industries)
+                                                        @php
+                                                            $industries = array();
+                                                            $industries = json_decode($shortlisted_cv->personal->industries);
+                                                        @endphp
+
+                                                        @if(count($industries))
+                                                            <ul class="pl-4">
+                                                                @foreach($industries as $industry)
+                                                                    <li>{{$industry}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($shortlisted_cv->visibility == 'anonymous')
+                                                        Anonym
+                                                    @else
+                                                        {{$shortlisted_cv->personal && ($shortlisted_cv->personal->first_name || $shortlisted_cv->personal->last_name) ? $shortlisted_cv->personal->first_name.' '.$shortlisted_cv->personal->last_name : ''}}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if($shortlisted_cv->visibility == 'anonymous')
+                                                        Anonym
+                                                    @else
+                                                        {{$shortlisted_cv->personal && $shortlisted_cv->personal->email ? $shortlisted_cv->personal->email : ''}}
+                                                    @endif
+                                                </td>
+                                                <td>{{$shortlisted_cv->updated_at ? date('d-m-Y', strtotime($shortlisted_cv->updated_at)) : ''}}</td>
+                                                <td>{{$shortlisted_cv->expiry ? date('d-m-Y',strtotime($shortlisted_cv->expiry)) : ''}}</td>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="mr-1 remove-shortlist-cv" data-url="{{route('metas.destroy',$shortlisted_cv->meta->id)}}"><i class="fas fa-heart"></i></a>
+                                                    @if($shortlisted_cv->visibility == 'anonymous')
+                                                        <a href="#" class="mr-1"><i class="fas fa-share"></i></a>
+                                                    @else
+                                                        <a href="{{ url('my-business/cv/view_pdf_cv', $shortlisted_cv->id)}}" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{ url('my-business/cv/download_pdf', $shortlisted_cv->id)}}"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty text-center">Ingen opptak funnet</td></tr>
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+
 
         </div>
     </main>
 <script>
 $(document).ready( function () {
-    $('#cv_list').DataTable();
+    @if($cvs->count() > 0)
+        $('#cv_list').DataTable({
+            "order": [[ 0, "desc" ]]
+        });
+    @endif
+
+    @if($shortlisted_cvs->count() > 0)
+        $('#shortlisted_cv_list').DataTable({
+            "order": [[ 0, "desc" ]]
+        });
+    @endif
+
+
+    function showTab(hash) {
+        if (location.hash != "") {
+            $('#cv_tabs .nav-link').removeClass('active');
+            $('.tab-pane').removeClass('show');
+            $('.tab-pane').removeClass('active');
+            $('.tab-pane' + hash).addClass('show');
+            $('.tab-pane' + hash).addClass('active');
+            $('#cv_tabs .nav-item a[href="'+hash+'"]').addClass('active');
+        }
+    }
+
+    showTab(location.hash);
+
+    $(document).on('click', '#cv_tabs a', function () {
+        location.hash = $(this).attr('href');
+    });
+    //add or remove apply job cv from Cv Meta
+    $(document).on('click', '.shortlist-cv', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        // var id = $(this).data('company_id');
+        var company_id = null;
+
+        $.ajax({
+            url: "{{route('metas.store')}}",
+            type: "POST",
+            data: {'value':id,'key':'cv','company_id':company_id},
+            async: false,
+            success: function (response) {
+                if(response.msg == 'Cv er allerede på listen.'){
+                    notify("error",response.msg);
+                }else{
+                    location.reload();
+                }
+            },
+            error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                var errors = jqXhr.responseJSON;
+
+                notify("error","noe gikk galt!");
+                return false;
+            },
+        });
+    });
+
+    //add or remove apply job cv from Cv Meta
+    $(document).on('click', '.remove-shortlist-cv', function (e) {
+        e.preventDefault();
+
+        var url = $(this).data('url');
+        $.ajax({
+            url: url,
+            type: "delete",
+            data:{'id':1},
+            async: false,
+            success: function (response) {
+                location.reload();
+            },
+            error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                var errors = jqXhr.responseJSON;
+
+                notify("error","noe gikk galt!");
+                return false;
+            },
+        });
+    });
 } );    
 </script>
 

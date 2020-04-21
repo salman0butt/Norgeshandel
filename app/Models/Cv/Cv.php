@@ -2,7 +2,9 @@
 
 namespace App\Models\Cv;
 
+use App\Admin\Jobs\Job;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Cv extends Model
 {
@@ -11,6 +13,10 @@ class Cv extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+
+//    public function job(){
+//        return $this->belongsTo(Job::class);
+//    }
 
     public function media(){
         return $this->morphOne('App\Media', 'mediable');
@@ -34,5 +40,9 @@ class Cv extends Model
 
     public function educations(){
         return $this->hasMany('App\Models\Cv\CvEducation');
+    }
+
+    public function meta(){
+        return $this->hasOne(CvMeta::class,'value','id')->where('key','cv')->where('user_id',Auth::id());
     }
 }
