@@ -10,13 +10,14 @@
     left: 10px;
 }
 </style>
-<div class="left-ad float-left">
-    <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
-</div>
-<div class="dme-container pl-3 pr-3">
-    <div class="row top-ad">
-        <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+   @php $banner_ad_category = 'real-estate-sub'; @endphp
+    <div class="left-ad float-left" id="left_banner_ad">
+        @include('user-panel.banner-ads.left-banner')
     </div>
+<div class="dme-container pl-3 pr-3">
+        <div class="row top-ad" id="top_banner_ad">
+            @include('user-panel.banner-ads.top-banner')
+        </div>
     <div class="row mt-4">
         <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
             <h2 class="u-t2 p-2">&nbsp; Næringseiendom til slags</h2>
@@ -145,8 +146,8 @@
     </script>
 </div>
 <!--    ended container-->
-<div class="right-ad pull-right">
-    <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
+<div class="right-ad pull-right" id="right_banner_ad">
+    @include('user-panel.banner-ads.right-banner')
 </div>
 <script>
    $( document ).ready(function() {

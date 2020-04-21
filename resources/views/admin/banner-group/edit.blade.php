@@ -78,7 +78,8 @@ Edit Banner Group
                             <option value="jobs-sub" {{ ($banner_group->post_category == 'jobs-sub' ? 'selected' : '')}}>Jobs sub Category</option>
                             <option value="real-estate-main" {{ ($banner_group->post_category == 'real-estate-main' ? 'selected' : '')}}>Real Estate main Category</option>
                             <option value="real-estate-sub" {{ ($banner_group->post_category == 'real-estate-sub' ? 'selected' : '')}}>Real Estate sub Category</option>
-                            <option value="ad-landing" {{ ($banner_group->post_category == 'ad-landing' ? 'selected' : '')}}>Ads Landing Page</option>
+                             <option value="jobs-landing" {{ ($banner_group->post_category == 'jobs-landing' ? 'selected' : '')}}>Job Landing Pages</option>
+                            <option value="property-landing" {{ ($banner_group->post_category == 'property-landing' ? 'selected' : '')}}>Property Landing Pages</option>
                         
                         </select>
                     </div>
