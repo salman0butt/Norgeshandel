@@ -45,7 +45,7 @@
                                             <span class="status status--success u-mb0"
                                                   style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">
                                                 @if($notif->notifiable_type==\App\Models\Search::class)
-                                                    Treff i lagret søk
+                                                    Søket er lagret!
                                                 @else
                                                     Treff i favoritter
                                                 @endif
