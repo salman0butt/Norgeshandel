@@ -29,7 +29,14 @@ class AppliedJobController extends Controller
             $applied_jobs_cv_list = AppliedJob::whereHas('job', function (Builder $query) {
                 $query->where('user_id', Auth::id());
             })->orderBy('id','DESC')->get();
-            return view('user-panel.jobs.applied-jobs-cv-list',compact('applied_jobs_cv_list'));
+
+            $shortlisted_applied_jobs_cv_list = AppliedJob::whereHas('job', function (Builder $query) {
+                $query->where('user_id', Auth::id());
+            })->whereHas('meta', function (Builder $query) {
+                $query->where('user_id', Auth::id())->orderBy('id','DESC');
+            })->get();
+
+            return view('user-panel.jobs.applied-jobs-cv-list',compact('applied_jobs_cv_list','shortlisted_applied_jobs_cv_list'));
         }else{
             return redirect('forbidden');
         }
