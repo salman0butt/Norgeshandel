@@ -90,9 +90,12 @@ Add new Banner Group
                         <select class="form-control custom-select" id="post_category" name="post_category"
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
-                            <option value="home">Home</option>
-                            <option value="jobs">Jobs</option>
-                            <option value="real-estate">Real Estate</option>
+                            <option value="home">Home Page</option>
+                            <option value="jobs-main">Jobs main Category Pages</option>
+                            <option value="jobs-sub">Jobs sub Category Pages</option>
+                            <option value="real-estate-main">Real Estate main Category Pages</option>
+                            <option value="real-estate-sub">Real Estate sub Category Pages</option>
+                            <option value="ad-landing">Ads Landing Pages</option>
                         </select>
                     </div>
                 </div>

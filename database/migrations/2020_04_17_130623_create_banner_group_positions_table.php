@@ -15,8 +15,11 @@ class CreateBannerGroupPositionsTable extends Migration
     {
         Schema::create('banner_group_positions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('position')->default('0');
+            $table->unsignedBigInteger('banner_group_id');
+            $table->string('position');
             $table->timestamps();
+            $table->foreign('banner_group_id')->references('id')->on('banner_groups')->onDelete('cascade');;
+
         });
     }
 

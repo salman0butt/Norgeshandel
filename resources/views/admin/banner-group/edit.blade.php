@@ -1,6 +1,5 @@
 @extends('layouts/admin')
 
-
 @section('main_title')
 Edit Banner Group
 @endsection
@@ -52,12 +51,19 @@ Edit Banner Group
                   <div class="col-md-6">
                     <label class="col-md-12 control-label" for="Location">Location<span class="red">*</span></label>
                     <div class="col-md-12">
-                        <select class="form-control custom-select" id="Location" name="location"
-                            style="width: 100%;" aria-hidden="true" required>
-                            <option value="">Select</option>
-                            <option value="left"{{ ($banner_group->location == 'left' ? 'selected' : '')}}>Left</option>
-                            <option value="right" {{ ($banner_group->location == 'right' ? 'selected' : '')}}>Right</option>
-                            <option value="top" {{ ($banner_group->location == 'top' ? 'selected' : '')}}>Top</option>
+                        <select class="form-control custom-select select2" id="position" name="location[]"
+                            style="width: 100%;" aria-hidden="true" required multiple>
+                              @php
+                            $arr = array('');
+                              foreach ($banner_group->positions as $pos){
+                                  $arr[$pos->position] = $pos->position;
+                                 
+                              }    
+                                      
+                            @endphp
+                            <option value="left"{{ ( isset($arr['left']) == 'left' ? 'selected' : '')}}>Left</option>
+                            <option value="right" {{ (isset($arr['right']) == 'right' ? 'selected' : '')}}>Right</option>
+                            <option value="top" {{ (isset($arr['top']) == 'top' ? 'selected' : '')}}>Top</option>
                         </select>
                     </div>
                 </div>
@@ -68,8 +74,11 @@ Edit Banner Group
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
                             <option value="home" {{ ($banner_group->post_category == 'home' ? 'selected' : '')}}>Home</option>
-                            <option value="jobs" {{ ($banner_group->post_category == 'jobs' ? 'selected' : '')}}>Jobs</option>
-                            <option value="real-estate" {{ ($banner_group->post_category == 'real-estate' ? 'selected' : '')}}>Real Estate</option>
+                             <option value="jobs-main" {{ ($banner_group->post_category == 'jobs-main' ? 'selected' : '')}}>Jobs main Category</option>
+                            <option value="jobs-sub" {{ ($banner_group->post_category == 'jobs-sub' ? 'selected' : '')}}>Jobs sub Category</option>
+                            <option value="real-estate-main" {{ ($banner_group->post_category == 'real-estate-main' ? 'selected' : '')}}>Real Estate main Category</option>
+                            <option value="real-estate-sub" {{ ($banner_group->post_category == 'real-estate-sub' ? 'selected' : '')}}>Real Estate sub Category</option>
+                            <option value="ad-landing" {{ ($banner_group->post_category == 'ad-landing' ? 'selected' : '')}}>Ads Landing Page</option>
                         
                         </select>
                     </div>
@@ -118,7 +127,33 @@ Edit Banner Group
     $(".select2").select2();
 
 </script>
+        <script>
+                 
+                        $('select').on('select2:select', function (e) {
+                            var data = e.params.data;
+                         
+                            if(data.id == 'top'){
+                             this.children[0].setAttribute('disabled','disabled');
+                              this.children[1].setAttribute('disabled','disabled');
+                             $(".select2").select2();
+                            }else if(data.id == 'left' || data.id == 'right') {
+                            this.children[2].setAttribute('disabled','disabled');
+                             $(".select2").select2();
+                            }
+                        });
+                            $('select').on('select2:unselect', function (e) {
+                            var data = e.params.data;
+                            if(data.id == 'top'){
+                              this.children[0].removeAttribute('disabled');
+                              this.children[1].removeAttribute('disabled');
+                              $(".select2").select2();
+                            }  else if(data.id == 'left' || data.id == 'right') {
+                              this.children[2].removeAttribute('disabled');
+                               $(".select2").select2();
+                            }
+                        });
 
+                    </script>
 
 
 @endsection

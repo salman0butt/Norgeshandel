@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Admin\Banners\BannerGroup;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class BannerController extends Controller
 {
@@ -62,7 +63,7 @@ class BannerController extends Controller
 
         if (!empty($request->banner_image)) {
            $file = $request->banner_image;
-            common::update_media($file, $banner->id, Banner::class, 'banner');
+            common::update_media($file, $banner->id, Banner::class, 'banner',true,true,true);
         }
 
 

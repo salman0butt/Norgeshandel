@@ -17,7 +17,7 @@ class BannerGroup extends Model
         return $this->belongsToMany(Banner::class, 'banners_banner_groups');
     }
     public function positions() {
-        return $this->belongsToMany(BannerGroup_position::class,'banner_group_positions');
+        return $this->hasMany(BannerGroup_position::class,'banner_group_id');
     }
 
 }

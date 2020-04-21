@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin\ads;
 
 use App\Admin\ads\Banner;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Admin\Banners\BannerGroup;
+use App\Http\Controllers\Controller;
+use App\Admin\Banners\BannerGroup_position;
 
 
 class BannerGroupController extends Controller
@@ -43,8 +44,7 @@ class BannerGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request->location);
+        
         $data = [
             'title' => $request->title,
             'post_category' => $request->post_category,
@@ -52,11 +52,20 @@ class BannerGroupController extends Controller
             'time_start' => $request->time_start,
             'time_end' => $request->time_end   
         ];
-//   dd($data);
-    $bannerGroup = new BannerGroup($data);
-    $bannerGroup->positions()->attach($request->location);
 
+    $bannerGroup = new BannerGroup($data);
+
+    
     $bannerGroup->save();
+    //dd($request->location);
+    
+    foreach($request->location as $location){
+        $Banner_pos = new BannerGroup_position();
+        $Banner_pos->position = $location;
+        $bannerGroup->positions()->save($Banner_pos);
+    }
+  
+
     $bannerGroup->banners()->detach();
     $bannerGroup->banners()->attach($request->banners);
 
@@ -108,7 +117,6 @@ class BannerGroupController extends Controller
         //
            $data = [
             'title' => $request->title,
-            'location' => $request->location,
             'post_category' => $request->post_category,
             'page_url' => $request->page_url,
             'time_start' => $request->time_start,
@@ -117,6 +125,15 @@ class BannerGroupController extends Controller
 //   dd($data);
     $bannerGroup = BannerGroup::find($id);
     $bannerGroup->update($data);
+    $bannerGroup->positions()->delete();
+
+    foreach ($request->location as $location) {
+        $Banner_pos = new BannerGroup_position();
+        $Banner_pos->position = $location;
+     
+        $bannerGroup->positions()->save($Banner_pos);
+    }
+
     $bannerGroup->banners()->detach();
     $bannerGroup->banners()->attach($request->banners);
      

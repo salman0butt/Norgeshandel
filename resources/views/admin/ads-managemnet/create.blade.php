@@ -20,7 +20,7 @@ Add new Banner Ad
     <div class="row">
            <div class="col-md-12 mb-1">
             <div class="profile" style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;">
-                <img src="{{asset('public/admin/images/banners/1280x720.png')}}" id="profile_image"
+                <img src="{{asset('public/admin/images/banners/1280x720.png')}}" id="banner_image"
                     style="width:100%; max-height: 250px; height:250px;" alt="">
             </div>
     </div>
@@ -107,7 +107,7 @@ Add new Banner Ad
         </div>
         <div class="row col-md-8 offset-2 mb-2">
          <div class="custom-file">
-                <input type="file" name="banner_image" class="custom-file-input" id="banner_image_select">
+                <input type="file" name="banner_image" class="custom-file-input" id="banner_image_select" onchange="readURL(this);">
                 <label class="custom-file-label" for="validatedCustomFile">Choose Banner ad Image...</label>
                 <div class="invalid-feedback"></div>
             </div>
@@ -132,7 +132,20 @@ Add new Banner Ad
     $(".select2").select2();
 
 </script>
+<script>
+       function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#banner_image')
+                        .attr('src', e.target.result)
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
 
 
 @endsection
