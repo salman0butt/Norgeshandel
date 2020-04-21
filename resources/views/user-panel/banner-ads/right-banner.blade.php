@@ -1,7 +1,10 @@
 @php
+use Illuminate\Database\Eloquent\Builder;
     $now_date_time = date('Y-m-d H:i:00');
     $right_banner_group = \App\Admin\Banners\BannerGroup::where('post_category',$banner_ad_category)
-                        ->where('location','right')->where('time_start','<=',$now_date_time)
+                        ->whereHas('positions', function (Builder $query) {
+                        $query->where('position', 'right');
+                        })->where('time_start','<=',$now_date_time)
                         ->orderBy('time_start','ASC')->get();
 @endphp
 <?php $i = 0; ?>
@@ -14,7 +17,7 @@
                         @php
                             $path = asset('public/images/top-ad.png');
                             if($right_banner_group_banner->media){
-                                $path = \App\Helpers\common::getMediaPath($right_banner_group_banner->media);
+                                $path = \App\Helpers\common::getMediaPath($right_banner_group_banner->media,'160x600');
                             }
                             $time_out = '';
                             $seconds = 1;
@@ -32,7 +35,7 @@
 
                         @endphp
                         <a href="{{$right_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_right_banner_img'}}" data-time="{{$time_out}}">
-                            <img class="d-block w-100" src="{{$path}}" alt="First slide">
+                            <img class="w-100" src="{{$path}}" alt="First slide">
                         </a>
                         <?php $i++ ?>
                     @endif

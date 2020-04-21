@@ -29,14 +29,14 @@ Add new Banner Group
                 {{-- {{ dd($banners) }} --}}
                  <div class="col-md-6">
                     <label class="col-md-12">Select Banners</label>
-                    <div class="form-group row">
+                    <div class="row">
                         <div class="col-md-12">
-                            <select class="select2 form-control m-t-15 select2-hidden-accessible" name="banners" multiple=""
-                                style="height: 36px;width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                              
+                            <select class="select2 form-control custom-select select2-hidden-accessible" name="banners" multiple style="height: 36px;width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true">
+
                                    @foreach($banners as $banner)
-                                    <option value="{{ $banner->id }}" data-select2-id="{{ $banner->id }}">{{ $banner->title }}</option>
+                                    <option value="{{ $banner->id }}">{{ $banner->title }}</option>
                                    @endforeach
+                           
                             </select>
                             {{-- <span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" data-select2-id="5" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" style="display:none !important;"  role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="Nebraska" data-select2-id="74"><span class="select2-selection__choice__remove" role="presentation">×</span>Nebraska</li><li class="select2-selection__choice" title="New Mexico" data-select2-id="75"><span class="select2-selection__choice__remove" role="presentation">×</span>New Mexico</li><li class="select2-selection__choice" title="South Dakota" data-select2-id="76"><span class="select2-selection__choice__remove" role="presentation">×</span>South Dakota</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span> --}}
                         </div>
@@ -49,8 +49,8 @@ Add new Banner Group
                   <div class="col-md-6">
                     <label class="col-md-12 control-label" for="Location">Location<span class="red">*</span></label>
                     <div class="col-md-12">
-                        <select class="select2 form-control custom-select" id="Location" id="position" name="location"
-                            style="width: 100%;" multiple="" data-select2-id="1" " aria-hidden="true" required>
+                        <select class="select2 form-control custom-select" id="Location" id="position" name="location[]"
+                            style="width: 100%;" multiple="" data-select2-id="1" aria-hidden="true" required>
                             <option value="left">Left</option>
                             <option value="right">Right</option>
                             <option value="top">Top</option>
@@ -65,20 +65,38 @@ Add new Banner Group
                              this.children[0].setAttribute('disabled','disabled');
                               this.children[1].setAttribute('disabled','disabled');
                              $(".select2").select2();
+                            }else if(data.id == 'left' || data.id == 'right') {
+                            this.children[2].setAttribute('disabled','disabled');
+                             $(".select2").select2();
+                            }
+                        });
+                            $('select').on('select2:unselect', function (e) {
+                            var data = e.params.data;
+                            if(data.id == 'top'){
+                              this.children[0].removeAttribute('disabled');
+                              this.children[1].removeAttribute('disabled');
+                              $(".select2").select2();
+                            }  else if(data.id == 'left' || data.id == 'right') {
+                              this.children[2].removeAttribute('disabled');
+                               $(".select2").select2();
                             }
                         });
 
                     </script>
-                </div>=
+                </div>
               <div class="col-md-6">
                     <label class="col-md-12 control-label" for="category">Category<span class="red">*</span></label>
                     <div class="col-md-12">
                         <select class="form-control custom-select" id="post_category" name="post_category"
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
-                            <option value="home">Home</option>
-                            <option value="jobs">Jobs</option>
-                            <option value="real-estate">Real Estate</option>
+                            <option value="home">Home Page</option>
+                            <option value="jobs-main">Jobs main Category Pages</option>
+                            <option value="jobs-sub">Jobs sub Category Pages</option>
+                            <option value="real-estate-main">Real Estate main Category Pages</option>
+                            <option value="real-estate-sub">Real Estate sub Category Pages</option>
+                            <option value="jobs-landing">Job Landing Pages</option>
+                            <option value="property-landing">Property Landing Pages</option>
                         </select>
                     </div>
                 </div>

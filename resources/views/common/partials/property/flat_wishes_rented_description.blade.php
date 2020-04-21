@@ -1,13 +1,14 @@
 @extends('layouts.landingSite')
 @section('page_content')
 <main>
-    <div class="left-ad float-left">
-        <img src="{{asset('public/images/left-ad.png')}}" class="img-fluid" alt="">
-    </div>
-    <div class="dme-container">
-        <div class="row top-ad">
-            <img src="{{asset('public/images/top-ad.png')}}" class="img-fluid m-auto" alt="">
+    @php $banner_ad_category = 'property-landing'; @endphp
+        <div class="left-ad float-left" id="left_banner_ad">
+            @include('user-panel.banner-ads.left-banner')
         </div>
+    <div class="dme-container">
+           <div class="row top-ad" id="top_banner_ad">
+                @include('user-panel.banner-ads.top-banner')
+            </div>
     </div>
     <div class="dme-container p-3">
         <div class="breade-crumb">
@@ -186,9 +187,9 @@
     </div>
     </div>
 
-    <div class="right-ad pull-right">
-        <img src="{{asset('public/images/right-ad.png')}}" class="img-fluid" alt="">
-    </div>
+        <div class="right-ad pull-right" id="right_banner_ad">
+             @include('user-panel.banner-ads.right-banner')
+        </div>
 </main>
 
 @endsection

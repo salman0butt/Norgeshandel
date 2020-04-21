@@ -45,7 +45,11 @@
                             <tr>
                                 <td>{{ $banner_group->id }}</td>
                                 <td>{{ $banner_group->title }}</td>
-                                <td>{{ $banner_group->location }}</td>
+                                <td>
+                                    @foreach ($banner_group->positions as $pos)
+                                        {{ $pos->position }}<br>
+                                    @endforeach
+                               </td>
                                 <td>{{ $banner_group->post_category }}</td>
                                   <td>{{ $banner_group->page_url }}</td>
                                   <td>
