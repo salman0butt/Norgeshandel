@@ -94,7 +94,7 @@
                                         @endif
                                     @endforeach
                                 @else
-                                    <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty">Ingen opptak funnet</td></tr>
+                                    <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty text-center">Ingen opptak funnet</td></tr>
                                 @endif
                                 </tbody>
                             </table>
@@ -119,27 +119,29 @@
                                 <tbody>
                                 @if($shortlisted_applied_jobs_cv_list->count() > 0)
                                     @foreach($shortlisted_applied_jobs_cv_list as $key=>$shortlisted_jobs_cv_list_obj)
-                                        <tr>
-                                            <td>{{$shortlisted_jobs_cv_list_obj->meta->id}}</td>
-                                            <td title="{{$shortlisted_jobs_cv_list_obj->job && $shortlisted_jobs_cv_list_obj->job->title ? $shortlisted_jobs_cv_list_obj->job->title : ''}}">{{$shortlisted_jobs_cv_list_obj->job && $shortlisted_jobs_cv_list_obj->job->title ? Str::limit($shortlisted_jobs_cv_list_obj->job->title,25) : ''}}</td>
-                                            <td>{{$shortlisted_jobs_cv_list_obj->name}}</td>
-                                            <td>{{$shortlisted_jobs_cv_list_obj->email}}</td>
-                                            <td>{{$shortlisted_jobs_cv_list_obj->telephone}}</td>
-                                            <td>{{$shortlisted_jobs_cv_list_obj->dob}}</td>
-                                            <td>{{$shortlisted_jobs_cv_list_obj->education}}</td>
-                                            <td title="{{$shortlisted_jobs_cv_list_obj->current_position}}">{{Str::limit($shortlisted_jobs_cv_list_obj->current_position,25)}}</td>
-                                            <td>
-                                                <a href="javascript:void(0)" class="mr-1 remove-shortlist-apply-job" data-url="{{route('metas.destroy',$shortlisted_jobs_cv_list_obj->meta->id)}}"><i class="fas fa-heart"></i></a>
-                                                @if($shortlisted_jobs_cv_list_obj->cv_type == 'external-cv' && $shortlisted_jobs_cv_list_obj->media)
-                                                    <a href="{{\App\Helpers\common::getMediaPath($shortlisted_jobs_cv_list_obj->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
-                                                @else
-                                                    <a href="{{$shortlisted_jobs_cv_list_obj->cv ? url('my-business/cv/view_pdf_cv', $shortlisted_jobs_cv_list_obj->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
-                                                @endif
-                                            </td>
-                                        </tr>
+                                        @if($shortlisted_jobs_cv_list_obj->meta)
+                                            <tr>
+                                                <td>{{$shortlisted_jobs_cv_list_obj->meta->id}}</td>
+                                                <td title="{{$shortlisted_jobs_cv_list_obj->job && $shortlisted_jobs_cv_list_obj->job->title ? $shortlisted_jobs_cv_list_obj->job->title : ''}}">{{$shortlisted_jobs_cv_list_obj->job && $shortlisted_jobs_cv_list_obj->job->title ? Str::limit($shortlisted_jobs_cv_list_obj->job->title,25) : ''}}</td>
+                                                <td>{{$shortlisted_jobs_cv_list_obj->name}}</td>
+                                                <td>{{$shortlisted_jobs_cv_list_obj->email}}</td>
+                                                <td>{{$shortlisted_jobs_cv_list_obj->telephone}}</td>
+                                                <td>{{$shortlisted_jobs_cv_list_obj->dob}}</td>
+                                                <td>{{$shortlisted_jobs_cv_list_obj->education}}</td>
+                                                <td title="{{$shortlisted_jobs_cv_list_obj->current_position}}">{{Str::limit($shortlisted_jobs_cv_list_obj->current_position,25)}}</td>
+                                                <td>
+                                                    <a href="javascript:void(0)" class="mr-1 remove-shortlist-apply-job" data-url="{{route('metas.destroy',$shortlisted_jobs_cv_list_obj->meta->id)}}"><i class="fas fa-heart"></i></a>
+                                                    @if($shortlisted_jobs_cv_list_obj->cv_type == 'external-cv' && $shortlisted_jobs_cv_list_obj->media)
+                                                        <a href="{{\App\Helpers\common::getMediaPath($shortlisted_jobs_cv_list_obj->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                    @else
+                                                        <a href="{{$shortlisted_jobs_cv_list_obj->cv ? url('my-business/cv/view_pdf_cv', $shortlisted_jobs_cv_list_obj->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 @else
-                                    <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty">Ingen opptak funnet</td></tr>
+                                    <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty text-center">Ingen opptak funnet</td></tr>
                                 @endif
                                 </tbody>
                             </table>
@@ -154,9 +156,12 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#applied_job_table').DataTable({
-                "order": [[ 0, "desc" ]]
-            }); //
+            @if($applied_jobs_cv_list->count() > 0)
+                $('#applied_job_table').DataTable({
+                    "order": [[ 0, "desc" ]]
+                });
+            @endif
+
             @if($shortlisted_applied_jobs_cv_list->count() > 0)
                 $('#shorlisted_applied_job_table').DataTable({
                     "order": [[ 0, "desc" ]]
@@ -235,6 +240,6 @@
                     },
                 });
             });
-        } );
+        });
     </script>
 @endsection
