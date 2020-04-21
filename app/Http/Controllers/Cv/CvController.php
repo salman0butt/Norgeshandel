@@ -9,6 +9,7 @@ use App\Models\Cv\CvEducation;
 use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
 use App\Models\Cv\CvPreference;
+use App\Models\Cv\CvRequest;
 use App\Models\Language;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Session;
 use niklasravnsborg\LaravelPdf\Pdf;
 //use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+use DB;
 
 class CvController extends Controller
 {
@@ -196,18 +198,43 @@ class CvController extends Controller
         return $pdf->stream('NorgesHandel-CV-'.$cv_id.'pdf');
     }
 
-    //list all cvs to comapny users
+    //list all cvs to company users
     public function cv_list(){
         $date = Date('Y-m-d');
         if(Auth::user()->hasRole('company')){
             $cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
+
             $shortlisted_cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
                 ->whereHas('meta', function (Builder $query) {
                     $query->where('user_id', Auth::id())->orderBy('id','DESC');
                 })->get();
-            return view('user-panel.my-business.cv.cv-list',compact('cvs','shortlisted_cvs'));
+
+            $requested_cvs = Cv::where('status','published')->where('visibility','anonymous')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
+                ->whereHas('user.requests_received', function (Builder $query) {
+                    $query->where('employer_id', Auth::id())->orderBy('id','DESC');
+                })->get();
+
+            return view('user-panel.my-business.cv.cv-list',compact('cvs','shortlisted_cvs','requested_cvs'));
         }else{
             return redirect('forbidden');
+        }
+    }
+
+    //Cv Request
+    public function cv_request(Request $request){
+        DB::beginTransaction();
+        try{
+            CvRequest::updateOrCreate(['user_id' => $request->user_id, 'employer_id' => $request->employer_id], ['status' => $request->status]);
+            DB::commit();
+            $data['msg'] = 'success';
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
     }
 

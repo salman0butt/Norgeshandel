@@ -45,11 +45,11 @@
                 <ul class="nav nav-tabs mb-5" id="applied_cv_tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="cv-tab" data-toggle="tab" href="#cvs" role="tab"
-                           aria-controls="home" aria-selected="true">Cvs</a>
+                           aria-controls="home" aria-selected="true">CV liste</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="shortlisted-tab" data-toggle="tab" href="#shortlisted_cv" role="tab"
-                           aria-controls="profile" aria-selected="false">Nominert</a>
+                           aria-controls="profile" aria-selected="false">Utvalgte</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -66,7 +66,7 @@
                                     <th>Fødselsår</th>
                                     <th>Utdannelse</th>
                                     <th>Nåværende stilling</th>
-                                    <th>Utsikt</th>
+                                    <th>Handling</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -113,7 +113,7 @@
                                     <th>Fødselsår</th>
                                     <th>Utdannelse</th>
                                     <th>Nåværende stilling</th>
-                                    <th>Utsikt</th>
+                                    <th>Handling</th>
                                 </tr>
                                 </thead>
                                 <tbody>

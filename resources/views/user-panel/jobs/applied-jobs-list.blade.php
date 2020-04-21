@@ -54,7 +54,7 @@
                         {{--<th>Industri</th>--}}
                         <th>Jobbfunksjon</th>
                         <th>Dato</th>
-                        <th>Utsikt</th>
+                        <th>Handling</th>
                     </tr>
                     </thead>
                     <tbody>

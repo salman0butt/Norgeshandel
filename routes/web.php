@@ -316,6 +316,7 @@ Route::group(['middleware' => 'authverified'], function () {
                 Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
                 Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
                 Route::get('view_pdf_cv/{cv_id}', 'Cv\CvController@view_pdf_cv')->name('view_pdf_cv');
+                Route::post('cv-request', 'Cv\CvController@cv_request')->name('cv-request');
             });
             Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
             Route::post('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
