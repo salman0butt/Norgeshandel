@@ -83,11 +83,11 @@
                                                 <td>{{$applied_jobs_cv_list_obj->education}}</td>
                                                 <td title="{{$applied_jobs_cv_list_obj->current_position}}">{{Str::limit($applied_jobs_cv_list_obj->current_position,25)}}</td>
                                                 <td>
-                                                    <a href="javascript:void(0)" class="mr-1 shortlist-apply-job" data-company_id="{{$applied_jobs_cv_list_obj->job ? $applied_jobs_cv_list_obj->job->company_id : ''}}" data-apply_job_id = "{{$applied_jobs_cv_list_obj->id}}"><i class="far fa-heart"></i></a>
+                                                    <a href="javascript:void(0)" class="mr-1 shortlist-apply-job" data-company_id="{{$applied_jobs_cv_list_obj->job ? $applied_jobs_cv_list_obj->job->company_id : ''}}" title="Kortliste CV" data-apply_job_id = "{{$applied_jobs_cv_list_obj->id}}"><i class="far fa-heart"></i></a>
                                                     @if($applied_jobs_cv_list_obj->cv_type == 'external-cv' && $applied_jobs_cv_list_obj->media)
-                                                        <a href="{{\App\Helpers\common::getMediaPath($applied_jobs_cv_list_obj->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{\App\Helpers\common::getMediaPath($applied_jobs_cv_list_obj->media)}}" title="Se CV" target="_blank"><i class="fas fa-eye"></i></a>
                                                     @else
-                                                        <a href="{{$applied_jobs_cv_list_obj->cv ? url('my-business/cv/view_pdf_cv', $applied_jobs_cv_list_obj->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{$applied_jobs_cv_list_obj->cv ? url('my-business/cv/view_pdf_cv', $applied_jobs_cv_list_obj->cv->id) : '#'}}" title="Se CV" target="_blank"><i class="fas fa-eye"></i></a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -130,11 +130,11 @@
                                                 <td>{{$shortlisted_jobs_cv_list_obj->education}}</td>
                                                 <td title="{{$shortlisted_jobs_cv_list_obj->current_position}}">{{Str::limit($shortlisted_jobs_cv_list_obj->current_position,25)}}</td>
                                                 <td>
-                                                    <a href="javascript:void(0)" class="mr-1 remove-shortlist-apply-job" data-url="{{route('metas.destroy',$shortlisted_jobs_cv_list_obj->meta->id)}}"><i class="fas fa-heart"></i></a>
+                                                    <a href="javascript:void(0)" class="mr-1 remove-shortlist-apply-job" title="Fjern cv fra kortlisten" data-url="{{route('metas.destroy',$shortlisted_jobs_cv_list_obj->meta->id)}}"><i class="fas fa-heart"></i></a>
                                                     @if($shortlisted_jobs_cv_list_obj->cv_type == 'external-cv' && $shortlisted_jobs_cv_list_obj->media)
-                                                        <a href="{{\App\Helpers\common::getMediaPath($shortlisted_jobs_cv_list_obj->media)}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{\App\Helpers\common::getMediaPath($shortlisted_jobs_cv_list_obj->media)}}" title="Se CV" target="_blank"><i class="fas fa-eye"></i></a>
                                                     @else
-                                                        <a href="{{$shortlisted_jobs_cv_list_obj->cv ? url('my-business/cv/view_pdf_cv', $shortlisted_jobs_cv_list_obj->cv->id) : '#'}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                                        <a href="{{$shortlisted_jobs_cv_list_obj->cv ? url('my-business/cv/view_pdf_cv', $shortlisted_jobs_cv_list_obj->cv->id) : '#'}}" title="Se CV" target="_blank"><i class="fas fa-eye"></i></a>
                                                     @endif
                                                 </td>
                                             </tr>

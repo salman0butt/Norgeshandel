@@ -36,7 +36,7 @@
     $industry = \App\Taxonomy::where('slug', 'industry')->first();
     $industries = $industry->terms;
     $job_function = \App\Taxonomy::where('slug', 'job_function')->first();
-    $job_functions = $job_function->terms;
+    $job_functions = $job_function->terms()->orderBy('name','ASC')->get();
     $sector = \App\Taxonomy::where('slug', 'sector')->first();
     $sectors = $sector->terms;
     //    $arr = ["id" => null,"name" => null,"title" => null,"job_type" => null,"slug" => null,"positions" => null,"commitment_type" => null,"sector" => null,"keywords" => null,"description" => null,"deadline" => null,"accession" => null,"emp_name" => null,"emp_company_information" => null,"emp_website" => null,"emp_facebook" => null,"emp_linkedin" => null,"emp_twitter" => null,"country" => null,"zip" => null,"address" => null,"workplace_video" => null,"app_receive_by" => null,"app_link_to_receive" => null,"app_email_to_receive" => null,"app_contact" => null,"app_contact_title" => null,"app_mobile" => null,"app_phone" => null,"app_email" => null,"app_linkedin" => null,"app_twitter" => null,"ad_id" => null,"user_id" => null,"created_at" => null,"updated_at" => null]
@@ -204,7 +204,7 @@
                                 <select name="deadline_type" id="deadline_type" class="form-control dme-form-control"
                                     required>
                                     <option @if(empty($obj_job->deadline)) selected
-                                        @endif value="Soonest">{{__('Soonest')}}</option>
+                                        @endif value="Snarest">{{__('Soonest')}}</option>
                                     <option @if(!empty($obj_job->deadline)) selected @endif>{{__('Specify date')}}
                                     </option>
                                 </select>

@@ -36,7 +36,7 @@
 
                 <?php $i++ ?>
             @endforeach
-        @else
+        @elseif(!Request::is('jobs/*'))
             <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>">
                 <img class="d-block w-100" src="{{ asset('/public/images/1280x720.png') }}" alt="First slide">
             </div>
@@ -44,14 +44,16 @@
 
     </div>
 
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+    @if($name->count() > 0)
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    @endif
 </div>
 
 {{--<div class="single-realestate-caption text-center" style="width:50%;margin:auto;margin-top: -20px;">{{$val->title}}</div>--}}

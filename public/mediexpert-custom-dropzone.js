@@ -206,6 +206,8 @@ $(document).on('click', '.dz-remove', function (e) {
         }
     });
     */
+
+
     var ad_status = $('.ad_status').val();
 
     // if (confirm("Er du sikker på å slette?") == true) {
@@ -213,7 +215,7 @@ $(document).on('click', '.dz-remove', function (e) {
     filename = $(this).attr('id');
     if(filename){
         delete_media(filename);
-        if($("div").hasClass("input_type_file")){
+        if($("div").hasClass("input_type_file") && $(this).hasClass('fileinput-exists')){
             $('.input_type_file').removeClass('fileinput-exists ').addClass('fileinput-new');
             $('.input_type_file .dz-remove').attr('id','');
         }

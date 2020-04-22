@@ -18,6 +18,11 @@
             @include('user-panel.banner-ads.left-banner')
         </div>
         <div class="dme-container">
+            <div class="row top-ad" id="top_banner_ad">
+                @include('user-panel.banner-ads.top-banner')
+            </div>
+        </div>
+        <div class="dme-container p-3">
             <div class="breade-crumb">
                 <nav aria-label="breadcrumb">
                     <div class="row pl-3 pr-3">
@@ -43,15 +48,8 @@
                             </ul>
                         </div>
                     </div>
-
-
                 </nav>
             </div>
-          <div class="row top-ad" id="top_banner_ad">
-                @include('user-panel.banner-ads.top-banner')
-            </div>
-        </div>
-        <div class="dme-container p-3">
             <div class="row">
                 <div class="col-md-12">
                     @php $name = $job->ad->company_gallery; $obj = $job; @endphp

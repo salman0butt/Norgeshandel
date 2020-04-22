@@ -222,6 +222,15 @@ class CvController extends Controller
 
     //Cv Request
     public function cv_request(Request $request){
+        if($request->status != 'requested'){
+            $cv_request = CvRequest::where('user_id',$request->user_id)->where('employer_id',$request->employer_id)->first();
+            if(!$cv_request || $cv_request->user_id != Auth::id()){
+                (header("HTTP/1.0 404 Not Found"));
+                $data['failure'] = 'unauthorized';
+                echo json_encode($data);
+                exit();
+            }
+        }
         DB::beginTransaction();
         try{
             CvRequest::updateOrCreate(['user_id' => $request->user_id, 'employer_id' => $request->employer_id], ['status' => $request->status]);
