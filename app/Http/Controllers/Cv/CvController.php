@@ -14,6 +14,7 @@ use App\Models\Language;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use niklasravnsborg\LaravelPdf\Pdf;
 //use niklasravnsborg\LaravelPdf\Facades\Pdf;
@@ -202,7 +203,7 @@ class CvController extends Controller
     public function cv_list(){
         $date = Date('Y-m-d');
         if(Auth::user()->hasRole('company')){
-            $cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
+            $cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
 
             $shortlisted_cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
                 ->whereHas('meta', function (Builder $query) {
@@ -233,7 +234,24 @@ class CvController extends Controller
         }
         DB::beginTransaction();
         try{
-            CvRequest::updateOrCreate(['user_id' => $request->user_id, 'employer_id' => $request->employer_id], ['status' => $request->status]);
+            $cv_request = CvRequest::updateOrCreate(['user_id' => $request->user_id, 'employer_id' => $request->employer_id], ['status' => $request->status]);
+
+            if($cv_request->status == 'requested'){
+                $to_name = $cv_request->user && $cv_request->user->username ? $cv_request->user->username : 'NH-Bruker';
+                $to_email = $cv_request->user->email;
+                $subject = "CV-forespørsel mottatt";
+                $text = "Vi vil informere om at ".($cv_request->employer->username ? $cv_request->employer->username : 'NH-Bruker')." har blitt sendt deg en forespørsel om å se din CV.";
+            }else{
+                $to_name = $cv_request->employer && $cv_request->employer->username ? $cv_request->employer->username : 'NH-Bruker';
+                $to_email = $cv_request->employer->email;
+                $subject = "CV-forespørsel ".($cv_request->status == "accepted" ? 'akseptert' : 'avvist');
+                $text = "Vi vil informere om at CV-forespørselen din er ".($cv_request->status == "accepted" ? 'akseptert' : 'avvist')." av ".($cv_request->user->username ? $cv_request->user->username : 'NH-Bruker').'.';
+            }
+            Mail::send('mail.cv_request',compact('text'), function ($message) use ($to_name, $to_email,$subject) {
+                $message->to($to_email, $to_name)->subject($subject);
+                $message->from('developer@digitalmx.no', 'NorgesHandel');
+            });
+
             DB::commit();
             $data['msg'] = 'success';
             echo json_encode($data);
