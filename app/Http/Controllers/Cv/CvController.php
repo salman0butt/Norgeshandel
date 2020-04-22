@@ -205,12 +205,12 @@ class CvController extends Controller
         if(Auth::user()->hasRole('company')){
             $cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
 
-            $shortlisted_cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
+            $shortlisted_cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
                 ->whereHas('meta', function (Builder $query) {
                     $query->where('user_id', Auth::id())->orderBy('id','DESC');
                 })->get();
 
-            $requested_cvs = Cv::where('status','published')->where('visibility','anonymous')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
+            $requested_cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->where('visibility','anonymous')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
                 ->whereHas('user.requests_received', function (Builder $query) {
                     $query->where('employer_id', Auth::id())->orderBy('id','DESC');
                 })->get();
