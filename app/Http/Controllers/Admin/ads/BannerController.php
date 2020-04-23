@@ -53,7 +53,8 @@ class BannerController extends Controller
             'link' => $request->url,
             'is_active' => $request->is_active,
             'display_time_type' => $request->display_time_type,
-            'display_time_duration' => $request->display_time_duration
+            'display_time_duration' => $request->display_time_duration,
+            'full_banner' => $request->full_banner
         ];
         
         $banner = new Banner($data);
@@ -116,7 +117,8 @@ class BannerController extends Controller
             'link' => $request->url,
             'is_active' => $request->is_active,
             'display_time_type' => $request->display_time_type,
-            'display_time_duration' => $request->display_time_duration
+            'display_time_duration' => $request->display_time_duration,
+            'full_banner' => $request->full_banner
         ];
 
 
@@ -155,6 +157,9 @@ class BannerController extends Controller
 
         $banner->delete();
         return redirect()->back()->with('danger','Ad Deleted Successfully');
+
+    }
+    public function views($banner_id) {
 
     }
 

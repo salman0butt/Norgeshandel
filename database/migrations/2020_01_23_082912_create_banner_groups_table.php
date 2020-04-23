@@ -16,7 +16,6 @@ class CreateBannerGroupsTable extends Migration
         Schema::create('banner_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->string('post_category');
             $table->string('page_url')->nullable();
             $table->timestamp('time_start')->nullable();
             $table->timestamp('time_end')->nullable();

@@ -50,7 +50,9 @@
                                         {{ $pos->position }}<br>
                                     @endforeach
                                </td>
-                                <td>{{ $banner_group->post_category }}</td>
+                                <td>@foreach ($banner_group->categories as $cat)
+                                        {{ $cat->post_category }}<br>
+                                    @endforeach</td>
                                   <td>{{ $banner_group->page_url }}</td>
                                   <td>
                                   <ul class="p-0 mb-0">

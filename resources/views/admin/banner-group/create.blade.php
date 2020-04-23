@@ -87,7 +87,7 @@ Add new Banner Group
               <div class="col-md-6">
                     <label class="col-md-12 control-label" for="category">Category<span class="red">*</span></label>
                     <div class="col-md-12">
-                        <select class="form-control custom-select" id="post_category" name="post_category"
+                        <select class="select2 form-control custom-select select2-hidden-accessible" multiple id="post_category" name="post_category[]"
                             style="width: 100%;" aria-hidden="true" required>
                             <option value="">Select</option>
                             <option value="home">Home Page</option>

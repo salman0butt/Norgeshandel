@@ -1,10 +1,12 @@
 @php
 use Illuminate\Database\Eloquent\Builder;
     $now_date_time = date('Y-m-d H:i:00');
-    $top_banner_group = \App\Admin\Banners\BannerGroup::where('post_category',$banner_ad_category)
-                        ->whereHas('positions', function (Builder $query) {
-                        $query->where('position', 'top');
-                        })->where('time_start','<=',$now_date_time)->orderBy('time_start','ASC')->get();
+    $top_banner_group = \App\Admin\Banners\BannerGroup::whereHas('categories', function (Builder $query) use($banner_ad_category) {
+                    $query->where('post_category', $banner_ad_category);
+                    })
+                    ->whereHas('positions', function (Builder $query) {
+                    $query->where('position', 'top');
+                    })->where('time_start','<=',$now_date_time)->orderBy('time_start','ASC')->get();    
 @endphp
 <?php $i = 0; ?>
 @if($top_banner_group->count() > 0)
@@ -30,11 +32,15 @@ use Illuminate\Database\Eloquent\Builder;
                                 $seconds = 60 * 60 * $top_banner_group_banner->display_time_duration;
                             }
                             $time_out = $seconds * 1000;
-
-
+                            $is_full_banner = $top_banner_group_banner->full_banner;
+                               if($is_full_banner){
+                                   echo '<script>
+                                   $(".dme-wrapper > .dme-container").attr("style","padding:0px 8px");
+                                   </script>';
+                               }
                         @endphp
-                        <a href="{{$top_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_top_banner_img'}}" data-time="{{$time_out}}">
-                            <img class="d-block w-100" src="{{$path}}" alt="First slide" style="max-height: 150px;">
+                        <a href="{{$top_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_top_banner_img'}}" data-time="{{$time_out}}" style="margin:0 auto;">
+                            <img class="d-block w-100" src="{{$path}}" alt="First slide" style="max-height: 150px;" data-id="{{ $top_banner_group_banner->id }}" onload="view()">
                         </a>
                         <?php $i++ ?>
                     @endif

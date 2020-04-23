@@ -19,7 +19,7 @@
         <div class="left-ad float-left" id="left_banner_ad">
             @include('user-panel.banner-ads.left-banner')
         </div>
-        <div class="dme-container pl-3 pr-3">
+        <div class="dme-container" style="padding:0px 16px;">
 
             <div class="row top-ad" id="top_banner_ad">
                 @include('user-panel.banner-ads.top-banner')
@@ -199,6 +199,9 @@
 
 
 <script type="text/javascript">
+function view(){
+ alert("working");
+}
 $(document).ready(function(){
     loadMoreData(1);
     // show_divs();

@@ -1,8 +1,9 @@
 @php
 use Illuminate\Database\Eloquent\Builder;
     $now_date_time = date('Y-m-d H:i:00');
-    $left_banner_group = \App\Admin\Banners\BannerGroup::where('post_category',$banner_ad_category)
-                        ->whereHas('positions', function (Builder $query) {
+    $left_banner_group = \App\Admin\Banners\BannerGroup::whereHas('categories', function (Builder $query) use($banner_ad_category) {
+                    $query->where('post_category', $banner_ad_category);
+                    })->whereHas('positions', function (Builder $query) {
                         $query->where('position', 'left');
                         })->where('time_start','<=',$now_date_time)
                         ->orderBy('time_start','ASC')->get();
@@ -35,7 +36,7 @@ use Illuminate\Database\Eloquent\Builder;
 
                         @endphp
                         <a href="{{$left_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_left_banner_img'}}" data-time="{{$time_out}}">
-                            <img class="w-100" src="{{$path}}" alt="First slide">
+                            <img class="w-100" src="{{$path}}" alt="First slide" data-id="{{ $left_banner_group_banner->id }}">
                         </a>
                         <?php $i++ ?>
                     @endif
