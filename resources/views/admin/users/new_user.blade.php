@@ -89,21 +89,23 @@ $countries_list = countries();
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label for="username" class="text-right control-label ">username<span
-                                    class="red">*</span></label>
+                            <label for="username" class="text-right control-label ">username
+                                {{--<span class="red">*</span>--}}
+                            </label>
                             <input type="text" class="form-control" id="username" value="<?php echo $username; ?>"
-                                   name="username" placeholder="Smith" required>
+                                   name="username" placeholder="Smith">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="mobile_number" class="control-label col-form-label">Mobile number<span
-                                    class="red">*</span></label>
+                            <label for="mobile_number" class="control-label col-form-label">Mobile number
+                                {{--<span class="red">*</span>--}}
+                            </label>
                             <input type="tel" class="form-control" id="mobile_number"
                                    value="<?php echo $mobile_number; ?>" name="mobile_number"
-                                   placeholder="+47 123 456789" required>
+                                   placeholder="+47 123 456789">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -157,12 +159,13 @@ $countries_list = countries();
             </div>
             <div class="col-md-6">
                 <div class="row form-group">
-                    <label class="col-md-4 control-label col-form-label" for="gender">Gender<span
-                            class="red">*</span></label>
+                    <label class="col-md-4 control-label col-form-label" for="gender">Gender
+                        {{--<span class="red">*</span>--}}
+                    </label>
                     <div class="col-md-8">
                         <select class="select2 form-control custom-select select2-hidden-accessible" id="gender"
                                 name="gender"
-                                style="width: 100%; height:36px;" data-select2-id="1" aria-hidden="true" required>
+                                style="width: 100%; height:36px;" data-select2-id="1" aria-hidden="true">
                             @if($gender != "")
                                 <option selected value="<?php echo $gender; ?>"><?php echo $gender; ?></option>
                             @endif

@@ -129,6 +129,7 @@ return [
     'request' => 'Requested by',
     'behalf' => 'On behalf of',
     'Status' => 'Status',
+    'Action' => 'Handling',
     'delete' => 'Delete',
     'preview' => 'CV preview',
     'preview-p' => "This preview shows how your resume will look for recruitment agencies and companies using FINN's resume database.",

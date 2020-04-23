@@ -15,7 +15,7 @@
         <h4 class="mb-3">Job</h4>
         <ul class="list list-unstyled">
             @foreach($followings as $following)
-                @if($following->company->company_type == "job")
+                @if($following->company && $following->company->company_type == "job")
                     <li>
                         <div class="row">
                             <div class="col-md-8">

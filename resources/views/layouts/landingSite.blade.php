@@ -617,7 +617,7 @@
         shares: ["email", "twitter", "facebook"]
     });
     $(function() {
-        $('input[type="date"]').datepicker({
+        $('.date-picker, input[type="date"]').datepicker({
             format: "dd-mm-yyyy",
              autoclose: true,
              language: 'no',

@@ -194,7 +194,7 @@ class AppliedJobController extends Controller
 
                 }
 
-
+                //Send email to user when he/she applied  on a jon
                 $to_name = $apply_job->name;
                 $to_email = $apply_job->email;
                 $subject = 'Takk for søknaden din på stillingen "'.$apply_job->job->title.'"';
@@ -202,6 +202,17 @@ class AppliedJobController extends Controller
                     $message->to($to_email, $to_name)->subject($subject);
                     $message->from('developer@digitalmx.no', 'NorgesHandel');
                 });
+
+                //Send email to job owner when a user applied on a job
+                if($apply_job->job && $apply_job->job->user && $apply_job->job->user->email){
+                    $to_name = $apply_job->job->user->username ? $apply_job->job->user->username : 'NH-Bruker';
+                    $to_email = $apply_job->job->user->email;
+                    $subject = 'Takk for søknaden din på stillingen "'.$apply_job->job->title.'"';
+                    Mail::send('mail.notify_job_owner_user_applied_cv',compact('apply_job'), function ($message) use ($to_name, $to_email,$subject) {
+                        $message->to($to_email, $to_name)->subject($subject);
+                        $message->from('developer@digitalmx.no', 'NorgesHandel');
+                    });
+                }
 
                 DB::commit();
                 session()->flash('success', 'Du har søkt på denne jobben.');
