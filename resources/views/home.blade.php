@@ -219,7 +219,7 @@
 
     function loadMoreData(page) {
         $.ajax({
-                url: '{{ url(' / page ') }}/' + page,
+                url: '{{ url('/page') }}/' + page,
                 type: "get",
                 beforeSend: function () {
                     $('.ajax-load').show();
