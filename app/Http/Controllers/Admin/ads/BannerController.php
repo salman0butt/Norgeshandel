@@ -160,11 +160,11 @@ class BannerController extends Controller
 
     }
     public function views($banner_id) {
-
+          $banner = Banner::findOrFail($banner_id);
+          $views = $banner->views;
+          $views = $views+1;
+          $banner->update(['views'=>$views]);
+          return response()->json(['success'=>1]);
     }
-
-
-
-
 
 }

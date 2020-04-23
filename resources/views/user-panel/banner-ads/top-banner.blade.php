@@ -39,8 +39,8 @@ use Illuminate\Database\Eloquent\Builder;
                                    </script>';
                                }
                         @endphp
-                        <a href="{{$top_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_top_banner_img'}}" data-time="{{$time_out}}" style="margin:0 auto;">
-                            <img class="d-block w-100" src="{{$path}}" alt="First slide" style="max-height: 150px;" data-id="{{ $top_banner_group_banner->id }}" onload="view()">
+                        <a href="{{$top_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_top_banner_img'}} ad_clicked" data-time="{{$time_out}}" style="margin:0 auto;" data-banner-id="{{ $top_banner_group_banner->id }}">
+                            <img class="d-block w-100" src="{{$path}}" alt="First slide" style="max-height: 150px;" data-id="{{ $top_banner_group_banner->id }}" onload="views(this.dataset.id)">
                         </a>
                         <?php $i++ ?>
                     @endif

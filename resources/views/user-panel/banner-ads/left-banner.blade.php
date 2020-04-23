@@ -35,8 +35,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 
                         @endphp
-                        <a href="{{$left_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_left_banner_img'}}" data-time="{{$time_out}}">
-                            <img class="w-100" src="{{$path}}" alt="First slide" data-id="{{ $left_banner_group_banner->id }}">
+                        <a href="{{$left_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_left_banner_img'}} ad_clicked" data-time="{{$time_out}}" data-banner-id="{{ $left_banner_group_banner->id }}">
+                            <img class="w-100" src="{{$path}}" alt="First slide" data-id="{{ $left_banner_group_banner->id }}" onload="views(this.dataset.id)">
                         </a>
                         <?php $i++ ?>
                     @endif
