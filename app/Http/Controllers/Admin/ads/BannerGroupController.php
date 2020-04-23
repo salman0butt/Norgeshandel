@@ -6,6 +6,7 @@ use App\Admin\ads\Banner;
 use Illuminate\Http\Request;
 use App\Admin\Banners\BannerGroup;
 use App\Http\Controllers\Controller;
+use App\Admin\Banners\BannerGroupCategory;
 use App\Admin\Banners\BannerGroup_position;
 
 
@@ -47,7 +48,6 @@ class BannerGroupController extends Controller
         
         $data = [
             'title' => $request->title,
-            'post_category' => $request->post_category,
             'page_url' => $request->page_url,
             'time_start' => $request->time_start,
             'time_end' => $request->time_end   
@@ -64,7 +64,12 @@ class BannerGroupController extends Controller
         $Banner_pos->position = $location;
         $bannerGroup->positions()->save($Banner_pos);
     }
-  
+    foreach ($request->post_category as $category) {
+    $Banner_pos = new BannerGroupCategory();
+    $Banner_pos->post_category = $category;
+
+    $bannerGroup->categories()->save($Banner_pos);
+    }
 
     $bannerGroup->banners()->detach();
     $bannerGroup->banners()->attach($request->banners);
@@ -117,7 +122,6 @@ class BannerGroupController extends Controller
         //
            $data = [
             'title' => $request->title,
-            'post_category' => $request->post_category,
             'page_url' => $request->page_url,
             'time_start' => $request->time_start,
             'time_end' => $request->time_end   
@@ -126,12 +130,21 @@ class BannerGroupController extends Controller
     $bannerGroup = BannerGroup::find($id);
     $bannerGroup->update($data);
     $bannerGroup->positions()->delete();
+    $bannerGroup->categories()->delete();
+
 
     foreach ($request->location as $location) {
         $Banner_pos = new BannerGroup_position();
         $Banner_pos->position = $location;
      
         $bannerGroup->positions()->save($Banner_pos);
+    }
+     
+    foreach ($request->post_category as $category) {
+    $Banner_pos = new BannerGroupCategory();
+    $Banner_pos->post_category = $category;
+
+    $bannerGroup->categories()->save($Banner_pos);
     }
 
     $bannerGroup->banners()->detach();

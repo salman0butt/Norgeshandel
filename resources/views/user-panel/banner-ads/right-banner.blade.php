@@ -1,7 +1,9 @@
 @php
 use Illuminate\Database\Eloquent\Builder;
     $now_date_time = date('Y-m-d H:i:00');
-    $right_banner_group = \App\Admin\Banners\BannerGroup::where('post_category',$banner_ad_category)
+    $right_banner_group = \App\Admin\Banners\BannerGroup::whereHas('categories', function (Builder $query) use($banner_ad_category) {
+                    $query->where('post_category', $banner_ad_category);
+                    })
                         ->whereHas('positions', function (Builder $query) {
                         $query->where('position', 'right');
                         })->where('time_start','<=',$now_date_time)
@@ -34,8 +36,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 
                         @endphp
-                        <a href="{{$right_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_right_banner_img'}}" data-time="{{$time_out}}">
-                            <img class="w-100" src="{{$path}}" alt="First slide">
+                        <a href="{{$right_banner_group_banner->link}}" target="_blank" class="{{ $i != 0 ? 'd-none' : 'show_right_banner_img'}} ad_clicked" data-time="{{$time_out}}" data-banner-id="{{ $right_banner_group_banner->id }}">
+                            <img class="w-100" src="{{$path}}" alt="First slide" data-id="{{ $right_banner_group_banner->id }}" onload="views(this.dataset.id)">
                         </a>
                         <?php $i++ ?>
                     @endif

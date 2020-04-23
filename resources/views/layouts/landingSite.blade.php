@@ -50,6 +50,35 @@
 }
 
 </style>
+<script>
+    function views(this_obj) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var url = "{{ url('views') }}";
+        var banner_id = this_obj;
+        if (banner_id != '') {
+            $.ajax({
+                type: "POST",
+                url: url+'/'+banner_id,
+                dataType: "json",
+                async: true,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                   return true;
+                },
+                error: function (jqXhr, json,
+                    errorThrown) { // this are default for ajax errors
+                    var errors = jqXhr.responseJSON;
+                  return false;
+                }
+            });
+        }
+    }
+</script>
 </head>
 <body class="@yield('body_class')">
 @if(Request::is('account/*'))
@@ -404,7 +433,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="{{ asset('public/js/bootstrap-datepicker.no.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
 
 <script>
     var urlParams = new URLSearchParams(location.search);

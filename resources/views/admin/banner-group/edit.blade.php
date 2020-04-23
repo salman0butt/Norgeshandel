@@ -70,16 +70,20 @@ Edit Banner Group
               <div class="col-md-6">
                     <label class="col-md-12 control-label" for="category">Category<span class="red">*</span></label>
                     <div class="col-md-12">
-                        <select class="form-control custom-select" id="post_category" name="post_category"
-                            style="width: 100%;" aria-hidden="true" required>
+                        <select class="select2 form-control custom-select select2-hidden-accessible" id="post_category" name="post_category[]"
+                            style="width: 100%;" aria-hidden="true" required multiple>
                             <option value="">Select</option>
-                            <option value="home" {{ ($banner_group->post_category == 'home' ? 'selected' : '')}}>Home</option>
-                             <option value="jobs-main" {{ ($banner_group->post_category == 'jobs-main' ? 'selected' : '')}}>Jobs main Category</option>
-                            <option value="jobs-sub" {{ ($banner_group->post_category == 'jobs-sub' ? 'selected' : '')}}>Jobs sub Category</option>
-                            <option value="real-estate-main" {{ ($banner_group->post_category == 'real-estate-main' ? 'selected' : '')}}>Real Estate main Category</option>
-                            <option value="real-estate-sub" {{ ($banner_group->post_category == 'real-estate-sub' ? 'selected' : '')}}>Real Estate sub Category</option>
-                             <option value="jobs-landing" {{ ($banner_group->post_category == 'jobs-landing' ? 'selected' : '')}}>Job Landing Pages</option>
-                            <option value="property-landing" {{ ($banner_group->post_category == 'property-landing' ? 'selected' : '')}}>Property Landing Pages</option>
+                            @php  $category = array('');    @endphp
+                                @foreach ($banner_group->categories as $cat)
+                                        {{ $category[$cat->post_category] = $cat->post_category }}<br>
+                                    @endforeach
+                            <option value="home" {{ (isset($category['home']) == 'home' ? 'selected' : '')}}>Home</option>
+                             <option value="jobs-main" {{ (isset($category['jobs-main']) == 'jobs-main' ? 'selected' : '')}}>Jobs main Category</option>
+                            <option value="jobs-sub" {{ (isset($category['jobs-sub']) == 'jobs-sub' ? 'selected' : '')}}>Jobs sub Category</option>
+                            <option value="real-estate-main" {{ (isset($category['real-estate-main']) == 'real-estate-main' ? 'selected' : '')}}>Real Estate main Category</option>
+                            <option value="real-estate-sub" {{ (isset($category['real-estate-sub']) == 'real-estate-sub' ? 'selected' : '')}}>Real Estate sub Category</option>
+                             <option value="jobs-landing" {{ (isset($category['jobs-landing']) == 'jobs-landing' ? 'selected' : '')}}>Job Landing Pages</option>
+                            <option value="property-landing" {{ (isset($category['property-landing']) == 'property-landing' ? 'selected' : '')}}>Property Landing Pages</option>
                         
                         </select>
                     </div>

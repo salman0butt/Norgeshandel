@@ -422,3 +422,4 @@ function right_banner_ad() {
     });
 }
 
+
