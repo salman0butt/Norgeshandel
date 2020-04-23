@@ -520,6 +520,7 @@ Route::group(['middleware' => 'authverified'], function () {
                     $company_follow->company_id = $request->company_id;
                     $company_follow->save();
                 }
+                dd($company_follow);
                 return json_encode('success');
             }else{
                 return json_encode('success');

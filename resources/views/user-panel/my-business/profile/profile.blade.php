@@ -210,7 +210,7 @@
                         <div class="row m-0 pt-4">
                             <div class="col-md-12 radius-8 bg-light p-3">
                                 <div class="row">
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         @if(is_countable($company->company_logo) && count($company->company_logo)>0)
                                             <img
                                                 src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"
@@ -234,7 +234,7 @@
                                             <div>{{$company->country}}</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2" style="font-size: 20px">
+                                    <div class="col-md-1" style="font-size: 20px">
                                         <form class="float-right" action="{{route('company.destroy', compact('company'))}}"
                                               method="POST"
                                               onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen?')">

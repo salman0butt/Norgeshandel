@@ -244,7 +244,7 @@ class JobController extends Controller
     //     return response(json_encode($ids));
     // }
 
-      public function new_job(Request $request)
+    public function new_job(Request $request)
     {   
         $type = '';
          if($request->is('*/job/full_time')){
@@ -340,8 +340,16 @@ class JobController extends Controller
                 $job_temp_media_obj->mediable_type = 'App\Models\Ad';
                 $job_temp_media_obj->update();
             }
-
         }
+        if(!$request->company_id){
+            $request->merge(['company_id'=>0]);
+        }
+//        if($request->emp_company_information){
+//            $request->merge(['emp_company_information'=> utf8_encode($request->emp_company_information)]);
+//        }
+//        if($request->description){
+//            $request->merge(['description'=> utf8_encode($request->description)]);
+//        }
         $job_id = $request->job_id;
         $job = Job::where('id', $job_id)->first();
         $arr = array(
@@ -355,16 +363,17 @@ class JobController extends Controller
             'job_function' => $request->job_function,
             'industry' => $request->industry,
             'keywords' => $request->keywords,
-            'description' => htmlentities($request->description),
+            'description' => $request->description,
             'deadline' => $request->deadline,
             'accession' => $request->accession,
             'emp_name' => $request->emp_name,
-            'emp_company_information' => htmlentities($request->emp_company_information),
+            'emp_company_information' => $request->emp_company_information,
             'emp_website' => $request->emp_website,
             'emp_facebook' => $request->emp_facebook,
             'emp_linkedin' => $request->emp_linkedin,
             'emp_twitter' => $request->emp_twitter,
             'country' => $request->country,
+            'company_id'=>$request->company_id,
             'zip' => $request->zip,
             'zip_city' => $request->zip_city,
             'address' => $request->address,
@@ -439,6 +448,7 @@ class JobController extends Controller
      */
     public function update(Request $request,$id)
     {
+
         if($request->job_id){
             $job = Job::find($request->job_id);
         }

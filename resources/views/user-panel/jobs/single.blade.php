@@ -53,7 +53,9 @@
             <div class="row">
                 <div class="col-md-12">
                     @php $name = $job->ad->company_gallery; $obj = $job; @endphp
-                    @include('user-panel.partials.landing_page_slider',compact('name'))
+                    @if($name->count())
+                        @include('user-panel.partials.landing_page_slider',compact('name'))
+                    @endif
                     @if($job->workplace_video)
                         <div style="position: absolute;bottom: 0;left: 30px;">
                             <a data-fslightbox="gallery1" href="{{$job->workplace_video}}" class="btn btn-light radius-8 video-button" style="color: #ac304a; background: white">
@@ -84,11 +86,15 @@
                                 <div class="col-md-12 title"><span
                                             class="font-weight-bold">Stillingstittel: </span><span>{{$job->title}}</span>
                                 </div>
-                                <div class="col-md-6 emp_name"><span
-                                        class="font-weight-bold">Arbeidsgiver: </span><span>{{$job->emp_name}}</span>
-                                </div>
+                                @if($job->emp_name)
+                                    <div class="col-md-6 emp_name"><span
+                                            class="font-weight-bold">Arbeidsgiver: </span><span>{{$job->emp_name}}</span>
+                                    </div>
+                                @endif
+                                @if($job->country)
                                 <div class="col-md-6 place"><span
                                         class="font-weight-bold">Sted: </span><span>{{$job->country}}</span></div>
+                                @endif
                                 <div class="col-md-6 commitment_type"><span
                                         class="font-weight-bold">Stillingstype: </span><span>{{$job->commitment_type}}</span>
                                 </div>

@@ -190,8 +190,10 @@
                         <div class="row">
                             <label for="description" class="col-md-2 u-t5">{{__('Job description (optional)')}}</label>
                             <div class="col-sm-10 ">
-                                <textarea name="description" class="form-control dme-form-control description"
-                                    id="description" cols="30" rows="10">{{$obj_job->description}}</textarea>
+                                <textarea name="description" cols="30" rows="10">{{$obj_job->description}}</textarea>
+
+                                {{--<textarea name="description" class="form-control dme-form-control"--}}
+                                    {{--id="description" cols="30" rows="10">{{$obj_job->description}}</textarea>--}}
 
                             </div>
                         </div>
@@ -259,10 +261,11 @@
                                 <label for="emp_company_information"
                                     class="col-md-2 u-t5">{{__('Company Information (optional)')}}</label>
                                 <div class="col-sm-10 ">
-                                    <textarea name="emp_company_information"
-                                        class="form-control dme-form-control emp_company_information"
-                                        id="emp_company_information" cols="30"
-                                        rows="10">{{$obj_job->emp_company_information}}</textarea>
+                                    <textarea name="emp_company_information" cols="30" rows="10">{{$obj_job->emp_company_information}}</textarea>
+                                    {{--<textarea name="emp_company_information"--}}
+                                        {{--class="form-control dme-form-control emp_company_information"--}}
+                                        {{--id="emp_company_information" cols="30"--}}
+                                        {{--rows="10">{{$obj_job->emp_company_information}}</textarea>--}}
                                 </div>
                             </div>
                         </div>

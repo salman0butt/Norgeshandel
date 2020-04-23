@@ -1228,3 +1228,8 @@ background-position: center;
 background-size: cover;
 
 }
+
+.remove-agent-button{
+    margin-top: 28px;
+    float: right;
+}
