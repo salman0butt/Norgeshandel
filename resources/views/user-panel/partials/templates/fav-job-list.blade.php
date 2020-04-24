@@ -24,7 +24,7 @@ $gallery = asset('public/images/placeholder.png');
 if(count($media)>0){
     foreach ($media as $item){
         if ($item->type=='logo'){
-            $logo = \App\Helpers\common::getMediaPath($item, '66x66');
+            $logo = \App\Helpers\common::getMediaPath($item);
         }
     }
     if ($job && $job->ad && $job->ad->company_gallery && $job->ad->company_gallery->first()){
@@ -36,11 +36,17 @@ if(count($media)>0){
     <div class="row product-list-item mr-1 p-sm-1 mt-3">
         <div class="image-section image-section @if(Request::is('my-business/favorite-list/*')) col-sm-3 @else col-sm-4 @endif  p-2">
             <a href="{{url('jobs', compact('job'))}}" style="display: block;" class="trailing-border">
-
-                <img src="{{$gallery}}" class="img-fluid radius-8 trailing-border" style="margin: 2px; height: 180px; width: 100%"
-                     alt="">
-                <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;">
+                <div class="trailing-border" style="height: 180px; width:100%;
+                        background-image: url('@if(!empty($logo)){{$logo}}@else{{asset('public/images/placeholder.png')}}@endif');
+                        background-position: center; @if(!empty($logo)) background-repeat: no-repeat; background-size: 100%; @else background-size: cover;  @endif">
+                    {{--                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="" alt="" class="img-fluid radius-8">--}}
+                    <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;"></div>
                 </div>
+
+                {{--<img src="{{$logo}}" class="img-fluid radius-8 trailing-border" style="margin: 2px; height: 180px; width: 100%"--}}
+                     {{--alt="">--}}
+                {{--<div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;">--}}
+                {{--</div>--}}
             </a>
         </div>
         <div class="detailed-section @if(Request::is('my-business/favorite-list/*')) col-md-9 @else col-md-8 @endif position-relative p-2">
@@ -49,7 +55,7 @@ if(count($media)>0){
             <div class="clearfix"></div>
             <div class="title color-grey">{{$job->title}}</div>
             <div class="detail u-t5 my-2 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>
-            <div class="dealer-logo float-right my-2" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>
+            {{--<div class="dealer-logo float-right my-2" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>--}}
             <div class="clearfix"></div>
             
             @if(Request::is('my-business/favorite-list/*'))
