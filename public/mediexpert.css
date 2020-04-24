@@ -403,6 +403,7 @@ a.dme-btn-rounded-back-only:hover{
 }
 input[type=password].dme-form-control,
 input[type=text].dme-form-control,
+input[type=number].dme-form-control,
 input[type=date].dme-form-control,
 select.dme-form-control,
 input[type=email].dme-form-control,

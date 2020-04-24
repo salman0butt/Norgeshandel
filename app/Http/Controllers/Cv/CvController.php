@@ -240,7 +240,7 @@ class CvController extends Controller
                 $to_name = $cv_request->user && $cv_request->user->username ? $cv_request->user->username : 'NH-Bruker';
                 $to_email = $cv_request->user->email;
                 $subject = "CV-forespørsel mottatt";
-                $text = "Vi vil informere om at ".($cv_request->employer->username ? $cv_request->employer->username : 'NH-Bruker')." har blitt sendt deg en forespørsel om å se din CV.";
+                $text = "Vi vil informere om at ".($cv_request->employer->username ? $cv_request->employer->username : 'NH-Bruker')." har sendt deg en forespørsel om å se din CV.";
             }else{
                 $to_name = $cv_request->employer && $cv_request->employer->username ? $cv_request->employer->username : 'NH-Bruker';
                 $to_email = $cv_request->employer->email;

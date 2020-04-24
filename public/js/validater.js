@@ -50,7 +50,7 @@ $(document).ready(function () {
             },
             rented_to: {
                 required: true
-            }
+            },
         },
         onfocusout: false,
         invalidHandler: function(form, validator) {

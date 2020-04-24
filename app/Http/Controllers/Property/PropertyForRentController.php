@@ -229,12 +229,14 @@ class PropertyForRentController extends Controller
 
     public function UpdatePropertyForRentAdd(Request $request, $id,$call_by='')
     {
+
         DB::beginTransaction();
         try {
             if (!$request->facilities2) {
                 $request->merge(['facilities2' => null]);
             }
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
+
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -345,6 +347,9 @@ class PropertyForRentController extends Controller
             }
             $message = '';
             $ad = $property->ad;
+
+            $agent_detail = common::ad_agents($request->all(),$ad);
+
             if ($ad && $ad->status == 'saved') {
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {

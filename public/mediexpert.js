@@ -65,6 +65,13 @@ $(document).ready(function (e) {
             $('.append-agent-section .append-agent').removeClass('d-none');
             $('.append-agent-section .append-agent').removeClass('append-agent');
             $('.append-agent > .single').attr("class", "remove");
+
+
+            $('.append-agent input').each(function(key) {
+                if(key != 3){
+                    $(this).prop('required', 'true');
+                }
+            });
         }else{
             alert('Du kan legge til maksimalt 3 agenter igjen en annonse.');
         }
