@@ -313,6 +313,7 @@ class PropertyForRentController extends Controller
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {
                 $property_for_rent_data = common::updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
+                $agent_detail = common::ad_agents($request->all(),$response->ad);
             }
 
             $response->update($property_for_rent_data);
@@ -347,8 +348,6 @@ class PropertyForRentController extends Controller
             }
             $message = '';
             $ad = $property->ad;
-
-            $agent_detail = common::ad_agents($request->all(),$ad);
 
             if ($ad && $ad->status == 'saved') {
                 $message = 'Annonsen din er publisert.';

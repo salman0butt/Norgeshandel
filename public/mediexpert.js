@@ -60,18 +60,14 @@ function dme_nav_collapse(){
 $(document).ready(function (e) {
     $(document).on('click', '.add-ad-agent', function(e) {
         if($('.append-agent-section .remove').length < 3){
+
             $('.append-agent').clone().appendTo('.append-agent-section');
+
             $('.append-agent-section .append-agent').addClass('single remove');
             $('.append-agent-section .append-agent').removeClass('d-none');
+
             $('.append-agent-section .append-agent').removeClass('append-agent');
             $('.append-agent > .single').attr("class", "remove");
-
-
-            $('.append-agent input').each(function(key) {
-                if(key != 3){
-                    $(this).prop('required', 'true');
-                }
-            });
         }else{
             alert('Du kan legge til maksimalt 3 agenter igjen en annonse.');
         }
@@ -79,11 +75,12 @@ $(document).ready(function (e) {
 
     $(document).on('click', '.remove-agent-button', function(e) {
         $(this).closest(".remove").remove();
+        var ad_status = $('.ad_status').val();
+        if(ad_status == 'saved'){
+            record_store_ajax_request('change',(this));
+        }
         e.preventDefault();
     });
-
-
-
 
     dme_nav_collapse();
     $('.show-sub .list-unstyled .list-unstyled:first').css('display', 'block');

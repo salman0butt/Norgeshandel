@@ -42,6 +42,92 @@
 
     <script>
 
+        function record_store_ajax_request(event, this_obj) {
+            if(event == 'click'){
+                if(! $('#flat_wishes_rented_form').valid()) return false;
+            }
+            var url = '';
+            if (event == 'change') {
+
+                var zip_code = $('.zip_code').val();
+                var old_zip = $('#old_zip').val();
+                //console.log(old_zip);
+                if (zip_code) {
+                    if (old_zip != zip_code) {
+                        find_zipcode_city(zip_code);
+                    }
+                }
+                        @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
+                var url = "{{url('new/flat/wishes/rented/'.$flat_wishes_rented1->id)}}";
+                @endif
+            } else {
+                        @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
+                var url = "{{url('new/flat/wishes/rented/update/'.$flat_wishes_rented1->id)}}";
+                @endif
+            }
+
+            //if (!$('#property_for_rent_form').valid()) return false;
+
+            $("input ~ span,select ~ span").each(function (index) {
+                $(".error-span").html('');
+                $("input, select").removeClass("error-input");
+            });
+            //  $('.notice').html("");
+
+
+            var myform = document.getElementById("flat_wishes_rented_form");
+            var fd = new FormData(myform);
+
+            // fd.append('property_photos', $('#property_photos').get(0).files[0]);
+            var l = Ladda.create(this_obj);
+            l.start();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: fd,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (event == 'change') {
+                        notify("info","Annonsen din er lagret");
+                    }else if(event == 'click'){
+                        $('.deleted_media').val('');
+                        $('.media_position').val('');
+                        $('.ad_status').val(data.status);
+                        var message = 'Annonsen din er publisert';
+                        if(data.message){
+                            message = data.message;
+                        }
+                        notify("success",message);
+                    }
+
+                },
+                error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+
+                    var errors = jqXhr.responseJSON;
+                    //console.log(errors.errors);
+                    if (isEmpty(errors.errors)) {
+                        notify("error","noe gikk galt!");
+                        return false;
+                    }
+                    if (!isEmpty(errors.errors)) {
+                        //console.log(errors.errors);
+                        $.each(errors.errors, function (index, value) {
+                            $("." + index).html(value);
+                            $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
+                        });
+                    } else {
+                        notify("error","noe gikk galt!");
+                    }
+                },
+
+            }).always(function () {
+                l.stop();
+            });
+            return false;
+        }
+
         $(document).ready(function(){
 
             $.ajaxSetup({
@@ -49,94 +135,10 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-          
-            function record_store_ajax_request(event, this_obj) {
-                if(event == 'click'){
-                   if(! $('#flat_wishes_rented_form').valid()) return false;
-                }
-               var url = '';
-                if (event == 'change') {
 
-                    var zip_code = $('.zip_code').val();
-                    var old_zip = $('#old_zip').val();
-                    //console.log(old_zip);
-                    if (zip_code) {
-                        if (old_zip != zip_code) {
-                            find_zipcode_city(zip_code);
-                        }
-                    }
-                    @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
-                      var url = "{{url('new/flat/wishes/rented/'.$flat_wishes_rented1->id)}}";
-                    @endif
-                } else {
-                    @if(Request::is('new/flat/wishes/rented/*/edit') || Request::is('complete/ad/*'))
-                    var url = "{{url('new/flat/wishes/rented/update/'.$flat_wishes_rented1->id)}}";
-                    @endif
-                }
-               
-                //if (!$('#property_for_rent_form').valid()) return false;
 
-                $("input ~ span,select ~ span").each(function (index) {
-                    $(".error-span").html('');
-                    $("input, select").removeClass("error-input");
-                });
-              //  $('.notice').html("");
 
-            
-                var myform = document.getElementById("flat_wishes_rented_form");
-                var fd = new FormData(myform);
-
-                // fd.append('property_photos', $('#property_photos').get(0).files[0]);
-                var l = Ladda.create(this_obj);
-                l.start();
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: fd,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                       if (event == 'change') {
-                            notify("info","Annonsen din er lagret");
-                       }else if(event == 'click'){
-                           $('.deleted_media').val('');
-                           $('.media_position').val('');
-                           $('.ad_status').val(data.status);
-                           var message = 'Annonsen din er publisert';
-                           if(data.message){
-                               message = data.message;
-                           }
-                           notify("success",message);
-                       }
-                   
-                    },
-                    error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
-
-                        var errors = jqXhr.responseJSON;
-                        //console.log(errors.errors);
-                        if (isEmpty(errors.errors)) {
-                          notify("error","noe gikk galt!");
-                            return false;
-                        }
-                        if (!isEmpty(errors.errors)) {
-                            //console.log(errors.errors);
-                            $.each(errors.errors, function (index, value) {
-                                $("." + index).html(value);
-                                $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
-                            });
-                        } else {
-                          notify("error","noe gikk galt!");
-                        }
-                    },
-
-                }).always(function () {
-                    l.stop();
-                });
-                return false;
-            }
-            
-            $("input:not(input[type=date]),textarea").on('change', function (e) {
+            $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
                 var ad_status = $('.ad_status').val();
@@ -156,7 +158,7 @@
                 $('#old_zip').attr('value',postal);
             });
             //click button update
-            $("#publiserannonsen").click(function (e) {
+            $(document).on('click', '#publiserannonsen', function(e){
                 e.preventDefault();
                 record_store_ajax_request('click', (this));
             });
