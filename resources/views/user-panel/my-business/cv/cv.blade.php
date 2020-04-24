@@ -194,11 +194,11 @@ $industries = $industry->terms;
                                                 <select class="form-control" id="personal_gender" name="gender"
                                                         required>
                                                     <option value="">{{ __('cv.select') }}</option>
-                                                    <option value="male"
+                                                    <option value="Kvinne"
                                                             @if($cvpersonal->gender=="Kvinne") selected @endif>Kvinne
                                                     </option>
-                                                    <option value="female"
-                                                            @if($cvpersonal->gender=="Mann") selected @endif>Mann
+                                                    <option value="mann"
+                                                            @if($cvpersonal->gender=="mann") selected @endif>Mann
                                                     </option>
                                                 </select>
                                             </div>
@@ -1448,7 +1448,7 @@ $industries = $industry->terms;
                                             <div class="col-md-3"></div>
                                         </div>
                                     @endif
-                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                    @if(isset($cv->languages) && !empty($cv->languages) && $cv->languages->count())
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
@@ -1639,7 +1639,7 @@ $industries = $industry->terms;
                                             <div class="col-md-3"></div>
                                         </div>
                                     @endif
-                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                    @if(isset($cv->languages) && !empty($cv->languages) && $cv->languages->count())
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">

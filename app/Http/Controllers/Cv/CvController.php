@@ -183,18 +183,27 @@ class CvController extends Controller
     }
 
     //Download is CV in Pdf
-    public function download_pdf($cv_id){
+    public function download_pdf($cv_id,$anonym_cv=''){
+
+        $anonym_cv_information = '';
+        if($anonym_cv){
+            $anonym_cv_information = $anonym_cv;
+        }
         $cv =   Cv::find($cv_id);
-        $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
+        $html = view('user-panel.my-business.cv.download_pdf', compact('cv','anonym_cv_information'))->render();
         $pdf = new Pdf($html);
         $pdf->download('NorgesHandel-CV-'.$cv_id.'-'.$cv->user->first_name.' '.$cv->user->last_name.'.pdf');
         return back();
     }
 
     //View is CV in Pdf
-    public function view_pdf_cv($cv_id){
+    public function view_pdf_cv($cv_id,$anonym_cv=''){
+        $anonym_cv_information = '';
+        if($anonym_cv){
+            $anonym_cv_information = $anonym_cv;
+        }
         $cv =   Cv::find($cv_id);
-        $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
+        $html = view('user-panel.my-business.cv.download_pdf', compact('cv','anonym_cv_information'))->render();
         $pdf = new Pdf($html);
         return $pdf->stream('NorgesHandel-CV-'.$cv_id.'pdf');
     }
@@ -203,7 +212,10 @@ class CvController extends Controller
     public function cv_list(){
         $date = Date('Y-m-d');
         if(Auth::user()->hasRole('company')){
-            $cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
+            $cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')
+                ->whereHas('personal', function (Builder $query) {
+                    $query->whereNotNull('title');
+                })->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
 
             $shortlisted_cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
                 ->whereHas('meta', function (Builder $query) {

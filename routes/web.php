@@ -317,7 +317,11 @@ Route::group(['middleware' => 'authverified'], function () {
                 Route::post('update_languages/{cv_id}', 'Cv\CvController@update_languages')->name('update_languages');
                 Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
                 Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
+                //download annonymus cv
+                Route::get('download_pdf/{cv_id}/{anonym_cv}', 'Cv\CvController@download_pdf')->name('download_pdf');
                 Route::get('view_pdf_cv/{cv_id}', 'Cv\CvController@view_pdf_cv')->name('view_pdf_cv');
+                //view annonymus cv
+                Route::get('view_pdf_cv/{cv_id}/{anonym_cv}', 'Cv\CvController@view_pdf_cv')->name('view_pdf_cv');
                 Route::post('cv-request', 'Cv\CvController@cv_request')->name('cv-request');
             });
             Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');

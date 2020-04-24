@@ -5,7 +5,7 @@
             <div class="col-md-12">
 
                 @include('common.partials.flash-messages')
-
+                
                 <div class="col-md-6">
                     <p>Søk på stilling som {{$job->title}} i {{$job->emp_name}}</p>
                 </div>
@@ -31,6 +31,8 @@
                         <p class="pt-2">
                             <a href="#" class="choose-norgeshandel-cv">Bruk min CV på NorgesHandel</a>
                         </p>
+
+                        <input type="hidden" class="cv-status" value="{{(Auth::user() && Auth::user()->cv && Auth::user()->cv->personal && Auth::user()->cv->personal->title && Auth::user()->cv->personal->first_name && Auth::user()->cv->personal->last_name && Auth::user()->cv->personal->address) ? 'success' : 'failure'}}">
 
                     </div>
 
@@ -136,10 +138,14 @@
 
             //Add Norgeshandel CV
             $(document).on('click', '.choose-norgeshandel-cv', function () {
-                $('.cv_pdf').attr('disabled','disabled');
-                $('.cv_pdf').removeAttr('required');
-                $('.norgeshandel-section').removeClass('d-none');
-                $('#cv-error').css('display','none');
+                if($('.cv-status').val() == 'success'){
+                    $('.cv_pdf').attr('disabled','disabled');
+                    $('.cv_pdf').removeAttr('required');
+                    $('.norgeshandel-section').removeClass('d-none');
+                    $('#cv-error').css('display','none');
+                }else{
+                    alert('Beklager, du kan ikke laste opp Norgeshandel CV. Du må fylle den før du søker på jobb.');
+                }
             });
 
             //Remove Notrgeshandel
