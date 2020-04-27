@@ -1,6 +1,5 @@
 @extends('layouts.landingSite')
 @section('page_content')
-
     <?php
     $facilities = array();
     if (isset($property_data->facilities) && !empty($property_data->facilities)) {
@@ -235,6 +234,7 @@
                                                                                 data-controller="trackSendSMS">{{ $property_data->phone }}</a>
                                     </p>
                                 </div>
+
                             @endif
                             @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock)
                                 <div class="mb-2">
@@ -254,6 +254,7 @@
                                 </div>
                             @endif
                         </div>
+                        <div id="map" style="height: 306px; width: 100%;"></div>
                     </div>
                 @else
                     <div class="col-md-4">
@@ -286,12 +287,12 @@
                                 visning.
                             </div>
                         </div>
+                          
                     </div>
                 @endif
-                <div style="width: 306px;height:153px;">
-                    {!! Mapper::render() !!}
-                </div>
-
+         
+              
+              
             </div>
         </div>
 
@@ -301,5 +302,15 @@
             </div>
         </div>
     </main>
+@section('map')
+    <script>
+        $(function() {
+        var lat = '{{ $property_data->latitude }}';
+        var lon = '{{ $property_data->longitude }}';
+        var full_address = '{{ $property_data->full_address }}';
+        showMap(lat, lon, full_address);
+         });
+    </script>
+@stop
 
 @endsection
