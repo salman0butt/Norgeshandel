@@ -260,13 +260,13 @@
                             @php
                                 $user_follow_company = \App\Models\Following::where('user_id',\Illuminate\Support\Facades\Auth::id())->where('company_id',$job->company->id)->first();
                             @endphp
-                            <button class="dme-btn-outlined-blue col-8 mb-2 follow-company-button" data-company_id="{{$job->company->id}}">@if($user_follow_company) Slutt å følge firma @else Følg firma @endif</button>
+                            <button class="dme-btn-outlined-blue col-8 mb-2 follow-company-button" data-url="{{url('company-follow')}}" data-company_id="{{$job->company->id}}">@if($user_follow_company) Slutt å følge firma @else Følg firma @endif</button>
                             <div class="col-4"></div>
                             <div class="text-muted following-count">{{$job->company && $job->company->followings ? $job->company->followings->count() : '0'}} følger dette firmaet</div>
                             @if(!empty($job->company->emp_website))
                                 <div><a href="{{$job->company->emp_website}}" class="emp-website">{{$job->company->emp_website}}</a></div>
                             @endif
-                            <div><a href="#" class="emp-ads">more ads by company</a></div>
+                            <div><a href="{{url('jobs/company/'.$job->company->id.'/ads')}}" class="emp-ads">more ads by company</a></div>
                         @else
                             @if(!empty($job->emp_website))
                                 <div><a href="{{$job->emp_website}}" class="emp-website">{{__('Hjemmeside')}}</a></div>
@@ -300,28 +300,3 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 //}
 
 ?>
-
-@section('script')
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.follow-company-button', function (e) {
-                e.preventDefault();
-                var company_id = $(this).data('company_id');
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "{{url('company-follow')}}",
-                    type: "GET",
-                    data: {'company_id':company_id},
-                    async: false,
-                    success: function (response) {
-                        location.reload();
-                    }
-                });
-            });
-        })
-    </script>
-@endsection

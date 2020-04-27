@@ -7,6 +7,9 @@
         @include('user-panel.banner-ads.top-banner')
     </div>
     <div class="row mt-4">
+        <div class="col-md-12">
+            @include('common.partials.flash-messages')
+        </div>
         <div class="col-md-12 bg-maroon-lighter pt-2 mb-3" style="">
             <h2 class="u-t2 p-2 job-type">
                 @if(!isset($filters) || empty($filters))
@@ -194,7 +197,6 @@ $var = json_encode($counts);
             }
         });
 
-
         $.each($('.pagination .page-link'), function () {
             var link = $(this).attr('href');
             if (!isEmpty(link)) {
@@ -222,6 +224,8 @@ $var = json_encode($counts);
                 $(this).parent().parent().css("opacity", '0.5');
             }
         });
+
+
     });
 
 </script>

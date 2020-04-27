@@ -284,6 +284,27 @@ $(document).ready(function (e) {
         }
     });
 
+    $(document).on('click', '.follow-company-button', function (e) {
+        e.preventDefault();
+        var company_id = $(this).data('company_id');
+        var url = $(this).data('url');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {'company_id':company_id},
+            async: false,
+            success: function (response) {
+                location.reload();
+            }
+        });
+    });
+
+
     $('.url_http').on('change', function(){
         if ($(this).val() == ''){
             return;

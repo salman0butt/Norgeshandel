@@ -205,6 +205,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::patch('jobs/update/{id}', 'Admin\Jobs\JobController@update')->name('update');
     Route::patch('jobs/store', 'Admin\Jobs\JobController@store');
     Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
+    Route::get('jobs/company/{id}/ads', 'Admin\Jobs\JobController@company_more_ads');
 
     Route::get('shared-lists/{link_id}', function ($link_id) {
         $list = \App\fav_list::where('share_link', $link_id)->get()->first();
@@ -526,7 +527,6 @@ Route::group(['middleware' => 'authverified'], function () {
                     $company_follow->company_id = $request->company_id;
                     $company_follow->save();
                 }
-                dd($company_follow);
                 return json_encode('success');
             }else{
                 return json_encode('success');

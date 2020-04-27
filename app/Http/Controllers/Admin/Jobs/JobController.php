@@ -607,6 +607,29 @@ class JobController extends Controller
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
+    //Show more ads by a company
+    public function company_more_ads($id){
+        $pagination = 20;
+        if(getenv('PAGINATION')){
+            $pagination = getenv('PAGINATION');
+        }
+        $date = Date('y-m-d',strtotime('-7 days'));
+
+        $jobs = DB::table('ads')
+            ->join('jobs', 'ads.id', '=', 'jobs.ad_id')
+//            ->where('ads.status', '=', 'published')
+            ->where('ads.ad_type', '=', 'job')
+            ->whereNull('jobs.deleted_at')
+            ->whereNull('ads.deleted_at')
+            ->where('ads.visibility','=',1)
+            ->where('jobs.company_id',$id)
+            ->where(function ($query) use ($date){
+                $query->where('ads.status', 'published')
+                    ->orwhereDate('ads.sold_at','>',$date);
+            })->orderBy('ads.published_on','DESC')->limit($pagination)->get();
+        return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
+    }
+
     public function count(){
 
     }

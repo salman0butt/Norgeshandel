@@ -238,7 +238,7 @@
                                         @if(is_countable(Auth::user()->job_companies) &&
                                         count(Auth::user()->job_companies)>0)
                                         @foreach(Auth::user()->job_companies as $company)
-                                        <option value="{{$company->id}}">{{$company->emp_name}}</option>
+                                        <option value="{{$company->id}}" {{$obj_job->company_id && $obj_job->company_id == $company->id ? 'selected' : ''}}>{{$company->emp_name}}</option>
                                         @endforeach
                                         @endif
                                     </select>

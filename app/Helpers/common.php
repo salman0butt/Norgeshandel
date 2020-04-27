@@ -698,4 +698,24 @@ class common
         }
     }
 
+
+    public static function company_commitment_jobs($company_id,$type){
+        $count = 0;
+        $jobs = DB::table('ads')
+            ->join('jobs', 'ads.id', '=', 'jobs.ad_id')
+//            ->where('ads.status', '=', 'published')
+            ->where('ads.ad_type', '=', 'job')
+            ->whereNull('jobs.deleted_at')
+            ->whereNull('ads.deleted_at')
+            ->where('jobs.company_id',$company_id)
+            ->where(function ($query) use ($type){
+                if ($type != 'all'){
+                    $query->where('jobs.commitment_type',$type);
+                }
+            })
+            ->where('ads.visibility','=',1)->get();
+        return $jobs;
+
+    }
+
 }

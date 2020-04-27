@@ -6,6 +6,7 @@
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+
 @endsection
 @section('page_content')
     <main class="profile">
@@ -276,7 +277,7 @@
                                                         (valgfritt)</label>
                                                     <div class="col-sm-10 ">
                                                 <textarea name="emp_company_information"
-                                                          class="form-control dme-form-control emp_company_information"
+                                                          class="dme-form-control"
                                                           id="emp_company_information_{{$company->id}}" cols="30"
                                                           rows="10">{{$company->emp_company_information}}</textarea>
                                                     </div>
@@ -377,7 +378,7 @@
                                                 <div class="row">
                                                     <label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bedriftslogo
                                                         (valgfritt)</label>
-                                                    <div class="col-sm-4 ">
+                                                    <div class="col-sm-4">
                                                         <input type="file" name="company_logo"
                                                                id="company_logo_{{$company->id}}" class=""
                                                                value="Select logo">
@@ -390,16 +391,15 @@
                                                     <label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bilder
                                                         fra arbeidsplassen
                                                         (valgfritt)</label>
-                                                    <div class="col-sm-4 ">
+                                                    <div class="col-sm-4">
                                                         <input type="file" name="company_gallery[]"
                                                                id="job_gallery_{{$company->id}}"
                                                                class=""
                                                                multiple="">
                                                         @if(is_countable($company->company_gallery) && count($company->company_gallery)>0)
                                                             @foreach($company->company_gallery as $img)
-                                                                <img
-                                                                    src="{{\App\Helpers\common::getMediaPath($img)}}"
-                                                                    style="max-width: 75px;" alt="" class="img-thumbnail">
+                                                                <img src="{{\App\Helpers\common::getMediaPath($img)}}"
+                                                                        style="max-width: 75px;" alt="" class="img-thumbnail">
                                                             @endforeach
                                                         @endif
                                                     </div>
@@ -617,16 +617,16 @@ meldingstjeneste og i dine annonser.</p>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#form_company_profile').submit(function (e) {
-                $('#description').text(tinyMCE.get("description").getContent());
-                $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
+                // $('#description').text(tinyMCE.get("description").getContent());
+                // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
             });
-            tinymce.init({
-                selector: 'textarea.emp_company_information',
-                width: $(this).parent().width(),
-                height: 250,
-                menubar: false,
-                statusbar: false
-            });
+            // tinymce.init({
+            //     selector: 'textarea.emp_company_information',
+            //     width: $(this).parent().width(),
+            //     height: 250,
+            //     menubar: false,
+            //     statusbar: false
+            // });
             $(".custom-file-input").on("change", function () {
                 readFileURL((this), '.profile img');
                 var fileName = $(this).val().split("\\").pop();
