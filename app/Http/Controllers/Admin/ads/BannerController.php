@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin\ads;
 
+use App\BannerClick;
 use  App\Helpers\common;
 use App\Admin\ads\Banner;
 use Illuminate\Http\Request;
+use App\Admin\ads\BannerView;
 use App\Admin\Banners\BannerGroup;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -161,10 +163,55 @@ class BannerController extends Controller
     }
     public function views($banner_id) {
           $banner = Banner::findOrFail($banner_id);
-          $views = $banner->views;
-          $views = $views+1;
-          $banner->update(['views'=>$views]);
+          $view = new BannerView();
+          $views = $banner->views()->save($view);
+        //   $views = $views+1;
+        //   $banner->update(['views'=>$views]);
           return response()->json(['success'=>1]);
+    }
+
+    public function reports($id) {
+    // $start_date = date('Y-m-d H:i:s', strtotime('-1 month'));
+    // $end_date = date('Y-m-d H:i:s', strtotime(now()));
+    // $clicks = BannerClick::where('banner_id', $id)->where(function ($query) use ($start_date, $end_date) {
+    //     $query->where('created_at', '>=', $start_date)
+    //     ->orWhere('created_at', '=<', $end_date);
+    //     })->get();
+
+        $compare_date = (date("Y-m-d", strtotime("-1 month")));
+
+        $banner_clicks = DB::table('banner_clicks')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
+        ->where('banner_id', $id)
+        ->whereDate('created_at', '>', $compare_date)
+        ->groupBy('date')
+        ->get();
+
+         $banner_views = DB::table('banner_views')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
+        ->where('banner_id', $id)
+        ->whereDate('created_at', '>', $compare_date)
+        ->groupBy('date')
+        ->get();
+
+        $click_date = array();
+        $click_count = array();
+      
+       // $total_views = $banner_views->count();
+        $total_views = 0;
+        $total_clicks = $banner_clicks->count();
+
+        foreach ($banner_clicks as $click) {
+            $click_date[] = $click->date;
+            $click_count[] = $click->count_view;
+        }
+        $view_date = array();
+        $view_count = array();
+        foreach ($banner_views as $view) {
+            $view_date[] = $view->date;
+            $view_count[] = $view->count_view;
+            $total_views = $total_views + $view->count_view;
+        }
+      
+        return view('admin.ads-managemnet.reports',compact('click_date','click_count','view_date','view_count','total_clicks','total_views'));
     }
 
 }

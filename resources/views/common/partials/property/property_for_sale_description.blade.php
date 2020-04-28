@@ -509,6 +509,7 @@ $name = $property_data->ad->company_gallery;
                                     <a href="{{url('property/property-for-sale/search?user_id='.$property_data->ad->user->id)}}">Flere annonser fra annonsør</a>
                                 </div>
                             @endif
+                             <div id="map" style="height: 306px; width: 100%;"></div>
                         </div>
                     @else
                         @php
@@ -569,7 +570,7 @@ $name = $property_data->ad->company_gallery;
                         </h5>
                     </div>
                     <div style="width: 306px; height: 153px;">
-                        {!! Mapper::render() !!}
+                     
                     </div>
 
                 </div>
@@ -580,5 +581,15 @@ $name = $property_data->ad->company_gallery;
              @include('user-panel.banner-ads.right-banner')
         </div>
     </main>
+@section('map')
+    <script>
+        $(function() {
+        var lat = '{{ $property_data->latitude }}';
+        var lon = '{{ $property_data->longitude }}';
+        var full_address = '{{ $property_data->full_address }}';
+        showMap(lat, lon, full_address);
+         });
+    </script>
+@stop
 
 @endsection
