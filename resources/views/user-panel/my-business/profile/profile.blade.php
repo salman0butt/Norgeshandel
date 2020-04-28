@@ -7,6 +7,12 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap-fileinput.css')}}">
+    <!-- Dropzone style files -->
+    <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
+
 @endsection
 @section('page_content')
     <main class="profile">
@@ -29,6 +35,15 @@
                 </div>
                 @if($user->allowed_job_companies->first() && (($user->allowed_job_companies->first()->value > 0 && $user->allowed_job_companies->first()->value > count($user->job_companies)) ||
                 ($user->allowed_property_companies->first()->value >0 && $user->allowed_property_companies->first()->value > count($user->property_companies))))
+                    @php
+                        \App\Helpers\common::delete_media(Auth::user()->id, 'company_gallery_temp_images', 'company_gallery');
+                        if($user && $user->companies->count()> 0){
+                            foreach($user->companies as $delete_user_company_temp_img){
+                                 \App\Helpers\common::delete_media(Auth::user()->id, 'company_gallery_temp_images_'.$delete_user_company_temp_img->id, 'company_gallery');
+                            }
+                        }
+                    @endphp
+
                     <div class="company-profile">
                         <div class="row">
                             <div class="col-md-12">
@@ -40,8 +55,12 @@
                         <div class="row collapse" id="company_profile_block">
                             <div class="col-md-12">
                                 <form action="{{route('company.store')}}" id="form_company_profile" method="POST"
-                                      enctype="multipart/form-data">
+                                      enctype="multipart/form-data" class="dropzone addMorePics" data-action="{{route('company.store')}}"
+                                      data-append_input = 'no'>
                                     {{csrf_field()}}
+                                    <input type="hidden" name="upload_dropzone_images_type" value="company_gallery_temp_images">
+                                    <input type="hidden" name="media_position" class="media_position">
+                                    {{--<input type="hidden" name="deleted_media" class="deleted_media">--}}
                                     <h4 class="text-muted pt-2">Bedriftsprofilen</h4>
                                     <div class="form-group">
                                         <div class="row">
@@ -163,17 +182,29 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label for="job_gallery" class="col-md-2 u-t5">Bedriftslogo (valgfritt)</label>
-                                            <div class="col-sm-4 ">
-
-                                                <input type="file" name="company_logo" id="company_logo" class=""
-                                                       value="Select logo">
+                                            <div class="col-sm-10 mb-4">
+                                                @php $single_image_obj = null; $file_upload_name = 'company_logo'; @endphp
+                                                @include('user-panel.partials.upload-single-image',compact('single_image_obj'))
+                                                {{--<input type="file" name="company_logo" id="company_logo" class=""--}}
+                                                       {{--value="Select logo">--}}
                                             </div>
                                             <label for="job_gallery" class="col-md-2 u-t5">Bilder fra arbeidsplassen
                                                 (valgfritt)</label>
-                                            <div class="col-sm-4 ">
-                                                <input type="file" name="company_gallery[]" id="job_gallery" class=""
-                                                       multiple="">
+                                            <div class="col-sm-10">
+                                                <div class="clearfix">
+                                                    <a href="javascript:void(0);">
+                                                        <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted" style="border: 1px dashed #474445">
+                                                            <p class="">Slipp filer her eller klikk for å laste opp</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div action="#" class="picture dropzone-previews sortable">
+                                                </div>
                                             </div>
+                                            {{--<div class="col-sm-4 ">--}}
+                                                {{--<input type="file" name="company_gallery[]" id="job_gallery" class=""--}}
+                                                       {{--multiple="">--}}
+                                            {{--</div>--}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -256,9 +287,15 @@
                                     <div class="col-md-12">
                                         <form action="{{route('company.update', compact('company'))}}"
                                               id="form_company_profile_edit_{{$company->id}}" method="POST"
-                                              enctype="multipart/form-data">
+                                              enctype="multipart/form-data" class="dropzone addMorePics" data-action="{{route('company.update', compact('company'))}}"
+                                              data-append_input = 'no'>
                                             {{csrf_field()}}
                                             {{method_field('PUT')}}
+
+
+                                            <input type="hidden" name="upload_dropzone_images_type" value="company_gallery_temp_images_{{$company->id}}">
+                                            <input type="hidden" name="media_position" class="media_position">
+                                            <input type="hidden" name="deleted_media" class="deleted_media">
                                             <h4 class="text-muted pt-2">Bedriftsprofilen</h4>
                                             <div class="form-group">
                                                 <div class="row">
@@ -378,31 +415,93 @@
                                                 <div class="row">
                                                     <label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bedriftslogo
                                                         (valgfritt)</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="file" name="company_logo"
-                                                               id="company_logo_{{$company->id}}" class=""
-                                                               value="Select logo">
-                                                        @if(is_countable($company->company_logo) && count($company->company_logo)>0)
-                                                            <img
-                                                                src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"
-                                                                style="max-width: 100px;" alt="">
-                                                        @endif
+                                                    <div class="col-sm-10 mb-4">
+                                                        <div class="input_type_file fileinput fileinput-@if(is_countable($company->company_logo) && count($company->company_logo) > 0){{trim('exists')}}@else{{trim('new')}}@endif " data-provides="fileinput">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div class="">
+                                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                                    </div>
+                                                                    <div class="fileinput-preview fileinput-exists thumbnail mb-3" style="width: auto; height: 150px;">
+                                                                        @if(is_countable($company->company_logo) && count($company->company_logo)>0)
+                                                                            <img src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}" alt=""/>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="align-self-end">
+                                                                    @php
+                                                                        $file_name_unique = '';
+                                                                        if(is_countable($company->company_logo) && count($company->company_logo)>0){
+                                                                            $file_name_unique =$company->company_logo->first()->name_unique;
+                                                                        }
+                                                                    @endphp
+                                                                    <a href="javascript:;" class="red fileinput-exists dme-btn-outlined-blue btn-sm dz-remove ml-2" id="{{$file_name_unique}}" data-dismiss="fileinput">Fjern</a>
+                                                                    <span class="btn default btn-file mb-2">
+                                                                        <span class="fileinput-new dme-btn-outlined-blue btn-sm mt-5 mb-5">Velg bilde</span>
+                                                                        {{--<span class="fileinput-exists dme-btn-outlined-blue btn-sm">Endre</span>--}}
+                                                                        <input type="file" name="{{$file_upload_name}}" class="input_type_file" accept="image/*">
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {{--<input type="file" name="company_logo"--}}
+                                                               {{--id="company_logo_{{$company->id}}" class=""--}}
+                                                               {{--value="Select logo">--}}
+                                                        {{--@if(is_countable($company->company_logo) && count($company->company_logo)>0)--}}
+                                                            {{--<img--}}
+                                                                {{--src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"--}}
+                                                                {{--style="max-width: 100px;" alt="">--}}
+                                                        {{--@endif--}}
                                                     </div>
+
+
+
                                                     <label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bilder
                                                         fra arbeidsplassen
                                                         (valgfritt)</label>
-                                                    <div class="col-sm-4">
-                                                        <input type="file" name="company_gallery[]"
-                                                               id="job_gallery_{{$company->id}}"
-                                                               class=""
-                                                               multiple="">
-                                                        @if(is_countable($company->company_gallery) && count($company->company_gallery)>0)
-                                                            @foreach($company->company_gallery as $img)
-                                                                <img src="{{\App\Helpers\common::getMediaPath($img)}}"
-                                                                        style="max-width: 75px;" alt="" class="img-thumbnail">
-                                                            @endforeach
-                                                        @endif
+                                                    <div class="col-sm-10">
+                                                        <div class="clearfix">
+                                                            <a href="javascript:void(0);">
+                                                                <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted" style="border: 1px dashed #474445">
+                                                                    <p class="">Slipp filer her eller klikk for å laste opp</p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <div action="#" class="picture dropzone-previews sortable">
+                                                            @if(is_countable($company->company_gallery) && count($company->company_gallery)>0)
+                                                                @foreach($company->company_gallery as $img)
+                                                                    <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" >
+                                                                        <div class="dz-image">
+                                                                            <img data-dz-thumbnail="" alt="image not found" src="{{\App\Helpers\common::getMediaPath($img)}}">
+                                                                        </div>
+                                                                        <div class="dz-details">
+                                                                            <div class="dz-filename"><span data-dz-name="">{{@$img->name}}</span></div>
+                                                                        </div>
+                                                                        <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$img->name_unique}}">Slett</a>
+
+                                                                    </div>
+                                                                @endforeach
+                                                            @endif
+                                                        </div>
                                                     </div>
+
+                                                    {{--<label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bilder--}}
+                                                        {{--fra arbeidsplassen--}}
+                                                        {{--(valgfritt)</label>--}}
+                                                    {{--<div class="col-sm-4">--}}
+                                                        {{--<input type="file" name="company_gallery[]"--}}
+                                                               {{--id="job_gallery_{{$company->id}}"--}}
+                                                               {{--class=""--}}
+                                                               {{--multiple="">--}}
+                                                        {{--@if(is_countable($company->company_gallery) && count($company->company_gallery)>0)--}}
+                                                            {{--@foreach($company->company_gallery as $img)--}}
+                                                                {{--<img src="{{\App\Helpers\common::getMediaPath($img)}}"--}}
+                                                                        {{--style="max-width: 75px;" alt="" class="img-thumbnail">--}}
+                                                            {{--@endforeach--}}
+                                                        {{--@endif--}}
+                                                    {{--</div>--}}
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -639,6 +738,15 @@ meldingstjeneste og i dine annonser.</p>
 
         });
     </script>
+
+    <script src="{{asset('public/js/bootstrap-fileinput.js')}}"></script>
+    <!-- Dropzone script files -->
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
 @endsection
 
 

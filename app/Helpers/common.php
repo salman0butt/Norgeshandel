@@ -638,7 +638,7 @@ class common
     public static function update_media_position($arr){
         if (isset($arr)) {
             $data = json_decode($arr);
-            foreach ($data as $data_arr) {
+            foreach ($data as $key=>$data_arr) {
                 $response['flag'] = 'success';
                 $media = Media::where('name_unique', $data_arr[0])->first();
                 if ($media) {

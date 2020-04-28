@@ -642,7 +642,7 @@ Route::group(['middleware' => 'authverified'], function () {
         $media = Media::where('name_unique', $_GET['filename'])->first();
         $delete = 'no';
         if ($media) {
-            if(preg_match("/^.*\_temp_images$/", $media->mediable_type)){
+            if(preg_match_all("/_temp[^}]*_/", $media->mediable_type)){
                 $delete = 'yes';
             }else{
                 if($media->mediable_type = 'App\Models\Ad' && $media->mediable && $media->mediable->status == 'saved'){
