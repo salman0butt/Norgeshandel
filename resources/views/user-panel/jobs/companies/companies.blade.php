@@ -60,7 +60,7 @@
                                     <div class="col-md-3">
                                         <div class="p-2 text-center company-image">
                                             <img
-                                                src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"
+                                                src="{{$company->company_logo->first() ? \App\Helpers\common::getMediaPath($company->company_logo->first()) : asset('/public/images/1280x720.png')}}"
                                                 alt="" class="img-fluid align-middle">
                                         </div>
                                     </div>
