@@ -199,6 +199,8 @@
 
             var postal = $('.zip_code').val();
             $('#old_zip').attr('value',postal);
+            //calling address
+            fullAddress();
         });
 
         //click button update
