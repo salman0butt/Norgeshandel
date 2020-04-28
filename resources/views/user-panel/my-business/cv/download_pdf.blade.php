@@ -72,52 +72,68 @@
                     <tbody>
                     <tr style="border-top: 1px solid #dfe4e8;">
                         <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Navn</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
+                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-name">@if(!$anonym_cv_information) {{$cv->personal->first_name}} {{$cv->personal->last_name}} @else Anonym Kandidat @endif</td>
                     </tr>
                     <tr>
                         <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Født</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-birthdate">{{date('d.m.Y',strtotime($cv->personal->birthday))}}</td>
+                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-birthdate">@if(!$anonym_cv_information) {{$cv->personal && $cv->personal->birthday ? date('d.m.Y',strtotime($cv->personal->birthday)) : ''}} @else {{$cv->personal && $cv->personal->birthday ? date('Y',strtotime($cv->personal->birthday)) : ''}} @endif</td>
                     </tr>
-                    <tr>
-                        <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row size1of4" scope="row">Addresse</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-address">{{$cv->personal->address}}</td>
-                    </tr>
+                    @if(!$anonym_cv_information)
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row size1of4" scope="row">Addresse</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-address">{{$cv->personal->address}}</td>
+                        </tr>
+                    @endif
                     <tr>
                         <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Sted</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-postcode">{{$cv->personal->city}}</td>
+                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-postcode">@if(!$anonym_cv_information) {{$cv->personal->city}} @else Skjetten @endif</td>
                     </tr>
                     <tr>
                         <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Kjønn</th>
                         <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-gender">{{$cv->personal->gender}}</td>
                     </tr>
-                    <tr>
-                        <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Land</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-country">{{$cv->personal->country}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Telefon</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-phone">{{$cv->personal->tell}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Mobil</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-phone2">{{$cv->personal->mobile}}</td>
-                    </tr>
+                    @if($cv->personal->country)
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Land</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-country">{{$cv->personal->country}}</td>
+                        </tr>
+                    @endif
+                    @if($cv->personal->tell && !$anonym_cv_information)
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Telefon</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-phone">{{$cv->personal->tell}}</td>
+                        </tr>
+                    @endif
+                    @if($cv->personal->mobile && !$anonym_cv_information)
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Mobil</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-phone2">{{$cv->personal->mobile}}</td>
+                        </tr>
+                    @endif
+                    @if(!$anonym_cv_information)
                     <tr>
                         <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">E-post</th>
                         <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-email">{{$cv->personal->email}}</td>
                     </tr>
-                    <tr>
-                        <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Hjemmeside</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-homepage">{{$cv->personal->website}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Yrkesstatus</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-employmentstatus">{{$cv->personal->occupational_status}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Førerkort</th>
-                        <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
-                    </tr>
+                    @endif
+                    @if($cv->personal->website && !$anonym_cv_information)
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Hjemmeside</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-homepage">{{$cv->personal->website}}</td>
+                        </tr>
+                    @endif
+                    @if($cv->personal->occupational_status)
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Yrkesstatus</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-employmentstatus">{{$cv->personal->occupational_status}}</td>
+                        </tr>
+                    @endif
+                    @if($cv->personal->driving_license)
+                        <tr>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row" scope="row">Førerkort</th>
+                            <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-driverslicense">{{$cv->personal->driving_license}}</td>
+                        </tr>
+                    @endif
                     @php
                         $cv_industries = array();
                         if($cv->personal->industries){
@@ -141,7 +157,7 @@
 
             </div>
             <div class="col-md-4" style="width:34%;float: left;">
-                @if(isset($cv) && $cv->media!=null)
+                @if(isset($cv) && ($cv->media!=null) && empty($anonym_cv_information))
                     <div class="profile"
                          style="margin-left:10px;padding: 8px; background: #fdfdfd; border: 2px dashed #ddd;height: 200px; width:180px;">
                         <div style="height:200px; width:180px;background-size:contain;background-repeat:no-repeat;background-position:center;background-image: url({{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}})">
@@ -223,7 +239,7 @@
                 <div class="col-md-3"></div>
             </div>
         @endif
-        @if(isset($cv->languages) && !empty($cv->languages))
+        @if(isset($cv->languages) && !empty($cv->languages) && $cv->languages->count())
             <div class="row languages mt-1">
                 <div class="col-12 pt-4 ">
                     <h3 style="font-size:24px; font-weight: normal; font-family: Arial, Helvetica, sans-serif; margin-bottom: 5px;">
@@ -239,44 +255,59 @@
                 </div>
             </div>
         @endif
-        <div class="row preferences mt-1">
-            <div class="col-12">
-                <h3 style="font-size:24px; font-weight: normal; font-family: Arial, Helvetica, sans-serif; margin-bottom: 5px;">
-                    Ønsker for neste jobb</h3>
-                <table class="sectioninfo super-condensed border-white w-100">
-                    <tbody>
-                    <tr>
-                        <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row size1of4" scope="row">Jobbtype</th>
-                        <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="float-left">{{$cv->preference->job_type}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Personalansvar</th>
-                        <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-personnel">{{$cv->preference->responsibility}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Resultatansvar</th>
-                        <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Flyttevillighet</th>
-                        <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-move">{{$cv->preference->willingness}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Reisedøgn inntil pr år</th>
-                        <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-travel">{{$cv->preference->travel_days}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Lønnsvilkår</th>
-                        <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-salary">{{$cv->preference->salary}}</td>
-                    </tr>
-                    <tr>
-                        <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
-                        <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-period">{{$cv->preference->termination_notice}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+        @if($cv->preference && $cv->preference->job_type)
+            <div class="row preferences mt-1">
+                <div class="col-12">
+                    <h3 style="font-size:24px; font-weight: normal; font-family: Arial, Helvetica, sans-serif; margin-bottom: 5px;">Ønsker for neste jobb</h3>
+                    <table class="sectioninfo super-condensed border-white w-100">
+                        <tbody>
+                        @if($cv->preference->job_type)
+                            <tr>
+                                <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row size1of4" scope="row">Jobbtype</th>
+                                <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="float-left">{{$cv->preference->job_type}}</td>
+                            </tr>
+                        @endif
+                        @if($cv->preference->responsibilit)
+                            <tr>
+                                <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Personalansvar</th>
+                                <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-personnel">{{$cv->preference->responsibility}}</td>
+                            </tr>
+                        @endif
+                        @if($cv->preference->disclaimer)
+                            <tr>
+                                <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Resultatansvar</th>
+                                <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-accountmanager">{{$cv->preference->disclaimer}}</td>
+                            </tr>
+                        @endif
+                        @if($cv->preference->willingness)
+                            <tr>
+                                <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Flyttevillighet</th>
+                                <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-move">{{$cv->preference->willingness}}</td>
+                            </tr>
+                        @endif
+                        @if($cv->preference->travel_days)
+                            <tr>
+                                <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Reisedøgn inntil pr år</th>
+                                <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-travel">{{$cv->preference->travel_days}}</td>
+                            </tr>
+                        @endif
+                        @if($cv->preference->salary)
+                            <tr>
+                                <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Lønnsvilkår</th>
+                                <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-salary">{{$cv->preference->salary}}</td>
+                            </tr>
+                        @endif
+                        @if($cv->preference->termination_notice)
+                            <tr>
+                                <th style="border-bottom: 1px solid #bbbbbb;width:40%;padding: 5px; text-align: left;" class="th_row" scope="row">Oppsigelsestid i dagens jobb</th>
+                                <td style="border-bottom: 1px solid #bbbbbb;width:60%;padding: 5px; text-align: left;" id="future-period">{{$cv->preference->termination_notice}}</td>
+                            </tr>
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 <script src="{{asset('public/mediexpert.js')}}"></script>

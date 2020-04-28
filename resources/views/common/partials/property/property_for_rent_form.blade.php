@@ -235,7 +235,7 @@
             <label class="u-t5">Leies ut fra</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" value="{{ $property_for_rent->rented_from }}" name="rented_from" class="dme-form-control">
+                    <input type="text" value="{{ $property_for_rent->rented_from }}" name="rented_from" class="dme-form-control date-picker">
                     <span class="error-span rented_from"></span>
                 </div>
                 <div class="col-sm-8">
@@ -246,7 +246,7 @@
             <label class="u-t5">Leies ut til</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" value="{{ $property_for_rent->rented_to }}" name="rented_to" class="dme-form-control">
+                    <input type="text" value="{{ $property_for_rent->rented_to }}" name="rented_to" class="dme-form-control date-picker">
                     <span class="error-span rented_to"></span>
                 </div>
                 <div class="col-sm-8">
@@ -276,7 +276,7 @@
             <label class="u-t5">Visningsdato (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="date" name="delivery_date[]" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control">
+                    <input type="text" name="delivery_date[]" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control date-picker">
                     <span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>
                 </div>
             </div>
@@ -318,19 +318,23 @@
                 </div>
             </div>
         </div>
+        @if(Auth::user()->hasRole('company'))
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12 pr-md-0">
+                        <button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue add-ad-agent">+ Legg til en annen megler</button>
+                    </div>
+                </div>
+            </div>
+            @php
+                $ad_agents = array();
+                if($property_for_rent && $property_for_rent->ad && $property_for_rent->ad->agent && $property_for_rent->ad->agent->agent_details){
+                    $ad_agents = json_decode($property_for_rent->ad->agent->agent_details);
+                }
+            @endphp
 
-        {{--<div class="form-group">--}}
-            {{--<div class="row">--}}
-                {{--<div class="col-sm-12 pr-md-0">--}}
-                    {{--<button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue add-ad-agent">+ Legg til en annen megler</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-
-        {{--<div class="append-agent-section">--}}
-
-        {{--</div>--}}
-
+            @include('user-panel.partials.ad_agent_section')
+        @endif
 
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
@@ -361,31 +365,5 @@
                 class="dme-btn-outlined-blue mb-3 col-12 ladda-button"><span class="ladda-label"> @if(Request::is('new/property/rent/ad/*/edit')) {{'Oppdater annonsen'}} @else {{ 'Publiser annonsen!' }} @endif</span></button>
     </div>
 </form>
-
-{{--<div class="append-agent d-none">--}}
-    {{--<div class="form-group">--}}
-        {{--<div class="row">--}}
-            {{--<div class="col-sm-6 pr-md-0">--}}
-                {{--<label class="u-t5">Navn</label>--}}
-                {{--<input type="text" name="agent_name[]" class="dme-form-control">--}}
-            {{--</div>--}}
-            {{--<div class="col-sm-6 pr-md-0">--}}
-                {{--<label class="u-t5">Stilling</label>--}}
-                {{--<input type="text" name="agent_position[]" class="dme-form-control">--}}
-            {{--</div>--}}
-            {{--<div class="col-sm-6 pr-md-0">--}}
-                {{--<label class="u-t5">Mobil</label>--}}
-                {{--<input type="text" name="agent_mobile_no[]" class="dme-form-control">--}}
-            {{--</div>--}}
-            {{--<div class="col-sm-5 pr-md-0">--}}
-                {{--<label class="u-t5">Telefon (valgfritt)</label>--}}
-                {{--<input type="text" name="agent_telephone[]" class="dme-form-control">--}}
-            {{--</div>--}}
-            {{--<div class="col-sm-1 pr-md-0">--}}
-                {{--<button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue remove-agent-button"><span class="fa fa-trash"></span></button>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-{{--</div>--}}
 
 

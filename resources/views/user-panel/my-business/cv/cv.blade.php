@@ -194,11 +194,11 @@ $industries = $industry->terms;
                                                 <select class="form-control" id="personal_gender" name="gender"
                                                         required>
                                                     <option value="">{{ __('cv.select') }}</option>
-                                                    <option value="male"
-                                                            @if($cvpersonal->gender=="male") selected @endif>Kvinne
+                                                    <option value="Kvinne"
+                                                            @if($cvpersonal->gender=="Kvinne") selected @endif>Kvinne
                                                     </option>
-                                                    <option value="female"
-                                                            @if($cvpersonal->gender=="female") selected @endif>Mann
+                                                    <option value="mann"
+                                                            @if($cvpersonal->gender=="mann") selected @endif>Mann
                                                     </option>
                                                 </select>
                                             </div>
@@ -1190,7 +1190,7 @@ $industries = $industry->terms;
                                                         </tr>
                                                     @endforeach
                                                 @else
-                                                    <tr class="odd"><td valign="top" colspan="4" class="dataTables_empty text-center">Ingen opptak funnet</td></tr>
+                                                    <tr class="odd"><td valign="top" colspan="4" class="dataTables_empty text-center">Ingen forespørsel funnet</td></tr>
                                                 @endif
                                             </tbody>
                                         </table>
@@ -1223,7 +1223,7 @@ $industries = $industry->terms;
                                                     </tr>
                                                 @endforeach
                                             @else
-                                                <tr class="odd"><td valign="top" colspan="4" class="dataTables_empty text-center">Ingen opptak funnet</td></tr>
+                                                <tr class="odd"><td valign="top" colspan="4" class="dataTables_empty text-center">Ingen forespørsel funnet</td></tr>
                                             @endif
                                             </tbody>
                                         </table>
@@ -1448,7 +1448,7 @@ $industries = $industry->terms;
                                             <div class="col-md-3"></div>
                                         </div>
                                     @endif
-                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                    @if(isset($cv->languages) && !empty($cv->languages) && $cv->languages->count())
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
@@ -1514,19 +1514,19 @@ $industries = $industry->terms;
                                                 <tbody>
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.name') }}</th>
-                                                    <td id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
+                                                    <td id="cvdetails-name">Anonym Kandidat</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.birthday') }}</th>
-                                                    <td id="cvdetails-birthdate">{{$cv->personal->birthday}}</td>
+                                                    <td id="cvdetails-birthdate">{{$cv->personal->birthday ? date('Y',strtotime($cv->personal->birthday)) : ''}}</td>
                                                 </tr>
-                                                <tr>
-                                                    <th class="th_row size1of4" scope="row">{{ __('cv.address') }}</th>
-                                                    <td id="cvdetails-address">{{$cv->personal->address}}</td>
-                                                </tr>
+                                                {{--<tr>--}}
+                                                    {{--<th class="th_row size1of4" scope="row">{{ __('cv.address') }}</th>--}}
+                                                    {{--<td id="cvdetails-address">{{$cv->personal->address}}</td>--}}
+                                                {{--</tr>--}}
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.city') }}</th>
-                                                    <td id="cvdetails-postcode">{{$cv->personal->city}}</td>
+                                                    <td id="cvdetails-postcode">Skjetten</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.gender') }}</th>
@@ -1561,17 +1561,18 @@ $industries = $industry->terms;
                                         </div>
                                         <div class="col-md-4">
                                             <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">Bilde</h3>
-                                            @if(isset($cv) && $cv->media!=null)
-                                                <div class="profile"
-                                                     style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
-                                                    <img
-                                                        src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
-                                                        id="cv_profile_image"
-                                                        style="max-width:180px;max-height: 200px; height:200px;" alt="">
-                                                </div>
-                                            @else
-                                                <small class="text-dark">{{ __('cv.pre-picture-p') }}</small>
-                                            @endif
+                                            <p class="text-muted">Denne CVen mangler bilde.</p>
+                                            {{--@if(isset($cv) && $cv->media!=null)--}}
+                                                {{--<div class="profile"--}}
+                                                     {{--style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">--}}
+                                                    {{--<img--}}
+                                                        {{--src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"--}}
+                                                        {{--id="cv_profile_image"--}}
+                                                        {{--style="max-width:180px;max-height: 200px; height:200px;" alt="">--}}
+                                                {{--</div>--}}
+                                            {{--@else--}}
+                                                {{--<small class="text-dark">{{ __('cv.pre-picture-p') }}</small>--}}
+                                            {{--@endif--}}
                                         </div>
                                     </div>
                                     @if(isset($cv->educations) && is_countable($cv->educations) && !empty($cv->educations->first()->school))
@@ -1638,7 +1639,7 @@ $industries = $industry->terms;
                                             <div class="col-md-3"></div>
                                         </div>
                                     @endif
-                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                    @if(isset($cv->languages) && !empty($cv->languages) && $cv->languages->count())
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">

@@ -4,21 +4,24 @@ use App\Helpers\common;
 $empname = $job->company_id != 0 ? $job->company->emp_name : $job->emp_name;
 //dump($job);
 
-$image_path = 'public/images/placeholder.png';
+$image_path = '';
 if ($job->company_id != 0) {
-    if (is_countable($job->company->company_gallery) && count($job->company->company_gallery) > 0) {
-        $image_path = common::getMediaPath($job->company->company_gallery->first(), '235x180');
+    if (is_countable($job->company->company_logo) && count($job->company->company_logo) > 0) {
+        $image_path = common::getMediaPath($job->company->company_logo->first(),'150x150');
     }
 } else {
-    if (is_countable($job->ad->company_gallery) && count($job->ad->company_gallery) > 0) {
-        $image_path = common::getMediaPath($job->ad->company_gallery->first(), '235x180');
+    if (is_countable($job->ad->company_logo) && count($job->ad->company_logo) > 0) {
+        $image_path = common::getMediaPath($job->ad->company_logo->first(),'150x150');
     }
 }
 
 ?>
 <div class="row bg-hover-maroon-lighter radius-8 p-sm-1">
     <a href="{{route('jobs.show', compact('job'))}}" class="image-section col-sm-4 p-2">
-        <div class="img-fluid radius-8" style="height: 160px; width: 100%;background-image: url('{{asset($image_path)}}'); background-position: center; background-size: cover;"></div>
+        <div class="img-fluid radius-8 trailing-border" style="height: 160px; width:100%;
+                background-image: url('@if(!empty($image_path)){{$image_path}}@else{{asset('public/images/placeholder.png')}}@endif');
+                background-position: center; @if(!empty($image_path)) background-repeat: no-repeat; @else background-size: cover;  @endif">
+        </div>
         {{--        <img src="{{asset($image_path)}}" alt="" class="img-fluid radius-8" style="height: 160px; width: 100%;">--}}
         @if($job && $job->ad && !$job->ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>

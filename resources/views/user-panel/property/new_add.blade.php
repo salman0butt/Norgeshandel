@@ -46,94 +46,92 @@
 @section('script')
     <script type="text/javascript">
 
-        $(document).ready(function () {
-
-            function record_store_ajax_request(event, this_obj) {
-                if(event == 'click'){
-                    if(! $('#property_for_rent_form').valid()) return false;
-                }
-
-                if (event == 'change') {
-                    var zip_code = $('.zip_code').val();
-                    var old_zip = $('#old_zip').val();
-                    
-                    if (zip_code) {
-                        if (old_zip != zip_code) {
-                            find_zipcode_city(zip_code);
-                        }
-                    }
-                    @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
-                        var url = "{{url('add/property/for/rent/ad/'.$property_for_rent1->id)}}";
-                    @endif
-                } else {
-                    @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
-                        var url = "{{url('add/property/for/rent/ad/update/'.$property_for_rent1->id)}}";
-                    @endif
-                }
-
-                //if (!$('#property_for_rent_form').valid()) return false;
-
-                $("input ~ span,select ~ span").each(function (index) {
-                    $(".error-span").html('');
-                    $("input, select").removeClass("error-input");
-                });
-
-
-
-                var myform = document.getElementById("property_for_rent_form");
-                var fd = new FormData(myform);
-
-                // fd.append('property_photos', $('#property_photos').get(0).files[0]);
-                var l = Ladda.create(this_obj);
-                l.start();
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: fd,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        if (event == 'change') {
-                            notify("info","Annonsen din er lagret");
-        
-                        }else if(event == 'click'){
-                            $('.deleted_media').val('');
-                            $('.media_position').val('');
-                            $('.ad_status').val(data.status);
-                            var message = 'Annonsen din er publisert';
-                            if(data.message){
-                                message = data.message;
-                            }
-                            notify("success",message);
-                        }
-                    },
-                    error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
-
-                        var errors = jqXhr.responseJSON;
-                        if (isEmpty(errors.errors)) {
-                             notify("error","noe gikk galt!");
-                            return false;
-                        }
-                        if (!isEmpty(errors.errors)) {
-                            $.each(errors.errors, function (index, value) {
-                                $("." + index).html(value);
-                                $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
-                            });
-                        } else {
-                             notify("error","noe gikk galt!");
-                        }
-                    },
-
-                }).always(function () {
-                    l.stop();
-                });
-                return false;
-                
+        function record_store_ajax_request(event, this_obj) {
+            if(event == 'click'){
+                if(! $('#property_for_rent_form').valid()) return false;
             }
 
+            if (event == 'change') {
+                var zip_code = $('.zip_code').val();
+                var old_zip = $('#old_zip').val();
 
-            $("input:not(input[type=date]),textarea").on('change', function (e) {
+                if (zip_code) {
+                    if (old_zip != zip_code) {
+                        find_zipcode_city(zip_code);
+                    }
+                }
+                        @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
+                var url = "{{url('add/property/for/rent/ad/'.$property_for_rent1->id)}}";
+                @endif
+            } else {
+                        @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
+                var url = "{{url('add/property/for/rent/ad/update/'.$property_for_rent1->id)}}";
+                @endif
+            }
+
+            //if (!$('#property_for_rent_form').valid()) return false;
+
+            $("input ~ span,select ~ span").each(function (index) {
+                $(".error-span").html('');
+                $("input, select").removeClass("error-input");
+            });
+
+
+
+            var myform = document.getElementById("property_for_rent_form");
+            var fd = new FormData(myform);
+
+            // fd.append('property_photos', $('#property_photos').get(0).files[0]);
+            var l = Ladda.create(this_obj);
+            l.start();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: fd,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (event == 'change') {
+                        notify("info","Annonsen din er lagret");
+
+                    }else if(event == 'click'){
+                        $('.deleted_media').val('');
+                        $('.media_position').val('');
+                        $('.ad_status').val(data.status);
+                        var message = 'Annonsen din er publisert';
+                        if(data.message){
+                            message = data.message;
+                        }
+                        notify("success",message);
+                    }
+                },
+                error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+
+                    var errors = jqXhr.responseJSON;
+                    if (isEmpty(errors.errors)) {
+                        notify("error","noe gikk galt!");
+                        return false;
+                    }
+                    if (!isEmpty(errors.errors)) {
+                        $.each(errors.errors, function (index, value) {
+                            $("." + index).html(value);
+                            $("input[name='" + index + "'],select[name='" + index + "']").addClass("error-input");
+                        });
+                    } else {
+                        notify("error","noe gikk galt!");
+                    }
+                },
+
+            }).always(function () {
+                l.stop();
+            });
+            return false;
+
+        }
+        $(document).ready(function () {
+
+            $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
                 var ad_status = $('.ad_status').val();
@@ -153,7 +151,7 @@
                 $('#old_zip').attr('value',postal);
             });
             //click button update
-            $("#publiser_annonsen").click(function (e) {
+            $(document).on('click', '#publiser_annonsen', function(e){
                 e.preventDefault();
                 record_store_ajax_request('click', (this));
             });

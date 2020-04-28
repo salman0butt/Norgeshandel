@@ -21,6 +21,7 @@
             </h2>
         </div>
         <div class="col-md-12">
+            @include('common.partials.flash-messages')
             <div class="hits fa-pull-right"><span class="font-weight-bold">{{count($jobs) ? $jobs->sum('positions') : '0'}}</span> stillinger i <span
                     class="font-weight-bold">{{count($jobs)}}</span> annonser
             </div>
@@ -187,13 +188,13 @@ $var = json_encode($counts);
             success: function (response) {
                 if (response) {
                     $('#save_search_dialog_btn').attr('disabled', "disabled");
+
                 }
             },
             error: function (error) {
                 // console.log(error);
             }
         });
-
 
         $.each($('.pagination .page-link'), function () {
             var link = $(this).attr('href');
@@ -222,6 +223,8 @@ $var = json_encode($counts);
                 $(this).parent().parent().css("opacity", '0.5');
             }
         });
+
+
     });
 
 </script>

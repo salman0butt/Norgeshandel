@@ -117,10 +117,10 @@
                                                     <a href="javascript:void(0);" class="mr-1 shortlist-cv" title="Kortliste CV" data-id="{{$cv->id}}"><i class="far fa-heart"></i></a>
                                                     @if($cv->visibility == 'anonymous')
                                                         <a href="javascript:void(0);" class="mr-1 send-request" title="Send forespørsel" data-user_id="{{$cv->user ? $cv->user->id : ''}}"><i class="fas fa-share"></i></a>
-                                                    @else
-                                                        <a href="{{ url('my-business/cv/view_pdf_cv', $cv->id)}}" title="Se CV" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
-                                                        <a href="{{ url('my-business/cv/download_pdf', $cv->id)}}" title="Last ned CV"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
                                                     @endif
+                                                    <a href="{{ $cv->visibility == 'anonymous' ? url('my-business/cv/view_pdf_cv/'.$cv->id.'/yes') : url('my-business/cv/view_pdf_cv/'.$cv->id)}}" title="Se CV" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
+                                                    <a href="{{ $cv->visibility == 'anonymous' ?  url('my-business/cv/download_pdf/'.$cv->id.'/yes') : url('my-business/cv/download_pdf/'.$cv->id)}}" title="Last ned CV"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
+
                                                 </td>
                                             </tr>
                                         @endif
@@ -192,10 +192,10 @@
                                                     <a href="javascript:void(0);" class="mr-1 remove-shortlist-cv" title="Fjern cv fra kortlisten" data-url="{{route('metas.destroy',$shortlisted_cv->meta->id)}}"><i class="fas fa-heart"></i></a>
                                                     @if($shortlisted_cv->visibility == 'anonymous')
                                                         <a href="#" class="mr-1 send-request" title="Send forespørsel" data-user_id="{{$shortlisted_cv->user ? $shortlisted_cv->user->id : ''}}"><i class="fas fa-share"></i></a>
-                                                    @else
-                                                        <a href="{{ url('my-business/cv/view_pdf_cv', $shortlisted_cv->id)}}" title="Se CV" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
-                                                        <a href="{{ url('my-business/cv/download_pdf', $shortlisted_cv->id)}}" title="Last ned CV"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
                                                     @endif
+
+                                                    <a href="{{ $shortlisted_cv->visibility == 'anonymous' ? url('my-business/cv/view_pdf_cv/'.$shortlisted_cv->id.'/yes') : url('my-business/cv/view_pdf_cv/'.$shortlisted_cv->id)}}" title="Se CV" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
+                                                    <a href="{{ $shortlisted_cv->visibility == 'anonymous' ?  url('my-business/cv/download_pdf/'.$shortlisted_cv->id.'/yes') : url('my-business/cv/download_pdf/'.$shortlisted_cv->id)}}" title="Last ned CV"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
                                                 </td>
                                             </tr>
                                         @endif
@@ -288,8 +288,11 @@
                                                     @endif
 
                                                     @if($requested_cv->user->cv_requests_sent()->status == "accepted")
-                                                        <a @if($requested_cv->user->cv_requests_sent()->status != "requested") style="color: white;" @endif href="{{ url('my-business/cv/view_pdf_cv', $requested_cv->id)}}" title="Se CV" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
-                                                        <a @if($requested_cv->user->cv_requests_sent()->status != "requested") style="color: white;" @endif href="{{ url('my-business/cv/download_pdf', $requested_cv->id)}}" title="Last ned CV"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
+                                                        <a style="color: white;" href="{{url('my-business/cv/view_pdf_cv/'.$requested_cv->id)}}" title="Se CV" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
+                                                        <a style="color: white;" href="{{url('my-business/cv/download_pdf/'.$requested_cv->id)}}" title="Last ned CV"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
+                                                    @else
+                                                        <a @if($requested_cv->user->cv_requests_sent()->status == "rejected") style="color: white;" @endif href="{{url('my-business/cv/view_pdf_cv/'.$requested_cv->id.'/yes')}}" title="Se CV" target="_blank" class="mr-1"><i class="fas fa-eye"></i></a>
+                                                        <a @if($requested_cv->user->cv_requests_sent()->status == "rejected") style="color: white;" @endif href="{{url('my-business/cv/download_pdf/'.$requested_cv->id.'/yes')}}" title="Last ned CV"  target="_blank"><i class="fas fa-arrow-circle-down"></i></a>
                                                     @endif
                                                 </td>
                                             </tr>

@@ -105,8 +105,9 @@ $(document).ready(function() {
             var dataArr = [];
             var sortableContainerId = this.id;
 
-            // var childrens = $(this).children('.dz-preview');
-            var childrens = $('.dropzone-previews').children('.dz-preview');
+            var childrens = $(this).children('.dz-preview');
+
+            //var childrens = $('.dropzone-previews').children('.dz-preview');
             childrens.each(function () {
                 var child = $(this);
                 var child_id = child.find('.dz-remove').attr('id');
@@ -129,11 +130,11 @@ $(document).ready(function() {
                     }
                 });
             }else{
-
                 var dataArr = JSON.stringify(dataArr);
-
-                $('form .media_position').val('');
-                $('form .media_position').val(dataArr);
+                $(this).closest('form').find('.media_position').val('');
+                $(this).closest('form').find('.media_position').val(dataArr);
+                // $(this).closest("form .media_position").val('');
+                // $(this).closest("form .media_position").val(dataArr);
             }
             // alert(JSON.stringify(dataArr));
             // console.log(JSON.stringify({dataArr})); //$.parseJSON(JSON.stringify(response));
@@ -160,7 +161,7 @@ function ws_remove_file(filename) {
     });
 }
 
-function delete_media(filename){
+function delete_media(filename,this_obj=''){
     var ad_status = $('.ad_status').val();
     if(ad_status == 'saved'){
         ws_remove_file(filename);
@@ -178,7 +179,13 @@ function delete_media(filename){
         }else{
             dataArr[0] = [filename]; //JSON.stringify(filename);
         }
-        $('.deleted_media').val(JSON.stringify(dataArr));
+        if(this_obj){
+            (this_obj).closest('form').find('.deleted_media').val(JSON.stringify(dataArr));
+        }else{
+            $('.deleted_media').val(JSON.stringify(dataArr));
+        }
+
+        //
     }
 }
 
@@ -214,7 +221,7 @@ $(document).on('click', '.dz-remove', function (e) {
     e.preventDefault();
     filename = $(this).attr('id');
     if(filename){
-        delete_media(filename);
+        delete_media(filename,$(this));
         if($("div").hasClass("input_type_file") && $(this).hasClass('fileinput-exists')){
             $('.input_type_file').removeClass('fileinput-exists ').addClass('fileinput-new');
             $('.input_type_file .dz-remove').attr('id','');

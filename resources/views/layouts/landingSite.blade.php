@@ -87,6 +87,7 @@
 @include('user-panel.partials.header')
 @endif
 @yield('page_content')
+@include('user-panel.partials.ad_agent_repeater_section')
 <div id="modal_select_category" class="modal fade" role="dialog">
     <div class="modal-dialog pt-5">
         <div class="modal-content smart-scroll" style="max-height: calc(100vh - 100px); overflow-y: scroll;">

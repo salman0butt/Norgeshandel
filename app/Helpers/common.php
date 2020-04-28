@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\AdAgent;
 use App\Admin\Jobs\Job;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
@@ -637,7 +638,7 @@ class common
     public static function update_media_position($arr){
         if (isset($arr)) {
             $data = json_decode($arr);
-            foreach ($data as $data_arr) {
+            foreach ($data as $key=>$data_arr) {
                 $response['flag'] = 'success';
                 $media = Media::where('name_unique', $data_arr[0])->first();
                 if ($media) {
@@ -670,6 +671,51 @@ class common
             }
         }
         return '';
+    }
+
+    public static function ad_agents($request,$ad){
+        if(count($request) && $ad->id){
+            $agent_detail = array();
+            if(isset($request['agent_name']) && count($request['agent_name'])){
+                if(count($request['agent_name'])){
+                    foreach ($request['agent_name'] as $key=>$agent_name){
+                        if($agent_name){
+                            $agent_detail[$key] = array(
+                                'name' => $agent_name,
+                                'position' => $request['agent_position'][$key],
+                                'mobile_no' => $request['agent_mobile_no'][$key],
+                                'telephone' => $request['agent_telephone'][$key],
+                            );
+                        }
+                    }
+                }
+                $agent_name = json_encode($agent_detail);
+                $agent = AdAgent::updateOrCreate(['ad_id' => $ad->id], ['agent_details' => $agent_name]);
+                return $agent;
+            }else{
+                $ad->agent()->delete();
+            }
+        }
+    }
+
+
+    public static function company_commitment_jobs($company_id,$type){
+        $count = 0;
+        $jobs = DB::table('ads')
+            ->join('jobs', 'ads.id', '=', 'jobs.ad_id')
+//            ->where('ads.status', '=', 'published')
+            ->where('ads.ad_type', '=', 'job')
+            ->whereNull('jobs.deleted_at')
+            ->whereNull('ads.deleted_at')
+            ->where('jobs.company_id',$company_id)
+            ->where(function ($query) use ($type){
+                if ($type != 'all'){
+                    $query->where('jobs.commitment_type',$type);
+                }
+            })
+            ->where('ads.visibility','=',1)->get();
+        return $jobs;
+
     }
 
 }
