@@ -37,6 +37,7 @@
                             <th scope="col">Time Type</th>
                             <th scope="col">Time Duration</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Reports</th>
                             <th scope="col">Actions</th>
                         </tr>
                         </thead>
@@ -61,10 +62,11 @@
                                     </ul>
                                   </td>
                                   <td>{{ count($banner->clicks) }}</td>
-                                  <td>{{ $banner->views }}</td>
+                                  <td>{{ $banner->views()->count() }}</td>
                                   <td>{{ ($banner->display_time_type == 'm' ? 'Minutes' : 'Seconds') }}</td>
                                  <td>{{ $banner->display_time_duration }}</td>
                                   <td>{{ ($banner->is_active ==1 ? 'Active':'Inactive') }}</td>
+                                  <td><a href="{{ url('banners/reports/'.$banner->id) }}" class="btn btn-sm btn-primary">Report</a> </td>
                                 <td><div class="display_name mb-2"></div>
                                 <a href="{{ url('admin/ads/'.$banner->id.'/edit') }}" class="btn btn-default btn-sm float-left m-1">Edit</a>
                                 <form action="{{ url('admin/ads/'.$banner->id) }}" method="POST"  onsubmit="jarascript:return confirm('Are you sure to delete the Ad:{{$banner->title}} ')">
