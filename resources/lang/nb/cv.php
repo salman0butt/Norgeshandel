@@ -138,7 +138,7 @@ return [
     'persnal' => 'personals',
     'name' => 'Navn',
     'birthday' => 'Født',
-    'address' => 'Addresse',
+    'address' => 'Adresse',
     'city' => 'Sted',
     'gender' => 'Kjønn',
     'country' => 'Land',

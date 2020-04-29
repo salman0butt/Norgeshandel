@@ -266,7 +266,7 @@
                             @if(!empty($job->company->emp_website))
                                 <div><a href="{{$job->company->emp_website}}" class="emp-website">{{$job->company->emp_website}}</a></div>
                             @endif
-                            <div><a href="{{url('jobs/company/'.$job->company->id.'/ads')}}" class="emp-ads">more ads by company</a></div>
+                            <div><a href="{{url('jobs/company/'.$job->company->id.'/ads')}}" class="emp-ads">Flere annonser fra firma</a></div>
                         @else
                             @if(!empty($job->emp_website))
                                 <div><a href="{{$job->emp_website}}" class="emp-website">{{__('Hjemmeside')}}</a></div>

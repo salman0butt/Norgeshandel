@@ -48,7 +48,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button class="btn dme-btn-outlined-blue" data-toggle="collapse"
-                                        data-target="#company_profile_block">Rediger bedriftsprofilen din
+                                        data-target="#company_profile_block">
+                                    {{$user->companies->count() > 0 ? ' Legg til ny bedriftsprofil' : 'Rediger bedriftsprofilen din'}}
                                 </button>
                             </div>
                         </div>
@@ -85,7 +86,7 @@
                                                         <option value="" disabled>Jobb (Grensen overskredet)</option>
                                                     @endif
                                                     @if(count($user->property_companies)<$user->allowed_property_companies->first()->value)
-                                                        <option value="property">property</option>
+                                                        <option value="Eiendom">Eiendom</option>
                                                     @else
                                                         <option value="" disabled>Eiendom (Grensen overskredet)</option>
                                                     @endif
@@ -162,7 +163,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <label for="emp_zip" class="col-md-2 u-t5">post kode</label>
+                                            <label for="emp_zip" class="col-md-2 u-t5">Post kode</label>
                                             <div class="col-sm-4 ">
                                                 <input name="zip" id="emp_zip" value="" type="text"
                                                        class="form-control dme-form-control">
