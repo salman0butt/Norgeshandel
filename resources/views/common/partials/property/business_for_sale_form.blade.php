@@ -21,6 +21,9 @@
         <input type="hidden" name="media_position" class="media_position">
         <input type="hidden" name="deleted_media" class="deleted_media">
           <input type="hidden" id="old_zip" value="{{ (isset($business_for_sale_obj->zip_code) ? $business_for_sale_obj->zip_code : '') }}">
+            <input type="hidden" name="latitude" id="latitude" value="">
+            <input type="hidden" name="longitude" id="longitude" value="">
+            <input type="hidden" name="full_address" id="full_address" value="">
             <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($business_for_sale_obj->zip_city) ? $business_for_sale_obj->zip_city : '') }}">
         <!--                            selection-->
         <div class="form-group">

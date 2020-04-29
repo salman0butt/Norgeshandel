@@ -302,15 +302,6 @@
             </div>
         </div>
     </main>
-@section('map')
-    <script>
-        $(function() {
-        var lat = '{{ $property_data->latitude }}';
-        var lon = '{{ $property_data->longitude }}';
-        var full_address = '{{ $property_data->full_address }}';
-        showMap(lat, lon, full_address);
-         });
-    </script>
-@stop
-
 @endsection
+@php $map_obj = $property_data @endphp
+@include('common.partials.description_map',compact('map_obj'))

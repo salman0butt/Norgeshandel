@@ -22,6 +22,9 @@
     <input type="hidden" name="upload_dropzone_images_type" value="flat_wishes_rented_temp_images">
     <input type="hidden" name="media_position" class="media_position">
     <input type="hidden" name="deleted_media" class="deleted_media">
+    <input type="hidden" name="latitude" id="latitude" value="">
+    <input type="hidden" name="longitude" id="longitude" value="">
+    <input type="hidden" name="full_address" id="full_address" value="">
     <div class="pl-3">
         <div class="form-group">
             <h3 class="u-t5">Ønsket leieområde</h3>

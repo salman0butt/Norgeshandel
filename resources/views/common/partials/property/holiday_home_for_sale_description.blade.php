@@ -450,6 +450,7 @@
                             </span>
                                 <span><?php echo (!empty($property_data->note)            ?  $property_data->note : ""); ?></span>
                             </div>
+                             
                         @else
                             <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
                         @endif
@@ -457,6 +458,7 @@
                         <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på visning.
                         </div>
                 </div>
+                       
                 @else
                 <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
@@ -557,7 +559,7 @@
 
                 </div>
                 <div style="width: 306px; height: 153px;">
-                    {!! Mapper::render() !!}
+                <div id="map" style="height: 306px; width: 100%;"></div>
                 </div>
             </div>
         </div>
@@ -570,3 +572,6 @@
 </main>
 
 @endsection
+
+@php $map_obj = $property_data @endphp
+@include('common.partials.description_map',compact('map_obj'))

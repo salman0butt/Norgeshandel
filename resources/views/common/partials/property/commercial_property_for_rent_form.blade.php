@@ -25,6 +25,9 @@
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_rent->zip_city) ? $commercial_property_for_rent->zip_city : '') }}">
         <input type="hidden" name="media_position" class="media_position">
         <input type="hidden" name="deleted_media" class="deleted_media">
+        <input type="hidden" name="latitude" id="latitude" value="">
+        <input type="hidden" name="longitude" id="longitude" value="">
+        <input type="hidden" name="full_address" id="full_address" value="">
         <!-- checkbox -->
         <div class="form-group">
             <h3 class="u-t5">Type lokale</h3>
