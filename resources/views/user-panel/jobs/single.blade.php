@@ -296,13 +296,14 @@
 
                     </div>
                     <div class="mt-3 location"><h5 class="u-t3">location</h5></div>
-                    <a href="#" class=""><img src="{{asset('public/images/staticmap.png')}}" class="img-fluid"
-                                              alt=""></a>
-                    <p class="u-mt4">
+                         <div style="width: 306px; height: 306px;">
+                             <div id="map" style="height: 100%; width: 100%;"></div>
+                        </div>
+                    {{-- <p class="u-mt4">
                         <a href="" class="u-mr8 mr-2">Stort kart</a>
                         <a href="" class="u-mr8 mr-2">Hybridkart</a>
                         <a href="" class="u-mr8 mr-2">Flyfoto</a>
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         </div>
@@ -321,3 +322,32 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 //}
 
 ?>
+
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.follow-company-button', function (e) {
+                e.preventDefault();
+                var company_id = $(this).data('company_id');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "{{url('company-follow')}}",
+                    type: "GET",
+                    data: {'company_id':company_id},
+                    async: false,
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+            });
+        })
+    </script>
+@endsection
+@php $map_obj = $job @endphp
+@include('common.partials.description_map',compact('map_obj'))
+

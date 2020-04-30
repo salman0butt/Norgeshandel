@@ -49,7 +49,10 @@ class Job extends Model
         'user_id',
         'company_id',
         'slug',
-        'leadership_category'
+        'leadership_category',
+        'latitude',
+        'longitude',
+        'full_address'
     ];
 
     public function user(){

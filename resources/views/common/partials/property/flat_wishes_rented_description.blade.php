@@ -131,6 +131,7 @@
                             {{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
                     <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                 </div>
+               
             </div>
             <div class="col-md-4">
                 @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company')
@@ -181,7 +182,7 @@
                 </div>
 
                 <div style="width: 306px; height: 153px;">
-                    {!! Mapper::render() !!}
+                     <div id="map" style="height: 306px; width: 100%;"></div>
                 </div>
         </div>
     </div>
@@ -193,3 +194,5 @@
 </main>
 
 @endsection
+@php $map_obj = $property_data @endphp
+@include('common.partials.description_map',compact('map_obj'))
