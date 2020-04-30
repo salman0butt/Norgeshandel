@@ -329,12 +329,7 @@
                     </div>
                 </div>
             </div>
-            @php
-                $ad_agents = array();
-                if($property_for_rent && $property_for_rent->ad && $property_for_rent->ad->agent && $property_for_rent->ad->agent->agent_details){
-                    $ad_agents = json_decode($property_for_rent->ad->agent->agent_details);
-                }
-            @endphp
+            @php $ad = $property_for_rent->ad; @endphp
 
             @include('user-panel.partials.ad_agent_section')
         @endif

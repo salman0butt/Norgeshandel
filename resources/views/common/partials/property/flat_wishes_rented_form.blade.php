@@ -281,12 +281,7 @@
                     </div>
                 </div>
             </div>
-            @php
-                $ad_agents = array();
-                if($flat_wishes_rented && $flat_wishes_rented->ad && $flat_wishes_rented->ad->agent && $flat_wishes_rented->ad->agent->agent_details){
-                    $ad_agents = json_decode($flat_wishes_rented->ad->agent->agent_details);
-                }
-            @endphp
+            @php $ad = $flat_wishes_rented->ad; @endphp
 
             @include('user-panel.partials.ad_agent_section')
         @endif

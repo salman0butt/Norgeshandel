@@ -177,7 +177,7 @@ class Ad extends Model
         return $this->morphMany(Notification::class, 'notifiable')->orderBy('id', 'desc');
     }
 
-    public function agent(){
-        return $this->hasOne(AdAgent::class,'ad_id','id');
+    public function agents(){
+        return $this->hasMany(AdAgent::class,'ad_id','id');
     }
 }

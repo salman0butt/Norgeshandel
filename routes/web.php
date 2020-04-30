@@ -647,7 +647,7 @@ Route::group(['middleware' => 'authverified'], function () {
             if(preg_match_all("/_temp[^}]*_/", $media->mediable_type)){
                 $delete = 'yes';
             }else{
-                if($media->mediable_type = 'App\Models\Ad' && $media->mediable && $media->mediable->status == 'saved'){
+                if(($media->mediable_type = 'App\AdAgent' && $media->mediable && $media->mediable->ad->status == 'saved') || ($media->mediable_type = 'App\Models\Ad' && $media->mediable && $media->mediable->status == 'saved')){
                     $delete = 'yes';
                 }
             }

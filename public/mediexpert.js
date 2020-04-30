@@ -58,16 +58,24 @@ function dme_nav_collapse(){
     });
 }
 $(document).ready(function (e) {
+
+    var ad_agent_click = 0;
     $(document).on('click', '.add-ad-agent', function(e) {
         if($('.append-agent-section .remove').length < 3){
-
+            ++ad_agent_click;
             $('.append-agent').clone().appendTo('.append-agent-section');
 
             $('.append-agent-section .append-agent').addClass('single remove');
             $('.append-agent-section .append-agent').removeClass('d-none');
 
+            $('.append-agent input[name="agent_key[]"]').val(ad_agent_click);
+            $('.append-agent').attr('id','agent_section_'+ad_agent_click);
+
             $('.append-agent-section .append-agent').removeClass('append-agent');
             $('.append-agent > .single').attr("class", "remove");
+
+
+
         }else{
             alert('Du kan legge til maksimalt 3 agenter igjen en annonse.');
         }

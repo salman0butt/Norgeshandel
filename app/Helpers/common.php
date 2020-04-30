@@ -678,24 +678,50 @@ class common
             $agent_detail = array();
             if(isset($request['agent_name']) && count($request['agent_name'])){
                 if(count($request['agent_name'])){
+                    if($ad->agents->count() > 0){
+                        foreach($ad->agents as $ad_agent){
+                            if($ad_agent->avatar){
+                                self::delete_media($ad_agent->id, 'App\AdAgent', 'agent_avatar');
+                            }
+                            $ad_agent->delete();
+                        }
+                    }
+
+
                     foreach ($request['agent_name'] as $key=>$agent_name){
                         if($agent_name){
-                            $agent_detail[$key] = array(
+                            $agent_detail = array(
+//                                'key'=>$request['agent_key'][$key],
                                 'name' => $agent_name,
                                 'position' => $request['agent_position'][$key],
                                 'mobile_no' => $request['agent_mobile_no'][$key],
                                 'telephone' => $request['agent_telephone'][$key],
                             );
+                            $agent_name = json_encode($agent_detail);
+                            $agent = AdAgent::create(['ad_id' => $ad->id,'agent_details' => $agent_name]);
+
+                            if ($agent && isset($request['agent_avatar'][$key]) && $request['agent_avatar'][$key]) {
+                                $file = $request['agent_avatar'][$key];
+                                $media = common::update_media($file, $agent->id, 'App\AdAgent', 'agent_avatar');
+                            }
                         }
                     }
                 }
-                $agent_name = json_encode($agent_detail);
-                $agent = AdAgent::updateOrCreate(['ad_id' => $ad->id], ['agent_details' => $agent_name]);
-                return $agent;
+//                $agent_name = json_encode($agent_detail);
+//                $agent = AdAgent::updateOrCreate(['ad_id' => $ad->id], ['agent_details' => $agent_name]);
+
             }else{
-                $ad->agent()->delete();
+                if($ad->agents->count() > 0){
+                    foreach($ad->agents as $ad_agent){
+                        if($ad_agent->avatar){
+                            self::delete_media($ad_agent->id, 'App\AdAgent', 'agent_avatar');
+                        }
+                        $ad_agent->delete();
+                    }
+                }
             }
         }
+        return 'success';
     }
 
 

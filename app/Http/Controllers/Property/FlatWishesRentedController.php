@@ -201,7 +201,7 @@ class FlatWishesRentedController extends Controller
     {
         DB::beginTransaction();
         try {
-            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone');
+            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone','agent_avatar','agent_key');
             $regions = "";
             if (isset($flat_wishes_rented_data['region'])) {
                 foreach ($flat_wishes_rented_data['region'] as $key => $val) {
@@ -242,8 +242,10 @@ class FlatWishesRentedController extends Controller
             $response->update($flat_wishes_rented_data);
             DB::commit();
             $data['success'] = $response;
+//            $data['agents'] = $agent_detail;
             if($call_by){
                 $data['flag'] = 'success';
+//                $data['agents'] = $agent_detail;
                 return $data;
             }
             echo json_encode($data);
