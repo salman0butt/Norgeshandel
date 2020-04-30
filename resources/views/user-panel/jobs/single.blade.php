@@ -323,31 +323,6 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 
 ?>
 
-
-@section('script')
-    <script>
-        $(document).ready(function () {
-            $(document).on('click', '.follow-company-button', function (e) {
-                e.preventDefault();
-                var company_id = $(this).data('company_id');
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "{{url('company-follow')}}",
-                    type: "GET",
-                    data: {'company_id':company_id},
-                    async: false,
-                    success: function (response) {
-                        location.reload();
-                    }
-                });
-            });
-        })
-    </script>
-@endsection
 @php $map_obj = $job @endphp
 @include('common.partials.description_map',compact('map_obj'))
 
