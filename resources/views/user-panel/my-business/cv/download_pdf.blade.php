@@ -80,7 +80,7 @@
                     </tr>
                     @if(!$anonym_cv_information)
                         <tr>
-                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row size1of4" scope="row">Addresse</th>
+                            <th style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" class="th_row size1of4" scope="row">Adresse</th>
                             <td style="border-top: 1px solid #dfe4e8;padding: 5px; text-align: left" id="cvdetails-address">{{$cv->personal->address}}</td>
                         </tr>
                     @endif

@@ -36,7 +36,9 @@
 
         <div class="mt-5 mb-3">
             <div class="row">
-                <div class="col-md-6"><img src="{{$company->company_logo->first() ? \App\Helpers\common::getMediaPath($company->company_logo->first()) : asset('/public/images/1280x720.png')}}" alt="logo" width="100"></div>
+                <div class="col-md-6">
+                    <img src="{{$company->company_logo->first() ? \App\Helpers\common::getMediaPath($company->company_logo->first()) : asset('/public/images/1280x720.png')}}" alt="logo" width="100">
+                </div>
                 <div class="col-md-6 text-right">
                     <font style="vertical-align: inherit;">
                         <font style="vertical-align: inherit;">{{$company->followings->count()}} følgere </font>

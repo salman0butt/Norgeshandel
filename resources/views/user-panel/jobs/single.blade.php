@@ -7,8 +7,15 @@
     <?php
     $job_function = "";
     $logo = $job->ad->media()->where('type', 'logo')->get()->first();
+
     if (!empty($logo)) {
         $logo = \App\Helpers\common::getMediaPath($logo, '150x150');
+    }else{
+        if ($job->company_id != 0) {
+            if (is_countable($job->company->company_logo) && count($job->company->company_logo) > 0) {
+                $logo = \App\Helpers\common::getMediaPath($job->company->company_logo->first(),'150x150');
+            }
+        }
     }
     ?>
     <main>
@@ -56,12 +63,7 @@
                     @if($name->count())
                         @include('user-panel.partials.landing_page_slider',compact('name'))
                     @endif
-                    @if($job->workplace_video)
-                        <div style="position: absolute;bottom: 0;left: 30px;">
-                            <a data-fslightbox="gallery1" href="{{$job->workplace_video}}" class="btn btn-light radius-8 video-button" style="color: #ac304a; background: white">
-                                <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
-                        </div>
-                    @endif
+
                     {{--<img src="{{asset('public/images/home.jpg')}}" alt="" class="img-fluid">--}}
                 </div>
             </div>
@@ -219,6 +221,7 @@
                                             href="tel:{{$job->app_mobile}}">  {{$job->app_mobile}}</a></span>
                                 </div>
                             @endif
+
                             @if($job && ($job->app_linkedin || $job->app_twitter))
                                 <div class="mb-2">
                                     <span class="contact-name">Nettverk: </span>
@@ -231,17 +234,35 @@
                                     @endif
                                 </div>
                             @endif
+                            @if($job->company_id != 0)
+                                @if($job->company && ($job->company->emp_facebook || $job->company->emp_linkedin || $job->company->emp_twitter))
+                                    <div class="mb-2">
+                                        <span class="contact-name">Bedriftens nettverk: </span>
+                                        @if($job->company->emp_linkedin)
+                                            <span class="contact-tel"><a href="{{$job->company->emp_linkedin}}">LinkedIn</a>,</span>
+                                        @endif
+{{--                                        @if($job->company->emp_linkedin && ($job->company->emp_twitter || $job->company->emp_facebook)) , @endif--}}
+                                        @if($job->company->emp_twitter)
+                                            <span class="contact-tel"><a href="https://twitter.com/{{$job->company->emp_twitter}}">Twitter</a>,</span>
+                                        @endif
+                                        {{--@if($job->company->emp_facebook && ($job->company->emp_twitter || $job->company->emp_linkedin)) , @endif--}}
+                                        @if($job->company->emp_facebook)
+                                            <span class="contact-tel"><a href="{{$job->company->emp_facebook}}">Facebook</a></span>
+                                        @endif
+                                    </div>
+                                @endif
+                            @endif
                             @if($job && ($job->emp_facebook || $job->emp_linkedin || $job->emp_twitter))
                                 <div class="mb-2">
                                     <span class="contact-name">Bedriftens nettverk: </span>
                                     @if($job->emp_linkedin)
-                                        <span class="contact-tel"><a href="{{$job->emp_linkedin}}">LinkedIn</a></span>
+                                        <span class="contact-tel"><a href="{{$job->emp_linkedin}}">LinkedIn</a>,</span>
                                     @endif
-                                    @if($job->emp_linkedin && ($job->emp_twitter || $job->emp_facebook)) , @endif
+{{--                                    @if($job->emp_linkedin && ($job->emp_twitter || $job->emp_facebook)) , @endif--}}
                                     @if($job->emp_twitter)
-                                        <span class="contact-tel"><a href="https://twitter.com/{{$job->emp_twitter}}">Twitter</a></span>
+                                        <span class="contact-tel"><a href="https://twitter.com/{{$job->emp_twitter}}">Twitter</a>,</span>
                                     @endif
-                                    @if($job->emp_facebook && ($job->emp_twitter || $job->emp_linkedin)) , @endif
+{{--                                    @if($job->emp_facebook && ($job->emp_twitter || $job->emp_linkedin)) , @endif--}}
                                     @if($job->emp_facebook)
                                         <span class="contact-tel"><a href="{{$job->emp_facebook}}">Facebook</a></span>
                                     @endif

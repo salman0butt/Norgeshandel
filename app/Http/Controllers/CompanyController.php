@@ -19,7 +19,8 @@ class CompanyController extends Controller
     public function index()
     {
         //
-        $companies = Company::all();
+//        $companies = Company::all();
+        $companies = Company::where('company_type','job')->get();
         return view('user-panel.jobs.companies.companies',compact('companies'));
     }
 

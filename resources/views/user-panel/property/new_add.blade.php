@@ -60,8 +60,8 @@
                         find_zipcode_city(zip_code);
                     }
                 }
-                        @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
-                var url = "{{url('add/property/for/rent/ad/'.$property_for_rent1->id)}}";
+                @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
+                    var url = "{{url('add/property/for/rent/ad/'.$property_for_rent1->id)}}";
                 @endif
             } else {
                         @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))

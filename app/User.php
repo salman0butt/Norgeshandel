@@ -144,11 +144,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function job_companies(){
-        return $this->hasMany(Company::class)->where('company_type', '=', 'job');
+        return $this->hasMany(Company::class)->where('company_type', '=', 'Jobb');
     }
 
     public function property_companies(){
-        return $this->hasMany(Company::class)->where('company_type', '=', 'property');
+        return $this->hasMany(Company::class)->where('company_type', '=', 'Eiendom');
     }
 
     public function followings(){
