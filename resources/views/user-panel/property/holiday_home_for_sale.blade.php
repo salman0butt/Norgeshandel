@@ -189,14 +189,35 @@
                     }
                 }
             }
-            var postal = $('.zip_code').val();
-            $('#old_zip').attr('value',postal);
-        });
-        //click button update
-        $(document).on('click', '#publiserannonsen', function(e){
-            e.preventDefault();
-            record_store_ajax_request('click', (this));
-        });
+        
+            $("input:not(input[type=date]),textarea").on('change', function (e) {
+                e.preventDefault();
+                if(! $(this).valid()) return false;
+
+                var ad_status = $('.ad_status').val();
+                if(ad_status == 'saved'){
+                    record_store_ajax_request('change', (this));
+                }else{
+                    var zip_code = $('.zip_code').val();
+                    var old_zip = $('#old_zip').val();
+
+                    if (zip_code) {
+                        if (old_zip != zip_code) {
+                            find_zipcode_city(zip_code);
+                        }
+                    }
+                }
+                var postal = $('.zip_code').val();
+                $('#old_zip').attr('value',postal);
+
+                //calling address
+                 fullAddress();
+            });
+            //click button update
+            $("#publiserannonsen").click(function (e) {
+                e.preventDefault();
+                record_store_ajax_request('click', (this));
+            });
        
 
         var i = 0;

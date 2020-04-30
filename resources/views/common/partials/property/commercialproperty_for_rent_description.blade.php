@@ -215,6 +215,7 @@
                         <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span> <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
                         <div class="col-md-12 u-d1">Annonsene kan være mangelfulle i forhold til lovpålagt opplysningsplikt. Før bindende avtale inngås oppfordres interessenter til å innhente komplett informasjon fra meglerforetaket, selger eller utleier.</div>
                     </div>
+                   
                 </div>
                 <div class="col-md-4">
                     @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company')
@@ -272,10 +273,11 @@
                     {{-- <a href="https://hjelpesenter.finn.no/hc/no/articles/203012092" target="_blank" rel="noopener external">Les mer om elektronisk budgiving</a> --}}
                     @endif
                 </div>
+                 <div style="width: 306px; height: 306px;">
+                     <div id="map" style="height: 100%; width: 100%;"></div>
+                </div>
             </div>
-            <div style="width: 306px; height: 153px;">
-                {!! Mapper::render() !!}
-            </div>
+           
         </div>
         </div>
             <div class="right-ad pull-right" id="right_banner_ad">
@@ -283,3 +285,6 @@
             </div>
     </main>
 @endsection
+
+@php $map_obj = $property_data @endphp
+@include('common.partials.description_map',compact('map_obj'))

@@ -185,9 +185,9 @@
                     @endif
 
             </div>
-            <div style="width: 306px; height: 153px;">
-                {!! Mapper::render() !!}
-            </div>
+             <div style="width: 306px; height: 306px;">
+                    <div id="map" style="height: 100%; width: 100%;"></div>
+             </div>
         </div>
         </div>
 
@@ -196,5 +196,7 @@
         </div>
     </main>
 
-
 @endsection
+
+@php $map_obj = $property_data @endphp
+@include('common.partials.description_map',compact('map_obj'))
