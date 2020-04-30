@@ -271,13 +271,14 @@
 
                     </div>
                     <div class="mt-3 location"><h5 class="u-t3">location</h5></div>
-                    <a href="#" class=""><img src="{{asset('public/images/staticmap.png')}}" class="img-fluid"
-                                              alt=""></a>
-                    <p class="u-mt4">
+                         <div style="width: 306px; height: 306px;">
+                             <div id="map" style="height: 100%; width: 100%;"></div>
+                        </div>
+                    {{-- <p class="u-mt4">
                         <a href="" class="u-mr8 mr-2">Stort kart</a>
                         <a href="" class="u-mr8 mr-2">Hybridkart</a>
                         <a href="" class="u-mr8 mr-2">Flyfoto</a>
-                    </p>
+                    </p> --}}
                 </div>
             </div>
         </div>
@@ -321,3 +322,5 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
         })
     </script>
 @endsection
+@php $map_obj = $job @endphp
+@include('common.partials.description_map',compact('map_obj'))

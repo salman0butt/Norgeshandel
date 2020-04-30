@@ -49,7 +49,7 @@ function addr_search(street, city, zip) {
 function fullAddress() {
     var zip = $('.zip_code').val();
     var city = (document.querySelector("#zip_code_city_name") ? document.querySelector("#zip_code_city_name").innerText.toLowerCase() : '');
-    var street = $('input[name="street_address"]').val();
+    var street = $('input[name="street_address"],input[name="address"]').val();
     if (isEmpty(zip) || isEmpty(city) || isEmpty(street)){
         return;
     }

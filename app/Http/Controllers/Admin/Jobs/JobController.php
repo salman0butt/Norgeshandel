@@ -247,14 +247,14 @@ class JobController extends Controller
       public function new_job(Request $request)
     {   
         $type = '';
-         if($request->is('*/job/full_time')){
+         if($request->is('*/full_time')){
             $type = 'full_time';
-         }else if($request->is('*/job/management')){
+         }else if($request->is('*/management')){
             $type = 'management';
-         }else if($request->is('*/job/part_time')){
+         }else if($request->is('*/part_time')){
             $type = 'part_time';
          }
-        if($request->is('*/job/full_time') || $request->is('*/job/management') || $request->is('*/job/part_time')){
+        if($request->is('*/full_time') || $request->is('*/management') || $request->is('*/part_time')){
         $ad = new Ad(['ad_type' => 'job', 'status' => 'saved', 'user_id' => Auth::user()->id]);
         $ad->save();
         if ($ad) {
@@ -279,19 +279,26 @@ class JobController extends Controller
  
         $ad = Ad::find($id);
         if ($ad) {
+    
             if ($ad->ad_type == 'job' && $ad_type == 'full_time') {
                 common::delete_media(Auth::user()->id, 'temp_job_image', 'gallery');
                 $job = $ad->job;
                 if ($job) {
+                    Session::forget('type');
+                    $ad_type='';
                     return view('user-panel.jobs.new_full_time', compact('job'));
                 }
             } else if ($ad->ad_type == 'job' && $ad_type == 'part_time') {
                 common::delete_media(Auth::user()->id, 'temp_job_image', 'gallery');
                 $job = $ad->job;
+                Session::forget('type');
+                $ad_type = '';
                 return view('user-panel.jobs.new_part_time', compact('job'));
             } else if ($ad->ad_type == 'job' && $ad_type == 'management') {
                 common::delete_media(Auth::user()->id, 'temp_job_image', 'gallery');
                 $job = $ad->job;
+                Session::forget('type');
+                $ad_type = '';
                 return view('user-panel.jobs.new_management', compact('job'));
             }
             
@@ -380,6 +387,9 @@ class JobController extends Controller
             'app_linkedin' => $request->app_linkedin,
             'app_twitter' => $request->app_twitter,
             'user_id' => Auth::user()->id,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'full_address' => $request->full_address,
         );
         
         $job->update($arr);

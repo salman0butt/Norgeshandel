@@ -57,6 +57,9 @@
     <input type="hidden" name="upload_dropzone_images_type" value="job_temp_images">
     <input type="hidden" name="media_position" class="media_position">
     <input type="hidden" name="deleted_media" class="deleted_media">
+    <input type="hidden" name="latitude" id="latitude" value="">
+    <input type="hidden" name="longitude" id="longitude" value="">
+    <input type="hidden" name="full_address" id="full_address" value="">
 
     <input type="hidden" name="ad_id" id="ad_id" value="{{isset($obj_job->ad)?$obj_job->ad->id:""}}">
     <input type="hidden" name="job_id" id="job_id" value="{{isset($obj_job->id)?$obj_job->id:""}}">
@@ -629,8 +632,10 @@
                     var link = '{{url('jobs/update/'.$obj_job->id)}}';
                 @endif
             }
-             
 
+                //calling address
+                fullAddress()
+               
           $("input ~ span,select ~ span").each(function (index) {
                 $(".error-span").html('');
                 $("input, select").removeClass("error-input");
@@ -708,7 +713,9 @@
 
             var ad_status = $('.ad_status').val();
             if(ad_status == 'saved'){
+              
                 record_store_ajax_request('change', (this));
+                
             }else{
                 var zip_code = $('.zip_code').val();
                 var old_zip = $('#old_zip').val();
@@ -722,6 +729,7 @@
 
             var postal = $('.zip_code').val();
             $('#old_zip').attr('value',postal);
+
         });
 
         //click button update

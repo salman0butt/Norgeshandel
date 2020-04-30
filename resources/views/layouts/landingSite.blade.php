@@ -629,6 +629,7 @@
             format: "dd-mm-yyyy",
              autoclose: true,
              language: 'no',
+             clearBtn: true
         });
         $('input[type="date"]').attr('type','text');
     });
