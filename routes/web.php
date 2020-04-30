@@ -172,7 +172,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::delete('/admin/ads/{id}/', 'Admin\ads\BannerController@destroy')->middleware(['role:admin|manager']);
     Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
     Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
-    Route::post('views/{banner_id}', 'Admin\ads\BannerController@views')->middleware(['role:admin|manager']);
+    
     Route::get('banners/reports/{id}', 'Admin\ads\BannerController@reports')->middleware(['role:admin|manager']);
 
 
@@ -242,6 +242,7 @@ Route::group(['middleware' => 'authverified'], function () {
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
 
+        Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
         //Apply Job
         Route::get('recruitment/hired/frontend/applynow/{id}', 'AppliedJobController@edit')->name('apply-job');
         Route::resource('applied-jobs', 'AppliedJobController');

@@ -20,7 +20,7 @@ class CompanyController extends Controller
     {
         //
 //        $companies = Company::all();
-        $companies = Company::where('company_type','job')->get();
+        $companies = Company::where('company_type','Jobb')->get();
         return view('user-panel.jobs.companies.companies',compact('companies'));
     }
 
