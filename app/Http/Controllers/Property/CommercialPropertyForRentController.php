@@ -193,7 +193,7 @@ class CommercialPropertyForRentController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
+            $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone']);
 
             unset($commercial_property_for_rent['commercial_property_for_rent_pdf']);
             $commercial_property_for_rent['user_id'] = Auth::user()->id;
@@ -233,6 +233,8 @@ class CommercialPropertyForRentController extends Controller
                         $property_pdf = $property_pdf['file_names'][0];// $property_pdf->file_names[0];
                     }
                 }
+
+                $agent_detail = common::ad_agents($request->all(),$response->ad);
             }
             $response->update($commercial_property_for_rent);
 

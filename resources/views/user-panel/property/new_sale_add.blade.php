@@ -48,6 +48,101 @@
 
 @section('script')
 <script type="text/javascript">
+    function record_store_ajax_request(event, this_obj) {
+        if(event == 'click'){
+            if(! $('#property_for_sale_form').valid()) return false;
+        }
+        if (event == 'change') {
+            var zip_code = $('.zip_code').val();
+            var old_zip = $('#old_zip').val();
+            if (zip_code) {
+                if (old_zip != zip_code) {
+                    find_zipcode_city(zip_code);
+                }
+            }
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+            var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
+            @endif
+        } else {
+                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+            var url = "{{ url('new/property/sale/ad/update/'.$property_for_sale1->id) }}";
+            @endif
+        }
+
+
+        $("input ~ span,select ~ span").each(function (index) {
+            $(".error-span").html('');
+            $("input, select").removeClass("error-input");
+        });
+
+        // $('.notice').html("");
+        var myform = document.getElementById("property_for_sale_form");
+        var fd = new FormData(myform);
+
+        if($('.remove_property_quote').attr('id')){
+            fd.delete('property_quote');
+        }
+
+        if($('.remove_property_pdf').attr('id')){
+            fd.delete('property_pdf');
+        }
+
+        var l = Ladda.create(this_obj);
+        l.start();
+        $.ajax({
+            type: "POST",
+            url: url,
+            // async: false,
+            data: fd,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (event == 'change') {
+                    notify("info","Annonsen din er lagret");
+                }else if(event == 'click'){
+                    $('.deleted_media').val('');
+                    $('.media_position').val('');
+                    $('.ad_status').val(data.status);
+                    var message = 'Annonsen din er publisert';
+                    if(data.message){
+                        message = data.message;
+                    }
+                    notify("success",message);
+                }
+                if(data.property_quote){
+                    $('.remove_property_quote').attr('id',data.property_quote);
+                }
+                if(data.property_pdf){
+                    $('.remove_property_pdf').attr('id',data.property_pdf);
+                }
+            },
+            error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                var errors = jqXhr.responseJSON;
+                //console.log(errors.errors);
+                if (isEmpty(errors.errors)) {
+                    notify("error","noe gikk galt!");
+                    return false;
+                }
+                if (event == 'change') {
+                    return "error";
+                } else {
+                    // var html="<ul>";
+                    $.each(errors.errors, function (index, value) {
+                        //console.log(value);
+                        $("." + index).html(value);
+                        $("input[name='" + index + "'],select[name='" + index + "']")
+                            .addClass("error-input");
+                    });
+
+                }
+            },
+        }).always(function () {
+            l.stop();
+        });
+        return false;
+    }
+
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
@@ -84,102 +179,8 @@
 
 
 
-        function record_store_ajax_request(event, this_obj) {
-           if(event == 'click'){
-               if(! $('#property_for_sale_form').valid()) return false;
-           }
-            if (event == 'change') {
-                var zip_code = $('.zip_code').val();
-                var old_zip = $('#old_zip').val();
-                if (zip_code) {
-                    if (old_zip != zip_code) {
-                        find_zipcode_city(zip_code);
-                    }
-                }
-                @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-                    var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
-                @endif
-            } else {
-                @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
-                    var url = "{{ url('new/property/sale/ad/update/'.$property_for_sale1->id) }}";
-                @endif
-            }
 
-
-            $("input ~ span,select ~ span").each(function (index) {
-                $(".error-span").html('');
-                $("input, select").removeClass("error-input");
-            });
-
-            // $('.notice').html("");
-            var myform = document.getElementById("property_for_sale_form");
-            var fd = new FormData(myform);
-
-            if($('.remove_property_quote').attr('id')){
-                fd.delete('property_quote');
-            }
-
-            if($('.remove_property_pdf').attr('id')){
-                fd.delete('property_pdf');
-            }
-
-            var l = Ladda.create(this_obj);
-            l.start();
-            $.ajax({
-                type: "POST",
-                url: url,
-                // async: false,
-                data: fd,
-                dataType: "json",
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    if (event == 'change') {
-                       notify("info","Annonsen din er lagret");
-                   }else if(event == 'click'){
-                        $('.deleted_media').val('');
-                        $('.media_position').val('');
-                        $('.ad_status').val(data.status);
-                        var message = 'Annonsen din er publisert';
-                        if(data.message){
-                            message = data.message;
-                        }
-                        notify("success",message);
-                   }
-                    if(data.property_quote){
-                        $('.remove_property_quote').attr('id',data.property_quote);
-                    }
-                    if(data.property_pdf){
-                        $('.remove_property_pdf').attr('id',data.property_pdf);
-                    }
-                },
-                error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
-                    var errors = jqXhr.responseJSON;
-                    //console.log(errors.errors);
-                    if (isEmpty(errors.errors)) {
-                      notify("error","noe gikk galt!");
-                        return false;
-                    }
-                    if (event == 'change') {
-                    return "error";
-                    } else {
-                        // var html="<ul>";
-                        $.each(errors.errors, function (index, value) {
-                            //console.log(value);
-                            $("." + index).html(value);
-                            $("input[name='" + index + "'],select[name='" + index + "']")
-                                .addClass("error-input");
-                        });
-
-                    }
-                },
-            }).always(function () {
-                l.stop();
-            });
-            return false;
-        }
-
-        $("input:not(input[type=date]),textarea").on('change', function (e) {
+        $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
             e.preventDefault();
             if(! $(this).valid()) return false;
 
@@ -205,7 +206,7 @@
         });
 
         //click button update
-        $("#publiserannonsen").click(function (e) {
+        $(document).on('click', '#publiserannonsen', function(e){
             e.preventDefault();
             record_store_ajax_request('click', (this));
         });

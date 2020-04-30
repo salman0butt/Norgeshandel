@@ -36,7 +36,7 @@
     $industry = \App\Taxonomy::where('slug', 'industry')->first();
     $industries = $industry->terms;
     $job_function = \App\Taxonomy::where('slug', 'job_function')->first();
-    $job_functions = $job_function->terms;
+    $job_functions = $job_function->terms()->orderBy('name','ASC')->get();
     $sector = \App\Taxonomy::where('slug', 'sector')->first();
     $sectors = $sector->terms;
     //    $arr = ["id" => null,"name" => null,"title" => null,"job_type" => null,"slug" => null,"positions" => null,"commitment_type" => null,"sector" => null,"keywords" => null,"description" => null,"deadline" => null,"accession" => null,"emp_name" => null,"emp_company_information" => null,"emp_website" => null,"emp_facebook" => null,"emp_linkedin" => null,"emp_twitter" => null,"country" => null,"zip" => null,"address" => null,"workplace_video" => null,"app_receive_by" => null,"app_link_to_receive" => null,"app_email_to_receive" => null,"app_contact" => null,"app_contact_title" => null,"app_mobile" => null,"app_phone" => null,"app_email" => null,"app_linkedin" => null,"app_twitter" => null,"ad_id" => null,"user_id" => null,"created_at" => null,"updated_at" => null]
@@ -193,8 +193,10 @@
                         <div class="row">
                             <label for="description" class="col-md-2 u-t5">{{__('Job description (optional)')}}</label>
                             <div class="col-sm-10 ">
-                                <textarea name="description" class="form-control dme-form-control description"
-                                    id="description" cols="30" rows="10">{{$obj_job->description}}</textarea>
+                                <textarea name="description" cols="30" rows="10">{{$obj_job->description}}</textarea>
+
+                                {{--<textarea name="description" class="form-control dme-form-control"--}}
+                                    {{--id="description" cols="30" rows="10">{{$obj_job->description}}</textarea>--}}
 
                             </div>
                         </div>
@@ -207,7 +209,7 @@
                                 <select name="deadline_type" id="deadline_type" class="form-control dme-form-control"
                                     required>
                                     <option @if(empty($obj_job->deadline)) selected
-                                        @endif value="Soonest">{{__('Soonest')}}</option>
+                                        @endif value="Snarest">{{__('Soonest')}}</option>
                                     <option @if(!empty($obj_job->deadline)) selected @endif>{{__('Specify date')}}
                                     </option>
                                 </select>
@@ -232,14 +234,14 @@
                     @if(Auth::user()->roles->first()->name=="company")
                         <div class="form-group">
                             <div class="row">
-                                <label for="company_id" class="col-md-2 u-t5">{{__('Select Your Company')}}</label>
+                                <label for="company_id" class="col-md-2 u-t5">{{__('Velg din bedrift')}}</label>
                                 <div class="col-sm-10 ">
                                     <select name="company_id" id="company_id" class="form-control dme-form-control">
-                                        <option value="">{{__('Select')}}</option>
+                                        <option value="">{{__('Velg')}}</option>
                                         @if(is_countable(Auth::user()->job_companies) &&
                                         count(Auth::user()->job_companies)>0)
                                         @foreach(Auth::user()->job_companies as $company)
-                                        <option value="{{$company->id}}">{{$company->emp_name}}</option>
+                                        <option value="{{$company->id}}" {{$obj_job->company_id && $obj_job->company_id == $company->id ? 'selected' : ''}}>{{$company->emp_name}}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -262,10 +264,11 @@
                                 <label for="emp_company_information"
                                     class="col-md-2 u-t5">{{__('Company Information (optional)')}}</label>
                                 <div class="col-sm-10 ">
-                                    <textarea name="emp_company_information"
-                                        class="form-control dme-form-control emp_company_information"
-                                        id="emp_company_information" cols="30"
-                                        rows="10">{{$obj_job->emp_company_information}}</textarea>
+                                    <textarea name="emp_company_information" cols="30" rows="10">{{$obj_job->emp_company_information}}</textarea>
+                                    {{--<textarea name="emp_company_information"--}}
+                                        {{--class="form-control dme-form-control emp_company_information"--}}
+                                        {{--id="emp_company_information" cols="30"--}}
+                                        {{--rows="10">{{$obj_job->emp_company_information}}</textarea>--}}
                                 </div>
                             </div>
                         </div>

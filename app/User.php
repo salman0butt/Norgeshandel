@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Ad;
+use App\Models\Cv\CvRequest;
 use App\Models\Meta;
 use App\Models\Search;
 use Illuminate\Support\Facades\App;
@@ -143,11 +144,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function job_companies(){
-        return $this->hasMany(Company::class)->where('company_type', '=', 'job');
+        return $this->hasMany(Company::class)->where('company_type', '=', 'Jobb');
     }
 
     public function property_companies(){
-        return $this->hasMany(Company::class)->where('company_type', '=', 'property');
+        return $this->hasMany(Company::class)->where('company_type', '=', 'Eiendom');
     }
 
     public function followings(){
@@ -195,9 +196,23 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Notification::class)->whereNotNull('read_at');
     }
 
-
     //Get user ads
     public function ads(){
         return $this->hasMany(Ad::class);
+    }
+
+    //Get user request (those request that has been received by companies)
+    public function requests_received(){
+        return $this->hasMany(CvRequest::class,'user_id','id');
+    }
+
+    //Get user request (those request that has been received by companies)
+    public function requests_sent(){
+        return $this->hasMany(CvRequest::class,'employer_id','id');
+    }
+
+    //Get user request (those request that has been received by companies)
+    public function cv_requests_sent(){
+        return CvRequest::where('user_id',$this->id)->where('employer_id',Auth::id())->first();
     }
 }

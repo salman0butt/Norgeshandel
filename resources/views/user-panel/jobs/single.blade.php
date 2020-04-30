@@ -7,8 +7,15 @@
     <?php
     $job_function = "";
     $logo = $job->ad->media()->where('type', 'logo')->get()->first();
+
     if (!empty($logo)) {
         $logo = \App\Helpers\common::getMediaPath($logo, '150x150');
+    }else{
+        if ($job->company_id != 0) {
+            if (is_countable($job->company->company_logo) && count($job->company->company_logo) > 0) {
+                $logo = \App\Helpers\common::getMediaPath($job->company->company_logo->first(),'150x150');
+            }
+        }
     }
     ?>
     <main>
@@ -18,6 +25,11 @@
             @include('user-panel.banner-ads.left-banner')
         </div>
         <div class="dme-container">
+            <div class="row top-ad" id="top_banner_ad">
+                @include('user-panel.banner-ads.top-banner')
+            </div>
+        </div>
+        <div class="dme-container p-3">
             <div class="breade-crumb">
                 <nav aria-label="breadcrumb">
                     <div class="row pl-3 pr-3">
@@ -43,25 +55,15 @@
                             </ul>
                         </div>
                     </div>
-
-
                 </nav>
             </div>
-          <div class="row top-ad" id="top_banner_ad">
-                @include('user-panel.banner-ads.top-banner')
-            </div>
-        </div>
-        <div class="dme-container p-3">
             <div class="row">
                 <div class="col-md-12">
                     @php $name = $job->ad->company_gallery; $obj = $job; @endphp
-                    @include('user-panel.partials.landing_page_slider',compact('name'))
-                    @if($job->workplace_video)
-                        <div style="position: absolute;bottom: 0;left: 30px;">
-                            <a data-fslightbox="gallery1" href="{{$job->workplace_video}}" class="btn btn-light radius-8 video-button" style="color: #ac304a; background: white">
-                                <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
-                        </div>
+                    @if($name->count())
+                        @include('user-panel.partials.landing_page_slider',compact('name'))
                     @endif
+
                     {{--<img src="{{asset('public/images/home.jpg')}}" alt="" class="img-fluid">--}}
                 </div>
             </div>
@@ -86,11 +88,15 @@
                                 <div class="col-md-12 title"><span
                                             class="font-weight-bold">Stillingstittel: </span><span>{{$job->title}}</span>
                                 </div>
-                                <div class="col-md-6 emp_name"><span
-                                        class="font-weight-bold">Arbeidsgiver: </span><span>{{$job->emp_name}}</span>
-                                </div>
+                                @if($job->emp_name)
+                                    <div class="col-md-6 emp_name"><span
+                                            class="font-weight-bold">Arbeidsgiver: </span><span>{{$job->emp_name}}</span>
+                                    </div>
+                                @endif
+                                @if($job->country)
                                 <div class="col-md-6 place"><span
                                         class="font-weight-bold">Sted: </span><span>{{$job->country}}</span></div>
+                                @endif
                                 <div class="col-md-6 commitment_type"><span
                                         class="font-weight-bold">Stillingstype: </span><span>{{$job->commitment_type}}</span>
                                 </div>
@@ -215,6 +221,7 @@
                                             href="tel:{{$job->app_mobile}}">  {{$job->app_mobile}}</a></span>
                                 </div>
                             @endif
+
                             @if($job && ($job->app_linkedin || $job->app_twitter))
                                 <div class="mb-2">
                                     <span class="contact-name">Nettverk: </span>
@@ -227,17 +234,35 @@
                                     @endif
                                 </div>
                             @endif
+                            @if($job->company_id != 0)
+                                @if($job->company && ($job->company->emp_facebook || $job->company->emp_linkedin || $job->company->emp_twitter))
+                                    <div class="mb-2">
+                                        <span class="contact-name">Bedriftens nettverk: </span>
+                                        @if($job->company->emp_linkedin)
+                                            <span class="contact-tel"><a href="{{$job->company->emp_linkedin}}">LinkedIn</a>,</span>
+                                        @endif
+{{--                                        @if($job->company->emp_linkedin && ($job->company->emp_twitter || $job->company->emp_facebook)) , @endif--}}
+                                        @if($job->company->emp_twitter)
+                                            <span class="contact-tel"><a href="https://twitter.com/{{$job->company->emp_twitter}}">Twitter</a>,</span>
+                                        @endif
+                                        {{--@if($job->company->emp_facebook && ($job->company->emp_twitter || $job->company->emp_linkedin)) , @endif--}}
+                                        @if($job->company->emp_facebook)
+                                            <span class="contact-tel"><a href="{{$job->company->emp_facebook}}">Facebook</a></span>
+                                        @endif
+                                    </div>
+                                @endif
+                            @endif
                             @if($job && ($job->emp_facebook || $job->emp_linkedin || $job->emp_twitter))
                                 <div class="mb-2">
                                     <span class="contact-name">Bedriftens nettverk: </span>
                                     @if($job->emp_linkedin)
-                                        <span class="contact-tel"><a href="{{$job->emp_linkedin}}">LinkedIn</a></span>
+                                        <span class="contact-tel"><a href="{{$job->emp_linkedin}}">LinkedIn</a>,</span>
                                     @endif
-                                    @if($job->emp_linkedin && ($job->emp_twitter || $job->emp_facebook)) , @endif
+{{--                                    @if($job->emp_linkedin && ($job->emp_twitter || $job->emp_facebook)) , @endif--}}
                                     @if($job->emp_twitter)
-                                        <span class="contact-tel"><a href="https://twitter.com/{{$job->emp_twitter}}">Twitter</a></span>
+                                        <span class="contact-tel"><a href="https://twitter.com/{{$job->emp_twitter}}">Twitter</a>,</span>
                                     @endif
-                                    @if($job->emp_facebook && ($job->emp_twitter || $job->emp_linkedin)) , @endif
+{{--                                    @if($job->emp_facebook && ($job->emp_twitter || $job->emp_linkedin)) , @endif--}}
                                     @if($job->emp_facebook)
                                         <span class="contact-tel"><a href="{{$job->emp_facebook}}">Facebook</a></span>
                                     @endif
@@ -256,13 +281,13 @@
                             @php
                                 $user_follow_company = \App\Models\Following::where('user_id',\Illuminate\Support\Facades\Auth::id())->where('company_id',$job->company->id)->first();
                             @endphp
-                            <button class="dme-btn-outlined-blue col-8 mb-2 follow-company-button" data-company_id="{{$job->company->id}}">@if($user_follow_company) Slutt å følge firma @else Følg firma @endif</button>
+                            <button class="dme-btn-outlined-blue col-8 mb-2 follow-company-button" data-url="{{url('company-follow')}}" data-company_id="{{$job->company->id}}">@if($user_follow_company) Slutt å følge firma @else Følg firma @endif</button>
                             <div class="col-4"></div>
                             <div class="text-muted following-count">{{$job->company && $job->company->followings ? $job->company->followings->count() : '0'}} følger dette firmaet</div>
                             @if(!empty($job->company->emp_website))
                                 <div><a href="{{$job->company->emp_website}}" class="emp-website">{{$job->company->emp_website}}</a></div>
                             @endif
-                            <div><a href="#" class="emp-ads">more ads by company</a></div>
+                            <div><a href="{{url('jobs/company/'.$job->company->id.'/ads')}}" class="emp-ads">Flere annonser fra firma</a></div>
                         @else
                             @if(!empty($job->emp_website))
                                 <div><a href="{{$job->emp_website}}" class="emp-website">{{__('Hjemmeside')}}</a></div>
@@ -298,6 +323,7 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 
 ?>
 
+
 @section('script')
     <script>
         $(document).ready(function () {
@@ -324,3 +350,4 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 @endsection
 @php $map_obj = $job @endphp
 @include('common.partials.description_map',compact('map_obj'))
+

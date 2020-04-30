@@ -17,7 +17,9 @@
             if (isEmpty(type)) {
                 $('.job-type').text("Alle stilling");
             }
-            search(urlParams.toString());
+            @if(!Request::is('jobs/company/*/ads'))
+                search(urlParams.toString());
+            @endif
             $(document).on('change', '#sort', function () {
                 urlParams = new URLSearchParams(location.search);
                 urlParams.delete('sort');
@@ -57,7 +59,9 @@
                     history.replaceState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
                     }
             });
-        /*      
+
+
+        /*
             var strsearch = urlParams;
             strsearch.delete('page');
             var value = strsearch.toString();

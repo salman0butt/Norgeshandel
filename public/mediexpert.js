@@ -58,6 +58,30 @@ function dme_nav_collapse(){
     });
 }
 $(document).ready(function (e) {
+    $(document).on('click', '.add-ad-agent', function(e) {
+        if($('.append-agent-section .remove').length < 3){
+
+            $('.append-agent').clone().appendTo('.append-agent-section');
+
+            $('.append-agent-section .append-agent').addClass('single remove');
+            $('.append-agent-section .append-agent').removeClass('d-none');
+
+            $('.append-agent-section .append-agent').removeClass('append-agent');
+            $('.append-agent > .single').attr("class", "remove");
+        }else{
+            alert('Du kan legge til maksimalt 3 agenter igjen en annonse.');
+        }
+    });
+
+    $(document).on('click', '.remove-agent-button', function(e) {
+        $(this).closest(".remove").remove();
+        var ad_status = $('.ad_status').val();
+        if(ad_status == 'saved'){
+            record_store_ajax_request('change',(this));
+        }
+        e.preventDefault();
+    });
+
     dme_nav_collapse();
     $('.show-sub .list-unstyled .list-unstyled:first').css('display', 'block');
     $(document).on('click', '.dynamic-check-view-all.expand', function (e) {
@@ -260,16 +284,37 @@ $(document).ready(function (e) {
         }
     });
 
+    $(document).on('click', '.follow-company-button', function (e) {
+        e.preventDefault();
+        var company_id = $(this).data('company_id');
+        var url = $(this).data('url');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {'company_id':company_id},
+            async: false,
+            success: function (response) {
+                location.reload();
+            }
+        });
+    });
+
+    // $(document).on('change', '.url_http', function (e){
     $('.url_http').on('change', function(){
         if ($(this).val() == ''){
             return;
         }
-    s = $(this).val();
-    if (!s.match(/^[a-zA-Z]+:\/\//))
-    {
-        s = 'http://' + s;
-    $(this).val(s);
-    }
+        s = $(this).val();
+        if (!s.match(/^[a-zA-Z]+:\/\//))
+        {
+            s = 'http://' + s;
+            $(this).val(s);
+        }
     });
 
 

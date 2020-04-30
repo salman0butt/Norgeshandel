@@ -6,6 +6,13 @@
     <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" rel="stylesheet" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap-fileinput.css')}}">
+    <!-- Dropzone style files -->
+    <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
+
 @endsection
 @section('page_content')
     <main class="profile">
@@ -28,19 +35,37 @@
                 </div>
                 @if($user->allowed_job_companies->first() && (($user->allowed_job_companies->first()->value > 0 && $user->allowed_job_companies->first()->value > count($user->job_companies)) ||
                 ($user->allowed_property_companies->first()->value >0 && $user->allowed_property_companies->first()->value > count($user->property_companies))))
+                    @php
+                        \App\Helpers\common::delete_media(Auth::user()->id, 'company_gallery_temp_images', 'company_gallery');
+                        if($user && $user->companies->count()> 0){
+                            foreach($user->companies as $delete_user_company_temp_img){
+                                 \App\Helpers\common::delete_media(Auth::user()->id, 'company_gallery_temp_images_'.$delete_user_company_temp_img->id, 'company_gallery');
+                            }
+                        }
+                    @endphp
+
                     <div class="company-profile">
                         <div class="row">
                             <div class="col-md-12">
                                 <button class="btn dme-btn-outlined-blue" data-toggle="collapse"
-                                        data-target="#company_profile_block">Rediger bedriftsprofilen din
+                                        data-target="#company_profile_block">
+                                    {{$user->companies->count() > 0 ? ' Legg til ny bedriftsprofil' : 'Rediger bedriftsprofilen din'}}
                                 </button>
                             </div>
                         </div>
                         <div class="row collapse" id="company_profile_block">
                             <div class="col-md-12">
                                 <form action="{{route('company.store')}}" id="form_company_profile" method="POST"
-                                      enctype="multipart/form-data">
+                                      enctype="multipart/form-data" class="dropzone addMorePics" data-action="{{route('company.store')}}"
+                                      data-append_input = 'no' onSubmit="return checkform('form_company_profile')">
                                     {{csrf_field()}}
+                                    <input type="hidden" name="upload_dropzone_images_type" value="company_gallery_temp_images">
+                                    <input type="hidden" name="media_position" class="media_position">
+                                    <input type="hidden" id="old_zip" value="">
+                                    <input type="hidden" id="zip_city" name="zip_city" value="">
+
+
+                                    {{--<input type="hidden" name="deleted_media" class="deleted_media">--}}
                                     <h4 class="text-muted pt-2">Bedriftsprofilen</h4>
                                     <div class="form-group">
                                         <div class="row">
@@ -60,12 +85,12 @@
                                                         class="form-control dme-form-control" required="">
                                                     <option value="">Velg...</option>
                                                     @if(count($user->job_companies) < $user->allowed_job_companies->first()->value)
-                                                        <option value="job">Jobb</option>
+                                                        <option value="Jobb">Jobb</option>
                                                     @else
                                                         <option value="" disabled>Jobb (Grensen overskredet)</option>
                                                     @endif
                                                     @if(count($user->property_companies)<$user->allowed_property_companies->first()->value)
-                                                        <option value="property">property</option>
+                                                        <option value="Eiendom">Eiendom</option>
                                                     @else
                                                         <option value="" disabled>Eiendom (Grensen overskredet)</option>
                                                     @endif
@@ -89,8 +114,8 @@
                                             <label for="emp_website" class="col-md-2 u-t5">Nettsted (valgfritt)</label>
                                             <div class="col-sm-10 ">
                                                 <input name="emp_website" value="" id="emp_website" type="text"
-                                                       class="form-control dme-form-control" placeholder="firmanavn.no"
-                                                       required="">
+                                                       class="form-control dme-form-control url_http" placeholder="firmanavn.no"
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -142,10 +167,11 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <label for="emp_zip" class="col-md-2 u-t5">post kode</label>
+                                            <label for="emp_zip" class="col-md-2 u-t5">Post kode</label>
                                             <div class="col-sm-4 ">
                                                 <input name="zip" id="emp_zip" value="" type="text"
-                                                       class="form-control dme-form-control">
+                                                       class="form-control dme-form-control zip_code" data-old_zip="old_zip" data-zip_city="zip_city" data-id="zip_code_city_name">
+                                                <span id="zip_code_city_name"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -154,7 +180,7 @@
                                             <label for="address" class="col-md-2 u-t5">Gateadresse (valgfritt)</label>
                                             <div class="col-sm-10 ">
                                                 <input name="address" id="address" type="text"
-                                                       class="form-control dme-form-control" required="">
+                                                       class="form-control dme-form-control" >
                                                 <span class="u-t5">Forklar kort om tilgangen til boligen og hvordan du finner den, vennligst fortell om nærhet til vei, buss og tog.</span>
                                             </div>
                                         </div>
@@ -162,17 +188,29 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <label for="job_gallery" class="col-md-2 u-t5">Bedriftslogo (valgfritt)</label>
-                                            <div class="col-sm-4 ">
-
-                                                <input type="file" name="company_logo" id="company_logo" class=""
-                                                       value="Select logo">
+                                            <div class="col-sm-10 mb-4">
+                                                @php $single_image_obj = null; $file_upload_name = 'company_logo'; @endphp
+                                                @include('user-panel.partials.upload-single-image',compact('single_image_obj'))
+                                                {{--<input type="file" name="company_logo" id="company_logo" class=""--}}
+                                                       {{--value="Select logo">--}}
                                             </div>
                                             <label for="job_gallery" class="col-md-2 u-t5">Bilder fra arbeidsplassen
                                                 (valgfritt)</label>
-                                            <div class="col-sm-4 ">
-                                                <input type="file" name="company_gallery[]" id="job_gallery" class=""
-                                                       multiple="">
+                                            <div class="col-sm-10">
+                                                <div class="clearfix">
+                                                    <a href="javascript:void(0);">
+                                                        <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted" style="border: 1px dashed #474445">
+                                                            <p class="">Slipp filer her eller klikk for å laste opp</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div action="#" class="picture dropzone-previews sortable">
+                                                </div>
                                             </div>
+                                            {{--<div class="col-sm-4 ">--}}
+                                                {{--<input type="file" name="company_gallery[]" id="job_gallery" class=""--}}
+                                                       {{--multiple="">--}}
+                                            {{--</div>--}}
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -210,7 +248,7 @@
                         <div class="row m-0 pt-4">
                             <div class="col-md-12 radius-8 bg-light p-3">
                                 <div class="row">
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         @if(is_countable($company->company_logo) && count($company->company_logo)>0)
                                             <img
                                                 src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"
@@ -224,17 +262,19 @@
                                             <div>{{$company->emp_name}} <span class="small text-muted">(kategori: {{$company->company_type}})</span>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div class="font-weight-bold float-left" style="min-width: 120px;">Nettsted:
+                                        @if($company->emp_website)
+                                            <div>
+                                                <div class="font-weight-bold float-left" style="min-width: 120px;">Nettsted:
+                                                </div>
+                                                <div>{{$company->emp_website}}</div>
                                             </div>
-                                            <div>{{$company->emp_website}}</div>
-                                        </div>
+                                        @endif
                                         <div>
                                             <div class="font-weight-bold float-left" style="min-width: 120px;">Land:</div>
                                             <div>{{$company->country}}</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2" style="font-size: 20px">
+                                    <div class="col-md-1" style="font-size: 20px">
                                         <form class="float-right" action="{{route('company.destroy', compact('company'))}}"
                                               method="POST"
                                               onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen?')">
@@ -255,9 +295,17 @@
                                     <div class="col-md-12">
                                         <form action="{{route('company.update', compact('company'))}}"
                                               id="form_company_profile_edit_{{$company->id}}" method="POST"
-                                              enctype="multipart/form-data">
+                                              enctype="multipart/form-data" class="dropzone addMorePics" data-action="{{route('company.update', compact('company'))}}"
+                                              data-append_input = 'no' onSubmit="return checkform('form_company_profile_edit_{{$company->id}}')">
                                             {{csrf_field()}}
                                             {{method_field('PUT')}}
+
+
+                                            <input type="hidden" name="upload_dropzone_images_type" value="company_gallery_temp_images_{{$company->id}}">
+                                            <input type="hidden" name="media_position" class="media_position">
+                                            <input type="hidden" name="deleted_media" class="deleted_media">
+                                            <input type="hidden" id="old_zip_{{$company->id}}" value="{{isset($company->zip) ? $company->zip : ''}}">
+                                            <input type="hidden" id="zip_city_{{$company->id}}" name="zip_city" value="{{isset($company->zip_city) ? $company->zip_city : ''}}">
                                             <h4 class="text-muted pt-2">Bedriftsprofilen</h4>
                                             <div class="form-group">
                                                 <div class="row">
@@ -276,7 +324,7 @@
                                                         (valgfritt)</label>
                                                     <div class="col-sm-10 ">
                                                 <textarea name="emp_company_information"
-                                                          class="form-control dme-form-control emp_company_information"
+                                                          class="dme-form-control"
                                                           id="emp_company_information_{{$company->id}}" cols="30"
                                                           rows="10">{{$company->emp_company_information}}</textarea>
                                                     </div>
@@ -289,9 +337,9 @@
                                                     <div class="col-sm-10 ">
                                                         <input name="emp_website" value="{{$company->emp_website}}"
                                                                id="emp_website_{{$company->id}}" type="text"
-                                                               class="form-control dme-form-control"
+                                                               class="form-control dme-form-control url_http"
                                                                placeholder="firmanavn.no"
-                                                               required="">
+                                                        >
                                                     </div>
                                                 </div>
                                             </div>
@@ -352,12 +400,12 @@
                                                             @endif
                                                         </select>
                                                     </div>
-                                                    <label for="zip_{{$company->id}}" class="col-md-2 u-t5">post
-                                                        kode</label>
+                                                    <label for="zip_{{$company->id}}" class="col-md-2 u-t5">Post kode</label>
                                                     <div class="col-sm-4 ">
                                                         <input name="zip" id="zip_{{$company->id}}"
                                                                value="{{$company->zip}}" type="text"
-                                                               class="form-control dme-form-control">
+                                                               class="form-control dme-form-control zip_code" data-old_zip="old_zip_{{$company->id}}" data-zip_city="zip_city_{{$company->id}}" data-id="zip_code_city_name_{{$company->id}}">
+                                                        <span id="zip_code_city_name_{{$company->id}}">{{$company->zip_city}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -368,7 +416,7 @@
                                                     <div class="col-sm-10 ">
                                                         <input name="address" id="address_{{$company->id}}" type="text"
                                                                class="form-control dme-form-control"
-                                                               value="{{$company->address}}" required="">
+                                                               value="{{$company->address}}">
                                                         <span class="u-t5">Forklar kort om tilgangen til boligen og hvordan du finner den, vennligst fortell om nærhet til vei, buss og tog.</span>
                                                     </div>
                                                 </div>
@@ -377,32 +425,93 @@
                                                 <div class="row">
                                                     <label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bedriftslogo
                                                         (valgfritt)</label>
-                                                    <div class="col-sm-4 ">
-                                                        <input type="file" name="company_logo"
-                                                               id="company_logo_{{$company->id}}" class=""
-                                                               value="Select logo">
-                                                        @if(is_countable($company->company_logo) && count($company->company_logo)>0)
-                                                            <img
-                                                                src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"
-                                                                style="max-width: 100px;" alt="">
-                                                        @endif
+                                                    <div class="col-sm-10 mb-4">
+                                                        <div class="input_type_file fileinput fileinput-@if(is_countable($company->company_logo) && count($company->company_logo) > 0){{trim('exists')}}@else{{trim('new')}}@endif " data-provides="fileinput">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div class="">
+                                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                                    </div>
+                                                                    <div class="fileinput-preview fileinput-exists thumbnail mb-3" style="width: auto; height: 150px;">
+                                                                        @if(is_countable($company->company_logo) && count($company->company_logo)>0)
+                                                                            <img src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}" alt=""/>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <div class="align-self-end">
+                                                                    @php
+                                                                        $file_name_unique = '';
+                                                                        if(is_countable($company->company_logo) && count($company->company_logo)>0){
+                                                                            $file_name_unique =$company->company_logo->first()->name_unique;
+                                                                        }
+                                                                    @endphp
+                                                                    <a href="javascript:;" class="red fileinput-exists dme-btn-outlined-blue btn-sm dz-remove ml-2" id="{{$file_name_unique}}" data-dismiss="fileinput">Fjern</a>
+                                                                    <span class="btn default btn-file mb-2">
+                                                                        <span class="fileinput-new dme-btn-outlined-blue btn-sm mt-5 mb-5">Velg bilde</span>
+                                                                        {{--<span class="fileinput-exists dme-btn-outlined-blue btn-sm">Endre</span>--}}
+                                                                        <input type="file" name="{{$file_upload_name}}" class="input_type_file" accept="image/*">
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                        {{--<input type="file" name="company_logo"--}}
+                                                               {{--id="company_logo_{{$company->id}}" class=""--}}
+                                                               {{--value="Select logo">--}}
+                                                        {{--@if(is_countable($company->company_logo) && count($company->company_logo)>0)--}}
+                                                            {{--<img--}}
+                                                                {{--src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"--}}
+                                                                {{--style="max-width: 100px;" alt="">--}}
+                                                        {{--@endif--}}
                                                     </div>
+
+
+
                                                     <label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bilder
                                                         fra arbeidsplassen
                                                         (valgfritt)</label>
-                                                    <div class="col-sm-4 ">
-                                                        <input type="file" name="company_gallery[]"
-                                                               id="job_gallery_{{$company->id}}"
-                                                               class=""
-                                                               multiple="">
-                                                        @if(is_countable($company->company_gallery) && count($company->company_gallery)>0)
-                                                            @foreach($company->company_gallery as $img)
-                                                                <img
-                                                                    src="{{\App\Helpers\common::getMediaPath($img)}}"
-                                                                    style="max-width: 75px;" alt="" class="img-thumbnail">
-                                                            @endforeach
-                                                        @endif
+                                                    <div class="col-sm-10">
+                                                        <div class="clearfix">
+                                                            <a href="javascript:void(0);">
+                                                                <div action="#" class="dropzone-file-area border-grey font-grey upload-box dz-clickable text-muted" style="border: 1px dashed #474445">
+                                                                    <p class="">Slipp filer her eller klikk for å laste opp</p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <div action="#" class="picture dropzone-previews sortable">
+                                                            @if(is_countable($company->company_gallery) && count($company->company_gallery)>0)
+                                                                @foreach($company->company_gallery as $img)
+                                                                    <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" >
+                                                                        <div class="dz-image">
+                                                                            <img data-dz-thumbnail="" alt="image not found" src="{{\App\Helpers\common::getMediaPath($img)}}">
+                                                                        </div>
+                                                                        <div class="dz-details">
+                                                                            <div class="dz-filename"><span data-dz-name="">{{@$img->name}}</span></div>
+                                                                        </div>
+                                                                        <a class="dz-remove" href="javascript:undefined;" data-dz-remove=""  id="{{@$img->name_unique}}">Slett</a>
+
+                                                                    </div>
+                                                                @endforeach
+                                                            @endif
+                                                        </div>
                                                     </div>
+
+                                                    {{--<label for="job_gallery_{{$company->id}}" class="col-md-2 u-t5">Bilder--}}
+                                                        {{--fra arbeidsplassen--}}
+                                                        {{--(valgfritt)</label>--}}
+                                                    {{--<div class="col-sm-4">--}}
+                                                        {{--<input type="file" name="company_gallery[]"--}}
+                                                               {{--id="job_gallery_{{$company->id}}"--}}
+                                                               {{--class=""--}}
+                                                               {{--multiple="">--}}
+                                                        {{--@if(is_countable($company->company_gallery) && count($company->company_gallery)>0)--}}
+                                                            {{--@foreach($company->company_gallery as $img)--}}
+                                                                {{--<img src="{{\App\Helpers\common::getMediaPath($img)}}"--}}
+                                                                        {{--style="max-width: 75px;" alt="" class="img-thumbnail">--}}
+                                                            {{--@endforeach--}}
+                                                        {{--@endif--}}
+                                                    {{--</div>--}}
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -615,18 +724,30 @@ meldingstjeneste og i dine annonser.</p>
         </div>
     </main>
     <script type="text/javascript">
+
+        function checkform(form_id)
+        {
+            var zip_attr = $("#"+form_id+" input[name='zip']").attr('invalid-zip');
+            if(zip_attr === 'false')
+            {
+                alert('Legg inn et gyldig postnummer.');
+                return false;
+            }
+            return true;
+        }
+
         $(document).ready(function () {
             $('#form_company_profile').submit(function (e) {
-                $('#description').text(tinyMCE.get("description").getContent());
-                $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
+                // $('#description').text(tinyMCE.get("description").getContent());
+                // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
             });
-            tinymce.init({
-                selector: 'textarea.emp_company_information',
-                width: $(this).parent().width(),
-                height: 250,
-                menubar: false,
-                statusbar: false
-            });
+            // tinymce.init({
+            //     selector: 'textarea.emp_company_information',
+            //     width: $(this).parent().width(),
+            //     height: 250,
+            //     menubar: false,
+            //     statusbar: false
+            // });
             $(".custom-file-input").on("change", function () {
                 readFileURL((this), '.profile img');
                 var fileName = $(this).val().split("\\").pop();
@@ -637,8 +758,79 @@ meldingstjeneste og i dine annonser.</p>
                 autoclose: true
             });
 
+            $(document).on('change', '.zip_code', function (e){
+                var zip_code = $(this).val();
+                var old_zip = $('#'+$(this).data('old_zip')).val();
+
+                if (zip_code) {
+                    if (old_zip !=zip_code){
+                        var this_obj_id = $(this).attr('id');
+                        $('#'+this_obj_id+'-error').remove();
+
+                        document.getElementById($(this).data('id')).innerHTML = '';
+                        var zip_code = $(this).val();
+                        var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
+
+                        var client_url = 'localhost';
+
+                        var this_obj = $(this);
+                        ($(this)).attr("invalid-zip",'true');
+
+                        if (zip_code) {
+                            var xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) { //
+                                    const postalCode = JSON.parse(this.responseText);
+
+                                    if (postalCode.result == "Ugyldig postnummer") {
+
+                                        $("#"+this_obj_id).attr("invalid-zip",'false');
+                                        $("#"+this_obj_id).after("<label id='"+this_obj_id+"-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
+
+
+                                        // $('#zip_code-error').css('display', 'block');
+                                        //console.log(postalCode.result);
+                                        // if (document.getElementById('zip_code-error') == null) {
+                                        //     $("input[name='zip_code']").after("<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
+                                        // } else {
+                                        //     document.getElementById("zip_code-error").innerHTML = "Ugyldig verdi";
+                                        // }
+                                        $('#'+this_obj.data('zip_city')).html('');
+                                    } else {
+                                        $('#zip_code-error').css('display','none');
+
+                                        var id = (this_obj).data('id');
+                                        document.getElementById(id).innerHTML = postalCode.result;
+
+                                        str = postalCode.result;
+                                        res = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                                            return letter.toUpperCase();
+                                        });
+
+                                        $('#'+this_obj.data('zip_city')).val(res);
+                                        //console.log(res);
+                                    }
+                                }
+                            };
+                            xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, false);
+                            xhttp.send();
+                        }
+                        // find_zipcode_city(zip_code,id);
+                    }
+                }
+            });
+
         });
     </script>
+
+    <script src="{{asset('public/js/bootstrap-fileinput.js')}}"></script>
+    <!-- Dropzone script files -->
+    <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
+    <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
 @endsection
 
 

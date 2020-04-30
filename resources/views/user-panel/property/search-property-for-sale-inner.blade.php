@@ -23,6 +23,7 @@
             <h2 class="u-t2 p-2">&nbsp; Bolig til salgs </h2>
         </div>
         <div class="col-md-12">
+            @include('common.partials.flash-messages')
             <div class="hits fa-pull-right"><span class="font-weight-bold">{{$clicks}}</span> treff på <span
                     class="font-weight-bold">{{$add_array->total()}}</span> annonser
             </div>

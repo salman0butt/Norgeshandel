@@ -9,14 +9,17 @@ use App\Models\Cv\CvEducation;
 use App\Models\Cv\CvExperience;
 use App\Models\Cv\CvPersonal;
 use App\Models\Cv\CvPreference;
+use App\Models\Cv\CvRequest;
 use App\Models\Language;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use niklasravnsborg\LaravelPdf\Pdf;
 //use niklasravnsborg\LaravelPdf\Facades\Pdf;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+use DB;
 
 class CvController extends Controller
 {
@@ -180,34 +183,97 @@ class CvController extends Controller
     }
 
     //Download is CV in Pdf
-    public function download_pdf($cv_id){
+    public function download_pdf($cv_id,$anonym_cv=''){
+
+        $anonym_cv_information = '';
+        if($anonym_cv){
+            $anonym_cv_information = $anonym_cv;
+        }
         $cv =   Cv::find($cv_id);
-        $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
+        $html = view('user-panel.my-business.cv.download_pdf', compact('cv','anonym_cv_information'))->render();
         $pdf = new Pdf($html);
         $pdf->download('NorgesHandel-CV-'.$cv_id.'-'.$cv->user->first_name.' '.$cv->user->last_name.'.pdf');
         return back();
     }
 
     //View is CV in Pdf
-    public function view_pdf_cv($cv_id){
+    public function view_pdf_cv($cv_id,$anonym_cv=''){
+        $anonym_cv_information = '';
+        if($anonym_cv){
+            $anonym_cv_information = $anonym_cv;
+        }
         $cv =   Cv::find($cv_id);
-        $html = view('user-panel.my-business.cv.download_pdf', compact('cv'))->render();
+        $html = view('user-panel.my-business.cv.download_pdf', compact('cv','anonym_cv_information'))->render();
         $pdf = new Pdf($html);
         return $pdf->stream('NorgesHandel-CV-'.$cv_id.'pdf');
     }
 
-    //list all cvs to comapny users
+    //list all cvs to company users
     public function cv_list(){
         $date = Date('Y-m-d');
         if(Auth::user()->hasRole('company')){
-            $cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
-            $shortlisted_cvs = Cv::where('status','published')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
+            $cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')
+                ->whereHas('personal', function (Builder $query) {
+                    $query->whereNotNull('title');
+                })->whereDate('expiry','>=',$date)->orderBy('id','DESC')->get();
+
+            $shortlisted_cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
                 ->whereHas('meta', function (Builder $query) {
                     $query->where('user_id', Auth::id())->orderBy('id','DESC');
                 })->get();
-            return view('user-panel.my-business.cv.cv-list',compact('cvs','shortlisted_cvs'));
+
+            $requested_cvs = Cv::where('status','published')->where('user_id','<>',Auth::id())->where('visibility','anonymous')->whereNull('apply_job_id')->whereDate('expiry','>=',$date)
+                ->whereHas('user.requests_received', function (Builder $query) {
+                    $query->where('employer_id', Auth::id())->orderBy('id','DESC');
+                })->get();
+
+            return view('user-panel.my-business.cv.cv-list',compact('cvs','shortlisted_cvs','requested_cvs'));
         }else{
             return redirect('forbidden');
+        }
+    }
+
+    //Cv Request
+    public function cv_request(Request $request){
+        if($request->status != 'requested'){
+            $cv_request = CvRequest::where('user_id',$request->user_id)->where('employer_id',$request->employer_id)->first();
+            if(!$cv_request || $cv_request->user_id != Auth::id()){
+                (header("HTTP/1.0 404 Not Found"));
+                $data['failure'] = 'unauthorized';
+                echo json_encode($data);
+                exit();
+            }
+        }
+        DB::beginTransaction();
+        try{
+            $cv_request = CvRequest::updateOrCreate(['user_id' => $request->user_id, 'employer_id' => $request->employer_id], ['status' => $request->status]);
+
+            if($cv_request->status == 'requested'){
+                $to_name = $cv_request->user && $cv_request->user->username ? $cv_request->user->username : 'NH-Bruker';
+                $to_email = $cv_request->user->email;
+                $subject = "CV-forespørsel mottatt";
+                $text = "Vi vil informere om at ".($cv_request->employer->username ? $cv_request->employer->username : 'NH-Bruker')." har sendt deg en forespørsel om å se din CV.";
+            }else{
+                $to_name = $cv_request->employer && $cv_request->employer->username ? $cv_request->employer->username : 'NH-Bruker';
+                $to_email = $cv_request->employer->email;
+                $subject = "CV-forespørsel ".($cv_request->status == "accepted" ? 'akseptert' : 'avvist');
+                $text = "Vi vil informere om at CV-forespørselen din er ".($cv_request->status == "accepted" ? 'akseptert' : 'avvist')." av ".($cv_request->user->username ? $cv_request->user->username : 'NH-Bruker').'.';
+            }
+            Mail::send('mail.cv_request',compact('text'), function ($message) use ($to_name, $to_email,$subject) {
+                $message->to($to_email, $to_name)->subject($subject);
+                $message->from('developer@digitalmx.no', 'NorgesHandel');
+            });
+
+            DB::commit();
+            $data['msg'] = 'success';
+            echo json_encode($data);
+
+        }catch (\Exception $e){
+            DB::rollback();
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = $e->getMessage();
+            echo json_encode($data);
+            exit();
         }
     }
 

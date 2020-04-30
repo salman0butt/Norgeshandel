@@ -492,6 +492,24 @@
             <br>
         </div>
 
+        @if(Auth::user()->hasRole('company'))
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12 pr-md-0">
+                        <button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue add-ad-agent">+ Legg til en annen megler</button>
+                    </div>
+                </div>
+            </div>
+            @php
+                $ad_agents = array();
+                if($commercial_property_for_rent && $commercial_property_for_rent->ad && $commercial_property_for_rent->ad->agent && $commercial_property_for_rent->ad->agent->agent_details){
+                    $ad_agents = json_decode($commercial_property_for_rent->ad->agent->agent_details);
+                }
+            @endphp
+
+            @include('user-panel.partials.ad_agent_section')
+        @endif
+
         {{--<div class="form-group">--}}
             {{--<h3 class="u-t5">Kontaktperson</h3>--}}
             {{--<div class="row">--}}

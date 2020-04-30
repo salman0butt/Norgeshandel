@@ -20,7 +20,7 @@ class Company extends Model
     }
 
     public function company_gallery(){
-        return $this->morphMany(Media::class, 'mediable')->where('type','=','company_gallery');
+        return $this->morphMany(Media::class, 'mediable')->where('type','=','company_gallery')->orderBy('media_order','ASC');
     }
 
     public function jobs(){

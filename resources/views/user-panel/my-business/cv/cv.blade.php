@@ -186,7 +186,7 @@ $industries = $industry->terms;
                                             </div>
                                             <div class="form-group">
                                                 <label for="personal_birthday">{{ __('cv.bday') }}</label>
-                                                <input type="date" class="form-control" id="personal_birthday"
+                                                <input type="text" class="form-control date-picker" id="personal_birthday"
                                                        name="birthday" value="{{$cvpersonal->birthday}}" required>
                                             </div>
                                             <div class="form-group">
@@ -194,11 +194,11 @@ $industries = $industry->terms;
                                                 <select class="form-control" id="personal_gender" name="gender"
                                                         required>
                                                     <option value="">{{ __('cv.select') }}</option>
-                                                    <option value="male"
-                                                            @if($cvpersonal->gender=="male") selected @endif>Kvinne
+                                                    <option value="Kvinne"
+                                                            @if($cvpersonal->gender=="Kvinne") selected @endif>Kvinne
                                                     </option>
-                                                    <option value="female"
-                                                            @if($cvpersonal->gender=="female") selected @endif>Mann
+                                                    <option value="mann"
+                                                            @if($cvpersonal->gender=="mann") selected @endif>Mann
                                                     </option>
                                                 </select>
                                             </div>
@@ -1140,12 +1140,14 @@ $industries = $industry->terms;
                             </div>
                         </form>
                     </div>
+                    @php
+                        $unanswered_requests = Auth::user()->requests_received()->where('status','requested')->get();
+                        $answered_requests = Auth::user()->requests_received()->where('status','<>','requested')->get();
+                    @endphp
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                         <div class="inner-tab">
                             <h3 class="text-dark font-weight-normal" style="font-size:22px;">{{ __('cv.inquiry') }}</h3>
                             <p class="text-dark">{{ __('cv.inquiry-p') }}</p>
-
-
                             <div class="mt-5 inquiries-table">
                                 <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -1154,84 +1156,75 @@ $industries = $industry->terms;
                                         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
                                            href="#nav-profile" role="tab" aria-controls="nav-profile"
                                            aria-selected="false">{{ __('cv.answered') }}</a>
-
                                     </div>
                                 </nav>
                                 <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                    <div class="tab-pane fade show active mt-5 cv-requests-tabs" id="nav-home" role="tabpanel"
                                          aria-labelledby="nav-home-tab">
 
-                                        <table class="table table-striped">
+                                        <table class="table table-striped" id="unanswered_requests_table">
                                             <thead>
                                             <tr>
                                                 <th scope="col">{{ __('cv.date') }}</th>
                                                 <th scope="col">{{ __('cv.request') }}</th>
-                                                <th scope="col">{{ __('cv.behalf') }}</th>
                                                 <th scope="col">{{ __('cv.Status') }}</th>
-                                                <th scope="col">{{ __('cv.delete') }}</th>
+                                                <th scope="col">{{ __('cv.Action') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th scope="row">12/04/2019</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>Approve</td>
-                                                <td><a href="#"><i class="far fa-trash-alt"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">12/04/2019</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>Approve</td>
-                                                <td><a href="#"><i class="far fa-trash-alt"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">12/04/2019</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>Approve</td>
-                                                <td><a href="#"><i class="far fa-trash-alt"></i></a></td>
-                                            </tr>
+                                                @if($unanswered_requests->count())
+                                                    @foreach($unanswered_requests as $key=>$unanswered_request)
+                                                        <tr>
+                                                            <th scope="row">{{$unanswered_request->created_at->format('d-m-Y')}}</th>
+                                                            <td>{{$unanswered_request->employer && $unanswered_request->employer->username ? $unanswered_request->employer->username : ''}}</td>
+                                                            <td>
+                                                                @if($unanswered_request->status == "requested")
+                                                                    <span class="badge badge-primary">Avventer</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                {{--{{url('cv-request?user_id='.$unanswered_request->user_id.'&employer_id='.$unanswered_request->employer_id)}}--}}
+                                                                <a href="javascript:void(0);" class="action-cv-request" data-status="accepted" data-employer_id = "{{$unanswered_request->employer_id}}" data-user_id = "{{$unanswered_request->user_id}}" title="Aksepter det"><i class="far fa-check-circle fa-lg"></i></a>
+                                                                <a href="javascript:void(0);" class="action-cv-request" data-status="rejected" data-employer_id = "{{$unanswered_request->employer_id}}" data-user_id = "{{$unanswered_request->user_id}}" title="Avvis det"><i class="far fa-times-circle fa-lg"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr class="odd"><td valign="top" colspan="4" class="dataTables_empty text-center">Ingen forespørsel funnet</td></tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                    <div class="tab-pane fade mt-5 cv-requests-tabs" id="nav-profile" role="tabpanel"
                                          aria-labelledby="nav-profile-tab">
 
 
-                                        <table class="table table-striped">
+                                        <table class="table table-striped" id="answered_requests_table">
                                             <thead>
                                             <tr>
                                                <th scope="col">{{ __('cv.date') }}</th>
                                                <th scope="col">{{ __('cv.request') }}</th>
-                                               <th scope="col">{{ __('cv.behalf') }}</th>
                                                <th scope="col">{{ __('cv.Status') }}</th>
-                                               <th scope="col">{{ __('cv.delete') }}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th scope="row">12/04/2019</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>Approve</td>
-                                                <td><a href="#"><i class="far fa-trash-alt"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">12/04/2019</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>Approve</td>
-                                                <td><a href="#"><i class="far fa-trash-alt"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">12/04/2019</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>Approve</td>
-                                                <td><a href="#"><i class="far fa-trash-alt"></i></a></td>
-                                            </tr>
+                                            @if($answered_requests->count())
+                                                @foreach($answered_requests as $key=>$answered_request)
+                                                    <tr>
+                                                        <th scope="row">{{$answered_request->created_at->format('d-m-Y')}}</th>
+                                                        <td>{{$answered_request->employer && $answered_request->employer->username ? $answered_request->employer->username : ''}}</td>
+                                                        <td>
+                                                            @if($answered_request->status == "accepted")
+                                                                <span class="badge badge-success">Akseptert</span>
+                                                            @elseif($answered_request->status == "rejected")
+                                                                <span class="badge badge-danger">Avvist</span>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr class="odd"><td valign="top" colspan="4" class="dataTables_empty text-center">Ingen forespørsel funnet</td></tr>
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -1455,7 +1448,7 @@ $industries = $industry->terms;
                                             <div class="col-md-3"></div>
                                         </div>
                                     @endif
-                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                    @if(isset($cv->languages) && !empty($cv->languages) && $cv->languages->count())
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
@@ -1521,19 +1514,19 @@ $industries = $industry->terms;
                                                 <tbody>
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.name') }}</th>
-                                                    <td id="cvdetails-name">{{$cv->personal->first_name}} {{$cv->personal->last_name}}</td>
+                                                    <td id="cvdetails-name">Anonym Kandidat</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.birthday') }}</th>
-                                                    <td id="cvdetails-birthdate">{{$cv->personal->birthday}}</td>
+                                                    <td id="cvdetails-birthdate">{{$cv->personal->birthday ? date('Y',strtotime($cv->personal->birthday)) : ''}}</td>
                                                 </tr>
-                                                <tr>
-                                                    <th class="th_row size1of4" scope="row">{{ __('cv.address') }}</th>
-                                                    <td id="cvdetails-address">{{$cv->personal->address}}</td>
-                                                </tr>
+                                                {{--<tr>--}}
+                                                    {{--<th class="th_row size1of4" scope="row">{{ __('cv.address') }}</th>--}}
+                                                    {{--<td id="cvdetails-address">{{$cv->personal->address}}</td>--}}
+                                                {{--</tr>--}}
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.city') }}</th>
-                                                    <td id="cvdetails-postcode">{{$cv->personal->city}}</td>
+                                                    <td id="cvdetails-postcode">Skjetten</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="th_row" scope="row">{{ __('cv.gender') }}</th>
@@ -1568,17 +1561,18 @@ $industries = $industry->terms;
                                         </div>
                                         <div class="col-md-4">
                                             <h3 class="text-dark font-weight-normal pt-4" style="font-size:22px;">Bilde</h3>
-                                            @if(isset($cv) && $cv->media!=null)
-                                                <div class="profile"
-                                                     style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">
-                                                    <img
-                                                        src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"
-                                                        id="cv_profile_image"
-                                                        style="max-width:180px;max-height: 200px; height:200px;" alt="">
-                                                </div>
-                                            @else
-                                                <small class="text-dark">{{ __('cv.pre-picture-p') }}</small>
-                                            @endif
+                                            <p class="text-muted">Denne CVen mangler bilde.</p>
+                                            {{--@if(isset($cv) && $cv->media!=null)--}}
+                                                {{--<div class="profile"--}}
+                                                     {{--style="padding: 10px; background: #fdfdfd; border: 2px dashed #ddd;max-width: 205px; margin:auto">--}}
+                                                    {{--<img--}}
+                                                        {{--src="@if(isset($cv) && $cv->media!=null){{asset(\App\Helpers\common::getMediaPath($cv->media, '180x200'))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif"--}}
+                                                        {{--id="cv_profile_image"--}}
+                                                        {{--style="max-width:180px;max-height: 200px; height:200px;" alt="">--}}
+                                                {{--</div>--}}
+                                            {{--@else--}}
+                                                {{--<small class="text-dark">{{ __('cv.pre-picture-p') }}</small>--}}
+                                            {{--@endif--}}
                                         </div>
                                     </div>
                                     @if(isset($cv->educations) && is_countable($cv->educations) && !empty($cv->educations->first()->school))
@@ -1645,7 +1639,7 @@ $industries = $industry->terms;
                                             <div class="col-md-3"></div>
                                         </div>
                                     @endif
-                                    @if(isset($cv->languages) && !empty($cv->languages))
+                                    @if(isset($cv->languages) && !empty($cv->languages) && $cv->languages->count())
                                         <div class="row languages mt-1">
                                             <div class="col-12 pt-4 ">
                                                 <h3 class="text-dark font-weight-normal" style="font-size:26px;">
@@ -1712,12 +1706,26 @@ $industries = $industry->terms;
     <script type="text/javascript">
         function showTab(hash) {
             if (location.hash != "") {
-                $('.tab-pane').removeClass('show');
-                $('.tab-pane').removeClass('active');
-                $('.tab-pane' + hash).addClass('show');
-                $('.tab-pane' + hash).addClass('active');
-                $('#cv_tabs a').removeClass('active');
-                $('#cv_tabs a[href="' + hash + '"]').addClass('active');
+
+                if(hash == "#nav-profile" || hash == "#nav-home"){
+                    $(".tab-pane").removeClass('show');
+                    $(".tab-pane").removeClass('active');
+                    $('#nav-tab a').removeClass('active');
+                    $('#cv_tabs a').removeClass('active');
+                    $("#myTabContent #contact").addClass('show');
+                    $("#myTabContent #contact").addClass('active');
+                    $('.cv-requests-tabs' + hash).addClass('show');
+                    $('.cv-requests-tabs' + hash).addClass('active');
+                    $('#cv_tabs a[href="#contact"]').addClass('active');
+                    $('#nav-tab a[href="' +hash+ '"]').addClass('active');
+                }else{
+                    $(".tab-pane:not('.cv-requests-tabs')").removeClass('show');
+                    $(".tab-pane:not('.cv-requests-tabs')").removeClass('active');
+                    $('.tab-pane' + hash).addClass('show');
+                    $('.tab-pane' + hash).addClass('active');
+                    $('#cv_tabs a').removeClass('active');
+                    $('#cv_tabs a[href="' + hash + '"]').addClass('active');
+                }
             }
         }
         var doc = new jsPDF();
@@ -1729,6 +1737,7 @@ $industries = $industry->terms;
 
         $('#selected_languages').html($('#source_languages').children('option:selected'));
         $(document).ready(function () {
+
             var htm = $('.printable_cv').html();
             // console.log(htm);
             $('#download_cv').click(function (e) {
@@ -1782,7 +1791,12 @@ $industries = $industry->terms;
                 showTab($(this).attr('href'));
                 location.hash = $(this).attr('href');
             });
+
             $(document).on('click', '#cv_tabs a', function () {
+                location.hash = $(this).attr('href');
+            });
+
+            $(document).on('click', '#nav-tab a', function () {
                 location.hash = $(this).attr('href');
             });
             $(".custom-file-input").on("change", function () {
@@ -1811,6 +1825,41 @@ $industries = $industry->terms;
                     }
 //                    document.getElementById("contact_us").reset();
                 })
+            });
+
+            @if($unanswered_requests->count() > 0)
+                $('#unanswered_requests_table').DataTable({
+                    "order": [[ 0, "desc" ]]
+                });
+            @endif
+            @if($answered_requests->count() > 0)
+                $('#answered_requests_table').DataTable({
+                    "order": [[ 0, "desc" ]]
+                });
+            @endif
+            //Sent request to view CV
+            $(document).on('click', '.action-cv-request', function (e) {
+                if (confirm("Er du sikker på å endre status? Du vil ikke endre det senere.") == true) {
+                    e.preventDefault();
+                    var user_id = $(this).data('user_id');
+                    var employer_id = $(this).data('employer_id');
+                    var status = $(this).data('status');
+                    $.ajax({
+                        url: '{{route('cv-request')}}',
+                        type: "POST",
+                        data:{'user_id':user_id,'employer_id':employer_id,'status':status},
+                        async: false,
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                            var errors = jqXhr.responseJSON;
+
+                            notify("error","noe gikk galt!");
+                            return false;
+                        },
+                    });
+                }
 
             });
         });

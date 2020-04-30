@@ -90,6 +90,7 @@
 @include('user-panel.partials.header')
 @endif
 @yield('page_content')
+@include('user-panel.partials.ad_agent_repeater_section')
 <div id="modal_select_category" class="modal fade" role="dialog">
     <div class="modal-dialog pt-5">
         <div class="modal-content smart-scroll" style="max-height: calc(100vh - 100px); overflow-y: scroll;">
@@ -379,6 +380,7 @@
 <script>
     function find_zipcode_city(val) {
         document.getElementById("zip_code_city_name").innerHTML = '';
+
         var zip_code = val;
         var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
         // var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=demodesign.no&pnr=2014';
@@ -386,7 +388,8 @@
 
         if (zip_code) {
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
+                xhttp.onreadystatechange = function () {
+                    // alert(obj_id);
                 if (this.readyState == 4 && this.status == 200) { //
                     const postalCode = JSON.parse(this.responseText);
 
@@ -401,7 +404,9 @@
                         $('#zip_city').html('');
                     } else {
                         $('#zip_code-error').css('display','none');
+
                         document.getElementById("zip_code_city_name").innerHTML = postalCode.result;
+
                         str = postalCode.result;
                         res = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
                         return letter.toUpperCase();
@@ -625,7 +630,7 @@
         shares: ["email", "twitter", "facebook"]
     });
     $(function() {
-        $('input[type="date"]').datepicker({
+        $('.date-picker, input[type="date"]').datepicker({
             format: "dd-mm-yyyy",
              autoclose: true,
              language: 'no',

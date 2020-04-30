@@ -173,7 +173,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
     Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
     Route::post('views/{banner_id}', 'Admin\ads\BannerController@views')->middleware(['role:admin|manager']);
-     Route::get('banners/reports/{id}', 'Admin\ads\BannerController@reports')->middleware(['role:admin|manager']);
+    Route::get('banners/reports/{id}', 'Admin\ads\BannerController@reports')->middleware(['role:admin|manager']);
 
 
 
@@ -207,6 +207,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::patch('jobs/update/{id}', 'Admin\Jobs\JobController@update')->name('update');
     Route::patch('jobs/store', 'Admin\Jobs\JobController@store');
     Route::get('jobs/mega_menu_search', 'Admin\Jobs\JobController@mega_menu_search')->name('mega_menu_search_url');
+    Route::get('jobs/company/{id}/ads', 'Admin\Jobs\JobController@company_more_ads');
 
     Route::get('shared-lists/{link_id}', function ($link_id) {
         $list = \App\fav_list::where('share_link', $link_id)->get()->first();
@@ -319,7 +320,12 @@ Route::group(['middleware' => 'authverified'], function () {
                 Route::post('update_languages/{cv_id}', 'Cv\CvController@update_languages')->name('update_languages');
                 Route::post('update_preference/{cv_id}', 'Cv\CvController@update_preference')->name('update_preference');
                 Route::get('download_pdf/{cv_id}', 'Cv\CvController@download_pdf')->name('download_pdf');
+                //download annonymus cv
+                Route::get('download_pdf/{cv_id}/{anonym_cv}', 'Cv\CvController@download_pdf')->name('download_pdf');
                 Route::get('view_pdf_cv/{cv_id}', 'Cv\CvController@view_pdf_cv')->name('view_pdf_cv');
+                //view annonymus cv
+                Route::get('view_pdf_cv/{cv_id}/{anonym_cv}', 'Cv\CvController@view_pdf_cv')->name('view_pdf_cv');
+                Route::post('cv-request', 'Cv\CvController@cv_request')->name('cv-request');
             });
             Route::get('profile', 'Admin\Users\AdminUserController@profile')->name('profile');
             Route::post('profile/request_company_profile', 'Admin\Users\AdminUserController@request_company_profile')->name('request_company_profile');
@@ -638,7 +644,7 @@ Route::group(['middleware' => 'authverified'], function () {
         $media = Media::where('name_unique', $_GET['filename'])->first();
         $delete = 'no';
         if ($media) {
-            if(preg_match("/^.*\_temp_images$/", $media->mediable_type)){
+            if(preg_match_all("/_temp[^}]*_/", $media->mediable_type)){
                 $delete = 'yes';
             }else{
                 if($media->mediable_type = 'App\Models\Ad' && $media->mediable && $media->mediable->status == 'saved'){

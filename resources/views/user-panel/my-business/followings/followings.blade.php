@@ -12,19 +12,22 @@
         </div>            <!---- end breadcrumb----->
         <h3 class="mb-5">Firmaer jeg følger</h3>
         @if(count($followings)>0)
-        <h4 class="mb-3">Job</h4>
+        <h4 class="mb-3">Jobb</h4>
         <ul class="list list-unstyled">
             @foreach($followings as $following)
-                @if($following->company->company_type == "job")
+                @if($following->company && $following->company->company_type == "job")
                     <li>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <h5 class="m-0 float-left font-weight-normal">{{$following->company->emp_name}}</h5>
+                        <div class="row my-3">
+                            <div class="col-md-2">
+                                <img src="{{$following->company->company_logo->first() ? \App\Helpers\common::getMediaPath($following->company->company_logo->first()) : asset('/public/images/1280x720.png')}}" alt="logo" width="100">
                             </div>
                             <div class="col-md-4">
-                                <a class="dme-btn-outlined-blue float-right" href="#">
-                                    <div class="ml-2">Slutt å følge</div>
+                                <a href="{{url('/single-company/'.$following->company->id)}}">
+                                    <h5 class="m-0 float-left font-weight-normal">{{$following->company->emp_name}}</h5>
                                 </a>
+                            </div>
+                            <div class="col-md-6">
+                                <button class="dme-btn-outlined-blue float-right follow-company-button" data-url="{{url('company-follow')}}" data-company_id="{{$following->company_id}}">Slutt å følge</button>
                             </div>
                         </div>
                     </li>

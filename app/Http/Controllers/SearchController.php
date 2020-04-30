@@ -62,6 +62,8 @@ class SearchController extends Controller
 
 
         Search::create($data);
+
+        Session::flash('success', 'Søket er lagret!');
         return back()->with('status', 'Search Saved Successfully');
 
     }
