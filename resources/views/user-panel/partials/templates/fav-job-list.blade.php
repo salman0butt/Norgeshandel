@@ -30,6 +30,12 @@ if(count($media)>0){
     if ($job && $job->ad && $job->ad->company_gallery && $job->ad->company_gallery->first()){
         $gallery = \App\Helpers\common::getMediaPath($job->ad->company_gallery->first(), '360x360');
     }
+}else{
+    if ($job->company_id != 0) {
+        if (is_countable($job->company->company_logo) && count($job->company->company_logo) > 0) {
+            $logo = \App\Helpers\common::getMediaPath($job->company->company_logo->first());
+        }
+    }
 }
 ?>
 <div class="col-sm-12 pr-0 end_fav_item" data-name="{{$job->title}}">

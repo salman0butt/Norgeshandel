@@ -231,10 +231,10 @@
                     @if(Auth::user()->roles->first()->name=="company")
                         <div class="form-group">
                             <div class="row">
-                                <label for="company_id" class="col-md-2 u-t5">{{__('Select Your Company')}}</label>
+                                <label for="company_id" class="col-md-2 u-t5">{{__('Velg din bedrift')}}</label>
                                 <div class="col-sm-10 ">
                                     <select name="company_id" id="company_id" class="form-control dme-form-control">
-                                        <option value="">{{__('Select')}}</option>
+                                        <option value="">{{__('Velg')}}</option>
                                         @if(is_countable(Auth::user()->job_companies) &&
                                         count(Auth::user()->job_companies)>0)
                                         @foreach(Auth::user()->job_companies as $company)

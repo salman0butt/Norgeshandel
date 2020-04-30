@@ -16,13 +16,24 @@ if($ad->company_gallery->count() > 0){
         $gallery = \App\Helpers\common::getMediaPath($company_gallery);
     }
 }
-if(count($media)>0){
-        foreach ($media as $item){
-            if ($item->type=='logo'){
-                $logo = \App\Helpers\common::getMediaPath($item);
-            }
-        }
+
+
+if ($job->company_id != 0) {
+    if (is_countable($job->company->company_logo) && count($job->company->company_logo) > 0) {
+        $logo = \App\Helpers\common::getMediaPath($job->company->company_logo->first());
     }
+} else {
+    if (is_countable($job->ad->company_logo) && count($job->ad->company_logo) > 0) {
+        $logo = \App\Helpers\common::getMediaPath($job->ad->company_logo->first());
+    }
+}
+//if(count($media)>0){
+//        foreach ($media as $item){
+//            if ($item->type=='logo'){
+//                $logo = \App\Helpers\common::getMediaPath($item);
+//            }
+//        }
+//    }
     ?>
 <div class="col-sm-4 pr-0">
 

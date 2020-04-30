@@ -1,4 +1,10 @@
  <div class="row pl-4 pr4">
+
+     @if(isset($ad->job) && $ad->job->workplace_video)
+             <a data-fslightbox="gallery1" href="{{$job->workplace_video}}" class="dme-btn-outlined-blue mr-2" style="color: #ac304a; background: white; font-size: 20px; height: 50px">
+                 <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
+     @endif
+
 <a href="#" style="position: initial" class="add-to-fav-btn
 @if(Auth::check() && count($ad->favorite($ad->id))>0)
     fav

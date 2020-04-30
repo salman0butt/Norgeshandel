@@ -3,7 +3,7 @@
 @section('page_content')
     <main class="dme-wrapper">
         <div class="left-ad float-left">
-            <img src="assets/images/left-ad.png" class="img-fluid" alt="">
+            {{--<img src="assets/images/left-ad.png" class="img-fluid" alt="">--}}
         </div>
 
         <div class="dme-container pl-3 pr-3">
@@ -32,7 +32,7 @@
                 <div class="col-md-8 offset-md-2">
                     <div class="row">
                         <div class="input-group search-box col-md-12">
-                            <input type="text" name="search" class="form-control search-control"
+                            <input type="text" name="search" class="form-control search-control search-input"
                                    placeholder="Stilling, nøkkelord eller firmanavn" autofocus="">
                             <span class="input-group-addon">
                             <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" height="32"
@@ -51,16 +51,15 @@
                 </div>
                 <!--            ended col-->
             </div>
-            <div class="row mt-4">
-                <div class="col-md-12 ">
+            <div class="row mt-4 ">
+                <div class="col-md-12 companies-list">
                     @if($companies && is_countable($companies) && count($companies) > 0)
                         @foreach($companies as $company)
-                            <a href="{{ url('/single-company/'.$company->id) }}" class="">
+                            <a href="{{ url('/single-company/'.$company->id) }}" class="company-profile">
                                 <div class="row hover-border text-muted mt-2 mb-2 company">
                                     <div class="col-md-3">
                                         <div class="p-2 text-center company-image">
-                                            <img
-                                                src="{{\App\Helpers\common::getMediaPath($company->company_logo->first())}}"
+                                            <img src="{{$company->company_logo->first() ? \App\Helpers\common::getMediaPath($company->company_logo->first()) : asset('/public/images/1280x720.png')}}"
                                                 alt="" class="img-fluid align-middle">
                                         </div>
                                     </div>
@@ -80,153 +79,6 @@
                     @else
                         <div class="col-md-6 offset-md-3 alert alert-warning">Ingen selskaper funnet!</div>
                     @endif
-                    {{-- <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
-                        <div class="row hover-border text-muted mt-2 mb-2 company">
-                            <div class="col-md-3">
-                                <div class="p-2 text-center company-image">
-                                    <img src="assets/images/ak-maskiner.png" alt="" class="img-fluid align-middle">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="p-1">
-                                    <div class="company-title">
-                                        <h3>A-K maskiner AS</h3>
-                                    </div>
-                                    <div class="company-detail">
-                                        <p>A-K maskiner AS er landets ledende private leverandør av maskiner og redskaper
-                                            til landbruksbransjen. Vi er organisert som en landsdekkende kjede med 40 salgs-
-                                            og servicepunkter med 250 medarbeidere.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
-                        <div class="row hover-border text-muted mt-2 mb-2 company">
-                            <div class="col-md-3">
-                                <div class="p-2 text-center company-image">
-                                    <img src="assets/images/abb.png" alt="" class="img-fluid align-middle">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="p-1">
-                                    <div class="company-title">
-                                        <h3>ABAX AS</h3>
-                                    </div>
-                                    <div class="company-detail">
-                                        <p>Vi er et internasjonalt selskap, og for å holde vår sterke posisjon i et av
-                                            verdens raskest voksende markeder, er vår bedriftsmodell basert på tre viktige
-                                            elementer: "People, technology and services".</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
-                        <div class="row hover-border text-muted mt-2 mb-2 company">
-                            <div class="col-md-3">
-                                <div class="p-2 text-center company-image">
-                                    <img src="assets/images/abb-personell.jpg" alt="" class="img-fluid align-middle">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="p-1">
-                                    <div class="company-title">
-                                        <h3>ABC Personell Vikar Og Rekrutteringsbyrå AS</h3>
-                                    </div>
-                                    <div class="company-detail">
-                                        <p>Vi rekrutterer effektivt til vikariater og faste stillinger! Vi ønsker svært
-                                            gjerne å komme i kontakt med deg om du vurderer ny jobb! Her kan du se noen av
-                                            oppdragene vi arbeider med for tiden.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
-                        <div class="row hover-border text-muted mt-2 mb-2 company">
-                            <div class="col-md-3">
-                                <div class="p-2 text-center company-image">
-                                    <img src="assets/images/accountor-as.jpg" alt="" class="img-fluid align-middle">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="p-1">
-                                    <div class="company-title">
-                                        <h3>ACCOUNTOR AS</h3>
-                                    </div>
-                                    <div class="company-detail">
-                                        <p>Accountor er Nord-Europas største regnskaps- og rådgivningskjede med 2,300
-                                            profesjonelle som betjener over 35,000 kunder i 7 land. Vi gjør din bedrift mer
-                                            lønnsom med vår lidenskap for resultater!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
-                        <div class="row hover-border text-muted mt-2 mb-2 company">
-                            <div class="col-md-3">
-                                <div class="p-2 text-center company-image">
-                                    <img src="assets/images/af-grouppen.png" alt="" class="img-fluid align-middle">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="p-1">
-                                    <div class="company-title">
-                                        <h3>AF Gruppen</h3>
-                                    </div>
-                                    <div class="company-detail">
-                                        <p>AF er et ledende entreprenør- og industrikonsern i Norge med virksomhet innen
-                                            Anlegg, Bygg, Eiendom, Offshore, Miljø og Energi. Vi trenger deg som er
-                                            nysgjerrig og liker å jobbe i team.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
-                        <div class="row hover-border text-muted mt-2 mb-2 company">
-                            <div class="col-md-3">
-                                <div class="p-2 text-center company-image">
-                                    <img src="assets/images/abb.png" alt="" class="img-fluid align-middle">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="p-1">
-                                    <div class="company-title">
-                                        <h3>ABB AS</h3>
-                                    </div>
-                                    <div class="company-detail">
-                                        <p>ABB er et ledende teknologiselskap som baner vei for det grønne skiftet og den
-                                            fjerde industrielle revolusjon. Vil du være med å skape fremtiden sammen med
-                                            oss?</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="http://digitalmedieexpert.no/NorgesHandel/single-company.php" class="">
-                        <div class="row hover-border text-muted mt-2 mb-2 company">
-                            <div class="col-md-3">
-                                <div class="p-2 text-center company-image">
-                                    <img src="assets/images/aker-biomarine.jpg" alt="" class="img-fluid align-middle">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="p-1">
-                                    <div class="company-title">
-                                        <h3>AKER BIOMARINE</h3>
-                                    </div>
-                                    <div class="company-detail">
-                                        <p>Aker BioMarine is a leading biotechnology company developing krill-derived
-                                            products for consumer health and wellness and animal nutrition. Our mission is
-                                            to improve human and planetary health!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a> --}}
                 </div>
             </div>
         </div>
@@ -235,7 +87,13 @@
             <img src="assets/images/right-ad.png" class="img-fluid" alt="">
         </div>
     </main>
-
-
-
 @endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+
+        })
+    </script>
+@endsection
+

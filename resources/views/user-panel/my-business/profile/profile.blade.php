@@ -48,7 +48,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button class="btn dme-btn-outlined-blue" data-toggle="collapse"
-                                        data-target="#company_profile_block">Rediger bedriftsprofilen din
+                                        data-target="#company_profile_block">
+                                    {{$user->companies->count() > 0 ? ' Legg til ny bedriftsprofil' : 'Rediger bedriftsprofilen din'}}
                                 </button>
                             </div>
                         </div>
@@ -56,10 +57,14 @@
                             <div class="col-md-12">
                                 <form action="{{route('company.store')}}" id="form_company_profile" method="POST"
                                       enctype="multipart/form-data" class="dropzone addMorePics" data-action="{{route('company.store')}}"
-                                      data-append_input = 'no'>
+                                      data-append_input = 'no' onSubmit="return checkform('form_company_profile')">
                                     {{csrf_field()}}
                                     <input type="hidden" name="upload_dropzone_images_type" value="company_gallery_temp_images">
                                     <input type="hidden" name="media_position" class="media_position">
+                                    <input type="hidden" id="old_zip" value="">
+                                    <input type="hidden" id="zip_city" name="zip_city" value="">
+
+
                                     {{--<input type="hidden" name="deleted_media" class="deleted_media">--}}
                                     <h4 class="text-muted pt-2">Bedriftsprofilen</h4>
                                     <div class="form-group">
@@ -80,12 +85,12 @@
                                                         class="form-control dme-form-control" required="">
                                                     <option value="">Velg...</option>
                                                     @if(count($user->job_companies) < $user->allowed_job_companies->first()->value)
-                                                        <option value="job">Jobb</option>
+                                                        <option value="Jobb">Jobb</option>
                                                     @else
                                                         <option value="" disabled>Jobb (Grensen overskredet)</option>
                                                     @endif
                                                     @if(count($user->property_companies)<$user->allowed_property_companies->first()->value)
-                                                        <option value="property">property</option>
+                                                        <option value="Eiendom">Eiendom</option>
                                                     @else
                                                         <option value="" disabled>Eiendom (Grensen overskredet)</option>
                                                     @endif
@@ -109,8 +114,8 @@
                                             <label for="emp_website" class="col-md-2 u-t5">Nettsted (valgfritt)</label>
                                             <div class="col-sm-10 ">
                                                 <input name="emp_website" value="" id="emp_website" type="text"
-                                                       class="form-control dme-form-control" placeholder="firmanavn.no"
-                                                       required="">
+                                                       class="form-control dme-form-control url_http" placeholder="firmanavn.no"
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -162,10 +167,11 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <label for="emp_zip" class="col-md-2 u-t5">post kode</label>
+                                            <label for="emp_zip" class="col-md-2 u-t5">Post kode</label>
                                             <div class="col-sm-4 ">
                                                 <input name="zip" id="emp_zip" value="" type="text"
-                                                       class="form-control dme-form-control">
+                                                       class="form-control dme-form-control zip_code" data-old_zip="old_zip" data-zip_city="zip_city" data-id="zip_code_city_name">
+                                                <span id="zip_code_city_name"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +180,7 @@
                                             <label for="address" class="col-md-2 u-t5">Gateadresse (valgfritt)</label>
                                             <div class="col-sm-10 ">
                                                 <input name="address" id="address" type="text"
-                                                       class="form-control dme-form-control" required="">
+                                                       class="form-control dme-form-control" >
                                                 <span class="u-t5">Forklar kort om tilgangen til boligen og hvordan du finner den, vennligst fortell om nærhet til vei, buss og tog.</span>
                                             </div>
                                         </div>
@@ -256,11 +262,13 @@
                                             <div>{{$company->emp_name}} <span class="small text-muted">(kategori: {{$company->company_type}})</span>
                                             </div>
                                         </div>
-                                        <div>
-                                            <div class="font-weight-bold float-left" style="min-width: 120px;">Nettsted:
+                                        @if($company->emp_website)
+                                            <div>
+                                                <div class="font-weight-bold float-left" style="min-width: 120px;">Nettsted:
+                                                </div>
+                                                <div>{{$company->emp_website}}</div>
                                             </div>
-                                            <div>{{$company->emp_website}}</div>
-                                        </div>
+                                        @endif
                                         <div>
                                             <div class="font-weight-bold float-left" style="min-width: 120px;">Land:</div>
                                             <div>{{$company->country}}</div>
@@ -288,7 +296,7 @@
                                         <form action="{{route('company.update', compact('company'))}}"
                                               id="form_company_profile_edit_{{$company->id}}" method="POST"
                                               enctype="multipart/form-data" class="dropzone addMorePics" data-action="{{route('company.update', compact('company'))}}"
-                                              data-append_input = 'no'>
+                                              data-append_input = 'no' onSubmit="return checkform('form_company_profile_edit_{{$company->id}}')">
                                             {{csrf_field()}}
                                             {{method_field('PUT')}}
 
@@ -296,6 +304,8 @@
                                             <input type="hidden" name="upload_dropzone_images_type" value="company_gallery_temp_images_{{$company->id}}">
                                             <input type="hidden" name="media_position" class="media_position">
                                             <input type="hidden" name="deleted_media" class="deleted_media">
+                                            <input type="hidden" id="old_zip_{{$company->id}}" value="{{isset($company->zip) ? $company->zip : ''}}">
+                                            <input type="hidden" id="zip_city_{{$company->id}}" name="zip_city" value="{{isset($company->zip_city) ? $company->zip_city : ''}}">
                                             <h4 class="text-muted pt-2">Bedriftsprofilen</h4>
                                             <div class="form-group">
                                                 <div class="row">
@@ -327,9 +337,9 @@
                                                     <div class="col-sm-10 ">
                                                         <input name="emp_website" value="{{$company->emp_website}}"
                                                                id="emp_website_{{$company->id}}" type="text"
-                                                               class="form-control dme-form-control"
+                                                               class="form-control dme-form-control url_http"
                                                                placeholder="firmanavn.no"
-                                                               required="">
+                                                        >
                                                     </div>
                                                 </div>
                                             </div>
@@ -390,12 +400,12 @@
                                                             @endif
                                                         </select>
                                                     </div>
-                                                    <label for="zip_{{$company->id}}" class="col-md-2 u-t5">post
-                                                        kode</label>
+                                                    <label for="zip_{{$company->id}}" class="col-md-2 u-t5">Post kode</label>
                                                     <div class="col-sm-4 ">
                                                         <input name="zip" id="zip_{{$company->id}}"
                                                                value="{{$company->zip}}" type="text"
-                                                               class="form-control dme-form-control">
+                                                               class="form-control dme-form-control zip_code" data-old_zip="old_zip_{{$company->id}}" data-zip_city="zip_city_{{$company->id}}" data-id="zip_code_city_name_{{$company->id}}">
+                                                        <span id="zip_code_city_name_{{$company->id}}">{{$company->zip_city}}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -406,7 +416,7 @@
                                                     <div class="col-sm-10 ">
                                                         <input name="address" id="address_{{$company->id}}" type="text"
                                                                class="form-control dme-form-control"
-                                                               value="{{$company->address}}" required="">
+                                                               value="{{$company->address}}">
                                                         <span class="u-t5">Forklar kort om tilgangen til boligen og hvordan du finner den, vennligst fortell om nærhet til vei, buss og tog.</span>
                                                     </div>
                                                 </div>
@@ -714,6 +724,18 @@ meldingstjeneste og i dine annonser.</p>
         </div>
     </main>
     <script type="text/javascript">
+
+        function checkform(form_id)
+        {
+            var zip_attr = $("#"+form_id+" input[name='zip']").attr('invalid-zip');
+            if(zip_attr === 'false')
+            {
+                alert('Legg inn et gyldig postnummer.');
+                return false;
+            }
+            return true;
+        }
+
         $(document).ready(function () {
             $('#form_company_profile').submit(function (e) {
                 // $('#description').text(tinyMCE.get("description").getContent());
@@ -734,6 +756,68 @@ meldingstjeneste og i dine annonser.</p>
             $('.datepicker').datepicker({
                 dateFormat: 'dd-mm-yy',
                 autoclose: true
+            });
+
+            $(document).on('change', '.zip_code', function (e){
+                var zip_code = $(this).val();
+                var old_zip = $('#'+$(this).data('old_zip')).val();
+
+                if (zip_code) {
+                    if (old_zip !=zip_code){
+                        var this_obj_id = $(this).attr('id');
+                        $('#'+this_obj_id+'-error').remove();
+
+                        document.getElementById($(this).data('id')).innerHTML = '';
+                        var zip_code = $(this).val();
+                        var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
+
+                        var client_url = 'localhost';
+
+                        var this_obj = $(this);
+                        ($(this)).attr("invalid-zip",'true');
+
+                        if (zip_code) {
+                            var xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) { //
+                                    const postalCode = JSON.parse(this.responseText);
+
+                                    if (postalCode.result == "Ugyldig postnummer") {
+
+                                        $("#"+this_obj_id).attr("invalid-zip",'false');
+                                        $("#"+this_obj_id).after("<label id='"+this_obj_id+"-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
+
+
+                                        // $('#zip_code-error').css('display', 'block');
+                                        //console.log(postalCode.result);
+                                        // if (document.getElementById('zip_code-error') == null) {
+                                        //     $("input[name='zip_code']").after("<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
+                                        // } else {
+                                        //     document.getElementById("zip_code-error").innerHTML = "Ugyldig verdi";
+                                        // }
+                                        $('#'+this_obj.data('zip_city')).html('');
+                                    } else {
+                                        $('#zip_code-error').css('display','none');
+
+                                        var id = (this_obj).data('id');
+                                        document.getElementById(id).innerHTML = postalCode.result;
+
+                                        str = postalCode.result;
+                                        res = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+                                            return letter.toUpperCase();
+                                        });
+
+                                        $('#'+this_obj.data('zip_city')).val(res);
+                                        //console.log(res);
+                                    }
+                                }
+                            };
+                            xhttp.open("GET", api_url + "?clientUrl=" + client_url + "&pnr=" + zip_code, false);
+                            xhttp.send();
+                        }
+                        // find_zipcode_city(zip_code,id);
+                    }
+                }
             });
 
         });

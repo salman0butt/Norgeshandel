@@ -173,7 +173,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::post('/admin/ads/', 'Admin\ads\BannerController@store')->middleware(['role:admin|manager']);
     Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
     Route::post('views/{banner_id}', 'Admin\ads\BannerController@views')->middleware(['role:admin|manager']);
-     Route::get('banners/reports/{id}', 'Admin\ads\BannerController@reports')->middleware(['role:admin|manager']);
+    Route::get('banners/reports/{id}', 'Admin\ads\BannerController@reports')->middleware(['role:admin|manager']);
 
 
 

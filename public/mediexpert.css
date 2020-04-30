@@ -961,9 +961,9 @@ a > .alert-warning:hover{
 .company-image{
 
 }
-.company{
-    min-height:225px;
-}
+/*.company{*/
+    /*min-height:225px;*/
+/*}*/
 .uploaded-image{
     width:100px;
     height: 100px;
