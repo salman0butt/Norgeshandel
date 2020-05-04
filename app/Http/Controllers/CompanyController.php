@@ -162,6 +162,14 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
+
+        if($company->jobs->count()){
+            foreach ($company->jobs as $company_job){
+                $company_job->ad()->delete();
+                $company_job->delete();
+            }
+        }
+
         if($company->company_logo->count()){
             common::delete_media($company->id, 'App\Models\Company', 'company_logo');
         }

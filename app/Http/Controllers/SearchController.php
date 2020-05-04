@@ -183,7 +183,7 @@ class SearchController extends Controller
             //$property_for_rent = PropertyForRent::where('heading', 'LIKE', '%' . $search . '%')->get();
             $property_for_rent = DB::table('property_for_rent')
                 ->join('ads', 'property_for_rent.ad_id', '=', 'ads.id')
-//                ->where('ads.status', '=', 'published')
+                ->whereNull('ads.deleted_at')
                 ->where('ads.visibility', '=', 1)
                 ->where('ads.ad_type', '=', 'property_for_rent')
                 ->whereNull('ads.deleted_at')
@@ -306,6 +306,7 @@ class SearchController extends Controller
             $job_parttime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'part_time')
+                ->whereNull('jobs.deleted_at')
                 ->where(function ($query) use ($date) {
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at', '>', $date);
@@ -316,6 +317,7 @@ class SearchController extends Controller
             $job_fulltime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'full_time')
+                ->whereNull('jobs.deleted_at')
                 ->where(function ($query) use ($date) {
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at', '>', $date);
@@ -326,6 +328,7 @@ class SearchController extends Controller
             $job_management = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'management')
+                ->whereNull('jobs.deleted_at')
                 ->where(function ($query) use ($date) {
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at', '>', $date);
@@ -354,6 +357,7 @@ class SearchController extends Controller
             $job_parttime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'part_time')
+                ->whereNull('jobs.deleted_at')
                 ->where(function ($query) use ($date) {
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at', '>', $date);
@@ -364,6 +368,7 @@ class SearchController extends Controller
             $job_fulltime = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'full_time')
+                ->whereNull('jobs.deleted_at')
                 ->where(function ($query) use ($date) {
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at', '>', $date);
@@ -374,6 +379,7 @@ class SearchController extends Controller
             $job_management = DB::table('jobs')->join('ads', 'jobs.ad_id', '=', 'ads.id')
                 ->where('ads.visibility', '=', 1)
                 ->where('jobs.job_type', '=', 'management')
+                ->whereNull('jobs.deleted_at')
                 ->where(function ($query) use ($date) {
                     $query->where('ads.status', 'published')
                         ->orwhereDate('ads.sold_at', '>', $date);

@@ -56,9 +56,13 @@ class common
     public static function table_search(&$query, $columns, $search_key, $table)
     {
         $query->where(function ($query) use ($columns, $search_key, $table){
-            $query->where($table.'.'.$columns[0], 'LIKE', '%' . $search_key . '%');
+            if(isset($columns[0])){
+                $query->where($table.'.'.$columns[0], 'LIKE', '%' . $search_key . '%');
+            }
             for($i=1; $i<count($columns); $i++){
-                $query->orWhere($table.'.'.$columns[$i], 'LIKE', '%' . $search_key . '%');
+                if(isset($columns[$i])){
+                    $query->orWhere($table.'.'.$columns[$i], 'LIKE', '%' . $search_key . '%');
+                }
             }
         });
     }

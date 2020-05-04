@@ -29,9 +29,9 @@
             @include('common.partials.flash-messages')
             @if($user->roles->first()->name=="company")
                 <div class="alert alert-info">
-                    For øyeblikket har du {{$user->allowed_job_companies->first() ? $user->allowed_job_companies->first()->value : ''}} stillingsgrenser
-                    og {{$user->allowed_job_companies->first() ? $user->allowed_property_companies->first()->value : ''}} eiendomsgrenser.
-                    <a href="{{url('my-business/profile/select_company_profile_type')}}">Be om mer grense.</a>
+                    For øyeblikket har du <b>{{$user->allowed_job_companies->first() ? $user->allowed_job_companies->first()->value : ''}} stillingsannonser</b>
+                    og <b>{{$user->allowed_job_companies->first() ? $user->allowed_property_companies->first()->value : ''}} eiendomsannonser</b>.
+                    <a style="text-decoration: underline;" href="{{url('my-business/profile/select_company_profile_type')}}">Be om å øke din grense.</a>
                 </div>
                 @if($user->allowed_job_companies->first() && (($user->allowed_job_companies->first()->value > 0 && $user->allowed_job_companies->first()->value > count($user->job_companies)) ||
                 ($user->allowed_property_companies->first()->value >0 && $user->allowed_property_companies->first()->value > count($user->property_companies))))
