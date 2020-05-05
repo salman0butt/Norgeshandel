@@ -16,6 +16,7 @@
                     <a class="m-2" href="{{ url('/setting') }}">Innstillinger</a>
                 </div>
                 <div class="row">
+       
                     @php($count = 0)
                     @php($added = array())
                     @if(is_countable($notifications) && count($notifications) > 0)

@@ -214,6 +214,9 @@ $(document).ready(function () {
             // property_type: {
             //     required: true
             // },
+            street_address: {
+                required: true
+            },
             floor: {
                 number: true
             },
@@ -381,6 +384,9 @@ $(document).ready(function () {
             municipal_number: {
                 number: true
             },
+            street_address: {
+              required: true  
+            },
             usage_number: {
                 number: true
             },
@@ -450,6 +456,9 @@ $(document).ready(function () {
                 required: true,
                 minlength: 2,
                 maxlength: 150
+            },
+            street_address: {
+                required: true
             },
             link_for_information: {
                 validUrl: true
@@ -672,6 +681,9 @@ $(document).ready(function () {
             from_clock: {
                 number: true
             },
+            street_address: {
+                required: true
+            },
             clockwise: {
                 number: true
             },
@@ -781,6 +793,9 @@ $(document).ready(function () {
             },
             gross_area_from: {
                 number: true,
+                required: true
+            },
+            street_address: {
                 required: true
             },
             gross_area_to: {
@@ -950,6 +965,9 @@ $(document).ready(function () {
                 required: true,
                 minlength: 2,
                 maxlength: 150
+            },
+            address: {
+              required: true
             },
             title: {
                 required: true,

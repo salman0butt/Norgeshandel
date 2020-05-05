@@ -31,6 +31,9 @@
     <input type="hidden" name="latitude" id="latitude" value="">
     <input type="hidden" name="longitude" id="longitude" value="">
     <input type="hidden" name="full_address" id="full_address" value="">
+      @if(Request::is('new/property/rent/ad/*/edit'))
+    <input type="hidden" name="notify" id="notify" value="true">
+    @endif
     <div class="pl-3 pr-3">
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
         <div class="form-group">

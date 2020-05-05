@@ -63,7 +63,7 @@ if($property !== null)
             <button type="submit" class="link float-right" style="cursor: pointer;"><span class="fa fa-trash fa-lg text-muted"></span></button>
         </form>
         <p class="product-location text-muted mb-0 mt-2 u-d1">
-            {{$property->street_address ? Str::limit($property->street_address,45).', ' : ''}}{{$property->zip_city ? $property->zip_city : ''}}
+            {{$property->street_address ? Str::limit($property->street_address,45).', ' : ''}}{{$property->zip_city ? Str::ucfirst(Str::lower($property->zip_city)) : ''}}
         </p>
         <p class="product-title u-t4">
             {{Str::limit($ad->getTitle(),100)}}
