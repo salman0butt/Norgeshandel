@@ -236,7 +236,7 @@ class PropertyForRentController extends Controller
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone','agent_avatar']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -313,7 +313,6 @@ class PropertyForRentController extends Controller
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {
                 $property_for_rent_data = common::updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
-                $agent_detail = common::ad_agents($request->all(),$response->ad);
             }
 
             $response->update($property_for_rent_data);

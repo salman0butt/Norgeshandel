@@ -49,6 +49,7 @@
     <script type="text/javascript">
 
         function record_store_ajax_request(event, this_obj) {
+
             if(event == 'click'){
                 if(! $('#property_for_rent_form').valid()) return false;
             }
@@ -133,7 +134,7 @@
         }
         $(document).ready(function () {
 
-            $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
+            $(document).on('keyup', 'input:not(input[type=date]),textarea', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
                 var ad_status = $('.ad_status').val();
@@ -170,5 +171,4 @@
     <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
     <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
     <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
-
 @endsection

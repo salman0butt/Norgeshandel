@@ -32,7 +32,8 @@
     <input type="hidden" name="longitude" id="longitude" value="">
     <input type="hidden" name="full_address" id="full_address" value="">
     <div class="pl-3 pr-3">
-    <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
+        <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
+
         <div class="form-group">
             <label class="u-t5">Overskrift</label>
             <div class="row">
@@ -56,8 +57,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="u-t5">Gateadresse
-            </label>
+            <label class="u-t5">Gateadresse</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="street_address" value="{{ $property_for_rent->street_address }}" class="dme-form-control">
@@ -270,7 +270,7 @@
             <label class="u-t5">Beskrivelse (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
+                    <textarea name="description" class="text-editor" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
                 </div>
             </div>
         </div>
@@ -321,19 +321,6 @@
                 </div>
             </div>
         </div>
-        @if(Auth::user()->hasRole('company'))
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-12 pr-md-0">
-                        <button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue add-ad-agent">+ Legg til en annen megler</button>
-                    </div>
-                </div>
-            </div>
-            @php $ad = $property_for_rent->ad; @endphp
-
-            @include('user-panel.partials.ad_agent_section')
-        @endif
-
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                 <div class="profile-icon">

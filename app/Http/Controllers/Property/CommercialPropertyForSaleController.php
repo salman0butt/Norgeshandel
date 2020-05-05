@@ -201,7 +201,7 @@ class CommercialPropertyForSaleController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone']);
+            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
             unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
             $commercial_property_for_sale['user_id'] = Auth::user()->id;
 

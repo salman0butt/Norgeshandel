@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
     <!--    incluedes   -->
-    <script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin"></script>
+    {{--<script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"--}}
+            {{--referrerpolicy="origin"></script>--}}
     <script src="{{asset('public/js/html2canvas.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
             integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
@@ -90,7 +90,6 @@
 @include('user-panel.partials.header')
 @endif
 @yield('page_content')
-@include('user-panel.partials.ad_agent_repeater_section')
 <div id="modal_select_category" class="modal fade" role="dialog">
     <div class="modal-dialog pt-5">
         <div class="modal-content smart-scroll" style="max-height: calc(100vh - 100px); overflow-y: scroll;">
@@ -423,9 +422,9 @@
     }
 </script>
 @yield('script')
+<script src="https://cdn.tiny.cloud/1/x0txntp9p38g4hksno5jsfsk6hkxeqyhqwonj7posbp6ystc/tinymce/5/tinymce.min.js"></script>
 
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
-{{--<script src="{{asset('public/js/app.js')}}"></script>--}}
 <script src="{{asset('public/mediexpert.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 

@@ -312,6 +312,25 @@ $(document).ready(function (e) {
         });
     });
 
+    /* Text editor Tinymc
+    if($('.text-editor').length > 0){
+        tinymce.init({
+            selector:'textarea.text-editor',
+            height: 300,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table paste imagetools wordcount"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tiny.cloud/css/codepen.min.css'
+            ]
+        });
+    }
+    */
+
     // $(document).on('change', '.url_http', function (e){
     $('.url_http').on('change', function(){
         if ($(this).val() == ''){
@@ -322,6 +341,36 @@ $(document).ready(function (e) {
         {
             s = 'http://' + s;
             $(this).val(s);
+        }
+    });
+
+    //ACtive and dective the record
+    //Change the status
+    $('.status').click(function () {
+        var id = ($(this).attr('id'));
+        id = id.replace(/\D/g,'');
+        if ($(this).is(":checked")) {
+            var status = 1;
+        }
+        else{
+            var status = 0;
+        }
+        var action = $(this).data('ajaxurl');
+        var model = $(this).data('class');
+        var column = $(this).data('column');
+        if(action){
+            $.ajax({
+                url: action,
+                type:'GET',
+                data: {'id':id,'status':status,'model_class':model,'column':column},
+                dataType:'json',
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (jqXhr, json, errorThrown) {
+                    alert('noe gikk galt');
+                },
+            });
         }
     });
 

@@ -24,7 +24,8 @@
                         <li class="breadcrumb-item active" aria-current="page">Endre profil</li>
                     </ol>
                 </nav>
-            </div>            <!---- end breadcrumb----->
+            </div>
+            <!---- end breadcrumb----->
 
             @include('common.partials.flash-messages')
             @if($user->roles->first()->name=="company")
@@ -46,11 +47,15 @@
 
                     <div class="company-profile">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-3">
                                 <button class="btn dme-btn-outlined-blue" data-toggle="collapse"
                                         data-target="#company_profile_block">
                                     {{$user->companies->count() > 0 ? ' Legg til ny bedriftsprofil' : 'Rediger bedriftsprofilen din'}}
                                 </button>
+                            </div>
+
+                            <div class="col-md-3 pl-0">
+                                <a href="{{url('my-business/company-agents')}}" class="btn dme-btn-outlined-blue">Bedriftsagenter</a>
                             </div>
                         </div>
                         <div class="row collapse" id="company_profile_block">
@@ -224,6 +229,26 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+
+                                    <div class="form-group company_colors d-none">
+                                        <div class="row">
+                                            <label for="background_color" class="col-md-2 u-t5">Profil bakgrunnsfarge</label>
+                                            <div class="col-sm-4 ">
+                                                <input type="color" id="background_color" name="background_color" value="#000000" style="width: 100%; height:45px;">
+                                                <span class="u-t5"></span>
+                                            </div>
+
+                                            <label for="text_color" class="col-md-2 u-t5">Profiltekstfarge</label>
+                                            <div class="col-sm-4 ">
+                                                <input type="color" id="text_color" name="text_color" value="#ffffff" style="width: 100%; height:45px;">
+                                                <span class="u-t5"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-12 text-center">
@@ -277,7 +302,7 @@
                                     <div class="col-md-1" style="font-size: 20px">
                                         <form class="float-right" action="{{route('company.destroy', compact('company'))}}"
                                               method="POST"
-                                              onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen?')">
+                                              onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen? Annonsene dine blir slettet, og du kan ikke gjenopprette dem.')">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}
                                             <button type="submit" class="link pl-3">
@@ -527,6 +552,25 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            @if($company->company_type == "Eiendom")
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <label for="background_color" class="col-md-2 u-t5">Profil bakgrunnsfarge</label>
+                                                        <div class="col-sm-4 ">
+                                                            <input type="color" id="background_color" name="background_color" value="{{$company->background_color}}" style="width: 100%; height:45px;">
+                                                            <span class="u-t5"></span>
+                                                        </div>
+
+                                                        <label for="text_color" class="col-md-2 u-t5">Profiltekstfarge</label>
+                                                        <div class="col-sm-4 ">
+                                                            <input type="color" id="text_color" name="text_color" value="{{$company->text_color}}" style="width: 100%; height:45px;">
+                                                            <span class="u-t5"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-sm-12 text-center">
@@ -756,6 +800,14 @@ meldingstjeneste og i dine annonser.</p>
             $('.datepicker').datepicker({
                 dateFormat: 'dd-mm-yy',
                 autoclose: true
+            });
+
+            $(document).on('change', '#company_type', function (e) {
+                $('.company_colors').addClass('d-none');
+                var val = $(this).val();
+                if(val === "Eiendom"){
+                    $('.company_colors').removeClass('d-none');
+                }
             });
 
             $(document).on('change', '.zip_code', function (e){

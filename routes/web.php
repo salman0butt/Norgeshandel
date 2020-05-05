@@ -289,6 +289,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::group(['prefix' => 'my-business'], function () {
             Route::get('savedsearches', 'SearchController@index');
             Route::resource('search', 'SearchController');
+            Route::resource('company-agents', 'AgentController');
 
             Route::get('/', function () {
                 return view('user-panel.my-business.my_business');
@@ -534,6 +535,26 @@ Route::group(['middleware' => 'authverified'], function () {
             }else{
                 return json_encode('success');
             }
+        });
+
+
+        Route::get('change-status', function (Request $request) {
+            if($request->id && is_numeric($request->status) && $request->model_class && $request->column){
+                $obj = $request->model_class::find($request->id);
+                if($obj){
+                    $obj2 = $request->model_class::where('id',$obj->id)->update([
+                        $request->column =>  $request->status
+                    ]);
+                    $data['success'] = 'success';
+                    echo json_encode($data);
+                    exit();
+                }
+            }
+            (header("HTTP/1.0 404 Not Found"));
+            $data['failure'] = 'failure';
+            echo json_encode($data);
+            exit();
+
         });
     });
 
