@@ -83,6 +83,7 @@
                                                 <td>{{$applied_jobs_cv_list_obj->education}}</td>
                                                 <td title="{{$applied_jobs_cv_list_obj->current_position}}">{{Str::limit($applied_jobs_cv_list_obj->current_position,25)}}</td>
                                                 <td>
+                                                    <a href="#" class="show_note" data-note="{{$applied_jobs_cv_list_obj->note}}" title="Forestilling søkertekst"><i class="far fa-sticky-note"></i></a>
                                                     <a href="javascript:void(0)" class="mr-1 shortlist-apply-job" data-company_id="{{$applied_jobs_cv_list_obj->job ? $applied_jobs_cv_list_obj->job->company_id : ''}}" title="Kortliste CV" data-apply_job_id = "{{$applied_jobs_cv_list_obj->id}}"><i class="far fa-heart"></i></a>
                                                     @if($applied_jobs_cv_list_obj->cv_type == 'external-cv' && $applied_jobs_cv_list_obj->media)
                                                         <a href="{{\App\Helpers\common::getMediaPath($applied_jobs_cv_list_obj->media)}}" title="Se CV" target="_blank"><i class="fas fa-eye"></i></a>
@@ -130,6 +131,7 @@
                                                 <td>{{$shortlisted_jobs_cv_list_obj->education}}</td>
                                                 <td title="{{$shortlisted_jobs_cv_list_obj->current_position}}">{{Str::limit($shortlisted_jobs_cv_list_obj->current_position,25)}}</td>
                                                 <td>
+                                                    <a href="#" class="show_note" data-note="{{$shortlisted_jobs_cv_list_obj->note}}" title="Forestilling søkertekst"><i class="far fa-sticky-note"></i></a>
                                                     <a href="javascript:void(0)" class="mr-1 remove-shortlist-apply-job" title="Fjern cv fra kortlisten" data-url="{{route('metas.destroy',$shortlisted_jobs_cv_list_obj->meta->id)}}"><i class="fas fa-heart"></i></a>
                                                     @if($shortlisted_jobs_cv_list_obj->cv_type == 'external-cv' && $shortlisted_jobs_cv_list_obj->media)
                                                         <a href="{{\App\Helpers\common::getMediaPath($shortlisted_jobs_cv_list_obj->media)}}" title="Se CV" target="_blank"><i class="fas fa-eye"></i></a>
@@ -152,6 +154,26 @@
 
         </div>
     </main>
+
+    <div class="modal fade" id="show_note" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 50px">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Søkertekst</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Søkertekst</h5>
+                    <p class="applied_job_note"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>
@@ -239,6 +261,18 @@
                         return false;
                     },
                 });
+            });
+
+            //Show note when an user applied cv on job and fill the data in input "Søkertekst"
+            $(document).on('click', '.show_note', function () {
+                $('#show_note .applied_job_note').html('');
+                var note = 'N/A';
+
+                if($(this).data('note')){
+                    note = $(this).data('note');
+                }
+                $('#show_note').modal();
+                $('#show_note .applied_job_note').html(note);
             });
         });
     </script>

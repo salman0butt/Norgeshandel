@@ -201,7 +201,7 @@ class FlatWishesRentedController extends Controller
     {
         DB::beginTransaction();
         try {
-            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone');
+            $flat_wishes_rented_data = $request->except('upload_dropzone_images_type','media_position','deleted_media','agent_avatar','agent_key');
             $regions = "";
             if (isset($flat_wishes_rented_data['region'])) {
                 foreach ($flat_wishes_rented_data['region'] as $key => $val) {
@@ -236,7 +236,7 @@ class FlatWishesRentedController extends Controller
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {
                 $flat_wishes_rented_data = common::updated_dropzone_images_type($flat_wishes_rented_data, $request->upload_dropzone_images_type, $response->ad->id);
-                $agent_detail = common::ad_agents($request->all(),$response->ad);
+
             }
 
             $response->update($flat_wishes_rented_data);

@@ -327,7 +327,7 @@ class PropertyForSaleController extends Controller
                 $request->merge(['facilities4' => null]);
             }
 
-            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone','notify']);
+            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','notify']);
 
             //Add More ViewingTimes
             if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {
@@ -416,7 +416,6 @@ class PropertyForSaleController extends Controller
                         }
                     }
 
-                    $agent_detail = common::ad_agents($request->all(),$temp_property_for_sale_obj->ad);
                 }
             }
             if (isset($property_for_sale_data['published-on']) && $property_for_sale_data['published-on'] == 'on') {

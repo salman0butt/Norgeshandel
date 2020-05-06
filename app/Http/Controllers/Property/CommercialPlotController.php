@@ -193,7 +193,7 @@ class CommercialPlotController extends Controller
             if (!$request->owned_plot_facilities) {
                 $request->merge(['owned_plot_facilities' => null]);
             }
-            $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone');
+            $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media');
             unset($commercial_plot['commercial_plot_pdf']);
             $commercial_plot['user_id'] = Auth::user()->id;
 
@@ -217,7 +217,7 @@ class CommercialPlotController extends Controller
                         $property_pdf = $property_pdf['file_names'][0];//$property_pdf->file_names[0];
                     }
                 }
-                $agent_detail = common::ad_agents($request->all(),$response->ad);
+
             }
 
             $response->update($commercial_plot);

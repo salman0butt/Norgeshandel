@@ -56,9 +56,13 @@ class common
     public static function table_search(&$query, $columns, $search_key, $table)
     {
         $query->where(function ($query) use ($columns, $search_key, $table){
-            $query->where($table.'.'.$columns[0], 'LIKE', '%' . $search_key . '%');
+            if(isset($columns[0])){
+                $query->where($table.'.'.$columns[0], 'LIKE', '%' . $search_key . '%');
+            }
             for($i=1; $i<count($columns); $i++){
-                $query->orWhere($table.'.'.$columns[$i], 'LIKE', '%' . $search_key . '%');
+                if(isset($columns[$i])){
+                    $query->orWhere($table.'.'.$columns[$i], 'LIKE', '%' . $search_key . '%');
+                }
             }
         });
     }
@@ -683,28 +687,15 @@ class common
         return '';
     }
 
-    public static function ad_agents($request,$ad){
-        if(count($request) && $ad->id){
-            $agent_detail = array();
-            if(isset($request['agent_name']) && count($request['agent_name'])){
-                if(count($request['agent_name'])){
-                    foreach ($request['agent_name'] as $key=>$agent_name){
-                        if($agent_name){
-                            $agent_detail[$key] = array(
-                                'name' => $agent_name,
-                                'position' => $request['agent_position'][$key],
-                                'mobile_no' => $request['agent_mobile_no'][$key],
-                                'telephone' => $request['agent_telephone'][$key],
-                            );
-                        }
-                    }
-                }
-                $agent_name = json_encode($agent_detail);
-                $agent = AdAgent::updateOrCreate(['ad_id' => $ad->id], ['agent_details' => $agent_name]);
-                return $agent;
-            }else{
-                $ad->agent()->delete();
+    public static function sync_ad_agents($request_company_id,$ad,$agent_id_arr){
+        if(Auth::user()->hasRole('company')){
+            $company_id = 0;
+            if(isset($request_company_id) && $request_company_id){
+                $company_id = $request_company_id;
             }
+            $ad->company_id = $company_id;
+            $ad->update();
+            $ad->agents()->sync($agent_id_arr);
         }
     }
 

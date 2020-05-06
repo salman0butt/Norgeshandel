@@ -16,6 +16,12 @@
     $pfr_facilities = \App\Taxonomy::where('slug', 'pfr_facilities')->first();
     $facilities = $pfr_facilities->terms;
 
+    $ad_obj = new \App\Models\Ad();
+    if($property_for_rent && $property_for_rent->ad){
+        $ad_obj = $property_for_rent->ad;
+    }
+
+
     //$property_type = explode(',', $flat_wishes_rented->property_type);
     //$region = explode(',', $flat_wishes_rented->region);
 
@@ -35,7 +41,11 @@
     <input type="hidden" name="notify" id="notify" value="true">
     @endif
     <div class="pl-3 pr-3">
-    <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
+        <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
+
         <div class="form-group">
             <label class="u-t5">Overskrift</label>
             <div class="row">
@@ -59,8 +69,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="u-t5">Gateadresse
-            </label>
+            <label class="u-t5">Gateadresse</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
                     <input type="text" name="street_address" value="{{ $property_for_rent->street_address }}" class="dme-form-control">
@@ -273,7 +282,7 @@
             <label class="u-t5">Beskrivelse (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
+                    <textarea name="description" class="text-editor" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
                 </div>
             </div>
         </div>
@@ -324,24 +333,6 @@
                 </div>
             </div>
         </div>
-        @if(Auth::user()->hasRole('company'))
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-12 pr-md-0">
-                        <button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue add-ad-agent">+ Legg til en annen megler</button>
-                    </div>
-                </div>
-            </div>
-            @php
-                $ad_agents = array();
-                if($property_for_rent && $property_for_rent->ad && $property_for_rent->ad->agent && $property_for_rent->ad->agent->agent_details){
-                    $ad_agents = json_decode($property_for_rent->ad->agent->agent_details);
-                }
-            @endphp
-
-            @include('user-panel.partials.ad_agent_section')
-        @endif
-
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                 <div class="profile-icon">

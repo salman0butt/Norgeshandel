@@ -8,9 +8,14 @@
     $tenure = \App\Taxonomy::where('slug', 'pfs_tenure')->first();
     $tenures = $tenure->terms;
 
-        $property_for_sale = new \App\PropertyForSale();
+    $property_for_sale = new \App\PropertyForSale();
     if(isset($property_for_sale1)){
         $property_for_sale = $property_for_sale1;
+    }
+
+    $ad_obj = new \App\Models\Ad();
+    if($property_for_sale && $property_for_sale->ad){
+        $ad_obj = $property_for_sale->ad;
     }
 
     $pfs_facility = \App\Taxonomy::where('slug', 'pfs_facilities')->first();
@@ -34,6 +39,10 @@
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_sale->zip_city) ? $property_for_sale->zip_city : '') }}">
 
     <div class="pl-3 pr-3">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
+
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
@@ -876,25 +885,6 @@ omkostninger.
                 </div>
             </div>
         </div>
-
-        @if(Auth::user()->hasRole('company'))
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-12 pr-md-0">
-                        <button type="button" id="add_more_viewing_times" class="dme-btn-outlined-blue add-ad-agent">+ Legg til en annen megler</button>
-                    </div>
-                </div>
-            </div>
-            @php
-                $ad_agents = array();
-                if($property_for_sale && $property_for_sale->ad && $property_for_sale->ad->agent && $property_for_sale->ad->agent->agent_details){
-                    $ad_agents = json_decode($property_for_sale->ad->agent->agent_details);
-                }
-            @endphp
-
-            @include('user-panel.partials.ad_agent_section')
-        @endif
-
 
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">

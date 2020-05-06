@@ -51,7 +51,6 @@
                         <th>By</th>
                         <th>Stillingstype</th>
                         <th>Sektor</th>
-                        {{--<th>Industri</th>--}}
                         <th>Jobbfunksjon</th>
                         <th>Dato</th>
                         <th>Handling</th>
@@ -62,7 +61,7 @@
                         @foreach($applied_jobs as $key=>$applied_job)
                             @php
                                 $job_obj = '';
-                                if($applied_job->job){
+                                if($applied_job->job && $applied_job->job->ad && $applied_job->job->ad->visibility && $applied_job->job->ad->status == "published"){
                                     $job_obj = $applied_job->job;
                                 }
                             @endphp
@@ -73,11 +72,14 @@
                                 <td>{{$job_obj && $job_obj->zip_city ? $job_obj->zip_city : ''}}</td>
                                 <td>{{$job_obj && $job_obj->commitment_type ? $job_obj->commitment_type : ''}}</td>
                                 <td>{{$job_obj && $job_obj->sector ? $job_obj->sector : ''}}</td>
-{{--                                <td>{{$job_obj && $job_obj->industry ? $job_obj->industry : ''}}</td>--}}
                                 <td>{{$job_obj && $job_obj->job_function ? $job_obj->job_function : ''}}</td>
                                 <td>{{$applied_job->created_at->format('d-m-Y')}}</td>
                                 <td>
+                                    @if($job_obj)
                                     <a href="{{route('jobs.show',$applied_job->job_id)}}" target="_blank"><i class="fas fa-eye"></i></a>
+                                    @else
+                                        <a href="javascript:void(0);" data-toggle="modal" data-target="#job_is_no_more"><i class="fas fa-eye"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -89,6 +91,26 @@
             </div>
         </div>
     </main>
+
+    <div class="modal fade" id="job_is_no_more" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 50px">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Jobb</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h5>Status</h5>
+                    <p>Beklager! Nå er denne jobben inaktiv / fjernet fra eieren.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>

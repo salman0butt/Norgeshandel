@@ -1,6 +1,8 @@
 @extends('layouts.landingSite')
 
 @section('style')
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap-fileinput.css')}}">
+
     <!-- Dropzone style files -->
     <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
@@ -92,6 +94,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+
                     if (event == 'change') {
                         notify("info","Annonsen din er lagret");
 
@@ -206,6 +209,7 @@
         });
     </script>
 
+    <script src="{{asset('public/js/bootstrap-fileinput.js')}}"></script>
     <!-- Dropzone script files -->
     <script src="{{asset('public/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('public/dropzone/jquery.min.js')}}"></script>
@@ -213,5 +217,4 @@
     <script src="{{asset('public/dropzone/form-dropzone.min.js')}}"></script>
     <script src="{{asset('public/dropzone/dropzone.min.js')}}"></script>
     <script src="{{asset('public/mediexpert-custom-dropzone.js')}}"></script>
-
 @endsection

@@ -39,19 +39,20 @@ class CvController extends Controller
             }
 
             $cvpersonal = $cv->personal;
-            if($cvpersonal==null){
+
+            if($cvpersonal == null){
                 $cvpersonal = new CvPersonal(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvpersonal->save();
             }
 
             $cvexperiences = $cv->experiences;
-            if($cvexperiences==null){
+            if($cvexperiences == null){
                 $cvexperience = new CvExperience(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvexperience->save();
             }
 
             $cvpreference = $cv->preference;
-            if($cvpreference==null){
+            if($cvpreference == null){
                 $cvpreference = new CvPreference(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cvpreference->save();
             }
@@ -61,7 +62,12 @@ class CvController extends Controller
                 $cveducation = new CvEducation(['user_id'=>Auth::user()->id, 'cv_id'=>$cv->id]);
                 $cveducation->save();
             }
-            return view('user-panel.my-business.cv.cv', compact('cv'));
+
+            if($cv->personal){
+                return view('user-panel.my-business.cv.cv', compact('cv'));
+            }else{
+                return redirect(url('my-business/cv'));
+            }
         }
     }
 

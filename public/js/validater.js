@@ -894,6 +894,29 @@ $(document).ready(function () {
         }
     });
 
+    // Company Agnet VALIDATION
+    $("#company_agent").validate({
+        lang: 'no',
+        rules: {
+            company_id: {
+                required: true,
+            },
+            name: {
+                required: true,
+            },
+            position: {
+                required: true,
+            },
+            mobile_no: {
+                required: true,
+                digits: true
+            },
+            telephone_no: {
+                digits: true
+            },
+        }
+    });
+
     // LOGIN PAGE VALIDATION
     $("#addPhoneFrm").validate({
         lang: 'no',

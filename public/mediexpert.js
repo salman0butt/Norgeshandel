@@ -57,17 +57,40 @@ function dme_nav_collapse(){
         }
     });
 }
+
+function get_checked_agent_count(form_id) {
+    var rTotal = 0;
+    var selectedagent = document.forms[form_id]["agent_id[]"];
+
+    for (var sel = 0; sel < selectedagent.length; sel++) {
+        if (selectedagent[sel].checked)
+            rTotal++;
+    }
+    if(rTotal > 3){
+        return false;
+    }
+    return true;
+}
+
 $(document).ready(function (e) {
+
+    var ad_agent_click = 0;
     $(document).on('click', '.add-ad-agent', function(e) {
         if($('.append-agent-section .remove').length < 3){
-
+            ++ad_agent_click;
             $('.append-agent').clone().appendTo('.append-agent-section');
 
             $('.append-agent-section .append-agent').addClass('single remove');
             $('.append-agent-section .append-agent').removeClass('d-none');
 
+            $('.append-agent input[name="agent_key[]"]').val(ad_agent_click);
+            $('.append-agent').attr('id','agent_section_'+ad_agent_click);
+
             $('.append-agent-section .append-agent').removeClass('append-agent');
             $('.append-agent > .single').attr("class", "remove");
+
+
+
         }else{
             alert('Du kan legge til maksimalt 3 agenter igjen en annonse.');
         }
@@ -304,6 +327,25 @@ $(document).ready(function (e) {
         });
     });
 
+    /* Text editor Tinymc
+    if($('.text-editor').length > 0){
+        tinymce.init({
+            selector:'textarea.text-editor',
+            height: 300,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table paste imagetools wordcount"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tiny.cloud/css/codepen.min.css'
+            ]
+        });
+    }
+    */
+
     // $(document).on('change', '.url_http', function (e){
     $('.url_http').on('change', function(){
         if ($(this).val() == ''){
@@ -314,6 +356,69 @@ $(document).ready(function (e) {
         {
             s = 'http://' + s;
             $(this).val(s);
+        }
+    });
+
+    //change company dropdown
+    $(document).on('change', '#ad_company_id', function(e){
+        var id = $(this).val();
+        var url = $(this).data('ajaxurl');
+        var ad_id = $(this).data('ad_id');
+        $(".property_ad_company_agents").children('div').remove();
+        if(id && url){
+            $.ajax({
+                url: url,
+                type:'GET',
+                data: {'id':id,'ad_id':ad_id},
+                dataType:'json',
+                success: function (data) {
+                    $(".property_ad_company_agents").append(data.html);
+                },
+                // error: function (jqXhr, json, errorThrown) {
+                //     alert('noe gikk galt');
+                // },
+            });
+        }
+    });
+
+    $(document).on('change', '.ad_agent_id', function(e){
+        // e.preventDefault();
+        var form_id = $(this).closest("form").attr('id');
+        var result = get_checked_agent_count(form_id);
+        if(result === false){
+            e.target.checked = false;
+            alert('Du kan legge ved maksimalt 3 agenter med en annonse.');
+        }
+    });
+
+
+    //ACtive and dective the record
+    //Change the status
+    $('.status').click(function () {
+        var id = ($(this).attr('id'));
+        id = id.replace(/\D/g,'');
+        if ($(this).is(":checked")) {
+            var status = 1;
+        }
+        else{
+            var status = 0;
+        }
+        var action = $(this).data('ajaxurl');
+        var model = $(this).data('class');
+        var column = $(this).data('column');
+        if(action){
+            $.ajax({
+                url: action,
+                type:'GET',
+                data: {'id':id,'status':status,'model_class':model,'column':column},
+                dataType:'json',
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (jqXhr, json, errorThrown) {
+                    alert('noe gikk galt');
+                },
+            });
         }
     });
 
