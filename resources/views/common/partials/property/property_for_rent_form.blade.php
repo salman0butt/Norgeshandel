@@ -16,6 +16,12 @@
     $pfr_facilities = \App\Taxonomy::where('slug', 'pfr_facilities')->first();
     $facilities = $pfr_facilities->terms;
 
+    $ad_obj = new \App\Models\Ad();
+    if($property_for_rent && $property_for_rent->ad){
+        $ad_obj = $property_for_rent->ad;
+    }
+
+
     //$property_type = explode(',', $flat_wishes_rented->property_type);
     //$region = explode(',', $flat_wishes_rented->region);
 
@@ -33,6 +39,9 @@
     <input type="hidden" name="full_address" id="full_address" value="">
     <div class="pl-3 pr-3">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
 
         <div class="form-group">
             <label class="u-t5">Overskrift</label>

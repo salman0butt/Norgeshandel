@@ -242,10 +242,8 @@ class FlatWishesRentedController extends Controller
             $response->update($flat_wishes_rented_data);
             DB::commit();
             $data['success'] = $response;
-//            $data['agents'] = $agent_detail;
             if($call_by){
                 $data['flag'] = 'success';
-//                $data['agents'] = $agent_detail;
                 return $data;
             }
             echo json_encode($data);

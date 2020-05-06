@@ -244,7 +244,6 @@ class CommercialPropertyForSaleController extends Controller
                             $property_pdf = $property_pdf['file_names'][0];//$property_pdf->file_names[0];
                         }
                     }
-                    $agent_detail = common::ad_agents($request->all(),$temp_commercial_property_for_sale_obj->ad);
                 }
             }
 

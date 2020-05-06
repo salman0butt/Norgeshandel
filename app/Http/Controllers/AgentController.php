@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\common;
+use App\Models\Ad;
 use App\Models\Agent;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 
 class AgentController extends Controller
 {
@@ -161,6 +163,28 @@ class AgentController extends Controller
         }else{
             session()->flash('danger', 'Bedrift ikke funnet.');
             return back();
+        }
+    }
+
+    //Get company agents while creating an property ad
+    public function get_company_agents(Request $request){
+        if($request->id){
+            $company = Company::find($request->id);
+            if($company && $company->user_id == Auth::id()){
+                $agents = Agent::where('company_id',$company->id)->where('status',1)->get();
+                $ad_agents_array = array();
+                if($request->ad_id){
+                    $ad = Ad::find($request->ad_id);
+                    if($ad && $ad->agents->count() > 0){
+                        if($ad->status == 'saved'){
+                            $ad->agents()->detach();
+                        }
+//                        $ad_agents_array = $ad->agents->pluck('id')->toArray();
+                    }
+                }
+                $view = view('user-panel.partials.company_agent_inner',compact('agents','ad_agents_array'))->render();
+                return response()->json(['html'=>$view]);
+            }
         }
     }
 }

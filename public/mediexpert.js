@@ -57,6 +57,21 @@ function dme_nav_collapse(){
         }
     });
 }
+
+function get_checked_agent_count(form_id) {
+    var rTotal = 0;
+    var selectedagent = document.forms[form_id]["agent_id[]"];
+
+    for (var sel = 0; sel < selectedagent.length; sel++) {
+        if (selectedagent[sel].checked)
+            rTotal++;
+    }
+    if(rTotal > 3){
+        return false;
+    }
+    return true;
+}
+
 $(document).ready(function (e) {
 
     var ad_agent_click = 0;
@@ -343,6 +358,39 @@ $(document).ready(function (e) {
             $(this).val(s);
         }
     });
+
+    //change company dropdown
+    $(document).on('change', '#ad_company_id', function(e){
+        var id = $(this).val();
+        var url = $(this).data('ajaxurl');
+        var ad_id = $(this).data('ad_id');
+        $(".property_ad_company_agents").children('div').remove();
+        if(id && url){
+            $.ajax({
+                url: url,
+                type:'GET',
+                data: {'id':id,'ad_id':ad_id},
+                dataType:'json',
+                success: function (data) {
+                    $(".property_ad_company_agents").append(data.html);
+                },
+                // error: function (jqXhr, json, errorThrown) {
+                //     alert('noe gikk galt');
+                // },
+            });
+        }
+    });
+
+    $(document).on('change', '.ad_agent_id', function(e){
+        // e.preventDefault();
+        var form_id = $(this).closest("form").attr('id');
+        var result = get_checked_agent_count(form_id);
+        if(result === false){
+            e.target.checked = false;
+            alert('Du kan legge ved maksimalt 3 agenter med en annonse.');
+        }
+    });
+
 
     //ACtive and dective the record
     //Change the status

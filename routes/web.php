@@ -242,6 +242,9 @@ Route::group(['middleware' => 'authverified'], function () {
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
 
+        //Apply Job
+        Route::get('get-company-agents', 'AgentController@get_company_agents')->name('get-company-agents');
+
         Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
         //Apply Job
         Route::get('recruitment/hired/frontend/applynow/{id}', 'AppliedJobController@edit')->name('apply-job');

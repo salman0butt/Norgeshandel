@@ -49,7 +49,6 @@
     <script type="text/javascript">
 
         function record_store_ajax_request(event, this_obj) {
-
             if(event == 'click'){
                 if(! $('#property_for_rent_form').valid()) return false;
             }
@@ -95,6 +94,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data) {
+
                     if (event == 'change') {
                         notify("info","Annonsen din er lagret");
 
@@ -134,7 +134,7 @@
         }
         $(document).ready(function () {
 
-            $(document).on('keyup', 'input:not(input[type=date]),textarea', function(e) {
+            $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
                 var ad_status = $('.ad_status').val();

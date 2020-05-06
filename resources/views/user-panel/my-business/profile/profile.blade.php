@@ -470,6 +470,7 @@
                                                                             $file_name_unique =$company->company_logo->first()->name_unique;
                                                                         }
                                                                     @endphp
+
                                                                     <a href="javascript:;" class="red fileinput-exists dme-btn-outlined-blue btn-sm dz-remove ml-2" id="{{$file_name_unique}}" data-dismiss="fileinput">Fjern</a>
                                                                     <span class="btn default btn-file mb-2">
                                                                         <span class="fileinput-new dme-btn-outlined-blue btn-sm mt-5 mb-5">Velg bilde</span>

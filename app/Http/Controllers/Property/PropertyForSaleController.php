@@ -416,7 +416,6 @@ class PropertyForSaleController extends Controller
                         }
                     }
 
-                    $agent_detail = common::ad_agents($request->all(),$temp_property_for_sale_obj->ad);
                 }
             }
             if (isset($property_for_sale_data['published-on']) && $property_for_sale_data['published-on'] == 'on') {

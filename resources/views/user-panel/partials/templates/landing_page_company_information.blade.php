@@ -1,51 +1,74 @@
+@php
+    $text_color = '#ffffff';
+    if($property_data->ad && $property_data->ad->company && $property_data->ad->company->text_color){
+        $text_color = $property_data->ad->company->text_color;
+    }
+@endphp
 <style>
     .extended-profile{
-        color: #000000;
+        color: {{$text_color}};
         padding: 20px;
     }
     .company-information .company-logo{
-        width: 80%;
+        width: 60%;
     }
     .company-information .user-profile-picture{
         height: 85px;
-        border: 1px solid rgba(0, 0, 0, 0.5);
+        border: 1px solid {{$text_color}};
         max-width: 100%;
     }
     .company-information .expandable-area li{
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid {{$text_color}};
+        /*border-bottom: 1px solid black;*/
     }
     .company-information .expandable-area li a{
-        color: black;
+        color: {{$text_color}};
         font-size: 14px;
     }
 </style>
 
 <div class="mb-4 company-information">
-    <div class="extended-profile" style="background-color: #d3edda;">
+    <div class="extended-profile" style="background-color: {{$property_data->ad->company && $property_data->ad->company->background_color ? $property_data->ad->company->background_color : '#000000'}}">
+        @if(!$property_published_on && $property_data->ad->company_id && $property_data->ad->company && $property_data->ad->company->company_logo->first())
         <div>
             <h2 class="text-center">
-                <img src="https://images.finncdn.no/mmo/logo/object/1406570743/iad_8464198797665854225krogsveen_profil.png" class="centered-element company-logo" alt="Krogsveen avd. Torshov">
+                <img src="{{asset(\App\Helpers\common::getMediaPath($property_data->ad->company->company_logo->first()))}}" class="centered-element company-logo" alt="Krogsveen avd. Torshov">
             </h2>
         </div>
+        @endif
 
         <div class="expandable-area">
             <div>
                 <div class="text-center">
-                    @if(!$property_published_on)
-                        <div>
-                            <img class="user-profile-picture" src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="">
-                        </div>
-                    @endif
+                    {{--@if(!$property_published_on && $property_data->user->media)--}}
+                        {{--<div>--}}
+                            {{--<img class="user-profile-picture" src="@if($property_data->user->media!=null){{asset(\App\Helpers\common::getMediaPath($property_data->user->media))}} @endif" alt="">--}}
+                        {{--</div>--}}
+                    {{--@endif--}}
 
-                    <h5 class="mt-2">
+                    <h5 class="mt-2 mb-3">
                         @if(!$property_published_on)
-                            {{$property_data->user && $property_data->user->username ? $property_data->user->username : 'NH-Bruker'}}
+                            {{$property_data->ad && $property_data->ad->company ? $property_data->ad->company->emp_name : 'NH-Bruker'}}
                         @else
                             NH-Bruker
                         @endif
                     </h5>
 
-                    <div>Eiendomsmeglerfullmektig</div>
+                    @if($property_data->ad && $property_data->ad->agents->count() > 0)
+                        @foreach($property_data->ad->agents as $ad_agent)
+                            <div>
+                                <img class="user-profile-picture" src="{{$ad_agent->avatar ? asset(\App\Helpers\common::getMediaPath($ad_agent->avatar)) : asset('/public/images/male-avatar.jpg')}}" alt="">
+                            </div>
+                            <h6 class="mt-2">{{$ad_agent->name}}</h6>
+                            <p class="mb-0">{{$ad_agent->position}}</p>
+                            <ul class="list-unstyled">
+                                <li class="py-2"><a  href="tel:{{$ad_agent->mobile_no}}">Mobil  {{$ad_agent->mobile_no}}</a></li>
+                                @if($ad_agent->telephone_no)
+                                    <li class="py-2"><a  href="tel:{{$ad_agent->telephone_no}}">Telefon  {{$ad_agent->telephone_no}}</a></li>
+                                @endif
+                            </ul>
+                        @endforeach
+                    @endif
 
                     <ul class="list-unstyled">
 
