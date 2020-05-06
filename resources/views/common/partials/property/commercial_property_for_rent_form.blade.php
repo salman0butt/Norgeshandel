@@ -7,6 +7,12 @@
     if(isset($commercial_for_rent)){
         $commercial_property_for_rent = $commercial_for_rent;
     }
+
+    $ad_obj = new \App\Models\Ad();
+    if($commercial_property_for_rent && $commercial_property_for_rent->ad){
+        $ad_obj = $commercial_property_for_rent->ad;
+    }
+
     $country = \App\Taxonomy::where('slug', 'country')->first();
     $countries = $country->terms;
 
@@ -28,6 +34,9 @@
         <input type="hidden" name="latitude" id="latitude" value="">
         <input type="hidden" name="longitude" id="longitude" value="">
         <input type="hidden" name="full_address" id="full_address" value="">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
         <!-- checkbox -->
         <div class="form-group">
             <h3 class="u-t5">Type lokale</h3>

@@ -402,7 +402,6 @@ class PropertyForSaleController extends Controller
                     if($request->file('property_pdf')){
                         $property_pdf = common::update_media($request->file('property_pdf'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'pdf');
                         if($property_pdf){
-//                            $property_pdf = json_decode($property_pdf);
                             $property_pdf = $property_pdf['file_names'][0];//$property_pdf->file_names[0];
                         }
                     }
@@ -411,10 +410,12 @@ class PropertyForSaleController extends Controller
                     if($request->file('property_quote')){
                         $property_quote = common::update_media($request->file('property_quote'), $temp_property_for_sale_obj->ad->id, 'App\Models\Ad', 'sales_information');
                         if($property_quote){
-//                            $property_quote = json_decode($property_quote);
                             $property_quote = $property_quote['file_names'][0];//$property_quote->file_names[0];
                         }
                     }
+
+                    common::sync_ad_agents($request->company_id,$temp_property_for_sale_obj->ad,$request->agent_id);
+
 
                 }
             }

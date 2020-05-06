@@ -7,6 +7,11 @@
         $flat_wishes_rented = $flat_wishes_rented1;
     }
 
+    $ad_obj = new \App\Models\Ad();
+    if($flat_wishes_rented && $flat_wishes_rented->ad){
+        $ad_obj = $flat_wishes_rented->ad;
+    }
+
     $country = \App\Taxonomy::where('slug', 'country')->first();
     $countries = $country->terms;
 
@@ -26,6 +31,10 @@
     <input type="hidden" name="longitude" id="longitude" value="">
     <input type="hidden" name="full_address" id="full_address" value="">
     <div class="pl-3">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
+
         <div class="form-group">
             <h3 class="u-t5">Ønsket leieområde</h3>
             <div class="row property_region_section">

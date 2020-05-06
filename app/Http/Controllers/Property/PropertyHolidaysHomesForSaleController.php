@@ -250,7 +250,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
             if (!$request->owned_site) {
                 $request->merge(['owned_site' => null]);
             }
-            $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media']);
+            $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id']);
 
             //Add More ViewingTimes
             if (isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "") {
@@ -340,8 +340,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
                     }
                 }
 
-
-
+                common::sync_ad_agents($request->company_id,$response->ad,$request->agent_id);
             }
             if (isset($property_home_for_sale_data['published_on']) && $property_home_for_sale_data['published_on'] == 'on') {
                 $property_home_for_sale_data['published_on'] = 1;

@@ -247,7 +247,7 @@ class BusinessForSaleController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
+            $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id']);
 
             unset($business_for_sale['business_for_sale_pdf']);
             $business_for_sale['user_id'] = Auth::user()->id;
@@ -272,6 +272,7 @@ class BusinessForSaleController extends Controller
                             $property_pdf = $property_pdf['file_names'][0];//$property_pdf->file_names[0];
                         }
                     }
+                    common::sync_ad_agents($request->company_id,$response->ad,$request->agent_id);
 
                 }
                 $response->update($business_for_sale);

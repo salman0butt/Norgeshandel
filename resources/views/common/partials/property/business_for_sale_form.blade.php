@@ -7,6 +7,12 @@
        if(isset($business_for_sale)){
            $business_for_sale_obj = $business_for_sale;
        }
+
+       $ad_obj = new \App\Models\Ad();
+        if($business_for_sale_obj && $business_for_sale_obj->ad){
+            $ad_obj = $business_for_sale_obj->ad;
+        }
+
        $country = \App\Taxonomy::where('slug', 'country')->first();
        $countries = $country->terms;
       // $property_type = explode(',', $commercial_property_for_rent->property_type);
@@ -25,6 +31,10 @@
             <input type="hidden" name="longitude" id="longitude" value="">
             <input type="hidden" name="full_address" id="full_address" value="">
             <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($business_for_sale_obj->zip_city) ? $business_for_sale_obj->zip_city : '') }}">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
+
         <!--                            selection-->
         <div class="form-group">
             <h3 class="u-t5">Bransje</h3>
