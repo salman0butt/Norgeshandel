@@ -8,6 +8,11 @@
         $commercial_plot = $commercial_plots;
     }
 
+    $ad_obj = new \App\Models\Ad();
+    if($commercial_plot && $commercial_plot->ad){
+        $ad_obj = $commercial_plot->ad;
+    }
+
     $country = \App\Taxonomy::where('slug', 'country')->first();
     $countries = $country->terms;
 
@@ -28,6 +33,10 @@
     <input type="hidden" name="longitude" id="longitude" value="">
     <input type="hidden" name="full_address" id="full_address" value="">
     <div class="pl-3">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
+
         <!--                            radio -->
         <div class="form-group">
             <h3 class="u-t5">Annonsetype</h3>

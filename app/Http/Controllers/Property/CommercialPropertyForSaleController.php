@@ -201,7 +201,7 @@ class CommercialPropertyForSaleController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
+            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id']);
             unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
             $commercial_property_for_sale['user_id'] = Auth::user()->id;
 
@@ -244,6 +244,7 @@ class CommercialPropertyForSaleController extends Controller
                             $property_pdf = $property_pdf['file_names'][0];//$property_pdf->file_names[0];
                         }
                     }
+                    common::sync_ad_agents($request->company_id,$temp_commercial_property_for_sale_obj->ad,$request->agent_id);
                 }
             }
 

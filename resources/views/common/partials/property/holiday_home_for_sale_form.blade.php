@@ -6,6 +6,12 @@
         if(isset($holiday_home_for_sale1)){
         $holiday_home_for_sale = $holiday_home_for_sale1;
         }
+
+        $ad_obj = new \App\Models\Ad();
+        if($holiday_home_for_sale && $holiday_home_for_sale->ad){
+            $ad_obj = $holiday_home_for_sale->ad;
+        }
+
         $country = \App\Taxonomy::where('slug', 'country')->first();
         $countries = $country->terms;
 
@@ -30,6 +36,10 @@
         <input type="hidden" name="longitude" id="longitude" value="">
         <input type="hidden" name="full_address" id="full_address" value="">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($holiday_home_for_sale->zip_city) ? $holiday_home_for_sale->zip_city : '') }}">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
+
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
