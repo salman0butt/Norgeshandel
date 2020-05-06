@@ -302,7 +302,7 @@
                                     <div class="col-md-1" style="font-size: 20px">
                                         <form class="float-right" action="{{route('company.destroy', compact('company'))}}"
                                               method="POST"
-                                              onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen? Annonsene dine blir slettet, og du kan ikke gjenopprette dem.')">
+                                              onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen? Annonsene og agentene dine blir slettet, og du kan ikke gjenopprette dem.')">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}
                                             <button type="submit" class="link pl-3">
