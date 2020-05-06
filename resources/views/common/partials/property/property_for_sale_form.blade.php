@@ -26,6 +26,9 @@
     <input type="hidden" name="latitude" id="latitude" value="">
     <input type="hidden" name="longitude" id="longitude" value="">
     <input type="hidden" name="full_address" id="full_address" value="">
+    @if(Request::is('new/property/sale/ad/*/edit'))
+    <input type="hidden" name="notify" id="notify" value="true">
+    @endif
 
     <input type="hidden" id="old_zip" value="{{ (isset($property_for_sale->zip_code) ? $property_for_sale->zip_code : '') }}">
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_sale->zip_city) ? $property_for_sale->zip_city : '') }}">

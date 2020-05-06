@@ -8,6 +8,8 @@ use App\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use function GuzzleHttp\Psr7\str;
+use Illuminate\Database\Eloquent\Builder;
+
 
 
 class NotificationController extends Controller
@@ -35,13 +37,18 @@ class NotificationController extends Controller
                 $count++;
             }
         }
-        $ad_sold = Notification::where('type', '=', 'ad_sold')->whereNull('read_at')->count();
+        $ad_sold = Notification::where(function ($query) {
+        $query->where('type', '=','ad_sold')
+        ->orWhere('type', '=', 'property_for_rent')
+        ->orWhere('type', '=', 'property_for_sale');
+        })->whereNull('read_at')->count();
         $total = $ad_sold+$count;
         return $total;
     }
 
     public function create($notifiable_id, $property_type, $text)
     {
+      
         $notification_data = array();
         $notification_data['type'] = $property_type;
         $notification_data['user_id'] = Auth::user()->id;

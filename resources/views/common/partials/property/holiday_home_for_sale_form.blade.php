@@ -822,7 +822,7 @@
             <h3 class="u-t5">Bilder (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <button id="add_more_viewing_times_sales" ype="button" class="dme-btn-outlined-blue">+ Visningstidspunt
+                    <button id="add_more_viewing_times_sales" type="button" class="dme-btn-outlined-blue">+ Visningstidspunt
                     </button>
                 </div>
             </div>

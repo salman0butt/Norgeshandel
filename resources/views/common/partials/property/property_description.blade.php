@@ -254,7 +254,9 @@
                                 </div>
                             @endif
                         </div>
-                        <div id="map" style="height: 306px; width: 100%;"></div>
+                         <div style="width: 306px; height: 306px;">
+                         <div id="map" style="height: 100%; width: 100%;"></div>
+                        </div>
                     </div>
                 @else
                     <div class="col-md-4">
@@ -287,7 +289,9 @@
                                 visning.
                             </div>
                         </div>
-
+                        <div style="width: 306px; height: 306px;">
+                         <div id="map" style="height: 100%; width: 100%;"></div>
+                        </div>
                     </div>
                 @endif
             </div>
