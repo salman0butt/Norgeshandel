@@ -319,7 +319,9 @@ class PropertyForRentController extends Controller
             $response->update($property_for_rent_data);
 
             if ($request->notify) {
-                $ad = Ad::find($id);
+                $ad_id = PropertyForRent::where('id', '=', $id)->first();
+              
+                $ad = Ad::find($ad_id->ad_id);
                 common::property_notification($ad, $this->pusher, Auth::user()->id,'property_for_rent');
             }
              
