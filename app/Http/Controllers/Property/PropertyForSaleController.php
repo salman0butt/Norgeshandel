@@ -327,11 +327,7 @@ class PropertyForSaleController extends Controller
                 $request->merge(['facilities4' => null]);
             }
 
-<<<<<<< HEAD
-            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media']);
-=======
-            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone','notify']);
->>>>>>> 5149872ae0da8304258275eb08c4567e484b350c
+            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','notify']);
 
             //Add More ViewingTimes
             if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {

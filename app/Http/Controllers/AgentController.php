@@ -179,7 +179,6 @@ class AgentController extends Controller
                         if($ad->status == 'saved'){
                             $ad->agents()->detach();
                         }
-//                        $ad_agents_array = $ad->agents->pluck('id')->toArray();
                     }
                 }
                 $view = view('user-panel.partials.company_agent_inner',compact('agents','ad_agents_array'))->render();

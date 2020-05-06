@@ -8,9 +8,14 @@
     $tenure = \App\Taxonomy::where('slug', 'pfs_tenure')->first();
     $tenures = $tenure->terms;
 
-        $property_for_sale = new \App\PropertyForSale();
+    $property_for_sale = new \App\PropertyForSale();
     if(isset($property_for_sale1)){
         $property_for_sale = $property_for_sale1;
+    }
+
+    $ad_obj = new \App\Models\Ad();
+    if($property_for_sale && $property_for_sale->ad){
+        $ad_obj = $property_for_sale->ad;
     }
 
     $pfs_facility = \App\Taxonomy::where('slug', 'pfs_facilities')->first();
@@ -34,6 +39,10 @@
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_sale->zip_city) ? $property_for_sale->zip_city : '') }}">
 
     <div class="pl-3 pr-3">
+
+        <!-- Company Section -->
+        @include('user-panel.partials.ad_company_section')
+
         <div class="form-group">
             <h3 class="u-t5">Annonseoverskrift</h3>
             <div class="row">
