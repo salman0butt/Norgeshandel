@@ -319,7 +319,7 @@ class PropertyForRentController extends Controller
 
             if ($request->notify) {
                 $ad = Ad::find($id);
-                common::property_notification($ad, $this->pusher, Auth::user()->id);
+                common::property_notification($ad, $this->pusher, Auth::user()->id,'property_for_rent');
             }
              
             DB::commit();

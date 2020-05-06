@@ -39,7 +39,8 @@ class NotificationController extends Controller
         }
         $ad_sold = Notification::where(function ($query) {
         $query->where('type', '=','ad_sold')
-        ->orWhere('type', '=', 'property_for_rent');
+        ->orWhere('type', '=', 'property_for_rent')
+        ->orWhere('type', '=', 'property_for_sale');
         })->whereNull('read_at')->count();
         $total = $ad_sold+$count;
         return $total;
