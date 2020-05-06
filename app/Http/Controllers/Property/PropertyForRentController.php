@@ -229,14 +229,13 @@ class PropertyForRentController extends Controller
 
     public function UpdatePropertyForRentAdd(Request $request, $id,$call_by='')
     {
-
         DB::beginTransaction();
         try {
             if (!$request->facilities2) {
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_name','agent_position','agent_mobile_no','agent_telephone','notify']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -315,12 +314,19 @@ class PropertyForRentController extends Controller
                 $property_for_rent_data = common::updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
                 $agent_detail = common::ad_agents($request->all(),$response->ad);
             }
-
+   
             $response->update($property_for_rent_data);
+
+            if ($request->notify) {
+                $ad = Ad::find($id);
+                common::property_notification($ad, $this->pusher, Auth::user()->id,'property_for_rent');
+            }
+             
             DB::commit();
             if($call_by){
                 return 'success';
             }
+        
             $data['success'] = $response;
             echo json_encode($data);
             exit();

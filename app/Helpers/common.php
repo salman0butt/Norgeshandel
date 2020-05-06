@@ -602,6 +602,16 @@ class common
         }
     }
 
+    // update notification for property 
+       public static function property_notification(Ad $ad, Pusher $pusher,$user_id, $property_type){
+
+        $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Eiendom oppdatert']);
+        $notif->save();
+        $data = array('detail' => 'Eiendom oppdatert', 'to_user_id' => $user_id);
+        $pusher->trigger('notification', 'notification-event', $data);
+    
+    }
+
     //find previous ad
     public static function previous_ad($obj){
         $prev = '';
@@ -618,7 +628,7 @@ class common
         return $prev;
     }
 
-    //find previous ad
+    //find next ad
     public static function next_ad($obj){
         $next = '';
         if($obj && $obj->ad){
