@@ -170,12 +170,25 @@ class CompanyController extends Controller
             }
         }
 
-        if($company->company_logo->count()){
-            common::delete_media($company->id, 'App\Models\Company', 'company_logo');
+        if($company->agents->count()){
+            foreach ($company->agents as $company_agent){
+                $company_agent->delete();
+            }
         }
-        if($company->company_gallery->count()){
-            common::delete_media($company->id, 'App\Models\Company', 'company_gallery');
+
+        if($company->ads->count()){
+            foreach ($company->ads as $company_ad){
+                $company_ad->property()->delete();
+                $company_ad->delete();
+            }
         }
+
+//        if($company->company_logo->count()){
+//            common::delete_media($company->id, 'App\Models\Company', 'company_logo');
+//        }
+//        if($company->company_gallery->count()){
+//            common::delete_media($company->id, 'App\Models\Company', 'company_gallery');
+//        }
 
         $company->delete();
         Session::flash('success', 'Selskapet ble slettet!');

@@ -6,9 +6,12 @@ use App\Admin\Jobs\Job;
 use App\Media;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Company extends Model
 {
+    use SoftDeletes;
     protected $guarded = [];
 
     public function user(){
@@ -33,5 +36,9 @@ class Company extends Model
 
     public function agents(){
         return $this->hasMany(Agent::class);
+    }
+
+    public function ads(){
+        return $this->hasMany(Ad::class);
     }
 }
