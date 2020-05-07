@@ -38,7 +38,7 @@
                 <div class="breade-crumb col-4">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{url('my-business/company-agents/create')}}">Annonseagent</a></li> <!-- ('cv.breadcrumb.main') -->
+                            <li class="breadcrumb-item"><a href="{{url('my-business/company-agents/create')}}">Legg til eiendomsmegler</a></li> <!-- ('cv.breadcrumb.main') -->
                         </ol>
                     </nav>
                 </div>

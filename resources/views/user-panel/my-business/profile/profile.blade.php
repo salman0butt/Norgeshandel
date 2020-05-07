@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="col-md-3 pl-0">
-                                <a href="{{url('my-business/company-agents')}}" class="btn dme-btn-outlined-blue">Bedriftsagenter</a>
+                                <a href="{{url('my-business/company-agents')}}" class="btn dme-btn-outlined-blue">Eiendomsmeglere</a>
                             </div>
                         </div>
                         <div class="row collapse" id="company_profile_block">

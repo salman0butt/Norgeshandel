@@ -121,14 +121,15 @@
                                         soverom
                                     </p>
                                 </div>
-                                {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
-
+                                @if($property_for_rent->ad->company_id && $property_for_rent->ad->company && $property_for_rent->ad->company->company_logo->first())
+                                    <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($property_for_rent->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                @endif
                             </div>
                           </a>
-                            <div>
-                                @php $ad = $property_for_rent->ad;  @endphp
-                                @include('user-panel.partials.fav-heart-button', compact('ad'))
-                            </div>
+                        <div>
+                            @php $ad = $property_for_rent->ad;  @endphp
+                            @include('user-panel.partials.fav-heart-button', compact('ad'))
+                        </div>
                     </div>
                 @endforeach
 
