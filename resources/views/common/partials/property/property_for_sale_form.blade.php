@@ -78,7 +78,7 @@
             <h3 class="u-t5">Adkomst <span class="text-muted">(valgfritt)</span></h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                <textarea type="text" name="access" class="dme-form-control">{{ $property_for_sale->access }}</textarea><br>
+                <textarea type="text" name="access" class="dme-form-control {{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}">{{ $property_for_sale->access }}</textarea><br>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
             <h3 class="u-t5">Beliggenhet <span class="text-muted">(valgfritt)</span></h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea type="text" name="location" class="dme-form-control">{{ $property_for_sale->location }}</textarea><br>
+                    <textarea type="text" name="location" class="dme-form-control {{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}">{{ $property_for_sale->location }}</textarea><br>
 
                     <span class="error-span location"></span>
                 </div>
@@ -284,7 +284,7 @@
             <h3 class="u-t5">Arealbeskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="area_description" type="text" class="dme-form-control">{{ $property_for_sale->area_description }}</textarea><br>
+                    <textarea name="area_description" type="text" class="dme-form-control {{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}">{{ $property_for_sale->area_description }}</textarea><br>
                     <span class="u-t5">Størrelsen på rom i eiendommen</span>
                 </div>
             </div>
@@ -508,7 +508,7 @@
             <h3 class="u-t5">Beskaffenhet (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="character" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->character }}</textarea>
+                    <textarea name="character" id="beskrivelse" cols="30" rows="10" class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}">{{ $property_for_sale->character }}</textarea>
                     <span class="u-t5">Info om adkomst, regulering, parkering og hage mm.</span>
                     <span class="error-span character"></span>
                 </div>
@@ -689,7 +689,7 @@ omkostninger.
             <h3 class="u-t5">Mer info om felleskostander (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="joint_debt_costs" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->joint_debt_costs }}</textarea>
+                    <textarea name="joint_debt_costs" id="beskrivelse" cols="30" rows="10" class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}">{{ $property_for_sale->joint_debt_costs }}</textarea>
                     <span class="error-span joint_debt_costs"></span>
                 </div>
             </div>
@@ -728,7 +728,7 @@ omkostninger.
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description2" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->description2 }}</textarea>
+                    <textarea name="description2" id="beskrivelse" cols="30" rows="10" class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}">{{ $property_for_sale->description2 }}</textarea>
 
                 </div>
             </div>
@@ -737,7 +737,7 @@ omkostninger.
             <h3 class="u-t5">Andre opplysninger (valgfritt)</h3>
             <div class="row">
             <div class="col-sm-12 pr-md-0">
-                <textarea name="essential_information" id="beskrivelse" cols="30" rows="10">{{ $property_for_sale->essential_information }}</textarea>
+                <textarea name="essential_information" id="beskrivelse" cols="30" rows="10" class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}">{{ $property_for_sale->essential_information }}</textarea>
                     <span class="u-t5">Informer om betydelig feil og mangler, referer evt. også til takst.</span>
                     <span class="error-span essential_information"></span>
             </div>

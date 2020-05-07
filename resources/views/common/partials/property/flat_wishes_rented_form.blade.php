@@ -267,7 +267,7 @@
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="beskrivelse" cols="30" rows="10">{{ $flat_wishes_rented->description }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="description" id="beskrivelse" cols="30" rows="10">{{ $flat_wishes_rented->description }}</textarea>
                 </div>
             </div>
         </div>

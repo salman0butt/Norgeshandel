@@ -284,7 +284,7 @@
             <label class="u-t5">Beskrivelse (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" class="text-editor" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
+                    <textarea name="description" class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
                 </div>
             </div>
         </div>

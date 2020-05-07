@@ -233,8 +233,6 @@ class PropertyForRentController extends Controller
 
     public function UpdatePropertyForRentAdd(Request $request, $id,$call_by='')
     {
-
-
         DB::beginTransaction();
         try {
             if (!$request->facilities2) {

@@ -43,6 +43,9 @@
 <script type="text/javascript">
 
     function record_store_ajax_request(event, this_obj) {
+
+        if($('.text-editor').length > 0) tinyMCE.triggerSave();
+
         if(event == 'click'){
             if(! $('#property_holiday_home_for_sale_form').valid()) return false;
         }

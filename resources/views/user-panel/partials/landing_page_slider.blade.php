@@ -17,16 +17,18 @@
                     $obj = $property_data;
                 }
                 $unique_name  =  $val->name_unique;
-                $path  =    \App\Helpers\common::getMediaPath($obj);
-                $file_path = 'public/uploads/' . date('Y', strtotime($obj->updated_at)) . '/' . date('m', strtotime($obj->updated_at)) . '/';
-                $full_path  = $path."". $unique_name;
+                $path  =    \App\Helpers\common::getMediaPath($val);
+                //dd($path);
+                $file_path = 'public/uploads/' . date('Y', strtotime($val->updated_at)) . '/' . date('m', strtotime($val->updated_at)) . '/';
+                //$full_path  = $path."". $unique_name;
+                //dd($file_path);
                 ?>
                 <div class="carousel-item <?php echo($i == 0 ? "active" : ""); ?>" style="text-align: center; width:100%;">
                     @if(!file_exists($file_path.$unique_name))
                         <img class="d-block" style="max-width: 100%;max-height: 800px;margin: auto;" src="{{ asset('/public/images/1280x720.png') }}" alt="First slide">
                     @else
-                       <a data-fslightbox="gallery1" href="{{$full_path}}" style="display: block;width:100%;">
-                           <img class="d-block" src="{{$full_path}}" alt="First slide" style="max-width: 100%;max-height: 800px!important;margin: auto">
+                       <a data-fslightbox="gallery1" href="{{$path}}" style="display: block;width:100%;">
+                           <img class="d-block" src="{{$path}}" alt="First slide" style="max-width: 100%;max-height: 800px!important;margin: auto">
                        </a>
                     @endif
                     <div class="single-realestate-caption text-center carousel_image_slide_text" style="width:50%;margin:auto;margin-top: -20px;">

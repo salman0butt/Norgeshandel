@@ -380,42 +380,42 @@
                     @if($property_data->description)
                         <div class="col-md-12">
                             <span class="font-weight-bold">Beskrivelse</span>
-                            <p style="white-space:pre-line">{{ $property_data->description }}</p>
+                            <p style="white-space:pre-line">@php echo $property_data->description; @endphp</p>
                         </div>
                     @endif
 
                     @if($property_data->area_description)
                         <div class="col-md-12">
                             <span class="font-weight-bold">Arealbeskrivelse</span>
-                            <p style="white-space:pre-line">{{ $property_data->area_description }}</p>
+                            <p style="white-space:pre-line">@php echo $property_data->area_description; @endphp</p>
                         </div>
                     @endif
 
                     @if($property_data->standard)
                         <div class="col-md-12">
                             <span class="font-weight-bold">Standard</span>
-                            <p style="white-space:pre-line">{{ $property_data->standard }}</p>
+                            <p style="white-space:pre-line">@php echo $property_data->standard; @endphp</p>
                         </div>
                     @endif
 
                     @if($property_data->character_description)
                         <div class="col-md-12">
                             <span class="font-weight-bold">Beskaffenhet</span>
-                            <p style="white-space:pre-line">{{ $property_data->character_description }}</p>
+                            <p style="white-space:pre-line">@php echo $property_data->character_description; @endphp</p>
                         </div>
                     @endif
 
                     @if($property_data->essential_information)
                         <div class="col-md-12">
                             <span class="font-weight-bold">Andre opplysninger</span>
-                            <p style="white-space:pre-line">{{ $property_data->essential_information }}</p>
+                            <p style="white-space:pre-line">@php echo $property_data->essential_information; @endphp</p>
                         </div>
                     @endif
 
                     @if($property_data->access_and_location)
                         <div class="col-md-12">
                             <span class="font-weight-bold">Adkomst og beliggenhet</span>
-                            <p style="white-space:pre-line">{{ $property_data->access_and_location }}</p>
+                            <p style="white-space:pre-line">@php echo $property_data->access_and_location; @endphp</p>
                         </div>
                     @endif
 

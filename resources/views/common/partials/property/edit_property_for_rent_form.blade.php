@@ -330,7 +330,7 @@
             <label class="u-t5">Beskrivelse (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="description" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
                     <span class="u-t5">Fortell om hva som er bra med boligen, hva som er inkludert av møbler og innredning osv. Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>

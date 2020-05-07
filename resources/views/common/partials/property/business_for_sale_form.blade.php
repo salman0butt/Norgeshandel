@@ -196,7 +196,7 @@
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="beskrivelse" cols="30" rows="10">{{$business_for_sale_obj->description}}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="description" id="beskrivelse" cols="30" rows="10">{{$business_for_sale_obj->description}}</textarea>
                     <span class="u-t5">Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>
