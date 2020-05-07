@@ -180,12 +180,46 @@
         $(document).ready( function () {
             @if($applied_jobs_cv_list->count() > 0)
                 $('#applied_job_table').DataTable({
+                "language": {
+                    "sProcessing":   "Laster...",
+                    "sLengthMenu":   "Vis _MENU_ linjer",
+                    "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
+                    "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
+                    "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
+                    "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "S&oslash;k:",
+                    "sUrl":          "",
+                    "oPaginate": {
+                        "sFirst":    "F&oslash;rste",
+                        "sPrevious": "Forrige",
+                        "sNext":     "Neste",
+                        "sLast":     "Siste"
+                    }
+                },
                     "order": [[ 0, "desc" ]]
                 });
             @endif
 
             @if($shortlisted_applied_jobs_cv_list->count() > 0)
                 $('#shorlisted_applied_job_table').DataTable({
+                    "language": {
+                    "sProcessing":   "Laster...",
+                    "sLengthMenu":   "Vis _MENU_ linjer",
+                    "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
+                    "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
+                    "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
+                    "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "S&oslash;k:",
+                    "sUrl":          "",
+                    "oPaginate": {
+                    "sFirst":    "F&oslash;rste",
+                        "sPrevious": "Forrige",
+                        "sNext":     "Neste",
+                        "sLast":     "Siste"
+                    }
+                    },
                     "order": [[ 0, "desc" ]]
                 });
             @endif
