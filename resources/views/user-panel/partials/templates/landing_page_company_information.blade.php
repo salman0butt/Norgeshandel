@@ -55,18 +55,19 @@
                     </h5>
 
                     @if(!$property_published_on && $property_data->user)
-                        <div>
-                            <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
-                        </div>
-                        <h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->lasst_name}}</h6>
-                        <p class="mb-0">{{$property_data->user->position}}</p>
+                        @if(!$property_data->user->hasRole('company'))
+                            <div>
+                                <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
+                            </div>
+                            <h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->lasst_name}}</h6>
+                            <p class="mb-0">{{$property_data->user->position}}</p>
 
-                        @if($property_data->user->mobile_number)
-                            <ul class="list-unstyled">
-                                <li class="py-2"><a  href="tel:{{$property_data->user->mobile_number}}">Mobil  {{$property_data->user->mobile_number}}</a></li>
-                            </ul>
+                            @if($property_data->user->mobile_number)
+                                <ul class="list-unstyled">
+                                    <li class="py-2"><a  href="tel:{{$property_data->user->mobile_number}}">Mobil  {{$property_data->user->mobile_number}}</a></li>
+                                </ul>
+                            @endif
                         @endif
-
                     @else
                         <div>
                             <img class="user-profile-picture" src="{{asset('/public/images/male-avatar.jpg')}}" alt="">
@@ -74,18 +75,25 @@
                         <h6 class="mt-2">NH-Bruker</h6>
                     @endif
 
+                    <ul class="list-unstyled mb-0">
+                        <li></li>
+                    </ul>
+
                     @if($property_data->ad && $property_data->ad->agents->count() > 0)
                         @foreach($property_data->ad->agents as $ad_agent)
-                            <div>
-                                <img class="user-profile-picture" src="{{$ad_agent->avatar ? asset(\App\Helpers\common::getMediaPath($ad_agent->avatar)) : asset('/public/images/male-avatar.jpg')}}" alt="">
+                            <div class="mt-2">
+                                <img class="user-profile-picture" src="{{$ad_agent->media ? asset(\App\Helpers\common::getMediaPath($ad_agent->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
                             </div>
-                            <h6 class="mt-2">{{$ad_agent->name}}</h6>
+                            <h6 class="mt-2">{{$ad_agent->first_name.' '.$ad_agent->last_name}}</h6>
                             <p class="mb-0">{{$ad_agent->position}}</p>
+
                             <ul class="list-unstyled">
-                                <li class="py-2"><a  href="tel:{{$ad_agent->mobile_no}}">Mobil  {{$ad_agent->mobile_no}}</a></li>
-                                @if($ad_agent->telephone_no)
-                                    <li class="py-2"><a  href="tel:{{$ad_agent->telephone_no}}">Telefon  {{$ad_agent->telephone_no}}</a></li>
+                                @if($ad_agent->mobile_number)
+                                    <li class="py-2"><a  href="tel:{{$ad_agent->mobile_number}}">Mobil  {{$ad_agent->mobile_number}}</a></li>
                                 @endif
+                            </ul>
+                            <ul class="list-unstyled mb-0">
+                                <li></li>
                             </ul>
                         @endforeach
                     @endif

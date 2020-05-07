@@ -698,7 +698,7 @@ class common
             }
             $ad->company_id = $company_id;
             $ad->update();
-//            $ad->agents()->sync($agent_id_arr);
+            $ad->agents()->sync($agent_id_arr);
         }
     }
 

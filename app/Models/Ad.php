@@ -177,7 +177,7 @@ class Ad extends Model
         return $this->morphMany(Notification::class, 'notifiable')->orderBy('id', 'desc');
     }
     public function agents() {
-        return $this->belongsToMany(Agent::class,'ad_agents','ad_id','agent_id');
+        return $this->belongsToMany(User::class,'ad_agents','ad_id','agent_id');
     }
     public function company() {
         return $this->belongsTo(Company::class,'company_id','id');
