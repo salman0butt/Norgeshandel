@@ -131,8 +131,12 @@
                                             soverom
                                         </p>
                                     </div>
+                                    @if($property_for_sale->ad->company_id && $property_for_sale->ad->company && $property_for_sale->ad->company->company_logo->first())
+                                        <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($property_for_sale->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                    @endif
                                     {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
                                 </div>
+
                             </a>
                             <div>
                                 @php $ad = $property_for_sale->ad;  @endphp

@@ -118,6 +118,9 @@
                                     @endif
                                 </div>
                                 <br>
+                                @if($commercial_plot->ad->company_id && $commercial_plot->ad->company && $commercial_plot->ad->company->company_logo->first())
+                                    <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($commercial_plot->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                @endif
                                 {{--<div class="detail u-t5 mt-3 float-left text-muted">Innlandet Næringsmegling AS</div>--}}
                                 {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid">--}}
                             </div>

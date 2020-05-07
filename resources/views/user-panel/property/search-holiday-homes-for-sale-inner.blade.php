@@ -97,8 +97,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div
-                                class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
+                            <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <div class="u-t5 text-muted" style=""></div>
                                 {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
@@ -129,10 +128,12 @@
                                         <span>{{  $property_holiday_home_for_sale->ownership_type  }}</span> •
                                         <span>{{  $property_holiday_home_for_sale->property_type  }}</span></div>
                                 </div>
-                                <div class="float-right">
+                                {{--<div class="float-right">--}}
                                     {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
-                                </div>
-
+                                {{--</div>--}}
+                                @if($property_holiday_home_for_sale->ad->company_id && $property_holiday_home_for_sale->ad->company && $property_holiday_home_for_sale->ad->company->company_logo->first())
+                                    <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($property_holiday_home_for_sale->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                @endif
                             </div>
                         </a>
                         <div>
