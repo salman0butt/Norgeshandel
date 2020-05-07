@@ -1,8 +1,18 @@
  <div class="row pl-4 pr4">
 
      @if(isset($ad->job) && $ad->job->workplace_video)
-             <a data-fslightbox="gallery1" href="{{$job->workplace_video}}" class="dme-btn-outlined-blue mr-2" style="color: #ac304a; background: white; font-size: 20px; height: 50px">
-                 <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
+         <a data-fslightbox="gallery1" href="{{$job->workplace_video}}" class="dme-btn-outlined-blue mr-2" style="color: #ac304a; background: white; font-size: 20px; height: 50px">
+             <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
+     @endif
+
+     @if(isset($ad->job) && isset($ad->job->company) && $ad->job->company->workplace_video)
+         <a data-fslightbox="gallery1" href="{{$ad->job->company->workplace_video}}" class="dme-btn-outlined-blue mr-2" style="color: #ac304a; background: white; font-size: 20px; height: 50px">
+         <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
+     @endif
+
+     @if(isset($ad->property) && isset($ad->company) && $ad->company->workplace_video)
+         <a data-fslightbox="gallery1" href="{{$ad->company->workplace_video}}" class="dme-btn-outlined-blue mr-2" style="color: #ac304a; background: white; font-size: 20px; height: 50px">
+             <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
      @endif
 
 <a href="#" style="position: initial" class="add-to-fav-btn
