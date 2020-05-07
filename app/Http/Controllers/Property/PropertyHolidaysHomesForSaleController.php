@@ -254,7 +254,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
             if (!$request->owned_site) {
                 $request->merge(['owned_site' => null]);
             }
-            $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id']);
+            $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
             //Add More ViewingTimes
             if (isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "") {
@@ -353,6 +353,12 @@ class PropertyHolidaysHomesForSaleController extends Controller
             }
 
             $response->update($property_home_for_sale_data);
+            
+            if ($request->old_price != $request->total_price) {
+                $ad_id = PropertyHolidaysHomesForSale::where('id', '=', $id)->first();
+                $ad = Ad::find($ad_id->ad_id);
+                common::property_notification($ad, $this->pusher, Auth::user()->id,'holiday_home_for_sale');
+            }
             DB::commit();
 
             $data['success'] = $response;

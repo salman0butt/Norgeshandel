@@ -330,7 +330,7 @@ class PropertyForSaleController extends Controller
                 $request->merge(['facilities4' => null]);
             }
 
-            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','notify']);
+            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
             //Add More ViewingTimes
             if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {
@@ -429,7 +429,7 @@ class PropertyForSaleController extends Controller
             }
 
             $response = PropertyForSale::where('id', '=', $id)->update($property_for_sale_data);
-            if ($request->notify) {
+            if ($request->old_price != $request->total_price) {
                 $ad_id = PropertyForSale::where('id', '=', $id)->first();
               
                 $ad = Ad::find($ad_id->ad_id);
