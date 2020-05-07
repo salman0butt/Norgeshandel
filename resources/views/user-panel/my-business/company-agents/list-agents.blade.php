@@ -99,26 +99,7 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#agents_table').DataTable({
-                "language": {
-                    "sProcessing":   "Laster...",
-                    "sLengthMenu":   "Vis _MENU_ linjer",
-                    "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
-                    "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
-                    "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
-                    "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
-                    "sInfoPostFix":  "",
-                    "sSearch":       "S&oslash;k:",
-                    "sUrl":          "",
-                    "oPaginate": {
-                        "sFirst":    "F&oslash;rste",
-                        "sPrevious": "Forrige",
-                        "sNext":     "Neste",
-                        "sLast":     "Siste"
-                    }
-                },
-                "order": [[ 0, "desc" ]]
-            });
+            jquery_data_tables_languages($('#agents_table'));
         } );
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

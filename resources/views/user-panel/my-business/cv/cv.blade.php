@@ -1828,48 +1828,10 @@ $industries = $industry->terms;
             });
 
             @if($unanswered_requests->count() > 0)
-                $('#unanswered_requests_table').DataTable({
-                "language": {
-                    "sProcessing":   "Laster...",
-                    "sLengthMenu":   "Vis _MENU_ linjer",
-                    "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
-                    "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
-                    "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
-                    "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
-                    "sInfoPostFix":  "",
-                    "sSearch":       "S&oslash;k:",
-                    "sUrl":          "",
-                    "oPaginate": {
-                        "sFirst":    "F&oslash;rste",
-                        "sPrevious": "Forrige",
-                        "sNext":     "Neste",
-                        "sLast":     "Siste"
-                    }
-                },
-                    "order": [[ 0, "desc" ]]
-                });
+                jquery_data_tables_languages($('#unanswered_requests_table'));
             @endif
             @if($answered_requests->count() > 0)
-                $('#answered_requests_table').DataTable({
-                "language": {
-                    "sProcessing":   "Laster...",
-                    "sLengthMenu":   "Vis _MENU_ linjer",
-                    "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
-                    "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
-                    "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
-                    "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
-                    "sInfoPostFix":  "",
-                    "sSearch":       "S&oslash;k:",
-                    "sUrl":          "",
-                    "oPaginate": {
-                        "sFirst":    "F&oslash;rste",
-                        "sPrevious": "Forrige",
-                        "sNext":     "Neste",
-                        "sLast":     "Siste"
-                    }
-                },
-                    "order": [[ 0, "desc" ]]
-                });
+                jquery_data_tables_languages($('#answered_requests_table'));
             @endif
             //Sent request to view CV
             $(document).on('click', '.action-cv-request', function (e) {

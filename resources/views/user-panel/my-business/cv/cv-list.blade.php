@@ -313,38 +313,15 @@
 <script>
 $(document).ready( function () {
     @if($cvs->count() > 0)
-        $('#cv_list').DataTable({
-            "order": [[ 0, "desc" ]]
-        });
+        jquery_data_tables_languages($('#cv_list'));
     @endif
 
     @if($shortlisted_cvs->count() > 0)
-        $('#shortlisted_cv_list').DataTable({
-            "order": [[ 0, "desc" ]]
-        });
+        jquery_data_tables_languages($('#shortlisted_cv_list'));
     @endif
 
     @if($requested_cvs->count() > 0)
-        $('#requested_cv_table').DataTable({
-        "language": {
-            "sProcessing":   "Laster...",
-            "sLengthMenu":   "Vis _MENU_ linjer",
-            "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
-            "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
-            "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
-            "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
-            "sInfoPostFix":  "",
-            "sSearch":       "S&oslash;k:",
-            "sUrl":          "",
-            "oPaginate": {
-                "sFirst":    "F&oslash;rste",
-                "sPrevious": "Forrige",
-                "sNext":     "Neste",
-                "sLast":     "Siste"
-            }
-        },
-            "order": [[ 0, "desc" ]]
-        });
+        jquery_data_tables_languages($('#requested_cv_table'));
     @endif
 
 
