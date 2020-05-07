@@ -65,10 +65,10 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="p-1">
-                                            <div class="company-title">
+                                            <div>
                                                 <h3>{{ $company->emp_name }}</h3>
                                             </div>
-                                            <div class="company-detail">
+                                            <div>
                                                 <p>{!! $company->emp_company_information !!}</p>
                                             </div>
                                         </div>
@@ -91,9 +91,16 @@
 
 @section('script')
     <script>
-        $(document).ready(function () {
-
-        })
+        $(document).ready(function(){
+            //reference link
+            //https://www.w3schools.com/jquery/jquery_filters.asp
+            $(".search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".company").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
     </script>
 @endsection
 
