@@ -42,7 +42,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'about_me',
         'gender',
         'status',
-        'image_path'
+        'image_path',
+        'position',
+        'created_by_company_id',
+        'email_verified_at'
     ];
 
     /**
@@ -214,5 +217,10 @@ class User extends Authenticatable implements MustVerifyEmail
     //Get user request (those request that has been received by companies)
     public function cv_requests_sent(){
         return CvRequest::where('user_id',$this->id)->where('employer_id',Auth::id())->first();
+    }
+
+    //Company AGents
+    public function created_by_company(){
+        return $this->belongsTo(Company::class,'created_by_company_id','id');
     }
 }

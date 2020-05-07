@@ -97,6 +97,9 @@ class CommercialPropertyForRentController extends Controller
         if (isset($request->user_id) && !empty($request->user_id)) {
             $query->where('ads.user_id', $request->user_id);
         }
+        if (isset($request->company_id) && !empty($request->company_id)) {
+            $query->where('ads.company_id', $request->company_id);
+        }
         $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
@@ -234,7 +237,7 @@ class CommercialPropertyForRentController extends Controller
                     }
                 }
 
-                common::sync_ad_agents($request->company_id,$response->ad,$request->agent_id);
+                common::sync_ad_agents($response->ad,$request->agent_id);
             }
             $response->update($commercial_property_for_rent);
 

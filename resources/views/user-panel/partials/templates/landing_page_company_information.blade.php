@@ -54,6 +54,26 @@
                         @endif
                     </h5>
 
+                    @if(!$property_published_on && $property_data->user)
+                        <div>
+                            <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
+                        </div>
+                        <h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->lasst_name}}</h6>
+                        <p class="mb-0">{{$property_data->user->position}}</p>
+
+                        @if($property_data->user->mobile_number)
+                            <ul class="list-unstyled">
+                                <li class="py-2"><a  href="tel:{{$property_data->user->mobile_number}}">Mobil  {{$property_data->user->mobile_number}}</a></li>
+                            </ul>
+                        @endif
+
+                    @else
+                        <div>
+                            <img class="user-profile-picture" src="{{asset('/public/images/male-avatar.jpg')}}" alt="">
+                        </div>
+                        <h6 class="mt-2">NH-Bruker</h6>
+                    @endif
+
                     @if($property_data->ad && $property_data->ad->agents->count() > 0)
                         @foreach($property_data->ad->agents as $ad_agent)
                             <div>

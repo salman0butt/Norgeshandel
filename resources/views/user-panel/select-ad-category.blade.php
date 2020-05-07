@@ -13,7 +13,7 @@ hr {
                 <div class="col-md-12">
                     <h2 class="mt-4 text-center">Hva skal du annonsere?</h2>
                     <div class="row">
-                        <div class="col-sm-4 offset-sm-2 pt-2 text-center align-content-center">
+                        <div class="col-sm-4 offset-sm-2 pt-2 text-center align-content-center  @if(Auth::user()->created_by_company_id) m-auto @endif">
                             <a href="#" class="category" data-dme-toggle="collapse" data-dme-target="home">
                                 <div class="category-icon" style="margin-top: 15px;">
                                     <img src="{{asset('public/images/Eiendom_ikon_maroon.svg')}}" style="max-height: 180px;">
@@ -21,14 +21,16 @@ hr {
                                 <div class="category-title color-grey col-12">Eiendom</div>
                             </a>
                         </div>
-                        <div class="col-sm-4 text-center pt-4 text-center align-content-center">
-                            <a href="" class="category nav nav-pills" data-dme-toggle="collapse" data-dme-target="job">
-                                <div class="category-icon" style="width:245px;">
-                                    <img src="{{asset('public/images/Jobb_ikon_maroon.svg')}}" style="max-height: 180px;">
-                                </div>
-                                <div class="category-title color-grey col-12">Jobb</div>
-                            </a>
-                        </div>
+                        @if(!Auth::user()->created_by_company_id)
+                            <div class="col-sm-4 text-center pt-4 text-center align-content-center">
+                                <a href="" class="category nav nav-pills" data-dme-toggle="collapse" data-dme-target="job">
+                                    <div class="category-icon" style="width:245px;">
+                                        <img src="{{asset('public/images/Jobb_ikon_maroon.svg')}}" style="max-height: 180px;">
+                                    </div>
+                                    <div class="category-title color-grey col-12">Jobb</div>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                     <center><hr class="col-6"></center>
                     <ul class="sub-cat-list pl-3 dme-collapse" id="home">
@@ -129,12 +131,14 @@ hr {
                     </ul>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-md-8 offset-md-2 text-center bg-maroon-lighter radius-8 p-5">
-                    <h4>For bedriftsavtale?</h4><br>
-                    <a href="{{ url('my-business/profile/select_company_profile_type') }}" class="dme-btn-outlined-blue mt-2">Bli bedriftskunde </a>
+            @if(!Auth::user()->created_by_company_id)
+                <div class="row mb-3">
+                    <div class="col-md-8 offset-md-2 text-center bg-maroon-lighter radius-8 p-5">
+                        <h4>For bedriftsavtale?</h4><br>
+                        <a href="{{ url('my-business/profile/select_company_profile_type') }}" class="dme-btn-outlined-blue mt-2">Bli bedriftskunde </a>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </main>
 @endsection
