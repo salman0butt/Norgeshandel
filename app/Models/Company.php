@@ -35,7 +35,7 @@ class Company extends Model
     }
 
     public function agents(){
-        return $this->hasMany(Agent::class);
+        return $this->hasMany(User::class,'created_by_company_id','id');
     }
 
     public function ads(){

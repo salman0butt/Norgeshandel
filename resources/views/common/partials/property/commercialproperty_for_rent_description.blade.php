@@ -218,9 +218,9 @@
                    
                 </div>
                 <div class="col-md-4">
-                    @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company')
+                    @if($property_data->user && $property_data->user->roles->first() && $property_data->user->roles->first()->name == 'company' || $property_data->user->roles->first()->name == 'agent')
                         @php
-                            $show_more_ad_url = url('property/commercial-property-for-rent/search?user_id='.$property_data->ad->user->id);
+                            $show_more_ad_url = url('property/commercial-property-for-rent/search?company_id='.$property_data->ad->company_id);
                             $property_published_on = $property_data['published-on'];
                         @endphp
                         @include('user-panel.partials.templates.landing_page_company_information')

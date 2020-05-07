@@ -6,11 +6,14 @@ use App\Helpers\common;
 use App\Models\Ad;
 use App\Models\Agent;
 use App\Models\Company;
+use App\User;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 
 class AgentController extends Controller
 {
@@ -21,10 +24,7 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agents = Agent::whereHas('company', function (Builder $query) {
-            $query->where('user_id',Auth::id());
-        })->get();
-        return view('user-panel.my-business.company-agents.list-agents',compact('agents'));
+        return view('user-panel.my-business.company-agents.list-agents');
     }
 
     /**
@@ -46,24 +46,27 @@ class AgentController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->company_id){
-            $company = Company::where('id',$request->company_id)->where('user_id',Auth::id())->first();
-        }
+        $validatedData = $request->validate([
+            'email' => 'unique:users',
+        ]);
+        $company = Auth::user()->property_companies->first();
         if($company){
             DB::beginTransaction();
             try{
-                $agent = new Agent($request->except('agent_avatar'));
-                $agent->save();
-
-                if ($agent && $request->file('agent_avatar')) {
-                    $file = $request->file('agent_avatar');
-                    $media = common::update_media($file, $agent->id, 'App\Models\Agent', 'agent_avatar');
-                }
+                $user = User::create([
+                    'email'=>$request->email,
+                    'password' => Hash::make($request->password),
+                    'position' => $request->position,
+                    'created_by_company_id' => $company->id,
+                    'email_verified_at' => Carbon::now()->toDateTimeString(),
+                ]);
+                $user->roles()->attach(6);
                 DB::commit();
                 session()->flash('success', 'Posten er lagt til.');
                 return redirect(url('my-business/company-agents'));
             }catch (\Exception $e){
                 DB::rollback();
+                dd($e->getMessage());
                 session()->flash('danger', 'Noe gikk galt.');
                 return back();
             }

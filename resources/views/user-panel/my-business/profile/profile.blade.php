@@ -47,14 +47,16 @@
 
                     <div class="company-profile">
                         <div class="row">
-                            <div class="col-md-3">
-                                <button class="btn dme-btn-outlined-blue" data-toggle="collapse"
-                                        data-target="#company_profile_block">
-                                    {{$user->companies->count() > 0 ? ' Legg til ny bedriftsprofil' : 'Rediger bedriftsprofilen din'}}
-                                </button>
-                            </div>
+                            @if(!(count($user->job_companies)) || !(count($user->property_companies)))
+                                <div class="col-md-3">
+                                    <button class="btn dme-btn-outlined-blue" data-toggle="collapse"
+                                            data-target="#company_profile_block">
+                                        {{$user->companies->count() > 0 ? ' Legg til ny bedriftsprofil' : 'Rediger bedriftsprofilen din'}}
+                                    </button>
+                                </div>
+                            @endif
 
-                            <div class="col-md-3 pl-0">
+                            <div class="col-md-3">
                                 <a href="{{url('my-business/company-agents')}}" class="btn dme-btn-outlined-blue">Eiendomsmeglere</a>
                             </div>
                         </div>
@@ -81,7 +83,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{--                                @dd($user->allowed_job_companies->first()->value)--}}
+
                                     <div class="form-group">
                                         <div class="row">
                                             <label for="company_type" class="col-md-2 u-t5">Velg selskapets formål</label>
@@ -89,12 +91,12 @@
                                                 <select name="company_type" id="company_type" type="text"
                                                         class="form-control dme-form-control" required="">
                                                     <option value="">Velg...</option>
-                                                    @if(count($user->job_companies) < $user->allowed_job_companies->first()->value)
+                                                    @if((count($user->job_companies) < $user->allowed_job_companies->first()->value) && !(count($user->job_companies)))
                                                         <option value="Jobb">Jobb</option>
                                                     @else
                                                         <option value="" disabled>Jobb (Grensen overskredet)</option>
                                                     @endif
-                                                    @if(count($user->property_companies)<$user->allowed_property_companies->first()->value)
+                                                    @if((count($user->property_companies)<$user->allowed_property_companies->first()->value) && !(count($user->property_companies)))
                                                         <option value="Eiendom">Eiendom</option>
                                                     @else
                                                         <option value="" disabled>Eiendom (Grensen overskredet)</option>
@@ -723,6 +725,10 @@
                         </div>
                         <div class="collapse show inner-col p-4 bg-maroon-lighter" id="view_profile">
                             <h3 class="font-weight-normal mb-3">Mine opplysninger</h3>
+                            @if(Auth::user()->created_by_company_id && Auth::user()->created_by_company)
+                                <p><b style="color:#646162" class="mr-3">Selskap :</b> {{$user->created_by_company->emp_name}}</p>
+                                <p><b style="color:#646162" class="mr-3">Stilling :</b> {{$user->position}}</p>
+                            @endif
                             <p><b style="color:#646162" class="mr-3">Visningsnavn :</b> {{$user->username}}</p>
                             <p><b style="color:#646162" class="mr-3">Fornavn :</b> {{$user->first_name}}</p>
                             <p><b style="color:#646162" class="mr-3">Etternavn :</b> {{$user->last_name}}</p>
@@ -736,11 +742,14 @@
                             <p><b style="color:#646162" class="mr-3">Født :</b> {{$user->birthday}}</p>
                             <p><b style="color:#646162" class="mr-3">Kjønn :</b> @if($user && $user->gender) {{$user->gender == 'male' ? 'Mann' : 'Kvinne'}} @endif</p>
                             <p class="mr-3">
-                                <a href="{{url('account/summary')}}" class="btn bg-maroon text-white" >Rediger profil</a>
-                                {{--<button class="btn bg-maroon text-white" data-toggle="collapse"--}}
-                                        {{--data-target="#edit_profile"--}}
-                                        {{--onclick="javascript:$('#view_profile').removeClass('show');">Rediger profil--}}
-                                {{--</button>--}}
+                                @if(Auth::user()->created_by_company_id)
+                                    <button class="btn bg-maroon text-white" data-toggle="collapse"
+                                            data-target="#edit_profile"
+                                            onclick="javascript:$('#view_profile').removeClass('show');">Rediger profil
+                                    </button>
+                                @else
+                                    <a href="{{url('account/summary')}}" class="btn bg-maroon text-white" >Rediger profil</a>
+                                @endif
                             </p>
                         </div>
                     </div>

@@ -359,28 +359,6 @@ $(document).ready(function (e) {
         }
     });
 
-    //change company dropdown
-    $(document).on('change', '#ad_company_id', function(e){
-        var id = $(this).val();
-        var url = $(this).data('ajaxurl');
-        var ad_id = $(this).data('ad_id');
-        $(".property_ad_company_agents").children('div').remove();
-        if(id && url){
-            $.ajax({
-                url: url,
-                type:'GET',
-                data: {'id':id,'ad_id':ad_id},
-                dataType:'json',
-                success: function (data) {
-                    $(".property_ad_company_agents").append(data.html);
-                },
-                // error: function (jqXhr, json, errorThrown) {
-                //     alert('noe gikk galt');
-                // },
-            });
-        }
-    });
-
     $(document).on('change', '.ad_agent_id', function(e){
         // e.preventDefault();
         var form_id = $(this).closest("form").attr('id');

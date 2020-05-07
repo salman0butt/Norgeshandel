@@ -153,6 +153,10 @@ class PropertyForRentController extends Controller
         if (isset($request->user_id) && !empty($request->user_id)) {
             $query->where('ads.user_id', $request->user_id);
         }
+
+        if (isset($request->company_id) && !empty($request->company_id)) {
+            $query->where('ads.company_id', $request->company_id);
+        }
         $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
@@ -229,13 +233,15 @@ class PropertyForRentController extends Controller
 
     public function UpdatePropertyForRentAdd(Request $request, $id,$call_by='')
     {
+
+
         DB::beginTransaction();
         try {
             if (!$request->facilities2) {
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','notify']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','notify']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -312,7 +318,7 @@ class PropertyForRentController extends Controller
             //Update media (mediable id and mediable type)
             if ($response && $response->ad) {
                 $property_for_rent_data = common::updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
-                common::sync_ad_agents($request->company_id,$response->ad,$request->agent_id);
+                common::sync_ad_agents($response->ad,$request->agent_id);
 
             }
    

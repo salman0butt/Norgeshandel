@@ -687,15 +687,18 @@ class common
         return '';
     }
 
-    public static function sync_ad_agents($request_company_id,$ad,$agent_id_arr){
-        if(Auth::user()->hasRole('company')){
+    public static function sync_ad_agents($ad,$agent_id_arr){
+        if(Auth::user()->hasRole('company') || Auth::user()->created_by_company_id){
             $company_id = 0;
-            if(isset($request_company_id) && $request_company_id){
-                $company_id = $request_company_id;
+            if(Auth::user()->created_by_company_id){
+                $company_id = Auth::user()->created_by_company_id;
+            }
+            if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first()){
+                $company_id = Auth::user()->property_companies->first()->id;
             }
             $ad->company_id = $company_id;
             $ad->update();
-            $ad->agents()->sync($agent_id_arr);
+//            $ad->agents()->sync($agent_id_arr);
         }
     }
 

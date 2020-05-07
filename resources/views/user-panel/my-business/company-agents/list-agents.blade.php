@@ -51,45 +51,38 @@
                     <tr>
                         <th>id</th>
                         <th>Velg bilde</th>
-                        <th>Selskap</th>
-                        <th>Navn</th>
                         <th>Stilling</th>
-                        <th>Mobil</th>
-                        <th>Telefon</th>
-                        <th>Status</th>
+                        <th>E-post</th>
                         <th>Handling</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @if($agents->count() > 0)
-                            @foreach($agents as $agent)
+                        @if(Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->agents->count() > 0)
+                            @foreach(Auth::user()->property_companies->first()->agents as $agent)
                             <tr>
                                 <td>{{$agent->id}}</td>
                                 <td>
-                                    <img class="img-thumbnail img-fluid" src="{{$agent->avatar ? \App\Helpers\common::getMediaPath($agent->avatar,'150x150') : asset('/public/images/male-avatar.jpg')}}" alt="logo" width="100">
+                                    <img class="img-thumbnail img-fluid" src="{{$agent->media ? \App\Helpers\common::getMediaPath($agent->media,'150x150') : asset('/public/images/male-avatar.jpg')}}" alt="logo" width="100">
                                 </td>
-                                <td>{{$agent->company->emp_name}}</td>
-                                <td>{{$agent->name}}</td>
                                 <td>{{$agent->position}}</td>
-                                <td>{{$agent->mobile_no}}</td>
-                                <td>{{$agent->telephone_no}}</td>
+                                <td>{{$agent->email}}</td>
+                                {{--<td>--}}
+                                    {{--<div class="custom-control custom-switch">--}}
+                                        {{--<input type="checkbox" data-ajaxurl="{{url('change-status')}}" data-class="{{\App\Models\Agent::class}}" data-column="status" class="custom-control-input status" id="agent_{{$agent->id}}" {{$agent->status == 1 ? 'checked' : ''}}>--}}
+                                        {{--<label class="custom-control-label" for="agent_{{$agent->id}}"></label>--}}
+                                    {{--</div>--}}
+                                {{--</td>--}}
                                 <td>
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" data-ajaxurl="{{url('change-status')}}" data-class="{{\App\Models\Agent::class}}" data-column="status" class="custom-control-input status" id="agent_{{$agent->id}}" {{$agent->status == 1 ? 'checked' : ''}}>
-                                        <label class="custom-control-label" for="agent_{{$agent->id}}"></label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <a href="{{route('company-agents.edit',$agent->id)}}"><i class="fa fa-edit"></i></a>
-                                    <form class="d-inline" action="{{route('company-agents.destroy',$agent->id)}}"
-                                          method="POST"
-                                          onsubmit="jarascript:return confirm('Vil du slette denne agenten? Du kan ikke gjenopprette det igjen.')">
-                                        {{method_field('DELETE')}}
-                                        {{csrf_field()}}
-                                        <button type="submit" class="link">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
+                                    {{--<a href="{{route('company-agents.edit',$agent->id)}}"><i class="fa fa-edit"></i></a>--}}
+                                    {{--<form class="d-inline" action="{{route('company-agents.destroy',$agent->id)}}"--}}
+                                          {{--method="POST"--}}
+                                          {{--onsubmit="jarascript:return confirm('Vil du slette denne agenten? Du kan ikke gjenopprette det igjen.')">--}}
+                                        {{--{{method_field('DELETE')}}--}}
+                                        {{--{{csrf_field()}}--}}
+                                        {{--<button type="submit" class="link">--}}
+                                            {{--<i class="fa fa-trash"></i>--}}
+                                        {{--</button>--}}
+                                    {{--</form>--}}
 
                                 </td>
                             </tr>

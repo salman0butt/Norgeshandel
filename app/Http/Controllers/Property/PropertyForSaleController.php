@@ -189,6 +189,9 @@ class PropertyForSaleController extends Controller
         if (isset($request->user_id) && !empty($request->user_id)) {
             $query->where('ads.user_id', $request->user_id);
         }
+        if (isset($request->company_id) && !empty($request->company_id)) {
+            $query->where('ads.company_id', $request->company_id);
+        }
         $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
@@ -414,7 +417,7 @@ class PropertyForSaleController extends Controller
                         }
                     }
 
-                    common::sync_ad_agents($request->company_id,$temp_property_for_sale_obj->ad,$request->agent_id);
+                    common::sync_ad_agents($temp_property_for_sale_obj->ad,$request->agent_id);
 
 
                 }

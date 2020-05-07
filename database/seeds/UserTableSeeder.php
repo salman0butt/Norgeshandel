@@ -41,6 +41,7 @@ class UserTableSeeder extends Seeder
             ['name'=>'vendor','display_name'=>'Vendor'],
             ['name'=>'company','display_name'=>'Company'],
             ['name'=>'subscriber','display_name'=>'Subscriber'],
+            ['name'=>'agent','display_name'=>'Agent'],
         );
         foreach ($roles as $role){
             $obj = new \App\Role($role);
