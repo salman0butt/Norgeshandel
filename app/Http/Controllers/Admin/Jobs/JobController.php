@@ -82,7 +82,7 @@ class JobController extends Controller
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
             })->where('ads.visibility',1)->where('jobs.job_type','management')->paginate(getenv('PAGINATION'));
-        $companies = Company::get();
+        $companies = Company::where('company_type','Jobb')->get();
         return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search','saved_search','management_jobs','companies'));
     }
 
