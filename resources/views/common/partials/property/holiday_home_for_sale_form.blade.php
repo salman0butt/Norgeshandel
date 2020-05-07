@@ -36,6 +36,11 @@
         <input type="hidden" name="longitude" id="longitude" value="">
         <input type="hidden" name="full_address" id="full_address" value="">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($holiday_home_for_sale->zip_city) ? $holiday_home_for_sale->zip_city : '') }}">
+        
+    @if(Request::is('holiday/home/for/sale/*/edit'))
+    <input type="hidden" name="old_price" id="old_price" value="{{ $holiday_home_for_sale->total_price ?? '' }}">
+    @endif
+
 
         <!-- Company Section -->
         @include('user-panel.partials.ad_company_section')

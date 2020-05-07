@@ -32,7 +32,7 @@
     <input type="hidden" name="longitude" id="longitude" value="">
     <input type="hidden" name="full_address" id="full_address" value="">
     @if(Request::is('new/property/sale/ad/*/edit'))
-    <input type="hidden" name="notify" id="notify" value="true">
+    <input type="hidden" name="old_price" id="old_price" value="{{ $property_for_sale->total_price }}">
     @endif
 
     <input type="hidden" id="old_zip" value="{{ (isset($property_for_sale->zip_code) ? $property_for_sale->zip_code : '') }}">
