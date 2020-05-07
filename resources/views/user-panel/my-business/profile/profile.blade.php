@@ -307,7 +307,7 @@
                                               onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen? Annonsene og agentene dine blir slettet, og du kan ikke gjenopprette dem.')">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}
-                                            <button type="submit" class="link pl-3">
+                                            <button type="submit" class="link pl-3  d-none">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>
                                         </form>

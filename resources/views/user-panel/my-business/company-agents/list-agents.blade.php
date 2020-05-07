@@ -73,7 +73,7 @@
                                     {{--</div>--}}
                                 {{--</td>--}}
                                 <td>
-                                    {{--<a href="{{route('company-agents.edit',$agent->id)}}"><i class="fa fa-edit"></i></a>--}}
+                                    <a href="{{route('company-agents.edit',$agent->id)}}"><i class="fa fa-edit"></i></a>
                                     {{--<form class="d-inline" action="{{route('company-agents.destroy',$agent->id)}}"--}}
                                           {{--method="POST"--}}
                                           {{--onsubmit="jarascript:return confirm('Vil du slette denne agenten? Du kan ikke gjenopprette det igjen.')">--}}

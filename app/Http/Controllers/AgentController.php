@@ -95,8 +95,8 @@ class AgentController extends Controller
      */
     public function edit($id)
     {
-        $agent = Agent::find($id);
-        if($agent && $agent->company && $agent->company->user_id == Auth::id()){
+        $agent = User::find($id);
+        if($agent && $agent->created_by_company_id && Auth::user()->property_companies->first() && $agent->created_by_company_id == Auth::user()->property_companies->first()->id){
             return view('user-panel.my-business.company-agents.create-update-agent',compact('agent'));
         }else{
             return abort(404);
@@ -112,21 +112,13 @@ class AgentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $agent = Agent::find($id);
+        $agent = User::find($id);
 
-        if($agent && $agent->company && $agent->company->user_id == Auth::id()){
+        if($agent && $agent->created_by_company_id && Auth::user()->property_companies->first() && $agent->created_by_company_id == Auth::user()->property_companies->first()->id){
             DB::beginTransaction();
             try{
-
-                $agent->update($request->except(['agent_avatar','agent_avatar_remove_value']));
-                if ($agent && $request->file('agent_avatar')) {
-                    $file = $request->file('agent_avatar');
-                    $media = common::update_media($file, $agent->id, 'App\Models\Agent', 'agent_avatar');
-                }else{
-                    if($request->agent_avatar_remove_value == 'yes'){
-                        common::delete_media($agent->id, 'App\Models\Agent', 'agent_avatar');
-                    }
-                }
+                $agent->position = $request->position;
+                $agent->update();
                 DB::commit();
                 session()->flash('success', 'Posten er oppdatert.');
                 return redirect(url('my-business/company-agents'));
