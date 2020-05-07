@@ -36,7 +36,7 @@
                                             <div class="">
                                             <span>
                                             <img class="img-thumbnail w-100" style="border-radius:10px;"
-                                                 src="{{asset('http://localhost/norgeshandel/public/images/placeholder.png')}}"
+                                                 src="{{asset('public/images/placeholder.png')}}"
                                                  alt="">
                                             </span>
                                             </div>
