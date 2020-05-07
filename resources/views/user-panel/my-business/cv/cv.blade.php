@@ -1828,14 +1828,10 @@ $industries = $industry->terms;
             });
 
             @if($unanswered_requests->count() > 0)
-                $('#unanswered_requests_table').DataTable({
-                    "order": [[ 0, "desc" ]]
-                });
+                jquery_data_tables_languages($('#unanswered_requests_table'));
             @endif
             @if($answered_requests->count() > 0)
-                $('#answered_requests_table').DataTable({
-                    "order": [[ 0, "desc" ]]
-                });
+                jquery_data_tables_languages($('#answered_requests_table'));
             @endif
             //Sent request to view CV
             $(document).on('click', '.action-cv-request', function (e) {

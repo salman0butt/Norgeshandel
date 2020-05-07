@@ -1,7 +1,12 @@
 @extends('layouts.landingSite')
 
 @section('page_content')
-
+    @php
+        $record_type = 'create';
+        if(Request::is('my-business/company-agents/*/edit')){
+            $record_type = 'edit';
+        }
+    @endphp
     <main>
         <div class="dme-container">
             <div class="row">
@@ -19,7 +24,7 @@
                                 <label class="u-t5">E-post</label>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input id="email" type="email" class="dme-form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                        <input id="email" type="email" class="dme-form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email',$agent->email) }}" required autocomplete="email" {{$record_type == 'edit' ? 'disabled' : ''}}>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -33,7 +38,7 @@
                                 <label class="u-t5">Passord</label>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" name="password" value="" class="dme-form-control"/>
+                                        <input type="text" name="password" value="" class="dme-form-control" {{$record_type == 'edit' ? 'disabled' : ''}}/>
                                         <span class="error-span name"></span>
                                     </div>
                                 </div>

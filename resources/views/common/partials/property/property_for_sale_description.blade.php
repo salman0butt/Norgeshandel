@@ -405,43 +405,43 @@ $name = $property_data->ad->company_gallery;
                         @if($property_data->description2)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Beskrivelse</span>
-                                <p style="white-space: pre-line">{{$property_data->description2}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->description2; @endphp</p>
                             </div>
                         @endif
                         @if($property_data->area_description)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Arealbeskrivelse</span>
-                                <p style="white-space: pre-line">{{$property_data->area_description}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->area_description; @endphp</p>
                             </div>
                         @endif
                         @if($property_data->access)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Adkomst</span>
-                                <p style="white-space: pre-line">{{$property_data->access}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->access; @endphp</p>
                             </div>
                         @endif
                         @if($property_data->location)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Beliggenhet</span>
-                                <p style="white-space: pre-line">{{$property_data->location}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->location; @endphp</p>
                             </div>
                         @endif
                         @if($property_data->character)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Beskaffenhet</span>
-                                <p style="white-space: pre-line">{{$property_data->character}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->character; @endphp</p>
                             </div>
                         @endif
                         @if($property_data->joint_debt_costs)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Mer info om felleskostander</span>
-                                <p style="white-space: pre-line">{{$property_data->joint_debt_costs}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->joint_debt_costs; @endphp</p>
                             </div>
                         @endif
                         @if($property_data->essential_information)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Andre opplysninger</span>
-                                <p style="white-space: pre-line">{{$property_data->essential_information}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->essential_information; @endphp</p>
                             </div>
                         @endif
 

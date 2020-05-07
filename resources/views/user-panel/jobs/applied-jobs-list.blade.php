@@ -115,9 +115,7 @@
 @section('script')
     <script>
         $(document).ready( function () {
-            $('#applied_job_table').DataTable({
-                "order": [[ 0, "desc" ]]
-            });
-        } );
+            jquery_data_tables_languages($('#applied_job_table'));
+        });
     </script>
 @endsection

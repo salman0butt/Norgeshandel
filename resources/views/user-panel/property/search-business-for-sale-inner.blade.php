@@ -113,10 +113,9 @@
                                     </div>
                                     <br>
                                 @endif
-                                {{--<div class="detail u-t5 mt-3 float-left text-muted">Privat</div>--}}
-                                {{--<div class="dealer-logo float-right mt-3">--}}
-                                    {{--<img src="assets/images/businessplots-logo.png" alt="" class="img-fluid">--}}
-                                {{--</div>--}}
+                                @if($business_for_sale->ad->company_id && $business_for_sale->ad->company && $business_for_sale->ad->company->company_logo->first())
+                                    <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($business_for_sale->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                @endif
                             </div>
                         </a>
                         <div>

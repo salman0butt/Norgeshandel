@@ -420,6 +420,29 @@
             xhttp.send();
         }
     }
+
+    function jquery_data_tables_languages(table_id){
+        (table_id).DataTable({
+            "language": {
+                "sProcessing":   "Laster...",
+                "sLengthMenu":   "Vis _MENU_ linjer",
+                "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
+                "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
+                "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
+                "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
+                "sInfoPostFix":  "",
+                "sSearch":       "S&oslash;k:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "F&oslash;rste",
+                    "sPrevious": "Forrige",
+                    "sNext":     "Neste",
+                    "sLast":     "Siste"
+                }
+            },
+            "order": [[ 0, "desc" ]]
+        });
+    }
 </script>
 @yield('script')
 <script src="https://cdn.tiny.cloud/1/x0txntp9p38g4hksno5jsfsk6hkxeqyhqwonj7posbp6ystc/tinymce/5/tinymce.min.js"></script>

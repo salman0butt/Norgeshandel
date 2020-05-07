@@ -179,15 +179,11 @@
     <script>
         $(document).ready( function () {
             @if($applied_jobs_cv_list->count() > 0)
-                $('#applied_job_table').DataTable({
-                    "order": [[ 0, "desc" ]]
-                });
+                jquery_data_tables_languages($('#applied_job_table'));
             @endif
 
             @if($shortlisted_applied_jobs_cv_list->count() > 0)
-                $('#shorlisted_applied_job_table').DataTable({
-                    "order": [[ 0, "desc" ]]
-                });
+                jquery_data_tables_languages($('#shorlisted_applied_job_table'));
             @endif
 
             function showTab(hash) {

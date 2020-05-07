@@ -136,6 +136,9 @@
 
             $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
                 e.preventDefault();
+
+                if($(this).hasClass('text-editor')) tinyMCE.triggerSave();
+
                 if(! $(this).valid()) return false;
                 var ad_status = $('.ad_status').val();
                 if(ad_status == 'saved'){
@@ -158,6 +161,7 @@
             //click button update
             $(document).on('click', '#publiser_annonsen', function(e){
                 e.preventDefault();
+                if($('.text-editor').length > 0) tinyMCE.triggerSave();
                 record_store_ajax_request('click', (this));
             });
 

@@ -327,7 +327,7 @@ $(document).ready(function (e) {
         });
     });
 
-    /* Text editor Tinymc
+    // Text editor Tinymc
     if($('.text-editor').length > 0){
         tinymce.init({
             selector:'textarea.text-editor',
@@ -344,7 +344,7 @@ $(document).ready(function (e) {
             ]
         });
     }
-    */
+
 
     // $(document).on('change', '.url_http', function (e){
     $('.url_http').on('change', function(){

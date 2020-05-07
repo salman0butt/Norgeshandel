@@ -313,21 +313,15 @@
 <script>
 $(document).ready( function () {
     @if($cvs->count() > 0)
-        $('#cv_list').DataTable({
-            "order": [[ 0, "desc" ]]
-        });
+        jquery_data_tables_languages($('#cv_list'));
     @endif
 
     @if($shortlisted_cvs->count() > 0)
-        $('#shortlisted_cv_list').DataTable({
-            "order": [[ 0, "desc" ]]
-        });
+        jquery_data_tables_languages($('#shortlisted_cv_list'));
     @endif
 
     @if($requested_cvs->count() > 0)
-        $('#requested_cv_table').DataTable({
-            "order": [[ 0, "desc" ]]
-        });
+        jquery_data_tables_languages($('#requested_cv_table'));
     @endif
 
 

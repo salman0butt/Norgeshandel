@@ -110,6 +110,10 @@
                                 @endif
                                 <div
                                     class="detail u-t5 mt-3 float-left text-muted">{{rtrim($property_for_flat_wishes_rented->property_type,",")}}</div>
+
+                                @if($property_for_flat_wishes_rented->ad->company_id && $property_for_flat_wishes_rented->ad->company && $property_for_flat_wishes_rented->ad->company->company_logo->first())
+                                    <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($property_for_flat_wishes_rented->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                @endif
                                 {{--<div class="dealer-logo float-right mt-3"><img src="assets/images/dealer-logo.png" alt="" class="img-fluid"></div>--}}
                             </div>
                         </a>

@@ -108,13 +108,13 @@
                         @if($property_data->description)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Beskrivelse</span>
-                                <p style="white-space: pre-line">{{$property_data->description}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->description; @endphp</p>
                             </div>
                         @endif
                         @if($property_data->location_description)
                             <div class="col-md-12">
                                 <span class="font-weight-bold">Beliggenhet</span>
-                                <p style="white-space: pre-line">{{$property_data->location_description}}</p>
+                                <p style="white-space: pre-line">@php echo $property_data->location_description; @endphp</p>
                             </div>
                         @endif
                         <div class="clearfix"></div>

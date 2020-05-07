@@ -91,7 +91,7 @@
             <h3 class="u-t5">Beliggenhet (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="location_description" id="location_description" cols="30" rows="10">{{ $commercial_plot->location_description }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="location_description" id="location_description" cols="30" rows="10">{{ $commercial_plot->location_description }}</textarea>
                     <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive
                         naturforhold, betraktninger om lokaliseringsfordeler og
                         strøksattraktivitet</span>
@@ -240,7 +240,7 @@
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" id="description" cols="30" rows="10">{{ $commercial_plot->description }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="description" id="description" cols="30" rows="10">{{ $commercial_plot->description }}</textarea>
                     <span class="u-t5">Fortell gjerne litt om nabolaget og nærhet til
                         transport.</span>
                 </div>

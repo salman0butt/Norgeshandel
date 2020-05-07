@@ -142,7 +142,7 @@
             <h3 class="u-t5">Adkomst (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="descripion_access" id="descripion_access" cols="30" rows="10">{{ $commercial_property_for_sale->descripion_access }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="descripion_access" id="descripion_access" cols="30" rows="10">{{ $commercial_property_for_sale->descripion_access }}</textarea>
                     <span class="u-t5">Forklar kort om adkomsten til lokalet og hvordan man finner fram, fortell gjerne om nærhet til vei, buss og tog.</span>
                 </div>
             </div>
@@ -339,7 +339,7 @@
             <h3 class="u-t5">Standard/Tekniske opplysninger (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="standard_technica_information" id="standard_technica_information" cols="30" rows="10">{{ $commercial_property_for_sale->standard_technica_information }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="standard_technica_information" id="standard_technica_information" cols="30" rows="10">{{ $commercial_property_for_sale->standard_technica_information }}</textarea>
 
                 </div>
             </div>
@@ -498,7 +498,7 @@
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description_simple" id="description_simple" cols="30" rows="10">{{ $commercial_property_for_sale->description_simple }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="description_simple" id="description_simple" cols="30" rows="10">{{ $commercial_property_for_sale->description_simple }}</textarea>
 
                 </div>
             </div>

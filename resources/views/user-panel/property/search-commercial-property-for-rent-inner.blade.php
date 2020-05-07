@@ -132,9 +132,9 @@
                                 {{--<div class="detail u-t5 mt-3 float-left text-muted">Private--}}
                                     {{--<br>Kontor--}}
                                 {{--</div>--}}
-                                {{--<div class="dealer-logo float-right mt-3"><img--}}
-{{--                                        src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid">--}}
-                                {{--</div>--}}
+                                @if($property_commercial_property_for_rent->ad->company_id && $property_commercial_property_for_rent->ad->company && $property_commercial_property_for_rent->ad->company->company_logo->first())
+                                    <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($property_commercial_property_for_rent->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                @endif
                             </div>
                         </a>
                         <div>

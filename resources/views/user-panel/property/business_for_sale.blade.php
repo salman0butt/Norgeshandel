@@ -44,6 +44,8 @@
 
     <script type="text/javascript">
         function record_store_ajax_request(event, this_obj) {
+            if($('.text-editor').length > 0) tinyMCE.triggerSave();
+
             if(event == 'click'){
                 if(! $('#business_for_sale').valid()) return false;
             }

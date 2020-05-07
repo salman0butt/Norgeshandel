@@ -190,19 +190,19 @@
                         @endif
                         @if($property_data->last_description)
                             <div class="col-md-12"><span class="font-weight-bold">Beskrivelse</span></div>
-                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->last_description}}</p></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">@php echo $property_data->last_description; @endphp</p></div>
                         @endif
                         @if($property_data->location_description)
                             <div class="col-md-12"><span class="font-weight-bold">Beliggenhet</span></div>
-                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->location_description}}</p></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">@php echo $property_data->location_description; @endphp</p></div>
                         @endif
                         @if($property_data->venue_description)
                             <div class="col-md-12"><span class="font-weight-bold">Adkomst</span></div>
-                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->venue_description}}</p></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">@php echo $property_data->venue_description; @endphp</p></div>
                         @endif
                         @if($property_data->standard_technical_information)
                             <div class="col-md-12"><span class="font-weight-bold">Standard/Tekniske opplysninger</span></div>
-                            <div class="col-md-12"><p style="white-space: pre-line">{{$property_data->standard_technical_information}}</p></div>
+                            <div class="col-md-12"><p style="white-space: pre-line">@php echo $property_data->standard_technical_information; @endphp</p></div>
                         @endif
 
                         {{--<div style="width: 500px; height: 300px;">--}}

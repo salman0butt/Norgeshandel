@@ -10,12 +10,12 @@
         @foreach($dropzone_img_obj->ad->company_gallery as $company_gallery)
             <?php
             $unique_name  =  $company_gallery->name_unique;
-            $path  =    \App\Helpers\common::getMediaPath($dropzone_img_obj);
+            $path  =    \App\Helpers\common::getMediaPath($company_gallery);
             $full_path  = $path."". $unique_name;
             ?>
             <div class="dz-preview dz-processing dz-image-preview dz-success dz-complete" >
                 <div class="dz-image">
-                    <img data-dz-thumbnail="" alt="image not found" src="{{$full_path}}">
+                    <img data-dz-thumbnail="" alt="image not found" src="{{$path}}">
                 </div>
                 <div class="dz-details">
                     <div class="dz-filename"><span data-dz-name="">{{@$company_gallery->name}}</span></div>

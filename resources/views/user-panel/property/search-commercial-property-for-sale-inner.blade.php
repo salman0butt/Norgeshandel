@@ -120,8 +120,9 @@
                                 <div class="detail u-t5 mt-3 float-left text-muted">
                                     • {{\App\Helpers\common::map_json($property_commercial_property_for_sale->property_type)}}
                                 </div>
-                                {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/businesssale-logo.jpg')}}" alt="" class="img-fluid">--}}
-                                {{--</div>--}}
+                                @if($property_commercial_property_for_sale->ad->company_id && $property_commercial_property_for_sale->ad->company && $property_commercial_property_for_sale->ad->company->company_logo->first())
+                                    <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($property_commercial_property_for_sale->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
+                                @endif
                             </div>
                         </a>
                         <div>
