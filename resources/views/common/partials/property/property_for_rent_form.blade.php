@@ -40,7 +40,7 @@
 
 
     @if(Request::is('new/property/rent/ad/*/edit'))
-    <input type="hidden" name="notify" id="notify" value="true">
+    <input type="hidden" name="old_price" id="old_price" value="{{ $property_for_rent->monthly_rent ?? '' }}">
     @endif
     <div class="pl-3 pr-3">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($property_for_rent->zip_city) ? $property_for_rent->zip_city : '') }}">

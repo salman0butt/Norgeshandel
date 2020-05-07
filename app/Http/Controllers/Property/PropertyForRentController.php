@@ -241,7 +241,7 @@ class PropertyForRentController extends Controller
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','notify']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -324,9 +324,8 @@ class PropertyForRentController extends Controller
    
             $response->update($property_for_rent_data);
 
-            if ($request->notify) {
+            if ($request->old_price != $request->monthly_rent) {
                 $ad_id = PropertyForRent::where('id', '=', $id)->first();
-              
                 $ad = Ad::find($ad_id->ad_id);
                 common::property_notification($ad, $this->pusher, Auth::user()->id,'property_for_rent');
             }
