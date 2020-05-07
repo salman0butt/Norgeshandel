@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class AgentController extends Controller
 {
@@ -61,12 +62,18 @@ class AgentController extends Controller
                     'email_verified_at' => Carbon::now()->toDateTimeString(),
                 ]);
                 $user->roles()->attach(6);
+                $password = $request->password;
+                $to_name = $user->username;
+                $to_email = $user->email;
+                Mail::send('mail.user_created_by_company',compact('user','password'), function ($message) use ($to_name, $to_email) {
+                    $message->to($to_email, $to_name)->subject('Konto opprettet');
+                    $message->from('developer@digitalmx.no', 'NorgesHandel ');
+                });
                 DB::commit();
                 session()->flash('success', 'Posten er lagt til.');
                 return redirect(url('my-business/company-agents'));
             }catch (\Exception $e){
                 DB::rollback();
-                dd($e->getMessage());
                 session()->flash('danger', 'Noe gikk galt.');
                 return back();
             }
