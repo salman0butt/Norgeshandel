@@ -330,6 +330,8 @@ $(document).ready(function (e) {
     // Text editor Tinymc
     if($('.text-editor').length > 0){
         tinymce.init({
+            menubar: false, // remove menubar if you want to show the menubar
+            // statusbar: false,
             selector:'textarea.text-editor',
             height: 300,
             plugins: [
@@ -337,7 +339,8 @@ $(document).ready(function (e) {
                 "searchreplace visualblocks code fullscreen",
                 "insertdatetime media table paste imagetools wordcount"
             ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+            // toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image", orignal
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tiny.cloud/css/codepen.min.css'

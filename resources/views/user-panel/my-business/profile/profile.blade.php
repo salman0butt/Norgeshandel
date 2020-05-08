@@ -111,7 +111,7 @@
                                                 (valgfritt)</label>
                                             <div class="col-sm-10 ">
                                                 <textarea name="emp_company_information"
-                                                          class="form-control dme-form-control emp_company_information"
+                                                          class="form-control dme-form-control emp_company_information text-editor"
                                                           id="emp_company_information" cols="30" rows="10"></textarea>
                                             </div>
                                         </div>
@@ -351,7 +351,7 @@
                                                         (valgfritt)</label>
                                                     <div class="col-sm-10 ">
                                                 <textarea name="emp_company_information"
-                                                          class="dme-form-control"
+                                                          class="dme-form-control text-editor"
                                                           id="emp_company_information_{{$company->id}}" cols="30"
                                                           rows="10">{{$company->emp_company_information}}</textarea>
                                                     </div>

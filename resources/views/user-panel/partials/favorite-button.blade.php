@@ -10,7 +10,7 @@
          <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
      @endif
 
-     @if(isset($ad->property) && isset($ad->company) && $ad->company->workplace_video)
+     @if($ad->company_id && isset($ad->company) && $ad->company->workplace_video)
          <a data-fslightbox="gallery1" href="{{$ad->company->workplace_video}}" class="dme-btn-outlined-blue mr-2" style="color: #ac304a; background: white; font-size: 20px; height: 50px">
              <i class="far fa-play-circle fa-lg pr-1"></i>Video</a>
      @endif
