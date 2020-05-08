@@ -196,7 +196,7 @@ class CommercialPropertyForRentController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id']);
+            $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
             unset($commercial_property_for_rent['commercial_property_for_rent_pdf']);
             $commercial_property_for_rent['user_id'] = Auth::user()->id;
@@ -240,6 +240,11 @@ class CommercialPropertyForRentController extends Controller
                 common::sync_ad_agents($response->ad,$request->agent_id);
             }
             $response->update($commercial_property_for_rent);
+            if ($request->old_price != $request->rent_per_meter_per_year) {
+                $ad_id = CommercialPropertyForRent::where('id', '=', $id)->first();
+                $ad = Ad::find($ad_id->ad_id);
+                common::property_notification($ad, $this->pusher, Auth::user()->id,'commercial_property_for_rent');
+            }
 
             DB::commit();
             $data['success'] = $response;

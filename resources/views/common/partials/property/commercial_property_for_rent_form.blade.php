@@ -34,6 +34,9 @@
         <input type="hidden" name="latitude" id="latitude" value="">
         <input type="hidden" name="longitude" id="longitude" value="">
         <input type="hidden" name="full_address" id="full_address" value="">
+            @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
+    <input type="hidden" name="old_price" id="old_price" value="{{ $commercial_property_for_rent->rent_per_meter_per_year ?? '' }}">
+    @endif
 
         <!-- Company Section -->
         @include('user-panel.partials.ad_company_section')

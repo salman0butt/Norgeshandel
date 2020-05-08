@@ -32,6 +32,9 @@
     <input type="hidden" name="latitude" id="latitude" value="">
     <input type="hidden" name="longitude" id="longitude" value="">
     <input type="hidden" name="full_address" id="full_address" value="">
+        @if(Request::is('commercial/plots/*/edit'))
+    <input type="hidden" name="old_price" id="old_price" value="{{ $commercial_plot->monthly_rent ?? '' }}">
+    @endif
     <div class="pl-3">
 
         <!-- Company Section -->
