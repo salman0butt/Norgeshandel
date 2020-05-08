@@ -82,14 +82,14 @@ Route::group(['middleware' => 'authverified'], function () {
         return view('user-panel.property.residential_and_recreational_land_for_sale');
     });
 
-    Route::get('searching/{search?}', 'SearchController@search')->name('searching');
-    Route::get('global-search/{search}', 'SearchController@global')->name('global');
-    Route::get('job-searching/{search?}', 'SearchController@job_search')->name('job-searching');
-    Route::get('job-search/{search}', 'SearchController@job_global')->name('job-global');
 //    home routes
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('page/{id}', 'HomeController@paginate');
 
+    Route::get('searching/{search?}', 'SearchController@search')->name('searching');
+    Route::get('global-search/{search}', 'SearchController@global')->name('global');
+    Route::get('job-searching/{search?}', 'SearchController@job_search')->name('job-searching');
+    Route::get('job-search/{search}', 'SearchController@job_global')->name('job-global');
     Route::get('/notification', function () {
 
         return view('notification');
@@ -177,7 +177,7 @@ Route::group(['middleware' => 'authverified'], function () {
 
 
 
-    Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+
 
 //Banner Group   /admin/banner-group/
 
@@ -713,4 +713,5 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
     Route::get('/{handel?}', 'HomeController@index');
+    Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
 });

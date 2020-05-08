@@ -32,10 +32,14 @@
             <input type="hidden" name="full_address" id="full_address" value="">
             <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($business_for_sale_obj->zip_city) ? $business_for_sale_obj->zip_city : '') }}">
 
+    @if(Request::is('add/business/for/sale/*/edit'))
+    <input type="hidden" name="old_price" id="old_price" value="{{ $business_for_sale_obj->price ?? '' }}">
+    @endif
+
         <!-- Company Section -->
         @include('user-panel.partials.ad_company_section')
 
-        <!--                            selection-->
+        <!--selection-->
         <div class="form-group">
             <h3 class="u-t5">Bransje</h3>
             <div class="row">

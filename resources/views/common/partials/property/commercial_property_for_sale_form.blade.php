@@ -34,6 +34,9 @@
         <input type="hidden" name="longitude" id="longitude" value="">
         <input type="hidden" name="full_address" id="full_address" value="">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_sale->zip_city) ? $commercial_property_for_sale->zip_city : '') }}">
+       @if(Request::is('add/new/commercial/property/for/sale/*/edit'))
+    <input type="hidden" name="old_price" id="old_price" value="{{ $commercial_property_for_sale->value_rate ?? '' }}">
+    @endif
 
         <!-- Company Section -->
         @include('user-panel.partials.ad_company_section')

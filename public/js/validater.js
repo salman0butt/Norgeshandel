@@ -835,9 +835,6 @@ $(document).ready(function () {
             loan_rate: {
                 number: true
             },
-            availiable_from: {
-                number: true
-            },
             offer_url: {
                 validUrl: true
             },

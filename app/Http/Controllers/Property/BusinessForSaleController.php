@@ -251,7 +251,7 @@ class BusinessForSaleController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id']);
+            $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
             unset($business_for_sale['business_for_sale_pdf']);
             $business_for_sale['user_id'] = Auth::user()->id;
@@ -280,6 +280,12 @@ class BusinessForSaleController extends Controller
 
                 }
                 $response->update($business_for_sale);
+                
+            if ($request->old_price != $request->monthly_rent) {
+                $ad_id = BusinessForSale::where('id', '=', $id)->first();
+                $ad = Ad::find($ad_id->ad_id);
+                common::property_notification($ad, $this->pusher, Auth::user()->id,'business_for_sale');
+            }
             }
 
 
