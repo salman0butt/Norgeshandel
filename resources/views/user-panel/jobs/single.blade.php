@@ -299,6 +299,7 @@
                     </div>
                     <div class="mt-3 location"><h5 class="u-t3">location</h5></div>
                          <div style="width: 306px; height: 306px;">
+                          <h5 class="text-muted">{{ $property_data->full_address }}</h5>
                              <div id="map" style="height: 100%; width: 100%;"></div>
                         </div>
                     {{-- <p class="u-mt4">
