@@ -148,11 +148,24 @@ class AgentController extends Controller
      */
     public function destroy($id)
     {
-        $agent = Agent::find($id);
+        $agent = User::find($id);
 
-        if($agent && $agent->company && $agent->company->user_id == Auth::id()){
+        if($agent && $agent->created_by_company_id == Auth::user()->property_companies->first()->id ){
             DB::beginTransaction();
             try{
+                if($agent->ads->count() > 0){
+                    foreach ($agent->ads as $ad){
+                        if(isset($ad->job) && $ad->job){
+                            $ad->job->delete();
+                        }
+
+                        if(isset($ad->property) && $ad->property){
+                            $ad->property->delete();
+                        }
+                        $ad->delete();
+                    }
+                }
+
                 $agent->delete();
                 DB::commit();
                 session()->flash('success', 'Posten er slettet.');

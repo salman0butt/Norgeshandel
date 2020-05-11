@@ -93,11 +93,15 @@ class LoginController extends Controller
 
             session()->flash('danger', 'Du kan ikke logge inn, kontoen din er deaktiv.');
             return back();
+        }
 
-//            $flag = 'deactivated';
-//            $class = 'warning';
+        if (!is_null($user->deleted_at)) {
+            auth()->logout();
+            // unset all session, as user has logged out
+            session_unset();
 
-//            return back()->with($class, 'Your account has not been approved by admin yet. So please wait. Thanks.');
+            session()->flash('danger', 'Du kan ikke logge inn, kontoen din er fjernet.');
+            return back();
         }
 
 

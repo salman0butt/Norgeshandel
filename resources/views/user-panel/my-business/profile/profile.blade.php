@@ -93,13 +93,13 @@
                                                     <option value="">Velg...</option>
                                                     @if((count($user->job_companies) < $user->allowed_job_companies->first()->value) && !(count($user->job_companies)))
                                                         <option value="Jobb">Jobb</option>
-                                                    @else
-                                                        <option value="" disabled>Jobb (Grensen overskredet)</option>
+                                                    {{--@else--}}
+                                                        {{--<option value="" disabled>Jobb (Grensen overskredet)</option>--}}
                                                     @endif
                                                     @if((count($user->property_companies)<$user->allowed_property_companies->first()->value) && !(count($user->property_companies)))
                                                         <option value="Eiendom">Eiendom</option>
-                                                    @else
-                                                        <option value="" disabled>Eiendom (Grensen overskredet)</option>
+                                                    {{--@else--}}
+                                                        {{--<option value="" disabled>Eiendom (Grensen overskredet)</option>--}}
                                                     @endif
                                                 </select>
                                             </div>
@@ -307,7 +307,7 @@
                                               onsubmit="jarascript:return confirm('Vil du slette denne firmaprofilen? Annonsene og agentene dine blir slettet, og du kan ikke gjenopprette dem.')">
                                             {{method_field('DELETE')}}
                                             {{csrf_field()}}
-                                            <button type="submit" class="link pl-3  d-none">
+                                            <button type="submit" class="link pl-3">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>
                                         </form>

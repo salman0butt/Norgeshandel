@@ -199,9 +199,21 @@ class AdminUserController extends Controller
         $user = User::find($id);
         $roles = $user->roles;
         if (!$user->hasRole('admin')) {
-            foreach ($roles as $role) {
-                $user->detachRole($role->id);
+            if($user->ads->count() > 0){
+                foreach ($user->ads as $ad){
+                    if(isset($ad->job) && $ad->job){
+                        $ad->job->delete();
+                    }
+
+                    if(isset($ad->property) && $ad->property){
+                        $ad->property->delete();
+                    }
+                    $ad->delete();
+                }
             }
+//            foreach ($roles as $role) {
+//                $user->detachRole($role->id);
+//            }
             $user->delete();
             session()->flash('success', 'User has been updated successfully');
         }

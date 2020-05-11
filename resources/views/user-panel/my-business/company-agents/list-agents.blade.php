@@ -75,15 +75,15 @@
                                 </td>
                                 <td>
                                     <a href="{{route('company-agents.edit',$agent->id)}}"><i class="fa fa-edit"></i></a>
-                                    {{--<form class="d-inline" action="{{route('company-agents.destroy',$agent->id)}}"--}}
-                                          {{--method="POST"--}}
-                                          {{--onsubmit="jarascript:return confirm('Vil du slette denne agenten? Du kan ikke gjenopprette det igjen.')">--}}
-                                        {{--{{method_field('DELETE')}}--}}
-                                        {{--{{csrf_field()}}--}}
-                                        {{--<button type="submit" class="link">--}}
-                                            {{--<i class="fa fa-trash"></i>--}}
-                                        {{--</button>--}}
-                                    {{--</form>--}}
+                                    <form class="d-inline" action="{{route('company-agents.destroy',$agent->id)}}"
+                                          method="POST"
+                                          onsubmit="jarascript:return confirm('Vil du slette denne agenten? Annonser blir slettet fra denne brukeren. Og du kan ikke gjenopprette den igjen. Takk!')">
+                                        {{method_field('DELETE')}}
+                                        {{csrf_field()}}
+                                        <button type="submit" class="link">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
 
                                 </td>
                             </tr>

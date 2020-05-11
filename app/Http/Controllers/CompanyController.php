@@ -162,7 +162,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-
+        //Delete company Jobs
         if($company->jobs->count()){
             foreach ($company->jobs as $company_job){
                 $company_job->ad()->delete();
@@ -170,12 +170,14 @@ class CompanyController extends Controller
             }
         }
 
+        //Delete Company users.
         if($company->agents->count()){
             foreach ($company->agents as $company_agent){
                 $company_agent->delete();
             }
         }
 
+        //Delete Company Property Ads
         if($company->ads->count()){
             foreach ($company->ads as $company_ad){
                 $company_ad->property()->delete();
