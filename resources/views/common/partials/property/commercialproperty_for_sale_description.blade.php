@@ -371,14 +371,15 @@
                     @endphp
                     @include('user-panel.partials.templates.landing_page_company_information')
                 @endif
-                    <div class="mt-3 mb-3">
+                    {{-- <div class="mt-3 mb-3">
                         <h5>
                             <font style="vertical-align: inherit;">
                                 <font style="vertical-align: inherit;">{{$property_data->street_address}}</font>
                             </font><br>
                         </h5>
-                    </div>
+                    </div> --}}
             <div style="width: 306px; height: 306px;">
+             <h5 class="text-muted">{{ $property_data->full_address }}</h5>
                  <div id="map" style="height: 100%; width: 100%;"></div>
             </div>
         </div>

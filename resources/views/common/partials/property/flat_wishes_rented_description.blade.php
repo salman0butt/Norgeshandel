@@ -181,9 +181,10 @@
                     </h5>
                 </div>
 
-                <div style="width: 306px; height: 153px;">
+                {{-- <div style="width: 306px; height: 153px;">
+                 <h5 class="text-muted">{{ $property_data->full_address }}</h5>
                      <div id="map" style="height: 306px; width: 100%;"></div>
-                </div>
+                </div> --}}
         </div>
     </div>
     </div>
@@ -194,5 +195,5 @@
 </main>
 
 @endsection
-@php $map_obj = $property_data @endphp
-@include('common.partials.description_map',compact('map_obj'))
+{{-- @php $map_obj = $property_data @endphp
+@include('common.partials.description_map',compact('map_obj')) --}}

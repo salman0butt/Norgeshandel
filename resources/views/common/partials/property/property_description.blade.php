@@ -256,6 +256,7 @@
                             @endif
                         </div>
                          <div style="width: 306px; height: 306px;">
+                          <h5 class="text-muted">{{ $property_data->full_address }}</h5>
                          <div id="map" style="height: 100%; width: 100%;"></div>
                         </div>
                     </div>
@@ -291,6 +292,7 @@
                             </div>
                         </div>
                         <div style="width: 306px; height: 306px;">
+                            <h5 class="text-muted">{{ $property_data->full_address }}</h5>
                          <div id="map" style="height: 100%; width: 100%;"></div>
                         </div>
                     </div>
