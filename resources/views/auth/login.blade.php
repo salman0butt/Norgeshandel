@@ -36,9 +36,10 @@
                 <p><a href="{{ url('/customer-services') }}" class="mr-4">Hjelp</a> Tilbake til <a href="{{ url('/') }}">NorgesHandel</a></p>
             </div>
             <div class="col-md-4 bg-white pt-5 pb-3">
+                @include('common.partials.flash-messages')
+
                 <form method="POST" action="{{ route('login') }}" id="login_page" name="login_page">
                     @csrf
-
                     <h3>Logg inn</h3>
                     <div class="form-group ">
                         <label for="email" class="u-t5">Skriv inn din e-postadresse</label>

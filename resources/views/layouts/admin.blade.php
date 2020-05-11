@@ -313,6 +313,7 @@
 
 <!-- All Jquery -->
 @yield('script')
+<script src="{{asset('public/admin/mediexpert.js')}}"></script>
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{ asset('public/admin/js/popper.min.js') }}"></script>
 <script src="{{ asset('public/admin/js/bootstrap.min.js') }}"></script>

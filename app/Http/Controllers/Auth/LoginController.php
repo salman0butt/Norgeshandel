@@ -86,6 +86,21 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        if ($user->account_status == 0) {
+            auth()->logout();
+            // unset all session, as user has logged out
+            session_unset();
+
+            session()->flash('danger', 'Du kan ikke logge inn, kontoen din er deaktiv.');
+            return back();
+
+//            $flag = 'deactivated';
+//            $class = 'warning';
+
+//            return back()->with($class, 'Your account has not been approved by admin yet. So please wait. Thanks.');
+        }
+
+
         if (strpos($this->redirectTo, '/page/')){
             return redirect(url('/'));
         }
