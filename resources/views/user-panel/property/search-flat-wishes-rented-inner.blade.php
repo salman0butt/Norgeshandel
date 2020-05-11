@@ -98,11 +98,11 @@
 
                                 {{-- Request()->get('view') <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="title color-grey">{{(Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($property_for_flat_wishes_rented->headline,35) : $property_for_flat_wishes_rented->headline}}</div>
-                                @if($property_for_flat_wishes_rented->description || $property_for_flat_wishes_rented->max_rent_per_month)
+                                @if($property_for_flat_wishes_rented->max_rent_per_month)
                                     <div class="mt-2">
-                                        @if($property_for_flat_wishes_rented->description)
-                                            <div class="area float-left color-grey" title="{{$property_for_flat_wishes_rented->description}}">{{Str::limit($property_for_flat_wishes_rented->description,70)}}</div>
-                                        @endif
+{{--                                        @if($property_for_flat_wishes_rented->description)--}}
+                                            {{--<div class="area float-left color-grey" title="{{$property_for_flat_wishes_rented->description}}">{{Str::limit($property_for_flat_wishes_rented->description,70)}}</div>--}}
+                                        {{--@endif--}}
                                         @if($property_for_flat_wishes_rented->max_rent_per_month)
                                             <div class="price font-weight-bold float-right color-grey">{{number_format($property_for_flat_wishes_rented->max_rent_per_month,0,""," ")}} kr</div>
                                         @endif
