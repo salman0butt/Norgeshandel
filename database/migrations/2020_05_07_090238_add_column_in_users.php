@@ -17,6 +17,7 @@ class AddColumnInUsers extends Migration
             $table->bigInteger('created_by_company_id')->nullable()->after('id');
             $table->string('position')->nullable()->after('password');
             $table->timestamp('deleted_at')->nullable()->after('remember_token');
+            $table->tinyInteger('account_status')->after('username')->default(1);
         });
     }
 
