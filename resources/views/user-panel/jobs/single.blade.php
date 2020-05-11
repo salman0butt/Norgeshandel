@@ -164,16 +164,18 @@
                         @if($job->description)
                             <div class="description mt-3 col-md-12" style="white-space: pre-line">
                                 <span class="font-weight-bold">Stillingsbeskrivelse</span>
-                                {{(($job->description))}}
+                                @php echo $job->description; @endphp
                             </div>
                         @endif
                         <div class="emp_company_information mt-3 col-md-12">
-                            @if(!empty($job->company))
+                            @if(!empty($job->company) && $job->company->emp_company_information)
                                 <span class="font-weight-bold">Om arbeidsgiveren</span>
-                                <div style="white-space: pre-line">{!! html_entity_decode($job->company->emp_company_information)!!}</div>
+                                <div style="white-space: pre-line">@php echo $job->company->emp_company_information; @endphp </div>
                             @else
-                                <span class="font-weight-bold">Om arbeidsgiveren</span>
-                                <div style="white-space: pre-line">{!! html_entity_decode($job->emp_company_information)!!}</div>
+                                @if($job->emp_company_information)
+                                    <span class="font-weight-bold">Om arbeidsgiveren</span>
+                                    <div style="white-space: pre-line">@php echo $job->emp_company_information; @endphp</div>
+                                @endif
                             @endif
 
                         </div>

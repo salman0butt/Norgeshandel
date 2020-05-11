@@ -5,6 +5,18 @@
     <a href="#" class="text-muted">Home</a> /
     <a href="#" class="">Users</a>
 @endsection
+@section('style')
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        a{
+            color: #ac304a;
+        }
+        .custom-control-input:checked~.custom-control-label::before{
+            border-color: #ac304a;
+            background-color: #ac304a;
+        }
+    </style>
+@endsection
 @section('page_content')
     {{--    @if(isset($response) && $response)<div class="alert alert-success">User has been added successfully</div>@endif--}}
 <div class="container-fluid">
@@ -63,37 +75,41 @@
                             <th scope="col">Phone</th>
                             <th scope="col">Role</th>
                             <th scope="col">Ads count</th>
+                            <th scope="col">Status</th>
                         </tr>
                         </thead>
                         <tbody class="customtable">
                         @if(isset($users))
                             @foreach($users as $user)
-                            <tr>
-                                <th>
-                                    <label class="customcheckbox">
-                                        <input type="checkbox" class="listCheckbox" data-value="{{$user->id}}" data-id="users_checklist">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </th>
-                                {{--{{getUrl($user->media)}}--}}
-                                <td><img style="height: 70px; width:60px;" src="@if($user->media!=null){{asset(\App\Helpers\common::getMediaPath($user->media))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
-                                <td><div class="display_name mb-2">{{$user->first_name}} {{$user->last_name}}</div>
-                                    <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-default float-left mr-2">Edit</a>
-                                    {{--<form action="{{route('admin.users.destroy', $user->id)}}" method="POST"  onsubmit="jarascript:return confirm('Are you sure to delete the user: {{$user->username}}')">--}}
-                                        {{--{{ csrf_field() }} {{method_field('DELETE')}}--}}
-                                        {{--<input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger">--}}
-                                    {{--</form>--}}
-
-{{--                                    {{dd($user->role)}}--}}
-                                </td>
-                                <td>{{$user->username}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>{{$user->mobile_number}}</td>
-                                <td>{{@$user->roles->first()->display_name}}</td>
-                                <td>{{$user->ads->count()}}</td>
-                            </tr>
+                                <tr>
+                                    <th>
+                                        <label class="customcheckbox">
+                                            <input type="checkbox" class="listCheckbox" data-value="{{$user->id}}" data-id="users_checklist">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </th>
+                                    <td><img style="height: 70px; width:60px;" src="@if($user->media!=null){{asset(\App\Helpers\common::getMediaPath($user->media))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
+                                    <td><div class="display_name mb-2">{{$user->first_name}} {{$user->last_name}}</div>
+                                        <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-primary float-left mr-1 btn-sm">Edit</a>
+                                        <form action="{{route('admin.users.destroy', $user->id)}}" method="POST"  onsubmit="jarascript:return confirm('Do you want to delete this user? Ads are deleted from this user. And you can\'t restore it again. Thanks!')">
+                                            {{ csrf_field() }} {{method_field('DELETE')}}
+                                            <input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger btn-sm">
+                                        </form>
+                                    </td>
+                                    <td>{{$user->username}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->mobile_number}}</td>
+                                    <td>{{@$user->roles->first()->display_name}}</td>
+                                    <td>{{$user->ads->count()}}</td>
+                                    <td>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" data-ajaxurl="{{url('change-status')}}" data-class="{{\App\User::class}}" data-column="account_status" class="custom-control-input status" id="user_{{$user->id}}" {{$user->account_status == 1 ? 'checked' : ''}}>
+                                            <label class="custom-control-label" for="user_{{$user->id}}"></label>
+                                        </div>
+                                    </td>
+                                </tr>
                             @endforeach
-                            @else
+                        @else
                             <tr>
                                 <td colspan="8">
                                     <h4 class="m-2 text-center">There is no user to display!</h4>
@@ -131,4 +147,10 @@
         })
     })
 </script>
+@endsection
+
+@section('script')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 @endsection

@@ -86,6 +86,25 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        if ($user->account_status == 0) {
+            auth()->logout();
+            // unset all session, as user has logged out
+            session_unset();
+
+            session()->flash('danger', 'Du kan ikke logge inn, kontoen din er deaktiv.');
+            return back();
+        }
+
+        if (!is_null($user->deleted_at)) {
+            auth()->logout();
+            // unset all session, as user has logged out
+            session_unset();
+
+            session()->flash('danger', 'Du kan ikke logge inn, kontoen din er fjernet.');
+            return back();
+        }
+
+
         if (strpos($this->redirectTo, '/page/')){
             return redirect(url('/'));
         }

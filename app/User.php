@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Auth;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
-    use EntrustUserTrait;
+    use EntrustUserTrait  { restore as private restoreA; }
+    use SoftDeletes  { restore as private restoreB; }
 
     /**
      * The attributes that are mass assignable.
@@ -75,6 +77,13 @@ class User extends Authenticatable implements MustVerifyEmail
 //        }
 //
 //    }
+
+    public function restore()
+    {
+        $this->restoreA();
+        $this->restoreB();
+    }
+
     public function getBirthdayAttribute() {
         if(!$this->attributes['birthday']){
             return '';
