@@ -245,7 +245,6 @@ Route::group(['middleware' => 'authverified'], function () {
         //Apply Job
         Route::get('get-company-agents', 'AgentController@get_company_agents')->name('get-company-agents');
 
-        Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
         //Apply Job
         Route::get('recruitment/hired/frontend/applynow/{id}', 'AppliedJobController@edit')->name('apply-job');
         Route::resource('applied-jobs', 'AppliedJobController');
@@ -714,4 +713,5 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
     Route::get('/{handel?}', 'HomeController@index');
     Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+    Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
 });
