@@ -47,6 +47,8 @@
                                                   style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">
                                                 @if($notif->notifiable_type==\App\Models\Search::class)
                                                     Søket er lagret!
+                                                @elseif($notif->notifiable_type=='price_changed')
+                                                Price changed
                                                 @else
                                                     Treff i favoritter
                                                 @endif

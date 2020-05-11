@@ -196,7 +196,7 @@ class CommercialPlotController extends Controller
             if (!$request->owned_plot_facilities) {
                 $request->merge(['owned_plot_facilities' => null]);
             }
-            $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id');
+            $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price');
             unset($commercial_plot['commercial_plot_pdf']);
             $commercial_plot['user_id'] = Auth::user()->id;
 
@@ -225,6 +225,13 @@ class CommercialPlotController extends Controller
             }
 
             $response->update($commercial_plot);
+            
+            if ($request->old_price != $request->monthly_rent) {
+                $ad_id = CommercialPlot::where('id', '=', $id)->first();
+                $ad = Ad::find($ad_id->ad_id);
+                common::property_notification($ad, $this->pusher, Auth::user()->id,'commercial_plot');
+            }
+
             DB::commit();
             $data['success'] = $response;
             $data['property_pdf'] = $property_pdf;

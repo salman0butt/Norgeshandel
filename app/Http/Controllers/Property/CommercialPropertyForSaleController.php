@@ -205,7 +205,7 @@ class CommercialPropertyForSaleController extends Controller
         $property_pdf = '';
         DB::beginTransaction();
         try {
-            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id']);
+            $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
             unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
             $commercial_property_for_sale['user_id'] = Auth::user()->id;
 
@@ -253,7 +253,11 @@ class CommercialPropertyForSaleController extends Controller
             }
 
             $response->update($commercial_property_for_sale);
-
+            if ($request->old_price != $request->rent_per_meter_per_year) {
+                $ad_id = CommercialPropertyForSale::where('id', '=', $id)->first();
+                $ad = Ad::find($ad_id->ad_id);
+                common::property_notification($ad, $this->pusher, Auth::user()->id,'commercial_property_for_sale');
+            }
             DB::commit();
             $data['success'] = $response;
             $data['property_pdf'] = $property_pdf;
