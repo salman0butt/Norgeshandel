@@ -549,7 +549,7 @@
                                         style="vertical-align: inherit;">Salgsoppgave</font></font></button>
                     @endif
                 @endif
-
+{{-- 
                 <div class="mt-3 mb-3">
                     <h5>
                         <font style="vertical-align: inherit;">
@@ -557,8 +557,9 @@
                         </font><br>
                     </h5>
 
-                </div>
+                </div> --}}
                 <div style="width: 306px; height: 153px;">
+                 <h5 class="text-muted">{{ $property_data->full_address }}</h5>
                 <div id="map" style="height: 306px; width: 100%;"></div>
                 </div>
             </div>

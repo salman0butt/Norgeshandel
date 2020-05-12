@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnInUsers extends Migration
+class Add3ColumnToCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddColumnInUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('account_status')->after('username')->default(1);
+        Schema::table('companies', function (Blueprint $table) {
+            //
+            $table->string('full_address')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
         });
     }
 
@@ -25,7 +28,7 @@ class AddColumnInUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             //
         });
     }

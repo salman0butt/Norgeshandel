@@ -56,6 +56,19 @@ function fullAddress() {
     addr_search(street, city, zip);
     
 }
+function companyAddress(element) {
+        var id = element;
+        var zip = $('#zip_'+id).val();
+        var city = $("#zip_code_city_name_"+id)[0].innerText.toLowerCase();
+        var street = $('#address_'+id).val();
+        console.log(zip);
+        console.log(city);
+        console.log(street);
+        if (isEmpty(zip) || isEmpty(city) || isEmpty(street)) {
+            return;
+        }
+        addr_search(street, city, zip);
+}
 
 function showMap(startlat, startlon, full_address){
     var options = {
