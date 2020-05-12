@@ -170,27 +170,45 @@ class BannerController extends Controller
           return response()->json(['success'=>1]);
     }
 
-    public function reports($id) {
-    // $start_date = date('Y-m-d H:i:s', strtotime('-1 month'));
-    // $end_date = date('Y-m-d H:i:s', strtotime(now()));
-    // $clicks = BannerClick::where('banner_id', $id)->where(function ($query) use ($start_date, $end_date) {
-    //     $query->where('created_at', '>=', $start_date)
-    //     ->orWhere('created_at', '=<', $end_date);
-    //     })->get();
+    public function reports(Request $request,$id) {
 
-        $compare_date = (date("Y-m-d", strtotime("-1 month")));
+        if($request->start_date && $request->end_date){
+            $banner_clicks = DB::table('banner_clicks')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
+                ->where('banner_id', $id)
+                ->whereDate('created_at', '>=', $request->start_date)
+                ->whereDate('created_at', '<=', $request->end_date)
+                ->groupBy('date')
+                ->get();
 
-        $banner_clicks = DB::table('banner_clicks')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
-        ->where('banner_id', $id)
-        ->whereDate('created_at', '>', $compare_date)
-        ->groupBy('date')
-        ->get();
+            $banner_views = DB::table('banner_views')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
+                ->where('banner_id', $id)
+                ->whereDate('created_at', '>=', $request->start_date)
+                ->whereDate('created_at', '<=', $request->end_date)
+                ->groupBy('date')
+                ->get();
 
-         $banner_views = DB::table('banner_views')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
-        ->where('banner_id', $id)
-        ->whereDate('created_at', '>', $compare_date)
-        ->groupBy('date')
-        ->get();
+        }else{
+            $compare_date = (date("Y-m-d", strtotime("-1 day")));
+            if($request->date){
+                $compare_date = $request->date;
+            }
+            $banner_clicks = DB::table('banner_clicks')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
+                ->where('banner_id', $id)
+                ->whereDate('created_at', '>', $compare_date)
+                ->groupBy('date')
+                ->get();
+
+            $banner_views = DB::table('banner_views')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
+                ->where('banner_id', $id)
+                ->whereDate('created_at', '>', $compare_date)
+                ->groupBy('date')
+                ->get();
+        }
+
+
+
+
+
 
         $click_date = array();
         $click_count = array();

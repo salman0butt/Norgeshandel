@@ -111,7 +111,7 @@ Add new Banner Group
                  <div class="col-md-3">
                     <label class="col-md-12 control-label" for="time-start">Start Time<span class="red">*</span></label>
                     <div class="col-md-12">
-                  <input type="datetime-local" name="time_start" placeholder="Start time" class="form-control">
+                        <input type="datetime-local" name="time_start" placeholder="Start time" class="form-control">
                     </div>
                 </div>
                   <div class="col-md-3">
