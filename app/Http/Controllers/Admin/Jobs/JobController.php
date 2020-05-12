@@ -158,7 +158,7 @@ class JobController extends Controller
             'app_email' => $request->app_email,
             'app_linkedin' => $request->app_linkedin,
             'app_twitter' => $request->app_twitter,
-            'user_id' => Auth::user()->id,
+//            'user_id' => Auth::user()->id,
         );
 
         $ad = Ad::find($request->ad_id);
@@ -259,10 +259,15 @@ class JobController extends Controller
             $type = 'part_time';
          }
         if($request->is('*/full_time') || $request->is('*/management') || $request->is('*/part_time')){
+
+        $company_id = 0;
+        if(Auth::user()->hasRole('company') && Auth::user()->job_companies->first() && Auth::user()->job_companies->first()->id){
+            $company_id = Auth::user()->job_companies->first()->id;
+        }
         $ad = new Ad(['ad_type' => 'job', 'status' => 'saved', 'user_id' => Auth::user()->id]);
         $ad->save();
         if ($ad) {
-           $job = new Job(['job_type' => $request->job_type, 'user_id' => Auth::user()->id]);
+           $job = new Job(['job_type' => $request->job_type, 'user_id' => Auth::user()->id, 'company_id'=>$company_id]);
             $ad->job()->save($job);
             if ($job) {
                 return redirect(url('complete/job/' . $ad->id))->with('type',$type);
@@ -399,7 +404,7 @@ class JobController extends Controller
             'app_email' => $request->app_email,
             'app_linkedin' => $request->app_linkedin,
             'app_twitter' => $request->app_twitter,
-            'user_id' => Auth::user()->id,
+//            'user_id' => Auth::user()->id,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
             'full_address' => $request->full_address,
