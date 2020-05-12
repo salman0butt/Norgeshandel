@@ -166,7 +166,7 @@
             });
 
                     var i = 0;
-        $("#add_more_viewing_times_sales").click(function(e){
+        $("#add_more_viewing_times").click(function(e){
 
                 e.preventDefault();
                 i=i+1;
