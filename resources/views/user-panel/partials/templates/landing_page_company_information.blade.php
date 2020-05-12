@@ -53,6 +53,9 @@
                             NH-Bruker
                         @endif
                     </h5>
+                    <ul class="list-unstyled">
+                        <li></li>
+                    </ul>
 
                     @if(!$property_published_on && $property_data->user)
                         @if(!$property_data->user->hasRole('company'))
@@ -63,7 +66,7 @@
                             <p class="mb-0">{{$property_data->user->position}}</p>
 
                             @if($property_data->user->mobile_number)
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled mb-0">
                                     <li class="py-2"><a  href="tel:{{$property_data->user->mobile_number}}">Mobil  {{$property_data->user->mobile_number}}</a></li>
                                 </ul>
                             @endif
@@ -75,9 +78,6 @@
                         <h6 class="mt-2">NH-Bruker</h6>
                     @endif
 
-                    <ul class="list-unstyled mb-0">
-                        <li></li>
-                    </ul>
 
                     @if($property_data->ad && $property_data->ad->agents->count() > 0)
                         @foreach($property_data->ad->agents as $ad_agent)
@@ -87,13 +87,10 @@
                             <h6 class="mt-2">{{$ad_agent->first_name.' '.$ad_agent->last_name}}</h6>
                             <p class="mb-0">{{$ad_agent->position}}</p>
 
-                            <ul class="list-unstyled">
+                            <ul class="list-unstyled mb-0">
                                 @if($ad_agent->mobile_number)
                                     <li class="py-2"><a  href="tel:{{$ad_agent->mobile_number}}">Mobil  {{$ad_agent->mobile_number}}</a></li>
                                 @endif
-                            </ul>
-                            <ul class="list-unstyled mb-0">
-                                <li></li>
                             </ul>
                         @endforeach
                     @endif
