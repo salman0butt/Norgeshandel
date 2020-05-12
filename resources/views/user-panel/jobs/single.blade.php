@@ -1,8 +1,8 @@
 @extends('layouts.landingSite')
-
 @section('main_title')
     NorgesHandel - {{$job->title}}
 @endsection
+{{ dd($job->company_id) }}
 @section('page_content')
     <?php
     $job_function = "";
@@ -325,7 +325,12 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 //}
 
 ?>
-
-@php $map_obj = $job @endphp
+@if(!$job->user->roles->first()->name == 'company')
+@php 
+$map_obj = '';
+ @endphp
+@else
+@php $map_obj = $job; @endphp
+@endif
 @include('common.partials.description_map',compact('map_obj'))
 

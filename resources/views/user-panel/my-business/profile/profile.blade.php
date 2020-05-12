@@ -860,13 +860,12 @@
             }
         });
 
-        $(document).on('change', '.zip_code', function (e) {
+        $(document).on('change', '.zip_code,input[name="address"]', function (e) {
             var zip_code = $(this).val();
             var old_zip = $('#' + $(this).data('old_zip')).val();
                     var element = $(this.form).attr('data-id');
                     console.log(element);
-                //calling address
-               companyAddress(element);
+             
             if (zip_code) {
                 if (old_zip != zip_code) {
                     var this_obj_id = $(this).attr('id');
@@ -924,6 +923,8 @@
                         xhttp.send();
                     }
                     // find_zipcode_city(zip_code,id);
+                    //calling address
+                    companyAddress(element);
                 }
             }
         });
