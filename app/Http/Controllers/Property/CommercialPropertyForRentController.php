@@ -131,8 +131,14 @@ class CommercialPropertyForRentController extends Controller
     //prooperty for new_commercial_property_for_rent new
     public function new_commercial_property_for_rent(Request $request)
     {
-
-        $ad = new Ad(['ad_type' => 'property_commercial_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $company_id = 0;
+        if(Auth::user()->hasRole('agent')){
+            $company_id = Auth::user()->created_by_company_id;
+        }
+        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+            $company_id = Auth::user()->property_companies->first()->id;
+        }
+        $ad = new Ad(['ad_type' => 'property_commercial_for_rent', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
         $ad->save();
 
 
@@ -199,7 +205,7 @@ class CommercialPropertyForRentController extends Controller
             $commercial_property_for_rent = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
             unset($commercial_property_for_rent['commercial_property_for_rent_pdf']);
-            $commercial_property_for_rent['user_id'] = Auth::user()->id;
+//            $commercial_property_for_rent['user_id'] = Auth::user()->id;
 
             if (isset($commercial_property_for_rent['property_type']) && $commercial_property_for_rent['property_type'] != "") {
                 $commercial_property_for_rent['property_type'] = json_encode($commercial_property_for_rent['property_type']);

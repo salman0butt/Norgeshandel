@@ -141,8 +141,14 @@ class FlatWishesRentedController extends Controller
     //prooperty for new_property_for_flat_wishes_rented new
     public function new_property_for_flat_wishes_rented(Request $request)
     {
-
-        $ad = new Ad(['ad_type' => 'property_flat_wishes_rented', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $company_id = 0;
+        if(Auth::user()->hasRole('agent')){
+            $company_id = Auth::user()->created_by_company_id;
+        }
+        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+            $company_id = Auth::user()->property_companies->first()->id;
+        }
+        $ad = new Ad(['ad_type' => 'property_flat_wishes_rented', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
         $ad->save();
 
 
@@ -232,7 +238,7 @@ class FlatWishesRentedController extends Controller
             }
 
             unset($flat_wishes_rented_data['flat_wishes_rented']);
-            $flat_wishes_rented_data['user_id'] = Auth::user()->id;
+//            $flat_wishes_rented_data['user_id'] = Auth::user()->id;
 
             $response = FlatWishesRented::findOrFail($id);
 

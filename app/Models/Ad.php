@@ -24,7 +24,7 @@ class Ad extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'user_id','status','ad_type','sold_at','published_on'
+        'user_id','status','ad_type','sold_at','published_on','company_id'
     ];
 
     public function media(){

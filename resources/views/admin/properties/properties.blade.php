@@ -101,8 +101,10 @@
                                                                 @endif
                                                                 <br>
                                                                 @if(Request()->get('trashed'))
-                                                                    <a href="{{url('admin/property/realestate/restore/'.$ad->id)}}" class="btn-link-danger" onclick="return confirm('Er du sikker på å gjenopprette denne jobben')">Restore</a>
-                                                                @else
+                                                                    @if(($ad->user && !$ad->company_id) || ($ad->company_id && $ad->company && $ad->user))
+                                                                        <a href="{{url('admin/property/realestate/restore/'.$ad->id)}}" class="btn-link-danger" onclick="return confirm('Er du sikker på å gjenopprette denne jobben')">Restore</a>
+                                                                    @endif
+                                                                    @else
                                                                         <a href="{{url('/', $ad->id)}}" class="mr-2">View</a>
                                                                         <a href="@if($ad->ad_type == 'property_for_rent') {{ url('new/property/rent/ad/'.$property->id.'/edit')}}
                                                                         @elseif($ad->ad_type == 'property_for_sale') {{ url('new/property/sale/ad/'.$property->id.'/edit')}}
@@ -132,7 +134,7 @@
                                                                 @endif
                                                             </td>
                                                             <td>{{\App\Helpers\common::get_ad_attribute($ad,'price') ? number_format(\App\Helpers\common::get_ad_attribute($ad,'price'),0,""," ") : ''}}</td>
-                                                            <td>{{$ad->user->username}}</td>
+                                                            <td>{{$ad->user ? $ad->user->username : ''}}</td>
                                                             <td>{{$ad->status}} @if($ad->status=='pending') <a href="{{route('jobs.status_change', [$ad, $approve])}}">approve</a>@endif</td>
                                                             <td>{{count($ad->views)}}</td>
                                                         </tr>

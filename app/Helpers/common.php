@@ -700,15 +700,6 @@ class common
 
     public static function sync_ad_agents($ad,$agent_id_arr){
         if(Auth::user()->hasRole('company') || Auth::user()->created_by_company_id){
-            $company_id = 0;
-            if(Auth::user()->created_by_company_id){
-                $company_id = Auth::user()->created_by_company_id;
-            }
-            if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first()){
-                $company_id = Auth::user()->property_companies->first()->id;
-            }
-            $ad->company_id = $company_id;
-            $ad->update();
             $ad->agents()->sync($agent_id_arr);
         }
     }

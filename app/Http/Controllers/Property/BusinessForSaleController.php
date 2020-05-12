@@ -121,8 +121,15 @@ class BusinessForSaleController extends Controller
     //prooperty for new_business_for_sale new
     public function new_business_for_sale(Request $request)
     {
+        $company_id = 0;
+        if(Auth::user()->hasRole('agent')){
+            $company_id = Auth::user()->created_by_company_id;
+        }
+        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+            $company_id = Auth::user()->property_companies->first()->id;
+        }
 
-        $ad = new Ad(['ad_type' => 'property_business_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $ad = new Ad(['ad_type' => 'property_business_for_sale', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id ]);
         $ad->save();
 
 
@@ -148,13 +155,13 @@ class BusinessForSaleController extends Controller
             $business_for_sale = $request->except('upload_dropzone_images_type');
 
             unset($business_for_sale['business_for_sale_pdf']);
-            $business_for_sale['user_id'] = Auth::user()->id;
+//            $business_for_sale['user_id'] = Auth::user()->id;
 
             //add Add to table
             $add = array();
             $add['ad_type'] = 'property_business_for_sale';
             $add['status'] = 'published';
-            $add['user_id'] = Auth::user()->id;
+//            $add['user_id'] = Auth::user()->id;
             $add_response = Ad::create($add);
             $business_for_sale['ad_id'] = $add_response->id;
 
@@ -254,7 +261,7 @@ class BusinessForSaleController extends Controller
             $business_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
             unset($business_for_sale['business_for_sale_pdf']);
-            $business_for_sale['user_id'] = Auth::user()->id;
+//            $business_for_sale['user_id'] = Auth::user()->id;
 
             if (isset($business_for_sale['published_on']) && $business_for_sale['published_on'] == 'on') {
                 $business_for_sale['published_on'] = 1;
