@@ -1,8 +1,8 @@
 @extends('layouts.landingSite')
-
 @section('main_title')
     NorgesHandel - {{$job->title}}
 @endsection
+{{ dd($job->company_id) }}
 @section('page_content')
     <?php
     $job_function = "";
@@ -299,7 +299,7 @@
                     </div>
                     <div class="mt-3 location"><h5 class="u-t3">location</h5></div>
                          <div style="width: 306px; height: 306px;">
-                          <h5 class="text-muted">{{ $property_data->full_address }}</h5>
+                          <h5 class="text-muted">{{ $job->full_address }}</h5>
                              <div id="map" style="height: 100%; width: 100%;"></div>
                         </div>
                     {{-- <p class="u-mt4">
@@ -325,7 +325,12 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 //}
 
 ?>
-
-@php $map_obj = $job @endphp
+@if(!$job->user->roles->first()->name == 'company')
+@php 
+$map_obj = '';
+ @endphp
+@else
+@php $map_obj = $job; @endphp
+@endif
 @include('common.partials.description_map',compact('map_obj'))
 
