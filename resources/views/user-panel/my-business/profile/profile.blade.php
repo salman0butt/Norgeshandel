@@ -188,6 +188,9 @@
                                         class="form-control dme-form-control zip_code" data-old_zip="old_zip"
                                         data-zip_city="zip_city" data-id="zip_code_city_name">
                                     <span id="zip_code_city_name"></span>
+                                            <input type="hidden" name="latitude" id="latitude" value="{{$company->latitude ?? ''}}">
+                                            <input type="hidden" name="longitude" id="longitude" value="{{$company->longitude ?? ''}}">
+                                            <input type="hidden" name="full_address" id="full_address" value="{{$company->full_address ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -195,7 +198,7 @@
                             <div class="row">
                                 <label for="address" class="col-md-2 u-t5">Gateadresse (valgfritt)</label>
                                 <div class="col-sm-10 ">
-                                    <input name="address" id="address" type="text"
+                                    <input name="address" id="emp_address" type="text"
                                         class="form-control dme-form-control">
                                     <span class="u-t5">Forklar kort om tilgangen til boligen og hvordan du finner den,
                                         vennligst fortell om nærhet til vei, buss og tog.</span>
@@ -450,9 +453,9 @@
                                                 data-id="zip_code_city_name_{{$company->id}}">
                                             <span id="zip_code_city_name_{{$company->id}}">{{$company->zip_city}}</span>
                                        
-                                            <input type="hidden" name="latitude" id="latitude" value="">
-                                            <input type="hidden" name="longitude" id="longitude" value="">
-                                            <input type="hidden" name="full_address" id="full_address" value="">
+                                            <input type="hidden" name="latitude" id="latitude" value="{{$company->latitude ?? ''}}">
+                                            <input type="hidden" name="longitude" id="longitude" value="{{$company->longitude ?? ''}}">
+                                            <input type="hidden" name="full_address" id="full_address" value="{{$company->full_address ?? ''}}">
                                         </div>
                                     </div>
                                 </div>
@@ -462,7 +465,7 @@
                                             (valgfritt)</label>
                                         <div class="col-sm-10 ">
                                             <input name="address" id="address_{{$company->id}}" type="text"
-                                                class="form-control dme-form-control" value="{{$company->address}}">
+                                                class="form-control dme-form-control address" value="{{$company->address}}">
                                             <span class="u-t5">Forklar kort om tilgangen til boligen og hvordan du
                                                 finner den, vennligst fortell om nærhet til vei, buss og tog.</span>
                                         </div>
@@ -860,7 +863,7 @@
             }
         });
 
-        $(document).on('change', '.zip_code,input[name="address"]', function (e) {
+        $(document).on('change', '.zip_code, input', function (e) {
             var zip_code = $(this).val();
             var old_zip = $('#' + $(this).data('old_zip')).val();
                     var element = $(this.form).attr('data-id');
