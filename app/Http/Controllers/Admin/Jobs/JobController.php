@@ -111,13 +111,16 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-     
         $ad_id = '';
         if ($request->ad_id && !empty($ad->id)) {
             $ad_id = $request->ad_id;
         }
         if ($request->file('files')) {
             return $this->upload_images($request, $ad_id);
+        }
+
+        if(!$request->company_id){
+            $request->merge(['company_id'=>0]);
         }
 
         $arr = array(
@@ -148,6 +151,7 @@ class JobController extends Controller
             'app_link_to_receive' => $request->app_link_to_receive,
             'app_email_to_receive' => $request->app_email_to_receive,
             'app_contact' => $request->app_contact,
+            'company_id' => $request->company_id,
             'app_contact_title' => $request->app_contact_title,
             'app_mobile' => $request->app_mobile,
             'app_phone' => $request->app_phone,
@@ -458,7 +462,6 @@ class JobController extends Controller
      */
     public function update(Request $request,$id)
     {
-
         if($request->job_id){
             $job = Job::find($request->job_id);
         }
