@@ -141,8 +141,14 @@ class CommercialPropertyForSaleController extends Controller
     //property for new_commercial_property_for_sale new
     public function new_commercial_property_for_sale(Request $request)
     {
-
-        $ad = new Ad(['ad_type' => 'property_commercial_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $company_id = 0;
+        if(Auth::user()->hasRole('agent')){
+            $company_id = Auth::user()->created_by_company_id;
+        }
+        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+            $company_id = Auth::user()->property_companies->first()->id;
+        }
+        $ad = new Ad(['ad_type' => 'property_commercial_for_sale', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
         $ad->save();
 
 
@@ -207,7 +213,7 @@ class CommercialPropertyForSaleController extends Controller
         try {
             $commercial_property_for_sale = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
             unset($commercial_property_for_sale['commercial_property_for_sale_pdf']);
-            $commercial_property_for_sale['user_id'] = Auth::user()->id;
+//            $commercial_property_for_sale['user_id'] = Auth::user()->id;
 
             if (isset($commercial_property_for_sale['property_type']) && $commercial_property_for_sale['property_type'] != "") {
                 $commercial_property_for_sale['property_type'] = json_encode($commercial_property_for_sale['property_type']);

@@ -110,7 +110,9 @@ $job_functions = $job_function->terms;
                                                                 {{$job->name ? Str::limit($job->name,20) : ''}}
                                                                 <br>
                                                                 @if(Request()->get('trashed'))
-                                                                    <a href="{{url('admin/jobs/restore/'.$job->id)}}" class="btn-link-danger" onclick="return confirm('Er du sikker på å gjenopprette denne jobben')">Restore</a>
+                                                                    @if(($job->user && !$job->company_id) || ($job->company_id && $job->company && $job->user))
+                                                                        <a href="{{url('admin/jobs/restore/'.$job->id)}}" class="btn-link-danger" onclick="return confirm('Er du sikker på å gjenopprette denne jobben')">Restore</a>
+                                                                    @endif
                                                                 @else
                                                                     <a href="{{route('jobs.show', compact('job'))}}" class="mr-2">View</a>
                                                                     <a href="{{route('jobs.edit', compact('job'))}}" class="mr-2">Edit</a>

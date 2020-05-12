@@ -202,7 +202,14 @@ class PropertyForRentController extends Controller
     //prooperty for rent new
     public function new_property_for_rent(Request $request)
     {
-        $ad = new Ad(['ad_type' => 'property_for_rent', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $company_id = 0;
+        if(Auth::user()->hasRole('agent')){
+            $company_id = Auth::user()->created_by_company_id;
+        }
+        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+            $company_id = Auth::user()->property_companies->first()->id;
+        }
+        $ad = new Ad(['ad_type' => 'property_for_rent', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
         $ad->save();
         if ($ad) {
             $property = new PropertyForRent(['user_id' => Auth::id()]);
@@ -309,7 +316,7 @@ class PropertyForRentController extends Controller
                 $property_for_rent_data['published_on'] = 0;
             }
 
-            $property_for_rent_data['user_id'] = Auth::user()->id;
+//            $property_for_rent_data['user_id'] = Auth::user()->id;
 
             $response = PropertyForRent::findOrFail($id);
 

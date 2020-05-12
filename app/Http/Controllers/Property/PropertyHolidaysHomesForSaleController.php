@@ -170,8 +170,14 @@ class PropertyHolidaysHomesForSaleController extends Controller
     //property for new_property_for_holiday_homes_for_sale new
     public function new_property_for_holiday_homes_for_sale(Request $request)
     {
-
-        $ad = new Ad(['ad_type' => 'property_holiday_home_for_sale', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $company_id = 0;
+        if(Auth::user()->hasRole('agent')){
+            $company_id = Auth::user()->created_by_company_id;
+        }
+        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+            $company_id = Auth::user()->property_companies->first()->id;
+        }
+        $ad = new Ad(['ad_type' => 'property_holiday_home_for_sale', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
         $ad->save();
 
 
@@ -317,7 +323,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
                 $property_home_for_sale_data['facilities'] = $facilities;
             }
 
-            $property_home_for_sale_data['user_id'] = Auth::user()->id;
+//            $property_home_for_sale_data['user_id'] = Auth::user()->id;
             unset($property_home_for_sale_data['property_home_for_sale_pdf']);
             unset($property_home_for_sale_data['property_home_for_sale_sales_quote']);
             $response = PropertyHolidaysHomesForSale::findOrFail($id);

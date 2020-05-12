@@ -117,8 +117,14 @@ class CommercialPlotController extends Controller
     //prooperty for new_commercial_plots new
     public function new_commercial_plots(Request $request)
     {
-
-        $ad = new Ad(['ad_type' => 'property_commercial_plots', 'status' => 'saved', 'user_id' => Auth::id()]);
+        $company_id = 0;
+        if(Auth::user()->hasRole('agent')){
+            $company_id = Auth::user()->created_by_company_id;
+        }
+        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+            $company_id = Auth::user()->property_companies->first()->id;
+        }
+        $ad = new Ad(['ad_type' => 'property_commercial_plots', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
         $ad->save();
 
 
@@ -198,7 +204,7 @@ class CommercialPlotController extends Controller
             }
             $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price');
             unset($commercial_plot['commercial_plot_pdf']);
-            $commercial_plot['user_id'] = Auth::user()->id;
+//            $commercial_plot['user_id'] = Auth::user()->id;
 
             if (isset($commercial_plot['published_on']) && $commercial_plot['published_on'] == 'on') {
                 $commercial_plot['published_on'] = 1;
