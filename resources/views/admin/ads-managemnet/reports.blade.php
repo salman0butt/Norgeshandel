@@ -16,7 +16,8 @@
         <div class="float-left">
             <a href="{{url('banners/reports/'.Request()->id.'?date='.(date("Y-m-d", strtotime("-7 day"))))}}" class="btn btn-primary mr-2">Last Week</a>
             <a href="{{url('banners/reports/'.Request()->id.'?date='.(date("Y-m-d", strtotime("-1 month"))))}}" class="btn btn-primary mr-2">Last Month</a>
-            <a href="{{url('banners/reports/'.Request()->id.'?date='.date('Y-m-d', strtotime('-1 year')))}}" class="btn btn-primary">Last Year</a>
+            <a href="{{url('banners/reports/'.Request()->id.'?date='.date('Y-m-d', strtotime('-1 year')))}}" class="btn btn-primary mr-2">Last Year</a>
+            <a href="{{url('banners/reports/'.Request()->id.'?generate_pdf=true'.(Request()->date ? '&date='.Request()->date : '').(Request()->start_date ? '&start_date='.Request()->start_date : '').(Request()->end_date ? '&end_date='.Request()->end_date : ''))}}" class="btn btn-success">Generate PDF</a>
         </div>
         <div class="float-right">
             <form class="form-inline" method="GET" action="{{url('banners/reports/'.Request()->id)}}">
@@ -85,13 +86,6 @@ new Chart(document.getElementById("views"), {
     ]
   },
   options: {
-      scales: {
-          yAxes: [{
-              ticks: {
-                  fixedStepSize: 1
-              }
-          }],
-      },
     title: {
       display: true,
       text: 'Banners Views Monthly Reports'

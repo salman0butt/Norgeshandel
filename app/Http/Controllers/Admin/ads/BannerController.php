@@ -11,6 +11,7 @@ use App\Admin\Banners\BannerGroup;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
+use niklasravnsborg\LaravelPdf\Pdf;
 
 class BannerController extends Controller
 {
@@ -171,7 +172,6 @@ class BannerController extends Controller
     }
 
     public function reports(Request $request,$id) {
-
         if($request->start_date && $request->end_date){
             $banner_clicks = DB::table('banner_clicks')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
                 ->where('banner_id', $id)
@@ -205,10 +205,11 @@ class BannerController extends Controller
                 ->get();
         }
 
-
-
-
-
+        if($request->generate_pdf && $request->generate_pdf == 'true'){
+            $html = view('admin.ads-managemnet.pdf_report',compact('banner_views','banner_clicks'))->render();
+            $pdf = new Pdf($html);
+            return $pdf->stream('NorgesHandel-CV.pdf');
+        }
 
         $click_date = array();
         $click_count = array();
