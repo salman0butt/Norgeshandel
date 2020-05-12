@@ -38,6 +38,8 @@
     </style>
 </head>
 <body>
+<h1>{{$banner && $banner->title ? $banner->title : ''}}</h1>
+<hr>
 <h2>Banner Views</h2>
 <table id="views">
     <tr>

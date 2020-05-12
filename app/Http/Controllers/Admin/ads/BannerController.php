@@ -172,6 +172,7 @@ class BannerController extends Controller
     }
 
     public function reports(Request $request,$id) {
+        $banner = Banner::find($id);
         if($request->start_date && $request->end_date){
             $banner_clicks = DB::table('banner_clicks')->selectRaw("COUNT(id) as count_view, date(created_at) as date ")
                 ->where('banner_id', $id)
@@ -206,9 +207,9 @@ class BannerController extends Controller
         }
 
         if($request->generate_pdf && $request->generate_pdf == 'true'){
-            $html = view('admin.ads-managemnet.pdf_report',compact('banner_views','banner_clicks'))->render();
+            $html = view('admin.ads-managemnet.pdf_report',compact('banner_views','banner_clicks','banner'))->render();
             $pdf = new Pdf($html);
-            return $pdf->stream('NorgesHandel-CV.pdf');
+            return $pdf->stream('banner_report.pdf');
         }
 
         $click_date = array();
