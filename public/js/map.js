@@ -61,7 +61,7 @@ function companyAddress(element) {
         var zip = '';
         var city ='';
         var street = '';
-    if (isEmpty(id) || id == 'undefined'){
+    if (!isEmpty(id)){
              zip = $('#zip_' + id).val();
              city = $("#zip_code_city_name_" + id)[0].innerText.toLowerCase();
              street = $('#address_' + id).val();

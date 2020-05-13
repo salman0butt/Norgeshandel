@@ -612,11 +612,11 @@ class common
             ->join('metas', 'metas.metable_id', '=', 'favorites.user_id')
             ->where('metas.metable_type', '=', 'App\User')
             ->where('favorites.ad_id', '=', $ad->id)
-            ->where('metas.key', '=', 'notification_ad_sold')
+            ->where('metas.key', '=', 'notification_price_changed')
             ->where('metas.value', '=', 1)
             ->get();
         if($users){
-             $ids = $users->pluck('user_id');
+            $ids = $users->pluck('user_id');
             foreach ($ids as $user_id) {
         $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Price has been changed']);
         $notif->save();
