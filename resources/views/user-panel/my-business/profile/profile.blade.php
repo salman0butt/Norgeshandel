@@ -905,7 +905,7 @@
             }
         });
 
-        $(document).on('change', '.zip_code, input', function (e) {
+        $(document).on('change', '.zip_code, input[name="address"]', function (e) {
             var zip_code = $(this).val();
             var old_zip = $('#' + $(this).data('old_zip')).val();
                     var element = $(this.form).attr('data-id');
