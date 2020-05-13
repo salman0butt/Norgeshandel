@@ -62,11 +62,12 @@
                     </button>
                 </div>
                 @endif
-
-                <div class="col-md-3">
-                    <a href="{{url('my-business/company-agents')}}"
-                        class="btn dme-btn-outlined-blue">Eiendomsmeglere</a>
-                </div>
+                @if($user->property_companies->count() > 0)
+                    <div class="col-md-3">
+                        <a href="{{url('my-business/company-agents')}}"
+                            class="btn dme-btn-outlined-blue">Eiendomsmeglere</a>
+                    </div>
+                @endif
             </div>
             <div class="row collapse" id="company_profile_block">
                 <div class="col-md-12">
