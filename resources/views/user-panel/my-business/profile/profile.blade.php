@@ -12,7 +12,11 @@
 <link rel="stylesheet" href="{{asset('public/dropzone/plugins.min.css')}}">
 <link rel="stylesheet" href="{{asset('public/dropzone/dropzone.min.css')}}">
 <link rel="stylesheet" href="{{asset('public/dropzone/basic.min.css')}}">
-
+<style>
+#emp_address-error {
+    display:none !important;
+}
+</style>
 @endsection
 @section('page_content')
 <main class="profile">
@@ -912,7 +916,7 @@
                     var this_obj_id = $(this).attr('id');
                     $('#' + this_obj_id + '-error').remove();
 
-                    document.getElementById($(this).data('id')).innerHTML = '';
+                    document.getElementById($(this).data('id'))? document.getElementById($(this).data('id')).innerHTML = '' : null;
                     var zip_code = $(this).val();
                     var api_url = 'https://api.bring.com/shippingguide/api/postalCode.json';
 
