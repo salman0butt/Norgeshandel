@@ -58,9 +58,19 @@ function fullAddress() {
 }
 function companyAddress(element) {
         var id = element;
-        var zip = $('#zip_'+id).val();
-        var city = $("#zip_code_city_name_"+id)[0].innerText.toLowerCase();
-        var street = $('#address_'+id).val();
+        var zip = '';
+        var city ='';
+        var street = '';
+    if (isEmpty(id) || id == 'undefined'){
+             zip = $('#zip_' + id).val();
+             city = $("#zip_code_city_name_" + id)[0].innerText.toLowerCase();
+             street = $('#address_' + id).val();
+        }else {
+             zip = $('#emp_zip').val();
+             city = $("#zip_code_city_name")[0].innerText.toLowerCase();
+             street = $('#emp_address').val();
+        }
+   
         console.log(zip);
         console.log(city);
         console.log(street);
