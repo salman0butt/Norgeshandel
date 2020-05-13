@@ -62,7 +62,7 @@
                             <div>
                                 <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
                             </div>
-                            <h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->lasst_name}}</h6>
+                            <h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->last_name}}</h6>
                             <p class="mb-0">{{$property_data->user->position}}</p>
 
                             @if($property_data->user->mobile_number)

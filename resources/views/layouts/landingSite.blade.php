@@ -445,7 +445,8 @@
     }
 </script>
 @yield('script')
-<script src="https://cdn.tiny.cloud/1/x0txntp9p38g4hksno5jsfsk6hkxeqyhqwonj7posbp6ystc/tinymce/5/tinymce.min.js"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+{{--<script src="https://cdn.tiny.cloud/1/x0txntp9p38g4hksno5jsfsk6hkxeqyhqwonj7posbp6ystc/tinymce/5/tinymce.min.js"></script>--}}
 
 <script src="https://js.pusher.com/3.1/pusher.min.js"></script>
 <script src="{{asset('public/mediexpert.js')}}"></script>

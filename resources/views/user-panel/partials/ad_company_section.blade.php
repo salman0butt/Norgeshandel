@@ -18,7 +18,7 @@
 
             @if($agents->count() > 0)
                 <div class="form-group">
-                    <label class="u-t5">Agenter</label>
+                    <label class="u-t5">Vil du legge til en kollega?</label>
                     <div class="row">
                         @foreach($agents as $agent)
                             <div class="col-md-12 input-toggle d-flex align-items-center">

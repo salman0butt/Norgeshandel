@@ -7,7 +7,7 @@
                     <h3 class="u-t3 pt-3">
                         Hei,
                     </h3>
-                    <p>Vi vil informere deg om at {{$user->created_by_company && $user->created_by_company->emp_name ? $user->created_by_company->emp_name : ''}} har blitt opprettet kontoen din på NorgesHandel.</p>
+                    <p>Vi vil informere deg om at {{$user->created_by_company && $user->created_by_company->emp_name ? $user->created_by_company->emp_name : ''}} har opprettet profilen din hos NorgesHandel.</p>
                     <br>
                     <p><b>Her er kontodetaljer</b></p>
                     <p>E-post: {{$user->email}}</p>

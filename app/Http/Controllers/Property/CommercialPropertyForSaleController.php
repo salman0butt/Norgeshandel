@@ -141,27 +141,35 @@ class CommercialPropertyForSaleController extends Controller
     //property for new_commercial_property_for_sale new
     public function new_commercial_property_for_sale(Request $request)
     {
-        $company_id = 0;
-        if(Auth::user()->hasRole('agent')){
-            $company_id = Auth::user()->created_by_company_id;
-        }
-        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
-            $company_id = Auth::user()->property_companies->first()->id;
-        }
-        $ad = new Ad(['ad_type' => 'property_commercial_for_sale', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
-        $ad->save();
-
-
-        if ($ad) {
-            $property = new CommercialPropertyForSale(['user_id' => Auth::id()]);
-            $ad->propertyCommercialPropertyForSale()->save($property);
-            if ($property) {
-
-                return redirect(url('complete/ad/' . $ad->id));
+        DB::beginTransaction();
+        try{
+            $company_id = 0;
+            if(Auth::user()->hasRole('agent')){
+                $company_id = Auth::user()->created_by_company_id;
+            }
+            if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+                $company_id = Auth::user()->property_companies->first()->id;
+            }
+            $auth_id = Auth::id();
+            $ad = new Ad(['ad_type' => 'property_commercial_for_sale', 'status' => 'saved', 'user_id' => $auth_id, 'company_id'=>$company_id]);
+            $ad->save();
+            if ($ad) {
+                $property = new CommercialPropertyForSale(['user_id' => $auth_id]);
+                $ad->propertyCommercialPropertyForSale()->save($property);
+                if ($property) {
+                    DB::commit();
+                    return redirect(url('complete/ad/' . $ad->id));
+                } else {
+                    DB::rollback();
+                    abort(404);
+                }
             } else {
+                DB::rollback();
                 abort(404);
             }
-        } else {
+            DB::commit();
+        }catch (\Exception $e){
+            DB::rollback();
             abort(404);
         }
     }
