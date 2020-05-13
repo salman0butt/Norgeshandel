@@ -231,7 +231,7 @@ class BannerController extends Controller
             $total_views = $total_views + $view->count_view;
         }
       
-        return view('admin.ads-managemnet.reports',compact('click_date','click_count','view_date','view_count','total_clicks','total_views'));
+        return view('admin.ads-managemnet.reports',compact('click_date','click_count','view_date','view_count','total_clicks','total_views','banner_clicks','banner_views'));
     }
 
 }

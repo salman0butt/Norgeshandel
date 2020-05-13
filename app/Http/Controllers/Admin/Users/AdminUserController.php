@@ -198,24 +198,72 @@ class AdminUserController extends Controller
     {
         $user = User::find($id);
         $roles = $user->roles;
+
         if (!$user->hasRole('admin')) {
-            if($user->ads->count() > 0){
-                foreach ($user->ads as $ad){
-                    if(isset($ad->job) && $ad->job){
-                        $ad->job->delete();
+
+            DB::beginTransaction();
+            try{
+                if($user->hasRole('company')){
+                    if($user->property_companies->count() > 0){
+                        foreach ($user->property_companies->first()->agents as $company_agent){
+                            if($company_agent->ads->count() > 0){
+                                foreach ($company_agent->ads as $agent_ad){
+                                    if($agent_ad->ad_type != 'job' &&  isset($agent_ad->property) && $agent_ad->property){
+                                        $agent_ad->property->delete();
+                                    }
+                                    $agent_ad->delete();
+                                }
+                            }
+                            $company_agent->delete();
+                        }
+                        $user->property_companies->first()->delete();
                     }
 
-                    if(isset($ad->property) && $ad->property){
-                        $ad->property->delete();
+                    if($user->job_companies->count() > 0){
+                        if($user->job_companies->first()->jobs->count() > 0){
+                            foreach ($user->job_companies->first()->jobs as $company_job_ad){
+                                if($company_job_ad->ad_type == 'job' && isset($company_job_ad->job) && $company_job_ad->job){
+                                    $company_job_ad->job->delete();
+                                    $company_job_ad->delete();
+                                }
+
+                                if($company_job_ad->ad_type != 'job' && isset($company_job_ad->property) && $company_job_ad->property){
+                                    $company_job_ad->property->delete();
+                                    $company_job_ad->delete();
+                                }
+
+                            }
+                        }
+                        $user->job_companies->first()->delete();
                     }
-                    $ad->delete();
                 }
-            }
+                if($user->ads->count() > 0){
+                    foreach ($user->ads as $ad){
+                        if($ad->ad_type == 'job' && isset($ad->job) && $ad->job){
+                            $ad->job->delete();
+                        }
+
+                        if($ad->ad_type != 'job' && isset($ad->property) && $ad->property){
+                            $ad->property->delete();
+                        }
+
+                        $ad->delete();
+                    }
+                }
 //            foreach ($roles as $role) {
 //                $user->detachRole($role->id);
 //            }
-            $user->delete();
-            session()->flash('success', 'User has been updated successfully');
+                $user->delete();
+                DB::commit();
+                session()->flash('success', 'User has been updated successfully');
+                return back();
+
+            }catch (\Exception $e){
+                DB::rollback();
+                dd($e->getMessage());
+                session()->flash('danger', 'Something went wrong.');
+                return back();
+            }
         }
         else{
             session()->flash('danger', 'Administrator can\'t be deleted');
