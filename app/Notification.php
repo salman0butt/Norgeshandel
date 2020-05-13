@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Ad;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
@@ -15,5 +16,8 @@ class Notification extends Model
 
     public function searches(){
         return $this->morphTo()->whereDate('created_at', '>', $this->created_at);
+    }
+    public function ad() {
+        return $this->belongsTo(Ad::class,'notifiable_id','id');
     }
 }

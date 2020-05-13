@@ -1,5 +1,4 @@
 @extends('layouts.landingSite')
-
 @section('page_content')
     <style>
         article.col-md-12.pl-0.pr-0.list-ad:hover {
@@ -21,7 +20,9 @@
                     @php($added = array())
                     @if(is_countable($notifications) && count($notifications) > 0)
                         @foreach ($notifications as $notif)
-                            @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id)
+                        
+                            @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id) 
+                    
                             @if(!in_array($addable, $added) && !empty($notif->notifiable))
                                 <article class="col-md-12 pl-0 pr-0 list-ad">
                                     <a href="
@@ -47,27 +48,28 @@
                                                   style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">
                                                 @if($notif->notifiable_type==\App\Models\Search::class)
                                                     Søket er lagret!
-                                                @elseif($notif->notifiable_type=='price_changed')
-                                                Price changed
-                                                @else
+                                                @elseif($notif->notifiable_type== App\Models\Ad::class)
                                                     Treff i favoritter
                                                 @endif
                                             </span>
+                                            
+                                        </span>
+                                        <div class="" style="display:block;width:70%;float:left;">
+                                        <p class="mb-0">{{ $notif->ad->property->zip_city }}</p>
+                                            <h2 class="u-t3 u-mt8" style="margin-top:10px;">
+                                                <span class="">
+                                                <h5>{{ $notif->ad->getTitle() }}</h5>
+                                                </span>
+                                            </h2>
                                             <span class="u-stone timeago" style="margin-left:10px;" title="{{$notif->created_at}}">
                                             &nbsp;
                                             </span>
-                                        </span>
-                                        <div class="" style="display:block;width:70%;float:left;">
-                                            <h2 class="u-t3 u-mt8" style="margin-top:10px;">
-                                                <span class="">
-                                                </span>
-                                            </h2>
-                                            <p class="u-stone u-t4">
+                                            <p class="u-stone u-t4 d-block pull-right">
                                                 <b>
                                                     @if($notif->notifiable_type==\App\Models\Search::class)
                                                         {{count($notif->notifiable->first()->unread_notifications)<1?"Ingen nye":count($notif->notifiable->first()->unread_notifications)." nye"}}
                                                     @else
-                                                        {{$notif->read_at==null?'1 Nye':'Ingen nye'}}
+                                                        {{$notif->read_at==null?'1 Nye':''}}
                                                     @endif
                                                 </b>
                                             </p>

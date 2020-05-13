@@ -22,8 +22,8 @@ class NotificationController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $notifications = Notification::orderBy('id', 'desc')->get();
-//            $searches = Auth::user()->saved_searches;
+            $notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->get();
+ //            $searches = Auth::user()->saved_searches;
             return view('common.partials.notifications.all_notifications', compact('notifications'));
         }
         return redirect('login');
@@ -37,7 +37,7 @@ class NotificationController extends Controller
                 $count++;
             }
         }
-        $ad_sold = Notification::where(function ($query) {
+        $ad_sold = Notification::where('user_id',Auth::id())->where(function ($query) {
         $query->where('type', '=','ad_sold')
         ->orWhere('type', '=', 'property_for_rent')
         ->orWhere('type', '=', 'property_for_sale')

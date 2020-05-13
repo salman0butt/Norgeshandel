@@ -327,7 +327,7 @@ NorgesHandel - {{$job->title}}
 
                     </h5>
                     <div id="map" style="height: 100%; width: 100%;"></div>
-                </div>
+                </div><br><br>
                 {{-- <p class="u-mt4">
                         <a href="" class="u-mr8 mr-2">Stort kart</a>
                         <a href="" class="u-mr8 mr-2">Hybridkart</a>
