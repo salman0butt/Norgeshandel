@@ -161,11 +161,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'all'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -190,11 +190,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Engasjement'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -214,11 +214,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Fast'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -238,11 +238,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Prosjekt'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -262,11 +262,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Lærling'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -286,11 +286,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Selvstendig næringsdrivende'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -310,11 +310,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Sommer/Sesong'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -334,11 +334,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Trainee'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>
@@ -358,11 +358,11 @@
             @php $jobs = \App\Helpers\common::company_commitment_jobs($company->id,'Vikariat'); @endphp
             @if($jobs->count() > 0)
                 @foreach($jobs as $key=>$job)
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-2">
                         <h4 class="mb-0" style="font-size: 20px;">
                             <a href="{{route('jobs.show',$job->id)}}" target="_blank">
                                 <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">{{$job->title}}</font>
+                                    <font style="vertical-align: inherit;">{{$job->name}}</font>
                                 </font>
                             </a>
                         </h4>

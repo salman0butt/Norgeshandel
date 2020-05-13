@@ -29,7 +29,7 @@ if(count($media)>0){
     }
 }
 ?>
-<div class="col-sm-12 pr-0 end_fav_item" data-name="{{$job->title}}">
+<div class="col-sm-12 pr-0 end_fav_item" data-name="{{$job->name}}">
 
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
         <div class="image-section @if(Request::is('my-business/favorite-list/*')) col-sm-3 @else col-sm-4 @endif  p-2">
@@ -43,7 +43,7 @@ if(count($media)>0){
             <div class="product-location text-muted mb-0 mt-2 u-d1" style="font-size: 16px; color: #6c757d!important;">{{$job->address ? Str::limit($job->address,30).', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
             <div class="location u-t5 text-muted mt-2 float-left">{{$job->sector}}</div>
             <div class="clearfix"></div>
-            <div class="title color-grey">{{$job->title}}</div>
+            <div class="title color-grey">{{$job->name}}</div>
             <div class="detail u-t5 mt-1 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>
             <div class="dealer-logo float-right mt-1" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>
         </div>

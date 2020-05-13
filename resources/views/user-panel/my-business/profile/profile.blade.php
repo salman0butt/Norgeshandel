@@ -679,6 +679,36 @@
 
                 </div>
                 <div class="col-md-6 mt-4">
+                    <div class="collapse m-3 " id="change_password">
+                        <h3 class="font-weight-normal mb-3">Endre Passord</h3>
+                        <form action="{{route('users.update', $user->id)}}" enctype="multipart/form-data" method="post">
+                            {{method_field('PUT')}}
+                            {{csrf_field()}}
+                            <input type="hidden" name="profile_submit_type" value="change-password">
+                            <div class="form-group">
+                                <label for="old_password">Gammelt passord*</label>
+                                <input type="password" class="form-control" id="old_password" name="old_password"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Nytt passord*</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       required="">
+                            </div>
+                            <div class="form-group">
+                                <label for="verify_password">Bekreft passord*</label>
+                                <input type="password" class="form-control" id="verify_password" name="verify_password"
+                                       required="">
+                            </div>
+                            <p class="mr-3">
+                                <button type="button" class="btn bg-white color-maroon" data-toggle="collapse"
+                                        data-target="#view_profile"
+                                        onclick="javascript:$('#change_password').removeClass('show');">Avbyrt
+                                </button>
+                                <button class="btn bg-maroon text-white">Endre</button>
+                            </p>
+                        </form>
+                    </div>
                     <div class="collapse m-3 " id="edit_profile">
                         <h3 class="font-weight-normal mb-3">Endre Profil</h3>
                         <form action="{{route('users.update', $user->id)}}" enctype="multipart/form-data" method="post">
@@ -699,6 +729,7 @@
                                 <input type="text" class="form-control" id="username" name="username"
                                     value="{{$user->username}}" required="">
                             </div>
+                            @if(!Auth::user()->hasRole('agent'))
                             <div class="form-group">
                                 <label for="personal_address">Adresse*</label>
                                 <input type="text" class="form-control" id="address" name="address"
@@ -731,20 +762,22 @@
                                     @endforeach
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label for="personal_email">E-post*</label>
                                 <input type="text" class="form-control" id="email" name="email" value="{{$user->email}}"
                                     required="">
                             </div>
                             <div class="form-group">
+                                <label for="personal_birthday">Fødselsdato*</label>
+                                <input type="text" class="form-control datepicker" id="birthday" name="birthday"
+                                       value="{{$user->birthday}}" required="">
+                            </div>
+                            @endif
+                            <div class="form-group">
                                 <label for="personal_mobile">Mobil</label>
                                 <input type="text" class="form-control" id="mobile" name="mobile_number"
                                     value="{{$user->mobile}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="personal_birthday">Fødselsdato*</label>
-                                <input type="text" class="form-control datepicker" id="birthday" name="birthday"
-                                    value="{{$user->birthday}}" required="">
                             </div>
                             <div class="form-group">
                                 <label for="personal_gender">Kjønn*</label>
@@ -778,18 +811,23 @@
                         <p><b style="color:#646162" class="mr-3">Mobilnummer :</b> {{$user->mobile_number}}</p>
                         <p><b style="color:#646162" class="mr-3">E-post :</b>{{$user->email}}</p>
                         <p><b style="color:#646162" class="mr-3">Passord :</b>******</p>
+                        @if(!Auth::user()->hasRole('agent'))
                         <p><b style="color:#646162" class="mr-3">Gateadresse :</b> {{$user->address}}</p>
                         <p><b style="color:#646162" class="mr-3">Postnummer :</b> {{$user->zip}}</p>
                         <p><b style="color:#646162" class="mr-3">Poststed :</b> {{$user->city}}</p>
                         <p><b style="color:#646162" class="mr-3">Land :</b> {{$user->country}}</p>
                         <p><b style="color:#646162" class="mr-3">Født :</b> {{$user->birthday}}</p>
+                        @endif
                         <p><b style="color:#646162" class="mr-3">Kjønn :</b> @if($user && $user->gender)
                             {{$user->gender == 'male' ? 'Mann' : 'Kvinne'}} @endif</p>
                         <p class="mr-3">
-                            @if(Auth::user()->created_by_company_id)
-                            <button class="btn bg-maroon text-white" data-toggle="collapse" data-target="#edit_profile"
-                                onclick="javascript:$('#view_profile').removeClass('show');">Rediger profil
-                            </button>
+                            @if(Auth::user()->created_by_company_id && Auth::user()->hasRole('agent'))
+                                <button class="btn bg-maroon text-white" data-toggle="collapse" data-target="#edit_profile"
+                                    onclick="javascript:$('#view_profile').removeClass('show');">Rediger profil
+                                </button>
+                                <button class="btn bg-maroon text-white" data-toggle="collapse" data-target="#change_password"
+                                        onclick="javascript:$('#view_profile').removeClass('show');">Endre passord
+                                </button>
                             @else
                             <a href="{{url('account/summary')}}" class="btn bg-maroon text-white">Rediger profil</a>
                             @endif
