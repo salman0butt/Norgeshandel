@@ -49,7 +49,7 @@ background-image: url('@if(!empty($logo)){{$logo}}@else{{asset('public/images/pl
         <div class="detailed-section col-sm-12 px-2 pb-2">
             <div class="product-location text-muted mb-0 my-2 u-d1">{{$job->address ? Str::limit($job->address,25).', ': ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
             <div class="location u-t5 text-muted mt-2">{{$job->sector}}</div>
-            <div class="title color-grey">{{Str::limit($job->title,80)}}</div>
+            <div class="title color-grey">{{Str::limit($job->name,80)}}</div>
             <div class="detail u-t5 mt-2 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>
             {{--<div class="dealer-logo float-right mt-3" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>--}}
         </div>

@@ -2,7 +2,6 @@
 @section('main_title')
 NorgesHandel - {{$job->title}}
 @endsection
-
 @section('page_content')
 <?php
     $job_function = "";

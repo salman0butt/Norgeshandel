@@ -7,7 +7,7 @@
                 @include('common.partials.flash-messages')
                 
                 <div class="col-md-6">
-                    <p>Søk på stilling som {{$job->title}} i {{$job->emp_name}}</p>
+                    <p>Søk på stilling som {{$job->name}} i {{$job->emp_name}}</p>
                 </div>
                 <hr>
 

@@ -258,25 +258,36 @@ class JobController extends Controller
          }else if($request->is('*/part_time')){
             $type = 'part_time';
          }
-        if($request->is('*/full_time') || $request->is('*/management') || $request->is('*/part_time')){
+        if($type){
 
-        $company_id = 0;
-        if(Auth::user()->hasRole('company') && Auth::user()->job_companies->first() && Auth::user()->job_companies->first()->id){
-            $company_id = Auth::user()->job_companies->first()->id;
-        }
-        $ad = new Ad(['ad_type' => 'job', 'status' => 'saved', 'user_id' => Auth::user()->id]);
-        $ad->save();
-        if ($ad) {
-           $job = new Job(['job_type' => $request->job_type, 'user_id' => Auth::user()->id, 'company_id'=>$company_id]);
-            $ad->job()->save($job);
-            if ($job) {
-                return redirect(url('complete/job/' . $ad->id))->with('type',$type);
-            } else {
+            DB::beginTransaction();
+            try{
+                $company_id = 0;
+                if(Auth::user()->hasRole('company') && Auth::user()->job_companies->first() && Auth::user()->job_companies->first()->id){
+                    $company_id = Auth::user()->job_companies->first()->id;
+                }
+                $auth_id = Auth::user()->id;
+                $ad = new Ad(['ad_type' => 'job', 'status' => 'saved', 'user_id' => $auth_id]);
+                $ad->save();
+                if ($ad) {
+                    $job = new Job(['job_type' => $type, 'user_id' => $auth_id, 'company_id'=>$company_id]);
+                    $ad->job()->save($job);
+                    if ($job) {
+                        DB::commit();
+                        return redirect(url('complete/job/' . $ad->id))->with('type',$type);
+                    } else {
+                        DB::rollback();
+                        abort(404);
+                    }
+                } else {
+                    DB::rollback();
+                    abort(404);
+                }
+            }catch (\Exception $e){
+                DB::rollback();
                 abort(404);
             }
-        } else {
-            abort(404);
-        }
+
     } else {
             abort(404);
         }

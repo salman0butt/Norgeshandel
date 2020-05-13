@@ -70,7 +70,7 @@ class AgentController extends Controller
                     $message->from('developer@digitalmx.no', 'NorgesHandel ');
                 });
                 DB::commit();
-                session()->flash('success', 'Posten er lagt til.');
+                session()->flash('success', 'Personen er lagt til');
                 return redirect(url('my-business/company-agents'));
             }catch (\Exception $e){
                 DB::rollback();

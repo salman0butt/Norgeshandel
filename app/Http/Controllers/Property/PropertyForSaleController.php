@@ -240,26 +240,39 @@ class PropertyForSaleController extends Controller
 //    zain
     public function new_property_for_sale(Request $request)
     {
-        $company_id = 0;
-        if(Auth::user()->hasRole('agent')){
-            $company_id = Auth::user()->created_by_company_id;
-        }
-        if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
-            $company_id = Auth::user()->property_companies->first()->id;
-        }
-        $ad = new Ad(['ad_type' => 'property_for_sale', 'status' => 'saved', 'user_id' => Auth::id(), 'company_id'=>$company_id]);
-        $ad->save();
-        if ($ad) {
-            $property = new PropertyForSale(['user_id' => Auth::id()]);
-            $ad->propertyForSale()->save($property);
-            if ($property) {
-                return redirect(url('complete/ad/' . $ad->id));
+
+        DB::beginTransaction();
+        try{
+            $company_id = 0;
+            if(Auth::user()->hasRole('agent')){
+                $company_id = Auth::user()->created_by_company_id;
+            }
+            if(Auth::user()->hasRole('company') && Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->id){
+                $company_id = Auth::user()->property_companies->first()->id;
+            }
+            $auth_id = Auth::id();
+            $ad = new Ad(['ad_type' => 'property_for_sale', 'status' => 'saved', 'user_id' => $auth_id, 'company_id'=>$company_id]);
+            $ad->save();
+            if ($ad) {
+                $property = new PropertyForSale(['user_id' => $auth_id]);
+                $ad->propertyForSale()->save($property);
+                if ($property) {
+                    DB::commit();
+                    return redirect(url('complete/ad/' . $ad->id));
+                } else {
+                    DB::rollback();
+                    abort(404);
+                }
             } else {
+                DB::rollback();
                 abort(404);
             }
-        } else {
+        }catch (\Exception $e){
+            DB::rollback();
             abort(404);
         }
+
+
     }
 
 
