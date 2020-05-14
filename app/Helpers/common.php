@@ -42,6 +42,7 @@ use App\BusinessForSale;
 use App\FlatWishesRented;
 use App\PropertyForRent;
 use function foo\func;
+use Illuminate\Support\Facades\Mail;
 
 class common
 {
@@ -505,6 +506,16 @@ class common
                     $notif->save();
                     $data = array('detail' => $message, 'to_user_id' => $search->user_id);
                     $pusher->trigger('notification', 'notification-event', $data);
+
+                    //Send email notification if user check the email notification in settings
+                    $user_meta_notification_new_ad = Meta::where('metable_id',$search->user_id)->where('metable_type','App\User')->where('key','notification_new_ad')->first();
+                    if($user_meta_notification_new_ad){
+                        $user_meta_notification_email = Meta::where('metable_id',$search->user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
+                        $user_obj = User::find($search->user_id);
+                        if($user_meta_notification_email && $user_obj && $user_obj->email){
+                            common::property_email_notification($user_obj,'saved_searches','',$search);
+                        }
+                    }
                 }
 //                }
             }
@@ -602,13 +613,20 @@ class common
                 $notif->save();
                 $data = array('detail' => 'Eiendom er solgt', 'to_user_id' => $user_id);
                 $pusher->trigger('notification', 'notification-event', $data);
+
+                //Send email notification if user check the email notification in settings
+                $user_meta = Meta::where('metable_id',$user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
+                $user_obj = User::find($user_id);
+                if($user_meta && $user_obj && $user_obj->email){
+                    common::property_email_notification($user_obj,'ad_sold_or_rented',$ad,'');
+                }
             }
         }
     }
 
     // update notification for property 
        public static function property_notification(Ad $ad, Pusher $pusher,$user_id, $property_type){
-             $users = DB::table('favorites')
+        $users = DB::table('favorites')
             ->join('metas', 'metas.metable_id', '=', 'favorites.user_id')
             ->where('metas.metable_type', '=', 'App\User')
             ->where('favorites.ad_id', '=', $ad->id)
@@ -618,13 +636,61 @@ class common
         if($users){
             $ids = $users->pluck('user_id');
             foreach ($ids as $user_id) {
-        $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Price has been changed']);
-        $notif->save();
-        $data = array('detail' => 'Eiendom oppdatert', 'to_user_id' => $user_id);
-        $pusher->trigger('notification', 'notification-event', $data);
+                $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Price has been changed']);
+                $notif->save();
+                $data = array('detail' => 'Eiendom oppdatert', 'to_user_id' => $user_id);
+                $pusher->trigger('notification', 'notification-event', $data);
+
+
+                //Send email notification if user check the email notification in settings
+                $user_meta = Meta::where('metable_id',$user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
+                $user_obj = User::find($user_id);
+                if($user_meta && $user_obj && $user_obj->email){
+                    common::property_email_notification($user_obj,'price_changed',$ad,'');
+                }
             }
         }
-    
+    }
+
+    //Notify user via email when he/she checked the email notify in his/her setting
+    public static function property_email_notification($user_obj,$key,$ad='',$search=''){
+        if($user_obj && $key){
+            if($key == 'price_changed' && $ad){
+                $text = 'Vi vil informere deg om at prisen er endret fra denne <b>'.$ad->getTitle().'</b> annonsen. Her er lenken til annonsen.';
+                $link = url('/',$ad->id);
+                $subject = 'Annonseprisen ble endret';
+            }
+
+            if($key == 'ad_sold_or_rented' && $ad){
+                if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent'){
+                    $status = 'Utleid';
+                }else{
+                    $status = 'Solgt';
+                }
+                $text = 'Vi vil informere deg om at <b>'.$ad->getTitle().'</b> annonse er '.$status.'. Her er lenken til annonsen.';
+                $link = url('/',$ad->id);
+                $subject = 'Annonse '.$status;
+            }
+
+            if($key == 'saved_searches' && $search){
+                $text = 'Vi vil informere deg om at det er lagt til en ny annonse på NorgesHandel relatert til lagrede søk. Her er lenken til annonsen.';
+                $link = url('/'.$search->filter).'&search_id='.$search->id;
+                $subject = 'Ny annonse opprettet';
+            }
+
+            if($key == 'price_changed'&& $ad){
+                $text = 'Vi vil informere deg om at prisen er endret fra denne <b>'.$ad->getTitle().'</b> annonsen. Her er lenken til annonsen.';
+                $link = url('/',$ad->id);
+                $subject = 'Pris endret';
+            }
+
+            $to_name = $user_obj->username;
+            $to_email = $user_obj->email;
+            Mail::send('mail.property_email_notification',compact('text','link','user_obj'), function ($message) use ($to_name, $to_email,$subject) {
+                $message->to($to_email, $to_name)->subject($subject);
+                $message->from('developer@digitalmx.no', 'NorgesHandel');
+            });
+        }
     }
 
     //find previous ad

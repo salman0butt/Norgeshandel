@@ -55,10 +55,10 @@
                                             
                                         </span>
                                         <div class="" style="display:block;width:70%;float:left;">
-                                        <p class="mb-0">{{ $notif->ad->property->zip_city }}</p>
+                                        <p class="mb-0">{{isset($notif->ad) && isset($notif->ad->property) ? $notif->ad->property->zip_city : ''}}</p>
                                             <h2 class="u-t3 u-mt8" style="margin-top:10px;">
                                                 <span class="">
-                                                <h5>{{ $notif->ad->getTitle() }}</h5>
+                                                <h5>{{ $notif->ad && isset($notif->ad->property) ? $notif->ad->getTitle() : ''}}</h5>
                                                 </span>
                                             </h2>
                                             <span class="u-stone timeago" style="margin-left:10px;" title="{{$notif->created_at}}">
