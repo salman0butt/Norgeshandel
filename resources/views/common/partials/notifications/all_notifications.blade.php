@@ -54,11 +54,13 @@
                                             </span>
                                             
                                         </span>
+
                                         <div class="" style="display:block;width:70%;float:left;margin-top: -2%;">
-                                        <p class="mb-0">{{ $notif->ad->property->zip_city }}</p>
-                                            <h2 class="u-t3 u-mt8">
+                                        <p class="mb-0">{{isset($notif->ad) && isset($notif->ad->property) ? $notif->ad->property->zip_city : ''}}</p>
+                                            <h2 class="u-t3 u-mt8" style="margin-top:10px;">
+
                                                 <span class="">
-                                                <h5>{{ $notif->ad->getTitle() }}</h5>
+                                                <h5>{{ $notif->ad && isset($notif->ad->property) ? $notif->ad->getTitle() : ''}}</h5>
                                                 </span>
                                             </h2>
                                           
@@ -89,9 +91,9 @@
                 <div data-controller="newnotificationscountreset"></div>
             </div>
         </main>
-        ​
+
     </div>
-    ​
+
     <script>
         $(document).ready(function () {
             $(".timeago").timeago();
