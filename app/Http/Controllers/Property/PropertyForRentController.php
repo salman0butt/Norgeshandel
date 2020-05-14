@@ -394,7 +394,6 @@ class PropertyForRentController extends Controller
             $published_date = date("Y-m-d H:i:s");
 
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
-           
             if ($response) {
 //        notifications bellow
                 common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-rent');
