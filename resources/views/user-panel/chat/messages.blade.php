@@ -155,6 +155,12 @@
         .m-t-5 {
             margin-top: 10px;
         }
+        .chat-thread-tab span.badge.badge-primary.pending {
+            border-radius: 10px !important;
+            left: 15px !important;
+            top: -5px !important;
+            padding: 8px 12px !important;
+        }
 
     </style>
     <main class="smart-scroll">
