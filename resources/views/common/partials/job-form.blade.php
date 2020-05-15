@@ -548,6 +548,107 @@
             }
         }
 
+        //new function starts here
+        function record_store_ajax_request(event, this_obj) {
+
+            if($('.text-editor').length > 0) tinyMCE.triggerSave();
+
+            if(event == 'click'){
+                if(! $('#job-form').valid()) return false;
+            }
+            if (event == 'change') {
+                var zip_code = $('.zip_code').val();
+                var old_zip = $('#old_zip').val();
+                if (zip_code) {
+                    if (old_zip != zip_code) {
+                        find_zipcode_city(zip_code);
+                    }
+                }
+                        @if(Request::is('jobs/*/edit') || Request::is('complete/job/*'))
+                var link = '{{url('jobs/update_dummy')}}';
+                @endif
+            } else {
+                        @if(Request::is('complete/job/*'))
+                var link = '{{url('jobs/store')}}';
+                        @elseif (Request::is('jobs/*/edit'))
+                var link = '{{url('jobs/update/'.$obj_job->id)}}';
+                @endif
+            }
+
+            //calling address
+            fullAddress()
+
+            $("input ~ span,select ~ span").each(function (index) {
+                $(".error-span").html('');
+                $("input, select").removeClass("error-input");
+            });
+
+            var myform = document.getElementById("job-form");
+            var fd = new FormData(myform);
+            if($('.input_type_file .dz-remove').attr('id')){
+                fd.delete('company_logo');
+            }
+            console.log(link);
+            var l = Ladda.create(this_obj);
+            l.start();
+            $.ajax({
+                url: link,
+                type: "POST",
+                data: fd,//$('#job-form').serialize(),
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // var resp = JSON.parse(response);
+                    if(response.company_logo_id){
+                        $('.input_type_file .dz-remove').attr('id',response.company_logo_id);
+                    }
+                    if (event == 'change') {
+                        notify("info","Annonsen din er lagret");
+                    }else if(event == 'click'){
+                        $('.deleted_media').val('');
+                        $('.media_position').val('');
+                        $('.click_button').val('no');
+                        $('.ad_status').val(response.status);
+                        var message = 'Annonsen din er publisert';
+                        if(response.message){
+                            message = response.message;
+                        }
+                        notify("success",message);
+                    }
+
+                    if ($('#ad_id').val().length < 1) {
+                        $('#job_id').val(response.job_id);
+                        $('#ad_id').val(response.ad_id);
+                    }
+                },
+                error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                    var errors = jqXhr.responseJSON;
+                    //console.log(errors.errors);
+                    notify("error","noe gikk galt!");
+                    /* if (isEmpty(errors.errors)) {
+                    notify("error","noe gikk galt!");
+                      return false;
+                  }
+                  if (event == 'change') {
+                   notify("error","noe gikk galt!");
+                  }else {
+                      // var html="<ul>";
+                   $.each(errors.errors, function (index, value) {
+                          //console.log(value);
+                          $("." + index).html(value);
+                          $("input[name='" + index + "'],select[name='" + index + "']")
+                              .addClass("error-input");
+                      });
+
+                  }*/
+                },
+            }).always(function () {
+                l.stop();
+            });
+            return false;
+        }
+
         $(document).ready(function (e) {
 
                $.ajaxSetup({
@@ -612,106 +713,6 @@
             
             });*/
 
-        //new function starts here
-        function record_store_ajax_request(event, this_obj) {
-
-            if($('.text-editor').length > 0) tinyMCE.triggerSave();
-
-           if(event == 'click'){
-               if(! $('#job-form').valid()) return false;
-           }
-            if (event == 'change') {
-                var zip_code = $('.zip_code').val();
-                var old_zip = $('#old_zip').val();
-                if (zip_code) {
-                    if (old_zip != zip_code) {
-                        find_zipcode_city(zip_code);
-                    }
-                }
-                @if(Request::is('jobs/*/edit') || Request::is('complete/job/*'))
-                    var link = '{{url('jobs/update_dummy')}}';
-                @endif
-            } else {
-                @if(Request::is('complete/job/*'))
-                    var link = '{{url('jobs/store')}}';
-                @elseif (Request::is('jobs/*/edit'))
-                    var link = '{{url('jobs/update/'.$obj_job->id)}}';
-                @endif
-            }
-
-                //calling address
-                fullAddress()
-               
-          $("input ~ span,select ~ span").each(function (index) {
-                $(".error-span").html('');
-                $("input, select").removeClass("error-input");
-            });
-
-            var myform = document.getElementById("job-form");
-            var fd = new FormData(myform);
-            if($('.input_type_file .dz-remove').attr('id')){
-                fd.delete('company_logo');
-            }
-            console.log(link);
-               var l = Ladda.create(this_obj);
-            l.start();
-            $.ajax({
-                url: link,
-                type: "POST",
-                data: fd,//$('#job-form').serialize(),
-                dataType: "json",
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    // var resp = JSON.parse(response);
-                    if(response.company_logo_id){
-                        $('.input_type_file .dz-remove').attr('id',response.company_logo_id);
-                    }
-                    if (event == 'change') {
-                       notify("info","Annonsen din er lagret");
-                   }else if(event == 'click'){
-                        $('.deleted_media').val('');
-                        $('.media_position').val('');
-                        $('.click_button').val('no');
-                        $('.ad_status').val(response.status);
-                        var message = 'Annonsen din er publisert';
-                        if(response.message){
-                            message = response.message;
-                        }
-                        notify("success",message);
-                   }
-
-                    if ($('#ad_id').val().length < 1) {
-                        $('#job_id').val(response.job_id);
-                        $('#ad_id').val(response.ad_id);
-                    }
-                },
-                error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
-                    var errors = jqXhr.responseJSON;
-                    //console.log(errors.errors);
-                       notify("error","noe gikk galt!");
-                      /* if (isEmpty(errors.errors)) {
-                      notify("error","noe gikk galt!");
-                        return false;
-                    }
-                    if (event == 'change') {
-                     notify("error","noe gikk galt!");
-                    }else {
-                        // var html="<ul>";
-                     $.each(errors.errors, function (index, value) {
-                            //console.log(value);
-                            $("." + index).html(value);
-                            $("input[name='" + index + "'],select[name='" + index + "']")
-                                .addClass("error-input");
-                        });
-
-                    }*/
-                },
-            }).always(function () {
-                l.stop();
-            });
-            return false;
-        }
 
         $("input:not(input[type=date]),textarea").on('change', function (e) {
             e.preventDefault();

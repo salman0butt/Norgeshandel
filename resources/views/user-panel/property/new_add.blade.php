@@ -49,6 +49,8 @@
     <script type="text/javascript">
 
         function record_store_ajax_request(event, this_obj) {
+            if($('.text-editor').length > 0) tinyMCE.triggerSave();
+
             if(event == 'click'){
                 if(! $('#property_for_rent_form').valid()) return false;
             }
@@ -134,10 +136,9 @@
         }
         $(document).ready(function () {
 
-            $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
+            $(document).on('change', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
                 e.preventDefault();
-
-                if($(this).hasClass('text-editor')) tinyMCE.triggerSave();
+               // if($(this).hasClass('text-editor')) tinyMCE.get('elm1');//tinyMCE.triggerSave();
 
                 if(! $(this).valid()) return false;
                 var ad_status = $('.ad_status').val();
@@ -161,7 +162,7 @@
             //click button update
             $(document).on('click', '#publiser_annonsen', function(e){
                 e.preventDefault();
-                if($('.text-editor').length > 0) tinyMCE.triggerSave();
+                //if($('.text-editor').length > 0) tinyMCE.triggerSave();
                 record_store_ajax_request('click', (this));
             });
 
