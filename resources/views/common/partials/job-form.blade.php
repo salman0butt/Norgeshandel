@@ -57,9 +57,9 @@
     <input type="hidden" name="upload_dropzone_images_type" value="job_temp_images">
     <input type="hidden" name="media_position" class="media_position">
     <input type="hidden" name="deleted_media" class="deleted_media">
-    <input type="hidden" name="latitude" id="latitude" value="">
-    <input type="hidden" name="longitude" id="longitude" value="">
-    <input type="hidden" name="full_address" id="full_address" value="">
+    <input type="hidden" name="latitude" id="latitude" value="{{ $obj_job->latitude ?? '' }}">
+    <input type="hidden" name="longitude" id="longitude" value="{{ $obj_job->latitude ?? '' }}">
+    <input type="hidden" name="full_address" id="full_address" value="{{ $obj_job->latitude ?? '' }}">
 
     <input type="hidden" name="ad_id" id="ad_id" value="{{isset($obj_job->ad)?$obj_job->ad->id:""}}">
     <input type="hidden" name="job_id" id="job_id" value="{{isset($obj_job->id)?$obj_job->id:""}}">

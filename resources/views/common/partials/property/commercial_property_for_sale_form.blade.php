@@ -30,9 +30,9 @@
         <input type="hidden" name="upload_dropzone_images_type" value="commercial_property_for_sale_temp_images">
         <input type="hidden" name="media_position" class="media_position">
         <input type="hidden" name="deleted_media" class="deleted_media">
-        <input type="hidden" name="latitude" id="latitude" value="">
-        <input type="hidden" name="longitude" id="longitude" value="">
-        <input type="hidden" name="full_address" id="full_address" value="">
+        <input type="hidden" name="latitude" id="latitude" value="{{ $commercial_property_for_sale->latitude ?? '' }}">
+        <input type="hidden" name="longitude" id="longitude" value="{{ $commercial_property_for_sale->longitude ?? '' }}">
+        <input type="hidden" name="full_address" id="full_address" value="{{ $commercial_property_for_sale->full_address ?? '' }}">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_sale->zip_city) ? $commercial_property_for_sale->zip_city : '') }}">
        @if(Request::is('add/new/commercial/property/for/sale/*/edit'))
     <input type="hidden" name="old_price" id="old_price" value="{{ $commercial_property_for_sale->value_rate ?? '' }}">

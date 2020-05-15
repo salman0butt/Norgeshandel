@@ -29,9 +29,9 @@
     <input type="hidden" name="media_position" class="media_position">
     <input type="hidden" name="deleted_media" class="deleted_media">
     <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_plot->zip_city) ? $commercial_plot->zip_city : '') }}">
-    <input type="hidden" name="latitude" id="latitude" value="">
-    <input type="hidden" name="longitude" id="longitude" value="">
-    <input type="hidden" name="full_address" id="full_address" value="">
+    <input type="hidden" name="latitude" id="latitude" value="{{ $commercial_plot->latitude ?? '' }}">
+    <input type="hidden" name="longitude" id="longitude" value="{{ $commercial_plot->longitude ?? '' }}">
+    <input type="hidden" name="full_address" id="full_address" value="{{ $commercial_plot->full_address ?? '' }}">
         @if(Request::is('commercial/plots/*/edit'))
     <input type="hidden" name="old_price" id="old_price" value="{{ $commercial_plot->monthly_rent ?? '' }}">
     @endif
