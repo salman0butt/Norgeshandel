@@ -63,7 +63,7 @@
                     find_zipcode_city(zip_code);
                 }
             }
-                    @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
+            @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
             var url = "{{url('new/property/sale/ad/'.$property_for_sale1->id)}}";
             @endif
         } else {
@@ -180,12 +180,9 @@
 
         });
 
-
-
-
         $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
+
             e.preventDefault();
-            // if($(this).hasClass('text-editor')) tinyMCE.triggerSave();
 
             if(! $(this).valid()) return false;
 

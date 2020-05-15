@@ -214,7 +214,7 @@
                             <div class="row">
                                 <label for="job_gallery" class="col-md-2 u-t5">Bedriftslogo (valgfritt)</label>
                                 <div class="col-sm-10 mb-4">
-                                    @php $single_image_obj = null; $file_upload_name = 'company_logo'; @endphp
+                                    @php $single_image_obj = null; $file_upload_name = 'company_logo';  @endphp
                                     @include('user-panel.partials.upload-single-image',compact('single_image_obj'))
                                     {{--<input type="file" name="company_logo" id="company_logo" class=""--}}
                                     {{--value="Select logo">--}}
@@ -517,7 +517,7 @@
                                                                 class="fileinput-new dme-btn-outlined-blue btn-sm mt-5 mb-5">Velg
                                                                 bilde</span>
                                                             {{--<span class="fileinput-exists dme-btn-outlined-blue btn-sm">Endre</span>--}}
-                                                            <input type="file" name="{{$file_upload_name}}"
+                                                            <input type="file" name="company_logo"
                                                                 class="input_type_file" accept="image/*">
                                                         </span>
                                                     </div>
