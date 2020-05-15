@@ -36,7 +36,7 @@
                                             <div class="">
                                             <span>
                                             <img class="img-thumbnail w-100" style="border-radius:10px;max-height:84px;"
-                                                 src="@if($notif->ad->company_gallery->first()) {{App\Helpers\common::getMediaPath($notif->ad->company_gallery->first())}} @else {{asset('public/images/placeholder.png')}} @endif"
+                                                 src="@if($notif->ad && $notif->ad->company_gallery->first()) {{App\Helpers\common::getMediaPath($notif->ad->company_gallery->first())}} @else {{asset('public/images/placeholder.png')}} @endif"
                                                  alt="">
                                             </span>
                                             </div>
