@@ -34,9 +34,9 @@
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_rent_temp_images">
     <input type="hidden" name="media_position" class="media_position">
     <input type="hidden" name="deleted_media" class="deleted_media">
-    <input type="hidden" name="latitude" id="latitude" value="">
-    <input type="hidden" name="longitude" id="longitude" value="">
-    <input type="hidden" name="full_address" id="full_address" value="">
+    <input type="hidden" name="latitude" id="latitude" value="{{ $property_for_rent->latitude ?? '' }}">
+    <input type="hidden" name="longitude" id="longitude" value="{{ $property_for_rent->longitude ?? '' }}">
+    <input type="hidden" name="full_address" id="full_address" value="{{ $property_for_rent->full_address ?? '' }}">
 
 
     @if(Request::is('new/property/rent/ad/*/edit'))

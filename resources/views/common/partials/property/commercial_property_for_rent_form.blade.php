@@ -31,9 +31,9 @@
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_rent->zip_city) ? $commercial_property_for_rent->zip_city : '') }}">
         <input type="hidden" name="media_position" class="media_position">
         <input type="hidden" name="deleted_media" class="deleted_media">
-        <input type="hidden" name="latitude" id="latitude" value="">
-        <input type="hidden" name="longitude" id="longitude" value="">
-        <input type="hidden" name="full_address" id="full_address" value="">
+        <input type="hidden" name="latitude" id="latitude" value="{{ $commercial_property_for_rent->latitude ?? '' }}">
+        <input type="hidden" name="longitude" id="longitude" value="{{ $commercial_property_for_rent->longitude ?? '' }}">
+        <input type="hidden" name="full_address" id="full_address" value="{{ $commercial_property_for_rent->full_address ?? '' }}">
             @if(Request::is('add/new/commercial/property/for/rent/*/edit'))
     <input type="hidden" name="old_price" id="old_price" value="{{ $commercial_property_for_rent->rent_per_meter_per_year ?? '' }}">
     @endif

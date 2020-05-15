@@ -636,6 +636,7 @@ class common
         if($users){
             $ids = $users->pluck('user_id');
             foreach ($ids as $user_id) {
+
                 $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Price has been changed']);
                 $notif->save();
                 $data = array('detail' => 'Eiendom oppdatert', 'to_user_id' => $user_id);

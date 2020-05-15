@@ -316,10 +316,9 @@ NorgesHandel - {{$job->title}}
                 </div>
                 <div style="width: 306px; height: 250px;">
                     <h5 class="text-muted">
-                        @if($job->user->roles->first()->name == 'company')
+                        @if($job->company)
                         @php
-                        $company = \App\Models\Company::findOrFail($job->company_id);
-                        echo $company->full_address;
+                         $job->company->full_address;
                         @endphp
                         @else
                         {{ $job->full_address }}
@@ -351,9 +350,9 @@ $count = $job->ad->views()->where('ip', Request::getClientIp())->get();
 //}
 
 ?>
-@if($job->user->roles->first()->name == 'company')
+@if($job->company)
 @php
-$company = \App\Models\Company::findOrFail($job->company_id);
+$company = $job->company;
 
 $map_obj = $company;
 @endphp
