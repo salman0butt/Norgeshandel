@@ -637,7 +637,7 @@ class common
             $ids = $users->pluck('user_id');
             foreach ($ids as $user_id) {
 
-                $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Price has been changed']);
+                $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Prisen har blitt endret']);
                 $notif->save();
                 $data = array('detail' => 'Eiendom oppdatert', 'to_user_id' => $user_id);
                 $pusher->trigger('notification', 'notification-event', $data);
