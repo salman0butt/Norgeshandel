@@ -466,9 +466,11 @@ class common
             $propertyController = new FlatWishesRentedController();
             $properties = $propertyController->search_flat_wishes_rented($request, true);
         }
+
         if ($properties) {
             $arr = $properties->pluck('ad_id');
             if (in_array($property->ad_id, $arr->toArray())) {
+                dd('not');
                 return true;
             }
         }
