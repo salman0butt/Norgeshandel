@@ -136,15 +136,36 @@ class AdminUserController extends Controller
                             $message->to($to_email, $to_name)->subject('Passord endret');
                             $message->from('developer@digitalmx.no', 'NorgesHandel ');
                         });
-                        $request->session()->flash('success', 'Passordet er endret.');
-                        return redirect()->back();
+
+                        if($request->change_password_type && $request->change_password_type == 'ajax'){
+                            $data['message'] = 'Passordet er endret.';
+                            $data['class'] = 'success';
+                            return json_encode($data);
+                        }else{
+                            $request->session()->flash('success', 'Passordet er endret.');
+                            return redirect()->back();
+                        }
+
                     }else{
-                        $request->session()->flash('danger', 'Passordene stemmer ikke overens.');
-                        return redirect()->back();
+                        if($request->change_password_type && $request->change_password_type == 'ajax'){
+                            $data['message'] = 'Passordene stemmer ikke overens.';
+                            $data['class'] = 'error';
+                            return json_encode($data);
+                        }else{
+                            $request->session()->flash('danger', 'Passordene stemmer ikke overens.');
+                            return redirect()->back();
+                        }
                     }
                 }else{
-                    $request->session()->flash('danger', 'Ditt nåværende passord er feil. Vennligst prøv igjen med riktig passord.');
-                    return redirect()->back();
+                    if($request->change_password_type && $request->change_password_type == 'ajax'){
+                        $data['message'] = 'Ditt nåværende passord er feil. Vennligst prøv igjen med riktig passord.';
+                        $data['class'] = 'error';
+                        return json_encode($data);
+                    }else{
+                        $request->session()->flash('danger', 'Ditt nåværende passord er feil. Vennligst prøv igjen med riktig passord.');
+                        return redirect()->back();
+                    }
+
                 }
             }
         }

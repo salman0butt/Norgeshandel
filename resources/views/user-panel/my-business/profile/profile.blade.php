@@ -689,9 +689,10 @@
                 <div class="col-md-6 mt-4">
                     <div class="collapse m-3 " id="change_password">
                         <h3 class="font-weight-normal mb-3">Endre Passord</h3>
-                        <form action="{{route('users.update', $user->id)}}" enctype="multipart/form-data" method="post">
+                        <form action="" enctype="multipart/form-data" method="post" id="change_password_agent_user">
                             {{method_field('PUT')}}
                             {{csrf_field()}}
+                            <input type="hidden" name="change_password_type" value="ajax">
                             <input type="hidden" name="profile_submit_type" value="change-password">
                             <div class="form-group">
                                 <label for="old_password">Gammelt passord*</label>
@@ -713,7 +714,7 @@
                                         data-target="#view_profile"
                                         onclick="javascript:$('#change_password').removeClass('show');">Avbyrt
                                 </button>
-                                <button class="btn bg-maroon text-white">Endre</button>
+                                <button data-style="slide-up" data-spinner-color="#AC304A" data-size="l" class="dme-btn-outlined-blue change-password-button ladda-button"><span class="ladda-label"> Endre</span></button>
                             </p>
                         </form>
                     </div>
@@ -834,7 +835,7 @@
                                     onclick="javascript:$('#view_profile').removeClass('show');">Rediger profil
                                 </button>
                                 <button class="btn bg-maroon text-white" data-toggle="collapse" data-target="#change_password"
-                                        onclick="javascript:$('#view_profile').removeClass('show');">Endre passord
+                                        onclick="javascript:$('#view_profile').removeClass('show'); document.getElementById('change_password_agent_user').reset();">Endre passord
                                 </button>
                             @else
                             <a href="{{url('account/summary')}}" class="btn bg-maroon text-white">Rediger profil</a>
@@ -881,18 +882,13 @@
             // $('#description').text(tinyMCE.get("description").getContent());
             // $('#emp_company_information').text(tinyMCE.get("emp_company_information").getContent());
         });
-        // tinymce.init({
-        //     selector: 'textarea.emp_company_information',
-        //     width: $(this).parent().width(),
-        //     height: 250,
-        //     menubar: false,
-        //     statusbar: false
-        // });
+
         $(".custom-file-input").on("change", function () {
             readFileURL((this), '.profile img');
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
+
         $('.datepicker').datepicker({
             dateFormat: 'dd-mm-yy',
             autoclose: true
@@ -973,6 +969,38 @@
                     companyAddress(element);
                 }
             }
+        });
+
+        //click button update
+        $(document).on('click', '.change-password-button', function(e){
+            e.preventDefault();
+            if(! $('#change_password_agent_user').valid()) return false;
+
+            var url = "{{route('users.update', $user->id)}}";
+            var myform = document.getElementById("change_password_agent_user");
+            var fd = new FormData(myform);
+
+            // fd.append('property_photos', $('#property_photos').get(0).files[0]);
+            var l = Ladda.create(this);
+            l.start();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: fd,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    notify(data.class,data.message);
+                },
+                error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                    notify("error","noe gikk galt!");
+                },
+
+            }).always(function () {
+                l.stop();
+            });
+            return false;
         });
 
     });

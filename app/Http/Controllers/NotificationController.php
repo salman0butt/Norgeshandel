@@ -21,6 +21,11 @@ class NotificationController extends Controller
 
     public function index()
     {
+        $date = Date('y-m-d',strtotime('-7 days'));
+
+        //Delete read notifications before last 7 days ago
+        $read_notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->whereDate('read_at','<=',$date)->delete();
+
         if (Auth::check()) {
             $notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->get();
  //            $searches = Auth::user()->saved_searches;
