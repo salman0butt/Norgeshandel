@@ -333,6 +333,21 @@ $(document).ready(function (e) {
             menubar: false, // remove menubar if you want to show the menubar
             // statusbar: false,
             selector:'textarea.text-editor',
+            setup : function(ed) {
+
+                ed.on("blur", function(e){
+
+                    var ad_status = $('.ad_status').val();
+                    if(ad_status == 'saved') {
+                        ed.save();
+                        tinymce.triggerSave();
+                        $('.text-editor').html(tinymce.activeEditor.getContent());
+                        var this_obj = document.getElementById(ed.id);//$('#'+ed.id);
+                        record_store_ajax_request('change', this_obj);
+                    }
+                });
+            },
+
             height: 300,
             plugins: [
                 "advlist autolink lists link image charmap print preview anchor",
