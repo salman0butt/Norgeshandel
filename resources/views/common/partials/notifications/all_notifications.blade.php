@@ -15,12 +15,11 @@
                     <a class="m-2" href="{{ url('/setting') }}">Innstillinger</a>
                 </div>
                 <div class="row">
-       
                     @php($count = 0)
                     @php($added = array())
                     @if(is_countable($notifications) && count($notifications) > 0)
                         @foreach ($notifications as $notif)
-                        
+                              
                             @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id) 
                     
                             @if(!in_array($addable, $added) && !empty($notif->notifiable))
@@ -30,13 +29,13 @@
                                     @else
                                     {{url('/', $notif->notifiable->id)}}
                                     @endif">
-                            
                                         <div class=""
                                              style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
                                             <div class="">
                                             <span>
-                                            <img class="img-thumbnail w-100" style="border-radius:10px;max-height:84px;"
+                                            <img class="img-thumbnail w-100" style="border-radius:10px;min-height:110px;max-height:110px;"
                                                  src="@if($notif->ad && $notif->ad->company_gallery->first()) {{App\Helpers\common::getMediaPath($notif->ad->company_gallery->first())}} @else {{asset('public/images/placeholder.png')}} @endif"
+
                                                  alt="">
                                             </span>
                                             </div>
@@ -79,7 +78,7 @@
                                         </div>
                                     </a>
                                 </article>
-                                @php(array_push($added, $addable))
+                                {{-- @php(array_push($added, $addable)) --}}
                             @endif
                         @endforeach
                     @else
