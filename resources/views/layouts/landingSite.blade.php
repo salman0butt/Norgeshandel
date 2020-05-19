@@ -652,14 +652,21 @@
         showCount: false,
         shares: ["email", "twitter", "facebook"]
     });
-    $(function() {
+    function date_picker(){
         $('.date-picker, input[type="date"]').datepicker({
             format: "dd-mm-yyyy",
-             autoclose: true,
-             language: 'no',
-             clearBtn: true
+            autoclose: true,
+            language: 'no',
+            clearBtn: true
         });
         $('input[type="date"]').attr('type','text');
+    };
+    $(function () {
+        date_picker();
+    });
+
+    $('body').on('focusin', '.date-picker', function(e) {
+        date_picker();
     });
 
 </script>

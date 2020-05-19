@@ -789,8 +789,8 @@
             <h3 class="u-t5">Visningsdato (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-4 pr-md-0">
-                    <input name="delivery_date[]" value="{{ $holiday_home_for_sale->delivery_date }}" type="date"
-                        class="dme-form-control">
+                    <input name="delivery_date" value="{{ $holiday_home_for_sale->delivery_date }}" type="text"
+                        class="dme-form-control date-picker">
                 </div>
                 <div class="col-md-8"></div>
                 <div class="col-md-12 u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</div>
@@ -800,7 +800,7 @@
             <h3 class="u-t5">Fra klokken (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-4 pr-md-0">
-                    <input name="from_clock[]" value="{{ $holiday_home_for_sale->from_clock }}" type="text"
+                    <input name="from_clock" value="{{ $holiday_home_for_sale->from_clock }}" type="text"
                         class="dme-form-control" placeholder="tt.mm">
                 </div>
                 <div class="col-md-8"></div>
@@ -811,7 +811,7 @@
             <h3 class="u-t5">Til klokken (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-4 pr-md-0">
-                    <input name="clockwise[]" value="{{ $holiday_home_for_sale->clockwise }}" type="text"
+                    <input name="clockwise" value="{{ $holiday_home_for_sale->clockwise }}" type="text"
                         class="dme-form-control" placeholder="tt.mm">
                 </div>
                 <div class="col-md-8"></div>
@@ -823,14 +823,77 @@
             <h3 class="u-t5">Merknad (valgfritt)</h3>
             <div class="row">
                 <div class="col-md-12 pr-md-0">
-                    <input name="note[]" value="{{ $holiday_home_for_sale->note }}" type="text" class="dme-form-control"
+                    <input name="note" value="{{ $holiday_home_for_sale->note }}" type="text" class="dme-form-control"
                         placeholder="F.eks.: visning etter avtale">
                 </div>
                 <div class="col-md-12 u-t5">Tid (eksempel 19:30)</div>
             </div>
         </div>
+        @php
+            $delivery_date = $from_clock = $clock_wise = $note = array();
+            if($holiday_home_for_sale->secondary_deliver_date){
+                $delivery_date = json_decode($holiday_home_for_sale->secondary_deliver_date);
+            }
+            if($holiday_home_for_sale->secondary_from_clock){
+                $from_clock = json_decode($holiday_home_for_sale->secondary_from_clock);
+            }
+            if($holiday_home_for_sale->secondary_clockwise){
+                $clock_wise = json_decode($holiday_home_for_sale->secondary_clockwise);
+            }
+            if($holiday_home_for_sale->secondary_note){
+                $note = json_decode($holiday_home_for_sale->secondary_note);
+            }
+        @endphp
         <div id="add_more_viewing_times_fields">
-
+            @if(count($delivery_date) > 0)
+                @foreach($delivery_date as $key=>$delivery_date_obj)
+                    <div class="appended_viewing_times_fields">
+                        <div class="form-group">
+                            <label class="u-t5">Visningsdato (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-4 pr-md-0">
+                                    <input type="text" name="secondary_deliver_date[]" value="{{isset($delivery_date_obj) ? $delivery_date_obj : ''}}" class="dme-form-control date-picker">
+                                    <span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="u-t5">Fra klokken (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-4 pr-md-0">
+                                    <input type="text" name="secondary_from_clock[]" value="{{isset($from_clock[$key]) ? $from_clock[$key] : ''}}" placeholder="tt.mm" class="dme-form-control">
+                                    <span class="u-t5">Tid (eksempel 18:00)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="u-t5">Til klokken (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-4 pr-md-0">
+                                    <input type="text" name="secondary_clockwise[]" value="{{isset($clock_wise[$key]) ? $clock_wise[$key] : ''}}" placeholder="tt.mm" class="dme-form-control">
+                                    <span class="u-t5">Tid (eksempel 19:00)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="u-t5">Merknad (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-12 pr-md-0">
+                                    <input type="text" name="secondary_note[]" value="{{isset($note[$key]) ? $note[$key] : ''}}" placeholder="F.eks.: visning etter avtale"
+                                           class="dme-form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12 pr-md-0">
+                                    <button type="button" class="dme-btn-outlined-blue remove_appended_viewing_times_fields">Ta Vekk</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
 
         <div class="form-group">
