@@ -712,6 +712,10 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
     Route::get('/{handel?}', 'HomeController@index');
-    Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
-    Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
+
 });
+Route::group(['middleware' => 'guest'], function () {
+Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
+});
+
