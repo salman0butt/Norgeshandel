@@ -58,8 +58,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @if(Auth::user()->property_companies->first() && Auth::user()->property_companies->first()->agents->count() > 0)
-                            @foreach(Auth::user()->property_companies->first()->agents as $agent)
+                        @if(Auth::user()->companies_agents->count() > 0)
+                            @foreach(Auth::user()->companies_agents as $agent)
                             <tr>
                                 <td>{{$agent->id}}</td>
                                 <td>

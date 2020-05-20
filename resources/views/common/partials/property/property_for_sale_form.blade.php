@@ -24,15 +24,17 @@
  @if(Request::is('new/property/sale/ad/*/edit') || Request::is('complete/ad/*'))
    @method('PATCH')
   @endif
+
     <input type="hidden" id="total_price" name="total_price" value="{{ $property_for_sale->total_price }}">
     <input type="hidden" name="upload_dropzone_images_type" value="property_for_sale_temp_images">
     <input type="hidden" name="media_position" class="media_position">
     <input type="hidden" name="deleted_media" class="deleted_media">
-     <input type="hidden" name="latitude" id="latitude" value="{{ $property_for_sale->latitude ?? '' }}">
+    <input type="hidden" name="latitude" id="latitude" value="{{ $property_for_sale->latitude ?? '' }}">
     <input type="hidden" name="longitude" id="longitude" value="{{ $property_for_sale->longitude ?? '' }}">
     <input type="hidden" name="full_address" id="full_address" value="{{ $property_for_sale->full_address ?? '' }}">
+
     @if(Request::is('new/property/sale/ad/*/edit'))
-    <input type="hidden" name="old_price" id="old_price" value="{{ $property_for_sale->total_price }}">
+        <input type="hidden" name="old_price" id="old_price" value="{{ $property_for_sale->total_price }}">
     @endif
 
     <input type="hidden" id="old_zip" value="{{ (isset($property_for_sale->zip_code) ? $property_for_sale->zip_code : '') }}">

@@ -2,7 +2,8 @@
       data-action="@if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$property_for_rent1->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
-     $property_for_rent = new \App\PropertyForRent();
+
+    $property_for_rent = new \App\PropertyForRent();
     if(isset($property_for_rent1)){
         $property_for_rent = $property_for_rent1;
     }
@@ -20,11 +21,6 @@
     if($property_for_rent && $property_for_rent->ad){
         $ad_obj = $property_for_rent->ad;
     }
-
-
-    //$property_type = explode(',', $flat_wishes_rented->property_type);
-    //$region = explode(',', $flat_wishes_rented->region);
-
 
 @endphp
     @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
