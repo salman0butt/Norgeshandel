@@ -52,20 +52,20 @@
                             NH-Bruker
                         @endif
                     </h5>
-                    @if($property_data->user->hasRole('company'))
-                        @if(!$property_data->ad->is_mine())
-                            <div>
-                                <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
-                            </div>
+          @if($property_data->user->hasRole('company'))
+            <div>
+            <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
+            </div>
 
-                            <ul class="list-unstyled mb-0">
-                                @if($property_data->user->first_name || $property_data->user->last_name)
-                                    <li class="py-2"><h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->last_name}}</h6></li>
-                                @endif
-                                <li class="py-2"><a  href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></li>
-                            </ul>
-                        @endif
-                    @endif
+            <ul class="list-unstyled mb-0">
+            @if($property_data->user->first_name || $property_data->user->last_name)
+            <li class="py-2"><h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->last_name}}</h6></li>
+            @endif
+            @if(!$property_data->ad->is_mine())
+            <li class="py-2"><a href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></li>
+            @endif
+            </ul>
+            @endif
                     <ul class="list-unstyled">
                         <li></li>
                     </ul>
