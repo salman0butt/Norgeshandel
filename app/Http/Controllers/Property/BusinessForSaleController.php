@@ -64,7 +64,6 @@ class BusinessForSaleController extends Controller
                     
             });
 //        DB::enableQueryLog();
-
         if (isset($request->search) && !empty($request->search)) {
 //            $query->where('business_for_sales.headline', 'like', '%' . $request->search . '%');
             common::table_search($query, common::get_model_columns(BusinessForSale::class), $request->search, 'business_for_sales');

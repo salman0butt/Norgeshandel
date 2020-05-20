@@ -81,10 +81,6 @@ class common
             } else {
 
                 return rtrim($json, ', ');
-                //  foreach($explod_val as $key=>$val):
-                //  $returnable =
-                //   endforeach;
-                // dd($arr);
             }
 
 
@@ -304,8 +300,6 @@ class common
             // dump($testdate);
 
             foreach ($banner_group->banners as $banner):
-                // dd($banner->display_time_duration);
-
                 // echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked  d-block w-100' data-id='".$id."' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media,'300x200'))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";
                 echo "<img src='" . asset(\App\Helpers\common::getMediaPath($banner->media)) . "' class='img-fluid m-auto' style='height:100%' alt=''>";
                 $id++;
@@ -415,10 +409,46 @@ class common
         $filter = $arr2[1];
         $array_filter = explode('&', $filter);
         $request = new Request();
-        foreach ($array_filter as $value) {
+        $request_arr = array();
+        foreach ($array_filter as $key=>$value) {
             $pairs = explode('=', $value);
             if (count($pairs) > 1) {
+
+                if($pairs[0] == 'search'){
+                    $pairs[1] = str_replace("%20",' ',$pairs[1]);
+                }
+                if($pairs[0] == 'search'){
+                    $pairs[1] = str_replace("+",' ',$pairs[1]);
+                }
+
+                 if($pairs[0] == 'search'){
+                     $pairs[1] = str_replace("%2B",'+',$pairs[1]);
+                 }
+
+                $count = substr_count($filter,$pairs[0]);
+
+                if(strpos($pairs[0], '%5B%5D')){
+                    $pairs[0] = str_replace("%5B%5D",'',$pairs[0]);
+                }
+
+                if(strpos($pairs[1], '%2F')){
+                    $pairs[1] = str_replace("%2F",'/',$pairs[1]);
+                }
+
+                if($count > 1){
+                    $request_arr[$pairs[0]][] = $pairs[1];
+                }
+
                 $request->merge([$pairs[0] => $pairs[1]]);
+            }
+        }
+
+        foreach ($request->all() as $request_key=>$request_obj){
+            foreach ($request_arr as $arr_req_key=>$request_arr_obj){
+                if($request_key == $arr_req_key){
+                    $request->merge([$arr_req_key => $request_arr_obj]);
+                    break;
+                }
             }
         }
         return $request;
@@ -470,7 +500,6 @@ class common
         if ($properties) {
             $arr = $properties->pluck('ad_id');
             if (in_array($property->ad_id, $arr->toArray())) {
-                dd('not');
                 return true;
             }
         }

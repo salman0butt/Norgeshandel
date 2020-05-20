@@ -481,7 +481,6 @@
     function search(data) {
         var urlParams = new URLSearchParams(location.search);
         var url = $('#mega_menu_search_url').val();
-
         $.ajax({
             data: data,
             url: url,
