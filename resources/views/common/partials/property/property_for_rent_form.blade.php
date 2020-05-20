@@ -379,7 +379,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-12 pr-md-0">
-                                    <button type="button" class="dme-btn-outlined-blue remove_appended_viewing_times_fields">Ta Vekk</button>
+                                    <button type="button" class="dme-btn-outlined-blue remove_appended_viewing_times_fields">Fjern</button>
                                 </div>
                             </div>
                         </div>

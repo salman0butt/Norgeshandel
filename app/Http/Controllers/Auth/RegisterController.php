@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Mail\NewUserVerification;
 use App\Role;
 use App\User;
-use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\Registered;
+use App\Models\Meta;
 use Illuminate\Http\Request;
+use App\Mail\NewUserVerification;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
@@ -105,7 +106,11 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         $user->roles()->attach(5);
-
+    
+        $key = array('notification_new_ad','notification_price_changed','notification_ad_sold','notification_email');
+        foreach($key as $k){
+        Meta::updateOrCreate(['metable_id' => $user->id, 'metable_type' => 'App\User', 'key' => $k], ['value' => 1]);
+        }             
 //        $email = $data['email'];
 //        \Mail::to($email)->send(new NewUserVerification($data, '#'));
 
