@@ -228,8 +228,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return CvRequest::where('user_id',$this->id)->where('employer_id',Auth::id())->first();
     }
 
-    //Company AGents
+    //Company Agents
     public function created_by_company(){
         return $this->belongsTo(Company::class,'created_by_company_id','id');
+    }
+
+    //get user comapnies agents using hasmany through relations
+    public function companies_agents(){
+        //Reference link => https://laravel.com/docs/7.x/eloquent-relationships
+        return $this->hasManyThrough(User::class,Company::class,'user_id','created_by_company_id','id','id');
     }
 }

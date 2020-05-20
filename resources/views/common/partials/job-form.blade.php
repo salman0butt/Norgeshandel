@@ -44,9 +44,13 @@
     if(isset($job)){
         $obj_job = $job;
     }
+    $ad_obj = new \App\Models\Ad();
+    if($obj_job && $obj_job->ad){
+        $ad_obj = $obj_job->ad;
+    }
     ?>
 
-<form action="#" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company") class="dropzone addMorePics p-0" @endif
+<form action="#" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company" && Auth::user()->roles->first()->name != "agent") class="dropzone addMorePics p-0" @endif
     data-action="@if(Request::is('jobs/*/edit') || Request::is('complete/job/*')){{route('jobs.update', $job->id)}}
     @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
     {{ csrf_field() }}
@@ -69,15 +73,10 @@
             <div class="col-md-12">
                 <h4 class="text-muted pl-3 pr-3">{{__('About the position')}}</h4>
                 <div class="pl-3">
-        {{-- @if ($message = Session::get('success'))
-        <script>
-        $(function(){
-            notify("success","Jobben er lagt til");
-        });
-        
-        </script>
-        @endif --}}
-                    {{-- <div class="notice"></div> --}}
+
+                    <!-- Company Section -->
+                    @include('user-panel.partials.ad_company_section')
+
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
@@ -248,7 +247,7 @@
                                 </div>
                             </div>
                         </div>
-                    @else
+                    @elseif(Auth::user()->roles->first()->name != "company" && Auth::user()->roles->first()->name != "agent")
                         <div class="form-group">
                             <div class="row">
                                 <label for="emp_name" class="col-md-2 u-t5">{{__('Employer')}}</label>

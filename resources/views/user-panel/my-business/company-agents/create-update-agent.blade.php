@@ -1,3 +1,4 @@
+
 @extends('layouts.landingSite')
 
 @section('page_content')
@@ -20,6 +21,27 @@
                         @endif
                         @csrf
                         <div class="">
+
+                            <div class="form-group">
+                                <label class="u-t5">Selskaper</label>
+                                <div class="row">
+                                    <div class="col-sm-12 pr-md-0">
+                                        <select name="created_by_company_id" id="company_type" type="text"
+                                                class="form-control dme-form-control" {{$record_type == 'create' ? 'required' : ''}}>
+                                            @if($record_type == 'create')
+                                                <option value="">Velg...</option>
+                                            @endif
+                                            @if(Auth::user()->companies)
+                                                @foreach(Auth::user()->companies as $company)
+                                                    <option value="{{$company->id}}" {{$agent && $agent->created_by_company_id == $company->id ? 'selected' : ''}} {{$record_type == 'edit' ? 'disabled' : ''}}>{{$company->emp_name}} ({{$company->company_type}})</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="form-group">
                                 <label class="u-t5">E-post</label>
                                 <div class="row">
@@ -38,7 +60,7 @@
                                 <label class="u-t5">Passord</label>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" name="password" value="" class="dme-form-control" {{$record_type == 'edit' ? 'disabled' : ''}}/>
+                                        <input type="text" name="password" value="" class="dme-form-control" {{$record_type == 'edit' ? 'disabled' : ''}} {{$record_type == 'create' ? 'required' : ''}}/>
                                         <span class="error-span name"></span>
                                     </div>
                                 </div>
@@ -48,14 +70,11 @@
                                 <label class="u-t5">Stilling</label>
                                 <div class="row">
                                     <div class="col-sm-12 pr-md-0">
-                                        <input type="text" name="position" value="{{$agent->position}}" class="dme-form-control"/>
+                                        <input type="text" name="position" value="{{$agent->position}}" class="dme-form-control" required/>
                                         <span class="error-span position"></span>
                                     </div>
                                 </div>
                             </div>
-
-
-
 
                             <button class="dme-btn-outlined-blue mb-3 col-12">{{$agent->name ? 'Oppdater' : 'Legg til'}}</button>
                         </div>
