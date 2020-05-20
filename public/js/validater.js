@@ -185,9 +185,9 @@ $(document).ready(function () {
             apartment_number: {
                 number: true
             },
-             deliver_date:{
-                 number: true
-            }
+            //  deliver_date:{
+            //      number: true
+            // }
         },
         onfocusout: false,
         invalidHandler: function(form, validator) {
@@ -675,9 +675,9 @@ $(document).ready(function () {
             video: {
                 validUrl: true
             },
-            delivery_date: {
-                number: true
-            },
+            // delivery_date: {
+            //     number: true
+            // },
             from_clock: {
                 number: true
             },

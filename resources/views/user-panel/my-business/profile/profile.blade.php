@@ -117,7 +117,7 @@
                                                 <option value="Eiendom">Eiendom</option>
                                                 {{--@else--}}
                                                 {{--<option value="" disabled>Eiendom (Grensen overskredet)</option>--}}
-                                                @endif
+                                            @endif
                                     </select>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@
 
 
 
-                        <div class="form-group company_colors d-none">
+                        <div class="form-group">
                             <div class="row">
                                 <label for="background_color" class="col-md-2 u-t5">Profil bakgrunnsfarge</label>
                                 <div class="col-sm-4 ">
@@ -604,7 +604,6 @@
                                     </div>
                                 </div>
 
-                                @if($company->company_type == "Eiendom")
                                 <div class="form-group">
                                     <div class="row">
                                         <label for="background_color" class="col-md-2 u-t5">Profil
@@ -624,7 +623,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endif
 
                                 <div class="form-group">
                                     <div class="row">
@@ -892,14 +890,6 @@
         $('.datepicker').datepicker({
             dateFormat: 'dd-mm-yy',
             autoclose: true
-        });
-
-        $(document).on('change', '#company_type', function (e) {
-            $('.company_colors').addClass('d-none');
-            var val = $(this).val();
-            if (val === "Eiendom") {
-                $('.company_colors').removeClass('d-none');
-            }
         });
 
         $(document).on('change', '.zip_code, input[name="address"]', function (e) {

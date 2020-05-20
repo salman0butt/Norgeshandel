@@ -49,8 +49,11 @@ class AgentController extends Controller
     {
         $validatedData = $request->validate([
             'email' => 'unique:users',
+            'created_by_company_id' => 'required',
+            'password' => 'required',
+            'position' => 'required',
         ]);
-        $company = Auth::user()->property_companies->first();
+        $company = Company::where('id',$request->created_by_company_id)->where('user_id',Auth::id())->first();
         if($company){
             DB::beginTransaction();
             try{
@@ -58,7 +61,7 @@ class AgentController extends Controller
                     'email'=>$request->email,
                     'password' => Hash::make($request->password),
                     'position' => $request->position,
-                    'created_by_company_id' => $company->id,
+                    'created_by_company_id' => $request->created_by_company_id,
                     'email_verified_at' => Carbon::now()->toDateTimeString(),
                 ]);
                 $user->roles()->attach(6);
@@ -121,7 +124,7 @@ class AgentController extends Controller
     {
         $agent = User::find($id);
 
-        if($agent && $agent->created_by_company_id && Auth::user()->property_companies->first() && $agent->created_by_company_id == Auth::user()->property_companies->first()->id){
+        if($agent && $agent->created_by_company_id){
             DB::beginTransaction();
             try{
                 $agent->position = $request->position;
@@ -150,7 +153,7 @@ class AgentController extends Controller
     {
         $agent = User::find($id);
 
-        if($agent && $agent->created_by_company_id == Auth::user()->property_companies->first()->id ){
+        if($agent && $agent->created_by_company_id){
             DB::beginTransaction();
             try{
                 if($agent->ads->count() > 0){

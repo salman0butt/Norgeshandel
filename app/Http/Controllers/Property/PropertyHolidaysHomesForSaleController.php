@@ -270,6 +270,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
             }
             $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
+            /*/
             //Add More ViewingTimes
             if (isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "") {
                 $property_home_for_sale_data['secondary_deliver_date'] = null;
@@ -322,6 +323,26 @@ class PropertyHolidaysHomesForSaleController extends Controller
                     $i++;
                 }
             }
+            */
+
+            $property_home_for_sale_data['secondary_deliver_date'] = $property_home_for_sale_data['secondary_from_clock'] = $property_home_for_sale_data['secondary_clockwise'] = $property_home_for_sale_data['secondary_note'] = null;
+
+            if(isset($request->secondary_deliver_date)){
+                $property_home_for_sale_data['secondary_deliver_date'] = json_encode($request->secondary_deliver_date);
+            }
+
+            if(isset($request->secondary_from_clock)){
+                $property_home_for_sale_data['secondary_from_clock'] = json_encode($request->secondary_from_clock);
+            }
+
+            if(isset($request->secondary_clockwise)){
+                $property_home_for_sale_data['secondary_clockwise'] = json_encode($request->secondary_clockwise);
+            }
+
+            if(isset($request->secondary_note)){
+                $property_home_for_sale_data['secondary_note'] = json_encode($request->secondary_note);
+            }
+            
             //Manage Facilities
             if (isset($property_home_for_sale_data['facilities'])) {
                 $facilities = "";

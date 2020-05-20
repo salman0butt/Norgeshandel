@@ -352,6 +352,25 @@ class PropertyForSaleController extends Controller
 
             $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
 
+            $property_for_sale_data['secondary_deliver_date'] = $property_for_sale_data['secondary_from_clock'] = $property_for_sale_data['secondary_clockwise'] = $property_for_sale_data['secondary_note1'] = null;
+
+            if(isset($request->secondary_deliver_date)){
+                $property_for_sale_data['secondary_deliver_date'] = json_encode($request->secondary_deliver_date);
+            }
+
+            if(isset($request->secondary_from_clock)){
+                $property_for_sale_data['secondary_from_clock'] = json_encode($request->secondary_from_clock);
+            }
+
+            if(isset($request->secondary_clockwise)){
+                $property_for_sale_data['secondary_clockwise'] = json_encode($request->secondary_clockwise);
+            }
+
+            if(isset($request->secondary_note1)){
+                $property_for_sale_data['secondary_note1'] = json_encode($request->secondary_note1);
+            }
+
+           /*
             //Add More ViewingTimes
             if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {
                 $property_for_sale_data['secondary_deliver_date'] = null;
@@ -404,6 +423,8 @@ class PropertyForSaleController extends Controller
                     $i++;
                 }
             }
+
+           */
 
             unset($property_for_sale_data['property_pdf']);
             unset($property_for_sale_data['property_quote']);
