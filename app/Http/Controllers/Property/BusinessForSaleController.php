@@ -228,6 +228,7 @@ class BusinessForSaleController extends Controller
             $property = BusinessForSale::find($id);
             $message = '';
             $ad = $property->ad;
+
             if ($ad && $ad->status == 'saved') {
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
@@ -241,6 +242,8 @@ class BusinessForSaleController extends Controller
                 }
             }
             $published_date = date("Y-m-d H:i:s");
+
+            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/business-for-sale');
 
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 

@@ -74,9 +74,8 @@
                     $property_for_flat_wishes_rented = App\FlatWishesRented::find($value->id);
                     $name = $property_for_flat_wishes_rented->ad->company_gallery->first();
                     if ($name != null) {
-                        $name = $name->name_unique;
-                        $path = \App\Helpers\common::getMediaPath($property_for_flat_wishes_rented);
-                        $full_path = $path . "" . $name;
+                        $path = \App\Helpers\common::getMediaPath($name);
+                        $full_path = $path;
                     } else {
                         $full_path = "";
                     }

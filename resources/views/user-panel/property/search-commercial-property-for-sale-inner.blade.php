@@ -72,9 +72,8 @@
                     $property_commercial_property_for_sale = App\CommercialPropertyForSale::find($value->id);
                     $name = $property_commercial_property_for_sale->ad->company_gallery->first();
                     if (!empty($name)) {
-                        $name = $property_commercial_property_for_sale->ad->company_gallery->first()->name_unique;
-                        $path = \App\Helpers\common::getMediaPath($property_commercial_property_for_sale);
-                        $full_path = $path . "" . $name;
+                        $path = \App\Helpers\common::getMediaPath($name);
+                        $full_path = $path;
                     } else {
                         $full_path = "";
                     }

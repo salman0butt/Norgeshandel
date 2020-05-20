@@ -75,9 +75,8 @@
                     $commercial_plot = App\CommercialPlot::find($value->id);
                     $name = $commercial_plot->ad->company_gallery;
                     if (!$name->isEmpty()) {
-                        $name = $commercial_plot->ad->company_gallery->first()->name_unique;
-                        $path = \App\Helpers\common::getMediaPath($commercial_plot);
-                        $full_path = $path . "" . $name;
+                        $path = \App\Helpers\common::getMediaPath($name);
+                        $full_path = $path;
                     } else {
                         $full_path = "";
                     }

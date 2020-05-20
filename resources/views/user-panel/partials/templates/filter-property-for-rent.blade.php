@@ -68,7 +68,10 @@
                                     <input type="text" class="dme-form-control" name="monthly_rent_to">
                                     <span class="u-t5">Til kr</span>
                                 </div>
-                                <div class="col-sm-4"><button class="dme-btn-outlined-blue float-right">Søk</button></div>
+                                <div class="col-sm-4">
+                                    {{--<button type="button" name="size_btn" class="dme-btn-outlined-blue float-right">Søk</button>--}}
+                                    <button type="button" name="monthly_rent_btn" class="dme-btn-outlined-blue float-right">Søk</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group nav-dynamic-checks">
@@ -83,9 +86,7 @@
                                     <span class="u-t5">Til m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4">
-                                    <button type="button" name="size_btn" class="dme-btn-outlined-blue float-right">
-                                        Søk
-                                    </button>
+                                    <button type="button" name="size_btn" class="dme-btn-outlined-blue float-right">Søk</button>
                                 </div>
                             </div>
                         </div>
