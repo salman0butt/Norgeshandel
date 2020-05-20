@@ -485,7 +485,7 @@ class common
             ->where('notification_web', '=', '1')
             ->get();
 
-        if ($searches) {
+        if ($searches->count() > 0) {
             foreach ($searches as $search) {
                 $req = common::get_request_from_search_url($search->filter);
 //                if ($req) {

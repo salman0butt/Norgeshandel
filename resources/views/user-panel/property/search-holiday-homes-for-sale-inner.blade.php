@@ -75,9 +75,8 @@
                     $property_holiday_home_for_sale = App\PropertyHolidaysHomesForSale::find($value->id);
                     $name = $property_holiday_home_for_sale->ad->company_gallery->first();
                     if (!empty($name)) {
-                        $name = $property_holiday_home_for_sale->ad->company_gallery->first()->name_unique;
-                        $path = \App\Helpers\common::getMediaPath($property_holiday_home_for_sale);
-                        $full_path = $path . "" . $name;
+                        $path = \App\Helpers\common::getMediaPath($name);
+                        $full_path = $path;
                     } else {
                         $full_path = "";
                     }

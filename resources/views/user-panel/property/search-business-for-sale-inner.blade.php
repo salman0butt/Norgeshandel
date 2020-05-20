@@ -73,9 +73,8 @@
                     $business_for_sale = App\BusinessForSale::find($value->id);
                     $name = $business_for_sale->ad->company_gallery->first();
                     if ($name != null) {
-                        $name = $name->name_unique;
-                        $path = \App\Helpers\common::getMediaPath($business_for_sale);
-                        $full_path = $path . "" . $name;
+                        $path = \App\Helpers\common::getMediaPath($name);
+                        $full_path = $path;
                     } else {
                         $full_path = "";
                     }
