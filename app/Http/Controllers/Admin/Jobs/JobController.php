@@ -425,8 +425,8 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        $prev = Job::where('id', '<', $job->id)->orderBy('id', 'desc')->first();
-        $next = Job::where('id', '>', $job->id)->orderBy('id', 'asc')->first();
+        $prev = common::previous_ad($job);
+        $next = common::next_ad($job);
         return view('user-panel/jobs/single', compact('job', 'prev', 'next'));
     }
 

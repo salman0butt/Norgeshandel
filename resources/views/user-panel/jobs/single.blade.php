@@ -240,6 +240,13 @@ NorgesHandel - {{$job->title}}
                                 <span> {{$job->app_contact}} </span>
                             </div>
                             @endif
+
+                            @if($job && $job->app_email)
+                                <div class="mb-2 contact-name">
+                                    <span>E-post: </span>
+                                    <span> {{$job->app_email}} </span>
+                                </div>
+                            @endif
                             @if($job && $job->app_phone)
                             <div class="mb-2">
                                 <span class="contact-name">Telefon: </span>
@@ -305,29 +312,28 @@ NorgesHandel - {{$job->title}}
                                                 {{$job && $job->company ? $job->company->emp_name : 'NH-Bruker'}}
                                             </h5>
                                             @if($job->user->hasRole('company'))
-                                                <div>
-                                                    <img class="user-profile-picture" src="{{$job->user->media ? asset(\App\Helpers\common::getMediaPath($job->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
-                                                </div>
-
                                                 <ul class="list-unstyled mb-0">
                                                     @if($job->user->first_name || $job->user->last_name)
                                                         <li class="py-2"><h6 class="mt-2">{{$job->user->first_name.' '.$job->user->last_name}}</h6></li>
                                                     @endif
                                                 </ul>
                                             @endif
-                                            {{--<ul class="list-unstyled">--}}
-                                                {{--<li></li>--}}
-                                            {{--</ul>--}}
+
+                                            <ul class="list-unstyled">
+                                                <li class="py-2">{{$job->app_contact_title}}</li>
+                                                <li class="py-2">{{$job->app_contact}}</li>
+                                                @if($job->app_email)
+                                                    <li class="py-2">{{$job->app_email}}</li>
+                                                @endif
+                                            </ul>
 
                                             @if($job->user)
                                                 @if($job->user->hasRole('agent'))
-                                                    <div>
-                                                        <img class="user-profile-picture" src="{{$job->user->media ? asset(\App\Helpers\common::getMediaPath($job->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
-                                                    </div>
-                                                    <h6 class="mt-2">{{$job->user->first_name.' '.$job->user->last_name}}</h6>
-
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li class="py-2"><p class="mb-0">{{$job->user->position}}</p></li>
+                                                    <ul class="list-unstyled">
+                                                        @if($job->user->first_name || $job->user->last_name)
+                                                        <li class="py-2">{{$job->user->first_name.' '.$job->user->last_name}}</li>
+                                                        @endif
+                                                        <li >{{$job->user->position}}</li>
                                                         @if($job->user->mobile_number)
                                                             <li class="py-2"><a  href="tel:{{$job->user->mobile_number}}">Mobil  {{$job->user->mobile_number}}</a></li>
                                                         @endif
@@ -344,13 +350,11 @@ NorgesHandel - {{$job->title}}
 
                                             @if($job->ad && $job->ad->agents->count() > 0)
                                                 @foreach($job->ad->agents as $ad_agent)
-                                                    <div class="mt-2">
-                                                        <img class="user-profile-picture" src="{{$ad_agent->media ? asset(\App\Helpers\common::getMediaPath($ad_agent->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
-                                                    </div>
-                                                    <h6 class="mt-2">{{$ad_agent->first_name.' '.$ad_agent->last_name}}</h6>
-
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li class="py-2"><p class="mb-0">{{$ad_agent->position}}</p></li>
+                                                    <ul class="list-unstyled">
+                                                        @if($ad_agent->first_name || $ad_agent->last_name)
+                                                            <li class="py-2">{{$ad_agent->first_name.' '.$ad_agent->last_name}}</li>
+                                                        @endif
+                                                        <li class="py-2">{{$ad_agent->position}}</li>
                                                         @if($ad_agent->mobile_number)
                                                             <li class="py-2"><a  href="tel:{{$ad_agent->mobile_number}}">Mobil  {{$ad_agent->mobile_number}}</a></li>
                                                         @endif
@@ -373,13 +377,6 @@ NorgesHandel - {{$job->title}}
                                                     <li class="py-2"><a  href="{{$job->company->emp_facebook}}">Facebook</a></li>
                                                 @endif
 
-                                                @if($job->app_link_to_receive && $job->app_receive_by == 'url')
-                                                    <li class="py-2"><a href='{{$job->app_link_to_receive}}'>Søk her</a></li>
-                                                @endif
-                                                @if($job->app_receive_by == 'email')
-                                                    <li class="py-2"><a href="{{route('apply-job',$job->id)}}" target="_blank">Søk her</a></li>
-                                                @endif
-
                                             </ul>
                                         </div>
                                     </div>
@@ -388,15 +385,15 @@ NorgesHandel - {{$job->title}}
                         </div>
 
                     @endif
-                    @if($job->company_id == 0)
-                        @if($job->app_link_to_receive && $job->app_receive_by == 'url')
+
+
+                    @if($job->app_link_to_receive && $job->app_receive_by == 'url')
                         <button class="dme-btn-maroon col-12 mb-2"
-                            onclick="window.location.href='{{$job->app_link_to_receive}}';">Søk her</button>
-                        @endif
-                        @if($job->app_receive_by == 'email')
+                                onclick="window.location.href='{{$job->app_link_to_receive}}';">Søk her</button>
+                    @endif
+                    @if($job->app_receive_by == 'email')
                         <button class="dme-btn-maroon col-12 mb-2"
-                            onclick="window.open('{{route('apply-job',$job->id)}}', '_blank');">Søk her</button>
-                        @endif
+                                onclick="window.open('{{route('apply-job',$job->id)}}', '_blank');">Søk her</button>
                     @endif
 
                     @if(!empty($job->company))
