@@ -196,4 +196,46 @@ class CompanyController extends Controller
         Session::flash('success', 'Selskapet ble slettet!');
         return redirect()->back();
     }
+
+    public function company_list() {
+        $companies = Company::all();
+        return view('admin.companies.index',compact('companies'));
+    }
+    public function admin_soft_delete(Company $company){
+             //Delete company Jobs
+             
+        if($company->jobs->count()){
+            foreach ($company->jobs as $company_job){
+                $company_job->ad()->delete();
+                $company_job->delete();
+            }
+        }
+
+        //Delete Company users.
+        if($company->agents->count()){
+            foreach ($company->agents as $company_agent){
+                $company_agent->delete();
+            }
+        }
+
+        //Delete Company Property Ads
+        if($company->ads->count()){
+            foreach ($company->ads as $company_ad){
+                $company_ad->property()->delete();
+                $company_ad->delete();
+            }
+        }
+       
+        $company->delete();
+        Session::flash('success', 'Selskapet ble slettet!');
+        return redirect()->back();
+    } 
+    public function admin_company_view(Company $company){
+        
+        return view('admin.companies.single-company',compact('company'));
+    }
+
+
+
+
 }

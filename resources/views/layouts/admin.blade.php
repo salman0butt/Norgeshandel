@@ -228,9 +228,9 @@
                             <li class="sidebar-item"><a href="{{url('/admin/banner-group/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Banner Group')}} </span></a></li>
                         </ul>
                     </li>
-
-
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="grid.html" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Finance')}}</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/companies-list') }}" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Companies')}}</span></a></li>
+                    
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/agent-list') }}" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Agents')}}</span></a></li>
 {{--                    @endpermission--}}
 {{--                    @permission('manage_users')--}}
                     <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">{{__('Users')}} </span></a>

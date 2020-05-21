@@ -1,15 +1,25 @@
 
 function myFunction(arr) {
-    console.log(arr);
+
     if (arr.adresser.length > 0) {
 
         $('#latitude').val(arr.adresser[0].representasjonspunkt.lat);
         $('#longitude').val(arr.adresser[0].representasjonspunkt.lon);
         $('#full_address').val(arr.adresser[0].adressetekst + ", " + arr.adresser[0].postnummer + " "+ arr.adresser[0].poststed);
         console.log(arr.adresser[0].adressetekst + ", " + arr.adresser[0].postnummer + " " + arr.adresser[0].poststed);
+        if ($('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').length == 0){
+            alert('working');
+            $('input[name="street_address"],input[name="address"]').parent().append('<br><span class="u-t5">' + arr.adresser[0].adressetekst + ", " + arr.adresser[0].postnummer + " " + arr.adresser[0].poststed + '</span>');
+
+        }
+        else {
+            $('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').html(arr.adresser[0].adressetekst + ", " + arr.adresser[0].postnummer + " " + arr.adresser[0].poststed);
+        }
+        
     }
     else {
         console.log("Sorry, no results...");
+        $('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').html('Sorry, no Address Found...');
     }
 
 }
@@ -32,7 +42,7 @@ function myFunction(arr) {
 function addr_search(street, city, zip) {
 
     var xmlhttp = new XMLHttpRequest();
-    var url = "https://ws.geonorge.no/adresser/v1/sok?adressetekst="+street+"&poststed="+city+"&postnummer="+zip+"&treffPerSide=10&side=0&asciiKompatibel=true";
+    var url = "https://ws.geonorge.no/adresser/v1/sok?adressetekst="+street+"&poststed="+city+"&postnummer="+zip+"&side=0&asciiKompatibel=true";
    
 
     xmlhttp.onreadystatechange = function () {
