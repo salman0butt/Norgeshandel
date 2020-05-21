@@ -204,4 +204,45 @@ class AgentController extends Controller
             }
         }
     }
+
+    public function admin_agents_list() {
+    
+        $agents = User::where('created_by_company_id','!=','')->get();
+  
+        return view('admin.agents.index',compact('agents'));
+    }
+    public function admin_agent_delete($id) {
+         $agent = User::find($id);
+
+        if($agent && $agent->created_by_company_id){
+            DB::beginTransaction();
+            try{
+                if($agent->ads->count() > 0){
+                    foreach ($agent->ads as $ad){
+                        if(isset($ad->job) && $ad->job){
+                            $ad->job->delete();
+                        }
+
+                        if(isset($ad->property) && $ad->property){
+                            $ad->property->delete();
+                        }
+                        $ad->delete();
+                    }
+                }
+
+                $agent->delete();
+                DB::commit();
+                session()->flash('success', 'Posten er slettet.');
+                return back();
+            }catch (\Exception $e){
+                DB::rollback();
+                session()->flash('danger', 'Noe gikk galt.');
+                return back();
+            }
+        }else{
+            session()->flash('danger', 'Bedrift ikke funnet.');
+            return back();
+        }
+    }
+
 }
