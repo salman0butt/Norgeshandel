@@ -52,6 +52,7 @@
                             NH-Bruker
                         @endif
                     </h5>
+
                     @if($property_data->user->hasRole('company'))
                         <div>
                             <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
