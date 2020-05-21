@@ -272,9 +272,25 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-
+                        @php
+                            $pfs_facility = \App\Taxonomy::where('slug', 'pfs_facilities')->first();
+                            $pfs_facilities = $pfs_facility->terms;
+                        @endphp
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Fasiliteter</h3>
+                            <ul class="list list-unstyled">
+                                @if($pfs_facilities->count() > 0)
+                                    @foreach($pfs_facilities as $facility)
+                                        <li>
+                                            <div class="input-toggle">
+                                                <input id="facilities-{{$facility->id}}" type="checkbox" value="{{$facility->name}}" name="facilities[]">
+                                                <label class="smalltext" for="facilities-{{$facility->id}}"> {{$facility->name}} <span data-name="{{$facility->name}}" data-title="facilities" class="count"></span></label>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                            <!--
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
@@ -397,6 +413,7 @@
                                     </div>
                                 </li>
                             </ul>
+                            -->
                         </div>
 
                         <div class="form-group nav-dynamic-checks">

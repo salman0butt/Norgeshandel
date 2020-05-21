@@ -411,6 +411,7 @@ class common
         $request = new Request();
         $request_arr = array();
         foreach ($array_filter as $key=>$value) {
+            $count = 1;
             $pairs = explode('=', $value);
             if (count($pairs) > 1) {
 
@@ -425,9 +426,10 @@ class common
                      $pairs[1] = str_replace("%2B",'+',$pairs[1]);
                  }
 
-                $count = substr_count($filter,$pairs[0]);
+//                $count = substr_count($filter,$pairs[0]);
 
                 if(strpos($pairs[0], '%5B%5D')){
+                    $count++;
                     $pairs[0] = str_replace("%5B%5D",'',$pairs[0]);
                 }
 
@@ -513,7 +515,6 @@ class common
             ->where('filter', 'like', '%' . $searche_str . '%')
             ->where('notification_web', '=', '1')
             ->get();
-
         if ($searches->count() > 0) {
             foreach ($searches as $search) {
                 $req = common::get_request_from_search_url($search->filter);
@@ -532,6 +533,7 @@ class common
                 ) {
                     $to_be_sent = common::check_property_from_search_parameters($req, $obj);
                 }
+
                 if ($to_be_sent) {
                     $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
                     $notif->save();
