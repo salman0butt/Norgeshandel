@@ -97,6 +97,7 @@ class PropertyForSaleController extends Controller
             }
         }
 
+
         if (isset($request->asking_price_from) && !empty($request->asking_price_from)) {
             $query->where($table . '.asking_price', '>=', (int)$request->asking_price_from);
         }
@@ -152,7 +153,6 @@ class PropertyForSaleController extends Controller
                 $query->where($table . '.year', '<', today()->addMonths(-6)->year);
             }
         }
-
         if (isset($request->display_date) && !empty($request->display_date)) {
             $query->whereDate($table . '.deliver_date', '=', $request->display_date[0]);
             for ($i = 1; $i < count($request->display_date); $i++) {
@@ -168,13 +168,13 @@ class PropertyForSaleController extends Controller
             $query->whereIn($table . '.tenure', $request->pfs_tenure);
         }
 
+
         if (isset($request->facilities) && !empty($request->facilities)) {
             $query->where($table . '.facilities', 'like', '%' . $request->facilities[0] . '%');
             for ($i = 1; $i < count($request->facilities); $i++) {
                 $query->orWhere($table . '.facilities', 'like', '%' . $request->facilities[$i] . '%');
             }
         }
-
         if (isset($request->floor) && !empty($request->floor)) {
             $query->whereIn($table . '.floor', $request->floor);
             if (in_array('over 6', $request->floor)) {
@@ -193,6 +193,7 @@ class PropertyForSaleController extends Controller
             $query->where('ads.company_id', $request->company_id);
         }
         $query->orderBy('ads.published_on', 'DESC');
+
 
         switch ($sort) {
             case 'published':
@@ -317,12 +318,11 @@ class PropertyForSaleController extends Controller
                 $published_date = date("Y-m-d H:i:s");
                 $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
                 if ($response) {
-//        notifications bellow
+                    //notifications bellow
                     common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-sale');
-//      notifications ended
+                    //notifications ended
                 }
                 $msg['message'] = $message;
-//                $data['success'] = $response;
                 $msg['status'] = $ad->status;
                 echo json_encode($msg);
             }

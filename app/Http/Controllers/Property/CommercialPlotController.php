@@ -189,7 +189,7 @@ class CommercialPlotController extends Controller
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
 //            notification bellow
-            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/flat-wishes-rented');
+            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/commercial-plots');
 //            end notification
 
             $msg['message'] = $message;

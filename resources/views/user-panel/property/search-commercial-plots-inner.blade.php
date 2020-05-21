@@ -73,8 +73,8 @@
                 @foreach ($add_array as $key => $value)
                     <?php
                     $commercial_plot = App\CommercialPlot::find($value->id);
-                    $name = $commercial_plot->ad->company_gallery;
-                    if (!$name->isEmpty()) {
+                    $name = $commercial_plot->ad->company_gallery->first();
+                    if ($name != null) {
                         $path = \App\Helpers\common::getMediaPath($name);
                         $full_path = $path;
                     } else {
