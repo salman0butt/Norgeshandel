@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 use \Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Admin\Users\AdminUserController;
 
 Auth::routes(['verify' => true]);
 Route::get('states', function (){
@@ -174,6 +175,14 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
     
     Route::get('banners/reports/{id}', 'Admin\ads\BannerController@reports')->middleware(['role:admin|manager']);
+    //admin Company list
+    Route::get('admin/companies-list', 'CompanyController@company_list')->middleware(['role:admin|manager'])->name('admin.company.index');
+    Route::delete('admin/company/{company}', 'CompanyController@admin_soft_delete')->middleware(['role:admin|manager'])->name('admin.company.delete');
+    Route::get('admin/company/{company}', 'CompanyController@admin_company_view')->middleware(['role:admin|manager'])->name('admin.company.view');
+
+    //admin agents list
+    Route::get('admin/agent-list', 'AgentController@admin_agents_list')->middleware(['role:admin|manager'])->name('admin.agents.index');
+    Route::delete('admin/agent/{id}', 'AgentController@admin_agent_delete')->middleware(['role:admin|manager'])->name('admin.agent.delete');
 
 
 
