@@ -8,7 +8,6 @@ function myFunction(arr) {
         $('#full_address').val(arr.adresser[0].adressetekst + ", " + arr.adresser[0].postnummer + " "+ arr.adresser[0].poststed);
         console.log(arr.adresser[0].adressetekst + ", " + arr.adresser[0].postnummer + " " + arr.adresser[0].poststed);
         if ($('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').length == 0){
-            alert('working');
             $('input[name="street_address"],input[name="address"]').parent().append('<br><span class="u-t5">' + arr.adresser[0].adressetekst + ", " + arr.adresser[0].postnummer + " " + arr.adresser[0].poststed + '</span>');
 
         }
@@ -19,7 +18,7 @@ function myFunction(arr) {
     }
     else {
         console.log("Sorry, no results...");
-        $('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').html('Sorry, no Address Found...');
+        $('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').html('Beklager, ingen adresse funnet...');
     }
 
 }
