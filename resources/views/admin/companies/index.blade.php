@@ -69,6 +69,7 @@
                                     <td>{{ ($company->trashed() ? 'Deleted' : 'Active' ) }}</td>
                                      <td>{{ $company->created_at }}</td>
                                     <td><div class="display_name mb-2">{{$company->user->name}}</div>
+                                     <a href="{{ url('admin/company/agent/'.$company->id) }}" class="btn btn-info float-left mr-1 btn-sm">View Agents</a>
                                         <a href="{{route('admin.company.view', $company->id)}}" class="btn btn-primary float-left mr-1 btn-sm">View Detail</a>
                                         @if (!$company->trashed())
                                         <form action="{{route('admin.company.delete', $company->id)}}" method="POST"  onsubmit="jarascript:return confirm('Do you want to delete this Company? Ads are deleted from this user. And you can\'t restore it again. Thanks!')">

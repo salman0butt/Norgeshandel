@@ -179,6 +179,7 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('admin/companies-list', 'CompanyController@company_list')->middleware(['role:admin|manager'])->name('admin.company.index');
     Route::delete('admin/company/{company}', 'CompanyController@admin_soft_delete')->middleware(['role:admin|manager'])->name('admin.company.delete');
     Route::get('admin/company/{company}', 'CompanyController@admin_company_view')->middleware(['role:admin|manager'])->name('admin.company.view');
+   Route::get('admin/company/agent/{id}', 'AgentController@company_agents')->middleware(['role:admin|manager'])->name('admin.company-agent.index');
 
     //admin agents list
     Route::get('admin/agent-list', 'AgentController@admin_agents_list')->middleware(['role:admin|manager'])->name('admin.agents.index');
