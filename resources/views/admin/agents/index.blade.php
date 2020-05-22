@@ -42,8 +42,8 @@
                             {{-- <th scope="col">Agent Company</th> --}}
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Company</th>
                             <th scope="col">Mobile</th>
-                            <th scope="col">Address</th>
                             <th scope="col">Status</th>
                             <th scope="col">Created</th>
                             <th scope="col">Actions</th>
@@ -63,11 +63,12 @@
                                     {{-- <td>{{ dd($agent->company) }}</td> --}}
                                     <td>{{ $agent->username ?? 'N/A' }}</td>
                                     <td>{{ $agent->email ?? 'N/A' }}</td>
+                                    <td>{{$agent->created_by_company ? $agent->created_by_company->emp_name.' ('.$agent->created_by_company->company_type.')' : ''}}</td>
                                     <td>{{ $agent->mobile_number ?? 'N/A' }}</td>
-                                    <td>{{ ($agent->address ?? ''.' '.$agent->city ?? ''.' '.$agent->zip ?? '') ?? 'N/A' }}</td>
                                     <td>{{ ($agent->status ? 'Not Active' : 'Active' ) }}</td>
                                      <td>{{ $agent->created_at }}</td>
-                                    <td><div class="display_name mb-2">{{$agent->username ?? ''}}</div>
+                                    <td>
+                                        {{--<div class="display_name mb-2">{{$agent->username ?? ''}}</div>--}}
                                         {{-- <a href="{{route('admin.company.view', $agent->id)}}" class="btn btn-primary float-left mr-1 btn-sm">View Detail</a> --}}
                                         <form action="{{route('admin.agent.delete', $agent->id)}}" method="POST"  onsubmit="jarascript:return confirm('Do you want to delete this Company? Ads are deleted from this user. And you can\'t restore it again. Thanks!')">
                                             {{ csrf_field() }} {{method_field('DELETE')}}
