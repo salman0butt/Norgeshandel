@@ -24,7 +24,9 @@
                     
                             @if(!in_array($addable, $added) && !empty($notif->notifiable))
                                 <article class="col-md-12 pl-0 pr-0 list-ad">
+                                   {{-- {{ dd($notif->ad) }} --}}
                                     <a href="@if($notif->notifiable_type==\App\Models\Search::class)
+                                 
                                     {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
                                     @else
                                     {{url('/', $notif->notifiable->id)}}

@@ -300,6 +300,7 @@ class PropertyForSaleController extends Controller
         if($msg['flag'] == 'success'){
             //  DB::connection()->enableQueryLog();
             $property = PropertyForSale::find($id);
+            $ad  = $property->ad();
             if ($property) {
                 $message = '';
                 $ad = $property->ad;
@@ -319,7 +320,7 @@ class PropertyForSaleController extends Controller
                 $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
                 if ($response) {
                     //notifications bellow
-                    common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-sale');
+                    common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/property-for-sale',$ad);
                     //notifications ended
                 }
                 $msg['message'] = $message;

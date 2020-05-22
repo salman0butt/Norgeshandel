@@ -171,7 +171,7 @@ class JobController extends Controller
 
 
 //            notification bellow
-        common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher, 'jobs/search');
+        common::send_search_notification($ad->job, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'jobs/search',$ad);
 //            end notification
 
 
@@ -481,11 +481,11 @@ class JobController extends Controller
                 $delete_media = common::delete_json_media($request->deleted_media);
             }
             $message = 'Annonsen din er oppdatert.';
-
+            $ad = $job->ad();
 //            DB::commit();
 
 //            notification bellow
-            common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher, 'jobs/search');
+            common::send_search_notification($job, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'jobs/search',$ad);
 
             $msg['message'] = $message;
 //                $data['success'] = $response;

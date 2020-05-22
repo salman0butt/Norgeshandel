@@ -243,7 +243,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
 //            notification bellow
-            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/holiday-homes-for-sale');
+            common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/holiday-homes-for-sale',$ad);
 //            end notification
 
             $msg['message'] = $message;
