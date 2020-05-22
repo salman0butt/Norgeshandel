@@ -244,5 +244,11 @@ class AgentController extends Controller
             return back();
         }
     }
+    public function company_agents($id) {
+        $company = Company::findOrFail($id);
+        $agents = $company->agents;
+
+       return view('admin.agents.index',compact('agents'));
+    }
 
 }
