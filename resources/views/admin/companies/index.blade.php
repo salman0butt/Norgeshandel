@@ -44,6 +44,7 @@
                             <th scope="col">Company Type</th>
                             <th scope="col">Company Owner</th>
                             <th scope="col">Company Address</th>
+                            <th scope="col">Employees</th>
                             <th scope="col">Status</th>
                             <th scope="col">Created</th>
                             <th scope="col">Actions</th>
@@ -64,6 +65,7 @@
                                     <td>{{ $company->company_type }}</td>
                                     <td>{{ $company->user->username }}</td>
                                     <td>{{ $company->full_address }}</td>
+                                    <td>{{$company->agents->count()}}</td>
                                     <td>{{ ($company->trashed() ? 'Deleted' : 'Active' ) }}</td>
                                      <td>{{ $company->created_at }}</td>
                                     <td><div class="display_name mb-2">{{$company->user->name}}</div>

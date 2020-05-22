@@ -31,14 +31,14 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business')}}">Min handel</a></li> <!-- ('cv.breadcrumb.sub') -->
                             <li class="breadcrumb-item"><a href="{{url('my-business/profile')}}">Endre profil</a></li> <!-- ('cv.breadcrumb.main') -->
-                            <li class="breadcrumb-item"><a>Bedriftsagenter</a></li> <!-- ('cv.breadcrumb.main') -->
+                            <li class="breadcrumb-item"><a>Ansatte</a></li> <!-- ('cv.breadcrumb.main') -->
                         </ol>
                     </nav>
                 </div>
                 <div class="breade-crumb col-4">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{url('my-business/company-agents/create')}}">Legg til eiendomsmegler</a></li> <!-- ('cv.breadcrumb.main') -->
+                            <li class="breadcrumb-item"><a href="{{url('my-business/company-agents/create')}}"> Legg til ansatt</a></li> <!-- ('cv.breadcrumb.main') -->
                         </ol>
                     </nav>
                 </div>
@@ -51,6 +51,7 @@
                     <tr>
                         <th>id</th>
                         <th>Velg bilde</th>
+                        <th>Firma</th>
                         <th>Stilling</th>
                         <th>E-post</th>
                         <th>Status</th>
@@ -65,6 +66,7 @@
                                 <td>
                                     <img class="img-thumbnail img-fluid" src="{{$agent->media ? \App\Helpers\common::getMediaPath($agent->media,'150x150') : asset('/public/images/male-avatar.jpg')}}" alt="logo" width="100">
                                 </td>
+                                <td>{{$agent->created_by_company && $agent->created_by_company->emp_name ? $agent->created_by_company->emp_name.' ('.$agent->created_by_company->company_type.')' : ''}}</td>
                                 <td>{{$agent->position}}</td>
                                 <td>{{$agent->email}}</td>
                                 <td>

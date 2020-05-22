@@ -415,27 +415,72 @@ class common
             $pairs = explode('=', $value);
             if (count($pairs) > 1) {
 
+                //Covert the ASCII code to space
                 if($pairs[0] == 'search'){
                     $pairs[1] = str_replace("%20",' ',$pairs[1]);
                 }
+
+                //Covert the ASCII code to space
                 if($pairs[0] == 'search'){
                     $pairs[1] = str_replace("+",' ',$pairs[1]);
                 }
 
+                //Covert the ASCII code to special character +
                  if($pairs[0] == 'search'){
                      $pairs[1] = str_replace("%2B",'+',$pairs[1]);
                  }
 
-//                $count = substr_count($filter,$pairs[0]);
-
+                //Covert the ASCII code to space
                 if(strpos($pairs[0], '%5B%5D')){
                     $count++;
                     $pairs[0] = str_replace("%5B%5D",'',$pairs[0]);
                 }
 
+                //Covert the ASCII code to special character /
                 if(strpos($pairs[1], '%2F')){
                     $pairs[1] = str_replace("%2F",'/',$pairs[1]);
                 }
+                //Covert the ASCII code to special character Æ
+                if(strpos($pairs[1], '%C3%86')){
+                    $pairs[1] = str_replace("%C3%86",'Æ',$pairs[1]);
+                }
+                $pairs[1] = str_replace("%C3%86",'Æ',$pairs[1]);
+
+                //Covert the ASCII code to special character æ
+                if(strpos($pairs[1], '%C3%A6')){
+                    $pairs[1] = str_replace("%C3%A6",'æ',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character Ø
+                if(strpos($pairs[1], '%C3%98')){
+                    $pairs[1] = str_replace("%C3%98",'Ø',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character ø
+                if(strpos($pairs[1], '%C3%B8')){
+                    $pairs[1] = str_replace("%C3%B8",'ø',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character Å
+                if(strpos($pairs[1], '%C3%85')){
+                    $pairs[1] = str_replace("%C3%85",'Å',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character å
+                if(strpos($pairs[1], '%C3%A5')){
+                    $pairs[1] = str_replace("%C3%A5",'å',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character é
+                if(strpos($pairs[1], '%C3%A9')){
+                    $pairs[1] = str_replace("%C3%A9",'é',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character ,
+                if(strpos($pairs[1], '%2C')){
+                    $pairs[1] = str_replace("%2C",',',$pairs[1]);
+                }
+
 
                 if($count > 1){
                     $request_arr[$pairs[0]][] = $pairs[1];
@@ -453,6 +498,7 @@ class common
                 }
             }
         }
+
         return $request;
     }
 
@@ -498,7 +544,6 @@ class common
             $propertyController = new FlatWishesRentedController();
             $properties = $propertyController->search_flat_wishes_rented($request, true);
         }
-
         if ($properties) {
             $arr = $properties->pluck('ad_id');
             if (in_array($property->ad_id, $arr->toArray())) {

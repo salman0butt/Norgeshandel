@@ -1051,7 +1051,7 @@ $(document).ready(function () {
                 email: true
             },
             app_email: {
-                required: true,
+                // required: true,
                 email: true
             },
             app_linkedin: {

@@ -481,7 +481,7 @@
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
-                            <label for="app_email" class="col-md-2 u-t5">{{__('Email')}}</label>
+                            <label for="app_email" class="col-md-2 u-t5">{{__('Email')}} (valgfritt)</label>
                             <div class="col-sm-10 ">
                                 <input name="app_email" id="app_email" type="text" class="form-control dme-form-control"
                                     value="{{@$obj_job->app_email}}">

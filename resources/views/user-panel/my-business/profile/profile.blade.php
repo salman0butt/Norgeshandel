@@ -66,10 +66,10 @@
                     </button>
                 </div>
                 @endif
-                @if($user->property_companies->count() > 0)
+                @if($user->companies->count() > 0)
                     <div class="col-md-3">
                         <a href="{{url('my-business/company-agents')}}"
-                            class="btn dme-btn-outlined-blue">Eiendomsmeglere</a>
+                            class="btn dme-btn-outlined-blue">Ansatte</a>
                     </div>
                 @endif
             </div>
