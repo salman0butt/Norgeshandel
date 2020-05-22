@@ -50,7 +50,8 @@ class NotificationController extends Controller
         ->orWhere('type', '=', 'commercial_property_for_rent')
         ->orWhere('type', '=', 'commercial_property_for_sale')
         ->orWhere('type', '=', 'business_for_sale')
-        ->orWhere('type', '=', 'commercial_plot');
+        ->orWhere('type', '=', 'commercial_plot')
+        ->orWhere('type', '=', 'saved_search');
         })->whereNull('read_at')->count();
         $total = $ad_sold+$count;
         return $total;

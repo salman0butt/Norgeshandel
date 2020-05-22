@@ -554,7 +554,7 @@ class common
     }
 
 //    notification
-    public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searche_str)
+    public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searche_str, $ad)
     {
         $searches = \App\Models\Search::where('type', '=', 'saved')
             ->where('filter', 'like', '%' . $searche_str . '%')
@@ -580,7 +580,8 @@ class common
                 }
 
                 if ($to_be_sent) {
-                    $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
+                    // $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
+                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $ad->id, 'data' => $message]);
                     $notif->save();
                     $data = array('detail' => $message, 'to_user_id' => $search->user_id);
                     $pusher->trigger('notification', 'notification-event', $data);

@@ -242,12 +242,12 @@ class BusinessForSaleController extends Controller
             }
             $published_date = date("Y-m-d H:i:s");
 
-            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/business-for-sale');
+            common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/business-for-sale',$ad);
 
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
 //            notification bellow
-            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/business-for-sale');
+            common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/business-for-sale',$ad);
 //            end notification
 
             $msg['message'] = $message;

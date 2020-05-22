@@ -358,7 +358,7 @@ class PropertyForRentController extends Controller
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
             if ($response) {
 //        notifications bellow
-                common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-rent');
+                common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/property-for-rent',$ad);
 //      notifications ended
             }
 //  dd(DB::getQueryLog());
