@@ -159,9 +159,9 @@
         </script>
     </div>
     <!--    ended container-->
-        <div class="right-ad pull-right" id="right_banner_ad">
-            @include('user-panel.banner-ads.right-banner')
-        </div>
+    <div class="right-ad pull-right" id="right_banner_ad">
+        @include('user-panel.banner-ads.right-banner')
+    </div>
 </div>
 <script>
    $( document ).ready(function() {
