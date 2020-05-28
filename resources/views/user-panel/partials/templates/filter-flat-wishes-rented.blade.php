@@ -47,11 +47,11 @@
                             <h3 class="u-t5">Pris</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="price_from">
+                                    <input type="text" class="dme-form-control" name="price_from" value="{{Request()->price_from}}">
                                     <span class="u-t5">Pris Fra</span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="price_to">
+                                    <input type="text" class="dme-form-control" name="price_to" value="{{Request()->price_to}}">
                                     <span class="u-t5">Pris Til</span>
                                 </div>
                                 <div class="col-sm-4">
@@ -65,9 +65,10 @@
                             <h3 class="u-t5">Ønskes fra</h3>
                             <ul class="list list-unstyled">
                                 @for($i=0; $i<8; $i++)
+                                    @php $val = now()->addMonths($i)->year; $val1 = now()->addMonths($i)->month<10?'0'.now()->addMonths($i)->month:now()->addMonths($i)->month; $org_val = $val.'-'.$val1; @endphp
                                     <li>
                                         <div class="input-toggle">
-                                            <input type="checkbox" name="wanted_from[]" value="{{now()->addMonths($i)->year}}-{{now()->addMonths($i)->month<10?'0'.now()->addMonths($i)->month:now()->addMonths($i)->month}}" id="available_from-{{$i}}">
+                                            <input type="checkbox" name="wanted_from[]" value="{{$org_val}}" id="available_from-{{$i}}"  {{Request()->wanted_from ? is_numeric(array_search($org_val, Request()->wanted_from)) ? "checked" : "" : ''}}>
                                             <label for="available_from-{{$i}}" class="">{{now()->addMonths($i)->monthName}} {{now()->addMonths($i)->year}}<span data-name="Akershus" data-title="available_from" class="count"></span></label>
                                         </div>
                                     </li>
@@ -78,7 +79,7 @@
                             <h3 class="u-t5">Boligtype</h3>
                             <?php
                             if (!empty($tax = App\Taxonomy::where('slug', 'fwr_property_type')->get()->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
+                                echo App\Helpers\common::map_nav($tax->parent_terms(),Request()->fwr_property_type);
                             }
                             ?>
                         </div>
@@ -90,25 +91,25 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="1" id="number_of_tenants-">
+                                        <input type="checkbox" name="number_of_tenants[]" value="1" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(1,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
                                         <label for="number_of_tenants-1"> 1 person<span data-name="1 person" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="2" id="number_of_tenants-">
+                                        <input type="checkbox" name="number_of_tenants[]" value="2" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(2,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
                                         <label for="number_of_tenants-2"> 2 personer<span data-name="2 personer" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="3" id="number_of_tenants-">
+                                        <input type="checkbox" name="number_of_tenants[]" value="3" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(3,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
                                         <label for="number_of_tenants-3"> 3 personer<span data-name="3 personer" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="4" id="number_of_tenants-">
+                                        <input type="checkbox" name="number_of_tenants[]" value="4" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(4,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
                                         <label for="number_of_tenants-"> 4 eller flere<span data-name="4 eller flere" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>

@@ -46,11 +46,11 @@
                             <h3 class="u-t5">Tomtestørrelse</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_from">
+                                    <input type="text" class="dme-form-control" name="use_area_from" value="{{Request()->use_area_from}}">
                                     <span class="u-t5">Fra m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_to">
+                                    <input type="text" class="dme-form-control" name="use_area_to" value="{{Request()->use_area_to}}">
                                     <span class="u-t5">Til m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4">

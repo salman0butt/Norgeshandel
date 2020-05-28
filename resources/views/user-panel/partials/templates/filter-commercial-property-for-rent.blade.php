@@ -33,7 +33,7 @@
                                 <li>
                                     <div class="input-toggle">
                                         <input type="checkbox" name="created_at" value="{{today()->toDateString()}}"
-                                               id="published-1">
+                                               id="published-1" {{Request()->created_at && Request()->created_at == today()->toDateString() ? 'checked' : ''}}>
                                         <label for="published-1" class="">Nye i dag <span
                                                 data-name="{{today()->toDateString()}}"
                                                 data-title="created_at"
@@ -62,11 +62,11 @@
                             <h3 class="u-t5">Størrelse</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_from">
+                                    <input type="text" class="dme-form-control" name="use_area_from" value="{{Request()->use_area_from}}">
                                     <span class="u-t5">Fra m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_to">
+                                    <input type="text" class="dme-form-control" name="use_area_to" value="{{Request()->use_area_to}}">
                                     <span class="u-t5">Til m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4">
@@ -90,7 +90,7 @@
                             <h3 class="u-t5">Type lokale</h3>
                             <?php
                             if (!empty($tax = App\Taxonomy::where('slug', 'cpfs_property_type')->get()->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
+                                echo App\Helpers\common::map_nav($tax->parent_terms(),Request()->cpfs_property_type);
                             }
                             ?>
                         </div>
