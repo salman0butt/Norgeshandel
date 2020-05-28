@@ -33,7 +33,7 @@
                                 <li>
                                     <div class="input-toggle">
                                         <input type="checkbox" name="created_at" value="{{now()->toDateString()}}"
-                                               id="published-1">
+                                               id="published-1"  {{Request()->created_at && Request()->created_at == now()->toDateString() ? 'checked' : ''}}>
                                         <label for="published-1" class="">Nye i dag <span
                                                 data-name="{{today()->toDateString()}}"
                                                 data-title="created_at"
@@ -61,11 +61,11 @@
                             <h3 class="u-t5">Månedsleie</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="monthly_rent_from">
+                                    <input type="text" class="dme-form-control" name="monthly_rent_from" value="{{Request()->monthly_rent_from}}">
                                     <span class="u-t5">Fra kr</span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="monthly_rent_to">
+                                    <input type="text" class="dme-form-control" name="monthly_rent_to" value="{{Request()->monthly_rent_to}}">
                                     <span class="u-t5">Til kr</span>
                                 </div>
                                 <div class="col-sm-4">
@@ -78,11 +78,11 @@
                             <h3 class="u-t5">Størrelse</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_from">
+                                    <input type="text" class="dme-form-control" name="use_area_from" value="{{Request()->use_area_from}}">
                                     <span class="u-t5">Fra m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_to">
+                                    <input type="text" class="dme-form-control" name="use_area_to" value="{{Request()->use_area_to}}">
                                     <span class="u-t5">Til m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4">
@@ -97,22 +97,22 @@
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Antall soverom</h3>
                             <div class="rounded-radio row pl-3 pr-3">
-                                <input type="radio" id="bedrooms" name="number_of_bedrooms">
+                                <input type="radio" id="bedrooms" name="number_of_bedrooms" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 'on' ? 'checked' : ''}}>
                                 <label for="bedrooms" class="col-2 first">Alle</label>
 
-                                <input type="radio" id="bedroom-1" name="number_of_bedrooms" value="1">
+                                <input type="radio" id="bedroom-1" name="number_of_bedrooms" value="1" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 1 ? 'checked' : ''}}>
                                 <label for="bedroom-1" class="col-2">1+</label>
 
-                                <input type="radio" id="bedroom-2" name="number_of_bedrooms" value="2">
+                                <input type="radio" id="bedroom-2" name="number_of_bedrooms" value="2" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 2 ? 'checked' : ''}}>
                                 <label for="bedroom-2" class="col-2">2+</label>
 
-                                <input type="radio" id="bedroom-3" name="number_of_bedrooms" value="3">
+                                <input type="radio" id="bedroom-3" name="number_of_bedrooms" value="3" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 3 ? 'checked' : ''}}>
                                 <label for="bedroom-3" class="col-2">3+</label>
 
-                                <input type="radio" id="bedroom-4" name="number_of_bedrooms" value="4">
+                                <input type="radio" id="bedroom-4" name="number_of_bedrooms" value="4" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 4 ? 'checked' : ''}}>
                                 <label for="bedroom-4" class="col-2">4+</label>
 
-                                <input type="radio" id="bedroom-5" name="number_of_bedrooms" value="5">
+                                <input type="radio" id="bedroom-5" name="number_of_bedrooms" value="5" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 5 ? 'checked' : ''}}>
                                 <label for="bedroom-5" class="col-2 last">5+</label>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                             <h3 class="u-t5">Boligtype</h3>
                             <?php
                             if (!empty($tax = App\Taxonomy::where('slug', 'pfr_property_type')->get()->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
+                                echo App\Helpers\common::map_nav($tax->parent_terms(),Request()->pfr_property_type);
                             }
                             ?>
                         </div>
@@ -140,7 +140,7 @@
                             <h3 class="u-t5">Fasiliteter</h3>
                             <?php
                             if (!empty($tax = App\Taxonomy::where('slug', 'pfr_facilities')->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
+                                echo App\Helpers\common::map_nav($tax->parent_terms(),Request()->pfr_facilities);
                             }
                             ?>
                         </div>
@@ -150,9 +150,10 @@
                             <h3 class="u-t5">Ledig fra</h3>
                             <ul class="list list-unstyled">
                                 @for($i=0; $i<16; $i++)
+                                    @php $val = now()->addMonths($i)->year; $val1 = now()->addMonths($i)->month<10?'0'.now()->addMonths($i)->month:now()->addMonths($i)->month; $org_val = $val.'-'.$val1; @endphp
                                     <li>
                                         <div class="input-toggle">
-                                            <input type="checkbox" name="available_from[]" value="{{now()->addMonths($i)->year}}-{{now()->addMonths($i)->month<10?'0'.now()->addMonths($i)->month:now()->addMonths($i)->month}}" id="available_from-{{$i}}">
+                                            <input type="checkbox" name="available_from[]" value="{{$org_val}}" id="available_from-{{$i}}" {{Request()->available_from ? is_numeric(array_search($org_val, Request()->available_from)) ? "checked" : "" : ''}}>
                                             <label for="available_from-{{$i}}" class="">{{now()->addMonths($i)->monthName}} <span data-name="Akershus" data-title="available_from" class="count"></span></label>
                                         </div>
                                     </li>
@@ -164,43 +165,43 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="1" id="navFloor">
+                                        <input type="checkbox" name="floor[]" value="1" id="navFloor" {{Request()->floor ? is_numeric(array_search(1,Request()->floor)) ? "checked" : "" : ""}}>
                                         <label for="navFloor" class="">1 etasje<span data-name="1" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="2" id="navFloor-1">
+                                        <input type="checkbox" name="floor[]" value="2" id="navFloor-1" {{Request()->floor ? is_numeric(array_search(2,Request()->floor)) ? "checked" : "" : ""}}>
                                         <label for="navFloor-1" class="">2 etasje<span data-name="2" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="3" id="navFloor-2">
+                                        <input type="checkbox" name="floor[]" value="3" id="navFloor-2" {{Request()->floor ? is_numeric(array_search(3,Request()->floor)) ? "checked" : "" : ""}}>
                                         <label for="navFloor-2" class="">3 etasje<span data-name="3" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="4" id="navFloor-3">
+                                        <input type="checkbox" name="floor[]" value="4" id="navFloor-3" {{Request()->floor ? is_numeric(array_search(4,Request()->floor)) ? "checked" : "" : ""}}>
                                         <label for="navFloor-3" class="">4 etasje<span data-name="4" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="5" id="navFloor-4">
+                                        <input type="checkbox" name="floor[]" value="5" id="navFloor-4" {{Request()->floor ? is_numeric(array_search(5,Request()->floor)) ? "checked" : "" : ""}}>
                                         <label for="navFloor-4" class="">5 etasje<span data-name="5" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="6" id="navFloor-5">
+                                        <input type="checkbox" name="floor[]" value="6" id="navFloor-5" {{Request()->floor ? is_numeric(array_search(6,Request()->floor)) ? "checked" : "" : ""}}>
                                         <label for="navFloor-5" class="">6 etasje<span data-name="6" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="floor[]" value="over_6" id="navFloor-6">
+                                        <input type="checkbox" name="floor[]" value="over_6" id="navFloor-6" {{Request()->floor ? is_numeric(array_search('over_6',Request()->floor)) ? "checked" : "" : ""}}>
                                         <label for="navFloor-6" class="">Over 6 etasje<span data-name="over 6" data-title="floor" class="count"></span></label>
                                     </div>
                                 </li>

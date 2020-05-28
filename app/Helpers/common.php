@@ -30,6 +30,7 @@ use App\Admin\ads\Banner;
 use App\Term;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use App\Admin\Banners\BannerGroup;
 use Illuminate\Database\Eloquent\Model;
@@ -102,7 +103,7 @@ class common
         }
     }
 
-    public static function map_nav($terms)
+    public static function map_nav($terms,$url_params='')
     {
         $html = '<ul class="list list-unstyled">';
         foreach ($terms as $term) {
@@ -110,7 +111,7 @@ class common
             $html .= '
             <li>
                 <div class="input-toggle">
-                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="' . $value . '" id="' . $term->taxonomy->id . '-' . $term->id . '">
+                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="' . $value . '" id="' . $term->taxonomy->id . '-' . $term->id . '" '.($url_params ? is_numeric(array_search($value,$url_params)) ? "checked" : "" : "").'>
                     <label for="' . $term->taxonomy->id . '-' . $term->id . '" class="">' . $term->name . ' <span data-name="' . $term->name . '" data-title="' . $term->taxonomy->slug . '" class="count"></span></label>
                 </div>
                 ';

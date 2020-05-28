@@ -344,46 +344,44 @@ $name = $property_data->ad->company_gallery;
                                                 </div>
                                             @endif
 
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Kommunenr: </span>
+                                                <span>{{$property_data->municipality_number}}</span>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Gårdsnr: </span>
+                                                <span>{{$property_data->farm_number}}</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span class="font-weight-bold">Bruksnr: </span>
+                                                <span>{{$property_data->usage_number}}</span>
+                                            </div>
+                                            @if($property_data->party_number)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Festenummer: </span>
+                                                    <span>{{$property_data->party_number}}</span>
+                                                </div>
+                                            @endif
+                                            @if($property_data->section_number)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Seksjonsnummer: </span>
+                                                    <span>{{$property_data->section_number}}</span>
+                                                </div>
+                                            @endif
+                                            @if($property_data->apartment_number)
+                                                <div class="col-md-6">
+                                                    <span class="font-weight-bold">Leilighetsnummer: </span>
+                                                    <span>{{$property_data->apartment_number}}</span>
+                                                </div>
+                                            @endif
+
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
                             @endif
-                            <br>
-                            <span class="font-weight-bold col-md-12">Matrikkelinformasjon</span>
-                                <div class="row pl-3">
-                                    <div class="col-md-6">
-                                        <span class="font-weight-bold">Kommunenr: </span>
-                                        <span>{{$property_data->municipality_number}}</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="font-weight-bold">Gårdsnr: </span>
-                                        <span>{{$property_data->farm_number}}</span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <span class="font-weight-bold">Bruksnr: </span>
-                                        <span>{{$property_data->usage_number}}</span>
-                                    </div>
-                                    @if($property_data->party_number)
-                                        <div class="col-md-6">
-                                            <span class="font-weight-bold">Festenummer: </span>
-                                            <span>{{$property_data->party_number}}</span>
-                                        </div>
-                                    @endif
-                                    @if($property_data->section_number)
-                                        <div class="col-md-6">
-                                            <span class="font-weight-bold">Seksjonsnummer: </span>
-                                            <span>{{$property_data->section_number}}</span>
-                                        </div>
-                                    @endif
-                                    @if($property_data->apartment_number)
-                                        <div class="col-md-6">
-                                            <span class="font-weight-bold">Leilighetsnummer: </span>
-                                            <span>{{$property_data->apartment_number}}</span>
-                                        </div>
-                                    @endif
-                                </div>
 
                         </div>
 

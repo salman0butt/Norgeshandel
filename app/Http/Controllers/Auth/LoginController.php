@@ -26,6 +26,10 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+//    protected $maxAttempts = 1; // Default is 5
+//    protected $lockoutTime = 3;
+//    protected $decayMinutes = 1; // Default is 1
+
     /**
      * Where to redirect users after login.
      *
@@ -44,7 +48,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-//    function is overridden from AuthenticatesUsers.php trait
+    protected function hasTooManyLoginAttempts(Request $request)
+    {
+        return $this->limiter()->tooManyAttempts(
+            $this->throttleKey($request), 5, 1
+        );
+    }
+
+    //function is overridden from AuthenticatesUsers.php trait
     public function login(Request $request)
     {
         if(!empty($request->redirectTo)){
