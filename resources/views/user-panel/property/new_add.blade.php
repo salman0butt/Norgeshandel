@@ -62,6 +62,8 @@
                 if (zip_code) {
                     if (old_zip != zip_code) {
                         find_zipcode_city(zip_code);
+                    $('input[name="street_address"],input[name="address"]).val('');
+                     $('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').remove();
                     }
                 }
                 @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
