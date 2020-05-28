@@ -14,6 +14,6 @@ return [
     */
 
     'failed' => 'Du har oppgitt feil e-post eller passord. Vennligst prøv igjen.',
-    'throttle' => 'For mange påloggingsforsøk. Vennligst prøv igjen om: sekunder sekunder.',
+    'throttle' => 'For mange påloggingsforsøk. Vennligst prøv igjen om 1 minutt.',
 
 ];
