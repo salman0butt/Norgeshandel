@@ -159,10 +159,12 @@ $(document).ready(function (e) {
     });
     $(document).click(function (e) {
         if(e.target.closest('header') == null){
-            $('.mega-menu').slideUp();
-            isDown = false;
-            $('#mega-menu-button span').addClass('fa-bars');
-            $('#mega-menu-button span').removeClass('fa-times');
+            if(!$(e.target).hasClass('dynamic-check-view-all')){
+                $('.mega-menu').slideUp();
+                isDown = false;
+                $('#mega-menu-button span').addClass('fa-bars');
+                $('#mega-menu-button span').removeClass('fa-times');
+            }
         }
     });
 

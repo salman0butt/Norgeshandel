@@ -43,9 +43,8 @@
             <div class="">
                 <label for="sort-by" class="mb-1">Sortér på</label>
                 <select name="sort-by" id="sort_by" class="dme-form-control">
-
-                    <option @if(isset($sort) && $sort=='most_relevant') selected @endif value="most_relevant">Mest relevant</option>
-                    <option @if(isset($sort) && $sort=='published') selected @endif value="published">Publisert</option>
+                    <option value="most_relevant" @if(isset($sort) && $sort=="most_relevant" ) selected @endif>Mest relevant</option>
+                    <option @if((isset($sort) && $sort=='published') || !isset($sort)) selected @endif value="published">Publisert</option>
                     <option @if(isset($sort) && $sort=='priced_low_high') selected @endif value="priced_low_high">Max leie lav-høy</option>
                     <option @if(isset($sort) && $sort=='priced_high_low') selected @endif value="priced_high_low">Max leie høy-lav</option>
                     <option @if(isset($sort) && $sort=='time_from') selected @endif value="time_from">Tidspunkt fra</option>
@@ -55,12 +54,7 @@
             </div>
         </div>
     </div>
-{{-- 
-    <div style="display: block;margin: 0 auto; text-align:center;">
-        <div id="imageLoader" style="display:none;margin-top:15%; padding-bottom: 15%">
-            <img src="{{ asset('public\spinner.gif') }}" alt="spinner" id="imageLoader">
-        </div>
-    </div> --}}
+
 
     <div class="row pagination_data">
         <div class="col-md-12 outer-div">

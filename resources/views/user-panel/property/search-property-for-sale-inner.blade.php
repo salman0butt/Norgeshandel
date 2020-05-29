@@ -45,8 +45,8 @@
             <div class="">
                 <label for="sort_by" class="mb-1">Sortér på</label>
                 <select name="sort-by" id="sort_by" class="dme-form-control">
+                    <option value="most_relevant" @if(isset($sort) && $sort=="most_relevant" ) selected @endif>Mest relevant</option>
                     <option @if((isset($sort) && $sort=='published') || !isset($sort)) selected @endif value="published">Publisert</option>
-                    <option @if(isset($sort) && $sort=='published') selected @endif value="published">Publisert</option>
                     <option @if(isset($sort) && $sort=='priced-low-high') selected @endif value="priced-low-high">Prisant lav-høy</option>
                     <option @if(isset($sort) && $sort=='priced-high-low') selected @endif value="priced-high-low">Prisant høy-lav</option>
                     <option @if(isset($sort) && $sort=='p-rom-area-low-high') selected @endif value="p-rom-area-low-high">P-ROM Areal lav-høy</option>

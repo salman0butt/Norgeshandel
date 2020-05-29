@@ -137,26 +137,34 @@ class PropertyHolidaysHomesForSaleController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
 
-        $order = $request->order;
-        switch ($order) {
+        if(isset($request->sort) && $request->sort){
+            $sort = $request->sort;
+        }
+
+        switch ($sort) {
             case 'published':
                 $query->orderBy('ads.updated_at', 'DESC');
                 break;
             case 'priced-low-high':
-                $query->orderBy('value_rate', 'ASC');
+                $query->orderBy('asking_price', 'ASC');
                 break;
             case 'priced-high-low':
                 $query->orderBy('asking_price', 'DESC');
                 break;
+            case 'housing_area_low_high':
+                $query->orderBy('primary_room', 'ASC');
+                break;
+            case 'housing_area_high_low':
+                $query->orderBy('primary_room', 'DESC');
+                break;
         }
+        $query->orderBy('ads.published_on', 'DESC');
     
 
 
         if ($get_collection){
             return $query->get();
-;
         }
         $add_array = $query->paginate($this->pagination);
 //        dd(DB::getQueryLog());

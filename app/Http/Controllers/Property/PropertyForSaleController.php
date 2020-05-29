@@ -192,12 +192,14 @@ class PropertyForSaleController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
-
+//        $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
-            case 'published':
+            case 'most_relevant':
                 $query->orderBy('ads.updated_at', 'DESC');
+                break;
+            case 'published':
+                $query->orderBy('ads.published_on', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('asking_price', 'ASC');
@@ -218,15 +220,13 @@ class PropertyForSaleController extends Controller
                 $query->orderBy('total_price', 'DESC');
                 break;
         }
-       
-
-
         $query->where($arr);
 
         if ($get_collection){
             return $query->get();
         }
 
+        $query->orderBy('ads.published_on', 'DESC');
         $all = $query->get();
         $ids = $all->pluck('id');
         $clicks = AdView::whereIn('ad_id', $ids)->count();

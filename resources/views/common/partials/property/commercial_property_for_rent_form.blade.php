@@ -395,7 +395,7 @@
         </div>
         <!--                            small input-->
         <div class="form-group">
-            <h3 class="u-t5">Husleie per m² per år (valgfritt)</h3>
+            <h3 class="u-t5">Husleie per mnd (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input type="text" name="rent_per_meter_per_year" value="{{ $commercial_property_for_rent->rent_per_meter_per_year }}" class="dme-form-control" placeholder="Kr.">

@@ -207,13 +207,13 @@
                                                         {{--src="{{asset('public/images/placeholder.png')}}"--}}
                                                      class="profile-post-image" alt="">
                                                 <img
-                                                    src="{{($thread_user->media!=null && $thread_user!=null)?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
+                                                    src="{{($thread_user && $thread_user->media!=null && $thread_user!=null)?asset(\App\Helpers\common::getMediaPath($thread_user->media)):asset('public/images/profile-placeholder.png')}}"
                                                     class="profile-image" alt="Profile image"
                                                     style="border: 1px solid #f7f7f7; @if($thread->ad->deleted_at) bottom:35px !important; @endif">
                                             </div>
                                             <div class="col-md-9 p-0 mt-1 profile-name">
                                             <span class="font-weight-bold align-middle"
-                                                  style="min-height: 1em;">{{$thread_user->username}}</span>
+                                                  style="min-height: 1em;">{{$thread_user && $thread_user->username ? $thread_user->username : ''}}</span>
                                                 <p class="text-muted thread-ad-title mb-0">{{$thread->ad->getTitle()}}</p>
                                                 @if($thread->ad->deleted_at) <small>(Denne annonsen er ikke
                                                     mer.)</small><br>@endif

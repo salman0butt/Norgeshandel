@@ -157,23 +157,25 @@ class PropertyForRentController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
-            case 'published':
+            case 'most_relevant':
                 $query->orderBy('ads.updated_at', 'DESC');
                 break;
+            case 'published':
+                $query->orderBy('ads.published_on', 'DESC');
+                break;
             case 'priced-low-high':
-                $query->orderBy('asking_price', 'ASC');
+                $query->orderBy('monthly_rent', 'ASC');
                 break;
             case 'priced-high-low':
-                $query->orderBy('asking_price', 'DESC');
+                $query->orderBy('monthly_rent', 'DESC');
                 break;
             case 'p-rom-area-low-high':
-                $query->orderBy('primary_room', 'ASC');
+                $query->orderBy('primary_rom', 'ASC');
                 break;
             case 'p-rom-area-high-low':
-                $query->orderBy('primary_room', 'DESC');
+                $query->orderBy('primary_rom', 'DESC');
                 break;
             case 'total-price-low-high':
                 $query->orderBy('total_price', 'ASC');
@@ -185,8 +187,7 @@ class PropertyForRentController extends Controller
                 $query->orderBy('property_for_rent.id', 'DESC');
                 break;
         }
-     
-
+        $query->orderBy('ads.published_on', 'DESC');
         if ($get_collection){
             return $query->get();
         }

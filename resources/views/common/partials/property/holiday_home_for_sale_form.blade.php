@@ -578,7 +578,7 @@
             <h3 class="u-t5">Omkostninger (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input name="cost" value="{{ $holiday_home_for_sale->cost }}" type="text" class="dme-form-control"
+                    <input name="cost" value="{{ $holiday_home_for_sale->cost }}" type="text" class="dme-form-control cost"
                         placeholder="Kr.">
                 </div>
                 <div class="col-sm-8">

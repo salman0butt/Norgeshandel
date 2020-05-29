@@ -593,7 +593,7 @@ class common
                         $user_meta_notification_email = Meta::where('metable_id',$search->user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
                         $user_obj = User::find($search->user_id);
                         if($user_meta_notification_email && $user_obj && $user_obj->email){
-                            common::property_email_notification($user_obj,'saved_searches','',$search);
+                            common::property_email_notification($user_obj,'saved_searches',$ad,$search);
                         }
                     }
                 }
@@ -753,9 +753,9 @@ class common
                 $subject = 'Annonse '.$status;
             }
 
-            if($key == 'saved_searches' && $search){
+            if($key == 'saved_searches' && $search && $ad){
                 $text = 'Vi vil informere deg om at det er lagt til en ny annonse på NorgesHandel relatert til lagrede søk. Her er lenken til annonsen.';
-                $link = url('/'.$search->filter).'&search_id='.$search->id;
+                $link = url('/',$ad->id);
                 $subject = 'Ny annonse opprettet';
             }
 

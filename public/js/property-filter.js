@@ -148,9 +148,9 @@ $(document).ready(function () {
             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
         }
     });
-    $(window).on('popstate', function (e) {
-        window.location.href = window.location.href.split("?")[0];
-    });
+    // $(window).on('popstate', function (e) {
+    //     window.location.href = window.location.href.split("?")[0];
+    // });
 
 });
 

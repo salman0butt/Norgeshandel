@@ -111,20 +111,26 @@ class FlatWishesRentedController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
-            case 'published':
-                $query->orderBy('flat_wishes_renteds.updated_at', 'DESC');
+            case 'most_relevant':
+                $query->orderBy('ads.updated_at', 'DESC');
                 break;
-            case 'priced-low-high':
+            case 'published':
+                $query->orderBy('ads.published_on', 'DESC');
+                break;
+            case 'priced_low_high':
                 $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'ASC');
                 break;
-            case 'priced-high-low':
+            case 'priced_high_low':
                 $query->orderBy('flat_wishes_renteds.max_rent_per_month', 'DESC');
                 break;
+            case 'time_from':
+                $query->orderBy('flat_wishes_renteds.wanted_from', 'ASC');
+                break;
         }
-      
+
+        $query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
             return $query->get();
