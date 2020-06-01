@@ -144,6 +144,17 @@
                 }
             });
 
+            $(document).on('change', '.ad_type', function(e) {
+                var val = $(this).val();
+                if(val === "Bortfeste"){
+                    $('.price_section h3').html('Prisantydning');
+                    $('.price_section span').html('Minstebeløpet du selger eiendommen for');
+                }
+                if(val == "Salg"){
+                    $('.price_section h3').html('Utleie pris');
+                    $('.price_section span').html('Utleie beløp per måned');
+                }
+            });
             $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
