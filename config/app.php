@@ -169,6 +169,8 @@ return [
 
 //        pdf generator
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        FarhanWazir\GoogleMaps\GMapsServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -241,7 +243,9 @@ return [
 //        image intervention
         'Image' => Intervention\Image\Facades\Image::class,
 
-        'Mapper'         => Cornford\Googlmapper\Facades\MapperFacade::class,
+        'GMaps' => FarhanWazir\GoogleMaps\Facades\GMapsFacade::class,
+        'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
+
     ],
 
 ];
