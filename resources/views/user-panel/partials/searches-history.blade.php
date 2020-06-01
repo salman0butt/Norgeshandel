@@ -3,7 +3,7 @@
     @if (Auth::check())
         @if (isset($saved_search) && $saved_search->count() > 0)
             @foreach($saved_search as $search)
-                <li><a href="{{!empty($search->filter)?url($search->filter):"#"}}">{{ $search->name }}</a></li>
+                <li><a href="{{!empty($search->filter)?url($search->filter):"#"}}">{{ Str::limit($search->name,70)}}</a></li>
             @endforeach
                 <li><a href="javascript:void(0);" class="clear_searches_link" data-search_type="saved" data-action="{{route('clear-searches')}}" style="font-weight: 500">Tøm lista</a></li>
         @else
@@ -22,7 +22,7 @@
             @foreach($recent_search as $recent)
                 @if($recent->name && $recent->name != 'null')
                     @php $recent_searches++; @endphp
-                    <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ $recent->name }}</a></li>
+                    <li><a href="{{url(htmlspecialchars($recent->filter))}}">{{ Str::limit($recent->name,50)}}</a></li>
                 @endif
             @endforeach
             @if($recent_searches)

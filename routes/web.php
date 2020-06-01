@@ -20,8 +20,25 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Zizaco\Entrust\Entrust;
 use \Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Admin\Users\AdminUserController;
 
 Auth::routes(['verify' => true]);
+//google map
+Route::get('/map', function () {
+    $config = array();
+    $config['center'] = '37.4419, -122.1419';
+    $config['zoom'] = 'auto';
+    $config['places'] = true;
+    $config['placesAutocompleteInputID'] = 'myPlaceTextBox';
+    $config['placesAutocompleteBoundsMap'] = true; // set results biased towards the maps viewport
+    $config['placesAutocompleteOnChange'] = 'console.log(\'You selected a place\');';
+
+    GMaps::initialize($config);
+    $map = GMaps::create_map();
+    return view('user-panel.my-business.map', compact('map'));
+});
+
+
 Route::get('states', function (){
 //    $file = fopen('public/postnummer.csv', 'r');
 //    dump(fgetcsv($file));
@@ -30,6 +47,10 @@ Route::get('states', function (){
 //            ->insert(['zip_code'=>$line[0], 'zip_city'=>$line[1], 'municipal_code'=>$line[2], 'municipal_number'=>$line[3]]);
 //        dump($line);
 //    }
+
+
+
+
     $results = DB::table('dummy')->select('municipal_name')->limit(15)->distinct()->get();
     echo '<div style="max-width: 100%;">';
     foreach ($results as $result){
@@ -174,6 +195,15 @@ Route::group(['middleware' => 'authverified'], function () {
     Route::get('/admin/ads/create', 'Admin\ads\BannerController@create')->middleware(['role:admin|manager']);
     
     Route::get('banners/reports/{id}', 'Admin\ads\BannerController@reports')->middleware(['role:admin|manager']);
+    //admin Company list
+    Route::get('admin/companies-list', 'CompanyController@company_list')->middleware(['role:admin|manager'])->name('admin.company.index');
+    Route::delete('admin/company/{company}', 'CompanyController@admin_soft_delete')->middleware(['role:admin|manager'])->name('admin.company.delete');
+    Route::get('admin/company/{company}', 'CompanyController@admin_company_view')->middleware(['role:admin|manager'])->name('admin.company.view');
+   Route::get('admin/company/agent/{id}', 'AgentController@company_agents')->middleware(['role:admin|manager'])->name('admin.company-agent.index');
+
+    //admin agents list
+    Route::get('admin/agent-list', 'AgentController@admin_agents_list')->middleware(['role:admin|manager'])->name('admin.agents.index');
+    Route::delete('admin/agent/{id}', 'AgentController@admin_agent_delete')->middleware(['role:admin|manager'])->name('admin.agent.delete');
 
 
 
@@ -581,6 +611,10 @@ Route::group(['middleware' => 'authverified'], function () {
         //Restore property
         Route::get('/property/realestate/restore/{id}', 'PropertyController@restore')->name('property-restore');
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
+        //restore user
+        Route::get('/user/restore/{id}', 'Admin\Users\AdminUserController@restore')->name('user-restore');
+
+
         //all general resources
         Route::resources([
             'dashboard' => 'Admin\DashboardController',
@@ -712,6 +746,14 @@ Route::group(['middleware' => 'authverified'], function () {
 
     Route::post('search/notification/exists', 'NotificationController@searchNotificationExists');
     Route::get('/{handel?}', 'HomeController@index');
-    Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
-    Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
+
 });
+Route::group(['middleware' => 'guest'], function () {
+Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
+Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
+});
+
+// Route::get('/test', 'MapController@index');
+
+
+

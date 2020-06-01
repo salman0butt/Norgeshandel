@@ -87,6 +87,9 @@
                     <a href="{{route('register')}}" class="text-center">Opprette ny konto</a>
                 </form>
 
+                {{--@error('email')--}}
+                {{--{{dd($message)}}--}}
+                {{--@enderror--}}
             </div>
         </div>
     </div>

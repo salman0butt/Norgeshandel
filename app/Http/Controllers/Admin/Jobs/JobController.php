@@ -119,10 +119,6 @@ class JobController extends Controller
             return $this->upload_images($request, $ad_id);
         }
 
-        if(!$request->company_id){
-            $request->merge(['company_id'=>0]);
-        }
-
         $arr = array(
             'name' => $request->name,
             'title' => $request->title,
@@ -151,29 +147,18 @@ class JobController extends Controller
             'app_link_to_receive' => $request->app_link_to_receive,
             'app_email_to_receive' => $request->app_email_to_receive,
             'app_contact' => $request->app_contact,
-            'company_id' => $request->company_id,
             'app_contact_title' => $request->app_contact_title,
             'app_mobile' => $request->app_mobile,
             'app_phone' => $request->app_phone,
             'app_email' => $request->app_email,
             'app_linkedin' => $request->app_linkedin,
             'app_twitter' => $request->app_twitter,
-//            'user_id' => Auth::user()->id,
         );
 
         $ad = Ad::find($request->ad_id);
-
-//        $response = $ad->job->id;
-//        $notifiable_id = $response;
-//        $notification_obj = new \App\Http\Controllers\NotificationController();
-//        $notification_response = $notification_obj->create($notifiable_id,'App\Admin\Jobs\Job','property have been added');
-//        $notification_id_search = $notification_response->id;
-//        //trigger event
-////        event(new \App\Events\PropertyForRent($notifiable_id,$notification_id_search));
-//
-//
-
-           
+        if($ad){
+            common::sync_ad_agents($ad,$request->agent_id);
+        }
         $published_date = date("Y-m-d H:i:s");
 
         $ad->job->update($arr);
@@ -186,7 +171,7 @@ class JobController extends Controller
 
 
 //            notification bellow
-        common::send_search_notification($ad->job, 'saved_search', 'Ny jobb er publisert', $this->pusher, 'jobs/search');
+        common::send_search_notification($ad->job, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'jobs/search',$ad);
 //            end notification
 
 
@@ -263,6 +248,9 @@ class JobController extends Controller
             DB::beginTransaction();
             try{
                 $company_id = 0;
+                if(Auth::user()->hasRole('agent')){
+                    $company_id = Auth::user()->created_by_company_id;
+                }
                 if(Auth::user()->hasRole('company') && Auth::user()->job_companies->first() && Auth::user()->job_companies->first()->id){
                     $company_id = Auth::user()->job_companies->first()->id;
                 }
@@ -293,13 +281,10 @@ class JobController extends Controller
         }
     }
 
-      public function complete_job($id)
-    {
+    public function complete_job($id){
         $ad_type = session('type');
- 
         $ad = Ad::find($id);
         if ($ad) {
-    
             if ($ad->ad_type == 'job' && $ad_type == 'full_time') {
                 common::delete_media(Auth::user()->id, 'temp_job_image', 'gallery');
                 $job = $ad->job;
@@ -368,15 +353,7 @@ class JobController extends Controller
                 $job_temp_media_obj->update();
             }
         }
-        if(!$request->company_id){
-            $request->merge(['company_id'=>0]);
-        }
-//        if($request->emp_company_information){
-//            $request->merge(['emp_company_information'=> utf8_encode($request->emp_company_information)]);
-//        }
-//        if($request->description){
-//            $request->merge(['description'=> utf8_encode($request->description)]);
-//        }
+
         $job_id = $request->job_id;
         $job = Job::where('id', $job_id)->first();
         $arr = array(
@@ -400,7 +377,6 @@ class JobController extends Controller
             'emp_linkedin' => $request->emp_linkedin,
             'emp_twitter' => $request->emp_twitter,
             'country' => $request->country,
-            'company_id'=>$request->company_id,
             'zip' => $request->zip,
             'zip_city' => $request->zip_city,
             'address' => $request->address,
@@ -428,6 +404,9 @@ class JobController extends Controller
             $company_logo = common::update_media($file, $job->ad->id, 'App\Models\Ad', 'logo');
             $company_logo_id = $company_logo['file_names'][0];
         }
+        if($job->ad){
+            common::sync_ad_agents($job->ad,$request->agent_id);
+        }
         $ids = ['ad_id' => $request->ad_id, 'job_id' => $request->job_id,'company_logo_id'=>$company_logo_id];
         if ($call_by) {
            return $ids;
@@ -446,8 +425,8 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
-        $prev = Job::where('id', '<', $job->id)->orderBy('id', 'desc')->first();
-        $next = Job::where('id', '>', $job->id)->orderBy('id', 'asc')->first();
+        $prev = common::previous_ad($job);
+        $next = common::next_ad($job);
         return view('user-panel/jobs/single', compact('job', 'prev', 'next'));
     }
 
@@ -502,11 +481,11 @@ class JobController extends Controller
                 $delete_media = common::delete_json_media($request->deleted_media);
             }
             $message = 'Annonsen din er oppdatert.';
-
+            $ad = $job->ad();
 //            DB::commit();
 
 //            notification bellow
-            common::send_search_notification($job, 'saved_search', 'Jobben er oppdatert', $this->pusher, 'jobs/search');
+            common::send_search_notification($job, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'jobs/search',$ad);
 
             $msg['message'] = $message;
 //                $data['success'] = $response;

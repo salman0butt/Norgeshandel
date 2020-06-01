@@ -143,7 +143,7 @@
             <h3 class="u-t5">Adkomst (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="venue_description" value="" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->venue_description }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent') ? 'text-editor' : ''}}" name="venue_description" id="venue_description" cols="30" rows="10">{{ $commercial_property_for_rent->venue_description }}</textarea>
                 
                 </div>
             </div>
@@ -153,7 +153,7 @@
             <h3 class="u-t5">Beliggenhet (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="location_description" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->location_description }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent') ? 'text-editor' : ''}}" name="location_description" id="location_description" cols="30" rows="10">{{ $commercial_property_for_rent->location_description }}</textarea>
                     <span class="u-t5">Forklar kort om beliggenheten, omgivelsene, attraktive naturforhold, betraktninger om lokaliseringsfordeler og strøksattraktivitet</span>
                 </div>
             </div>
@@ -338,7 +338,7 @@
             <h3 class="u-t5">Standard/Tekniske opplysninger (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="standard_technical_information" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->standard_technical_information }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent') ? 'text-editor' : ''}}" name="standard_technical_information" id="standard_technical_information" cols="30" rows="10">{{ $commercial_property_for_rent->standard_technical_information }}</textarea>
                    
                 </div>
             </div>
@@ -466,7 +466,7 @@
             <h3 class="u-t5">Beskrivelse (valgfritt)</h3>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="last_description" id="beskrivelse" cols="30" rows="10">{{ $commercial_property_for_rent->last_description }}</textarea>
+                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent') ? 'text-editor' : ''}}" name="last_description" id="last_description" cols="30" rows="10">{{ $commercial_property_for_rent->last_description }}</textarea>
                     <span class="u-t5">Fortell gjerne litt om nabolaget og nærhet til transport.</span>
                 </div>
             </div>

@@ -2,7 +2,8 @@
       data-action="@if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$property_for_rent1->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input = 'yes'>
 @php
-     $property_for_rent = new \App\PropertyForRent();
+
+    $property_for_rent = new \App\PropertyForRent();
     if(isset($property_for_rent1)){
         $property_for_rent = $property_for_rent1;
     }
@@ -20,11 +21,6 @@
     if($property_for_rent && $property_for_rent->ad){
         $ad_obj = $property_for_rent->ad;
     }
-
-
-    //$property_type = explode(',', $flat_wishes_rented->property_type);
-    //$region = explode(',', $flat_wishes_rented->region);
-
 
 @endphp
     @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
@@ -284,7 +280,7 @@
             <label class="u-t5">Beskrivelse (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <textarea name="description" class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}" id="beskrivelse" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
+                    <textarea name="description" class="{{Auth::user()->hasRole('company') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent') ? 'text-editor' : ''}}" id="description" cols="30" rows="10">{{ $property_for_rent->description }}</textarea>
                 </div>
             </div>
         </div>
@@ -293,7 +289,7 @@
             <label class="u-t5">Visningsdato (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="delivery_date[]" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control date-picker">
+                    <input type="text" name="delivery_date" value="{{ $property_for_rent->delivery_date }}" class="dme-form-control date-picker">
                     <span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>
                 </div>
             </div>
@@ -302,7 +298,7 @@
             <label class="u-t5">Fra klokken (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="from_clock[]" value="{{ $property_for_rent->from_clock }}" placeholder="tt.mm" class="dme-form-control">
+                    <input type="text" name="from_clock" value="{{ $property_for_rent->from_clock }}" placeholder="tt.mm" class="dme-form-control">
                     <span class="u-t5">Tid (eksempel 18:00)</span>
                 </div>
             </div>
@@ -311,7 +307,7 @@
             <label class="u-t5">Til klokken (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
-                    <input type="text" name="clockwise_clock[]" value="{{ $property_for_rent->clockwise_clock }}" placeholder="tt.mm" class="dme-form-control">
+                    <input type="text" name="clockwise_clock" value="{{ $property_for_rent->clockwise_clock }}" placeholder="tt.mm" class="dme-form-control">
                     <span class="u-t5">Tid (eksempel 19:00)</span>
                 </div>
             </div>
@@ -320,13 +316,76 @@
             <label class="u-t5">Merknad (valgfritt)</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
-                    <input type="text" name="note[]" value="{{ $property_for_rent->note }}" placeholder="F.eks.: visning etter avtale"
+                    <input type="text" name="note" value="{{ $property_for_rent->note }}" placeholder="F.eks.: visning etter avtale"
                            class="dme-form-control">
                 </div>
             </div>
         </div>
+        @php
+            $delivery_date = $from_clock = $clock_wise = $note = array();
+            if($property_for_rent->secondary_delivery_date){
+                $delivery_date = json_decode($property_for_rent->secondary_delivery_date);
+            }
+            if($property_for_rent->secondary_from_clock){
+                $from_clock = json_decode($property_for_rent->secondary_from_clock);
+            }
+            if($property_for_rent->secondary_clockwise_clock){
+                $clock_wise = json_decode($property_for_rent->secondary_clockwise_clock);
+            }
+            if($property_for_rent->secondary_note){
+                $note = json_decode($property_for_rent->secondary_note);
+            }
+        @endphp
         <div id="add_more_viewing_times_fields">
-
+            @if(count($delivery_date) > 0)
+                @foreach($delivery_date as $key=>$delivery_date_obj)
+                    <div class="appended_viewing_times_fields">
+                        <div class="form-group">
+                            <label class="u-t5">Visningsdato (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-4 pr-md-0">
+                                    <input type="text" name="secondary_delivery_date[]" value="{{isset($delivery_date_obj) ? $delivery_date_obj : ''}}" class="dme-form-control date-picker">
+                                    <span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="u-t5">Fra klokken (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-4 pr-md-0">
+                                    <input type="text" name="secondary_from_clock[]" value="{{isset($from_clock[$key]) ? $from_clock[$key] : ''}}" placeholder="tt.mm" class="dme-form-control">
+                                    <span class="u-t5">Tid (eksempel 18:00)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="u-t5">Til klokken (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-4 pr-md-0">
+                                    <input type="text" name="secondary_clockwise_clock[]" value="{{isset($clock_wise[$key]) ? $clock_wise[$key] : ''}}" placeholder="tt.mm" class="dme-form-control">
+                                    <span class="u-t5">Tid (eksempel 19:00)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="u-t5">Merknad (valgfritt)</label>
+                            <div class="row">
+                                <div class="col-sm-12 pr-md-0">
+                                    <input type="text" name="secondary_note[]" value="{{isset($note[$key]) ? $note[$key] : ''}}" placeholder="F.eks.: visning etter avtale"
+                                           class="dme-form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12 pr-md-0">
+                                    <button type="button" class="dme-btn-outlined-blue remove_appended_viewing_times_fields">Fjern</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
         <div class="form-group">
             <div class="row">

@@ -78,9 +78,8 @@
                         if ($property_for_sale):
                         $property_for_sale_collection = $property_for_sale->ad->company_gallery->first();
                         if (!empty($property_for_sale_collection)) {
-                            $path = \App\Helpers\common::getMediaPath($property_for_sale);
-                            $name = $property_for_sale_collection->name_unique;
-                            $full_path_photos = $path . "" . $name;
+                            $path = \App\Helpers\common::getMediaPath($property_for_sale_collection);
+                            $full_path_photos = $path;
                         } else {
                             $full_path_photos = "";
                         }
@@ -160,9 +159,9 @@
         </script>
     </div>
     <!--    ended container-->
-        <div class="right-ad pull-right" id="right_banner_ad">
-            @include('user-panel.banner-ads.right-banner')
-        </div>
+    <div class="right-ad pull-right" id="right_banner_ad">
+        @include('user-panel.banner-ads.right-banner')
+    </div>
 </div>
 <script>
    $( document ).ready(function() {
@@ -173,5 +172,4 @@
             $('#filter').val("property/property-for-sale/search?" + param.toString());
         });
    });
-
 </script>

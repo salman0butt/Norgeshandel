@@ -144,10 +144,10 @@ class AdController extends Controller
         exit($html);
     }
 
-    public function my_ads($status = [])
+    public function my_ads($status = [],Request $request)
     {
         DB::enableQueryLog();
-        $my_ads = Ad::where('user_id', Auth::user()->id)->where('status','=','published')->orderByDesc('ads.updated_at')->paginate(getenv('PAGINATION'));
+        $my_ads = Ad::where('user_id', Auth::user()->id)->where('status','=','published')->orderByDesc('ads.updated_at')->paginate(10);
 
         $property_for_rent = Ad::where('ad_type','property_for_rent')->where('status','published')->where('user_id',Auth::user()->id)->count();
         $property_for_sale = Ad::where('ad_type','property_for_sale')->where('status','published')->where('user_id',Auth::user()->id)->count();
@@ -163,6 +163,11 @@ class AdController extends Controller
         $part_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','part_time')->where('ads.status','published')->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
         $management_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','management')->where('ads.status','published')->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
 
+        if ($request->ajax()) {
+    	$view = view('user-panel.my-business.my_ads_inner',compact('my_ads'))->render();
+            return response()->json(['html'=>$view]);
+        }
+
 
         return view('user-panel/my-business.my_ads', compact('my_ads','all_ads_count','property_for_rent','property_business_for_sale','property_for_sale'
         ,'holiday_home_for_sale','property_commercial_for_rent','property_commercial_for_sale','property_commercial_plots','property_flat_wishes_rented',
@@ -171,7 +176,7 @@ class AdController extends Controller
     }
 
     public function filter_my_ads($status, $ad_type)
-    {
+    {  
         if($status == 'expired'){
             $status = 'sold';
         }
@@ -207,7 +212,9 @@ class AdController extends Controller
         }
 
         $html = "";
-        $ads = $query->orderByDesc('ads.updated_at')->get();
+        $ads = $query->orderByDesc('ads.updated_at')->paginate(10);
+    //    dd($ads);
+      
         if(count($ads)>0) {
             foreach ($ads as $ad) {
                 $ad = Ad::find($ad->ad_ad_id);
@@ -224,10 +231,12 @@ class AdController extends Controller
             }
         }
         else {
-            $html = '<div class="row alert alert-warning no-ads dme-tab-content" style="" data-id="no-ads">
-                        <h3 class=" text-center col-md-12">Du har ingen annonser.</h3>
-                        <h5 class=" text-center col-md-12">Dine andre annonser kan du finne ved å endre på filteret.</h5>
-                    </div>';
+         
+            // $html = '<div class="row alert alert-warning no-ads dme-tab-content" style="" data-id="no-ads">
+            //             <h3 class=" text-center col-md-12">Du har ingen annonser.</h3>
+            //             <h5 class=" text-center col-md-12">Dine andre annonser kan du finne ved å endre på filteret.</h5>
+            //         </div>';
+            $html='';
         }
 
         if($status == 'expired'){
@@ -248,7 +257,7 @@ class AdController extends Controller
         $part_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','part_time')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
         $management_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','management')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
 
-
+            // dd($html);
         $ads_count = array('total_ads'=>$all_ads_count,'property_for_rent'=>$property_for_rent,'property_for_sale'=>$property_for_sale,'property_holiday_home_for_sale'=>$holiday_home_for_sale,
             'property_commercial_plots'=>$property_commercial_plots, 'property_commercial_for_sale'=>$property_commercial_for_sale,'property_commercial_for_rent'=>$property_commercial_for_rent,
             'full_time_job'=>$full_time_job,'part_time_job'=>$part_time_job,'management_job'=>$management_job,

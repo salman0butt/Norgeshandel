@@ -64,7 +64,6 @@ class BusinessForSaleController extends Controller
                     
             });
 //        DB::enableQueryLog();
-
         if (isset($request->search) && !empty($request->search)) {
 //            $query->where('business_for_sales.headline', 'like', '%' . $request->search . '%');
             common::table_search($query, common::get_model_columns(BusinessForSale::class), $request->search, 'business_for_sales');
@@ -228,6 +227,7 @@ class BusinessForSaleController extends Controller
             $property = BusinessForSale::find($id);
             $message = '';
             $ad = $property->ad;
+
             if ($ad && $ad->status == 'saved') {
                 $message = 'Annonsen din er publisert.';
             } elseif ($ad && $ad->status == 'published') {
@@ -242,10 +242,12 @@ class BusinessForSaleController extends Controller
             }
             $published_date = date("Y-m-d H:i:s");
 
+            common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/business-for-sale',$ad);
+
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
 //            notification bellow
-            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/business-for-sale');
+            common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/business-for-sale',$ad);
 //            end notification
 
             $msg['message'] = $message;

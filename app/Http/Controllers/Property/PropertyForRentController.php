@@ -261,65 +261,27 @@ class PropertyForRentController extends Controller
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
-//                $facilities = "";
-//                foreach ($property_for_rent_data['facilities'] as $key => $val) {
-//                    $facilities .= $val . ",";
-//                }
                 $property_for_rent_data['facilities'] = json_encode($property_for_rent_data['facilities']);
             }
 
-            //Add More ViewingTimes
-            if (isset($property_for_rent_data['delivery_date']) && $property_for_rent_data['delivery_date'] != "") {
-                $property_for_rent_data['secondary_delivery_date'] = null;
-                $i = 0;
-                foreach ($property_for_rent_data['delivery_date'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_rent_data['delivery_date'] = $val;
-                    } else {
-                        $property_for_rent_data['secondary_delivery_date'] .= $val . ",";
-                    }
-                    $i++;
-                }
+            $property_for_rent_data['secondary_delivery_date'] = $property_for_rent_data['secondary_from_clock'] = $property_for_rent_data['secondary_clockwise_clock'] = $property_for_rent_data['secondary_note'] = null;
+
+            if(isset($request->secondary_delivery_date)){
+                $property_for_rent_data['secondary_delivery_date'] = json_encode($request->secondary_delivery_date);
             }
 
-            $property_for_rent_data['secondary_from_clock'] = "";
-            if (isset($property_for_rent_data['from_clock'])) {
-                $i = 0;
-                foreach ($property_for_rent_data['from_clock'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_rent_data['from_clock'] = $val;
-                    } else {
-                        $property_for_rent_data['secondary_from_clock'] .= $val . ",";
-                    }
-                    $i++;
-                }
+            if(isset($request->secondary_from_clock)){
+                $property_for_rent_data['secondary_from_clock'] = json_encode($request->secondary_from_clock);
             }
 
-            $property_for_rent_data['secondary_clockwise_clock'] = "";
-            if (isset($property_for_rent_data['clockwise_clock'])) {
-                $i = 0;
-                foreach ($property_for_rent_data['clockwise_clock'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_rent_data['clockwise_clock'] = $val;
-                    } else {
-                        $property_for_rent_data['secondary_clockwise_clock'] .= $val . ",";
-                    }
-                    $i++;
-                }
+            if(isset($request->secondary_clockwise_clock)){
+                $property_for_rent_data['secondary_clockwise_clock'] = json_encode($request->secondary_clockwise_clock);
             }
 
-            $property_for_rent_data['secondary_note'] = "";
-            if (isset($property_for_rent_data['note'])) {
-                $i = 0;
-                foreach ($property_for_rent_data['note'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_rent_data['note'] = $val;
-                    } else {
-                        $property_for_rent_data['secondary_note'] .= $val . ",";
-                    }
-                    $i++;
-                }
+            if(isset($request->secondary_note)){
+                $property_for_rent_data['secondary_note'] = json_encode($request->secondary_note);
             }
+
 
             if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
                 $property_for_rent_data['published_on'] = 1;
@@ -396,7 +358,7 @@ class PropertyForRentController extends Controller
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
             if ($response) {
 //        notifications bellow
-                common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/property-for-rent');
+                common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/property-for-rent',$ad);
 //      notifications ended
             }
 //  dd(DB::getQueryLog());

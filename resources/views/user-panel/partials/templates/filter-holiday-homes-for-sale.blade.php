@@ -33,7 +33,7 @@
                                 <li>
                                     <div class="input-toggle">
                                         <input type="checkbox" name="created_at" value="{{today()->toDateString()}}"
-                                               id="published-1">
+                                               id="published-1" {{Request()->created_at && Request()->created_at == today()->toDateString() ? 'checked' : ''}}>
                                         <label for="published-1" class="">Nye i dag <span
                                                 data-name="{{today()->toDateString()}}"
                                                 data-title="created_at"
@@ -58,11 +58,11 @@
                             <h3 class="u-t5 mt-3">Prisantydning</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="asking_price_from">
+                                    <input type="text" class="dme-form-control" name="asking_price_from" value="{{Request()->asking_price_from}}">
                                     <span class="u-t5">Fra kr</span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="asking_price_to">
+                                    <input type="text" class="dme-form-control" name="asking_price_to" value="{{Request()->asking_price_to}}">
                                     <span class="u-t5">Til kr</span>
                                 </div>
                                 <div class="col-sm-4">
@@ -74,11 +74,11 @@
                             <h3 class="u-t5">Totalpris</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="total_price_from">
+                                    <input type="text" class="dme-form-control" name="total_price_from" value="{{Request()->total_price_from}}">
                                     <span class="u-t5">Fra kr</span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="total_price_to">
+                                    <input type="text" class="dme-form-control" name="total_price_to" value="{{Request()->total_price_to}}">
                                     <span class="u-t5">Til kr</span>
                                 </div>
                                 <div class="col-sm-4">
@@ -90,11 +90,11 @@
                             <h3 class="u-t5">Størrelse</h3>
                             <div class="row">
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_from">
+                                    <input type="text" class="dme-form-control" name="use_area_from" value="{{Request()->use_area_from}}">
                                     <span class="u-t5">Fra m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4 pr-md-0">
-                                    <input type="text" class="dme-form-control" name="use_area_to">
+                                    <input type="text" class="dme-form-control" name="use_area_to" value="{{Request()->use_area_to}}">
                                     <span class="u-t5">Til m<sup>2</sup></span>
                                 </div>
                                 <div class="col-sm-4">
@@ -105,22 +105,22 @@
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Antall soverom</h3>
                             <div class="rounded-radio row pl-3 pr-3">
-                                <input type="radio" id="bedrooms" name="number_of_bedrooms">
+                                <input type="radio" id="bedrooms" name="number_of_bedrooms" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 'on' ? 'checked' : ''}}>
                                 <label for="bedrooms" class="col-2 first">Alle</label>
 
-                                <input type="radio" id="bedroom-1" name="number_of_bedrooms" value="1">
+                                <input type="radio" id="bedroom-1" name="number_of_bedrooms" value="1" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 1 ? 'checked' : ''}}>
                                 <label for="bedroom-1" class="col-2">1+</label>
 
-                                <input type="radio" id="bedroom-2" name="number_of_bedrooms" value="2">
+                                <input type="radio" id="bedroom-2" name="number_of_bedrooms" value="2" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 2 ? 'checked' : ''}}>
                                 <label for="bedroom-2" class="col-2">2+</label>
 
-                                <input type="radio" id="bedroom-3" name="number_of_bedrooms" value="3">
+                                <input type="radio" id="bedroom-3" name="number_of_bedrooms" value="3" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 3 ? 'checked' : ''}}>
                                 <label for="bedroom-3" class="col-2">3+</label>
 
-                                <input type="radio" id="bedroom-4" name="number_of_bedrooms" value="4">
+                                <input type="radio" id="bedroom-4" name="number_of_bedrooms" value="4" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 4 ? 'checked' : ''}}>
                                 <label for="bedroom-4" class="col-2">4+</label>
 
-                                <input type="radio" id="bedroom-5" name="number_of_bedrooms" value="5">
+                                <input type="radio" id="bedroom-5" name="number_of_bedrooms" value="5" {{Request()->number_of_bedrooms && Request()->number_of_bedrooms == 5 ? 'checked' : ''}}>
                                 <label for="bedroom-5" class="col-2 last">5+</label>
                             </div>
                         </div>
@@ -141,19 +141,19 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="location[]" value="Innlandet" id="location-1">
+                                        <input type="checkbox" name="location[]" value="Innlandet" id="location-1" {{Request()->location ? is_numeric(array_search('Innlandet', Request()->location)) ? "checked" : "" : ''}}>
                                         <label for="location-1">Innlandet</label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="location[]" value="På fjellet" id="location-2">
+                                        <input type="checkbox" name="location[]" value="På fjellet" id="location-2" {{Request()->location ? is_numeric(array_search('På fjellet', Request()->location)) ? "checked" : "" : ''}}>
                                         <label for="location-2">På fjellet</label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="location[]" value="Ved sjøen" id="location-3">
+                                        <input type="checkbox" name="location[]" value="Ved sjøen" id="location-3" {{Request()->location ? is_numeric(array_search('Ved sjøen', Request()->location)) ? "checked" : "" : ''}}>
                                         <label for="location-3">Ved sjøen</label>
                                     </div>
                                 </li>
@@ -164,7 +164,7 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="owned_site" value="true" id="owned_site">
+                                        <input type="checkbox" name="owned_site" value="true" id="owned_site" {{Request()->owned_site && Request()->owned_site == 'true' ? 'checked' : ''}}>
                                         <label for="owned_site">Selveiet</label>
                                     </div>
                                 </li>
@@ -176,7 +176,7 @@
                             <h3 class="u-t5">Fasiliteter</h3>
                             <?php
                             if (!empty($tax = App\Taxonomy::where('slug', 'hhfs_facilities')->get()->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
+                                echo App\Helpers\common::map_nav($tax->parent_terms(),Request()->hhfs_facilities);
                             }
                             ?>
                         </div>
@@ -184,7 +184,7 @@
                             <h3 class="u-t5">Boligtype</h3>
                             <?php
                             if (!empty($tax = App\Taxonomy::where('slug', 'hhfs_property_type')->get()->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
+                                echo App\Helpers\common::map_nav($tax->parent_terms(),Request()->hhfs_property_type);
                             }
                             ?>
                         </div>
@@ -196,7 +196,7 @@
                                 @for($i=0; $i<30; $i++)
                                     <li>
                                         <div class="input-toggle">
-                                            <input type="checkbox" name="display_date[]" value="{{now()->addDays($i)->toDateString()}}" id="navdisplaydate-{{$i}}">
+                                            <input type="checkbox" name="display_date[]" value="{{now()->addDays($i)->toDateString()}}" id="navdisplaydate-{{$i}}" {{Request()->display_date ? is_numeric(array_search(now()->addDays($i)->toDateString(), Request()->display_date)) ? "checked" : "" : ''}}>
                                             <label for="navdisplaydate-{{$i}}" class="">{{now()->addDays($i)->isoFormat("dddd DD. MMMM")}} <span data-name="{{now()->addDays($i)->toDateString()}}" data-title="display_name" class="count"></span></label>
                                         </div>
                                     </li>

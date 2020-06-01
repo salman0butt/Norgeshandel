@@ -32,12 +32,18 @@ class AdminUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $roles = Role::orderBy('id', 'DESC')->get();
-        $users = User::orderBy('id', 'DESC')->get();
-        return view('admin.users.users', compact('users', 'roles'));
-//        return view('admin.users.users');
+  
+    
+     //show all Users to admin
+    public function index(Request $request){
+        if (request()->route()->getPrefix() == '/admin') {
+            $users = User::all();
+            if($request->trashed){
+                $users = User::onlyTrashed()->get();
+            }
+            $roles = Role::orderBy('id', 'DESC')->get();
+            return response()->view('admin.users.users', compact('users','roles'));
+        }
     }
 
     /**
@@ -452,6 +458,34 @@ class AdminUserController extends Controller
 
         }
     }
+
+        //Restore Users
+    public function restore($id){
+        if($id){
+            $user = User::where('id','=',$id)->withTrashed();
+            if($user){
+                if(!Auth::user()->hasRole('admin') && $user != Auth::id()){
+                    return redirect('forbidden');
+                }
+                DB::beginTransaction();
+                try{
+                    $user->restore();
+                    DB::commit();
+                    Session::flash('success', 'User Restored Successfully');
+                    return back();
+                }catch (\Exception $e){
+                    DB::rollback();
+                    Session::flash('danger', 'Noe gikk galt.');
+                    return back();
+                }
+            }else{
+                abort(404);
+                Session::flash('danger', 'Noe gikk galt.');
+                return back();
+            }
+        }
+    }
+
 
 
 }

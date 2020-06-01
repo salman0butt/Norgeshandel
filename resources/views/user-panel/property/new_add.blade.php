@@ -62,6 +62,8 @@
                 if (zip_code) {
                     if (old_zip != zip_code) {
                         find_zipcode_city(zip_code);
+                     $('input[name="street_address"]').val('');
+                     $('input[name="street_address"]').parent().find('span.u-t5').remove();
                     }
                 }
                 @if(Request::is('new/property/rent/ad/*/edit') || Request::is('complete/ad/*'))
@@ -138,7 +140,6 @@
 
             $(document).on('change', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
                 e.preventDefault();
-               // if($(this).hasClass('text-editor')) tinyMCE.get('elm1');//tinyMCE.triggerSave();
 
                 if(! $(this).valid()) return false;
                 var ad_status = $('.ad_status').val();
@@ -171,11 +172,11 @@
 
                 e.preventDefault();
                 i=i+1;
-                var html = '<div class="form-group">'+
+                var html = '<div class="appended_viewing_times_fields"><div class="form-group">'+
                         '<label class="u-t5">Visningsdato (valgfritt)</label>'
                         +'<div class="row">'+
                             '<div class="col-sm-4 pr-md-0">'+
-                                '<input type="date" name="delivery_date[]" class="dme-form-control">'+
+                                '<input type="text" name="secondary_delivery_date[]" class="dme-form-control date-picker">'+
                                 '<span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>'+
                             '</div>'+
                         '</div>'+
@@ -184,7 +185,7 @@
                         '<label class="u-t5">Fra klokken (valgfritt)</label>'+
                         '<div class="row">'+
                             '<div class="col-sm-4 pr-md-0">'+
-                                '<input type="text" name="from_clock[]" placeholder="tt.mm" class="dme-form-control">'+
+                                '<input type="text" name="secondary_from_clock[]" placeholder="tt.mm" class="dme-form-control">'+
                                 '<span class="u-t5">Tid (eksempel 18:00)</span>'+
                             '</div>'+
                         '</div>'+
@@ -193,7 +194,7 @@
                         '<label class="u-t5">Til klokken (valgfritt)</label>'+
                         '<div class="row">'+
                             '<div class="col-sm-4 pr-md-0">'+
-                                '<input type="text" name="clockwise[]" placeholder="tt.mm" class="dme-form-control">'+
+                                '<input type="text" name="secondary_clockwise_clock[]" placeholder="tt.mm" class="dme-form-control">'+
                                 '<span class="u-t5">Tid (eksempel 19:00)</span>'+
                             '</div>'+
                         '</div>'+
@@ -202,12 +203,29 @@
                         '<label class="u-t5">Merknad (valgfritt)</label>'+
                         '<div class="row">'+
                             '<div class="col-sm-12 pr-md-0">'+
-                                '<input type="text" name="note[]" placeholder="F.eks.: visning etter avtale" class="dme-form-control">'+
+                                '<input type="text" name="secondary_note[]" placeholder="F.eks.: visning etter avtale" class="dme-form-control">'+
                             '</div>'+
                         '</div>'+
-                    '</div>';
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<div class="row">' +
+                            '<div class="col-sm-12 pr-md-0">' +
+                                '<button type="button" class="dme-btn-outlined-blue remove_appended_viewing_times_fields">Fjern</button>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div></div>';
                     $("#add_more_viewing_times_fields").append(html);
 
+        });
+
+        $(document).on('click', '.remove_appended_viewing_times_fields', function(e){
+            e.preventDefault();
+            $(this).closest('.appended_viewing_times_fields').remove();
+
+            var ad_status = $('.ad_status').val();
+            if(ad_status == 'saved'){
+                record_store_ajax_request('change', (this));
+            }
         });
 
 

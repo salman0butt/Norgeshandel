@@ -21,7 +21,7 @@
     </div>
 @endif
 
-<div class="pagination">
+{{-- <div class="pagination">
     {{ $my_ads->links() }}
-    {{--{{ $my_ads->links('user-panel.my-business.my_ads',compact('my_ads')) }}--}}
-</div>
+    {{ $my_ads->links('user-panel.my-business.my_ads',compact('my_ads')) }}
+</div> --}}

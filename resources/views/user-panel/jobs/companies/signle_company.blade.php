@@ -61,7 +61,11 @@
                     </font>
                 </h2>
                 <p style="font-size: 20px;">
-                {!! $company->emp_company_information !!}
+                    @if( $company->emp_company_information)
+                        @php echo $company->emp_company_information; @endphp
+                    @else
+                        Denne bedriften har ikke lagt ut informasjon om seg selv ennå.
+                    @endif
                 </p>
                 @if($company->emp_website)
                     <a href="{{$company->emp_website}}" target="_blank">

@@ -204,9 +204,9 @@ class AppliedJobController extends Controller
                 });
 
                 //Send email to job owner when a user applied on a job
-                if($apply_job->job && $apply_job->job->user && $apply_job->job->user->email){
+                if($apply_job->job && $apply_job->job->app_email_to_receive){
                     $to_name = $apply_job->job->user->username ? $apply_job->job->user->username : 'NH-Bruker';
-                    $to_email = $apply_job->job->user->email;
+                    $to_email = $apply_job->job->app_email_to_receive;
                     $subject = 'Takk for søknaden din på stillingen "'.$apply_job->job->title.'"';
                     Mail::send('mail.notify_job_owner_user_applied_cv',compact('apply_job'), function ($message) use ($to_name, $to_email,$subject) {
                         $message->to($to_email, $to_name)->subject($subject);

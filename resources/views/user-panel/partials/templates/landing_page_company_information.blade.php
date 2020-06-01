@@ -52,23 +52,25 @@
                             NH-Bruker
                         @endif
                     </h5>
-                    @if($property_data->user->hasRole('company'))
-                        @if(!$property_data->ad->is_mine())
-                            <div>
-                                <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
-                            </div>
 
-                            <ul class="list-unstyled mb-0">
-                                @if($property_data->user->first_name || $property_data->user->last_name)
-                                    <li class="py-2"><h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->last_name}}</h6></li>
-                                @endif
+                    @if($property_data->user->hasRole('company'))
+                        <div>
+                            <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
+                        </div>
+
+                        <ul class="list-unstyled mb-0">
+                            @if($property_data->user->first_name || $property_data->user->last_name)
+                                <li class="py-2"><h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->last_name}}</h6></li>
+                            @endif
+
+                            @if(!$property_data->ad->is_mine())
                                 <li class="py-2"><a  href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></li>
-                            </ul>
-                        @endif
+                            @endif
+                        </ul>
                     @endif
-                    <ul class="list-unstyled">
-                        <li></li>
-                    </ul>
+                    {{--<ul class="list-unstyled">--}}
+                        {{--<li></li>--}}
+                    {{--</ul>--}}
 
                     @if(!$property_published_on && $property_data->user)
                         @if(!$property_data->user->hasRole('company'))
@@ -76,12 +78,14 @@
                                 <img class="user-profile-picture" src="{{$property_data->user->media ? asset(\App\Helpers\common::getMediaPath($property_data->user->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
                             </div>
                             <h6 class="mt-2">{{$property_data->user->first_name.' '.$property_data->user->last_name}}</h6>
-                            <p class="mb-0">{{$property_data->user->position}}</p>
-                            @if($property_data->user->mobile_number)
-                                <ul class="list-unstyled mb-0">
+
+                            <ul class="list-unstyled mb-0">
+                                <li class="py-2"><p class="mb-0">{{$property_data->user->position}}</p></li>
+                                @if($property_data->user->mobile_number)
                                     <li class="py-2"><a  href="tel:{{$property_data->user->mobile_number}}">Mobil  {{$property_data->user->mobile_number}}</a></li>
-                                </ul>
-                            @endif
+                                @endif
+                            </ul>
+
                             @if(!$property_data->ad->is_mine())
                                 <ul class="list-unstyled mb-0">
                                     <li class="py-2"><a  href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></li>
@@ -102,9 +106,9 @@
                                 <img class="user-profile-picture" src="{{$ad_agent->media ? asset(\App\Helpers\common::getMediaPath($ad_agent->media)) : asset('/public/images/male-avatar.jpg')}}" alt="">
                             </div>
                             <h6 class="mt-2">{{$ad_agent->first_name.' '.$ad_agent->last_name}}</h6>
-                            <p class="mb-0">{{$ad_agent->position}}</p>
 
                             <ul class="list-unstyled mb-0">
+                                <li class="py-2"><p class="mb-0">{{$ad_agent->position}}</p></li>
                                 @if($ad_agent->mobile_number)
                                     <li class="py-2"><a  href="tel:{{$ad_agent->mobile_number}}">Mobil  {{$ad_agent->mobile_number}}</a></li>
                                 @endif
@@ -125,10 +129,6 @@
                         @if(!$property_published_on && $show_more_ad_url)
                             <li class="py-2"><a  href="{{$show_more_ad_url}}">Flere annonser fra annonsør</a></li>
                         @endif
-
-                        {{--@if(!$property_data->ad->is_mine())--}}
-                            {{--<li class="py-2"><a  href="{{url('messages/new', $property_data->ad->id)}}">Send melding</a></li>--}}
-                        {{--@endif--}}
 
                         @if($property_data->offer_url)
                             <li class="py-2"><a  href="{{$property_data->offer_url}}" target="_blank">Hjemmeside</a></li>

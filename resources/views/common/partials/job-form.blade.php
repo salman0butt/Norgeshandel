@@ -44,9 +44,13 @@
     if(isset($job)){
         $obj_job = $job;
     }
+    $ad_obj = new \App\Models\Ad();
+    if($obj_job && $obj_job->ad){
+        $ad_obj = $obj_job->ad;
+    }
     ?>
 
-<form action="#" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company") class="dropzone addMorePics p-0" @endif
+<form action="#" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company" && Auth::user()->roles->first()->name != "agent") class="dropzone addMorePics p-0" @endif
     data-action="@if(Request::is('jobs/*/edit') || Request::is('complete/job/*')){{route('jobs.update', $job->id)}}
     @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
     {{ csrf_field() }}
@@ -69,15 +73,10 @@
             <div class="col-md-12">
                 <h4 class="text-muted pl-3 pr-3">{{__('About the position')}}</h4>
                 <div class="pl-3">
-        {{-- @if ($message = Session::get('success'))
-        <script>
-        $(function(){
-            notify("success","Jobben er lagt til");
-        });
-        
-        </script>
-        @endif --}}
-                    {{-- <div class="notice"></div> --}}
+
+                    <!-- Company Section -->
+                    @include('user-panel.partials.ad_company_section')
+
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
@@ -193,7 +192,7 @@
                         <div class="row">
                             <label for="description" class="col-md-2 u-t5">{{__('Job description (optional)')}}</label>
                             <div class="col-sm-10 ">
-                                <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="description" cols="30" rows="10">{{$obj_job->description}}</textarea>
+                                <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent') ? 'text-editor' : ''}}" name="description" id="description" cols="30" rows="10">{{$obj_job->description}}</textarea>
 
                                 {{--<textarea name="description" class="form-control dme-form-control"--}}
                                     {{--id="description" cols="30" rows="10">{{$obj_job->description}}</textarea>--}}
@@ -248,7 +247,7 @@
                                 </div>
                             </div>
                         </div>
-                    @else
+                    @elseif(Auth::user()->roles->first()->name != "company" && Auth::user()->roles->first()->name != "agent")
                         <div class="form-group">
                             <div class="row">
                                 <label for="emp_name" class="col-md-2 u-t5">{{__('Employer')}}</label>
@@ -264,7 +263,7 @@
                                 <label for="emp_company_information"
                                     class="col-md-2 u-t5">{{__('Company Information (optional)')}}</label>
                                 <div class="col-sm-10 ">
-                                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->created_by_company_id ? 'text-editor' : ''}}"name="emp_company_information" cols="30" rows="10">{{$obj_job->emp_company_information}}</textarea>
+                                    <textarea class="{{Auth::user()->hasRole('company') || Auth::user()->hasRole('admin') || Auth::user()->hasRole('agent') ? 'text-editor' : ''}}" name="emp_company_information" id="emp_company_information" cols="30" rows="10">{{$obj_job->emp_company_information}}</textarea>
                                     {{--<textarea name="emp_company_information"--}}
                                         {{--class="form-control dme-form-control emp_company_information"--}}
                                         {{--id="emp_company_information" cols="30"--}}
@@ -482,7 +481,7 @@
                     <!--                            full input-->
                     <div class="form-group">
                         <div class="row">
-                            <label for="app_email" class="col-md-2 u-t5">{{__('Email')}}</label>
+                            <label for="app_email" class="col-md-2 u-t5">{{__('Email')}} (valgfritt)</label>
                             <div class="col-sm-10 ">
                                 <input name="app_email" id="app_email" type="text" class="form-control dme-form-control"
                                     value="{{@$obj_job->app_email}}">
@@ -729,7 +728,10 @@
 
                 if (zip_code) {
                     if (old_zip != zip_code) {
+                    $('input[name="street_address"],input[name="address"]').val('');
+                     $('input[name="street_address"],input[name="address"]').parent().find('span.u-t5').remove();
                         find_zipcode_city(zip_code);
+                       
                     }
                 }
             }

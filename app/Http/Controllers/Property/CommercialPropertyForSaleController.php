@@ -201,7 +201,7 @@ class CommercialPropertyForSaleController extends Controller
             $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
 //            notification bellow
-            common::send_search_notification($property, 'saved_search', $message, $this->pusher, 'property/commercial-property-for-sale');
+            common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/commercial-property-for-sale',$ad);
 //            end notification
             //  dd(DB::getQueryLog());
             $msg['message'] = $message;

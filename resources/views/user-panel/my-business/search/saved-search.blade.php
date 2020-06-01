@@ -91,13 +91,13 @@
                                                     class="">Nye treff for dette søket sendes til din e-postadresse</span>
                                             </label>
                                         </div>
-                                        <div class="">
+                                        {{-- <div class="">
                                             <input name="notification_sms" type="checkbox" value="1" id="notification_sms_{{$search->id}}" {{$search->notification_sms?'checked':''}}>
                                             <label for="notification_sms_{{$search->id}}">
                                                  <strong class="">Umiddelbar push-varsling</strong>
                                                 <span class="">Sanntidsvarsling for dette søket sendes til NorgesHandel-appen på iPhone, iPad og Android</span>
                                             </label>
-                                        </div>
+                                        </div> --}}
                                         <div class="">
                                             <input name="notification_web" type="checkbox" value="1" id="notification_web_{{$search->id}}" {{$search->notification_web?'checked':''}}>
                                             <label for="notification_web_{{$search->id}}">

@@ -30,6 +30,7 @@ use App\Admin\ads\Banner;
 use App\Term;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use App\Admin\Banners\BannerGroup;
 use Illuminate\Database\Eloquent\Model;
@@ -81,10 +82,6 @@ class common
             } else {
 
                 return rtrim($json, ', ');
-                //  foreach($explod_val as $key=>$val):
-                //  $returnable =
-                //   endforeach;
-                // dd($arr);
             }
 
 
@@ -106,7 +103,7 @@ class common
         }
     }
 
-    public static function map_nav($terms)
+    public static function map_nav($terms,$url_params='')
     {
         $html = '<ul class="list list-unstyled">';
         foreach ($terms as $term) {
@@ -114,7 +111,7 @@ class common
             $html .= '
             <li>
                 <div class="input-toggle">
-                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="' . $value . '" id="' . $term->taxonomy->id . '-' . $term->id . '">
+                    <input type="checkbox" name="' . $term->taxonomy->slug . '[]" value="' . $value . '" id="' . $term->taxonomy->id . '-' . $term->id . '" '.($url_params ? is_numeric(array_search($value,$url_params)) ? "checked" : "" : "").'>
                     <label for="' . $term->taxonomy->id . '-' . $term->id . '" class="">' . $term->name . ' <span data-name="' . $term->name . '" data-title="' . $term->taxonomy->slug . '" class="count"></span></label>
                 </div>
                 ';
@@ -304,8 +301,6 @@ class common
             // dump($testdate);
 
             foreach ($banner_group->banners as $banner):
-                // dd($banner->display_time_duration);
-
                 // echo "<a href='".$banner->link."' data-banner-id='".$banner->id."' class='ad_clicked  d-block w-100' data-id='".$id."' target='_blank'><img src='".asset(\App\Helpers\common::getMediaPath($banner->media,'300x200'))."' class='img-fluid m-auto' style='height:100%' alt=''></a>";
                 echo "<img src='" . asset(\App\Helpers\common::getMediaPath($banner->media)) . "' class='img-fluid m-auto' style='height:100%' alt=''>";
                 $id++;
@@ -415,12 +410,96 @@ class common
         $filter = $arr2[1];
         $array_filter = explode('&', $filter);
         $request = new Request();
-        foreach ($array_filter as $value) {
+        $request_arr = array();
+        foreach ($array_filter as $key=>$value) {
+            $count = 1;
             $pairs = explode('=', $value);
             if (count($pairs) > 1) {
+
+                //Covert the ASCII code to space
+                if($pairs[0] == 'search'){
+                    $pairs[1] = str_replace("%20",' ',$pairs[1]);
+                }
+
+                //Covert the ASCII code to space
+                if($pairs[0] == 'search'){
+                    $pairs[1] = str_replace("+",' ',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character +
+                 if($pairs[0] == 'search'){
+                     $pairs[1] = str_replace("%2B",'+',$pairs[1]);
+                 }
+
+                //Covert the ASCII code to space
+                if(strpos($pairs[0], '%5B%5D')){
+                    $count++;
+                    $pairs[0] = str_replace("%5B%5D",'',$pairs[0]);
+                }
+
+                //Covert the ASCII code to special character /
+                if(strpos($pairs[1], '%2F')){
+                    $pairs[1] = str_replace("%2F",'/',$pairs[1]);
+                }
+                //Covert the ASCII code to special character Æ
+                if(strpos($pairs[1], '%C3%86')){
+                    $pairs[1] = str_replace("%C3%86",'Æ',$pairs[1]);
+                }
+                $pairs[1] = str_replace("%C3%86",'Æ',$pairs[1]);
+
+                //Covert the ASCII code to special character æ
+                if(strpos($pairs[1], '%C3%A6')){
+                    $pairs[1] = str_replace("%C3%A6",'æ',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character Ø
+                if(strpos($pairs[1], '%C3%98')){
+                    $pairs[1] = str_replace("%C3%98",'Ø',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character ø
+                if(strpos($pairs[1], '%C3%B8')){
+                    $pairs[1] = str_replace("%C3%B8",'ø',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character Å
+                if(strpos($pairs[1], '%C3%85')){
+                    $pairs[1] = str_replace("%C3%85",'Å',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character å
+                if(strpos($pairs[1], '%C3%A5')){
+                    $pairs[1] = str_replace("%C3%A5",'å',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character é
+                if(strpos($pairs[1], '%C3%A9')){
+                    $pairs[1] = str_replace("%C3%A9",'é',$pairs[1]);
+                }
+
+                //Covert the ASCII code to special character ,
+                if(strpos($pairs[1], '%2C')){
+                    $pairs[1] = str_replace("%2C",',',$pairs[1]);
+                }
+
+
+                if($count > 1){
+                    $request_arr[$pairs[0]][] = $pairs[1];
+                }
+
                 $request->merge([$pairs[0] => $pairs[1]]);
             }
         }
+
+        foreach ($request->all() as $request_key=>$request_obj){
+            foreach ($request_arr as $arr_req_key=>$request_arr_obj){
+                if($request_key == $arr_req_key){
+                    $request->merge([$arr_req_key => $request_arr_obj]);
+                    break;
+                }
+            }
+        }
+
         return $request;
     }
 
@@ -466,11 +545,9 @@ class common
             $propertyController = new FlatWishesRentedController();
             $properties = $propertyController->search_flat_wishes_rented($request, true);
         }
-
         if ($properties) {
             $arr = $properties->pluck('ad_id');
             if (in_array($property->ad_id, $arr->toArray())) {
-                dd('not');
                 return true;
             }
         }
@@ -478,14 +555,13 @@ class common
     }
 
 //    notification
-    public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searche_str)
+    public static function send_search_notification($obj, $type, $message, Pusher $pusher, $searche_str, $ad)
     {
         $searches = \App\Models\Search::where('type', '=', 'saved')
             ->where('filter', 'like', '%' . $searche_str . '%')
             ->where('notification_web', '=', '1')
             ->get();
-
-        if ($searches) {
+        if ($searches->count() > 0) {
             foreach ($searches as $search) {
                 $req = common::get_request_from_search_url($search->filter);
 //                if ($req) {
@@ -503,8 +579,10 @@ class common
                 ) {
                     $to_be_sent = common::check_property_from_search_parameters($req, $obj);
                 }
+
                 if ($to_be_sent) {
-                    $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
+                    // $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
+                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $ad->id, 'data' => $message]);
                     $notif->save();
                     $data = array('detail' => $message, 'to_user_id' => $search->user_id);
                     $pusher->trigger('notification', 'notification-event', $data);

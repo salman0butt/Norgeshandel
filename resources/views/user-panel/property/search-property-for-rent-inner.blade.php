@@ -74,9 +74,8 @@
                     $name       = $property_for_rent->ad->company_gallery->first();
                     if($name != null)
                     {
-                        $name       =    $name->name_unique;
-                        $path       = \App\Helpers\common::getMediaPath($property_for_rent);
-                        $full_path  = $path."".$name;
+                        $path = \App\Helpers\common::getMediaPath($name);
+                        $full_path = $path;
                     }
                     else
                     {

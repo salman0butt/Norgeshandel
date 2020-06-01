@@ -25,6 +25,15 @@
             @include('common.partials.flash-messages')
         </div>
         <div class="col-md-12">
+          @if(Request()->get('trashed'))
+                    <a href="{{url('admin/users')}}">
+                        page moved to the Users
+                    </a>
+                @else
+                    <a href="{{url('admin/users?trashed=users')}}">
+                        page moved to the trash
+                    </a>
+            @endif
             <form action="{{route('admin.users.change_role')}}" method="POST" class="">
                 {{ csrf_field() }}
                 {{--{{method_field('PUT')}}--}}
@@ -90,11 +99,17 @@
                                     </th>
                                     <td><img style="height: 70px; width:60px;" src="@if($user->media!=null){{asset(\App\Helpers\common::getMediaPath($user->media))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
                                     <td><div class="display_name mb-2">{{$user->first_name}} {{$user->last_name}}</div>
+                                    @if(Request()->get('trashed'))
+                                        @if($user)
+                                            <a href="{{url('admin/user/restore/'.$user->id)}}" class="btn-link-danger" onclick="return confirm('Fo You Want to restore this User')">Restore</a>
+                                        @endif
+                                    @else
                                         <a href="{{route('admin.users.edit', $user->id)}}" class="btn btn-primary float-left mr-1 btn-sm">Edit</a>
                                         <form action="{{route('admin.users.destroy', $user->id)}}" method="POST"  onsubmit="jarascript:return confirm('Do you want to delete this user? Ads are deleted from this user. And you can\'t restore it again. Thanks!')">
                                             {{ csrf_field() }} {{method_field('DELETE')}}
                                             <input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger btn-sm">
                                         </form>
+                                        @endif
                                     </td>
                                     <td>{{$user->username}}</td>
                                     <td>{{$user->email}}</td>
