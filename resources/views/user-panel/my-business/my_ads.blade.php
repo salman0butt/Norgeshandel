@@ -154,14 +154,17 @@ foreach ($my_ads as $ad){
                             {{----}}
                         {{--@endif--}}
                         {{--end repeatation--}}
-                       <div class="pagination">
+                       {{-- <div class="pagination">
                         {{ $my_ads->links() }}
-                       </div>
+                       </div> --}}
                     </div>
                 </div>
                  
             </div>
         </div>
+    <div class="ajax-load text-center" style="display:none">
+        <p><img src="{{ asset('public/images/loaderMore.gif') }}"></p>
+    </div>
        
     </main>
     <input type="hidden" value="{{url('jobs/search/filter_my_ads/')}}" id="url">
@@ -174,6 +177,7 @@ foreach ($my_ads as $ad){
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+                page = 1;
                 var status = $('input[name=status]:checked').val();
                 var ad_type = $('input[name=ad_type]:checked').val();
                 var url = $('#url').val();
@@ -215,4 +219,48 @@ foreach ($my_ads as $ad){
             })
         });
     </script>
+
+<script type="text/javascript">
+	var page = 1;
+	$(window).scroll(function() {
+	    if($(window).scrollTop() + $(window).height() >= $(document).height()) {
+	        page++;
+	        loadMoreData(page);
+	    }
+	});
+
+
+	function loadMoreData(page){
+        var status = $('input[name=status]:checked').val();
+        var ad_type = $('input[name=ad_type]:checked').val();
+        var url = $('#url').val();
+        if(isEmpty(status) || isEmpty(ad_type) || isEmpty(url)){
+            full_url = '?page=';
+        }else {
+            full_url =  url+'/'+status+'/'+ad_type+'?page='; 
+        }
+	  $.ajax(
+	        {
+	            url: full_url + page,
+	            type: "get",
+	            beforeSend: function()
+	            {
+	                $('.ajax-load').show();
+	            }
+	        })
+	        .done(function(data)
+	        {
+	            if(data.html == " "){
+	                $('.ajax-load').html("No more records found");
+	                return;
+	            }
+	            $('.ajax-load').hide();
+	            $("#ads-list").append(data.html);
+	        })
+	        .fail(function(jqXHR, ajaxOptions, thrownError)
+	        {
+	              alert('server not responding...');
+	        });
+	}
+</script>
 @endsection
