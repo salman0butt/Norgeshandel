@@ -213,21 +213,6 @@
                         </div>
                     </div>
                 </div>
-                @php
-                    $delivery_date = $from_clock = $clock_wise = $note = array();
-                    if($property_data->secondary_delivery_date){
-                        $delivery_date = json_decode($property_data->secondary_delivery_date);
-                    }
-                    if($property_data->secondary_from_clock){
-                        $from_clock = json_decode($property_data->secondary_from_clock);
-                    }
-                    if($property_data->secondary_clockwise_clock){
-                        $clock_wise = json_decode($property_data->secondary_clockwise_clock);
-                    }
-                    if($property_data->secondary_note){
-                        $note = json_decode($property_data->secondary_note);
-                    }
-                @endphp
                 @if($property_data->user && ($property_data->user->roles->first() && $property_data->user->roles->first()->name != 'company' && $property_data->user->roles->first()->name != 'agent'))
                     <div class="col-md-4">
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px; margin-bottom: 20px; border-radius: 5px;">
@@ -252,24 +237,21 @@
                                 </div>
 
                             @endif
-                            @if($property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock  || $property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock || $property_data->note)
-                                <div class="mb-2">
-                                    <span>Visning: </span>
-                                    <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}} <br>{{$property_data->note ? $property_data->note : ''}}</span>
-                                    @if(count($delivery_date))
-                                        @foreach($delivery_date as $key=>$delivery_date_obj)
-                                            <br>
-                                            <span>{{isset($delivery_date_obj) ? date('d-m-Y', strtotime($delivery_date_obj)) : ''}}
-                                                {{(isset($from_clock[$key]) ? $from_clock[$key] : '')}}
-                                                {{(isset($from_clock[$key]) && isset($clock_wise[$key]) ? ' - ' : '')}}
-                                                {{isset($clock_wise[$key]) ? ($clock_wise[$key]) : ''}}
-                                                <br>{{isset($note[$key]) ? $note[$key] : ''}}
-                                            </span>
-                                        @endforeach
-                                    @endif
-                                </div>
+                           @if($property_data->ad->visting_times->count() > 0)
+                                 <div class="mb-2">
+                                     <span>Visning: </span>
+                                     <span>{{$property_data->delivery_date ? date('d-m-Y', strtotime($property_data->delivery_date)) : ''}} {{$property_data->from_clock.($property_data->from_clock && $property_data->clockwise_clock ? ' - ' : '').$property_data->clockwise_clock}} <br>{{$property_data->note ? $property_data->note : ''}}</span>
+
+                                     @foreach($property_data->ad->visting_times as $key=>$visting_time)
+                                        <p>{{$visting_time->delivery_date ? date('d-m-Y', strtotime($visting_time->delivery_date)) : ''}}
+                                            {{($visting_time->time_start)}}
+                                            {{($visting_time->time_end)}}
+                                            <br> {{($visting_time->note)}}
+                                        </p>
+                                     @endforeach
+                                 </div>
                             @endif
-                    
+
                             @if(!$property_data->ad->is_mine())
                                 <div class="mb-2">
                                     <a href="{{url('messages/new', $property_data->ad->id)}}">Visning etter avtale</a>
@@ -297,32 +279,20 @@
                         <div style=" box-shadow: 0px 0px 2px 1px #ac304a; padding: 4px 10px;margin-bottom: 20px; border-radius: 5px;">
 
                             <h2 class="u-t3">Visning</h2>
-                            @if(!empty($property_data->delivery_date) || !empty($property_data->from_clock) ||
-                            !empty($property_data->clockwise_clock) || !empty($property_data->clockwise_clock) ||
-                            !empty($property_data->note) || $property_data->delivery_date || $property_data->from_clock || $property_data->clockwise_clock || $property_data->note)
-                                <div class="mb-2">
-                                    <span><?php echo(!empty($property_data->delivery_date) ? date("d.m.Y", strtotime($property_data->delivery_date)) : ""); ?></span>
-                                    <span><?php echo(!empty($property_data->from_clock) ? $property_data->from_clock : ""); ?>
-                                    - </span>
-                                    <span><?php echo(!empty($property_data->clockwise_clock) ? $property_data->clockwise_clock : ""); ?>
-                                </span><br>
-                                <span><?php echo(!empty($property_data->note) ? $property_data->note : ""); ?>
-                                </span>
-                                    @if(count($delivery_date))
-                                        @foreach($delivery_date as $key=>$delivery_date_obj)
-                                            <br>
-                                            <span>{{isset($delivery_date_obj) ? date('d-m-Y', strtotime($delivery_date_obj)) : ''}}
-                                                {{(isset($from_clock[$key]) ? $from_clock[$key] : '')}}
-                                                {{(isset($from_clock[$key]) && isset($clock_wise[$key]) ? ' - ' : '')}}
-                                                {{isset($clock_wise[$key]) ? ($clock_wise[$key]) : ''}}
-                                                <br>{{isset($note[$key]) ? $note[$key] : ''}}
-                                            </span>
+                                @if($property_data->ad->visting_times->count() > 0)
+                                    <div class="mb-2">
+                                        @foreach($property_data->ad->visting_times as $key=>$visting_time)
+                                            <p>{{$visting_time->delivery_date ? date('d-m-Y', strtotime($visting_time->delivery_date)) : ''}}
+                                                {{($visting_time->time_start)}}
+                                                {{($visting_time->time_end)}}
+                                                <br> {{($visting_time->note)}}
+                                            </p>
+
                                         @endforeach
-                                    @endif
-                                </div>
-                            @else
-                                <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
-                            @endif
+                                    </div>
+                                @else
+                                    <div class="mb-2"><span>Ta kontakt for å avtale visning</span></div>
+                                @endif
 
                             <div class="mb-2">Husk å bestille/laste ned salgsoppgave så du kan stille godt forberedt på
                                 visning.

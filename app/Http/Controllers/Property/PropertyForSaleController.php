@@ -154,10 +154,8 @@ class PropertyForSaleController extends Controller
             }
         }
         if (isset($request->display_date) && !empty($request->display_date)) {
-            $query->whereDate($table . '.deliver_date', '=', $request->display_date[0]);
-            for ($i = 1; $i < count($request->display_date); $i++) {
-                $query->orWhereDate($table . '.deliver_date', '=', $request->display_date[$i]);
-            }
+            $query->join('ad_visting_times','ad_visting_times.ad_id','=','ads.id')
+                ->whereIn('ad_visting_times.delivery_date',$request->display_date)->select('ads.*');
         }
 
         if (isset($request->pfs_property_type) && !empty($request->pfs_property_type)) {
@@ -220,8 +218,9 @@ class PropertyForSaleController extends Controller
                 $query->orderBy('total_price', 'DESC');
                 break;
         }
-        $query->where($arr);
 
+        $query->select('property_for_sales.*')->distinct();
+        $query->where($arr);
         if ($get_collection){
             return $query->get();
         }
@@ -231,6 +230,7 @@ class PropertyForSaleController extends Controller
         $ids = $all->pluck('id');
         $clicks = AdView::whereIn('ad_id', $ids)->count();
         $add_array = $query->paginate($this->pagination);
+
         if ($request->ajax()) {
             $html = view('user-panel.property.search-property-for-sale-inner', compact('add_array', 'col', 'sort', 'clicks'))->render();
             exit($html);
@@ -351,81 +351,8 @@ class PropertyForSaleController extends Controller
                 $request->merge(['facilities4' => null]);
             }
 
-            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
+            $property_for_sale_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price','delivery_date','time_start','time_end','note']);
 
-            $property_for_sale_data['secondary_deliver_date'] = $property_for_sale_data['secondary_from_clock'] = $property_for_sale_data['secondary_clockwise'] = $property_for_sale_data['secondary_note1'] = null;
-
-            if(isset($request->secondary_deliver_date)){
-                $property_for_sale_data['secondary_deliver_date'] = json_encode($request->secondary_deliver_date);
-            }
-
-            if(isset($request->secondary_from_clock)){
-                $property_for_sale_data['secondary_from_clock'] = json_encode($request->secondary_from_clock);
-            }
-
-            if(isset($request->secondary_clockwise)){
-                $property_for_sale_data['secondary_clockwise'] = json_encode($request->secondary_clockwise);
-            }
-
-            if(isset($request->secondary_note1)){
-                $property_for_sale_data['secondary_note1'] = json_encode($request->secondary_note1);
-            }
-
-           /*
-            //Add More ViewingTimes
-            if (isset($property_for_sale_data['deliver_date']) && $property_for_sale_data['deliver_date'] != "") {
-                $property_for_sale_data['secondary_deliver_date'] = null;
-                $i = 0;
-                foreach ($property_for_sale_data['deliver_date'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_sale_data['deliver_date'] = $val;
-                    } else {
-                        $property_for_sale_data['secondary_deliver_date'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-
-            $property_for_sale_data['secondary_from_clock'] = "";
-            if (isset($property_for_sale_data['from_clock'])) {
-                $i = 0;
-                foreach ($property_for_sale_data['from_clock'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_sale_data['from_clock'] = $val;
-                    } else {
-                        $property_for_sale_data['secondary_from_clock'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-
-            $property_for_sale_data['secondary_clockwise'] = "";
-            if (isset($property_for_sale_data['clockwise'])) {
-                $i = 0;
-                foreach ($property_for_sale_data['clockwise'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_sale_data['clockwise'] = $val;
-                    } else {
-                        $property_for_sale_data['secondary_clockwise'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-
-            $property_for_sale_data['secondary_note1'] = "";
-            if (isset($property_for_sale_data['note1'])) {
-                $i = 0;
-                foreach ($property_for_sale_data['note1'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_for_sale_data['note1'] = $val;
-                    } else {
-                        $property_for_sale_data['secondary_note1'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-
-           */
 
             unset($property_for_sale_data['property_pdf']);
             unset($property_for_sale_data['property_quote']);
@@ -460,6 +387,7 @@ class PropertyForSaleController extends Controller
                     }
 
                     common::sync_ad_agents($temp_property_for_sale_obj->ad,$request->agent_id);
+                    common::ad_visting_time($temp_property_for_sale_obj->ad,$request);
 
 
                 }

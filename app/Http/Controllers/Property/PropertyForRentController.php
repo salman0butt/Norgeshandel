@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Property;
+use App\AdVistingTime;
 use App\Helpers\common;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
@@ -258,30 +259,13 @@ class PropertyForRentController extends Controller
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price','delivery_date','time_start','time_end','note']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
                 $property_for_rent_data['facilities'] = json_encode($property_for_rent_data['facilities']);
             }
 
-            $property_for_rent_data['secondary_delivery_date'] = $property_for_rent_data['secondary_from_clock'] = $property_for_rent_data['secondary_clockwise_clock'] = $property_for_rent_data['secondary_note'] = null;
-
-            if(isset($request->secondary_delivery_date)){
-                $property_for_rent_data['secondary_delivery_date'] = json_encode($request->secondary_delivery_date);
-            }
-
-            if(isset($request->secondary_from_clock)){
-                $property_for_rent_data['secondary_from_clock'] = json_encode($request->secondary_from_clock);
-            }
-
-            if(isset($request->secondary_clockwise_clock)){
-                $property_for_rent_data['secondary_clockwise_clock'] = json_encode($request->secondary_clockwise_clock);
-            }
-
-            if(isset($request->secondary_note)){
-                $property_for_rent_data['secondary_note'] = json_encode($request->secondary_note);
-            }
 
 
             if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
@@ -299,6 +283,7 @@ class PropertyForRentController extends Controller
                 $property_for_rent_data = common::updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
                 common::sync_ad_agents($response->ad,$request->agent_id);
 
+                common::ad_visting_time($response->ad,$request);
             }
    
             $response->update($property_for_rent_data);

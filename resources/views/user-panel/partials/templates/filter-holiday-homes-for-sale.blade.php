@@ -196,7 +196,7 @@
                                 @for($i=0; $i<30; $i++)
                                     <li>
                                         <div class="input-toggle">
-                                            <input type="checkbox" name="display_date[]" value="{{now()->addDays($i)->toDateString()}}" id="navdisplaydate-{{$i}}" {{Request()->display_date ? is_numeric(array_search(now()->addDays($i)->toDateString(), Request()->display_date)) ? "checked" : "" : ''}}>
+                                            <input type="checkbox" name="display_date[]" value="{{date('d-m-Y',strtotime(now()->addDays($i)->toDateString()))}}" id="navdisplaydate-{{$i}}" {{Request()->display_date ? is_numeric(array_search( date('d-m-Y',strtotime(now()->addDays($i)->toDateString())),Request()->display_date)) ? "checked" : "" : ''}}>
                                             <label for="navdisplaydate-{{$i}}" class="">{{now()->addDays($i)->isoFormat("dddd DD. MMMM")}} <span data-name="{{now()->addDays($i)->toDateString()}}" data-title="display_name" class="count"></span></label>
                                         </div>
                                     </li>

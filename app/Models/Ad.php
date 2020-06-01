@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\AdAgent;
 use App\Admin\Jobs\Job;
+use App\AdVistingTime;
 use App\BusinessForSale;
 use App\CommercialPlot;
 use App\CommercialPropertyForRent;
@@ -179,6 +180,12 @@ class Ad extends Model
     public function agents() {
         return $this->belongsToMany(User::class,'ad_agents','ad_id','agent_id');
     }
+
+    public function visting_times() {
+        return $this->hasMany(AdVistingTime::class);
+    }
+
+
     public function company() {
         return $this->belongsTo(Company::class,'company_id','id');
     }
