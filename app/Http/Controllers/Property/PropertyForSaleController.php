@@ -158,6 +158,25 @@ class PropertyForSaleController extends Controller
                 ->whereIn('ad_visting_times.delivery_date',$request->display_date)->select('ads.*');
         }
 
+        if (isset($request->user_type) && !empty($request->user_type)) {
+            if(count($request->user_type) == 1){
+                $query->join('users','users.id','=','ads.user_id')
+                    ->join('role_user','role_user.user_id','=','users.id')
+                    ->join('roles','role_user.role_id','=','roles.id');
+
+                if(is_numeric(array_search('Privat',$request->user_type))){
+                    $query->where('roles.name','<>','company')->where('roles.name','<>','agent');
+                }
+
+                if(is_numeric(array_search('Megler',$request->user_type))){
+                    $query->where(function ($q){
+                        $q->where('roles.name','agent')->orWhere('roles.name','company');
+                    });
+                }
+
+            }
+        }
+
         if (isset($request->pfs_property_type) && !empty($request->pfs_property_type)) {
             $query->whereIn($table . '.property_type', $request->pfs_property_type);
         }
