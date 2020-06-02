@@ -18,6 +18,7 @@
         display:none !important;
     }
 </style>
+https://developers.google.com/maps/documentation/javascript/examples/streetview-service
 @section('page_content')
    {!! $map['js'] !!}
 @section('style')
