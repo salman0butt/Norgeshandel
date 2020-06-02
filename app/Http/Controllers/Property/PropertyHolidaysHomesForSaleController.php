@@ -151,7 +151,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
                 $query->orderBy('primary_room', 'DESC');
                 break;
         }
-        $query->select('property_holidays_homes_for_sales.*')->distinct();
+    $query->select('property_holidays_homes_for_sales.*','ads.published_on','ads.updated_at')->distinct();
         $query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
