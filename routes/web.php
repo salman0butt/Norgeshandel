@@ -24,19 +24,19 @@ use App\Http\Controllers\Admin\Users\AdminUserController;
 
 Auth::routes(['verify' => true]);
 //google map
-Route::get('/map', function () {
-    $config = array();
-    $config['center'] = '37.4419, -122.1419';
-    $config['zoom'] = 'auto';
-    $config['places'] = true;
-    $config['placesAutocompleteInputID'] = 'myPlaceTextBox';
-    $config['placesAutocompleteBoundsMap'] = true; // set results biased towards the maps viewport
-    $config['placesAutocompleteOnChange'] = 'console.log(\'You selected a place\');';
+// Route::get('/map', function () {
+//     $config = array();
+//     $config['center'] = '37.4419, -122.1419';
+//     $config['zoom'] = 'auto';
+//     $config['places'] = true;
+//     $config['placesAutocompleteInputID'] = 'myPlaceTextBox';
+//     $config['placesAutocompleteBoundsMap'] = true; // set results biased towards the maps viewport
+//     $config['placesAutocompleteOnChange'] = 'console.log(\'You selected a place\');';
 
-    GMaps::initialize($config);
-    $map = GMaps::create_map();
-    return view('user-panel.my-business.map', compact('map'));
-});
+//     GMaps::initialize($config);
+//     $map = GMaps::create_map();
+//     return view('user-panel.my-business.map', compact('map'));
+// });
 
 
 Route::get('states', function (){
@@ -753,7 +753,7 @@ Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
 Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
 });
 
-// Route::get('/test', 'MapController@index');
+Route::get('/test', 'MapController@index');
 
 
 
