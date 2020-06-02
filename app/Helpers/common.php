@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\AdAgent;
 use App\Admin\Jobs\Job;
+use App\AdVistingTime;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\Favorite;
@@ -593,7 +594,7 @@ class common
                         $user_meta_notification_email = Meta::where('metable_id',$search->user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
                         $user_obj = User::find($search->user_id);
                         if($user_meta_notification_email && $user_obj && $user_obj->email){
-                            common::property_email_notification($user_obj,'saved_searches','',$search);
+                            common::property_email_notification($user_obj,'saved_searches',$ad,$search);
                         }
                     }
                 }
@@ -753,9 +754,9 @@ class common
                 $subject = 'Annonse '.$status;
             }
 
-            if($key == 'saved_searches' && $search){
+            if($key == 'saved_searches' && $search && $ad){
                 $text = 'Vi vil informere deg om at det er lagt til en ny annonse på NorgesHandel relatert til lagrede søk. Her er lenken til annonsen.';
-                $link = url('/'.$search->filter).'&search_id='.$search->id;
+                $link = url('/',$ad->id);
                 $subject = 'Ny annonse opprettet';
             }
 
@@ -851,6 +852,23 @@ class common
         }
     }
 
+    public static function ad_visting_time($ad,$request){
+        if(count($request->delivery_date) || count($request->time_start) || count($request->time_end) || count($request->note)){
+            $max_val = max(count($request->delivery_date),count($request->time_start),count($request->time_end),count($request->note));
+            if($max_val){
+                AdVistingTime::where('ad_id',$ad->id)->delete();
+                for ($i=0;$i<$max_val;$i++){
+                    $ad_visting_time = new AdVistingTime();
+                    $ad_visting_time->ad_id = $ad->id;
+                    $ad_visting_time->delivery_date = $request->delivery_date[$i];
+                    $ad_visting_time->time_start = $request->time_start[$i];
+                    $ad_visting_time->time_end = $request->time_end[$i];
+                    $ad_visting_time->note = $request->note[$i];
+                    $ad_visting_time->save();
+                }
+            }
+        }
+    }
 
     public static function company_commitment_jobs($company_id,$type){
         $count = 0;

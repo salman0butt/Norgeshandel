@@ -89,12 +89,13 @@ class BusinessForSaleController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
-
 
         switch ($sort) {
-            case 'published':
+            case 'most_relevant':
                 $query->orderBy('ads.updated_at', 'DESC');
+                break;
+            case 'published':
+                $query->orderBy('ads.published_on', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('price', 'ASC');
@@ -103,6 +104,8 @@ class BusinessForSaleController extends Controller
                 $query->orderBy('price', 'DESC');
                 break;
         }
+
+        $query->orderBy('ads.published_on', 'DESC');
 
         if($get_collection){
             return $query->get();

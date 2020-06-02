@@ -157,22 +157,23 @@
             }
         });
 
-        $(document).on('keyup', '.asking_price,.prcentage_of_joint_debt', function() {
+        $(document).on('keyup', '.asking_price,.cost', function() {
 
             var asking_price    = $(".asking_price").val();
             // var costs_include   = $(".cost_includes").val();
-            var percentage_of_public_debt = $(".prcentage_of_joint_debt").val();
+            // var percentage_of_public_debt = $(".prcentage_of_joint_debt").val();
+            var cost = $(".cost").val();
             if(asking_price == "")
             {
                 asking_price = 0;
             }
 
-            if(percentage_of_public_debt == "")
+            if(cost == "")
             {
-                percentage_of_public_debt = 0;
+                cost = 0;
             }
             // + parseInt(costs_include)
-            var total_price = parseInt(asking_price) + parseInt(percentage_of_public_debt);
+            var total_price = parseInt(asking_price) + parseInt(cost);
             $("#total_price").val(total_price);
 
         });          
@@ -208,53 +209,52 @@
        
 
         var i = 0;
-        $("#add_more_viewing_times_sales").click(function(e){
+        $("#add_more_viewing_times").click(function (e) {
 
-                e.preventDefault();
-                i=i+1;
-                var html = '<div class="appended_viewing_times_fields"><div class="form-group">'+
-                        '<label class="u-t5">Visningsdato (valgfritt)</label>'
-                        +'<div class="row">'+
-                            '<div class="col-sm-4 pr-md-0">'+
-                                '<input type="text" name="secondary_deliver_date[]" class="dme-form-control date-picker">'+
-                                '<span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                        '<label class="u-t5">Fra klokken (valgfritt)</label>'+
-                        '<div class="row">'+
-                            '<div class="col-sm-4 pr-md-0">'+
-                                '<input type="text" name="secondary_from_clock[]" placeholder="tt.mm" class="dme-form-control">'+
-                                '<span class="u-t5">Tid (eksempel 18:00)</span>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                        '<label class="u-t5">Til klokken (valgfritt)</label>'+
-                        '<div class="row">'+
-                            '<div class="col-sm-4 pr-md-0">'+
-                                '<input type="text" name="secondary_clockwise[]" placeholder="tt.mm" class="dme-form-control">'+
-                                '<span class="u-t5">Tid (eksempel 19:00)</span>'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="form-group">'+
-                        '<label class="u-t5">Merknad (valgfritt)</label>'+
-                        '<div class="row">'+
-                            '<div class="col-sm-12 pr-md-0">'+
-                                '<input type="text" name="secondary_note[]" placeholder="F.eks.: visning etter avtale" class="dme-form-control">'+
-                            '</div>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="form-group">' +
-                        '<div class="row">' +
-                            '<div class="col-sm-12 pr-md-0">' +
-                                '<button type="button" class="dme-btn-outlined-blue remove_appended_viewing_times_fields">Fjern</button>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div></div>';
-                    $("#add_more_viewing_times_fields").append(html);
+            e.preventDefault();
+            var html = '<div class="appended_viewing_times_fields"><div class="form-group">' +
+                '<label class="u-t5">Visningsdato (valgfritt)</label>' +
+                '<div class="row">' +
+                '<div class="col-sm-4 pr-md-0">' +
+                '<input type="text" name="delivery_date[]" class="dme-form-control date-picker">' +
+                '<span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="u-t5">Fra klokken (valgfritt)</label>' +
+                '<div class="row">' +
+                '<div class="col-sm-4 pr-md-0">' +
+                '<input type="text" name="time_start[]" placeholder="tt.mm" class="dme-form-control">' +
+                '<span class="u-t5">Tid (eksempel 18:00)</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="u-t5">Til klokken (valgfritt)</label>' +
+                '<div class="row">' +
+                '<div class="col-sm-4 pr-md-0">' +
+                '<input type="text" name="time_end[]" placeholder="tt.mm" class="dme-form-control">' +
+                '<span class="u-t5">Tid (eksempel 19:00)</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="u-t5">Merknad (valgfritt)</label>' +
+                '<div class="row">' +
+                '<div class="col-sm-12 pr-md-0">' +
+                '<input type="text" name="note[]" placeholder="F.eks.: visning etter avtale" class="dme-form-control">' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '   <div class="row">'+
+                '       <div class="col-sm-12 pr-md-0">'+
+                '           <button type="button" class="dme-btn-outlined-blue remove_appended_viewing_times_fields">Fjern</button>' +
+                '       </div>'+
+                '   </div>'+
+                '</div></div>';
+            $("#add_more_viewing_times_fields").append(html);
 
         });
 

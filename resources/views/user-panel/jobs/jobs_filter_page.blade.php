@@ -8,9 +8,9 @@
     <script>
         var added = false;
         $(document).ready(function () {
-            $(window).on('popstate', function(e) {
-                window.location.href =  window.location.href.split("?")[0];
-            });
+            // $(window).on('popstate', function(e) {
+            //     window.location.href =  window.location.href.split("?")[0];
+            // });
 
             var urlParams = new URLSearchParams(location.search);
             var type = urlParams.get('job_type');

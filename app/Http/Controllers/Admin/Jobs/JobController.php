@@ -686,7 +686,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->orderBy('ads.published_on','DESC');
+            });
 
 
         $query->where($arr);
@@ -720,19 +720,30 @@ class JobController extends Controller
 
         if(isset($sort) && !empty($sort)) {
             switch ($sort){
+                case 0:
+                    $query->orderBy('ads.updated_at', 'DESC');
+//                    $query->orderBy('jobs.updated_at', 'desc');
+                    break;
                 case 1:
-                    $query->orderBy('jobs.udpated_at', 'desc');
+                    $query->orderBy('ads.published_on', 'DESC');
                     break;
                 case 2:
                     $query->orderBy('users.first_name', 'asc');
+                    break;
+                case 3:
+                    $query->orderBy('jobs.zip_city', 'asc');
                     break;
                 default:
                     break;
             }
         }
-
+        $query->orderBy('ads.published_on','DESC');
         if($request->job_type){
             $query = $query->where('jobs.job_type',$request->job_type);
+        } //jobtype
+
+        if($request->jobtype){
+            $query = $query->whereIn('jobs.job_type',$request->jobtype);
         }
 
         if($is_notif){

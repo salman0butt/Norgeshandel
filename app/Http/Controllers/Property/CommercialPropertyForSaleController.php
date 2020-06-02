@@ -109,11 +109,13 @@ class CommercialPropertyForSaleController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
+            case 'most_relevant':
+                $query->orderBy('ads.updated_at', 'DESC');
+                break;
             case 'published':
-                $query->orderBy($table . '.updated_at', 'DESC');
+                $query->orderBy('ads.published_on', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('value_rate', 'ASC');
@@ -122,8 +124,7 @@ class CommercialPropertyForSaleController extends Controller
                 $query->orderBy('value_rate', 'DESC');
                 break;
         }
-        
-
+        $query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
             return $query->get();

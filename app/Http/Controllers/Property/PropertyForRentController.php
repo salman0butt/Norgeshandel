@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Property;
+use App\AdVistingTime;
 use App\Helpers\common;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\NotificationController;
@@ -157,23 +158,25 @@ class PropertyForRentController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
-            case 'published':
+            case 'most_relevant':
                 $query->orderBy('ads.updated_at', 'DESC');
                 break;
+            case 'published':
+                $query->orderBy('ads.published_on', 'DESC');
+                break;
             case 'priced-low-high':
-                $query->orderBy('asking_price', 'ASC');
+                $query->orderBy('monthly_rent', 'ASC');
                 break;
             case 'priced-high-low':
-                $query->orderBy('asking_price', 'DESC');
+                $query->orderBy('monthly_rent', 'DESC');
                 break;
             case 'p-rom-area-low-high':
-                $query->orderBy('primary_room', 'ASC');
+                $query->orderBy('primary_rom', 'ASC');
                 break;
             case 'p-rom-area-high-low':
-                $query->orderBy('primary_room', 'DESC');
+                $query->orderBy('primary_rom', 'DESC');
                 break;
             case 'total-price-low-high':
                 $query->orderBy('total_price', 'ASC');
@@ -185,8 +188,7 @@ class PropertyForRentController extends Controller
                 $query->orderBy('property_for_rent.id', 'DESC');
                 break;
         }
-     
-
+        $query->orderBy('ads.published_on', 'DESC');
         if ($get_collection){
             return $query->get();
         }
@@ -257,30 +259,13 @@ class PropertyForRentController extends Controller
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price','delivery_date','time_start','time_end','note']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
                 $property_for_rent_data['facilities'] = json_encode($property_for_rent_data['facilities']);
             }
 
-            $property_for_rent_data['secondary_delivery_date'] = $property_for_rent_data['secondary_from_clock'] = $property_for_rent_data['secondary_clockwise_clock'] = $property_for_rent_data['secondary_note'] = null;
-
-            if(isset($request->secondary_delivery_date)){
-                $property_for_rent_data['secondary_delivery_date'] = json_encode($request->secondary_delivery_date);
-            }
-
-            if(isset($request->secondary_from_clock)){
-                $property_for_rent_data['secondary_from_clock'] = json_encode($request->secondary_from_clock);
-            }
-
-            if(isset($request->secondary_clockwise_clock)){
-                $property_for_rent_data['secondary_clockwise_clock'] = json_encode($request->secondary_clockwise_clock);
-            }
-
-            if(isset($request->secondary_note)){
-                $property_for_rent_data['secondary_note'] = json_encode($request->secondary_note);
-            }
 
 
             if (isset($property_for_rent_data['published_on']) && $property_for_rent_data['published_on'] == 'on') {
@@ -298,6 +283,7 @@ class PropertyForRentController extends Controller
                 $property_for_rent_data = common::updated_dropzone_images_type($property_for_rent_data, $request->upload_dropzone_images_type, $response->ad->id);
                 common::sync_ad_agents($response->ad,$request->agent_id);
 
+                common::ad_visting_time($response->ad,$request);
             }
    
             $response->update($property_for_rent_data);

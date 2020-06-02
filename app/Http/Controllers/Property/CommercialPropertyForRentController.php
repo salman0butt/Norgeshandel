@@ -103,8 +103,11 @@ class CommercialPropertyForRentController extends Controller
         $query->orderBy('ads.published_on', 'DESC');
 
         switch ($sort) {
+            case 'most_relevant':
+                $query->orderBy('ads.updated_at', 'DESC');
+                break;
             case 'published':
-                $query->orderBy($table . '.updated_at', 'DESC');
+                $query->orderBy('ads.published_on', 'DESC');
                 break;
             case 'priced-low-high':
                 $query->orderBy('value_rate', 'ASC');

@@ -45,11 +45,11 @@
             <h3 class="u-t5">Annonsetype</h3>
             <div class="row pl-3">
                 <div class="col-md-12 input-toggle">
-                    <input class="checkmark" type="radio" value="Bortfeste" name="plot_type" id="type_boligtomt" @if(!$commercial_plot->plot_type) checked @endif {{ $commercial_plot->plot_type == "Bortfeste" ? "checked" : ''}}>
+                    <input class="ad_type checkmark" type="radio" value="Bortfeste" name="plot_type" id="type_boligtomt" @if(!$commercial_plot->plot_type) checked @endif {{ $commercial_plot->plot_type == "Bortfeste" ? "checked" : ''}}>
                     <label for="type_boligtomt" class="radio-lbl"> Salg</label>
                 </div>
                 <div class="col-md-12 input-toggle">
-                    <input class="checkmark" type="radio" value="Salg" name="plot_type" id="type_fritidstomt" {{ $commercial_plot->plot_type == "Salg" ? "checked" : ''}}>
+                    <input class="ad_type checkmark" type="radio" value="Salg" name="plot_type" id="type_fritidstomt" {{ $commercial_plot->plot_type == "Salg" ? "checked" : ''}}>
                     <label for="type_fritidstomt" class="radio-lbl"> Utleie</label>
                 </div>
             </div>
@@ -159,8 +159,8 @@
             </div>
         </div>
         <!--                            small input-->
-        <div class="form-group">
-            <h3 class="u-t5">Prisantydning</h3>
+        <div class="form-group price_section">
+            <h3 class="u-t5">{{ $commercial_plot && $commercial_plot->plot_type && $commercial_plot->plot_type == "Salg" ? "Utleie pris" : 'Prisantydning'}}</h3>
             <div class="row">
                 <div class="col-sm-4 pr-md-0">
                     <input name="asking_price" value="{{ $commercial_plot->asking_price }}" type="text" class="dme-form-control" placeholder="Kr.">
@@ -168,7 +168,9 @@
                 <div class="col-sm-8">
                 </div>
             </div>
-            <span class="u-t5">Minstebeløpet du selger eiendommen for.</span>
+            <span class="u-t5">
+                {{ $commercial_plot && $commercial_plot->plot_type && $commercial_plot->plot_type == "Salg" ? "Utleie beløp per måned" : 'Minstebeløpet du selger eiendommen for'}}
+            </span>
         </div>
         <!--                            small input-->
         <div class="form-group">

@@ -214,14 +214,14 @@
         });
 
         var i = 0;
-        $("#add_more_viewing_times_sales").click(function (e) {
+        $("#add_more_viewing_times").click(function (e) {
 
             e.preventDefault();
             var html = '<div class="appended_viewing_times_fields"><div class="form-group">' +
                 '<label class="u-t5">Visningsdato (valgfritt)</label>' +
                 '<div class="row">' +
                 '<div class="col-sm-4 pr-md-0">' +
-                '<input type="text" name="secondary_deliver_date[]" class="dme-form-control date-picker">' +
+                '<input type="text" name="delivery_date[]" class="dme-form-control date-picker">' +
                 '<span class="u-t5">Dato (eks. 31.12.2017 eller 31/12/2017)</span>' +
                 '</div>' +
                 '</div>' +
@@ -230,7 +230,7 @@
                 '<label class="u-t5">Fra klokken (valgfritt)</label>' +
                 '<div class="row">' +
                 '<div class="col-sm-4 pr-md-0">' +
-                '<input type="text" name="secondary_from_clock[]" placeholder="tt.mm" class="dme-form-control">' +
+                '<input type="text" name="time_start[]" placeholder="tt.mm" class="dme-form-control">' +
                 '<span class="u-t5">Tid (eksempel 18:00)</span>' +
                 '</div>' +
                 '</div>' +
@@ -239,7 +239,7 @@
                 '<label class="u-t5">Til klokken (valgfritt)</label>' +
                 '<div class="row">' +
                 '<div class="col-sm-4 pr-md-0">' +
-                '<input type="text" name="secondary_clockwise[]" placeholder="tt.mm" class="dme-form-control">' +
+                '<input type="text" name="time_end[]" placeholder="tt.mm" class="dme-form-control">' +
                 '<span class="u-t5">Tid (eksempel 19:00)</span>' +
                 '</div>' +
                 '</div>' +
@@ -248,7 +248,7 @@
                 '<label class="u-t5">Merknad (valgfritt)</label>' +
                 '<div class="row">' +
                 '<div class="col-sm-12 pr-md-0">' +
-                '<input type="text" name="secondary_note1[]" placeholder="F.eks.: visning etter avtale" class="dme-form-control">' +
+                '<input type="text" name="note[]" placeholder="F.eks.: visning etter avtale" class="dme-form-control">' +
                 '</div>' +
                 '</div>' +
                 '</div>' +

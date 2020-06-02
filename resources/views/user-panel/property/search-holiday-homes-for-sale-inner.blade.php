@@ -89,8 +89,6 @@
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
 
                                 <div class="trailing-border box-image" style="background-image: url('@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif');height: 174.93px; width:100%;">
-{{--                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"--}}
-{{--                                        alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">--}}
                                     @if($property_holiday_home_for_sale->ad && $property_holiday_home_for_sale->ad->status == 'sold' && $property_holiday_home_for_sale->ad->sold_at)
                                         <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">SOLGT</span>
                                     @endif
@@ -98,7 +96,6 @@
                             </div>
                             <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
                                 <div class="u-t5 text-muted" style=""></div>
-                                {{-- <div class="add-to-fav"><span class="fa fa-heart text-muted"></span></div> --}}
                                 <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
                                     @if($property_holiday_home_for_sale->street_address)
                                         <span title="{{$property_holiday_home_for_sale->street_address}}">{{Str::limit($property_holiday_home_for_sale->street_address,25)}},</span>
@@ -108,7 +105,7 @@
                                 <div class="title color-grey">{{ (Request()->get('view') && Request()->get('view') == 'grid') ? Str::limit($property_holiday_home_for_sale->ad_headline,35) : $property_holiday_home_for_sale->ad_headline}}</div>
                                 <div class="mt-2">
                                     <div
-                                        class="area font-weight-bold float-left color-grey">{{ $property_holiday_home_for_sale ->  primary_room }}
+                                        class="area font-weight-bold float-left color-grey">{{ $property_holiday_home_for_sale->primary_room }}
                                         m²
                                     </div>
                                     <div
@@ -127,9 +124,6 @@
                                         <span>{{  $property_holiday_home_for_sale->ownership_type  }}</span> •
                                         <span>{{  $property_holiday_home_for_sale->property_type  }}</span></div>
                                 </div>
-                                {{--<div class="float-right">--}}
-                                    {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
-                                {{--</div>--}}
                                 @if($property_holiday_home_for_sale->ad->company_id && $property_holiday_home_for_sale->ad->company && $property_holiday_home_for_sale->ad->company->company_logo->first())
                                     <div class="dealer-logo float-right mt-3"><img src="{{\App\Helpers\common::getMediaPath($property_holiday_home_for_sale->ad->company->company_logo->first())}} " alt="" class="img-fluid"></div>
                                 @endif

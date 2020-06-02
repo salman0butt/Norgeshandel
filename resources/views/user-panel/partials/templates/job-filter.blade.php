@@ -13,9 +13,10 @@
                             <div class="input-group search-box">
                                 <input type="text" id="search" name="search" class="dme-form-control search-control"
                                        placeholder="">
-                                @if(Request::get('job_type'))
+                                @if(Request::get('job_type') && !is_array(Request::get('job_type')))
                                     <input type="hidden" name="job_type" value="{{Request::get('job_type') ? Request::get('job_type') : ''}}" >
                                 @endif
+
                                 <span class="input-group-addon pt-2">
 
                                 <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
@@ -45,7 +46,7 @@
                             <h3 class="u-t5">Bransje</h3>
                             <?php
                             if (!empty($tax = \App\Taxonomy::where('slug', 'industry')->first())) {
-                                echo \App\Helpers\common::map_nav($tax->parent_terms());
+                                echo \App\Helpers\common::map_nav($tax->parent_terms(),Request()->industry);
                             }
                             ?>
                         </div>
@@ -64,7 +65,7 @@
                             <h3 class="u-t5">Ansettelsesform</h3>
                             <?php
                             if (!empty($tax = \App\Taxonomy::where('slug', 'commitment_type')->first())) {
-                                echo \App\Helpers\common::map_nav($tax->parent_terms());
+                                echo \App\Helpers\common::map_nav($tax->parent_terms(),Request()->commitment_type);
                             }
                             ?>
                         </div>
@@ -73,7 +74,7 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="deadline[]" value="today" id="6-450">
+                                        <input type="checkbox" name="deadline[]" value="today" id="6-450" {{Request()->deadline ? is_numeric(array_search('today', Request()->deadline)) ? "checked" : "" : ''}}>
                                         <label for="6-450" class="">Siste frist <span data-name="Siste frist"
                                                                                       data-title="deadline"
                                                                                       class="count"></span></label>
@@ -81,7 +82,7 @@
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="deadline[]" value="this_week" id="6-451">
+                                        <input type="checkbox" name="deadline[]" value="this_week" id="6-451" {{Request()->deadline ? is_numeric(array_search('this_week', Request()->deadline)) ? "checked" : "" : ''}}>
                                         <label for="6-451" class="">Under en uke <span data-name="Under en uke"
                                                                                        data-title="deadline"
                                                                                        class="count"></span></label>
@@ -89,7 +90,7 @@
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="deadline[]" value="three_days" id="6-452">
+                                        <input type="checkbox" name="deadline[]" value="three_days" id="6-452" {{Request()->deadline ? is_numeric(array_search('three_days', Request()->deadline)) ? "checked" : "" : ''}}>
                                         <label for="6-452" class="">Under tre døgn <span data-name="Under tre døgn"
                                                                                          data-title="deadline"
                                                                                          class="count"></span></label>
@@ -100,41 +101,43 @@
 
                     </div>
                     <div class="col-md-3">
-                        <div class="u-mt32 form-group">
-                            <h3 class="u-t5">Heltid/deltid</h3>
-                            <ul class="list list-unstyled">
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="job_type[]" value="part_time"
-                                               id="job_type_part_time">
-                                        <label for="job_type_part_time">Deltid <span data-name="part_time"
-                                                                                     data-title="job_type"
-                                                                                     class="count"></span></label>
-                                    </div>
-                                </li>
+                        @if(!Request()->job_type && !Request()->job_type == "management")
+                            <div class="u-mt32 form-group">
+                                <h3 class="u-t5">Heltid/deltid</h3>
+                                <ul class="list list-unstyled">
+                                    <li>
+                                        <div class="input-toggle">
+                                            <input type="checkbox" name="jobtype[]" value="part_time"
+                                                   id="job_type_part_time" {{Request()->jobtype ? is_numeric(array_search('part_time', Request()->jobtype)) ? "checked" : "" : ''}}>
+                                            <label for="job_type_part_time">Deltid <span data-name="part_time"
+                                                                                         data-title="jobtype"
+                                                                                         class="count"></span></label>
+                                        </div>
+                                    </li>
 
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="job_type[]" value="full_time"
-                                               id="job_type_full_time">
-                                        <label for="job_type_full_time" class="">Heltid <span data-name="full_time"
-                                                                                              data-title="job_type"
-                                                                                              class="count"></span></label>
-                                    </div>
-                                </li>
+                                    <li>
+                                        <div class="input-toggle">
+                                            <input type="checkbox" name="jobtype[]" value="full_time"
+                                                   id="job_type_full_time" {{Request()->jobtype ? is_numeric(array_search('full_time', Request()->jobtype)) ? "checked" : "" : ''}}>
+                                            <label for="job_type_full_time" class="">Heltid <span data-name="full_time"
+                                                                                                  data-title="jobtype"
+                                                                                                  class="count"></span></label>
+                                        </div>
+                                    </li>
 
-                                <li>
-                                    <div class="input-toggle">
-                                        <input type="checkbox" name="job_type[]" value="management"
-                                               id="job_type_management">
-                                        <label for="job_type_management" class="">Ledelse <span data-name="management"
-                                                                                                data-title="job_type"
-                                                                                                class="count"></span></label>
-                                    </div>
-                                </li>
+                                    <li>
+                                        <div class="input-toggle">
+                                            <input type="checkbox" name="jobtype[]" value="management"
+                                                   id="job_type_management" {{Request()->jobtype ? is_numeric(array_search('management', Request()->jobtype)) ? "checked" : "" : ''}}>
+                                            <label for="job_type_management" class="">Ledelse <span data-name="management"
+                                                                                                    data-title="jobtype"
+                                                                                                    class="count"></span></label>
+                                        </div>
+                                    </li>
 
-                            </ul>
-                        </div>
+                                </ul>
+                            </div>
+                        @endif
                         <div class="u-mt32 form-group nav-dynamic-checks">
                             <h3 class="u-t5">Sektor</h3>
                             <?php

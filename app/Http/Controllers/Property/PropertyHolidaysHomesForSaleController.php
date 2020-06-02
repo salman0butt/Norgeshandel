@@ -118,16 +118,8 @@ class PropertyHolidaysHomesForSaleController extends Controller
             $query->whereIn('property_holidays_homes_for_sales.property_type', $request->hhfs_property_type);
         }
         if (isset($request->display_date) && !empty($request->display_date)) {
-            $query->where(function ($query) use ($request) {
-                $query->where('property_holidays_homes_for_sales.delivery_date', 'like', '%' . $request->display_date[0] . '%');
-                for ($i = 1; $i < count($request->display_date); $i++) {
-                    $query->orWhere('property_holidays_homes_for_sales.delivery_date', 'like', '%' . $request->display_date[$i] . '%');
-                }
-                $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%' . $request->display_date[0] . '%');
-                for ($i = 1; $i < count($request->display_date); $i++) {
-                    $query->orWhere('property_holidays_homes_for_sales.secondary_deliver_date', 'like', '%' . $request->display_date[$i] . '%');
-                }
-            });
+            $query->join('ad_visting_times','ad_visting_times.ad_id','=','ads.id')
+                ->whereIn('ad_visting_times.delivery_date',$request->display_date)->select('ads.*');
         }
 
         if (isset($request->user_id) && !empty($request->user_id)) {
@@ -137,26 +129,33 @@ class PropertyHolidaysHomesForSaleController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
 
-        $order = $request->order;
-        switch ($order) {
+        if(isset($request->sort) && $request->sort){
+            $sort = $request->sort;
+        }
+
+        switch ($sort) {
             case 'published':
                 $query->orderBy('ads.updated_at', 'DESC');
                 break;
             case 'priced-low-high':
-                $query->orderBy('value_rate', 'ASC');
+                $query->orderBy('asking_price', 'ASC');
                 break;
             case 'priced-high-low':
                 $query->orderBy('asking_price', 'DESC');
                 break;
+            case 'housing_area_low_high':
+                $query->orderBy('primary_room', 'ASC');
+                break;
+            case 'housing_area_high_low':
+                $query->orderBy('primary_room', 'DESC');
+                break;
         }
-    
-
+        $query->select('property_holidays_homes_for_sales.*')->distinct();
+        $query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
             return $query->get();
-;
         }
         $add_array = $query->paginate($this->pagination);
 //        dd(DB::getQueryLog());
@@ -268,81 +267,8 @@ class PropertyHolidaysHomesForSaleController extends Controller
             if (!$request->owned_site) {
                 $request->merge(['owned_site' => null]);
             }
-            $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price']);
+            $property_home_for_sale_data = $request->except(['upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price','delivery_date','time_start','time_end','note']);
 
-            /*/
-            //Add More ViewingTimes
-            if (isset($property_home_for_sale_data['delivery_date']) && $property_home_for_sale_data['delivery_date'] != "") {
-                $property_home_for_sale_data['secondary_deliver_date'] = null;
-                $i = 0;
-                foreach ($property_home_for_sale_data['delivery_date'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_home_for_sale_data['delivery_date'] = $val;
-                    } else {
-                        $property_home_for_sale_data['secondary_deliver_date'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-
-            $property_home_for_sale_data['secondary_from_clock'] = "";
-            if (isset($property_home_for_sale_data['from_clock'])) {
-                $i = 0;
-                foreach ($property_home_for_sale_data['from_clock'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_home_for_sale_data['from_clock'] = $val;
-                    } else {
-                        $property_home_for_sale_data['secondary_from_clock'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-
-            $property_home_for_sale_data['secondary_clockwise'] = "";
-            if (isset($property_home_for_sale_data['clockwise'])) {
-                $i = 0;
-                foreach ($property_home_for_sale_data['clockwise'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_home_for_sale_data['clockwise'] = $val;
-                    } else {
-                        $property_home_for_sale_data['secondary_clockwise'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-
-            $property_home_for_sale_data['secondary_note'] = "";
-            if (isset($property_home_for_sale_data['note'])) {
-                $i = 0;
-                foreach ($property_home_for_sale_data['note'] as $key => $val) {
-                    if ($i == 0) {
-                        $property_home_for_sale_data['note'] = $val;
-                    } else {
-                        $property_home_for_sale_data['secondary_note'] .= $val . ",";
-                    }
-                    $i++;
-                }
-            }
-            */
-
-            $property_home_for_sale_data['secondary_deliver_date'] = $property_home_for_sale_data['secondary_from_clock'] = $property_home_for_sale_data['secondary_clockwise'] = $property_home_for_sale_data['secondary_note'] = null;
-
-            if(isset($request->secondary_deliver_date)){
-                $property_home_for_sale_data['secondary_deliver_date'] = json_encode($request->secondary_deliver_date);
-            }
-
-            if(isset($request->secondary_from_clock)){
-                $property_home_for_sale_data['secondary_from_clock'] = json_encode($request->secondary_from_clock);
-            }
-
-            if(isset($request->secondary_clockwise)){
-                $property_home_for_sale_data['secondary_clockwise'] = json_encode($request->secondary_clockwise);
-            }
-
-            if(isset($request->secondary_note)){
-                $property_home_for_sale_data['secondary_note'] = json_encode($request->secondary_note);
-            }
-            
             //Manage Facilities
             if (isset($property_home_for_sale_data['facilities'])) {
                 $facilities = "";
@@ -380,6 +306,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
                 }
 
                 common::sync_ad_agents($response->ad,$request->agent_id);
+                common::ad_visting_time($response->ad,$request);
             }
             if (isset($property_home_for_sale_data['published_on']) && $property_home_for_sale_data['published_on'] == 'on') {
                 $property_home_for_sale_data['published_on'] = 1;
