@@ -696,7 +696,7 @@ Route::group(['middleware' => 'authverified'], function () {
         event(new App\Events\PropertyForRent('Guest'));
         return "Event has been sent!";
     });
-
+ 
 
     Route::get('/delete-media-dz', function () {
         $media = Media::where('name_unique', $_GET['filename'])->first();
