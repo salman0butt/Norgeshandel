@@ -23,6 +23,10 @@ use \Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Admin\Users\AdminUserController;
 
 Auth::routes(['verify' => true]);
+//map
+Route::get('/map', 'MapController@index');
+Route::get('/streetview', 'MapController@street_view');
+
 //google map
 // Route::get('/map', function () {
 //     $config = array();
@@ -753,7 +757,7 @@ Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
 Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
 });
 
-Route::get('/test', 'MapController@index');
+
 
 
 
