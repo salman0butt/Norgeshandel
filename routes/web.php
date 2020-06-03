@@ -25,7 +25,6 @@ use App\Http\Controllers\Admin\Users\AdminUserController;
 Auth::routes(['verify' => true]);
 //map
 Route::get('/map', 'MapController@index');
-Route::get('/streetview', 'MapController@street_view');
 
 //google map
 // Route::get('/map', function () {

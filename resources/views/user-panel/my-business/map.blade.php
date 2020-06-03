@@ -82,7 +82,8 @@
         {{-- <strong>Place ID</strong>: <span id="place-id"></span><br> --}}
         <span id="place-address"></span>
     </div>
-
+   <input type="hidden" id="latitude" value="59.911491">
+   <input type="hidden" id="longitude" value="10.757933">
  
 <script>
 
@@ -146,8 +147,11 @@
 
                 map.setZoom(15);
                 map.setCenter(results[0].geometry.location);
-           
-                console.log(results);
+          
+                $('#latitude').val(place.geometry.location.lat());
+                $('#longitude').val(place.geometry.location.lng());
+                console.log(place.geometry.location.lat());
+                console.log(place.geometry.location.lng());
 
                 // Set the position of the marker using the place ID and location.
                 marker.setPlace({
@@ -166,7 +170,9 @@
         });
     }
 $('#stree-view').on('click',function() {
-    window.open("{{ url('/streetview') }}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=400,width=800,height=600");
+  var lat =  $('#latitude').val();
+  var lng = $('#longitude').val();
+    window.open("https://www.google.com/maps/@?api=1&map_action=pano&viewpoint="+lat+","+lng+"", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=400,width=800,height=600");
 });
 </script>
 
