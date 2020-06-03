@@ -39,10 +39,6 @@ class MapController extends Controller
         return view('user-panel.my-business.map');
 
     }
-    public function street_view() {
-
-        return view('user-panel.my-business.street');
-    }
 
     /**
      * Show the form for creating a new resource.
