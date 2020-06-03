@@ -144,7 +144,7 @@
                     return;
                 }
 
-                map.setZoom(13);
+                map.setZoom(15);
                 map.setCenter(results[0].geometry.location);
            
                 console.log(results);
