@@ -23,20 +23,23 @@ use \Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Admin\Users\AdminUserController;
 
 Auth::routes(['verify' => true]);
-//google map
-Route::get('/map', function () {
-    $config = array();
-    $config['center'] = '37.4419, -122.1419';
-    $config['zoom'] = 'auto';
-    $config['places'] = true;
-    $config['placesAutocompleteInputID'] = 'myPlaceTextBox';
-    $config['placesAutocompleteBoundsMap'] = true; // set results biased towards the maps viewport
-    $config['placesAutocompleteOnChange'] = 'console.log(\'You selected a place\');';
+//map
+Route::get('/map', 'MapController@index');
 
-    GMaps::initialize($config);
-    $map = GMaps::create_map();
-    return view('user-panel.my-business.map', compact('map'));
-});
+//google map
+// Route::get('/map', function () {
+//     $config = array();
+//     $config['center'] = '37.4419, -122.1419';
+//     $config['zoom'] = 'auto';
+//     $config['places'] = true;
+//     $config['placesAutocompleteInputID'] = 'myPlaceTextBox';
+//     $config['placesAutocompleteBoundsMap'] = true; // set results biased towards the maps viewport
+//     $config['placesAutocompleteOnChange'] = 'console.log(\'You selected a place\');';
+
+//     GMaps::initialize($config);
+//     $map = GMaps::create_map();
+//     return view('user-panel.my-business.map', compact('map'));
+// });
 
 
 Route::get('states', function (){
@@ -698,7 +701,7 @@ Route::group(['middleware' => 'authverified'], function () {
         event(new App\Events\PropertyForRent('Guest'));
         return "Event has been sent!";
     });
-
+ 
 
     Route::get('/delete-media-dz', function () {
         $media = Media::where('name_unique', $_GET['filename'])->first();
@@ -755,7 +758,7 @@ Route::post('/banner/ad/click', 'Admin\ads\BannerClickController@ad_clicked');
 Route::post('views/{banner_id}', 'Admin\ads\BannerController@views');
 });
 
-// Route::get('/test', 'MapController@index');
+
 
 
 
