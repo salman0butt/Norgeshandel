@@ -143,9 +143,8 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.footer.cookie');
     });
-    Route::get('/rating', function () {
-        return view('user-panel.my-business.rating');
-    });
+    Route::get('/rating','RatingController@ratings_list');
+    Route::get('show-more-ratings','RatingController@show_more_ratings')->name('show-more-ratings');
 
     Route::get('/customer-services', function () {
         return view('user-panel.footer.customer_service');
@@ -272,6 +271,7 @@ Route::group(['middleware' => 'authverified'], function () {
         echo 'hello';
     });
     Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
+    Route::get('show-more-public-profile-ads', 'Admin\Users\AdminUserController@show_more_public_profile_ads')->name('show-more-public-profile-ads');
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
 
@@ -290,6 +290,8 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('my-business/my-ads/{id}/options', 'AdController@ad_option');
         Route::get('my-business/my-ads/{id}/statistics', 'AdController@ad_statistics');
         Route::post('my-business/my-ads/{id}/sold', 'AdController@ad_sold')->name('ad-sold');
+        Route::get('my-business/my-ads/{id}/ratings', 'RatingController@ad_ratings');
+        Route::post('my-business/my-ads/{id}/ratings/store', 'RatingController@store_ratings')->name('ratings-store');
         // message
         Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
         Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');

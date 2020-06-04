@@ -10,6 +10,7 @@ use App\CommercialPlot;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\FlatWishesRented;
+use App\MessageThread;
 use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
@@ -185,8 +186,12 @@ class Ad extends Model
         return $this->hasMany(AdVistingTime::class);
     }
 
-
     public function company() {
         return $this->belongsTo(Company::class,'company_id','id');
+    }
+
+
+    public function message_threads(){
+        return $this->hasMany(MessageThread::class);
     }
 }
