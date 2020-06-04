@@ -1,13 +1,13 @@
 @extends('layouts.landingSite')
 @section('page_content')
     <style>
-        article.col-md-12.pl-0.pr-0.list-ad:hover {
+        article.col-md-12.pl-0.pr-0.list-ad1:hover {
             background: #ac304a1a;
             border-radius: 10px;
         }
     </style>
     <div class="container">
-        <main class="pageholder ">
+        <main class="pageholder">
             <div id="page-results" tabindex="-1" data-controller="trackNotificationShow" data-notification-count="2">
                 <h1 class="u-screen-reader-only">Varslinger</h1>
                 <div class="panel text-right pb-5">
@@ -18,22 +18,20 @@
                     @php($count = 0)
                     @php($added = array())
                     @if(is_countable($notifications) && count($notifications) > 0)
-                        @foreach ($notifications as $notif)
+                        @foreach ($notifications as $key=>$notif)
                             @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id)
                             @if(!in_array($addable, $added) && !empty($notif->notifiable))
-                                <article class="col-md-12 pl-0 pr-0 list-ad">
-                                   {{-- {{ dd($notif->ad) }} --}}
-                                    <a href="@if($notif->notifiable_type == \App\Models\Search::class)
-                                        {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
-                                    @elseif($notif->notifiable_type == 'App\UserRatingReview')
-                                        {{url('/', $notif->notifiable->ad_id)}}
-                                    @else
-                                    {{url('/', $notif->notifiable->id)}}
-                                    @endif">
+                                <article class="col-md-12 pl-0 pr-0 list-ad1">
+                                    <a href="
+                                        @if($notif->notifiable_type == \App\Models\Search::class)
+                                            {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
+                                        @elseif($notif->notifiable_type == 'App\UserRatingReview')
+                                            {{url('/', $notif->notifiable->ad_id)}}
+                                        @else
+                                            {{url('/', $notif->notifiable->id)}}
+                                        @endif" >
 
-
-                                        <div class=""
-                                             style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
+                                        <div class="" style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
                                             <div class="">
                                             <span>
                                             <img class="img-thumbnail w-100" style="border-radius:10px;min-height:110px;max-height:110px;"
@@ -43,22 +41,21 @@
                                             </span>
                                             </div>
                                         </div>
+
                                         <br>
                                         <span class="" style="margin-top:5%;">
                                             <span class="status status--success u-mb0"
                                                   style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">
                                                   {{ $notif->data }}
                                             </span>
-                                            
                                         </span>
 
                                         <div class="" style="display:block;width:70%;float:left;margin-top: -2%;">
-                                        <p class="mb-0">{{isset($notif->ad) && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->property->zip_city : ''}}</p>
+                                            <p class="mb-0">{{isset($notif->ad) && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->property->zip_city : ''}}</p>
                                             <h2 class="u-t3 u-mt8" style="margin-top:10px;">
-
                                                 <span class="">
-                                                <h5>{{ $notif->ad && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->getTitle() : ''}}</h5>
-                                                <h5 class="mt-4">{{ $notif->notifiable_type == 'App\UserRatingReview' &&  $notif->notifiable->ad && isset($notif->notifiable->ad->property) ? $notif->notifiable->ad->getTitle() : ''}}</h5>
+                                                    <h5>{{ $notif->ad && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->getTitle() : ''}}</h5>
+                                                    <h5 class="mt-4">{{ $notif->notifiable_type == 'App\UserRatingReview' &&  $notif->notifiable->ad && isset($notif->notifiable->ad->property) ? $notif->notifiable->ad->getTitle() : ''}}</h5>
                                                 </span>
                                             </h2>
                                           
@@ -77,7 +74,7 @@
                                         </div>
                                     </a>
                                 </article>
-                                {{-- @php(array_push($added, $addable)) --}}
+                                 @php(array_push($added, $addable))
                             @endif
                         @endforeach
                     @else
@@ -86,7 +83,10 @@
                         </div>
                     @endif
                 </div>
-                <div data-controller="newnotificationscountreset"></div>
+
+                <div data-controller="newnotificationscountreset">
+
+                </div>
             </div>
         </main>
 
