@@ -39,6 +39,11 @@ class MapController extends Controller
         return view('user-panel.my-business.map');
 
     }
+    public function direction() {
+
+    return view('user-panel.my-business.direction');
+
+    }
 
     /**
      * Show the form for creating a new resource.
