@@ -390,7 +390,6 @@
         if (zip_code) {
             var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
-                    // alert(obj_id);
                 if (this.readyState == 4 && this.status == 200) { //
                     const postalCode = JSON.parse(this.responseText);
 

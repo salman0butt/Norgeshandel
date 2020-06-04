@@ -64,28 +64,28 @@
                                     </div>
 
                                     <div class="col-3 {{$avg < 2 ? 'd-none' : ''}}">
-                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                        <img src="{{asset('public/images/Very-good-communication-icon.png')}}" width="23px" class="float-right">
                                     </div>
                                     <div class="col-9 pl-0 {{$avg < 2 ? 'd-none' : ''}}">
                                         <p class="mb-1">Veldig good kommunikasjon</p>
                                     </div>
 
                                     <div class="col-3 {{$avg < 4 ? 'd-none' : ''}}">
-                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                        <img src="{{asset('public/images/Seamless-delivery-icon.png')}}" width="23px" class="float-right">
                                     </div>
                                     <div class="col-9 pl-0 {{$avg < 4 ? 'd-none' : ''}}">
                                         <p class="mb-1">Problemfri overlevering</p>
                                     </div>
 
                                     <div class="col-3 {{$avg < 6 ? 'd-none' : ''}}">
-                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                        <img src="{{asset('public/images/Exact-description-icon.png')}}" width="23px" class="float-right">
                                     </div>
                                     <div class="col-9 pl-0 {{$avg < 6 ? 'd-none' : ''}}">
                                         <p class="mb-1">Nøyaktig beskrivelse</p>
                                     </div>
 
                                     <div class="col-3 {{$avg <= 6 ? 'd-none' : ''}}">
-                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                        <img src="{{asset('public/images/Hassle-free-payment-icon.png')}}" width="23px" class="float-right">
                                     </div>
                                     <div class="col-9 pl-0 {{$avg <= 6 ? 'd-none' : ''}}">
                                         <p class="mb-1">Problemfri betaling</p>
