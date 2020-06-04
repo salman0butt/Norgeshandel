@@ -582,7 +582,6 @@ class common
                 }
 
                 if ($to_be_sent) {
-                    // $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
                     $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $ad->id, 'data' => $message]);
                     $notif->save();
                     $data = array('detail' => $message, 'to_user_id' => $search->user_id);
@@ -699,7 +698,7 @@ class common
                 $user_meta = Meta::where('metable_id',$user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
                 $user_obj = User::find($user_id);
                 if($user_meta && $user_obj && $user_obj->email){
-                    common::property_email_notification($user_obj,'ad_sold_or_rented',$ad,'');
+                        common::property_email_notification($user_obj,'ad_sold_or_rented',$ad,'');
                 }
             }
         }

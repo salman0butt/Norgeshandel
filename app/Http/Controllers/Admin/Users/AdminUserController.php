@@ -13,6 +13,7 @@ use App\User;
 use App\Media;
 use App\Helpers;
 //use Illuminate\Contracts\Session\Session;
+use App\UserRatingReview;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -331,6 +332,15 @@ class AdminUserController extends Controller
         }
         $date = Date('y-m-d',strtotime('-7 days'));
         $user = User::find($id);
+        $ratings = UserRatingReview::where('to_user_id',$user->id)->orderBy('id','DESC')->paginate(5);
+        $count_active_ads = DB::table('ads')
+            ->where('visibility', '=', 1)
+            ->where('user_id','=', $user->id)
+            ->whereNull('deleted_at')
+            ->where(function ($query) use ($date){
+                $query->where('status', 'published')
+                    ->orwhereDate('sold_at','>',$date);
+            })->count();
         $active_ads = DB::table('ads')
             ->where('visibility', '=', 1)
             ->where('user_id','=', $user->id)
@@ -338,8 +348,31 @@ class AdminUserController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('status', 'published')
                     ->orwhereDate('sold_at','>',$date);
-            })->paginate($pagination);
-        return view('user-panel.my-business.profile.public', compact('user', 'active_ads'));
+            })->orderBy('id','DESC')->paginate($pagination);
+        return view('user-panel.my-business.profile.public', compact('user', 'active_ads','ratings','count_active_ads'));
+    }
+
+    //Show more public profile ads
+    public function show_more_public_profile_ads(Request $request){
+        $pagination = 20;
+        if(env('PAGINATION')){
+            $pagination = env('PAGINATION');
+        }
+        $date = Date('y-m-d',strtotime('-7 days'));
+        $user = User::find($request->user_id);
+        $active_ads = DB::table('ads')
+            ->where('visibility', '=', 1)
+            ->where('user_id','=', $user->id)
+            ->whereNull('deleted_at')
+            ->where(function ($query) use ($date){
+                $query->where('status', 'published')
+                    ->orwhereDate('sold_at','>',$date);
+            })->where('id','<',$request->last_id)
+            ->orderBy('id','DESC')->paginate($pagination);
+
+        $view = view('user-panel.my-business.public-user-ads-inner',compact('active_ads','user'))->render();
+
+        return response()->json(['html'=>$view]);
     }
 
     public function request_company_profile(Request $request){

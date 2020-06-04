@@ -42,12 +42,22 @@
                     @if(\Illuminate\Support\Facades\Request::is('property/flat-wishes-rented/search'))
                         @include('user-panel.partials.templates.filter-flat-wishes-rented')
                     @endif
-                    <li class="nav-item" id="move_to_notifications">
+                    {{--<li class="nav-item" id="move_to_notifications">--}}
+                        {{--<a class="nav-link position-relative" href="{{url('notifications')}}">--}}
+                            {{--<span class="badge badge-primary pending position-absolute" id="notification" style="left:0"></span>--}}
+                            {{--<i class="far fa-bell nav-icons"></i>--}}
+                            {{--<div class="mt-2 ml-2">Varslinger</div>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                    <li class="nav-item">
                         <a class="nav-link position-relative" href="{{url('notifications')}}">
-{{--                                <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">786</span>--}}
-                                <span class="badge badge-primary pending position-absolute" id="notification" style="left:0"></span>
-                                <i class="far fa-bell nav-icons"></i>
-                                <div class="mt-2 ml-2">Varslinger</div>
+                            @if(\Auth::check() && Auth::user()->unread_notifications()->count() >0)
+                                <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">
+                                     {{ Auth::user()->unread_notifications()->count()}}
+                                </span>
+                            @endif
+                            <i class="far fa-bell nav-icons"></i>
+                            <div class="mt-2 ml-2">Varslinger</div>
                         </a>
                     </li>
 
@@ -60,8 +70,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="{{url('/messages')}}">
-                            @if(\Auth::check())
-                            <span class="badge badge-primary pending position-absolute" id="chat-notification" style="left:0">{{count(\Auth::user()->unread_messages())>0?count(\Auth::user()->unread_messages()):""}}</span>
+                            @if(\Auth::check() && count(\Auth::user()->unread_messages())>0 )
+                            <span class="badge badge-primary pending position-absolute" id="chat-notification" style="left:0">
+                                {{count(\Auth::user()->unread_messages())>0 ? count(\Auth::user()->unread_messages()):""}}
+                            </span>
                             @endif
                                 <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
                             <div class="mt-2 ml-2">Meldinger</div>

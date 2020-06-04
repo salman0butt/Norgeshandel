@@ -1,5 +1,22 @@
 @extends('layouts.landingSite')
 <?php $countries = countries(); ?>
+
+@section('style')
+    <style>
+        .numberCircle {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            padding: 5px;
+            background: #233871;
+            border: 2px solid #666;
+            color: white;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600;
+        }
+    </style>
+@endsection
 @section('page_content')
     <main class="public_profile">
         <div class="dme-container pt-4">
@@ -32,14 +49,61 @@
                 <div class="col-md-4 pt-4 pb-4">
                     <div class="panel" aria-labelledby="profile-summary-header">
                         <h3 class="summary font-weight-normal">Sammendrag</h3>
-                        <div class="about small">{{$user->about_me}}</div>
+                        @if($ratings->count())
+                            @php
+                                $avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('general_ratings') : '0';
+                            @endphp
+                            <div class="p-3 bg-maroon-lighter radius-8">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="numberCircle">{{$avg}}</div>
+                                    </div>
+                                    <div class="col-9 pl-0">
+                                        <h6 class="mb-0">Urmerket</h6>
+                                        <p>{{$user->received_ratings->count()}} vurderinger</p>
+                                    </div>
+
+                                    <div class="col-3 {{$avg < 2 ? 'd-none' : ''}}">
+                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                    </div>
+                                    <div class="col-9 pl-0 {{$avg < 2 ? 'd-none' : ''}}">
+                                        <p class="mb-1">Veldig good kommunikasjon</p>
+                                    </div>
+
+                                    <div class="col-3 {{$avg < 4 ? 'd-none' : ''}}">
+                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                    </div>
+                                    <div class="col-9 pl-0 {{$avg < 4 ? 'd-none' : ''}}">
+                                        <p class="mb-1">Problemfri overlevering</p>
+                                    </div>
+
+                                    <div class="col-3 {{$avg < 6 ? 'd-none' : ''}}">
+                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                    </div>
+                                    <div class="col-9 pl-0 {{$avg < 6 ? 'd-none' : ''}}">
+                                        <p class="mb-1">Nøyaktig beskrivelse</p>
+                                    </div>
+
+                                    <div class="col-3 {{$avg <= 6 ? 'd-none' : ''}}">
+                                        <i class="fa fa-envelope fa-lg float-right mt-1"></i>
+                                    </div>
+                                    <div class="col-9 pl-0 {{$avg <= 6 ? 'd-none' : ''}}">
+                                        <p class="mb-1">Problemfri betaling</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-8 pt-4 pb-4">
                     <div class="panel" aria-labelledby="review-list-header">
                         <h3 class="font-weight-normal">Vurderinger</h3>
-                        <div class="ratings">
-                            <span>Brukeren har ikke fått noen vurderinger</span>
+                        <div class="ratings ratings-section">
+                            @if($ratings->count() > 0)
+                                @include('user-panel.my-business.public-user-rating-inner')
+                            @else
+                                Brukeren har ikke fått noen vurderinger
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -49,34 +113,12 @@
                 <div class="col-md-4 pt-4 pb-4">
                     <div class="panel" aria-labelledby="profile-summary-header">
                         <h3 class="summary font-weight-normal">Aktive annonser</h3>
-                        <div class="about small">({{count($active_ads)}}) annonser</div>
+                        <div class="about small">({{$count_active_ads}}) annonser</div>
                     </div>
                 </div>
                 <div class="col-md-8 pt-4 pb-4">
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <div style="float: right">
-                                {{$active_ads->links()}}
-                            </div>
-                        </div>
-                    </div>
-                    @foreach($active_ads as $ad)
-                    <?php $ad = \App\Models\Ad::find($ad->id);?>
-                        @if($ad && $ad->visibility)
-                            @if($ad->ad_type == 'job')
-                                @include('user-panel.partials.templates.job-list')
-                            @else
-                                {{-- @include('user-panel.partials.templates.propert-sequare') --}}
-                                @include('user-panel.partials.templates.property-list')
-                            @endif
-                        @endif
-                    @endforeach
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <div style="float: right">
-                                {{$active_ads->links()}}
-                            </div>
-                        </div>
+                    <div class="public-user-ads-section">
+                        @include('user-panel.my-business.public-user-ads-inner')
                     </div>
                 </div>
             </div>

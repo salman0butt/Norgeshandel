@@ -513,10 +513,10 @@
                 //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        @if(Auth::check())
+        /*
 
         $.ajax({
-            url: '{{url('notifications_count')}}',
+            url: //url('notifications_count'),
             type: "get",
             async: false,
             dataType: "json",
@@ -531,7 +531,8 @@
         }).fail(function (jqXHR, ajaxOptions, thrownError) {
             $('#notification:not(.page-notifications #notification)').html('');
         });
-        @endif
+
+        */
 
         //spinner start here
        /* $(document).ajaxStart(function () {

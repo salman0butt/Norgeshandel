@@ -173,7 +173,6 @@ class PropertyForSaleController extends Controller
                         $q->where('roles.name','agent')->orWhere('roles.name','company');
                     });
                 }
-
             }
         }
 
@@ -238,7 +237,7 @@ class PropertyForSaleController extends Controller
                 break;
         }
 
-        $query->select('property_for_sales.*')->distinct();
+        $query->select('property_for_sales.*','ads.published_on','ads.updated_at')->distinct();
         $query->where($arr);
         if ($get_collection){
             return $query->get();

@@ -238,4 +238,14 @@ class User extends Authenticatable implements MustVerifyEmail
         //Reference link => https://laravel.com/docs/7.x/eloquent-relationships
         return $this->hasManyThrough(User::class,Company::class,'user_id','created_by_company_id','id','id');
     }
+
+    //get user received ratings
+    public function received_ratings(){
+        return $this->hasMany(UserRatingReview::class,'to_user_id','id')->orderBy('id','DESC');
+    }
+
+    //get user received ratings
+    public function give_ratings(){
+        return $this->hasMany(UserRatingReview::class,'from_user_id','id')->orderBy('id','DESC');
+    }
 }

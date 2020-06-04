@@ -16,8 +16,7 @@
 </style>
 @section('page_content')
 <main class="dme-container mt-5">
-
-
+    <input type="hidden" class="show_rating" value="{{session('ratings') ? session('ratings') : ''}}">
     <div class="breade-crumb">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -141,4 +140,34 @@
         </div>
     </div>
 </main>
+
+<div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rangeringer og anmeldelser</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Ønsker du å rangere bruker relatert til denne annonsen.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="{{url('my-business/my-ads/'.$ad->id.'/ratings')}}">Ja</a>
+                <a class="btn btn-danger" href="#" data-dismiss="modal">Nei</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+@section('script')
+    @if(!empty(Session::get('error_code')) && Session::get('error_code') == 5)
+        <script>
+            $(function() {
+                $('#exampleModal').modal('show');
+            });
+        </script>
+    @endif
 @endsection

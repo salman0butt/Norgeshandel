@@ -454,6 +454,47 @@ $(document).ready(function (e) {
         right_banner_ad();
     }
 
+    //Show more ratings
+    $(document).on('click', '.show_more_notifications', function (e) {
+        var last_id = $(this).data('last_id');
+        var user_id = $(this).data('user_id');
+        var url = $(this).data('action');
+        var view_title = $(this).data('view_title');
+        $('.show_more_notifications img').removeClass('d-none');
+        $(this).css('pointer-events', 'none');
+        $.ajax({
+            url: url,
+            type:'GET',
+            data: {'last_id':last_id,'user_id':user_id,'view_title':view_title},
+            dataType:'json',
+            success: function (data) {
+                $('.show_more_notifications').addClass('d-none');
+                $('.show_more_notifications img').addClass('d-none');
+                $(".ratings-section").append(data.html);
+            }
+        });
+    });
+
+    //Show more public ads
+    $(document).on('click', '.show_more_public_profile_ads', function (e) {
+        var last_id = $(this).data('last_id');
+        var user_id = $(this).data('user_id');
+        var url = $(this).data('action');
+        $('.show_more_public_profile_ads img').removeClass('d-none');
+        $(this).css('pointer-events', 'none');
+        $.ajax({
+            url: url,
+            type:'GET',
+            data: {'last_id':last_id,'user_id':user_id},
+            dataType:'json',
+            success: function (data) {
+                $('.show_more_public_profile_ads').addClass('d-none');
+                $('.show_more_public_profile_ads img').addClass('d-none');
+                $(".public-user-ads-section").append(data.html);
+            }
+        });
+    });
+
 
 });
 

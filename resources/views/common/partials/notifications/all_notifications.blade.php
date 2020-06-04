@@ -19,24 +19,25 @@
                     @php($added = array())
                     @if(is_countable($notifications) && count($notifications) > 0)
                         @foreach ($notifications as $notif)
-                              
-                            @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id) 
-                    
+                            @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id)
                             @if(!in_array($addable, $added) && !empty($notif->notifiable))
                                 <article class="col-md-12 pl-0 pr-0 list-ad">
                                    {{-- {{ dd($notif->ad) }} --}}
-                                    <a href="@if($notif->notifiable_type==\App\Models\Search::class)
-                                 
-                                    {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
+                                    <a href="@if($notif->notifiable_type == \App\Models\Search::class)
+                                        {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
+                                    @elseif($notif->notifiable_type == 'App\UserRatingReview')
+                                        {{url('/', $notif->notifiable->ad_id)}}
                                     @else
                                     {{url('/', $notif->notifiable->id)}}
                                     @endif">
+
+
                                         <div class=""
                                              style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
                                             <div class="">
                                             <span>
                                             <img class="img-thumbnail w-100" style="border-radius:10px;min-height:110px;max-height:110px;"
-                                                 src="@if($notif->ad && $notif->ad->company_gallery->first()) {{App\Helpers\common::getMediaPath($notif->ad->company_gallery->first())}} @else {{asset('public/images/placeholder.png')}} @endif"
+                                                 src="@if($notif->notifiable_type != 'App\UserRatingReview' && $notif->ad && $notif->ad->company_gallery->first()) {{App\Helpers\common::getMediaPath($notif->ad->company_gallery->first())}} @elseif($notif->notifiable && isset($notif->notifiable->ad) && $notif->notifiable->ad->company_gallery->first())  {{App\Helpers\common::getMediaPath($notif->notifiable->ad->company_gallery->first())}}  @else {{asset('public/images/placeholder.png')}} @endif"
 
                                                  alt="">
                                             </span>
@@ -47,21 +48,17 @@
                                             <span class="status status--success u-mb0"
                                                   style="background:#AC304A;border-radius:5px;padding:1px 3px;color:white;">
                                                   {{ $notif->data }}
-                                                {{-- @if($notif->notifiable_type==\App\Models\Search::class)
-                                                    Søket er lagret!
-                                                @elseif($notif->notifiable_type== App\Models\Ad::class)
-                                                    Treff i favoritter
-                                                @endif --}}
                                             </span>
                                             
                                         </span>
 
                                         <div class="" style="display:block;width:70%;float:left;margin-top: -2%;">
-                                        <p class="mb-0">{{isset($notif->ad) && isset($notif->ad->property) ? $notif->ad->property->zip_city : ''}}</p>
+                                        <p class="mb-0">{{isset($notif->ad) && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->property->zip_city : ''}}</p>
                                             <h2 class="u-t3 u-mt8" style="margin-top:10px;">
 
                                                 <span class="">
-                                                <h5>{{ $notif->ad && isset($notif->ad->property) ? $notif->ad->getTitle() : ''}}</h5>
+                                                <h5>{{ $notif->ad && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->getTitle() : ''}}</h5>
+                                                <h5 class="mt-4">{{ $notif->notifiable_type == 'App\UserRatingReview' &&  $notif->notifiable->ad && isset($notif->notifiable->ad->property) ? $notif->notifiable->ad->getTitle() : ''}}</h5>
                                                 </span>
                                             </h2>
                                           

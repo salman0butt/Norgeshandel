@@ -7,12 +7,14 @@ use App\Helpers\common;
 use App\MessageThread;
 use App\Models\Ad;
 use App\Models\AdView;
+use App\UserRatingReview;
 use Carbon\Traits\Date;
 use DateTime;
 use http\Message\Body;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\Null_;
 use PhpParser\Node\Stmt\DeclareDeclare;
@@ -284,13 +286,29 @@ class AdController extends Controller
     // Mark as sold an ad
     public function ad_sold($id){
         $ad = Ad::find($id);
+        $count = 0;
+        if($ad->message_threads->count() > 0) {
+            foreach($ad->message_threads as $message_thread){
+                if($message_thread->messages->count() > 0){
+                    if($message_thread->users->where('id','<>',Auth::id())){
+                        $count++;
+                        break;
+                    }
+                }
+            }
+        }
+
         if($ad){
             if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
                 $ad->sold_at = date('Y-m-d G:i');
                 $ad->status = 'sold';
                 $ad->update();
                 common::fav_mark_sold_notification($ad, $this->pusher);
-                return back();
+                if($count){
+                    return Redirect::back()->with('error_code', 5);
+                }else{
+                    return back();
+                }
             }else{
                 return redirect('forbidden');
             }
