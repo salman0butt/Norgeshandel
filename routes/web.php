@@ -449,9 +449,9 @@ Route::group(['middleware' => 'authverified'], function () {
                 return view('user-panel.my-business.profile.account-purchase-history');
             });
 
-            Route::get('/privacy', function () {
-                return view('user-panel.my-business.profile.account-privacy');
-            });
+//            Route::get('/privacy', function () {
+//                return view('user-panel.my-business.profile.account-privacy');
+//            });
             Route::get('/summary', function () {
                 return view('user-panel.my-business.profile.account-summary');
             });
@@ -638,6 +638,9 @@ Route::group(['middleware' => 'authverified'], function () {
         \App\User::all()->first()->update(['password' => \Illuminate\Support\Facades\Hash::make('gujrat786')]);
 
     });
+    Route::delete('delete-self-account/{id}','Admin\Users\AdminUserController@destroy')->name('delete-self-account');
+
+
 
 //  zille bellow
     Route::get('property/realestate', 'PropertyController@list');

@@ -11,6 +11,9 @@
             margin-right: 5px;
         }
     </style>
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&callback=initMap"
+            async defer></script>
 @endsection
 
 @section('page_content')
@@ -18,10 +21,6 @@
     $job_function = \App\Taxonomy::where('slug', 'job_function')->first();
     $job_functions = $job_function->terms()->orderBy('name','ASC')->get();
 @endphp
-
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&callback=initMap"
-        async defer></script>
 <main class="job-preferences">
     <div class="dme-container">
         <div class="breade-crumb">

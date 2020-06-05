@@ -91,8 +91,8 @@
                     <span class="font-weight-bold">Mine jobb-preferanser</span>
                 </a>
             </li>
-            <li class="dme-btn-outlined-blue mb-1">
-                <a href="{{ url('/privacy') }}" style="text-decoration: none;">
+            <li class="dme-btn-outlined-blue mb-1 d-none">
+                <a href="#" style="text-decoration: none;">
                     <span class="font-weight-bold">Innstillinger for personvern</span>
                 </a>
             </li>

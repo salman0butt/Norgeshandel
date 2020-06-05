@@ -70,7 +70,7 @@ class AdminUserController extends Controller
         $user_array = $request->except(['_token', '_method', 'file',
         'confirm_passowrd', 'role_id', 'password',
         'allowed_properties', 'allowed_jobs']);
-        $user_array['password'] = Hash::make($user_array['password']);
+        $user_array['password'] = Hash::make($request->password);
 
         $user = new User($user_array);
         $role->users()->save($user);
@@ -224,9 +224,17 @@ class AdminUserController extends Controller
      */
     public function destroy($id)
     {
+        $self_account = '';
         $user = User::find($id);
         $roles = $user->roles;
 
+        //store user records in temp variable
+        $role_id = $user->roles->first()->id;
+        $user_obj = $user;
+
+        if($user->id == Auth::id()){
+            $self_account = 'yes';
+        }
         if (!$user->hasRole('admin')) {
 
             DB::beginTransaction();
@@ -278,18 +286,23 @@ class AdminUserController extends Controller
                         $ad->delete();
                     }
                 }
-//            foreach ($roles as $role) {
-//                $user->detachRole($role->id);
-//            }
+
                 $user->delete();
+
+                //reattach the role to deleted user
+                $user_obj->roles()->attach($role_id);
                 DB::commit();
-                session()->flash('success', 'User has been updated successfully');
-                return back();
+                if($self_account){
+                    Auth::logout();
+                    return redirect(url('/'));
+                }else{
+                    session()->flash('success', 'User has been deleted successfully');
+                    return back();
+                }
 
             }catch (\Exception $e){
                 DB::rollback();
-                dd($e->getMessage());
-                session()->flash('danger', 'Something went wrong.');
+                session()->flash('danger', 'Noe gikk galt.');
                 return back();
             }
         }
