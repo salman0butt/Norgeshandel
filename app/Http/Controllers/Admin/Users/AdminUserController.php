@@ -226,7 +226,13 @@ class AdminUserController extends Controller
     {
         $self_account = '';
         $user = User::find($id);
-        $roles = $user->roles;
+
+        if(!$user){
+            session()->flash('danger', 'Posten ble ikke funnet.');
+            return back();
+        }
+
+        $roles = $user ? $user->roles : '';
 
         //store user records in temp variable
         $role_id = $user->roles->first()->id;
@@ -236,7 +242,10 @@ class AdminUserController extends Controller
             $self_account = 'yes';
         }
         if (!$user->hasRole('admin')) {
-
+            if(!Auth::user()->hasRole('admin') && $user->id != Auth::id()){
+                session()->flash('danger', 'Du kan ikke slette denne brukeren.');
+                return back();
+            }
             DB::beginTransaction();
             try{
                 if($user->hasRole('company')){
