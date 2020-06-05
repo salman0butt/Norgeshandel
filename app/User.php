@@ -248,4 +248,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function give_ratings(){
         return $this->hasMany(UserRatingReview::class,'from_user_id','id')->orderBy('id','DESC');
     }
+
+    // User job preference cities
+    public function job_preference_cities(){
+        return $this->hasMany(JobPreferenceCity::class);
+    }
+
+    // User job preference key words
+    public function job_preference_key_words(){
+        return $this->hasMany(JobPreferenceKeyWord::class);
+    }
 }

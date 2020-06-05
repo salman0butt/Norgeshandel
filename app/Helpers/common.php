@@ -873,8 +873,9 @@ class common
         $count = 0;
         $jobs = DB::table('ads')
             ->join('jobs', 'ads.id', '=', 'jobs.ad_id')
-//            ->where('ads.status', '=', 'published')
+            ->where('ads.status', '=', 'published')
             ->where('ads.ad_type', '=', 'job')
+            ->where('ads.visibility',1)
             ->whereNull('jobs.deleted_at')
             ->whereNull('ads.deleted_at')
             ->where('jobs.company_id',$company_id)
@@ -885,6 +886,53 @@ class common
             })
             ->where('ads.visibility','=',1)->get();
         return $jobs;
+    }
+
+    //Send site and email notification to user according to job preferences related to
+    public static function job_preferences_notifications($ad,$pusher){
+        if($ad && $ad->job && $ad->job->company_id && $ad->job->company && $ad->job->company->followings->count() ){
+            foreach ($ad->job->company->followings as $following){
+                $count = 0;
+                $functions = $cities = array();
+
+                //find job functions
+                if($following->user && $following->user->job_preference_key_words->count() > 0 && $ad->job->job_function){
+                    $functions = $following->user->job_preference_key_words->pluck('key_word')->toArray();
+                    if(is_numeric(array_search($ad->job->job_function,$functions))){
+                        $count++;
+                    }
+                }
+
+                // find job city
+                if($following->user && $following->user->job_preference_cities->count() > 0 && $ad->job->zip_city){
+                    $cities = $following->user->job_preference_cities->pluck('city')->toArray();
+                    if(is_numeric(array_search($ad->job->zip_city,$functions))){
+                        $count++;
+                    }
+                }
+                //send email and site notification
+                if($count){
+                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'new_job_posted', 'user_id' => $following->user->id, 'notifiable_id' => $ad->id, 'data' => 'En ny jobb legges ut relatert til din jobbpreferanse.']);
+                    $notif->save();
+                    $data = array('detail' => 'En ny jobb legges ut relatert til din jobbpreferanse.', 'to_user_id' => $following->user->id);
+                    $pusher->trigger('notification', 'notification-event', $data);
+
+
+                    if($following->user->email){
+                        $text = 'Vi vil informere deg om at en ny jobb er lagt ut i henhold til dine stillingspreferanser. Her er koblingen til jobben.';
+                        $link = url('/',$ad->id);
+                        $subject = 'Ny jobb lagt ut';
+                        $user_obj = $following->user;
+                        $to_name = $following->user->username;
+                        $to_email = $following->user->email;
+                        Mail::send('mail.property_email_notification',compact('text','link','user_obj'), function ($message) use ($to_name, $to_email,$subject) {
+                            $message->to($to_email, $to_name)->subject($subject);
+                            $message->from('developer@digitalmx.no', 'NorgesHandel');
+                        });
+                    }
+                }
+            }
+        }
 
     }
 

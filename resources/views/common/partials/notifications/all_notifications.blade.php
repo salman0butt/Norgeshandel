@@ -24,12 +24,12 @@
                                 <article class="col-md-12 pl-0 pr-0 list-ad1">
                                     <a href="
                                         @if($notif->notifiable_type == \App\Models\Search::class)
-                                            {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
-                                        @elseif($notif->notifiable_type == 'App\UserRatingReview')
-                                            {{url('/', $notif->notifiable->ad_id)}}
-                                        @else
-                                            {{url('/', $notif->notifiable->id)}}
-                                        @endif" >
+                                    {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
+                                    @elseif($notif->notifiable_type == 'App\UserRatingReview')
+                                    {{url('/', $notif->notifiable->ad_id)}}
+                                    @else
+                                    {{url('/', $notif->notifiable->id)}}
+                                    @endif" >
 
                                         <div class="" style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
                                             <div class="">
@@ -41,7 +41,6 @@
                                             </span>
                                             </div>
                                         </div>
-
                                         <br>
                                         <span class="" style="margin-top:5%;">
                                             <span class="status status--success u-mb0"
@@ -50,15 +49,41 @@
                                             </span>
                                         </span>
 
-                                        <div class="" style="display:block;width:70%;float:left;margin-top: -2%;">
-                                            <p class="mb-0">{{isset($notif->ad) && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->property->zip_city : ''}}</p>
-                                            <h2 class="u-t3 u-mt8" style="margin-top:10px;">
-                                                <span class="">
-                                                    <h5>{{ $notif->ad && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->getTitle() : ''}}</h5>
-                                                    <h5 class="mt-4">{{ $notif->notifiable_type == 'App\UserRatingReview' &&  $notif->notifiable->ad && isset($notif->notifiable->ad->property) ? $notif->notifiable->ad->getTitle() : ''}}</h5>
-                                                </span>
-                                            </h2>
-                                          
+                                        <?php
+                                            $ad = $ad_title = $zip_city =  '';
+                                            if($notif->notifiable_type == 'App\UserRatingReview'){
+                                                if($notif->notifiable->ad && $notif->notifiable->ad->ad_type != 'job'){
+                                                    $ad_title = $notif->notifiable->ad->getTitle();
+                                                    $zip_city = $notif->notifiable->ad->property->zip_city;
+                                                }
+                                            }else{
+                                                if(isset($notif->ad) && $notif->ad->ad_type == 'job'){
+                                                    $ad_title = $notif->ad->job->name;
+                                                    $zip_city = $notif->ad->job->zip_city;
+                                                }
+                                                if(isset($notif->ad) && $notif->ad->ad_type != 'job'){
+                                                    $ad_title = $notif->ad->getTitle();
+                                                    $zip_city = $notif->ad->property->zip_city;
+                                                }
+                                            }
+                                        ?>
+                                        <div class="" style="display:block;width:70%;float:left;margin-top: 0%;">
+                                            @if($zip_city)
+                                                <p class="mb-0">
+                                                    {{$zip_city}}
+                                                    {{-- {{isset($notif->ad) && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->property->zip_city : ''}}--}}
+                                                </p>
+                                            @endif
+                                            @if($ad_title)
+                                                <h2 class="u-t3 u-mt8" style="margin-top:0px;">
+                                                    <span class="">
+                                                        {{Str::limit($ad_title,60)}}
+                                                        {{--<h5>{{ $notif->ad && isset($notif->ad->property) && $notif->notifiable_type != 'App\UserRatingReview' ? $notif->ad->getTitle() : ''}}</h5>--}}
+                                                        {{--<h5 class="mt-4">{{ $notif->notifiable_type == 'App\UserRatingReview' &&  $notif->notifiable->ad && isset($notif->notifiable->ad->property) ? $notif->notifiable->ad->getTitle() : ''}}</h5>--}}
+                                                    </span>
+                                                </h2>
+                                            @endif
+
                                             <span class="u-stone timeago" style="margin-left:10px;" title="{{$notif->created_at}}">
                                             &nbsp;
                                             </span>

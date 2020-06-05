@@ -379,6 +379,7 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('cv/extend', 'Cv\CvController@extend');
           
             Route::resource('job-preferences', 'JobPreferenceController');
+            Route::get('delete-job-preferences', 'JobPreferenceController@delete_job_preference')->name('delete-job-preferences');
             Route::resource('following', 'FollowingController');
         });
 
