@@ -40,7 +40,7 @@
             <p class="u-mb16">Her kan la bedriftene finne deg relatert til dine jobb preferanser. Husk til enhver tid å ha oppdaterte
                 preferanser slik at du er et steg nærmere drømme jobben din!</p>
         </div>
-        <div class="panel" style="margin-bottom: 80px">
+        <div class="panel">
             <form action="{{route('job-preferences.store')}}" method="POST">
                 @csrf
                 <div class="u-mb32 form-group">
@@ -78,7 +78,7 @@
                     </div>
                 </div>
 
-                <!-- Hide compnay event and news section -->
+                <!-- Hide company event and news section -->
                 <div class="u-mb32 form-group d-none">
                     <label>Hva ønsker du informasjon om?</label>
                     <div class="input-toggle">
@@ -101,11 +101,10 @@
                                 Fjern alle
                             </a>
                         @endif
+                        <div class="clearfix"></div>
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="panel u-d1 u-stone">
         </div>
 
 
