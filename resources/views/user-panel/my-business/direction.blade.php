@@ -1,212 +1,61 @@
-@extends('layouts.landingSite')
+<!DOCTYPE html>
+<html>
 
-@section('page_content')
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&callback=initMap"
-    async defer></script>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      .controls {
-        margin-top: 10px;
-        border: 1px solid transparent;
-        border-radius: 2px 0 0 2px;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height: 32px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
+<head>
+    <title>Norgshandal Maps Diriections</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Google Maps Diriections" />
+    <meta name="keywords" content="Google Maps Diriections" />
+    <meta name="author" content="Giri Jeedigunta - thewebstorebyg" />
 
-      #origin-input,
-      #destination-input {
-        background-color: #fff;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 300;
-        margin-left: 12px;
-        padding: 0 11px 0 13px;
-        text-overflow: ellipsis;
-        width: 200px;
-      }
+    <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
 
-      #origin-input:focus,
-      #destination-input:focus {
-        border-color: #4d90fe;
-      }
+        <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
+    <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+              <link href="{{ asset('public/css/diriection.css') }}" type="text/css" rel="stylesheet" /> 
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+</head>
 
-      #mode-selector {
-        color: #fff;
-        background-color: #4d90fe;
-        margin-left: 12px;
-        padding: 5px 11px 0px 11px;
-      }
+<body>
+@include('user-panel.partials.header')
 
-      #mode-selector label {
-        font-family: Roboto;
-        font-size: 13px;
-        font-weight: 300;
-      }
-    footer {
-        display: none !important;
-    }
-
-    </style>
-<br><br>
-      <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-      #right-panel {
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-
-      #right-panel select, #right-panel input {
-        font-size: 15px;
-      }
-
-      #right-panel select {
-        width: 100%;
-      }
-
-      #right-panel i {
-        font-size: 12px;
-      }
-      #right-panel {
-        height: 100%;
-        float: right;
-        width: 390px;
-        overflow: auto;
-      }
-      #map {
-        margin-right: 400px;
-      }
-      #floating-panel {
-        background: #fff;
-        padding: 5px;
-        font-size: 14px;
-        font-family: Arial;
-        border: 1px solid #ccc;
-        box-shadow: 0 2px 2px rgba(33, 33, 33, 0.4);
-        display: none;
-      }
-      @media print {
-        #map {
-          height: 100%;
-          margin: 0;
-        }
-        #right-panel {
-          float: none;
-          width: auto;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="floating-panel">
-      <strong>Start:</strong>
-      <select id="start">
-        <option value="chicago, il">Chicago</option>
-        <option value="st louis, mo">St Louis</option>
-        <option value="joplin, mo">Joplin, MO</option>
-        <option value="oklahoma city, ok">Oklahoma City</option>
-        <option value="amarillo, tx">Amarillo</option>
-        <option value="gallup, nm">Gallup, NM</option>
-        <option value="flagstaff, az">Flagstaff, AZ</option>
-        <option value="winona, az">Winona</option>
-        <option value="kingman, az">Kingman</option>
-        <option value="barstow, ca">Barstow</option>
-        <option value="san bernardino, ca">San Bernardino</option>
-        <option value="los angeles, ca">Los Angeles</option>
-      </select>
-      <br>
-      <strong>End:</strong>
-      <select id="end">
-        <option value="chicago, il">Chicago</option>
-        <option value="st louis, mo">St Louis</option>
-        <option value="joplin, mo">Joplin, MO</option>
-        <option value="oklahoma city, ok">Oklahoma City</option>
-        <option value="amarillo, tx">Amarillo</option>
-        <option value="gallup, nm">Gallup, NM</option>
-        <option value="flagstaff, az">Flagstaff, AZ</option>
-        <option value="winona, az">Winona</option>
-        <option value="kingman, az">Kingman</option>
-        <option value="barstow, ca">Barstow</option>
-        <option value="san bernardino, ca">San Bernardino</option>
-        <option value="los angeles, ca">Los Angeles</option>
-      </select>
+    <div id="mapCanvas" style="top: 50px;">&#160;</div>
+    <div id="directionsPanel">
+        <a href="#geoLocation" id="useGPS">Use My Location</a>
+        <p class="or">[OR]</p>
+        <div class="directionInputs">
+            <form>
+                <p>
+                    <label>Fra</label>
+                    <input type="text" value="" id="dirSource" />
+                </p>
+                <p>
+                    <label>Til</label>
+                    <input type="text" value="" id="dirDestination" />
+                </p>
+                <a href="#getDirections" id="getDirections">Get Directions</a>
+                <a href="#reset" id="paneReset">Reset</a>
+            </form>
+        </div>
+        <div id="directionSteps">
+            <p class="msg">Direction Steps Will Render Here</p>
+        </div>
+        <a href="#toggleBtn" id="paneToggle" class="out">&lt;</a>
     </div>
-    <div id="right-panel"></div>
-    <div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&callback=initMap" async defer></script>
+      <script src="{{ asset('public/js/diriection.js') }}"></script>
     <script>
-      function initMap() {
-        var directionsRenderer = new google.maps.DirectionsRenderer;
-        var directionsService = new google.maps.DirectionsService;
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 7,
-          center: {lat: 41.85, lng: -87.65}
-        });
-        directionsRenderer.setMap(map);
-        directionsRenderer.setPanel(document.getElementById('right-panel'));
-
-        var control = document.getElementById('floating-panel');
-        control.style.display = 'block';
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
-
-        var onChangeHandler = function() {
-          calculateAndDisplayRoute(directionsService, directionsRenderer);
-        };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
-      }
-
-      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-        var start = document.getElementById('start').value;
-        var end = document.getElementById('end').value;
-        directionsService.route({
-          origin: start,
-          destination: end,
-          travelMode: 'DRIVING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            directionsRenderer.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-      }
+    function init() {
+        initMap();
+    }
     </script>
-@endsection
+
+    <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script>
+</body>
+
+</html>
+
+
 
