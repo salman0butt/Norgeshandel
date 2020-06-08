@@ -116,7 +116,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     //get notification meta against a key
     public function notification_meta($key){
-        return Meta::where('metable_id',Auth::id())->where('metable_type','App\User')->where('key',$key)->first();
+        return Meta::where('metable_id',$this->id)->where('metable_type','App\User')->where('key',$key)->first();
     }
 
     //User account setting emails
@@ -257,5 +257,10 @@ class User extends Authenticatable implements MustVerifyEmail
     // User job preference key words
     public function job_preference_key_words(){
         return $this->hasMany(JobPreferenceKeyWord::class);
+    }
+
+    //user buys ad (those ads that will be mark as sold and seller select the user)
+    public function buy_ads() {
+        return $this->belongsToMany(Ad::class,'ad_sold_to_user','user_id','ad_id');
     }
 }

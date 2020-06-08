@@ -19,7 +19,7 @@
                     @php($added = array())
                     @if(is_countable($notifications) && count($notifications) > 0)
                         @foreach ($notifications as $key=>$notif)
-                            @php($addable = $notif->notifiable_type.'-'.$notif->notifiable_id)
+                            @php($addable = $notif->notifiable_type.'-'.$notif->id)
                             @if(!in_array($addable, $added) && !empty($notif->notifiable))
                                 <article class="col-md-12 pl-0 pr-0 list-ad1">
                                     <a href="
@@ -48,6 +48,7 @@
                                                   {{ $notif->data }}
                                             </span>
                                         </span>
+                                        <br>
 
                                         <?php
                                             $ad = $ad_title = $zip_city =  '';
@@ -109,9 +110,11 @@
                     @endif
                 </div>
 
-                <div data-controller="newnotificationscountreset">
-
-                </div>
+                @if($notifications->count() > 0)
+                    <div data-controller="newnotificationscountreset">
+                        {{$notifications->links()}}
+                    </div>
+                @endif
             </div>
         </main>
 

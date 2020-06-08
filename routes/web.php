@@ -327,6 +327,10 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('savedsearches', 'SearchController@index');
             Route::resource('search', 'SearchController');
             Route::resource('company-agents', 'AgentController');
+            //USer buy ads
+            Route::get('buy-ads', function () {
+                return view('user-panel.my-business.list-buy-ads');
+            });
 
             Route::get('/', function () {
                 return view('user-panel.my-business.my_business');

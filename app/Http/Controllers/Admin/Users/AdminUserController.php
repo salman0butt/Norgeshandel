@@ -500,6 +500,16 @@ class AdminUserController extends Controller
                         }
                     }
 
+                    // User Ratings and Reviews settings
+                    $user_ratings_reviews_setting = Meta::where('metable_id',Auth::id())->where('metable_type','App\User')->where('key', 'like', 'show_ratings_reviews')->first();
+                    if($user_ratings_reviews_setting){
+                        $user_ratings_reviews_setting->value = 0;
+                        $user_ratings_reviews_setting->update();
+                    }
+                    if($request->show_ratings_reviews){
+                        Meta::updateOrCreate(['metable_id' => $user->id, 'metable_type' => 'App\User','key' => 'show_ratings_reviews'], ['value' => $request->show_ratings_reviews]);
+                    }
+
                 }
                 DB::commit();
                 Session::flash('success', 'Innstillingen blir oppdatert.');

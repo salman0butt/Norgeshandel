@@ -36,6 +36,11 @@
                     <span class="font-weight-bold">Vurderinger</span>
                 </a>
             </li>
+            <li class="dme-btn-outlined-blue mb-1">
+                <a href="{{url('my-business/buy-ads')}}" style="text-decoration: none;">
+                    <span class="font-weight-bold">Gi din omtale</span>
+                </a>
+            </li>
         </ul>
         <ul class="list-unstyled col-md-4">
             <li class="dme-btn-outlined-blue mb-1">

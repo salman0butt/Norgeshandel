@@ -107,9 +107,9 @@ class RegisterController extends Controller
         ]);
         $user->roles()->attach(5);
     
-        $key = array('notification_new_ad','notification_price_changed','notification_ad_sold','notification_email');
+        $key = array('notification_new_ad','notification_price_changed','notification_ad_sold','notification_email','show_ratings_reviews');
         foreach($key as $k){
-        Meta::updateOrCreate(['metable_id' => $user->id, 'metable_type' => 'App\User', 'key' => $k], ['value' => 1]);
+            Meta::updateOrCreate(['metable_id' => $user->id, 'metable_type' => 'App\User', 'key' => $k], ['value' => 1]);
         }             
 //        $email = $data['email'];
 //        \Mail::to($email)->send(new NewUserVerification($data, '#'));

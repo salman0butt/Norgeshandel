@@ -51,8 +51,7 @@ class RatingController extends Controller
     public function ad_ratings($id){
         $ad = Ad::find($id);
         if($ad){
-            $rating_review_exist = UserRatingReview::where('ad_id',$ad->id)->first();
-            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
+            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin') || $ad->sold_to_user->first()->id == Auth::id())){
                 return view('user-panel.my-business.myad_ratings',compact('ad'));
             }else{
                 return redirect('forbidden');
@@ -66,18 +65,25 @@ class RatingController extends Controller
     // ratings users
     public function store_ratings($id,Request $request){
         $ad = Ad::find($id);
-
         $pusher = $this->pusher;
         if($ad){
-            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')) && $ad->ad_type != 'job'){
-
-                $rating_review_exist = UserRatingReview::where('ad_id',$ad->id)->first();
-                if($rating_review_exist){
-                    Session::flash('danger', 'Rangeringer og anmeldelser som allerede er lagt ut.');
-                    return redirect(url('my-business/my-ads/'.$ad->id.'/options'));
+            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin') || $ad->sold_to_user->first()->id == Auth::id())){
+                // When seller is posting an reviews and ratings
+                if(Auth::id() == $ad->user_id){
+                    $request->merge(['to_user_id'=>$ad->sold_to_user->first()->id,'from_user_id'=>Auth::id()]);
+                    $review_user = 'seller';
                 }
+
+                //when buyers is posting an reviews and ratings
+                if(Auth::id() != $ad->user_id && Auth::id() == $ad->sold_to_user->first()->id){
+                    $request->merge(['to_user_id'=>$ad->user_id,'from_user_id'=>Auth::id()]);
+                    $review_user = 'buyer';
+                }
+
+
                 $validatedData = $request->validate([
                     'to_user_id' => 'required',
+                    'from_user_id' => 'required',
                     'communication_ratings' => 'required',
                     'delivery_ratings' => 'required',
                     'description_ratings' => 'required',
@@ -87,7 +93,6 @@ class RatingController extends Controller
                 ]);
                 $rating = new UserRatingReview($request->all());
                 $rating->ad_id = $ad->id;
-                $rating->from_user_id = Auth::id();
                 $rating->save();
 
                 // Send notification to ratings receiver user
@@ -109,8 +114,15 @@ class RatingController extends Controller
                     $message->from('developer@digitalmx.no', 'NorgesHandel');
                 });
 
-                Session::flash('success', 'Posten har blitt lagret.');
-                return redirect(url('my-business/my-ads/'.$ad->id.'/options'));
+                Session::flash('success', 'Anmeldelsen har blitt lagt ut.');
+
+                if($review_user == 'seller'){
+                    return redirect(url('my-business/my-ads/'.$ad->id.'/options'));
+                }
+
+                if($review_user == 'buyer'){
+                    return redirect(url('my-business/buy-ads'));
+                }
             }else{
                 return redirect('forbidden');
             }
