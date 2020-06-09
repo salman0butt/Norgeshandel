@@ -84,6 +84,8 @@ $(document).ready(function () {
         }
     });
     $(document).on('change', '#sort_by', function () {
+        // return false;
+        // alert('not');
         var newUrl = $('#mega_menu_form').serialize();
         var sort = $(this).val();
         var view = getUrlParameter('view');

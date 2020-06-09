@@ -7,10 +7,13 @@ use App\Helpers\common;
 use App\MessageThread;
 use App\Models\Ad;
 use App\Models\AdView;
+use App\Notification;
+use App\User;
 use App\UserRatingReview;
 use Carbon\Traits\Date;
 use DateTime;
 use http\Message\Body;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -273,8 +276,12 @@ class AdController extends Controller
     public function ad_option($id){
         $ad = Ad::find($id);
         if($ad){
+            $users = User::whereHas('roles', function (Builder $query) {
+                $query->where('name', '<>', 'admin');
+            })->where('id','<>',Auth::id())->get();
+
             if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
-                return view('user-panel.my-business.my_ads_options',compact('ad'));
+                return view('user-panel.my-business.my_ads_options',compact('ad','users'));
             }else{
                 return redirect('forbidden');
             }
@@ -284,31 +291,38 @@ class AdController extends Controller
     }
 
     // Mark as sold an ad
-    public function ad_sold($id){
+    public function ad_sold($id,Request $request){
         $ad = Ad::find($id);
-        $count = 0;
-        if($ad->message_threads->count() > 0) {
-            foreach($ad->message_threads as $message_thread){
-                if($message_thread->messages->count() > 0){
-                    if($message_thread->users->where('id','<>',Auth::id())){
-                        $count++;
-                        break;
-                    }
-                }
-            }
-        }
-
         if($ad){
             if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
                 $ad->sold_at = date('Y-m-d G:i');
                 $ad->status = 'sold';
                 $ad->update();
-                common::fav_mark_sold_notification($ad, $this->pusher);
-                if($count){
-                    return Redirect::back()->with('error_code', 5);
-                }else{
-                    return back();
+                if($request->user_id){
+                    $ad->sold_to_user()->attach($request->user_id);
+
+                    // Send notification to buyer
+                    $user_name = ($ad->user->first_name || $ad->user->last_name) ? $ad->user->first_name.' '.$ad->user->last_name : 'NH-Bruker';
+                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'ad_sold', 'user_id' => $request->user_id, 'notifiable_id' => $ad->id, 'data' => $user_name.' velger deg å være kjøper av denne annonsen. Nå kan du legge inn anmeldelser og rangeringer.']);
+                    $notif->save();
+                    $data = array('detail' => 'Velg som kjøper', 'to_user_id' => $request->user_id);
+                    $this->pusher->trigger('notification', 'notification-event', $data);
+
+                    // Send email notification to buyer
+                    $text = $user_name.' velger deg å være kjøper av denne annonsen. Nå kan du legge inn anmeldelser og rangeringer. Her er koblingen til annonsen.';
+                    $link = url('/',$ad->id);
+                    $subject = 'Velg som kjøper';
+                    $user_obj = User::find($request->user_id);
+                    $to_name = $user_obj->username;
+                    $to_email = $user_obj->email;
+                    Mail::send('mail.property_email_notification',compact('text','link','user_obj'), function ($message) use ($to_name, $to_email,$subject) {
+                        $message->to($to_email, $to_name)->subject($subject);
+                        $message->from('developer@digitalmx.no', 'NorgesHandel');
+                    });
                 }
+                common::fav_mark_sold_notification($ad, $this->pusher);
+                Session::flash('success','Posten er oppdatert.');
+                return back();
             }else{
                 return redirect('forbidden');
             }

@@ -50,48 +50,51 @@
                     <div class="panel" aria-labelledby="profile-summary-header">
                         <h3 class="summary font-weight-normal">Sammendrag</h3>
                         @if($ratings->count())
+
                             @php
                                 $avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('general_ratings') : '0';
                             @endphp
-                            <div class="p-3 bg-maroon-lighter radius-8">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div class="numberCircle">{{$avg}}</div>
-                                    </div>
-                                    <div class="col-9 pl-0">
-                                        <h6 class="mb-0">Urmerket</h6>
-                                        <p>{{$user->received_ratings->count()}} vurderinger</p>
-                                    </div>
+                            @if($user->notification_meta('show_ratings_reviews') && $user->notification_meta('show_ratings_reviews')->value == 1)
+                                <div class="p-3 bg-maroon-lighter radius-8">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="numberCircle">{{$avg}}</div>
+                                        </div>
+                                        <div class="col-9 pl-0">
+                                            <h6 class="mb-0">Urmerket</h6>
+                                            <p>{{$user->received_ratings->count()}} vurderinger</p>
+                                        </div>
 
-                                    <div class="col-3 {{$avg < 2 ? 'd-none' : ''}}">
-                                        <img src="{{asset('public/images/Very-good-communication-icon.png')}}" width="23px" class="float-right">
-                                    </div>
-                                    <div class="col-9 pl-0 {{$avg < 2 ? 'd-none' : ''}}">
-                                        <p class="mb-1">Veldig good kommunikasjon</p>
-                                    </div>
+                                        <div class="col-3 {{$avg < 2 ? 'd-none' : ''}}">
+                                            <img src="{{asset('public/images/Very-good-communication-icon.png')}}" width="23px" class="float-right">
+                                        </div>
+                                        <div class="col-9 pl-0 {{$avg < 2 ? 'd-none' : ''}}">
+                                            <p class="mb-1">Veldig good kommunikasjon</p>
+                                        </div>
 
-                                    <div class="col-3 {{$avg < 4 ? 'd-none' : ''}}">
-                                        <img src="{{asset('public/images/Seamless-delivery-icon.png')}}" width="23px" class="float-right">
-                                    </div>
-                                    <div class="col-9 pl-0 {{$avg < 4 ? 'd-none' : ''}}">
-                                        <p class="mb-1">Problemfri overlevering</p>
-                                    </div>
+                                        <div class="col-3 {{$avg < 4 ? 'd-none' : ''}}">
+                                            <img src="{{asset('public/images/Seamless-delivery-icon.png')}}" width="23px" class="float-right">
+                                        </div>
+                                        <div class="col-9 pl-0 {{$avg < 4 ? 'd-none' : ''}}">
+                                            <p class="mb-1">Problemfri overlevering</p>
+                                        </div>
 
-                                    <div class="col-3 {{$avg < 6 ? 'd-none' : ''}}">
-                                        <img src="{{asset('public/images/Exact-description-icon.png')}}" width="23px" class="float-right">
-                                    </div>
-                                    <div class="col-9 pl-0 {{$avg < 6 ? 'd-none' : ''}}">
-                                        <p class="mb-1">Nøyaktig beskrivelse</p>
-                                    </div>
+                                        <div class="col-3 {{$avg < 6 ? 'd-none' : ''}}">
+                                            <img src="{{asset('public/images/Exact-description-icon.png')}}" width="23px" class="float-right">
+                                        </div>
+                                        <div class="col-9 pl-0 {{$avg < 6 ? 'd-none' : ''}}">
+                                            <p class="mb-1">Nøyaktig beskrivelse</p>
+                                        </div>
 
-                                    <div class="col-3 {{$avg <= 6 ? 'd-none' : ''}}">
-                                        <img src="{{asset('public/images/Hassle-free-payment-icon.png')}}" width="23px" class="float-right">
-                                    </div>
-                                    <div class="col-9 pl-0 {{$avg <= 6 ? 'd-none' : ''}}">
-                                        <p class="mb-1">Problemfri betaling</p>
+                                        <div class="col-3 {{$avg <= 6 ? 'd-none' : ''}}">
+                                            <img src="{{asset('public/images/Hassle-free-payment-icon.png')}}" width="23px" class="float-right">
+                                        </div>
+                                        <div class="col-9 pl-0 {{$avg <= 6 ? 'd-none' : ''}}">
+                                            <p class="mb-1">Problemfri betaling</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -100,7 +103,11 @@
                         <h3 class="font-weight-normal">Vurderinger</h3>
                         <div class="ratings ratings-section">
                             @if($ratings->count() > 0)
-                                @include('user-panel.my-business.public-user-rating-inner')
+                                @if($user->notification_meta('show_ratings_reviews') && $user->notification_meta('show_ratings_reviews')->value == 1)
+                                    @include('user-panel.my-business.public-user-rating-inner')
+                                @else
+                                    Bruker skjule anmeldelser og rangeringer.
+                                @endif
                             @else
                                 Brukeren har ikke fått noen vurderinger
                             @endif

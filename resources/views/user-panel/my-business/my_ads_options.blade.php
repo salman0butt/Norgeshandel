@@ -1,22 +1,25 @@
 @extends('layouts.landingSite')
-<style>
-    .sidebar {
-        background-color: #F6F8FB;
-        padding: 10px 15px;
-    }
+@section('style')
+{{--    <link href="{{ asset('public/admin/css/select2.min.css') }}" rel="stylesheet">--}}
+    <style>
+        .sidebar {
+            background-color: #F6F8FB;
+            padding: 10px 15px;
+        }
 
-    .status--error {
-        background-color: #FFEFEF;
-        border-radius: 10px;
-        padding: 0 10px;
-    }
-    .u-pv8 a:hover {
-        text-decoration:underline;
-    }
-</style>
+        .status--error {
+            background-color: #FFEFEF;
+            border-radius: 10px;
+            padding: 0 10px;
+        }
+        .u-pv8 a:hover {
+            text-decoration:underline;
+        }
+    </style>
+@endsection
+
 @section('page_content')
 <main class="dme-container mt-5">
-    <input type="hidden" class="show_rating" value="{{session('ratings') ? session('ratings') : ''}}">
     <div class="breade-crumb">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -119,20 +122,16 @@
                         </div>
                         <div class="u-pv8 mt-2">
                             @if(!$ad->sold_at && $ad->status == 'published' && $ad->ad_type != 'job')
-                                <form action="{{route('ad-sold', $ad)}}" class="mb-0" method="POST" onsubmit="javascript:return confirm('Vil du merke denne annonsen som @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent') utleid @else solgt @endif? Du vil ikke kunne endre status senere.')">
-                                    {{csrf_field()}}
-                                    <button type="submit" class="link pl-0">
-                                        @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent')
-                                            Merk som utleid
-                                        @else
-                                            Merk som solgt
-                                        @endif
-                                    </button>
-                                </form>
+                                <button type="button" class="link pl-0" data-toggle="modal" data-target="#soldAd">
+                                    @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent')
+                                        Merk som utleid
+                                    @else
+                                        Merk som solgt
+                                    @endif
+                                </button>
                             @endif
                         </div>
                     </div>
-
                     {{--<a class="u-pv8 mt-2" href="#">Merk som solgt</a>--}}
 
                 </div>
@@ -141,33 +140,55 @@
     </div>
 </main>
 
-<div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade mt-5" id="soldAd" tabindex="-1" role="dialog" aria-labelledby="soldAd">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Rangeringer og anmeldelser</h5>
+                <h5 class="modal-title">Annonse solgt</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Ønsker du å rangere bruker relatert til denne annonsen.</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="{{url('my-business/my-ads/'.$ad->id.'/ratings')}}">Ja</a>
-                <a class="btn btn-danger" href="#" data-dismiss="modal">Nei</a>
-            </div>
+            <form action="{{route('ad-sold', $ad->id)}}" id="ad-sold" class="mb-0" method="POST">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <p>Vil du merke denne annonsen som @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent') utleid @else solgt @endif? Du vil ikke kunne endre status senere.</p>
+                    <div class="u-mb32 form-group">
+                        <div class="input">
+                            <label for="keywords-input" class="u-t5">Dine preferanser</label>
+                            <div style="display: block;">
+                                <select class="form-control" name="user_id" style="width: 100%;">
+                                    <option value="0">Other</option>
+                                    @if($users->count() > 0)
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->first_name.' '.$user->last_name.' ('.$user->email.')'}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="Submit" class="btn btn-primary">Ja</button>
+                    <a class="btn btn-danger" href="#" data-dismiss="modal">Nei</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 @endsection
+
 @section('script')
-    @if(!empty(Session::get('error_code')) && Session::get('error_code') == 5)
-        <script>
-            $(function() {
-                $('#exampleModal').modal('show');
-            });
-        </script>
-    @endif
+
+    {{--<script src="{{ asset('public/admin/js/select2.min.js') }}"></script>--}}
+    {{--<script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>--}}
+    {{--<script>--}}
+        {{--$(".select2").select2({--}}
+            {{--width: 'resolve', // need to override the changed default--}}
+            {{--selectOnClose: true--}}
+        {{--});--}}
+    {{--</script>--}}
 @endsection

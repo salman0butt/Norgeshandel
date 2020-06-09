@@ -27,7 +27,7 @@ class NotificationController extends Controller
         $read_notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->whereDate('read_at','<=',$date)->delete();
 
         if (Auth::check()) {
-            $notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->get();
+            $notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->paginate(20);
  //            $searches = Auth::user()->saved_searches;
             return view('common.partials.notifications.all_notifications', compact('notifications'));
         }

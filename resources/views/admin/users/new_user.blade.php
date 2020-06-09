@@ -258,11 +258,11 @@ $countries_list = countries();
                             <label class="col-md-2 m-t-15">Allowed Ad types</label>
                             <div class="col-md-5">
                                 <label for="">Jobs</label>
-                                <input type="number" name="allowed_jobs" min="0" value="@if(!empty(@$user->allowed_job_companies->first()->value)){{@$user->allowed_job_companies->first()->value}}@endif" class="form-control">
+                                <input type="number" name="allowed_jobs" min="0" value="@if(isset($user) && !empty(@$user->allowed_job_companies->first()->value)){{@$user->allowed_job_companies->first()->value}}@endif" class="form-control">
                             </div>
                             <div class="col-md-5">
                                 <label for="">Properties</label>
-                                <input type="number" name="allowed_properties" min="0" value="@if(!empty(@$user->allowed_property_companies->first()->value)){{@$user->allowed_property_companies->first()->value}}@endif" class="form-control">
+                                <input type="number" name="allowed_properties" min="0" value="@if(isset($user) && !empty(@$user->allowed_property_companies->first()->value)){{@$user->allowed_property_companies->first()->value}}@endif" class="form-control">
                             </div>
                         </div>
                     </div>

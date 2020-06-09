@@ -12,41 +12,6 @@
                     <form action="{{route('ratings-store',$ad->id)}}" method="POST">
                         @csrf
                         <div class="">
-                            @if($ad->message_threads->count() > 0)
-                                <div class="form-group">
-                                    <label class="u-t5">Velg Bruker</label>
-                                    <div class="row">
-                                        @foreach($ad->message_threads as $message_thread)
-                                            @if($message_thread->messages->count() > 0)
-                                                @if($message_thread->users->where('id','<>',Auth::id()))
-                                                    @php $user = $message_thread->users->where('id','<>',Auth::id())->first();@endphp
-                                                    <div class="col-md-6 input-toggle d-flex align-items-center mt-3">
-                                                        <input id="{{$user->first_name}}-{{$user->id}}" type="checkbox" value="{{$user->id}}" class="radio" name="to_user_id" required>
-                                                        <label class="smalltext" for="{{$user->first_name}}-{{$user->id}}">
-                                                            <div class="media">
-                                                                <div class="trailing-border" style="height: 100px; width:100px;
-                                                                        background-image: url('@if($user->media) {{\App\Helpers\common::getMediaPath($user->media)}} @else{{asset('public/images/male-avatar.jpg')}}@endif');
-                                                                        background-position: center; @if($user->media) background-repeat: no-repeat; background-size: 100%; @else background-size: cover;  @endif">
-                                                                </div>
-
-                                                                <div class="media-body pl-2">
-                                                                    <h5 class="mt-0">{{$user->first_name.' '.$user->last_name}}{{$user->username ? ' ('.$user->username.')' : ''}}</h5>
-                                                                    <p class="mb-1"><i class="fa fa-envelope fa-lg pr-1"></i>{{$user->email}}</p>
-                                                                    @if($user->mobile_number)
-                                                                        <p><i class="fas fa-mobile-alt fa-lg pr-1"></i>{{$user->mobile_number}}</p>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </label>
-
-                                                    </div>
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endif
-
                             <div class="form-group">
                                 <label class="u-t5">Veldig good kommunikasjon</label>
                                 <div class="row">

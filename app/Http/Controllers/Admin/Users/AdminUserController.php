@@ -70,7 +70,7 @@ class AdminUserController extends Controller
         $user_array = $request->except(['_token', '_method', 'file',
         'confirm_passowrd', 'role_id', 'password',
         'allowed_properties', 'allowed_jobs']);
-        $user_array['password'] = Hash::make($user_array['password']);
+        $user_array['password'] = Hash::make($request->password);
 
         $user = new User($user_array);
         $role->users()->save($user);
@@ -224,11 +224,28 @@ class AdminUserController extends Controller
      */
     public function destroy($id)
     {
+        $self_account = '';
         $user = User::find($id);
-        $roles = $user->roles;
 
+        if(!$user){
+            session()->flash('danger', 'Posten ble ikke funnet.');
+            return back();
+        }
+
+        $roles = $user ? $user->roles : '';
+
+        //store user records in temp variable
+        $role_id = $user->roles->first()->id;
+        $user_obj = $user;
+
+        if($user->id == Auth::id()){
+            $self_account = 'yes';
+        }
         if (!$user->hasRole('admin')) {
-
+            if(!Auth::user()->hasRole('admin') && $user->id != Auth::id()){
+                session()->flash('danger', 'Du kan ikke slette denne brukeren.');
+                return back();
+            }
             DB::beginTransaction();
             try{
                 if($user->hasRole('company')){
@@ -278,18 +295,23 @@ class AdminUserController extends Controller
                         $ad->delete();
                     }
                 }
-//            foreach ($roles as $role) {
-//                $user->detachRole($role->id);
-//            }
+
                 $user->delete();
+
+                //reattach the role to deleted user
+                $user_obj->roles()->attach($role_id);
                 DB::commit();
-                session()->flash('success', 'User has been updated successfully');
-                return back();
+                if($self_account){
+                    Auth::logout();
+                    return redirect(url('/'));
+                }else{
+                    session()->flash('success', 'User has been deleted successfully');
+                    return back();
+                }
 
             }catch (\Exception $e){
                 DB::rollback();
-                dd($e->getMessage());
-                session()->flash('danger', 'Something went wrong.');
+                session()->flash('danger', 'Noe gikk galt.');
                 return back();
             }
         }
@@ -476,6 +498,16 @@ class AdminUserController extends Controller
                         if(preg_match('/^notification_/', $key)){
                             Meta::updateOrCreate(['metable_id' => $user->id, 'metable_type' => 'App\User','key' => $key], ['value' => $value]);
                         }
+                    }
+
+                    // User Ratings and Reviews settings
+                    $user_ratings_reviews_setting = Meta::where('metable_id',Auth::id())->where('metable_type','App\User')->where('key', 'like', 'show_ratings_reviews')->first();
+                    if($user_ratings_reviews_setting){
+                        $user_ratings_reviews_setting->value = 0;
+                        $user_ratings_reviews_setting->update();
+                    }
+                    if($request->show_ratings_reviews){
+                        Meta::updateOrCreate(['metable_id' => $user->id, 'metable_type' => 'App\User','key' => 'show_ratings_reviews'], ['value' => $request->show_ratings_reviews]);
                     }
 
                 }
