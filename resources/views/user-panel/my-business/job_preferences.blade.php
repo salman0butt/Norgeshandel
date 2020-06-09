@@ -11,9 +11,7 @@
             margin-right: 5px;
         }
     </style>
-    <script
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&callback=initMap"
-            async defer></script>
+
 @endsection
 
 @section('page_content')
@@ -195,4 +193,6 @@
             });
         });
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&callback=initMap"
+            async defer></script>
 @endsection
