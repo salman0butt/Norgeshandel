@@ -14,13 +14,16 @@ class MapController extends Controller
      */
     public function index()
     {
-        return view('user-panel.my-business.map');
+        return view('map.map');
 
     }
     public function direction() {
 
-    return view('user-panel.my-business.direction');
+    return view('map.direction');
 
+    }
+    public function realEstate() {
+        return view('map.real-estate');
     }
 
     /**

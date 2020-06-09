@@ -16,6 +16,7 @@
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
               <link href="{{ asset('public/css/diriection.css') }}" type="text/css" rel="stylesheet" /> 
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-3.3.0.min.js"></script>
 </head>
 
 <body>
