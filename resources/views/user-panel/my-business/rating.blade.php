@@ -28,7 +28,7 @@
                     @php
                         $avg = Auth::user()->received_ratings->count() > 0 ? Auth::user()->received_ratings->avg('general_ratings') : '0';
                     @endphp
-                    <h3>{{$avg}}
+                    <h3>{{$avg ?  round($avg) : $avg}}
                         /<small>10</small></h3>
                     <div class="rating-stars">
                         @for($i=1;$i<=5;$i++)

@@ -6,7 +6,7 @@
                     <div class="numberCircle">{{$rating->general_ratings}}</div>
                 </div>
                 <div class="pl-2">
-                    <h5 class="mb-0">{{($rating->from_user && $rating->from_user->first_name || $rating->from_user->last_name) ? $rating->from_user->first_name.' '.$rating->from_user->last_name : 'NH-Bruker' }}</h5>
+                    <h5 class="mb-0">{{($rating->from_user && $rating->from_user->username) ? $rating->from_user->username : 'NH-Bruker' }}</h5>
                     <p class="font-weight-bold mb-0">{{$rating->created_at->format('d-m-Y')}}</p>
                     {{--<p>kjøper</p>--}}
                 </div>

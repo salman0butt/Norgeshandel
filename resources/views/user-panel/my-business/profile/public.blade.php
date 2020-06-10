@@ -50,7 +50,6 @@
                     <div class="panel" aria-labelledby="profile-summary-header">
                         <h3 class="summary font-weight-normal">Sammendrag</h3>
                         @if($ratings->count())
-
                             @php
                                 $avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('general_ratings') : '0';
                                 $communication_ratings_avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('communication_ratings') : '0';
@@ -62,7 +61,7 @@
                                 <div class="p-3 bg-maroon-lighter radius-8">
                                     <div class="row">
                                         <div class="col-3">
-                                            <div class="numberCircle">{{$avg}}</div>
+                                            <div class="numberCircle">{{$avg ? round($avg) : $avg}}</div>
                                         </div>
                                         <div class="col-9 pl-0">
                                             <h6 class="mb-0">Urmerket</h6>
