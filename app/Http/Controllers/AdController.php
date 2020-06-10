@@ -25,6 +25,7 @@ use Pusher\Pusher;
 use test\Mockery\ReturnTypeObjectTypeHint;
 use function foo\func;
 use function GuzzleHttp\Psr7\str;
+use Illuminate\Support\Facades\Mail;
 
 class AdController extends Controller
 {
@@ -276,12 +277,8 @@ class AdController extends Controller
     public function ad_option($id){
         $ad = Ad::find($id);
         if($ad){
-            $users = User::whereHas('roles', function (Builder $query) {
-                $query->where('name', '<>', 'admin');
-            })->where('id','<>',Auth::id())->get();
-
             if($ad->user_id == Auth::id() || Auth::user()->hasRole('admin')){
-                return view('user-panel.my-business.my_ads_options',compact('ad','users'));
+                return view('user-panel.my-business.my_ads_options',compact('ad'));
             }else{
                 return redirect('forbidden');
             }

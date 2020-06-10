@@ -159,9 +159,14 @@
                             <div style="display: block;">
                                 <select class="form-control" name="user_id" style="width: 100%;">
                                     <option value="0">Other</option>
-                                    @if($users->count() > 0)
-                                        @foreach($users as $user)
-                                            <option value="{{$user->id}}">{{$user->first_name.' '.$user->last_name.' ('.$user->email.')'}}</option>
+                                    @if($ad->message_threads->count() > 0)
+                                        @foreach($ad->message_threads as $message_thread)
+                                            @if($message_thread->messages->count() > 0)
+                                                @if($message_thread->users->where('id',Auth::id())->first())
+                                                    @php $user = $message_thread->users->where('id','<>',Auth::id())->first(); @endphp
+                                                    <option value="{{$user->id}}">{{$user->username ? $user->username : 'NH-Bruker'}}</option>
+                                                @endif
+                                            @endif
                                         @endforeach
                                     @endif
                                 </select>

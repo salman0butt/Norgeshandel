@@ -50,7 +50,7 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$buy_ad->getTitle()}}</td>
-                                <td>{{$buy_ad->user->first_name.' '.$buy_ad->user->last_name}}</td>
+                                <td>{{$buy_ad->user->username ? $buy_ad->user->username : 'NH-Bruker'}}</td>
                                 <td>
                                     @if($buy_ad->ratings->where('from_user_id',Auth::id())->first())
                                         @for($i=1;$i<=5;$i++)
