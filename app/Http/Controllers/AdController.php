@@ -303,13 +303,14 @@ class AdController extends Controller
 
                     // Send notification to buyer
                     $user_name = ($ad->user->first_name || $ad->user->last_name) ? $ad->user->first_name.' '.$ad->user->last_name : 'NH-Bruker';
-                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'ad_sold', 'user_id' => $request->user_id, 'notifiable_id' => $ad->id, 'data' => $user_name.' velger deg å være kjøper av denne annonsen. Nå kan du legge inn anmeldelser og rangeringer.']);
+                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'ad_sold', 'user_id' => $request->user_id, 'notifiable_id' => $ad->id, 'data' => $user_name.' har valgt deg til å være kjøper av denne annonsen. Nå kan du gi din vurdering til vedkommende.']);
                     $notif->save();
+
                     $data = array('detail' => 'Velg som kjøper', 'to_user_id' => $request->user_id);
                     $this->pusher->trigger('notification', 'notification-event', $data);
 
                     // Send email notification to buyer
-                    $text = $user_name.' velger deg å være kjøper av denne annonsen. Nå kan du legge inn anmeldelser og rangeringer. Her er koblingen til annonsen.';
+                    $text = $user_name.' har valgt deg til å være kjøper av denne annonsen. Nå kan du gi din vurdering til vedkommende. Her er koblingen til annonsen.';
                     $link = url('/',$ad->id);
                     $subject = 'Velg som kjøper';
                     $user_obj = User::find($request->user_id);

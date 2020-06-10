@@ -152,10 +152,10 @@
             <form action="{{route('ad-sold', $ad->id)}}" id="ad-sold" class="mb-0" method="POST">
                 {{csrf_field()}}
                 <div class="modal-body">
-                    <p>Vil du merke denne annonsen som @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent') utleid @else solgt @endif? Du vil ikke kunne endre status senere.</p>
+                    <h5>Vil du merke denne annonsen som @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent') utleid @else solgt @endif? Du vil ikke kunne endre status senere.</h5>
                     <div class="u-mb32 form-group">
                         <div class="input">
-                            <label for="keywords-input" class="u-t5">Dine preferanser</label>
+                            <label for="keywords-input" class="u-t5">Ønsker du å gi din vurdering? Velg bruker:</label>
                             <div style="display: block;">
                                 <select class="form-control" name="user_id" style="width: 100%;">
                                     <option value="0">Other</option>

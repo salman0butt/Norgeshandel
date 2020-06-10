@@ -53,6 +53,10 @@
 
                             @php
                                 $avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('general_ratings') : '0';
+                                $communication_ratings_avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('communication_ratings') : '0';
+                                $delivery_ratings_avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('delivery_ratings') : '0';
+                                $description_ratings_avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('description_ratings') : '0';
+                                $payment_ratings_avg = $user->received_ratings->count() > 0 ? $user->received_ratings->avg('payment_ratings') : '0';
                             @endphp
                             @if($user->notification_meta('show_ratings_reviews') && $user->notification_meta('show_ratings_reviews')->value == 1)
                                 <div class="p-3 bg-maroon-lighter radius-8">
@@ -65,33 +69,41 @@
                                             <p>{{$user->received_ratings->count()}} vurderinger</p>
                                         </div>
 
-                                        <div class="col-3 {{$avg < 2 ? 'd-none' : ''}}">
-                                            <img src="{{asset('public/images/Very-good-communication-icon.png')}}" width="23px" class="float-right">
-                                        </div>
-                                        <div class="col-9 pl-0 {{$avg < 2 ? 'd-none' : ''}}">
-                                            <p class="mb-1">Veldig good kommunikasjon</p>
-                                        </div>
+                                        @if($communication_ratings_avg >= 6)
+                                            <div class="col-3">
+                                                <img src="{{asset('public/images/Very-good-communication-icon.png')}}" width="23px" class="float-right">
+                                            </div>
+                                            <div class="col-9 pl-0">
+                                                <p class="mb-1">Veldig good kommunikasjon</p>
+                                            </div>
+                                        @endif
 
-                                        <div class="col-3 {{$avg < 4 ? 'd-none' : ''}}">
-                                            <img src="{{asset('public/images/Seamless-delivery-icon.png')}}" width="23px" class="float-right">
-                                        </div>
-                                        <div class="col-9 pl-0 {{$avg < 4 ? 'd-none' : ''}}">
-                                            <p class="mb-1">Problemfri overlevering</p>
-                                        </div>
+                                        @if($delivery_ratings_avg >= 6)
+                                            <div class="col-3">
+                                                <img src="{{asset('public/images/Seamless-delivery-icon.png')}}" width="23px" class="float-right">
+                                            </div>
+                                            <div class="col-9 pl-0">
+                                                <p class="mb-1">Problemfri overlevering</p>
+                                            </div>
+                                        @endif
 
-                                        <div class="col-3 {{$avg < 6 ? 'd-none' : ''}}">
-                                            <img src="{{asset('public/images/Exact-description-icon.png')}}" width="23px" class="float-right">
-                                        </div>
-                                        <div class="col-9 pl-0 {{$avg < 6 ? 'd-none' : ''}}">
-                                            <p class="mb-1">Nøyaktig beskrivelse</p>
-                                        </div>
+                                        @if($description_ratings_avg >= 6)
+                                            <div class="col-3">
+                                                <img src="{{asset('public/images/Exact-description-icon.png')}}" width="23px" class="float-right">
+                                            </div>
+                                            <div class="col-9 pl-0">
+                                                <p class="mb-1">Nøyaktig beskrivelse</p>
+                                            </div>
+                                        @endif
 
-                                        <div class="col-3 {{$avg <= 6 ? 'd-none' : ''}}">
-                                            <img src="{{asset('public/images/Hassle-free-payment-icon.png')}}" width="23px" class="float-right">
-                                        </div>
-                                        <div class="col-9 pl-0 {{$avg <= 6 ? 'd-none' : ''}}">
-                                            <p class="mb-1">Problemfri betaling</p>
-                                        </div>
+                                        @if($payment_ratings_avg >= 6)
+                                            <div class="col-3">
+                                                <img src="{{asset('public/images/Hassle-free-payment-icon.png')}}" width="23px" class="float-right">
+                                            </div>
+                                            <div class="col-9 pl-0">
+                                                <p class="mb-1">Problemfri betaling</p>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             @endif

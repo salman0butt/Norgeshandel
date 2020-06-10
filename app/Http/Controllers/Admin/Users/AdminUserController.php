@@ -354,24 +354,29 @@ class AdminUserController extends Controller
         }
         $date = Date('y-m-d',strtotime('-7 days'));
         $user = User::find($id);
-        $ratings = UserRatingReview::where('to_user_id',$user->id)->orderBy('id','DESC')->paginate(5);
-        $count_active_ads = DB::table('ads')
-            ->where('visibility', '=', 1)
-            ->where('user_id','=', $user->id)
-            ->whereNull('deleted_at')
-            ->where(function ($query) use ($date){
-                $query->where('status', 'published')
-                    ->orwhereDate('sold_at','>',$date);
-            })->count();
-        $active_ads = DB::table('ads')
-            ->where('visibility', '=', 1)
-            ->where('user_id','=', $user->id)
-            ->whereNull('deleted_at')
-            ->where(function ($query) use ($date){
-                $query->where('status', 'published')
-                    ->orwhereDate('sold_at','>',$date);
-            })->orderBy('id','DESC')->paginate($pagination);
-        return view('user-panel.my-business.profile.public', compact('user', 'active_ads','ratings','count_active_ads'));
+        if($user){
+            $ratings = UserRatingReview::where('to_user_id',$user->id)->orderBy('id','DESC')->paginate(5);
+            $count_active_ads = DB::table('ads')
+                ->where('visibility', '=', 1)
+                ->where('user_id','=', $user->id)
+                ->whereNull('deleted_at')
+                ->where(function ($query) use ($date){
+                    $query->where('status', 'published')
+                        ->orwhereDate('sold_at','>',$date);
+                })->count();
+            $active_ads = DB::table('ads')
+                ->where('visibility', '=', 1)
+                ->where('user_id','=', $user->id)
+                ->whereNull('deleted_at')
+                ->where(function ($query) use ($date){
+                    $query->where('status', 'published')
+                        ->orwhereDate('sold_at','>',$date);
+                })->orderBy('id','DESC')->paginate($pagination);
+            return view('user-panel.my-business.profile.public', compact('user', 'active_ads','ratings','count_active_ads'));
+        }else{
+            abort(404);
+        }
+
     }
 
     //Show more public profile ads

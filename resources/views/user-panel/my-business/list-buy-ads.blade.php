@@ -61,9 +61,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{url('/'.$buy_ad->id)}}"><i class="fa fa-eye fa-lg"></i></a>
+                                    <a href="{{url('/'.$buy_ad->id)}}" title="Vis annonse"><i class="fa fa-eye fa-lg"></i></a>
                                     @if(!$buy_ad->ratings->where('from_user_id',Auth::id())->first())
-                                        <a href="{{url('my-business/my-ads/'.$buy_ad->id.'/ratings')}}"><i class="fab fa-telegram-plane"></i></a>
+                                        <a href="{{url('my-business/my-ads/'.$buy_ad->id.'/ratings')}}" title="Gi din omtale"><i class="fab fa-telegram-plane"></i></a>
                                     @endif
                                 </td>
                                 {{--<td>--}}
