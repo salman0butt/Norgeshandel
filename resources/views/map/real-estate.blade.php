@@ -161,7 +161,6 @@
         async defer></script> --}}
     <script>
         $(function () {
-
             // Caching the Selectors		
             $Selectors = {
                 mapCanvas: jQuery('#mapCanvas')[0],

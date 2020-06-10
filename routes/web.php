@@ -24,9 +24,10 @@ use App\Http\Controllers\Admin\Users\AdminUserController;
 
 Auth::routes(['verify' => true]);
 //map
-Route::get('/map', 'MapController@index');
+Route::get('/map', 'MapController@map');
+Route::get('/map/search', 'MapController@index');
+Route::get('/map/direction', 'MapController@direction');
 Route::get('map/property', 'MapController@realEstate');
-Route::get('/direction', 'MapController@direction');
 
 //google map
 // Route::get('/map', function () {
