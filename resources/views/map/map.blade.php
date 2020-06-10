@@ -8,8 +8,8 @@
     /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
     #map {
-        height: 95%;
-        margin-top: 5px;
+        height: 90%;
+
     }
 
     /* Optional: Makes the sample page fill the window. */
@@ -64,15 +64,64 @@
 
     #stree-view {
         position: absolute;
-        top: 70px;
+        top: 110px;
         right: 100px;
         background-color: #fff;
         border: none;
         padding: 5px 10px;
     }
+    .primary-color {
+        background: #ac304a;
+    }
+    .navbar-nav li {
+        padding:0px 15px !important;
+    }
+      .navbar-nav li a:hover {
+       background: #ac304ad9;
+    }
 
 </style>
 <br><br>
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark primary-color">
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+    aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="basicExampleNav">
+
+    <!-- Links -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/map') }}">Søk</a>
+      </li>
+            <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/direction') }}">Ruteplan</a>
+      </li>
+
+      <!-- Dropdown -->
+      {{-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">Dropdown</a>
+        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+
+        </div>
+      </li> --}}
+
+    </ul>
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+<!--/.Navbar-->
+
 
 <div style="display: none">
     <input id="autocomplete" class="controls" type="text" placeholder="Enter a location">
@@ -132,6 +181,7 @@
         marker.addListener('click', function () {
             infowindow.open(map, marker);
         });
+        
 
         autocomplete.addListener('place_changed', function () {
             infowindow.close();

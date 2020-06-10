@@ -14,30 +14,16 @@ class MapController extends Controller
      */
     public function index()
     {
+        return view('map.map');
 
-        // $config = array();
-        // $config['center'] = '37.4419, -122.1419';
-        // $config['zoom'] = 'auto';
-        // $config['places'] = TRUE;
-        // $config['placesLocation'] = '37.4419, -122.1419';
-        // // $config['placesRadius'] = 200;
+    }
+    public function direction() {
 
-        // // $config['trafficOverlay'] = TRUE;
-        // // $config['bicyclingOverlay'] = true;
-        // // $config['panoramio'] = true;
-        // // $config['panoramioTag'] = 'sunset';
-        // // $config['map_type'] = 'STREET';
-        // // $config['streetViewPovHeading'] = 90;
-        // // $config['kmlLayerURL'] = 'http://api.flickr.com/services/feeds/geo/?g=322338@N20&lang=en-us&format=feed-georss';
+    return view('map.direction');
 
-        // $config['placesAutocompleteInputID'] = 'myPlaceTextBox';
-        // $config['placesAutocompleteBoundsMap'] = TRUE; // set results biased towards the maps viewport
-        // $config['placesAutocompleteOnChange'] = 'console.log(\'You selected a place\');';
-        
-        // GMaps::initialize($config);
-        // $map = GMaps::create_map();
-        return view('user-panel.my-business.map');
-
+    }
+    public function realEstate() {
+        return view('map.real-estate');
     }
 
     /**
