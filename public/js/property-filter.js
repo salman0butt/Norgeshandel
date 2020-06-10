@@ -1,5 +1,19 @@
 var added = false;
+
+var cur_lat = '';
+var cur_lon = '';
+
+function get_curr_location(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            cur_lat = position.coords.latitude;
+            cur_lon = position.coords.longitude;
+        });
+    }
+}
+
 $(document).ready(function () {
+    get_curr_location();
     //   $('a.row').on('click', function (e) {
     //       e.preventDefault();
     //       alert('working');
@@ -84,10 +98,9 @@ $(document).ready(function () {
         }
     });
     $(document).on('change', '#sort_by', function () {
-        // return false;
-        // alert('not');
         var newUrl = $('#mega_menu_form').serialize();
         var sort = $(this).val();
+
         var view = getUrlParameter('view');
         var page = getUrlParameter('page');
         var user_id = getUrlParameter('user_id');
@@ -96,7 +109,12 @@ $(document).ready(function () {
         }
         if (!isEmpty(sort)) {
             newUrl += "&sort=" + sort;
+            if(sort === '99' && cur_lat && cur_lon){
+                newUrl += "&lat=" + cur_lat;
+                newUrl += "&lon=" + cur_lon;
+            }
         }
+
         if (!isEmpty(view)) {
             newUrl += "&view=" + view;
         }

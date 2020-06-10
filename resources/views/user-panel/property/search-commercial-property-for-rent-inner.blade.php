@@ -67,6 +67,9 @@
                 {{$add_array->links()}}
             </div>
         </div>
+        @if(count($add_array)<1)
+            <div class="alert alert-warning col-md-6 offset-md-3">Ingen innlegg funnet!</div>
+        @endif
         <div class="col-md-12">
             <div class="<?php
             echo $col === 'grid' ? 'row' : '' ?>">

@@ -184,6 +184,10 @@ class PropertyForRentController extends Controller
             case 'total-price-high-low':
                 $query->orderBy('total_price', 'DESC');
                 break;
+            case '99':
+                //find nearby ads
+                common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                break;
             default:
                 $query->orderBy('property_for_rent.id', 'DESC');
                 break;
