@@ -7,7 +7,20 @@
     <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
     <script>
         var added = false;
+
+        var cur_lat = '';
+        var cur_lon = '';
+
+        function get_curr_location(){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    cur_lat = position.coords.latitude;
+                    cur_lon = position.coords.longitude;
+                });
+            }
+        }
         $(document).ready(function () {
+            get_curr_location();
             // $(window).on('popstate', function(e) {
             //     window.location.href =  window.location.href.split("?")[0];
             // });
@@ -21,9 +34,14 @@
                 search(urlParams.toString());
             @endif
             $(document).on('change', '#sort', function () {
+               var sort_val = $(this).val();
                 urlParams = new URLSearchParams(location.search);
                 urlParams.delete('sort');
                 urlParams.set('sort', $(this).val());
+                if(sort_val === '4' && cur_lat && cur_lon){
+                    urlParams.set('lat', cur_lat.toFixed(6));
+                    urlParams.set('lon', cur_lon.toFixed(6));
+                }
                 //console.log(urlParams.toString());
                 search(urlParams.toString());
                 history.pushState('', 'NorgesHandel', "?" + urlParams.toString());

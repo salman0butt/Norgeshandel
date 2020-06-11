@@ -110,8 +110,8 @@ $(document).ready(function () {
         if (!isEmpty(sort)) {
             newUrl += "&sort=" + sort;
             if(sort === '99' && cur_lat && cur_lon){
-                newUrl += "&lat=" + cur_lat;
-                newUrl += "&lon=" + cur_lon;
+                newUrl += "&lat=" + cur_lat.toFixed(6);
+                newUrl += "&lon=" + cur_lon.toFixed(6);
             }
         }
 
