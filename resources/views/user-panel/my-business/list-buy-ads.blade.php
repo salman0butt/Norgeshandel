@@ -50,7 +50,7 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$buy_ad->getTitle()}}</td>
-                                <td>{{$buy_ad->user->first_name.' '.$buy_ad->user->last_name}}</td>
+                                <td>{{$buy_ad->user->username ? $buy_ad->user->username : 'NH-Bruker'}}</td>
                                 <td>
                                     @if($buy_ad->ratings->where('from_user_id',Auth::id())->first())
                                         @for($i=1;$i<=5;$i++)
@@ -61,9 +61,9 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{url('/'.$buy_ad->id)}}"><i class="fa fa-eye fa-lg"></i></a>
+                                    <a href="{{url('/'.$buy_ad->id)}}" title="Vis annonse"><i class="fa fa-eye fa-lg"></i></a>
                                     @if(!$buy_ad->ratings->where('from_user_id',Auth::id())->first())
-                                        <a href="{{url('my-business/my-ads/'.$buy_ad->id.'/ratings')}}"><i class="fab fa-telegram-plane"></i></a>
+                                        <a href="{{url('my-business/my-ads/'.$buy_ad->id.'/ratings')}}" title="Gi din omtale"><i class="fab fa-telegram-plane"></i></a>
                                     @endif
                                 </td>
                                 {{--<td>--}}

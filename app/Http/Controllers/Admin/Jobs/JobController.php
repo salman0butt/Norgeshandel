@@ -653,7 +653,6 @@ class JobController extends Controller
                    $filter.=$key.'='.$value.'&';
                }
            }
-
         }
 
         $filter = rtrim($filter, '&');
@@ -729,6 +728,10 @@ class JobController extends Controller
                     break;
                 case 3:
                     $query->orderBy('jobs.zip_city', 'asc');
+                    break;
+                case 4:
+                    //find nearby ads
+                    common::find_nearby_ads($request->lat, $request->lon,$query,'jobs');
                     break;
                 default:
                     break;

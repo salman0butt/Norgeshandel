@@ -123,6 +123,10 @@ class CommercialPropertyForSaleController extends Controller
             case 'priced-high-low':
                 $query->orderBy('value_rate', 'DESC');
                 break;
+            case '99':
+                //find nearby ads
+                common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                break;
         }
         $query->orderBy('ads.published_on', 'DESC');
 

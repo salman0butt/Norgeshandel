@@ -103,6 +103,10 @@ class BusinessForSaleController extends Controller
             case 'priced-high-low':
                 $query->orderBy('price', 'DESC');
                 break;
+            case '99':
+                //find nearby ads
+                common::find_nearby_ads($request->lat, $request->lon,$query,'business_for_sales');
+                break;
         }
 
         $query->orderBy('ads.published_on', 'DESC');

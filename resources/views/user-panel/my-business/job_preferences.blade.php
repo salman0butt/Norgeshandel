@@ -34,8 +34,10 @@
             <h2 class="mb-2">Mine jobb-preferanser</h2>
             @include('common.partials.flash-messages')
             <p class="u-mb16" style="font-weight:600;">Jobb preferanser</p>
-            <p class="u-mb16">Her kan la bedriftene finne deg relatert til dine jobb preferanser. Husk til enhver tid å ha oppdaterte
-                preferanser slik at du er et steg nærmere drømme jobben din!</p>
+            <p class="u-mb16">
+                Her kan du finne drømme jobben din basert på bedriftene du følger.
+                Vi vil varsle deg hver gang det blir publisert en ny stilling relatert til dine interesser.
+            </p>
         </div>
         <div class="panel">
             <form action="{{route('job-preferences.store')}}" method="POST">
@@ -91,11 +93,11 @@
                 <div class="u-mb32 form-group">
                     <div class="input input--text u-mb8">
                         <button type="submit" class="dme-btn-outlined-blue float-left">
-                            Sende inn
+                            Lagre
                         </button>
                         @if(Auth::user()->job_preference_cities->count() || Auth::user()->job_preference_key_words->count())
                             <a href="{{route('delete-job-preferences')}}" type="submit" class="dme-btn-outlined-blue ml-3">
-                                Fjern alle
+                                Nullstill
                             </a>
                         @endif
                         <div class="clearfix"></div>

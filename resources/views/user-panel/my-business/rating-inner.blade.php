@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-sm-3">
                     <img src="@if($rating->from_user->media!=null){{asset(\App\Helpers\common::getMediaPath($rating->from_user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="Profile image" class="img-rounded" style="width: 75px; border-radius: 50%">
-                    <div class="review-block-name"><a href="#">{{($rating->from_user && $rating->from_user->first_name || $rating->from_user->last_name) ? $rating->from_user->first_name.' '.$rating->from_user->last_name : 'NH-Bruker' }}</a></div>
+                    <div class="review-block-name"><a href="#">{{($rating->from_user && $rating->from_user->username) ? $rating->from_user->username : 'NH-Bruker' }}</a></div>
                     <div class="review-block-date">{{$rating->created_at->format('d M Y')}}
                         <br><span class="u-stone timeago" title="{{$rating->created_at}}"></span>
                     </div>

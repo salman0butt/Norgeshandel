@@ -705,7 +705,7 @@ class common
     }
 
     // update notification for property 
-       public static function property_notification(Ad $ad, Pusher $pusher,$user_id, $property_type){
+    public static function property_notification(Ad $ad, Pusher $pusher,$user_id, $property_type){
         $users = DB::table('favorites')
             ->join('metas', 'metas.metable_id', '=', 'favorites.user_id')
             ->where('metas.metable_type', '=', 'App\User')
@@ -845,12 +845,14 @@ class common
         return '';
     }
 
+    //sync ad agents (add/remove colleagues for agent user role)
     public static function sync_ad_agents($ad,$agent_id_arr){
         if(Auth::user()->hasRole('company') || Auth::user()->created_by_company_id){
             $ad->agents()->sync($agent_id_arr);
         }
     }
 
+    // Ad vistings times (like property for rent, sales, holiday homes for sales)
     public static function ad_visting_time($ad,$request){
         if(count($request->delivery_date) || count($request->time_start) || count($request->time_end) || count($request->note)){
             $max_val = max(count($request->delivery_date),count($request->time_start),count($request->time_end),count($request->note));
@@ -869,6 +871,7 @@ class common
         }
     }
 
+    // Get commitment jobs against a company
     public static function company_commitment_jobs($company_id,$type){
         $count = 0;
         $jobs = DB::table('ads')
@@ -933,6 +936,31 @@ class common
                 }
             }
         }
+
+    }
+
+    //find nearby ads related to current location using lati and longs and miles
+    public static function find_nearby_ads($lat,$lon,$query,$table_name){
+        $d = 31.0686;       //50km in miles ;
+        $r = 3959;          //earth's radius in miles
+        $latitude = $lat;   //58.32775757729577;
+        $longitude = $lon;  //8.218992760525595;
+
+        $latN = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
+            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(0))));
+
+        $latS = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
+            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(180))));
+
+        $lonE = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(90))
+                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
+                - sin(deg2rad($latitude)) * sin(deg2rad($latN))));
+
+        $lonW = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(270))
+                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
+                - sin(deg2rad($latitude)) * sin(deg2rad($latN)))); //longitude
+        $query->where($table_name.'.latitude','<=',$latN)->where($table_name.'.latitude','>=',$latS)
+            ->where($table_name.'.longitude','<=',$lonE)->where($table_name.'.longitude','>=',$lonW);
 
     }
 

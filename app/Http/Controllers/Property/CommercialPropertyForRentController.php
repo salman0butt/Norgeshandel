@@ -113,6 +113,10 @@ class CommercialPropertyForRentController extends Controller
             case 'sqm-high-low':
                 $query->orderBy('use_area', 'DESC');
                 break;
+            case '99':
+                //find nearby ads
+                common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                break;
         }
         $query->orderBy('ads.published_on', 'DESC');
         if ($get_collection){
