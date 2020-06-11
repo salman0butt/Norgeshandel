@@ -59,7 +59,6 @@ class NotificationController extends Controller
 
     public function create($notifiable_id, $property_type, $text)
     {
-      
         $notification_data = array();
         $notification_data['type'] = $property_type;
         $notification_data['user_id'] = Auth::user()->id;
@@ -150,6 +149,22 @@ class NotificationController extends Controller
             $data["res"] = false;
         }
         echo json_encode($data);
+    }
+
+
+    //
+    public function read_single_notification(Request $request){
+        $flag = 'failure';
+        if($request->notify_id){
+            $notification = Notification::where('user_id',Auth::id())->where('id',$request->notify_id)->first();
+            if($notification){
+                $notification->read_at = now();
+                $notification->update();
+                $flag = 'success';
+            }
+        }
+        echo json_encode($flag);
+
     }
 
 

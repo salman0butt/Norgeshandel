@@ -308,6 +308,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('notifications', 'NotificationController@index');
         Route::get('notifications_count', 'NotificationController@notifications_count');
         Route::get('notifications-read-all', 'NotificationController@read_all');
+        Route::get('read-single-notification', 'NotificationController@read_single_notification')->name('read-single-notification');
 
 
         Route::get('remove-fav-note', 'FavoriteController@remove_fav_note');
