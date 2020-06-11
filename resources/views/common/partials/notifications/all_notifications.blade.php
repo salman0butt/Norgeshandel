@@ -5,12 +5,16 @@
             background: #ac304a1a;
             border-radius: 10px;
         }
+        article.unread_notification{
+            background: #9998981a;
+            border-radius: 10px;
+        }
     </style>
     <div class="container">
         <main class="pageholder">
             <div id="page-results" tabindex="-1" data-controller="trackNotificationShow" data-notification-count="2">
                 <h1 class="u-screen-reader-only">Varslinger</h1>
-                <div class="panel text-right pb-5">
+                <div class="panel text-right pb-3">
                     <a href="{{url('notifications-read-all')}}" class="m-2">Merk alt som lest</a>
                     <a class="m-2" href="{{ url('/setting') }}">Innstillinger</a>
                 </div>
@@ -21,15 +25,12 @@
                         @foreach ($notifications as $key=>$notif)
                             @php($addable = $notif->notifiable_type.'-'.$notif->id)
                             @if(!in_array($addable, $added) && !empty($notif->notifiable))
-                                <article class="col-md-12 pl-0 pr-0 list-ad1">
-                                    <a href="
-                                        @if($notif->notifiable_type == \App\Models\Search::class)
-                                    {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
-                                    @elseif($notif->notifiable_type == 'App\UserRatingReview')
-                                    {{url('/', $notif->notifiable->ad_id)}}
-                                    @else
-                                    {{url('/', $notif->notifiable->id)}}
-                                    @endif" >
+                                <article class="col-md-12 pl-0 pr-0 list-ad1 {{!$notif->read_at ? 'unread_notification' : ''}} mb-3">
+                                    <a href="javascript:void(0);" data-href=
+                                       "@if($notif->notifiable_type == \App\Models\Search::class) {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
+                                    @elseif($notif->notifiable_type == 'App\UserRatingReview') {{url('/', $notif->notifiable->ad_id)}}
+                                    @else {{url('/', $notif->notifiable->id)}} @endif"
+                                    class="notification_link" data-id="{{$notif->id}}">
 
                                         <div class="" style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
                                             <div class="">
@@ -129,4 +130,27 @@
 @endsection
 @section('script')
     <script src="{{asset('public/js/time-ago-in-words.min.js')}}"></script>
+    <script>
+        $(document).on('click', '.notification_link', function () {
+            // location.replace("https://www.w3schools.com")
+            var link = $(this).data('href');
+            var notify_id = $(this).data('id');
+            var url = '{{route('read-single-notification')}}';
+            if(link && notify_id){
+                $.ajax({
+                    url: url,
+                    type:'GET',
+                    data: {'notify_id':notify_id},
+                    dataType:'json',
+                    success: function (data) {
+                        if(data === 'success'){
+                            location.replace(link);
+                        }else{
+                            alert('noe gikk galt.');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

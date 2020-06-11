@@ -40,9 +40,9 @@ class HomeController extends Controller
      */
     public function index(Request $request, $handel=0)
     {
-        if (Auth::check()){
-            $notification = Notification::where('notifiable_type',Ad::class)->where('notifiable_id',$handel)->whereNull('read_at')->update(['read_at'=>now()]);
-        }
+//        if (Auth::check()){
+//            $notification = Notification::where('notifiable_type',Ad::class)->where('notifiable_id',$handel)->whereNull('read_at')->update(['read_at'=>now()]);
+//        }
 
         if ($request->handel) {
             $handel = $handel!=0?$handel:$request->handel;
