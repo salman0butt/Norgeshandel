@@ -1,16 +1,3 @@
-/*
-      For detailed tutorial visit:
-      https://thewebstorebyg.wordpress.com/2013/01/11/custom-directions-panel-with-google-maps-api-v3/ 
-
-      Author: Giri Jeedigunta
-      Last Edited: July 2017.
-      Visit: http://thewebstorebyg.wordpress.com/ for more tutorials. 
-
-      NOTE:
-      To use the Google Maps JavaScript API Versions 3.27 and above, 
-      you must generate your own API key and add a list of domains you intend to use this API. 
-      More details – https://developers.google.com/maps/documentation/javascript/get-api-key
- */
 
 var initMap = function() {
 
@@ -29,16 +16,16 @@ var initMap = function() {
 
         // Caching the Selectors		
         $Selectors = {
-            mapCanvas: jQuery('#mapCanvas')[0],
-            dirPanel: jQuery('#directionsPanel'),
-            dirInputs: jQuery('.directionInputs'),
-            dirSrc: jQuery('#dirSource'),
-            dirDst: jQuery('#dirDestination'),
-            getDirBtn: jQuery('#getDirections'),
-            dirSteps: jQuery('#directionSteps'),
-            paneToggle: jQuery('#paneToggle'),
-            useGPSBtn: jQuery('#useGPS'),
-            paneResetBtn: jQuery('#paneReset')
+            mapCanvas: jQuery_1_8_3('#mapCanvas')[0],
+            dirPanel: jQuery_1_8_3('#directionsPanel'),
+            dirInputs: jQuery_1_8_3('.directionInputs'),
+            dirSrc: jQuery_1_8_3('#dirSource'),
+            dirDst: jQuery_1_8_3('#dirDestination'),
+            getDirBtn: jQuery_1_8_3('#getDirections'),
+            dirSteps: jQuery_1_8_3('#directionSteps'),
+            paneToggle: jQuery_1_8_3('#paneToggle'),
+            useGPSBtn: jQuery_1_8_3('#useGPS'),
+            paneResetBtn: jQuery_1_8_3('#paneReset')
         };
 
     function autoCompleteSetup() {
@@ -64,7 +51,7 @@ var initMap = function() {
             trafficLayer = new google.maps.TrafficLayer();
 
         jQuery(controlDiv).addClass('gmap-control-container').addClass('gmnoprint');
-        jQuery(controlUI).text('Traffic').addClass('gmap-control');
+        jQuery(controlUI).text('Trafikk').addClass('gmap-control');
         jQuery(controlDiv).append(controlUI);
 
         // Traffic Btn Click Event	  
@@ -88,7 +75,7 @@ var initMap = function() {
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT,
-                position: google.maps.ControlPosition.TOP_RIGHT
+                position: google.maps.ControlPosition.TOP_CENTER
             },
 
             panControl: true,

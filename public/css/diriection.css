@@ -43,7 +43,6 @@ body {
     border-top: none;
     padding: 10px 15px;
     position: absolute;
-    top: 50px;
 }
 
 #directionsPanel a {
@@ -181,4 +180,7 @@ body {
 }
 *:not(.top-bar){
     box-sizing: content-box !important;
+}
+#mapCanvas>div>div>div.gmap-control-container.gmnoprint {
+    right: 1% !important;
 }

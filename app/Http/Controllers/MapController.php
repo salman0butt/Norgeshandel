@@ -12,14 +12,19 @@ class MapController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function map(){
+        return view('map.map');
+    }
     public function index()
     {
-        return view('map.map');
+        $html = view('map.search')->render();
+        exit($html);
 
     }
     public function direction() {
 
-    return view('map.direction');
+    $html = view('map.direction')->render();
+    exit($html);
 
     }
     public function realEstate() {
