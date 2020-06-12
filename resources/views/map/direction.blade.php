@@ -14,7 +14,7 @@
                     <input type="text" value="" id="dirDestination" placeholder="Velg destinasjon..."/>
                 </p>
                 <a href="#getDirections" id="getDirections">Få veibeskrivelse</a>
-                <a href="#reset" id="paneReset">Nullstille</a>
+                <a href="#reset" id="paneReset">Nullstill</a>
             </form>
         </div>
         <div id="directionSteps">
