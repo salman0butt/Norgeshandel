@@ -91,7 +91,7 @@
                                 </div>
                             </div>
 
-                            <button class="dme-btn-outlined-blue mb-3 col-12">Sende inn</button>
+                            <button class="dme-btn-outlined-blue mb-3 col-12">Send inn</button>
                         </div>
                     </form>
                 </div>

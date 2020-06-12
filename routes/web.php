@@ -626,7 +626,9 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         //restore user
         Route::get('/user/restore/{id}', 'Admin\Users\AdminUserController@restore')->name('user-restore');
-
+        //get all reviews and ratings
+        Route::get('ratings', 'RatingController@admin_ratings_list')->name('ratings');
+        Route::delete('delete-rating/{id}', 'RatingController@delete_rating')->name('delete-rating');
 
         //all general resources
         Route::resources([

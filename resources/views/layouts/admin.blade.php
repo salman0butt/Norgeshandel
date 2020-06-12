@@ -248,6 +248,7 @@
                             <li class="sidebar-item"><a href="settings-job.php" class="sidebar-link"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu"> {{__('Job')}} </span></a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/ratings') }}" aria-expanded="false"><i class="fa fa-star"></i><span class="hide-menu">{{__('Ratings & Reviews')}}</span></a></li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->

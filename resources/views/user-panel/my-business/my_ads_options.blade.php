@@ -158,7 +158,7 @@
                             <label for="keywords-input" class="u-t5">Ønsker du å gi din vurdering? Velg bruker:</label>
                             <div style="display: block;">
                                 <select class="form-control" name="user_id" style="width: 100%;">
-                                    <option value="0">Other</option>
+                                    <option value="0">Annen</option>
                                     @if($ad->message_threads->count() > 0)
                                         @foreach($ad->message_threads as $message_thread)
                                             @if($message_thread->messages->count() > 0)
