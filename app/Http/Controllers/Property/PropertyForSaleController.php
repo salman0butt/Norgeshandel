@@ -254,6 +254,11 @@ class PropertyForSaleController extends Controller
 
         $query->orderBy('ads.published_on', 'DESC');
         $all = $query->get();
+         if ($request->ajax()) {
+            if(Request::is('/map/*')) {
+                dd('working');
+            }
+        }
         $ids = $all->pluck('id');
         $clicks = AdView::whereIn('ad_id', $ids)->count();
         $add_array = $query->paginate($this->pagination);

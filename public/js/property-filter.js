@@ -14,7 +14,9 @@ function get_curr_location(){
 
 
 $(document).ready(function () {
+
     get_curr_location();
+  
     //   $('a.row').on('click', function (e) {
     //       e.preventDefault();
     //       alert('working');
