@@ -1,10 +1,37 @@
 var added = false;
 $(document).ready(function () {
+    var urlParams = new URLSearchParams(location.search);
     //   $('a.row').on('click', function (e) {
     //       e.preventDefault();
     //       alert('working');
     //       history.pushState({}, null, '');
     //   });
+    function search(data) {
+        var urlParams = new URLSearchParams(location.search);
+        var url = $('#mega_menu_search_url').val();
+        $.ajax({
+            data: data,
+            url: url,
+            type: "GET",
+            success: function (response) {
+                if (!isEmpty($("#basicExampleModal.show"))) {
+                    $('#dme-wrapper').html(response);
+                }
+            },
+            error: function (error) {
+                //console.log(error);
+            }
+        });
+    }
+    function fix_page_links() {
+        $('.pagination a').each(function (i) {
+            var par = urlParams;
+            par.delete('page');
+            var page_arr = $(this).attr('href').split('=');
+            par.set('page', page_arr[1]);
+            $(this).attr('href', "?" + par.toString());
+        });
+    }
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),

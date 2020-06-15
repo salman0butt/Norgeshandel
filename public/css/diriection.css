@@ -178,9 +178,7 @@ body {
     color: #FFFFFF !important;
     font-weight: bold;
 }
-*:not(.top-bar){
-    box-sizing: content-box !important;
-}
+
 #mapCanvas>div>div>div.gmap-control-container.gmnoprint {
     right: 1% !important;
 }

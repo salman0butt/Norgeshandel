@@ -1,4 +1,8 @@
-
+<style>
+*:not(.top-bar){
+    box-sizing: content-box !important;
+}
+</style>
  <div id="mapCanvas" onload=initialize()>&#160;</div>
     <div id="directionsPanel">
         <a href="#geoLocation" id="useGPS">Bruk min beliggenhet</a>
@@ -24,8 +28,6 @@
     </div>
 <script src="{{ asset('public/js/diriection.js') }}"></script>
 
-
-    {{-- <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script> --}}
 </div>
 
 
