@@ -83,9 +83,14 @@ if($property !== null)
 
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('/', $ad->id)}}" class="dme-btn-outlined-blue mr-2 btn-sm">Se annonse</a>
         @if($ad->status != 'saved')
-        <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm statistics-button">Se statistikk</a>
+            <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm statistics-button">Se statistikk</a>
         @endif
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Flere valg</a>
+
+        @if($ad->sold_to_user->count() && $ad->sold_to_user->first() && !$ad->ratings->where('from_user_id',$ad->user_id)->first())
+            <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$ad->id.'/ratings')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Gi din omtale</a>
+        @endif
+
         {{--<div class="buttons position-absolute p-2" style="bottom: 0;right: 0">--}}
         {{--<a href="{{url('my-business/my-ads/'.$property->ad->id.'/options')}}" class="dme-btn-outlined-blue float-right">Flere valg</a>--}}
         {{--@if($property->ad->status=='saved')--}}

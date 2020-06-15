@@ -100,8 +100,6 @@ class CommercialPropertyForRentController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
-        $query->orderBy('ads.published_on', 'DESC');
-
         switch ($sort) {
             case 'most_relevant':
                 $query->orderBy('ads.updated_at', 'DESC');
@@ -109,16 +107,20 @@ class CommercialPropertyForRentController extends Controller
             case 'published':
                 $query->orderBy('ads.published_on', 'DESC');
                 break;
-            case 'priced-low-high':
-                $query->orderBy('value_rate', 'ASC');
+            case 'sqm-low-high':
+                $query->orderBy('use_area', 'ASC');
                 break;
-            case 'priced-high-low':
-                $query->orderBy('value_rate', 'DESC');
+            case 'sqm-high-low':
+                $query->orderBy('use_area', 'DESC');
                 break;
+            case '99':
+                //find nearby ads
+                if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                    common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                    break;
+                }
         }
-       
-
-
+        //$query->orderBy('ads.published_on', 'DESC');
         if ($get_collection){
             return $query->get();
         }

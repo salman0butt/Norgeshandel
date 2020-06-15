@@ -150,9 +150,17 @@ class PropertyHolidaysHomesForSaleController extends Controller
             case 'housing_area_high_low':
                 $query->orderBy('primary_room', 'DESC');
                 break;
+            case '99':
+                //find nearby ads
+                if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                    common::find_nearby_ads($request->lat, $request->lon,$query,'property_holidays_homes_for_sales');
+                    break;
+                }
         }
-    $query->select('property_holidays_homes_for_sales.*','ads.published_on','ads.updated_at')->distinct();
-        $query->orderBy('ads.published_on', 'DESC');
+        if(!isset($request->lat) && isset($request->lon)) {
+            $query->select('property_holidays_homes_for_sales.*', 'ads.published_on', 'ads.updated_at')->distinct();
+        }
+        //$query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
             return $query->get();

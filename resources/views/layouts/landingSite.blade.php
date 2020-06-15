@@ -390,7 +390,6 @@
         if (zip_code) {
             var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
-                    // alert(obj_id);
                 if (this.readyState == 4 && this.status == 200) { //
                     const postalCode = JSON.parse(this.responseText);
 
@@ -513,10 +512,10 @@
                 //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        @if(Auth::check())
+        /*
 
         $.ajax({
-            url: '{{url('notifications_count')}}',
+            url: //url('notifications_count'),
             type: "get",
             async: false,
             dataType: "json",
@@ -531,7 +530,8 @@
         }).fail(function (jqXHR, ajaxOptions, thrownError) {
             $('#notification:not(.page-notifications #notification)').html('');
         });
-        @endif
+
+        */
 
         //spinner start here
        /* $(document).ajaxStart(function () {

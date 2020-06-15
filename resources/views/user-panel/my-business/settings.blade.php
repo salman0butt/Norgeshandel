@@ -73,6 +73,14 @@
                             handel</label>
                     </div>
                 </div>
+                <div class="form-group mt-4 mb-5">
+                    <h2>Vurderinger og rangeringer</h2>
+                    <div data-controller="notificationsetting" class="input-toggle">
+                        <input type="checkbox" id="show_review_ratings" data-channel="email"
+                               data-type="show_review_ratings" name="show_ratings_reviews" value="1"  {{Auth::user()->notification_meta('show_ratings_reviews') && Auth::user()->notification_meta('show_ratings_reviews')->value ? 'checked' : ''}}>
+                        <label for="show_review_ratings">Vis anmeldelser og rangeringer på offentlig vis</label>
+                    </div>
+                </div>
                 <div class="form-group u-mv32">
                     <p>
                         <a href="javascript:$('#notification_setting').submit();">Endre varsler</a>

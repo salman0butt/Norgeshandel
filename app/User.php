@@ -116,7 +116,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     //get notification meta against a key
     public function notification_meta($key){
-        return Meta::where('metable_id',Auth::id())->where('metable_type','App\User')->where('key',$key)->first();
+        return Meta::where('metable_id',$this->id)->where('metable_type','App\User')->where('key',$key)->first();
     }
 
     //User account setting emails
@@ -237,5 +237,30 @@ class User extends Authenticatable implements MustVerifyEmail
     public function companies_agents(){
         //Reference link => https://laravel.com/docs/7.x/eloquent-relationships
         return $this->hasManyThrough(User::class,Company::class,'user_id','created_by_company_id','id','id');
+    }
+
+    //get user received ratings
+    public function received_ratings(){
+        return $this->hasMany(UserRatingReview::class,'to_user_id','id')->orderBy('id','DESC');
+    }
+
+    //get user received ratings
+    public function give_ratings(){
+        return $this->hasMany(UserRatingReview::class,'from_user_id','id')->orderBy('id','DESC');
+    }
+
+    // User job preference cities
+    public function job_preference_cities(){
+        return $this->hasMany(JobPreferenceCity::class);
+    }
+
+    // User job preference key words
+    public function job_preference_key_words(){
+        return $this->hasMany(JobPreferenceKeyWord::class);
+    }
+
+    //user buys ad (those ads that will be mark as sold and seller select the user)
+    public function buy_ads() {
+        return $this->belongsToMany(Ad::class,'ad_sold_to_user','user_id','ad_id');
     }
 }

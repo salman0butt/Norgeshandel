@@ -2,9 +2,12 @@
 
 @section('page_content')
 <style>
-.checked {
-    color: orange;
-}
+    .checked {
+        color: orange;
+    }
+    .rating-stars span{
+        font-size: 18px;
+    }
 </style>
 <div class="dme-container">
     <div class="breade-crumb">
@@ -17,19 +20,20 @@
     </div>
 
     <!--------bread-crumb end----->
-
     <div class="row mt-5 mb-5 pl-4 pr-4">
         <div class="col-md-4 mt-3">
             <div class="card ">
                 <div class="card-header p-4">
                     <h4 style="font-size:18px;">Gjennomsnittlig rangering</h4>
-                    <h3>4.3/<small>5</small></h3>
+                    @php
+                        $avg = Auth::user()->received_ratings->count() > 0 ? Auth::user()->received_ratings->avg('general_ratings') : '0';
+                    @endphp
+                    <h3>{{$avg ?  round($avg) : $avg}}
+                        /<small>10</small></h3>
                     <div class="rating-stars">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        @for($i=1;$i<=5;$i++)
+                            <span class="fa fa-star {{$i <= ($avg/2)  ? 'checked' : ''}}"></span>
+                        @endfor
                     </div>
                 </div>
             </div>
@@ -38,162 +42,52 @@
         <div class="col-md-8 mt-3">
             <h4 style="font-size:18px;">Rangering fordelt</h4>
             <div class="rating-stars">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="ml-2"><b>1</b></span>
+                @for($i=5;$i>=1;$i--)
+                    <span class="fa fa-star checked"></span>
+                @endfor
+                <span class="ml-2"><b>10</b></span>
             </div>
             <div class="rating-stars">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="ml-2"><b>1</b></span>
+                @for($i=5;$i>=1;$i--)
+                    <span class="fa fa-star {{$i != 1 ? 'checked' : ''}}"></span>
+                @endfor
+                <span class="ml-2"><b>8</b></span>
             </div>
             <div class="rating-stars">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="ml-2"><b>0</b></span>
+                @for($i=5;$i>=1;$i--)
+                    <span class="fa fa-star {{$i >2  ? 'checked' : ''}}"></span>
+                @endfor
+                <span class="ml-2"><b>6</b></span>
             </div>
             <div class="rating-stars">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="ml-2"><b>0</b></span>
+                @for($i=5;$i>=1;$i--)
+                    <span class="fa fa-star {{$i >3  ? 'checked' : ''}}"></span>
+                @endfor
+                <span class="ml-2"><b>4</b></span>
             </div>
             <div class="rating-stars">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="ml-2"><b>0</b></span>
+                @for($i=5;$i>=1;$i--)
+                    <span class="fa fa-star {{$i >4  ? 'checked' : ''}}"></span>
+                @endfor
+                <span class="ml-2"><b>2</b></span>
             </div>
         </div>
     </div>
     <hr>
-    <div class="row">
-
-        <div class="review-block pl-5 pr-5">
-            <div class="row">
-                <div class="col-sm-3">
-                    <img src="http://dummyimage.com/60x60/666/ffffff&amp;text=No+Image" class="img-rounded">
-                    <div class="review-block-name"><a href="#">Navn</a></div>
-                    <div class="review-block-date">29. januar 2016<br>1 dag siden</div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="review-block-rate">
-                        <div class="rating-stars">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
-                    <div class="review-block-title">Dette var fint å kjøpe</div>
-                    <div class="review-block-description">Dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe</div>
-                </div>
-            </div>
-
-        </div>
-        <hr>
-        <!--------Single user rating----->
-
-        <div class="review-block pl-5 pr-5">
-            <div class="row">
-                <div class="col-sm-3">
-                    <img src="http://dummyimage.com/60x60/666/ffffff&amp;text=No+Image" class="img-rounded">
-                    <div class="review-block-name"><a href="#">Navn</a></div>
-                    <div class="review-block-date">29. januar 2016<br>1 dag siden</div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="review-block-rate">
-                        <div class="rating-stars">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
-                    <div class="review-block-title">Dette var fint å kjøpe</div>
-                    <div class="review-block-description">Dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe</div>
-                </div>
-            </div>
-
-        </div>
-        <hr>
-        <!--------Single user rating----->
-
-        <div class="review-block pl-5 pr-5">
-            <div class="row">
-                <div class="col-sm-3">
-                    <img src="http://dummyimage.com/60x60/666/ffffff&amp;text=No+Image" class="img-rounded">
-                    <div class="review-block-name"><a href="#">Navn</a></div>
-                    <div class="review-block-date">29. januar 2016<br>1 dag siden</div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="review-block-rate">
-                        <div class="rating-stars">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
-                    <div class="review-block-title">Dette var fint å kjøpe</div>
-                    <div class="review-block-description">Dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe</div>
-                </div>
-            </div>
-
-        </div>
-        <hr>
-        <!--------Single user rating----->
-
-        <div class="review-block pl-5 pr-5">
-            <div class="row">
-                <div class="col-sm-3">
-                    <img src="http://dummyimage.com/60x60/666/ffffff&amp;text=No+Image" class="img-rounded">
-                    <div class="review-block-name"><a href="#">Navn</a></div>
-                    <div class="review-block-date">29. januar 2016<br>1 dag siden</div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="review-block-rate">
-                        <div class="rating-stars">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
-                    <div class="review-block-title">Dette var fint å kjøpe</div>
-                    <div class="review-block-description">Dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å kjøpe dette var fint å
-                        kjøpe</div>
-                </div>
-            </div>
-
-        </div>
-        <hr>
-        <!--------Single user rating----->
+    <div class="row ratings-section">
+        @if($ratings->count() > 0)
+            @include('user-panel.my-business.rating-inner')
+        @else
+            <p class="m-auto pb-3">Brukeren har ikke fått noen vurderinger</p>
+        @endif
     </div>
 </div>
-
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $(".timeago").timeago();
+        })
+    </script>
+    <script src="{{asset('public/js/time-ago-in-words.min.js')}}"></script>
 @endsection

@@ -30,7 +30,6 @@
             </nav>
         </div>
         <!---- end breadcrumb----->
-
         @include('common.partials.flash-messages')
         @if($user->roles->first()->name=="company")
         <div class="alert alert-info">
@@ -842,15 +841,27 @@
                     </div>
                 </div>
             </div>
-            <div class="row  mb-5">
+            <div class="row mb-2">
+                <div class="col-md-6 mt-4">
+                    <h5>Slett konto</h5>
+                    <ul class="pl-3">
+                        <li>Alt du har lagt inn på NorgesHandel går tapt for alltid</li>
+                        <li>Du vil ikke kunne logge inn på tjenesten</li>
+                        <li>Du kan ikke angre i ettertid</li>
+                    </ul>
+                    <form action="{{route('delete-self-account', $user->id)}}" method="POST" onsubmit="jarascript:return confirm('Vil du slette NorgesHandel-kontoen din. Alle dataene dine blir fjernet. Og du vil ikke logge inn på NorgesHandel i fremtiden.')">
+                        {{method_field('DELETE')}}
+                        {{csrf_field()}}
+                        {{--<input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger btn-sm">--}}
+
+                        <a href="javascript:void(0);" onclick="$(this).closest('form').submit()">Slett min NorgesHandel-bruker</a>
+                    </form>
+                    {{-- <a href="#">Les mer om hvordan endre profil og e-post</a> --}}
+                </div>
                 <div class="col-md-6 mt-4">
                     <p>Profilbildet brukes i dine samtaler via Norgeshandel sin
                         meldingstjeneste og i dine annonser.</p>
                     <a href="{{route('public_profile', $user->id)}}">Se profilen slik andre ser den</a>
-                </div>
-                <div class="col-md-6 mt-4">
-
-                    {{-- <a href="#">Les mer om hvordan endre profil og e-post</a> --}}
                 </div>
             </div>
             @if($user->roles->first()->name!="company")

@@ -113,18 +113,18 @@ $(document).ready(function () {
             primary_room: {
                 required: true,
                 number: true
-            },   
+            },
             Base: {
                 number: true
             },
             year: {
                 required: true,
                 number: true,
-               
+
             },
             renovated_year: {
                 number: true
-              
+
             },
             number_of_bedrooms: {
                 required: true,
@@ -135,7 +135,7 @@ $(document).ready(function () {
             },
             holiday_year: {
                 number: true
-            
+
             },
             party_fee: {
                 number: true
@@ -259,7 +259,7 @@ $(document).ready(function () {
             },
             year_of_construction: {
                 number: true
-               
+
             },
             renovated_year: {
                 number: true
@@ -385,7 +385,7 @@ $(document).ready(function () {
                 number: true
             },
             street_address: {
-              required: true  
+              required: true
             },
             usage_number: {
                 number: true
@@ -867,7 +867,7 @@ $(document).ready(function () {
                 error.insertAfter(element);
             }
         }
-     
+
 
     });
 

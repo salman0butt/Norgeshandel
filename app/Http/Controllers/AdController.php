@@ -7,12 +7,17 @@ use App\Helpers\common;
 use App\MessageThread;
 use App\Models\Ad;
 use App\Models\AdView;
+use App\Notification;
+use App\User;
+use App\UserRatingReview;
 use Carbon\Traits\Date;
 use DateTime;
 use http\Message\Body;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\Null_;
 use PhpParser\Node\Stmt\DeclareDeclare;
@@ -20,6 +25,7 @@ use Pusher\Pusher;
 use test\Mockery\ReturnTypeObjectTypeHint;
 use function foo\func;
 use function GuzzleHttp\Psr7\str;
+use Illuminate\Support\Facades\Mail;
 
 class AdController extends Controller
 {
@@ -282,7 +288,7 @@ class AdController extends Controller
     }
 
     // Mark as sold an ad
-    public function ad_sold($id){
+    public function ad_sold($id,Request $request){
         $ad = Ad::find($id);
         if($ad){
             if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
@@ -290,7 +296,48 @@ class AdController extends Controller
                 $ad->status = 'sold';
                 $ad->update();
                 common::fav_mark_sold_notification($ad, $this->pusher);
-                return back();
+                Session::flash('success','Posten er oppdatert.');
+                return Redirect::back()->with('error_code', 5);
+            }else{
+                return redirect('forbidden');
+            }
+        }else{
+            abort(404);
+        }
+    }
+
+
+    //Ad user in sold ads like as buyer of this ad
+    public function add_buyer_in_sold_ad($id,Request $request){
+        $ad = Ad::find($id);
+        if($ad){
+            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))) {
+                if($request->user_id){
+                    $ad->sold_to_user()->attach($request->user_id);
+
+                    // Send notification to buyer
+                    $user_name = ($ad->user->first_name || $ad->user->last_name) ? $ad->user->first_name.' '.$ad->user->last_name : 'NH-Bruker';
+                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'ad_sold', 'user_id' => $request->user_id, 'notifiable_id' => $ad->id, 'data' => $user_name.' har valgt deg til å være kjøper av denne annonsen. Nå kan du gi din vurdering til vedkommende.']);
+                    $notif->save();
+
+                    $data = array('detail' => 'Velg som kjøper', 'to_user_id' => $request->user_id);
+                    $this->pusher->trigger('notification', 'notification-event', $data);
+
+                    // Send email notification to buyer
+                    $text = $user_name.' har valgt deg til å være kjøper av denne annonsen. Nå kan du gi din vurdering til vedkommende. Her er koblingen til annonsen.';
+                    $link = url('/',$ad->id);
+                    $subject = 'Velg som kjøper';
+                    $user_obj = User::find($request->user_id);
+                    $to_name = $user_obj->username;
+                    $to_email = $user_obj->email;
+                    Mail::send('mail.property_email_notification',compact('text','link','user_obj'), function ($message) use ($to_name, $to_email,$subject) {
+                        $message->to($to_email, $to_name)->subject($subject);
+                        $message->from('developer@digitalmx.no', 'NorgesHandel');
+                    });
+
+                    Session::flash('success','Kjøperen er lagt til.');
+                    return Redirect::back()->with('error_code', 6);
+                }
             }else{
                 return redirect('forbidden');
             }

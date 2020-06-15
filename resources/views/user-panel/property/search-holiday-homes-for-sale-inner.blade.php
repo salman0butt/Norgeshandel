@@ -49,7 +49,7 @@
                     <option @if(isset($sort) && $sort=='priced-high-low') selected @endif value="priced-high-low">Prisant høy-lav</option>
                     <option @if(isset($sort) && $sort=='housing_area_low_high') selected @endif value="housing_area_low_high">Boa lav-høy</option>
                     <option @if(isset($sort) && $sort=='housing_area_high_low') selected @endif value="housing_area_high_low">Boa høy-lav</option>
-                    <option @if(isset($sort) && $sort=='nearest') selected @endif value="nearest">Nærmest</option>
+                    <option @if(isset($sort) && $sort=='99') selected @endif value="99">Nærmest</option>
 
                 </select>
             </div>
@@ -64,14 +64,14 @@
         <div class="col-md-12 outer-div">
             <div class="inner-div">{{ $add_array->links() }}</div>
         </div>
+        @if(count($add_array)<1)
+            <div class="alert alert-warning col-md-6 offset-md-3">Ingen innlegg funnet!</div>
+        @endif
         <div class="col-md-12" id="order_specific_result">
             <div class="<?php
             echo $col === 'grid' ? 'row' : '' ?>">
-
                 @foreach ($add_array as $key => $value)
-
                     <?php
-
                     $property_holiday_home_for_sale = App\PropertyHolidaysHomesForSale::find($value->id);
                     $name = $property_holiday_home_for_sale->ad->company_gallery->first();
                     if (!empty($name)) {

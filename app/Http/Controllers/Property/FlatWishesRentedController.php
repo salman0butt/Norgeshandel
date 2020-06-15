@@ -128,9 +128,15 @@ class FlatWishesRentedController extends Controller
             case 'time_from':
                 $query->orderBy('flat_wishes_renteds.wanted_from', 'ASC');
                 break;
+            case '99':
+                //find nearby ads
+                if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                    common::find_nearby_ads($request->lat, $request->lon,$query,'flat_wishes_renteds');
+                    break;
+                }
         }
 
-        $query->orderBy('ads.published_on', 'DESC');
+        //$query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
             return $query->get();

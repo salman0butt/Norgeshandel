@@ -582,7 +582,6 @@ class common
                 }
 
                 if ($to_be_sent) {
-                    // $notif = new Notification(['notifiable_type' => 'App\Models\Search', 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $search->id, 'data' => $message]);
                     $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $ad->id, 'data' => $message]);
                     $notif->save();
                     $data = array('detail' => $message, 'to_user_id' => $search->user_id);
@@ -699,14 +698,14 @@ class common
                 $user_meta = Meta::where('metable_id',$user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
                 $user_obj = User::find($user_id);
                 if($user_meta && $user_obj && $user_obj->email){
-                    common::property_email_notification($user_obj,'ad_sold_or_rented',$ad,'');
+                        common::property_email_notification($user_obj,'ad_sold_or_rented',$ad,'');
                 }
             }
         }
     }
 
     // update notification for property 
-       public static function property_notification(Ad $ad, Pusher $pusher,$user_id, $property_type){
+    public static function property_notification(Ad $ad, Pusher $pusher,$user_id, $property_type){
         $users = DB::table('favorites')
             ->join('metas', 'metas.metable_id', '=', 'favorites.user_id')
             ->where('metas.metable_type', '=', 'App\User')
@@ -846,12 +845,14 @@ class common
         return '';
     }
 
+    //sync ad agents (add/remove colleagues for agent user role)
     public static function sync_ad_agents($ad,$agent_id_arr){
         if(Auth::user()->hasRole('company') || Auth::user()->created_by_company_id){
             $ad->agents()->sync($agent_id_arr);
         }
     }
 
+    // Ad vistings times (like property for rent, sales, holiday homes for sales)
     public static function ad_visting_time($ad,$request){
         if(count($request->delivery_date) || count($request->time_start) || count($request->time_end) || count($request->note)){
             $max_val = max(count($request->delivery_date),count($request->time_start),count($request->time_end),count($request->note));
@@ -870,12 +871,14 @@ class common
         }
     }
 
+    // Get commitment jobs against a company
     public static function company_commitment_jobs($company_id,$type){
         $count = 0;
         $jobs = DB::table('ads')
             ->join('jobs', 'ads.id', '=', 'jobs.ad_id')
-//            ->where('ads.status', '=', 'published')
+            ->where('ads.status', '=', 'published')
             ->where('ads.ad_type', '=', 'job')
+            ->where('ads.visibility',1)
             ->whereNull('jobs.deleted_at')
             ->whereNull('ads.deleted_at')
             ->where('jobs.company_id',$company_id)
@@ -886,7 +889,90 @@ class common
             })
             ->where('ads.visibility','=',1)->get();
         return $jobs;
+    }
 
+    //Send site and email notification to user according to job preferences related to
+    public static function job_preferences_notifications($ad,$pusher){
+        if($ad && $ad->job && $ad->job->company_id && $ad->job->company && $ad->job->company->followings->count() ){
+            foreach ($ad->job->company->followings as $following){
+                $count = 0;
+                $functions = $cities = array();
+
+                //find job functions
+                if($following->user && $following->user->job_preference_key_words->count() > 0 && $ad->job->job_function){
+                    $functions = $following->user->job_preference_key_words->pluck('key_word')->toArray();
+                    if(is_numeric(array_search($ad->job->job_function,$functions))){
+                        $count++;
+                    }
+                }
+
+                // find job city
+                if($following->user && $following->user->job_preference_cities->count() > 0 && $ad->job->zip_city){
+                    $cities = $following->user->job_preference_cities->pluck('city')->toArray();
+                    if(is_numeric(array_search($ad->job->zip_city,$functions))){
+                        $count++;
+                    }
+                }
+                //send email and site notification
+                if($count){
+                    $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'new_job_posted', 'user_id' => $following->user->id, 'notifiable_id' => $ad->id, 'data' => 'En ny jobb legges ut relatert til din jobbpreferanse.']);
+                    $notif->save();
+                    $data = array('detail' => 'En ny jobb legges ut relatert til din jobbpreferanse.', 'to_user_id' => $following->user->id);
+                    $pusher->trigger('notification', 'notification-event', $data);
+
+
+                    if($following->user->email){
+                        $text = 'Vi vil informere deg om at en ny jobb er lagt ut i henhold til dine stillingspreferanser. Her er koblingen til jobben.';
+                        $link = url('/',$ad->id);
+                        $subject = 'Ny jobb lagt ut';
+                        $user_obj = $following->user;
+                        $to_name = $following->user->username;
+                        $to_email = $following->user->email;
+                        Mail::send('mail.property_email_notification',compact('text','link','user_obj'), function ($message) use ($to_name, $to_email,$subject) {
+                            $message->to($to_email, $to_name)->subject($subject);
+                            $message->from('developer@digitalmx.no', 'NorgesHandel');
+                        });
+                    }
+                }
+            }
+        }
+
+    }
+
+    //find nearby ads related to current location using lati and longs and miles
+    public static function find_nearby_ads($lat,$lon,$query,$table_name){
+        $query->WhereNotNull($table_name.'.latitude')->WhereNotNull($table_name.'.longitude')
+        ->select($table_name.".*","ads.published_on","ads.updated_at"
+            ,DB::raw("6371 * acos(cos(radians(" . $lat . "))
+                        * cos(radians(".$table_name.".latitude))
+                        * cos(radians(".$table_name.".longitude) - radians(" . $lon . "))
+                        + sin(radians(" .$lat. "))
+                        * sin(radians(".$table_name.".latitude))) AS distance"))
+            ->orderBy('distance','ASC')->distinct();
+//        dd($query);
+
+        /*
+        $d = 31.0686;       //50km in miles ;
+        $r = 3959;          //earth's radius in miles
+        $latitude = $lat;   //58.32775757729577;
+        $longitude = $lon;  //8.218992760525595;
+
+        $latN = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
+            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(0))));
+
+        $latS = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
+            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(180))));
+
+        $lonE = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(90))
+                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
+                - sin(deg2rad($latitude)) * sin(deg2rad($latN))));
+
+        $lonW = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(270))
+                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
+                - sin(deg2rad($latitude)) * sin(deg2rad($latN)))); //longitude
+        $query->where($table_name.'.latitude','<=',$latN)->where($table_name.'.latitude','>=',$latS)
+            ->where($table_name.'.longitude','<=',$lonE)->where($table_name.'.longitude','>=',$lonW);
+        */
     }
 
 }

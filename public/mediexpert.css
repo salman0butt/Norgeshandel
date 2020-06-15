@@ -1234,3 +1234,33 @@ background-size: cover;
     margin-top: 28px;
     float: right;
 }
+
+
+span.stars {float: left}
+.star-title {margin: 0 10px;float: right}
+.stars input.star {display: none}
+.stars label.star {
+    font-size: 22px;
+    float: right;
+    margin:0 2px;
+    position: relative;
+    color:#212529;
+}
+.stars input.star:checked ~ label.star:before {
+    color: orange;
+    content: '\f005';
+    transition: all .25s;
+    font-weight: 600;
+}
+.stars input.star:nth-of-type(1):checked ~ label.star:before {
+    color: orange;
+    font-weight: 600;
+}
+.stars input.star:nth-of-type(5):checked ~ label.star:before {color: orange}
+.stars label.star:hover {transform: rotate(0deg) scale(1)}
+.stars label.star:before {
+    content: '\f005';
+    font-family: "Font Awesome 5 Free";
+    font-weight: 500;
+    display: inline-block;
+}

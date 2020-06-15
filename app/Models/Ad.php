@@ -10,11 +10,13 @@ use App\CommercialPlot;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
 use App\FlatWishesRented;
+use App\MessageThread;
 use App\Notification;
 use App\PropertyForRent;
 use App\PropertyForSale;
 use App\PropertyHolidaysHomesForSale;
 use App\User;
+use App\UserRatingReview;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Favorite;
@@ -185,8 +187,22 @@ class Ad extends Model
         return $this->hasMany(AdVistingTime::class);
     }
 
-
     public function company() {
         return $this->belongsTo(Company::class,'company_id','id');
+    }
+
+
+    public function message_threads(){
+        return $this->hasMany(MessageThread::class);
+    }
+
+    //sold to ad a user
+    public function sold_to_user() {
+        return $this->belongsToMany(User::class,'ad_sold_to_user','ad_id','user_id');
+    }
+
+    //Ratings
+    Public function ratings(){
+        return $this->hasMany(UserRatingReview::class);
     }
 }

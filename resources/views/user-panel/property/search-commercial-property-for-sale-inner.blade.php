@@ -47,7 +47,7 @@
                     <option @if((isset($sort) && $sort=='published') || !isset($sort)) selected @endif value="published">Publisert</option>
                     <option @if(isset($sort) && $sort=='priced-low-high') selected @endif value="priced-low-high">Prisant lav-høy</option>
                     <option @if(isset($sort) && $sort=='priced-high-low') selected @endif value="priced-high-low">Prisant høy-lav</option>
-                    <option @if(isset($sort) && $sort=='nearest') selected @endif value="nearest">Nærmest</option>
+                    <option @if(isset($sort) && $sort=='99') selected @endif value="99">Nærmest</option>
                 </select>
             </div>
         </div>
@@ -63,6 +63,9 @@
                 {{$add_array->links()}}
             </div>
         </div>
+        @if(count($add_array) < 1)
+            <div class="alert alert-warning col-md-6 offset-md-3">Ingen innlegg funnet!</div>
+        @endif
         <div class="col-md-12">
             <div class="<?php
             echo $col === 'grid' ? 'row' : '' ?>">

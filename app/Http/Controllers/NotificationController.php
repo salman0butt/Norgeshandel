@@ -27,7 +27,7 @@ class NotificationController extends Controller
         $read_notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->whereDate('read_at','<=',$date)->delete();
 
         if (Auth::check()) {
-            $notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->get();
+            $notifications = Notification::where('user_id',Auth::id())->orderBy('id', 'desc')->paginate(20);
  //            $searches = Auth::user()->saved_searches;
             return view('common.partials.notifications.all_notifications', compact('notifications'));
         }
@@ -59,7 +59,6 @@ class NotificationController extends Controller
 
     public function create($notifiable_id, $property_type, $text)
     {
-      
         $notification_data = array();
         $notification_data['type'] = $property_type;
         $notification_data['user_id'] = Auth::user()->id;
@@ -150,6 +149,22 @@ class NotificationController extends Controller
             $data["res"] = false;
         }
         echo json_encode($data);
+    }
+
+
+    //
+    public function read_single_notification(Request $request){
+        $flag = 'failure';
+        if($request->notify_id){
+            $notification = Notification::where('user_id',Auth::id())->where('id',$request->notify_id)->first();
+            if($notification){
+                $notification->read_at = now();
+                $notification->update();
+                $flag = 'success';
+            }
+        }
+        echo json_encode($flag);
+
     }
 
 

@@ -1,37 +1,27 @@
 var added = false;
+
+var cur_lat = '';
+var cur_lon = '';
+
+function get_curr_location(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            cur_lat = position.coords.latitude;
+            cur_lon = position.coords.longitude;
+        });
+    }
+}
+
+
 $(document).ready(function () {
-    var urlParams = new URLSearchParams(location.search);
+
+    get_curr_location();
+  
     //   $('a.row').on('click', function (e) {
     //       e.preventDefault();
     //       alert('working');
     //       history.pushState({}, null, '');
     //   });
-    function search(data) {
-        var urlParams = new URLSearchParams(location.search);
-        var url = $('#mega_menu_search_url').val();
-        $.ajax({
-            data: data,
-            url: url,
-            type: "GET",
-            success: function (response) {
-                if (!isEmpty($("#basicExampleModal.show"))) {
-                    $('#dme-wrapper').html(response);
-                }
-            },
-            error: function (error) {
-                //console.log(error);
-            }
-        });
-    }
-    function fix_page_links() {
-        $('.pagination a').each(function (i) {
-            var par = urlParams;
-            par.delete('page');
-            var page_arr = $(this).attr('href').split('=');
-            par.set('page', page_arr[1]);
-            $(this).attr('href', "?" + par.toString());
-        });
-    }
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
@@ -44,6 +34,14 @@ $(document).ready(function () {
             }
         }
     };
+
+    function set_lat_lon(newUrl,sort){
+        if(sort === '99' && cur_lat && cur_lon){
+            newUrl += "&lat=" + cur_lat.toFixed(6);
+            newUrl += "&lon=" + cur_lon.toFixed(6);
+        }
+        return newUrl;
+    }
 
     search(urlParams.toString());
     fix_page_links();
@@ -65,6 +63,7 @@ $(document).ready(function () {
         if (!isEmpty(sort)) {
             newUrl += "&sort=" + sort;
         }
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();
@@ -99,6 +98,7 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();
@@ -113,6 +113,7 @@ $(document).ready(function () {
     $(document).on('change', '#sort_by', function () {
         var newUrl = $('#mega_menu_form').serialize();
         var sort = $(this).val();
+
         var view = getUrlParameter('view');
         var page = getUrlParameter('page');
         var user_id = getUrlParameter('user_id');
@@ -128,6 +129,7 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();
@@ -163,7 +165,7 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
-
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();

@@ -48,8 +48,8 @@
                 <select name="sort-by" id="sort_by" class="dme-form-control">
                     <option value="most_relevant" @if(isset($sort) && $sort=="most_relevant" ) selected @endif>Mest relevant</option>
                     <option @if((isset($sort) && $sort=='published') || !isset($sort)) selected @endif value="published">Publisert</option>
-                    <option @if(isset($sort) && $sort=='sqm-low-high') selected @endif value="sqm-low-high">square meter low-high</option>
-                    <option @if(isset($sort) && $sort=='sqm-high-low') selected @endif value="sqm-high-low">square meter high-low</option>
+                    <option @if(isset($sort) && $sort=='sqm-low-high') selected @endif value="sqm-low-high">Bruksareal lav-høy</option>
+                    <option @if(isset($sort) && $sort=='sqm-high-low') selected @endif value="sqm-high-low">Bruksareal høy-lav</option>
                     <option @if(isset($sort) && $sort=='99') selected @endif value="99">Nærmest</option>
                 </select>
             </div>
@@ -67,6 +67,9 @@
                 {{$add_array->links()}}
             </div>
         </div>
+        @if(count($add_array)<1)
+            <div class="alert alert-warning col-md-6 offset-md-3">Ingen innlegg funnet!</div>
+        @endif
         <div class="col-md-12">
             <div class="<?php
             echo $col === 'grid' ? 'row' : '' ?>">

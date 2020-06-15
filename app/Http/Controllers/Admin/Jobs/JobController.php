@@ -24,6 +24,7 @@ use Intervention\Image\AbstractDecoder;
 use App\Http\Controllers\Admin\Users\AdminUserController;
 use Pusher\Pusher;
 use const http\Client\Curl\AUTH_ANY;
+use Illuminate\Support\Facades\Mail;
 
 //use function Sodium\compare;
 
@@ -169,11 +170,9 @@ class JobController extends Controller
             common::update_media($file, $ad->id, 'App\Models\Ad', 'logo');
         }
 
-
-//            notification bellow
+        //notification bellow
         common::send_search_notification($ad->job, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'jobs/search',$ad);
-//            end notification
-
+        //end notification
 
         $terms = Term::find([$request->industry, $request->job_function]);
         $ad->job->terms()->detach();
@@ -463,7 +462,6 @@ class JobController extends Controller
         if ($request->file('files')) {
             return $this->upload_images($request,$request->ad_id);
         }
-//        DB::beginTransaction();
         try{
             $call_by = '';
             if($request->click_button && $request->click_button == 'yes'){
@@ -484,22 +482,21 @@ class JobController extends Controller
             $ad = $job->ad();
 //            DB::commit();
 
-//            notification bellow
+            //notification bellow
             common::send_search_notification($job, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'jobs/search',$ad);
 
+            //Send company followers job notifications
+            if($job->ad && $job->company_id){
+                common::job_preferences_notifications($job->ad,$this->pusher);
+            }
+
             $msg['message'] = $message;
-//                $data['success'] = $response;
             $msg['status'] = $job->ad->status;
             $msg['company_logo_id']  = $ids['company_logo_id'];
             echo json_encode($msg);
-//            end notification
 
-//            Session::flash('success', 'Jobben er lagret');
-//            return back();
         }catch (\Exception $e){
-//            DB::rollback();
-//            Session::flash('danger', 'Noe gikk galt.');
-//            return back();
+
         }
 
     }
@@ -656,7 +653,6 @@ class JobController extends Controller
                    $filter.=$key.'='.$value.'&';
                }
            }
-
         }
 
         $filter = rtrim($filter, '&');
@@ -733,11 +729,18 @@ class JobController extends Controller
                 case 3:
                     $query->orderBy('jobs.zip_city', 'asc');
                     break;
+                case 4:
+                    if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                        common::find_nearby_ads($request->lat, $request->lon,$query,'jobs');
+                    }
+                    break;
                 default:
                     break;
             }
         }
-        $query->orderBy('ads.published_on','DESC');
+        if(!isset($request->lat) && !isset($request->lon)) {
+            $query->orderBy('ads.published_on', 'DESC');
+        }
         if($request->job_type){
             $query = $query->where('jobs.job_type',$request->job_type);
         } //jobtype

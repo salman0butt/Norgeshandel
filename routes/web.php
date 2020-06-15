@@ -146,9 +146,8 @@ Route::group(['middleware' => 'authverified'], function () {
 
         return view('user-panel.footer.cookie');
     });
-    Route::get('/rating', function () {
-        return view('user-panel.my-business.rating');
-    });
+    Route::get('/rating','RatingController@ratings_list');
+    Route::get('show-more-ratings','RatingController@show_more_ratings')->name('show-more-ratings');
 
     Route::get('/customer-services', function () {
         return view('user-panel.footer.customer_service');
@@ -275,6 +274,7 @@ Route::group(['middleware' => 'authverified'], function () {
         echo 'hello';
     });
     Route::get('profile/public/{id}', 'Admin\Users\AdminUserController@public_profile')->name('public_profile');
+    Route::get('show-more-public-profile-ads', 'Admin\Users\AdminUserController@show_more_public_profile_ads')->name('show-more-public-profile-ads');
 //    routes for all non guest users
     Route::group(['middleware' => ['verified']], function () {
 
@@ -293,6 +293,9 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('my-business/my-ads/{id}/options', 'AdController@ad_option');
         Route::get('my-business/my-ads/{id}/statistics', 'AdController@ad_statistics');
         Route::post('my-business/my-ads/{id}/sold', 'AdController@ad_sold')->name('ad-sold');
+        Route::post('my-business/my-ads/{id}/sold/add/buyer', 'AdController@add_buyer_in_sold_ad')->name('add-buyer-in-sold-ad');
+        Route::get('my-business/my-ads/{id}/ratings', 'RatingController@ad_ratings');
+        Route::post('my-business/my-ads/{id}/ratings/store', 'RatingController@store_ratings')->name('ratings-store');
         // message
         Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
         Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');
@@ -307,6 +310,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('notifications', 'NotificationController@index');
         Route::get('notifications_count', 'NotificationController@notifications_count');
         Route::get('notifications-read-all', 'NotificationController@read_all');
+        Route::get('read-single-notification', 'NotificationController@read_single_notification')->name('read-single-notification');
 
 
         Route::get('remove-fav-note', 'FavoriteController@remove_fav_note');
@@ -328,6 +332,10 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('savedsearches', 'SearchController@index');
             Route::resource('search', 'SearchController');
             Route::resource('company-agents', 'AgentController');
+            //USer buy ads
+            Route::get('buy-ads', function () {
+                return view('user-panel.my-business.list-buy-ads');
+            });
 
             Route::get('/', function () {
                 return view('user-panel.my-business.my_business');
@@ -380,6 +388,7 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::get('cv/extend', 'Cv\CvController@extend');
           
             Route::resource('job-preferences', 'JobPreferenceController');
+            Route::get('delete-job-preferences', 'JobPreferenceController@delete_job_preference')->name('delete-job-preferences');
             Route::resource('following', 'FollowingController');
         });
 
@@ -449,9 +458,9 @@ Route::group(['middleware' => 'authverified'], function () {
                 return view('user-panel.my-business.profile.account-purchase-history');
             });
 
-            Route::get('/privacy', function () {
-                return view('user-panel.my-business.profile.account-privacy');
-            });
+//            Route::get('/privacy', function () {
+//                return view('user-panel.my-business.profile.account-privacy');
+//            });
             Route::get('/summary', function () {
                 return view('user-panel.my-business.profile.account-summary');
             });
@@ -619,7 +628,9 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         //restore user
         Route::get('/user/restore/{id}', 'Admin\Users\AdminUserController@restore')->name('user-restore');
-
+        //get all reviews and ratings
+        Route::get('ratings', 'RatingController@admin_ratings_list')->name('ratings');
+        Route::delete('delete-rating/{id}', 'RatingController@delete_rating')->name('delete-rating');
 
         //all general resources
         Route::resources([
@@ -638,6 +649,9 @@ Route::group(['middleware' => 'authverified'], function () {
         \App\User::all()->first()->update(['password' => \Illuminate\Support\Facades\Hash::make('gujrat786')]);
 
     });
+    Route::delete('delete-self-account/{id}','Admin\Users\AdminUserController@destroy')->name('delete-self-account');
+
+
 
 //  zille bellow
     Route::get('property/realestate', 'PropertyController@list');

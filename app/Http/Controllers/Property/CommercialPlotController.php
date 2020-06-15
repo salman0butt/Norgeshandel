@@ -108,9 +108,14 @@ class CommercialPlotController extends Controller
             case 'area_high_low':
                 $query->orderBy('plot_size', 'DESC');
                 break;
+            case '99':
+                if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                    common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                    break;
+                }
         }
 
-        $query->orderBy('ads.published_on', 'DESC');
+//        $query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
             return $query->get();
