@@ -12,6 +12,7 @@ function get_curr_location(){
     }
 }
 
+
 $(document).ready(function () {
     get_curr_location();
     //   $('a.row').on('click', function (e) {
@@ -31,6 +32,14 @@ $(document).ready(function () {
             }
         }
     };
+
+    function set_lat_lon(newUrl,sort){
+        if(sort === '99' && cur_lat && cur_lon){
+            newUrl += "&lat=" + cur_lat.toFixed(6);
+            newUrl += "&lon=" + cur_lon.toFixed(6);
+        }
+        return newUrl;
+    }
 
     search(urlParams.toString());
     fix_page_links();
@@ -52,6 +61,7 @@ $(document).ready(function () {
         if (!isEmpty(sort)) {
             newUrl += "&sort=" + sort;
         }
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();
@@ -86,6 +96,7 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();
@@ -109,18 +120,14 @@ $(document).ready(function () {
         }
         if (!isEmpty(sort)) {
             newUrl += "&sort=" + sort;
-            if(sort === '99' && cur_lat && cur_lon){
-                newUrl += "&lat=" + cur_lat.toFixed(6);
-                newUrl += "&lon=" + cur_lon.toFixed(6);
-            }
         }
-
         if (!isEmpty(view)) {
             newUrl += "&view=" + view;
         }
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();
@@ -156,7 +163,7 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
-
+        newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
         search(newUrl);
         // fix_page_links();

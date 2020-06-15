@@ -9,6 +9,18 @@
             </div>
             <div class="row">
                 <div class="col-md-10 offset-md-1">
+                    <h5>Annonse Tittel: </h5>
+                    <h4>{{$ad->getTitle()}}</h4>
+                    <h5>Rangering Bruker: </h5>
+                    <h4>
+                        @if($ad->user_id == Auth::id() && $ad->sold_to_user->count() > 0)
+                            {{$ad->sold_to_user->first()->username ? $ad->sold_to_user->first()->username : 'NH-Bruker'}}
+                        @endif
+
+                        @if($ad->user_id != Auth::id() && $ad->user)
+                            {{$ad->user->username ? $ad->user->username : 'NH-Brkuer'}}
+                        @endif
+                    </h4>
                     <form action="{{route('ratings-store',$ad->id)}}" method="POST">
                         @csrf
                         <div class="">
@@ -91,7 +103,7 @@
                                 </div>
                             </div>
 
-                            <button class="dme-btn-outlined-blue mb-3 col-12">Sende inn</button>
+                            <button class="dme-btn-outlined-blue mb-3 col-12">Send inn</button>
                         </div>
                     </form>
                 </div>

@@ -130,4 +130,22 @@ class RatingController extends Controller
             abort(404);
         }
     }
+
+    //Show all ratings and reviews to admin
+    public function admin_ratings_list(){
+        $ratings = UserRatingReview::orderBy('id','DESC')->get();
+        return view('admin.list-ratings',compact('ratings'));
+    }
+
+    //
+    public function delete_rating($id){
+        $rating = UserRatingReview::find($id);
+        if($rating && Auth::user()->hasRole('admin')){
+            $rating->delete();
+            Session::flash('success','Record has been deleted successfully.');
+            return back();
+        }else{
+            abort(404);
+        }
+    }
 }

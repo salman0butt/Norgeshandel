@@ -941,6 +941,17 @@ class common
 
     //find nearby ads related to current location using lati and longs and miles
     public static function find_nearby_ads($lat,$lon,$query,$table_name){
+        $query->WhereNotNull($table_name.'.latitude')->WhereNotNull($table_name.'.longitude')
+        ->select($table_name.".*","ads.published_on","ads.updated_at"
+            ,DB::raw("6371 * acos(cos(radians(" . $lat . "))
+                        * cos(radians(".$table_name.".latitude))
+                        * cos(radians(".$table_name.".longitude) - radians(" . $lon . "))
+                        + sin(radians(" .$lat. "))
+                        * sin(radians(".$table_name.".latitude))) AS distance"))
+            ->orderBy('distance','ASC')->distinct();
+//        dd($query);
+
+        /*
         $d = 31.0686;       //50km in miles ;
         $r = 3959;          //earth's radius in miles
         $latitude = $lat;   //58.32775757729577;
@@ -961,7 +972,7 @@ class common
                 - sin(deg2rad($latitude)) * sin(deg2rad($latN)))); //longitude
         $query->where($table_name.'.latitude','<=',$latN)->where($table_name.'.latitude','>=',$latS)
             ->where($table_name.'.longitude','<=',$lonE)->where($table_name.'.longitude','>=',$lonW);
-
+        */
     }
 
 }

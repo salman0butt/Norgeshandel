@@ -237,11 +237,15 @@ class PropertyForSaleController extends Controller
                 break;
             case '99':
                 //find nearby ads
-                common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                    common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                }
                 break;
         }
 
-        $query->select('property_for_sales.*','ads.published_on','ads.updated_at')->distinct();
+        if(!isset($request->lat) && !isset($request->lon)){
+            $query->select('property_for_sales.*','ads.published_on','ads.updated_at')->distinct();
+        }
 
         $query->where($arr);
         if ($get_collection){

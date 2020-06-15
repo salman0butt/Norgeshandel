@@ -125,10 +125,12 @@ class CommercialPropertyForSaleController extends Controller
                 break;
             case '99':
                 //find nearby ads
-                common::find_nearby_ads($request->lat, $request->lon,$query,$table);
-                break;
+                if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                    common::find_nearby_ads($request->lat, $request->lon,$query,$table);
+                    break;
+                }
         }
-        $query->orderBy('ads.published_on', 'DESC');
+        //$query->orderBy('ads.published_on', 'DESC');
 
         if ($get_collection){
             return $query->get();

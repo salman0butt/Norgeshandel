@@ -293,6 +293,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('my-business/my-ads/{id}/options', 'AdController@ad_option');
         Route::get('my-business/my-ads/{id}/statistics', 'AdController@ad_statistics');
         Route::post('my-business/my-ads/{id}/sold', 'AdController@ad_sold')->name('ad-sold');
+        Route::post('my-business/my-ads/{id}/sold/add/buyer', 'AdController@add_buyer_in_sold_ad')->name('add-buyer-in-sold-ad');
         Route::get('my-business/my-ads/{id}/ratings', 'RatingController@ad_ratings');
         Route::post('my-business/my-ads/{id}/ratings/store', 'RatingController@store_ratings')->name('ratings-store');
         // message
@@ -627,7 +628,9 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::delete('property/delete/{obj}', 'PropertyController@property_destroy')->name('delete-property');
         //restore user
         Route::get('/user/restore/{id}', 'Admin\Users\AdminUserController@restore')->name('user-restore');
-
+        //get all reviews and ratings
+        Route::get('ratings', 'RatingController@admin_ratings_list')->name('ratings');
+        Route::delete('delete-rating/{id}', 'RatingController@delete_rating')->name('delete-rating');
 
         //all general resources
         Route::resources([

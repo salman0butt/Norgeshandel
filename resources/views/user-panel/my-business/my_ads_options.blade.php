@@ -131,6 +131,13 @@
                                 </button>
                             @endif
                         </div>
+                        <div class="u-pv8 mt-2">
+                            @if($ad->sold_at && $ad->status == 'sold' && $ad->ad_type != 'job' && !$ad->sold_to_user->count())
+                                <button type="button" class="link pl-0" data-toggle="modal" data-target="#soldAdUser">
+                                    Har du vurderingen din? Velg bruker:
+                                </button>
+                            @endif
+                        </div>
                     </div>
                     {{--<a class="u-pv8 mt-2" href="#">Merk som solgt</a>--}}
 
@@ -140,6 +147,7 @@
     </div>
 </main>
 
+<!-- Confirmation Sold ad modal -->
 <div class="modal fade mt-5" id="soldAd" tabindex="-1" role="dialog" aria-labelledby="soldAd">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -153,12 +161,36 @@
                 {{csrf_field()}}
                 <div class="modal-body">
                     <h5>Vil du merke denne annonsen som @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent') utleid @else solgt @endif? Du vil ikke kunne endre status senere.</h5>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="Submit" class="btn btn-primary">Ja</button>
+                    <a class="btn btn-danger" href="#" data-dismiss="modal">Nei</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- show user for selecting as a buyer of sold ads modal -->
+<div class="modal fade mt-5" id="soldAdUser" tabindex="-1" role="dialog" aria-labelledby="soldAdUser">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Annonse solgt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route('add-buyer-in-sold-ad', $ad->id)}}" id="ad-sold" class="mb-0" method="POST">
+                {{csrf_field()}}
+                <div class="modal-body">
                     <div class="u-mb32 form-group">
                         <div class="input">
                             <label for="keywords-input" class="u-t5">Ønsker du å gi din vurdering? Velg bruker:</label>
                             <div style="display: block;">
                                 <select class="form-control" name="user_id" style="width: 100%;">
-                                    <option value="0">Other</option>
+                                    <option value="0">Annen</option>
                                     @if($ad->message_threads->count() > 0)
                                         @foreach($ad->message_threads as $message_thread)
                                             @if($message_thread->messages->count() > 0)
@@ -184,16 +216,43 @@
     </div>
 </div>
 
+<!-- Confirmation Sold ad view reviews and ratings page modal -->
+<div class="modal fade mt-5" id="confirmation_msg_to_show_rating_form" tabindex="-1" role="dialog" aria-labelledby="confirmation_msg_to_show_rating_form">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Annonse solgt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+                <div class="modal-body">
+                    <h5>Vil du vurdere disse annonsene nå?</h5>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" href="{{url('my-business/my-ads/'.$ad->id.'/ratings')}}">Ja</a>
+                    <a class="btn btn-danger" href="#" data-dismiss="modal">Nei</a>
+                </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @section('script')
+    @if(!empty(Session::get('error_code')) && Session::get('error_code') == 5)
+        <script>
+            $(function() {
+                $('#soldAdUser').modal('show');
+            });
+        </script>
+    @endif
 
-    {{--<script src="{{ asset('public/admin/js/select2.min.js') }}"></script>--}}
-    {{--<script src="{{ asset('public/admin/js/select2.full.min.js') }}"></script>--}}
-    {{--<script>--}}
-        {{--$(".select2").select2({--}}
-            {{--width: 'resolve', // need to override the changed default--}}
-            {{--selectOnClose: true--}}
-        {{--});--}}
-    {{--</script>--}}
+    @if(!empty(Session::get('error_code')) && Session::get('error_code') == 6)
+        <script>
+            $(function() {
+                $('#confirmation_msg_to_show_rating_form').modal('show');
+            });
+        </script>
+    @endif
 @endsection

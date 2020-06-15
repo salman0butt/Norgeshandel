@@ -19,6 +19,15 @@
                 });
             }
         }
+
+        function set_lat_lon(newUrl,sort){
+            if(sort === '4' && cur_lat && cur_lon){
+                newUrl += "&lat=" + cur_lat.toFixed(6);
+                newUrl += "&lon=" + cur_lon.toFixed(6);
+            }
+            return newUrl;
+        }
+
         $(document).ready(function () {
             get_curr_location();
             // $(window).on('popstate', function(e) {
@@ -37,7 +46,10 @@
                var sort_val = $(this).val();
                 urlParams = new URLSearchParams(location.search);
                 urlParams.delete('sort');
+                urlParams.delete('lat');
+                urlParams.delete('lon');
                 urlParams.set('sort', $(this).val());
+
                 if(sort_val === '4' && cur_lat && cur_lon){
                     urlParams.set('lat', cur_lat.toFixed(6));
                     urlParams.set('lon', cur_lon.toFixed(6));
@@ -67,6 +79,8 @@
                 if (!isEmpty(sort)) {
                     newUrl += "&sort=" + sort;
                 }
+
+                newUrl = set_lat_lon(newUrl,sort);
 
                 search(newUrl);
                 if(!added){
