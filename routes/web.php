@@ -293,6 +293,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('my-business/my-ads/{id}/options', 'AdController@ad_option');
         Route::get('my-business/my-ads/{id}/statistics', 'AdController@ad_statistics');
         Route::post('my-business/my-ads/{id}/sold', 'AdController@ad_sold')->name('ad-sold');
+        Route::post('my-business/my-ads/{id}/sold/add/buyer', 'AdController@add_buyer_in_sold_ad')->name('add-buyer-in-sold-ad');
         Route::get('my-business/my-ads/{id}/ratings', 'RatingController@ad_ratings');
         Route::post('my-business/my-ads/{id}/ratings/store', 'RatingController@store_ratings')->name('ratings-store');
         // message

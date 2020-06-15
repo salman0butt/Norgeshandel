@@ -295,6 +295,23 @@ class AdController extends Controller
                 $ad->sold_at = date('Y-m-d G:i');
                 $ad->status = 'sold';
                 $ad->update();
+                common::fav_mark_sold_notification($ad, $this->pusher);
+                Session::flash('success','Posten er oppdatert.');
+                return Redirect::back()->with('error_code', 5);
+            }else{
+                return redirect('forbidden');
+            }
+        }else{
+            abort(404);
+        }
+    }
+
+
+    //Ad user in sold ads like as buyer of this ad
+    public function add_buyer_in_sold_ad($id,Request $request){
+        $ad = Ad::find($id);
+        if($ad){
+            if($ad->ad_type != 'job' && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))) {
                 if($request->user_id){
                     $ad->sold_to_user()->attach($request->user_id);
 
@@ -317,10 +334,10 @@ class AdController extends Controller
                         $message->to($to_email, $to_name)->subject($subject);
                         $message->from('developer@digitalmx.no', 'NorgesHandel');
                     });
+
+                    Session::flash('success','Kjøperen er lagt til.');
+                    return Redirect::back()->with('error_code', 6);
                 }
-                common::fav_mark_sold_notification($ad, $this->pusher);
-                Session::flash('success','Posten er oppdatert.');
-                return back();
             }else{
                 return redirect('forbidden');
             }

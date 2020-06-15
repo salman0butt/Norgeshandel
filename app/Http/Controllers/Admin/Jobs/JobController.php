@@ -730,14 +730,17 @@ class JobController extends Controller
                     $query->orderBy('jobs.zip_city', 'asc');
                     break;
                 case 4:
-                    //find nearby ads
-                    common::find_nearby_ads($request->lat, $request->lon,$query,'jobs');
+                    if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
+                        common::find_nearby_ads($request->lat, $request->lon,$query,'jobs');
+                    }
                     break;
                 default:
                     break;
             }
         }
-        $query->orderBy('ads.published_on','DESC');
+        if(!isset($request->lat) && !isset($request->lon)) {
+            $query->orderBy('ads.published_on', 'DESC');
+        }
         if($request->job_type){
             $query = $query->where('jobs.job_type',$request->job_type);
         } //jobtype
