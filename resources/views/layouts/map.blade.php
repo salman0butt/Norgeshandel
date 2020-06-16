@@ -150,6 +150,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0);" id="direction">Ruteplan</a>
                 </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/map/property') }}" id="direction">Property For Sale Filter</a>
+                </li>
             </ul>
             <!-- Links -->
 

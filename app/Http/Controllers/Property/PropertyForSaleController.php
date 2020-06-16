@@ -210,30 +210,14 @@ class PropertyForSaleController extends Controller
             $query->where('ads.company_id', $request->company_id);
         }
 //        $query->orderBy('ads.published_on', 'DESC');
-          $all_ads = $query->get();
+         // $all_ads = $query->get();
         //   $img_data = $all_ads->company_gallery->id;
- 
-        $full_path = array();
-          foreach($all_ads as $ad){
-              $ad = Ad::find($ad->ad_id);
-              if($ad->company_gallery->first() && $ad->company_gallery->first()->name_unique){
-                $full_path[] = \App\Helpers\common::getMediaPath($ad->company_gallery->first());
-              //  dd($full_path);
-              }
-              else{
-                  $full_path[] = asset('public/images/placeholder.png');
-
-              }
-          }
-
-        array_walk_recursive($all_ads, function (&$ad) use (&$full_path) {
-            $ad->full_path = current($full_path);
-            next($full_path);
-        });
-
-        if ($request->ajax()) {
-             if($request->map){
-                return response()->json(['data'=>$all_ads]);
+       
+        //Property for sale Map Filters
+       if ($request->ajax()) {
+             if(isset($request->map) && $request->map){
+                $all_ads = common::propertyMapFilters($query);
+                 return response()->json(['data'=>$all_ads]);
              }
         }
 
