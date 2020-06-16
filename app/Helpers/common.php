@@ -891,6 +891,29 @@ class common
         return $jobs;
     }
 
+    //Property Map Filters
+    public static function propertyMapFilters($query){
+        $all_ads = $query->get();
+         $full_path = array();
+          foreach($all_ads as $ad){
+              $ad = Ad::find($ad->ad_id);
+              if($ad->company_gallery->first() && $ad->company_gallery->first()->name_unique){
+                $full_path[] = \App\Helpers\common::getMediaPath($ad->company_gallery->first());
+              //  dd($full_path);
+              }
+              else{
+                  $full_path[] = asset('public/images/placeholder.png');
+
+              }
+          }
+
+        array_walk_recursive($all_ads, function (&$ad) use (&$full_path) {
+            $ad->full_path = current($full_path);
+            next($full_path);
+        });
+        return $all_ads;
+    } 
+
     //Send site and email notification to user according to job preferences related to
     public static function job_preferences_notifications($ad,$pusher){
         if($ad && $ad->job && $ad->job->company_id && $ad->job->company && $ad->job->company->followings->count() ){

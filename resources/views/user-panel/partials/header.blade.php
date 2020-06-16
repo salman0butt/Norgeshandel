@@ -18,9 +18,9 @@
                     @if(\Illuminate\Support\Facades\Request::is('jobs/search'))
                         @include('user-panel.partials.templates.job-filter')
                     @endif
-                    {{-- @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search')) --}}
+                    @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search') || \Illuminate\Support\Facades\Request::is('map') || \Illuminate\Support\Facades\Request::is('map/property'))
                         @include('user-panel.partials.templates.filter-property-for-sale')
-                    {{-- @endif --}}
+                    @endif
                     @if(\Illuminate\Support\Facades\Request::is('property/property-for-rent/search'))
                         @include('user-panel.partials.templates.filter-property-for-rent')
                     @endif

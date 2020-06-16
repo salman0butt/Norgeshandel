@@ -43,6 +43,7 @@ class PropertyForSaleController extends Controller
 
     public function search_property_for_sale(Request $request, $get_collection=false)
     {
+      
         if(isset($request->search_id) && !$get_collection){
             Notification::where('notifiable_id', '=', $request->search_id)
                 ->whereNull('read_at')->update(['read_at'=>now()]);
@@ -209,6 +210,16 @@ class PropertyForSaleController extends Controller
             $query->where('ads.company_id', $request->company_id);
         }
 //        $query->orderBy('ads.published_on', 'DESC');
+         // $all_ads = $query->get();
+        //   $img_data = $all_ads->company_gallery->id;
+       
+        //Property for sale Map Filters
+       if ($request->ajax()) {
+             if(isset($request->map) && $request->map){
+                $all_ads = common::propertyMapFilters($query);
+                 return response()->json(['data'=>$all_ads]);
+             }
+        }
 
         switch ($sort) {
             case 'most_relevant':
@@ -254,11 +265,7 @@ class PropertyForSaleController extends Controller
 
         $query->orderBy('ads.published_on', 'DESC');
         $all = $query->get();
-         if ($request->ajax()) {
-            if(Request::is('/map/*')) {
-                dd('working');
-            }
-        }
+  
         $ids = $all->pluck('id');
         $clicks = AdView::whereIn('ad_id', $ids)->count();
         $add_array = $query->paginate($this->pagination);
