@@ -43,6 +43,7 @@ class PropertyForSaleController extends Controller
 
     public function search_property_for_sale(Request $request, $get_collection=false)
     {
+      
         if(isset($request->search_id) && !$get_collection){
             Notification::where('notifiable_id', '=', $request->search_id)
                 ->whereNull('read_at')->update(['read_at'=>now()]);
@@ -209,6 +210,32 @@ class PropertyForSaleController extends Controller
             $query->where('ads.company_id', $request->company_id);
         }
 //        $query->orderBy('ads.published_on', 'DESC');
+          $all_ads = $query->get();
+        //   $img_data = $all_ads->company_gallery->id;
+ 
+        $full_path = array();
+          foreach($all_ads as $ad){
+              $ad = Ad::find($ad->ad_id);
+              if($ad->company_gallery->first() && $ad->company_gallery->first()->name_unique){
+                $full_path[] = \App\Helpers\common::getMediaPath($ad->company_gallery->first());
+              //  dd($full_path);
+              }
+              else{
+                  $full_path[] = asset('public/images/placeholder.png');
+
+              }
+          }
+
+        array_walk_recursive($all_ads, function (&$ad) use (&$full_path) {
+            $ad->full_path = current($full_path);
+            next($full_path);
+        });
+
+        if ($request->ajax()) {
+             if($request->map){
+                return response()->json(['data'=>$all_ads]);
+             }
+        }
 
         switch ($sort) {
             case 'most_relevant':
@@ -254,11 +281,7 @@ class PropertyForSaleController extends Controller
 
         $query->orderBy('ads.published_on', 'DESC');
         $all = $query->get();
-         if ($request->ajax()) {
-            if(Request::is('/map/*')) {
-                dd('working');
-            }
-        }
+  
         $ids = $all->pluck('id');
         $clicks = AdView::whereIn('ad_id', $ids)->count();
         $add_array = $query->paginate($this->pagination);

@@ -27,8 +27,8 @@ class MapController extends Controller
     exit($html);
 
     }
-    public function realEstate() {
-        return view('map.real-estate');
+    public function propertyForSaleFilter() {
+        return view('map.map-filter');
     }
 
     /**

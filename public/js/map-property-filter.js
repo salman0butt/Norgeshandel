@@ -10,9 +10,7 @@ $(document).ready(function () {
             url: url,
             type: "GET",
             success: function (response) {
-                if ($("#basicExampleModal.show") != '') {
-                    $('#dme-wrapper').html(response);
-                }
+                initMap(response.data);
             },
             error: function (error) {
                 //console.log(error);
