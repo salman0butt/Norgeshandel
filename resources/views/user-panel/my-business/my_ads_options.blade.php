@@ -24,7 +24,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('my-business')}}">Min handel</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business/my-ads')}}">Mine annonsers</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business/my-ads')}}">Mine annonser</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a href="#">Flere valg</a></li>
             </ol>
         </nav>
@@ -134,7 +134,7 @@
                         <div class="u-pv8 mt-2">
                             @if($ad->sold_at && $ad->status == 'sold' && $ad->ad_type != 'job' && !$ad->sold_to_user->count())
                                 <button type="button" class="link pl-0" data-toggle="modal" data-target="#soldAdUser">
-                                    Har du vurderingen din? Velg bruker:
+                                    Velg bruker og gi din vurdering av handelen.
                                 </button>
                             @endif
                         </div>
@@ -187,7 +187,9 @@
                 <div class="modal-body">
                     <div class="u-mb32 form-group">
                         <div class="input">
-                            <label for="keywords-input" class="u-t5">Ønsker du å gi din vurdering? Velg bruker:</label>
+                            <p>Du kan kun gi dine vurderinger til mennesker du har kommunisert med  gjennom meldinger i NorgesHandel.</p>
+                            <p>Vurderinger kan også gis senere dersom du ikke ønsker å gjøre dette nå.</p>
+                            <label for="keywords-input" class="u-t5">Velg bruker:</label>
                             <div style="display: block;">
                                 <select class="form-control" name="user_id" style="width: 100%;">
                                     <option value="0">Annen</option>

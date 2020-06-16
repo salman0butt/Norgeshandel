@@ -51,9 +51,9 @@
                     {{--</li>--}}
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="{{url('notifications')}}">
-                            @if(\Auth::check() && Auth::user()->unread_notifications()->count() >0)
+                            @if(\Auth::check() && Auth::user()->header_unread_notifications()->count() >0)
                                 <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">
-                                     {{ Auth::user()->unread_notifications()->count()}}
+                                     {{ Auth::user()->header_unread_notifications()->count()}}
                                 </span>
                             @endif
                             <i class="far fa-bell nav-icons"></i>

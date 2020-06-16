@@ -97,7 +97,7 @@ class RatingController extends Controller
 
                 // Send notification to ratings receiver user
                 $user_name = $rating->from_user && ($rating->from_user->first_name || $rating->from_user->last_name) ? $rating->from_user->first_name.' '.$rating->from_user->last_name : 'NH-Bruker';
-                $notif = new Notification(['notifiable_type' => UserRatingReview::class, 'type' => 'ratings_reviews', 'user_id' => $rating->to_user_id, 'notifiable_id' => $rating->id, 'data' => $user_name.' har gitt deg sin vurdering.']);
+                $notif = new Notification(['notifiable_type' => UserRatingReview::class, 'type' => 'ratings_reviews', 'user_id' => $rating->to_user_id, 'notifiable_id' => $rating->id, 'data' => $user_name.' har gitt deg sin vurdering av handelen.']);
                 $notif->save();
                 $data = array('detail' => 'Anmeldelse lagt ut', 'to_user_id' => $rating->to_user_id);
                 $pusher->trigger('notification', 'notification-event', $data);

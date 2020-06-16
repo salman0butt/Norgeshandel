@@ -12,7 +12,7 @@
     <script src="{{ asset('public/admin/js/jquery.min.js') }}"></script>
     <link href="{{ asset('public/admin/css/float-chart.css') }}" rel="stylesheet">
     <link href="{{ asset('public/admin/css/materialdesignicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('public/admin/css/fontawesome-all.css') }}" rel="stylesheet">
+    {{--<link href="{{ asset('public/admin/css/fontawesome-all.css') }}" rel="stylesheet">--}}
 
 {{--    <link href="{{ asset('public/admin/css/themify-icons.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('public/admin/css/multicheck.css') }}" rel="stylesheet">
@@ -231,8 +231,7 @@
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/companies-list') }}" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Companies')}}</span></a></li>
                     
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/agent-list') }}" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Agents')}}</span></a></li>
-{{--                    @endpermission--}}
-{{--                    @permission('manage_users')--}}
+
                     <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">{{__('Users')}} </span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
                             <li class="sidebar-item"><a href="{{url('admin/users')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All users')}} </span></a></li>
@@ -240,7 +239,7 @@
                             <li class="sidebar-item"><a href="{{url('admin/roles/index')}}" class="sidebar-link"><i class="mdi mdi-account-settings"></i><span class="hide-menu"> {{__('Settings')}} </span></a></li>
                         </ul>
                     </li>
-{{--                    @endpermission--}}
+
                     <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">{{__('Settings')}} </span></a>
                         <ul aria-expanded="false" class="collapse  first-level">
                             <li class="sidebar-item"><a href="settings-site.php" class="sidebar-link"><i class="mdi mdi-settings"></i><span class="hide-menu"> {{__('Site settings')}} </span></a></li>
@@ -249,6 +248,13 @@
                         </ul>
                     </li>
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/ratings') }}" aria-expanded="false"><i class="fa fa-star"></i><span class="hide-menu">{{__('Ratings & Reviews')}}</span></a></li>
+
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Packages')}} </span></a>
+                        <ul aria-expanded="false" class="collapse" id="multiCollapseExample1">
+                            <li class="sidebar-item"><a href="{{route('admin.packages.index')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Packages')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{route('admin.packages.create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Package')}} </span></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
