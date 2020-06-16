@@ -48,7 +48,7 @@
                             @foreach($ratings as $rating)
                                 @if($rating->ad)
                                     <tr>
-                                        <td>{{ $rating->ad && $rating->ad->getTitle() ? Str::limit($rating->ad->getTitle(),20) : '' }}</td>
+                                        <td title="{{ $rating->ad && $rating->ad->getTitle() ? $rating->ad->getTitle() : '' }}">{{ $rating->ad && $rating->ad->getTitle() ? Str::limit($rating->ad->getTitle(),20) : '' }}</td>
                                         <td>{{ $rating->to_user && $rating->to_user->username ? $rating->to_user->username : 'NH-Bruker' }}</td>
                                         <td>{{ $rating->from_user && $rating->from_user->username ? $rating->from_user->username : 'NH-Bruker' }}</td>
                                         <td>

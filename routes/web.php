@@ -312,7 +312,6 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('notifications-read-all', 'NotificationController@read_all');
         Route::get('read-single-notification', 'NotificationController@read_single_notification')->name('read-single-notification');
 
-
         Route::get('remove-fav-note', 'FavoriteController@remove_fav_note');
         Route::post('store-fav-note', 'FavoriteController@store_fav_note');
 
@@ -642,6 +641,8 @@ Route::group(['middleware' => 'authverified'], function () {
             'term' => 'TermController',
             'tax' => 'TaxonomyController',
             'media' => 'MediaController',
+
+            'packages' => 'PackageController',
         ]);
     });
 

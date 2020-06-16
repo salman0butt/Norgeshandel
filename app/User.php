@@ -199,6 +199,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Notification::class);
     }
+    public function header_unread_notifications()
+    {
+        return $this->hasMany(Notification::class)->whereNull('secondary_read_at');
+    }
     public function unread_notifications()
     {
         return $this->hasMany(Notification::class)->whereNull('read_at');

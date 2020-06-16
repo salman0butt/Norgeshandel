@@ -43,10 +43,12 @@ function dme_nav_collapse(){
     $.each($('.nav-dynamic-checks'), function (index) {
         var should_visible = true;
         if($(this).find('>ul>li').length>12){
-            $.each($(this).find('>ul>li'), function(x){
-                if($(this).index()>12){
-                    $(this).slideUp();
-                    should_visible = false;
+            $.each($(this).find('>ul>li'), function(x,this_obj){
+                if($(this).index() > 12){
+                    if(!$(this).find("input[type='checkbox']").attr("checked")){
+                        $(this).slideUp();
+                        should_visible = false;
+                    }
                 }
             });
         }

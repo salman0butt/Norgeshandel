@@ -296,7 +296,7 @@ class AdController extends Controller
                 $ad->status = 'sold';
                 $ad->update();
                 common::fav_mark_sold_notification($ad, $this->pusher);
-                Session::flash('success','Posten er oppdatert.');
+                Session::flash('success','Annonsen er oppdatert.');
                 return Redirect::back()->with('error_code', 5);
             }else{
                 return redirect('forbidden');

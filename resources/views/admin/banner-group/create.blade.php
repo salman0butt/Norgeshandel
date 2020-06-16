@@ -135,16 +135,7 @@ Add new Banner Group
     <!--            end row-->
 </form>
 
-
-
-
-
-
 <script>
     $(".select2").select2();
-
 </script>
-
-
-
 @endsection

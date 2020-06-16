@@ -106,6 +106,7 @@ class common
 
     public static function map_nav($terms,$url_params='')
     {
+        //
         $html = '<ul class="list list-unstyled">';
         foreach ($terms as $term) {
             $value = $term->taxonomy->slug == 'states_and_cities' ? $term->serial : $term->name;

@@ -64,7 +64,7 @@
                                             <div class="numberCircle">{{$avg ? round($avg) : $avg}}</div>
                                         </div>
                                         <div class="col-9 pl-0">
-                                            <h6 class="mb-0">Urmerket</h6>
+                                            <h6 class="mb-0">Utmerket</h6>
                                             <p>{{$user->received_ratings->count()}} vurderinger</p>
                                         </div>
 
