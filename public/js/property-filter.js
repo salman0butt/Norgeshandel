@@ -30,12 +30,6 @@ function set_lat_lon(newUrl,sort){
 
 
 $(document).ready(function () {
-
-    //   $('a.row').on('click', function (e) {
-    //       e.preventDefault();
-    //       alert('working');
-    //       history.pushState({}, null, '');
-    //   });
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
