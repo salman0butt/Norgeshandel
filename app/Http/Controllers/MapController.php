@@ -37,7 +37,7 @@ class MapController extends Controller
             $html = view('user-panel.partials.templates.filter-property-for-sale')->render();
             exit($html);
         }
-        else if($request->property_type == 'property_for_sale'){
+        else if($request->property_type == 'property_for_rent'){
             $html = view('user-panel.partials.templates.filter-property-for-rent')->render();
             exit($html);
         }

@@ -109,6 +109,14 @@ class CommercialPropertyForSaleController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
+                   //Property Map Filters
+       if ($request->ajax()) {
+             if(isset($request->map) && $request->map){
+                $all_ads = common::propertyMapFilters($query);
+                 return response()->json(['data'=>$all_ads]);
+             }
+        }
+
 
         switch ($sort) {
             case 'most_relevant':

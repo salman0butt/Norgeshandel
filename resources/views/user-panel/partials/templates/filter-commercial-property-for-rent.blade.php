@@ -42,6 +42,10 @@
                                 </li>
                             </ul>
                         </div>
+                         {{-- @if(\Illuminate\Support\Facades\Request::is('map/property')) --}}
+                        <input type="hidden" id="mega_menu_search_url" value="{{url('property/commercial-property-for-rent/search')}}">
+                        <input class="form-control" type="hidden" name="map" value="map">
+                   {{-- @endif --}}
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Område, by eller sted</h3>
                             <div class="float-left mt-2">

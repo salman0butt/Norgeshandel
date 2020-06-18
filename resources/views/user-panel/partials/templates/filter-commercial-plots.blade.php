@@ -59,6 +59,10 @@
                             </div>
                         </div>
                     </div>
+                     {{-- @if(\Illuminate\Support\Facades\Request::is('map/property')) --}}
+                        <input type="hidden" id="mega_menu_search_url" value="{{url('property/commercial-plots/search')}}">
+                        <input class="form-control" type="hidden" name="map" value="map">
+                   {{-- @endif --}}
                     <div style="border-right:1px solid #ddd;" class="col-md-6">
                         <div class="form-group nav-dynamic-checks mt-4">
                             <h3 class="u-t5">Område</h3>

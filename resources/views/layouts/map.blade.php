@@ -231,18 +231,19 @@
             $('#sok').on('click', function () {
 
                 $(this).parent().find('li.nav-item').addClass('active');
-                url = '{{ url(' / map / search ') }}';
+                url = '{{ url('/map/search') }}';
                 getMap(url);
             });
             $('#direction').on('click', function () {
                 $(this).parent().find('li.nav-item').addClass('active');
-                url = '{{ url(' / map / direction ') }}';
+                url = '{{ url('/map/direction') }}';
                 getMap(url);
             });
 
         });
 
     </script>
+    @yield('scripts')
 
 </body>
 

@@ -30,12 +30,12 @@
         return function() {
           infowindow.setContent(`<div class="row">
             <div id="images" class="col-md-4">
-                <center><img src="${locations[i]['full_path']}" width="200"/></center>
+                <center><img src="${locations[i]['full_path'] ? locations[i]['full_path'] : ''}" style="width:100%; max-width:100%;"/></center>
             </div>
             <div class="col-md-8">
-            <h6><a href="{{ url('/') }}/${locations[i]['ad_id']}">${locations[i]['headline']}</a></h6>
-            <p>location: ${locations[i]['full_address']} </p>
-            <p>price: ${locations[i]['total_price']}</p></div>
+            <h6><a href="{{ url('/') }}/${locations[i]['ad_id']}">${locations[i]['headline'] ? locations[i]['headline'] : 'N/A'}</a></h6>
+            <p>location: ${locations[i]['full_address'] ? locations[i]['full_address'] : ''} </p>
+            <p>price: ${locations[i]['total_price'] ? locations[i]['total_price'] : ''}</p></div>
           </div>`);
           infowindow.open(map, marker);
         }
@@ -44,17 +44,15 @@
  }
 
 </script>
+@section('scripts')
 <script>
-$('#property_type').on('change',function() {
-     console.log($(this).val());
-
-    var url = '{{ url('map/select-property') }}';
+$(document).on('change', '#property_type',function() {
+   var url = '{{ url('map/select-property') }}';
      $.ajax({
             data: {"property_type": $(this).val()},
             url: url,
             type: "GET",
             success: function (response) {
-              console.log(response);
               if($('#collapsibleNavbar > ul > li.nav-item.filter-btn').length > 0){
                    $('#collapsibleNavbar ul .filter-btn:first').remove();
                      $('#collapsibleNavbar ul:first').prepend(response);
@@ -69,5 +67,5 @@ $('#property_type').on('change',function() {
         });
 });
 </script>
-
+@stop
 @endsection

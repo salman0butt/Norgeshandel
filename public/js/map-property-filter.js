@@ -3,6 +3,13 @@ $(document).ready(function () {
     // var urlParams = new URLSearchParams(location.search);
     //  var newUrl = $('#mega_menu_form').serialize();
     //  search(newUrl);
+    
+    $(document).on('blur', '#property_type',function() {
+        setTimeout(function() {
+        var newUrl = $('#mega_menu_form').serialize();
+        search(newUrl);
+        }, 100);  
+    });
 
     function search(data) {
         var urlParams = new URLSearchParams(location.search);
@@ -11,6 +18,7 @@ $(document).ready(function () {
             data: data,
             url: url,
             type: "GET",
+            async :true,
             success: function (response) {
                 initMap(response.data);
             },
@@ -34,7 +42,8 @@ $(document).ready(function () {
 
    // search(urlParams.toString());
 
-    $('.mega-menu input').change(function (e) {
+   // $('.mega-menu input').change(function (e) {
+    $(document).on('change','.mega-menu input',function() {
         var newUrl = $('#mega_menu_form').serialize();
 
 
