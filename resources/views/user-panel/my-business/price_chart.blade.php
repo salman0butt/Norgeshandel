@@ -40,50 +40,10 @@
                     <p class="u-mb32 pb-2">Annonsepriser beregnes ut fra hvor mange annonser din bedrift har lagt ut i løpet
                         av de siste 12 månedene. Her finner du prisen på den neste annonsen du legger ut. </p>
                     <div>
-                        <p class="u-t3">Jobb</p>
                         <div class="form-group">
-
-                            <button type="button" class="triger-btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <button type="button" class="triger-btn triger-btn1">
                                 <div class="expansion-panel__summary">
-                                    <div><span class="u-strong u-pr16">Pakker</span>
-                                    </div>
-                                </div>
-                                <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
-                            </button>
-                            <div class="expansion-panel__details collapse show" id="collapseExample">
-                                <table class="table table-hover mt-2 col-md-12">
-                                    <thead>
-                                    <tr>
-                                        <th>Tittel</th>
-                                        <th>Tillatte annonser</th>
-                                        <th>Verdt verdi</th>
-                                        <th>Pris</th>
-                                        <th>Annonsens utløp</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($packages as $package)
-                                            <tr>
-                                                <td>{{$package->title}}</td>
-                                                <td>{{$package->no_of_ads}}</td>
-                                                <td>{{$package->worth_values.' kr'}}</td>
-                                                <td>{{$package->total_price.' kr'}}</td>
-                                                <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                                <caption>
-                                    <p class="u-t5">Alle priser er i NOK, gjelder pr. annonse og er ekskl.
-                                        moms</p>
-                                </caption>
-                            </div>
-
-
-                            <button type="button" class="triger-btn triger-btn1 mt-3">
-                                <div class="expansion-panel__summary">
-                                    <div><span class="u-strong u-pr16">Prisene gjelder både som bedrift eller privat</span>
+                                    <div><span class="u-strong u-pr16">Prisene gjelder både som bedrift eller privat for enkel annonse</span>
                                 </div>
                                 </div>
                                  <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
@@ -148,6 +108,43 @@
                                             <td class="">1990 Kr</td>
                                             <td></td>
                                         </tr>
+                                    </tbody>
+
+                                </table>
+                                <caption>
+                                    <p class="u-t5">Alle priser er i NOK, gjelder pr. annonse og er ekskl.
+                                        moms</p>
+                                </caption>
+                            </div>
+
+                            <button type="button" class="triger-btn mt-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <div class="expansion-panel__summary">
+                                    <div><span class="u-strong u-pr16">Pakker</span>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
+                            </button>
+                            <div class="expansion-panel__details collapse show" id="collapseExample">
+                                <table class="table table-hover mt-2 col-md-12">
+                                    <thead>
+                                    <tr>
+                                        <th>Tittel</th>
+                                        <th>Annonser</th>
+                                        <th>Verdi</th>
+                                        <th>Pakkepris</th>
+                                        <th>Varighet</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($packages as $package)
+                                        <tr>
+                                            <td>{{$package->title}}</td>
+                                            <td>{{$package->no_of_ads}}</td>
+                                            <td>{{$package->worth_values.' kr'}}</td>
+                                            <td>{{$package->total_price.' kr'}}</td>
+                                            <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
 
                                 </table>

@@ -162,6 +162,13 @@ class JobController extends Controller
         }
         $published_date = date("Y-m-d H:i:s");
 
+        if($ad && $ad->job && $ad->job->company && $ad->job->company->full_address && $ad->job->company->latitude && $ad->job->company->longitude){
+            $arr['latitude'] = $ad->job->company->latitude;
+            $arr['longitude'] = $ad->job->company->longitude;
+            $arr['full_address'] = $ad->job->company->full_address;
+        }
+
+
         $ad->job->update($arr);
         $ad->update(['status' => 'published', 'published_on' => $published_date]);
      
@@ -395,7 +402,14 @@ class JobController extends Controller
             'longitude' => $request->longitude,
             'full_address' => $request->full_address,
         );
-        
+
+
+        if($job && $job->company && $job->company->full_address && $job->company->latitude && $job->company->longitude){
+            $arr['latitude'] = $job->company->latitude;
+            $arr['longitude'] = $job->company->longitude;
+            $arr['full_address'] = $job->company->full_address;
+        }
+
         $job->update($arr);
         $company_logo_id = '';
         if ($request->file('company_logo')) {
