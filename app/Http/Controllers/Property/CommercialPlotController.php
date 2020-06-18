@@ -89,6 +89,15 @@ class CommercialPlotController extends Controller
             $query->where('ads.company_id', $request->company_id);
         }
 
+        //Property Map Filters
+       if ($request->ajax()) {
+             if(isset($request->map) && $request->map){
+                $all_ads = common::propertyMapFilters($query);
+                 return response()->json(['data'=>$all_ads]);
+             }
+        }
+
+
         switch ($sort) {
             case 'most_relevant':
                 $query->orderBy('ads.updated_at', 'DESC');

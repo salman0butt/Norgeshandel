@@ -134,6 +134,15 @@ class PropertyHolidaysHomesForSaleController extends Controller
             $sort = $request->sort;
         }
 
+             //Holiday Home For Sale Filters
+       if ($request->ajax()) {
+             if(isset($request->map) && $request->map){
+                $all_ads = common::propertyMapFilters($query);
+                 return response()->json(['data'=>$all_ads]);
+             }
+        }
+
+
         switch ($sort) {
             case 'published':
                 $query->orderBy('ads.updated_at', 'DESC');

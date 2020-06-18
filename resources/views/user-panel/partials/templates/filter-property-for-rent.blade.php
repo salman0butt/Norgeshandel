@@ -74,10 +74,10 @@
                                 </div>
                             </div>
                         </div>
-                    @if(\Illuminate\Support\Facades\Request::is('map/property'))
-                        <input type="hidden" id="mega_menu_search_url" value="{{url('property/property-for-sale/search')}}">
+                    {{-- @if(\Illuminate\Support\Facades\Request::is('map/property')) --}}
+                        <input type="hidden" id="mega_menu_search_url" value="{{url('property/property-for-rent/search')}}">
                         <input class="form-control" type="hidden" name="map" value="map">
-                   @endif
+                   {{-- @endif --}}
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Størrelse</h3>
                             <div class="row">

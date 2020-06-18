@@ -143,7 +143,8 @@ $(document).ready(function (e) {
     var isDown = false;
     var isOpen = false;
 
-    $('.mega-menu-button').click(function (e) {
+   // $('.mega-menu-button').click(function (e) {
+    $(document).on('click', '.mega-menu-button', function (e) {
         e.preventDefault();
         if(isDown){
             $('.mega-menu').slideUp();
