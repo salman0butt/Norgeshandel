@@ -2,11 +2,11 @@
 
 @section('content')
 <div id="map"></div>
-<div id="image"></div>
+
 <script>
-    function initMap(data = {},images=[]) {
+    function initMap(data = {}) {
        // console.log(data);
-        //console.log(images);
+
         
           var locations = data;
 
@@ -43,6 +43,31 @@
     }
  }
 
+</script>
+<script>
+$('#property_type').on('change',function() {
+     console.log($(this).val());
+
+    var url = '{{ url('map/select-property') }}';
+     $.ajax({
+            data: {"property_type": $(this).val()},
+            url: url,
+            type: "GET",
+            success: function (response) {
+              console.log(response);
+              if($('#collapsibleNavbar > ul > li.nav-item.filter-btn').length > 0){
+                   $('#collapsibleNavbar ul .filter-btn:first').remove();
+                     $('#collapsibleNavbar ul:first').prepend(response);
+              }else {
+                $('#collapsibleNavbar ul:first').prepend(response);
+              }
+
+            },
+            error: function (error) {
+                //console.log(error);
+            }
+        });
+});
 </script>
 
 @endsection
