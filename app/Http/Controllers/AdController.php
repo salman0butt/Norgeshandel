@@ -336,7 +336,8 @@ class AdController extends Controller
                     });
 
                     Session::flash('success','Kjøperen er lagt til.');
-                    return Redirect::back()->with('error_code', 6);
+                    return redirect(url('my-business/my-ads/'.$ad->id.'/ratings'));
+//                    return Redirect::back()->with('error_code', 6);
                 }
             }else{
                 return redirect('forbidden');
