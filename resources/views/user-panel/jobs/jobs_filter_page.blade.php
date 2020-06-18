@@ -18,7 +18,7 @@
                     cur_lon = position.coords.longitude;
 
                     if(newUrl){
-                        newUrl = set_lat_lon(newUrl,'99');
+                        newUrl = set_lat_lon(newUrl,'4');
                         search(newUrl);
                     }
                 }, function() {
@@ -36,7 +36,7 @@
         }
 
         $(document).ready(function () {
-            get_curr_location();
+            //get_curr_location();
             // $(window).on('popstate', function(e) {
             //     window.location.href =  window.location.href.split("?")[0];
             // });
@@ -59,8 +59,6 @@
 
 
                 if(sort_val === '4' && (!cur_lon || !cur_lat)) {
-                    urlParams.set('lat', cur_lat.toFixed(6));
-                    urlParams.set('lon', cur_lon.toFixed(6));
                     get_curr_location(urlParams.toString());
                 }else{
                     var temp_newUrl = set_lat_lon(urlParams.toString(),sort_val);
