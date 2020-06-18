@@ -122,20 +122,13 @@ Route::group(['middleware' => 'authverified'], function () {
         return view('notification');
     });
 
-    Route::get('/apply-job', function () {
-        return view('user-panel.jobs.apply-job');
-    });
 
-    Route::get('/price-chart', function () {
-        return view('user-panel.my-business.price_chart');
-    });
-    Route::get('/job-pref', function () {
-        return view('user-panel.my-business.job_preferences');
-    });
 
-    Route::get('/privacy', function () {
-        return view('user-panel.my-business.privacy_setting');
-    });
+
+
+//    Route::get('/privacy', function () {
+//        return view('user-panel.my-business.privacy_setting');
+//    });
     Route::get('/become-business', function () {
         return view('user-panel.footer.become_business');
     });
@@ -602,6 +595,17 @@ Route::group(['middleware' => 'authverified'], function () {
             exit();
 
         });
+
+
+        Route::get('/price-chart', function () {
+            $packages = \App\Package::where('status',1)->orderBy('total_price','ASC')->get();
+            return view('user-panel.my-business.price_chart',compact('packages'));
+        });
+
+        Route::get('/apply-job', function () {
+            return view('user-panel.jobs.apply-job');
+        });
+
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin|manager']], function () {

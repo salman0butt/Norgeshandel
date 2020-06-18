@@ -11,11 +11,18 @@
         var cur_lat = '';
         var cur_lon = '';
 
-        function get_curr_location(){
+        function get_curr_location(newUrl=''){
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     cur_lat = position.coords.latitude;
                     cur_lon = position.coords.longitude;
+
+                    if(newUrl){
+                        newUrl = set_lat_lon(newUrl,'4');
+                        search(newUrl);
+                    }
+                }, function() {
+                    alert('Du fant ikke nærmeste annonser fordi vi ikke får tilgang til posisjonen din. Fjern blokkeringen av siden vår fra nettleserinnstillingene dine og prøv igjen. Takk');
                 });
             }
         }
@@ -29,7 +36,7 @@
         }
 
         $(document).ready(function () {
-            get_curr_location();
+            //get_curr_location();
             // $(window).on('popstate', function(e) {
             //     window.location.href =  window.location.href.split("?")[0];
             // });
@@ -50,12 +57,14 @@
                 urlParams.delete('lon');
                 urlParams.set('sort', $(this).val());
 
-                if(sort_val === '4' && cur_lat && cur_lon){
-                    urlParams.set('lat', cur_lat.toFixed(6));
-                    urlParams.set('lon', cur_lon.toFixed(6));
+
+                if(sort_val === '4' && (!cur_lon || !cur_lat)) {
+                    get_curr_location(urlParams.toString());
+                }else{
+                    var temp_newUrl = set_lat_lon(urlParams.toString(),sort_val);
+                    search(temp_newUrl);
                 }
-                //console.log(urlParams.toString());
-                search(urlParams.toString());
+
                 history.pushState('', 'NorgesHandel', "?" + urlParams.toString());
             });
             $(document).on('click', '#view', function (e) {

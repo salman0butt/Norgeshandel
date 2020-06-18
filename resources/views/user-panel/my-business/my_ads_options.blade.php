@@ -34,7 +34,7 @@
             <div class="col-12">
                 @include('common.partials.flash-messages')
             </div>
-            <div class="grid__unit col-md-8">
+            <div class="grid__unit col-md-7">
                 <div class="panel u-mb32">
                     <div class="mt-1 mb-2">
                         @php
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="grid__unit col-md-4">
+            <div class="grid__unit col-md-5">
                 <div class="sidebar u-pv8 mt-5">
                     <a class="u-pv8 mt-2" href="@if($ad->ad_type == 'job') {{route('jobs.show', $ad->job)}} @else {{url('/', $ad->id)}} @endif">Se annonsen</a>
                     <div class="u-pt8">
@@ -249,7 +249,7 @@
             });
         </script>
     @endif
-
+    <? /*
     @if(!empty(Session::get('error_code')) && Session::get('error_code') == 6)
         <script>
             $(function() {
@@ -257,4 +257,5 @@
             });
         </script>
     @endif
+    */ ?>
 @endsection

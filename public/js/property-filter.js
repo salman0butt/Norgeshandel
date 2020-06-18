@@ -1,27 +1,35 @@
 var added = false;
 
-var cur_lat = '';
-var cur_lon = '';
+var cur_lat = 0;
+var cur_lon = 0;
 
-function get_curr_location(){
+function get_curr_location(newUrl=''){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             cur_lat = position.coords.latitude;
             cur_lon = position.coords.longitude;
+            if(newUrl){
+                newUrl = set_lat_lon(newUrl,'99');
+                search(newUrl);
+            }
+        }, function() {
+            alert('Du fant ikke nærmeste annonser fordi vi ikke får tilgang til posisjonen din. Fjern blokkeringen av siden vår fra nettleserinnstillingene dine og prøv igjen. Takk');
         });
     }
 }
 
 
-$(document).ready(function () {
+function set_lat_lon(newUrl,sort){
+    if(sort === '99' && cur_lat && cur_lon){
+        newUrl += "&lat=" + cur_lat.toFixed(6);
+        newUrl += "&lon=" + cur_lon.toFixed(6);
+    }
 
-    get_curr_location();
-  
-    //   $('a.row').on('click', function (e) {
-    //       e.preventDefault();
-    //       alert('working');
-    //       history.pushState({}, null, '');
-    //   });
+    return newUrl;
+}
+
+
+$(document).ready(function () {
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
@@ -34,14 +42,6 @@ $(document).ready(function () {
             }
         }
     };
-
-    function set_lat_lon(newUrl,sort){
-        if(sort === '99' && cur_lat && cur_lon){
-            newUrl += "&lat=" + cur_lat.toFixed(6);
-            newUrl += "&lon=" + cur_lon.toFixed(6);
-        }
-        return newUrl;
-    }
 
     search(urlParams.toString());
     fix_page_links();
@@ -65,6 +65,7 @@ $(document).ready(function () {
         }
         newUrl = set_lat_lon(newUrl,sort);
         // history.pushState('data', 'NorgesHandel', "?" + newUrl);
+
         search(newUrl);
         // fix_page_links();
         var back_url = $('#back_url').val();
@@ -110,10 +111,10 @@ $(document).ready(function () {
             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
         }
     });
+
     $(document).on('change', '#sort_by', function () {
         var newUrl = $('#mega_menu_form').serialize();
         var sort = $(this).val();
-
         var view = getUrlParameter('view');
         var page = getUrlParameter('page');
         var user_id = getUrlParameter('user_id');
@@ -129,9 +130,16 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
-        newUrl = set_lat_lon(newUrl,sort);
-        // history.pushState('data', 'NorgesHandel', "?" + newUrl);
-        search(newUrl);
+        // newUrl = set_lat_lon(newUrl,sort);
+
+        if(sort === '99' && (!cur_lon || !cur_lat)) {
+            get_curr_location(newUrl);
+        }else{
+            newUrl = set_lat_lon(newUrl,sort);
+            search(newUrl);
+        }
+
+
         // fix_page_links();
         var back_url = $('#back_url').val();
         if (!added) {
@@ -140,6 +148,7 @@ $(document).ready(function () {
         } else {
             window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
         }
+
     });
     $(document).on('click', '#view', function (e) {
 

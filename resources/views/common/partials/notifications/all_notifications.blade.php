@@ -28,9 +28,9 @@
                                 <article class="col-md-12 pl-0 pr-0 list-ad1 {{!$notif->read_at ? 'unread_notification' : ''}} mb-3">
                                     <a href="javascript:void(0);" data-href=
                                        "@if($notif->notifiable_type == \App\Models\Search::class) {{url('/'.$notif->notifiable->filter)}}&search_id={{$notif->notifiable->id}}
-                                    @elseif($notif->notifiable_type == 'App\UserRatingReview') {{url('/', $notif->notifiable->ad_id)}}
-                                    @else {{url('/', $notif->notifiable->id)}} @endif"
-                                    class="notification_link" data-id="{{$notif->id}}">
+                                        @elseif($notif->notifiable_type == 'App\UserRatingReview' && $notif->type == 'ratings_reviews') {{url('rating')}}
+                                        @else {{url('/', $notif->notifiable->id)}} @endif"
+                                        class="notification_link" data-id="{{$notif->id}}">
 
                                         <div class="" style="max-width: 160px;display:block;width:23%;float:left;margin:5px;">
                                             <div class="">
