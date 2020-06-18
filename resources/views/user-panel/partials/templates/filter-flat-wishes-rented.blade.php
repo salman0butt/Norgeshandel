@@ -42,10 +42,10 @@
                                 </li>
                             </ul>
                         </div>
-                         {{-- @if(\Illuminate\Support\Facades\Request::is('map/property')) --}}
+                         @if(\Illuminate\Support\Facades\Request::is('map/select-property'))
                         <input type="hidden" id="mega_menu_search_url" value="{{url('property/flat-wishes-rented/search')}}">
                         <input class="form-control" type="hidden" name="map" value="map">
-                   {{-- @endif --}}
+                   @endif
                         <div class="clearfix"></div>
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Pris</h3>

@@ -52,10 +52,10 @@
                             ?>
                         </div>
                     </div>
-                     {{-- @if(\Illuminate\Support\Facades\Request::is('map/property')) --}}
+                     @if(\Illuminate\Support\Facades\Request::is('map/select-property'))
                         <input type="hidden" id="mega_menu_search_url" value="{{url('property/business-for-sale/search')}}">
                         <input class="form-control" type="hidden" name="map" value="map">
-                   {{-- @endif --}}
+                   @endif
                     <div style="border-right:1px solid #ddd;" class="col-md-6">
                         <div class="form-group nav-dynamic-checks mt-4 show-sub">
                             <h3 class="u-t5">Område</h3>
