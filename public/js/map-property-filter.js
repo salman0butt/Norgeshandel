@@ -1,6 +1,8 @@
 var added = false;
 $(document).ready(function () {
-    var urlParams = new URLSearchParams(location.search);
+    // var urlParams = new URLSearchParams(location.search);
+    //  var newUrl = $('#mega_menu_form').serialize();
+    //  search(newUrl);
 
     function search(data) {
         var urlParams = new URLSearchParams(location.search);
@@ -17,7 +19,6 @@ $(document).ready(function () {
             }
         });
     }
-
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
@@ -31,7 +32,7 @@ $(document).ready(function () {
         }
     };
 
-    search(urlParams.toString());
+   // search(urlParams.toString());
 
     $('.mega-menu input').change(function (e) {
         var newUrl = $('#mega_menu_form').serialize();

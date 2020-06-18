@@ -150,9 +150,33 @@
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0);" id="direction">Ruteplan</a>
                 </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/map/property') }}" id="direction">Property For Sale Filter</a>
+
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Norgeshandel</a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url('/map/property') }}">Eiendom</a>
+                        <a class="dropdown-item" href="#">Jobb</a>
+                    </div>
                 </li>
+                @if(\Illuminate\Support\Facades\Request::is('map/property'))
+                <li>
+        <select name="property_type" id="property_type" class="dme-form-control searchKey">
+                <option value="">Velg</option>
+                <option value="property_for_sale">Bolig til salgs </option>
+                <option value="property_for_rent">Bolig til leie</option>
+                <option value="holiday_home_for_sale">Fritidsbolig til salgs</option>
+                <option value="flat_wishes_rented">Bolig ønskes leid</option>
+                <option value="commercial_property_for_sale">Næringseiendom til salgs </option>
+                <option value="commercial_property_for_rent">Næringseiendom til leie </option>
+                <option value="commercial_plot">Næringstomter</option>
+                <option value="Business_for_sale">Bedrifter til salgs</option>
+            </select>
+                </li>
+                @endif  
+            </ul>
+            <!-- Links -->
             </ul>
             <!-- Links -->
 
@@ -169,56 +193,57 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&language=no"
         async defer></script>
-        <script src="{{ asset('public/js/map-property-filter.js') }}"></script>
+    <script src="{{ asset('public/js/map-property-filter.js') }}"></script>
     <script src="{{asset('public/mediexpert.js')}}"></script>
-        <script>
-    $(function () {
-       var url = '{{ url('/map/search') }}';
-        getMap(url);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-Token': $('meta[name="csrf_token"]').attr('content')
+    <script>
+        $(function () {
+            var url = '{{ url('/map/search') }}';
+            getMap(url);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf_token"]').attr('content')
+                }
+            });
+
+            function getMap(url) {
+                if (url == '') {
+                    return;
+                }
+                jQuery.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data) {
+                        $('#mapper').html('');
+                        $('#mapper').html(data);
+                        initMap();
+                        //console.log(data);
+
+                    },
+                    error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
+                        console.log(jqXhr);
+                        // console.log(jqXhr.responseJSON);
+
+                    },
+
+                });
+
             }
-        });
-        function getMap(url){
-            if(url == '') {
-                return;
-            }
-             jQuery.ajax({
-            type: "GET",
-            url: url,
-            success: function (data) {
-                $('#mapper').html('');
-                $('#mapper').html(data);
-                initMap();
-                //console.log(data);
+            $('#sok').on('click', function () {
 
-            },
-            error: function (jqXhr, json, errorThrown) { // this are default for ajax errors
-                console.log(jqXhr);
-                // console.log(jqXhr.responseJSON);
-
-            },
+                $(this).parent().find('li.nav-item').addClass('active');
+                url = '{{ url(' / map / search ') }}';
+                getMap(url);
+            });
+            $('#direction').on('click', function () {
+                $(this).parent().find('li.nav-item').addClass('active');
+                url = '{{ url(' / map / direction ') }}';
+                getMap(url);
+            });
 
         });
 
-        }
-        $('#sok').on('click',function() {
+    </script>
 
-            $(this).parent().find('li.nav-item').addClass('active');
-           url = '{{ url('/map/search') }}';
-          getMap(url);
-        });
-        $('#direction').on('click',function() {
-              $(this).parent().find('li.nav-item').addClass('active');
-           url = '{{ url('/map/direction') }}';
-          getMap(url);
-        });
-       
-    });
-
-</script>
-    
 </body>
 
 </html>
