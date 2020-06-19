@@ -98,7 +98,10 @@
                                 </li>
                             </ul>
                         </div>
-
+                    @if(\Illuminate\Support\Facades\Request::is('map/select-job'))
+                        <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
+                        <input class="form-control" type="hidden" name="map" value="map">
+                   @endif
                     </div>
                     <div class="col-md-3">
                         @if(!Request()->job_type && !Request()->job_type == "management")

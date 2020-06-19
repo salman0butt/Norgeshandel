@@ -44,7 +44,7 @@
  }
 
 </script>
-@section('scripts')
+
 <script>
 $(document).on('change', '#property_type',function() {
    var url = '{{ url('map/select-property') }}';
@@ -67,5 +67,26 @@ $(document).on('change', '#property_type',function() {
         });
 });
 </script>
-@stop
+<script>
+  $(document).on('change', '#job_type',function() {
+   var url = '{{ url('map/select-job') }}';
+     $.ajax({
+            data: {"job_type": $(this).val()},
+            url: url,
+            type: "GET",
+            success: function (response) {
+              if($('#collapsibleNavbar > ul > li.nav-item.filter-btn').length > 0){
+                   $('#collapsibleNavbar ul .filter-btn:first').remove();
+                     $('#collapsibleNavbar ul:first').prepend(response);
+              }else {
+                $('#collapsibleNavbar ul:first').prepend(response);
+              }
+
+            },
+            error: function (error) {
+                //console.log(error);
+            }
+        });
+});
+</script>
 @endsection

@@ -27,8 +27,10 @@ Auth::routes(['verify' => true]);
 Route::get('/map', 'MapController@map');
 Route::get('/map/search', 'MapController@index');
 Route::get('/map/direction', 'MapController@direction');
-Route::get('map/property', 'MapController@propertyForSaleFilter');
+Route::get('map/property', 'MapController@propertyFilter');
+Route::get('map/job', 'MapController@jobFilter');
 Route::get('map/select-property', 'MapController@selectPropertyType');
+Route::get('map/select-job', 'MapController@selectJobType');
 
 //google map
 // Route::get('/map', function () {

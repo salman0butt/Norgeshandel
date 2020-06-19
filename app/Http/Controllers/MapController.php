@@ -28,7 +28,10 @@ class MapController extends Controller
     exit($html);
 
     }
-    public function propertyForSaleFilter() {
+    public function propertyFilter() {
+        return view('map.map-filter');
+    }
+      public function jobFilter() {
         return view('map.map-filter');
     }
     
@@ -67,69 +70,13 @@ class MapController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function selectJobType(Request $request) {
+        if($request->job_type == 'job_fulltime' || $request->job_type == 'job_parttime' || $request->job_type == 'job_management')
+      {
+        $html = view('user-panel.partials.templates.job-filter')->render();
+        exit($html);
+      }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //  
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {    
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+  
 }
