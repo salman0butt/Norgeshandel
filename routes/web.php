@@ -383,6 +383,10 @@ Route::group(['middleware' => 'authverified'], function () {
             Route::resource('job-preferences', 'JobPreferenceController');
             Route::get('delete-job-preferences', 'JobPreferenceController@delete_job_preference')->name('delete-job-preferences');
             Route::resource('following', 'FollowingController');
+
+            //show user packages
+            Route::get('packages','PackageController@list_user_packages')->name('user-packages');
+            Route::get('purchase-package/{id}','PackageController@purchase_package')->name('purchase-package');
         });
 
 //    new ad routes
@@ -391,29 +395,17 @@ Route::group(['middleware' => 'authverified'], function () {
                 return view('user-panel.select-ad-category');
             });
 
-//        new job routes
-            // Route::group(['prefix' => 'job'], function () {
-            //     Route::get('full_time', function () {
-            //         return view('user-panel.jobs.new_full_time');
-            //     });
-            //     Route::get('part_time', function () {
-            //         return view('user-panel.jobs.new_part_time');
-            //     });
-            //     Route::get('management', function () {
-            //         return view('user-panel.jobs.new_management');
-            //     });
-            // });
-
             Route::group(['prefix' => 'property'], function () {
                 Route::get('property-for-sale', 'Property\PropertyForSaleController@new_property_for_sale');
                 Route::get('property-for-rent', 'Property\PropertyForRentController@new_property_for_rent');
-               Route::get('property-for-flat-wishes-rented', 'Property\FlatWishesRentedController@new_property_for_flat_wishes_rented');
-               Route::get('property-for-holiday-homes-for-sale', 'Property\PropertyHolidaysHomesForSaleController@new_property_for_holiday_homes_for_sale');
-                 Route::get('commercial-property-for-sale', 'Property\CommercialPropertyForSaleController@new_commercial_property_for_sale');
-                 Route::get('commercial-property-for-rent', 'Property\CommercialPropertyForRentController@new_commercial_property_for_rent');
-                 Route::get('business-for-sale', 'Property\BusinessForSaleController@new_business_for_sale');
-                 Route::get('commercial-plots', 'Property\CommercialPlotController@new_commercial_plots');
+                Route::get('property-for-flat-wishes-rented', 'Property\FlatWishesRentedController@new_property_for_flat_wishes_rented');
+                Route::get('property-for-holiday-homes-for-sale', 'Property\PropertyHolidaysHomesForSaleController@new_property_for_holiday_homes_for_sale');
+                Route::get('commercial-property-for-sale', 'Property\CommercialPropertyForSaleController@new_commercial_property_for_sale');
+                Route::get('commercial-property-for-rent', 'Property\CommercialPropertyForRentController@new_commercial_property_for_rent');
+                Route::get('business-for-sale', 'Property\BusinessForSaleController@new_business_for_sale');
+                Route::get('commercial-plots', 'Property\CommercialPlotController@new_commercial_plots');
             });
+
         Route::get('job/full_time', 'Admin\Jobs\JobController@new_job');
         Route::get('job/management', 'Admin\Jobs\JobController@new_job');
         Route::get('job/part_time', 'Admin\Jobs\JobController@new_job');

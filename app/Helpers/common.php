@@ -26,6 +26,7 @@ use App\Models\Meta;
 use App\PropertyForSale;
 use App\PropertyHolidaysHomesForSale;
 use App\User;
+use App\UserPackage;
 use Carbon\Carbon;
 use App\Admin\ads\Banner;
 use App\Term;
@@ -973,8 +974,6 @@ class common
                         + sin(radians(" .$lat. "))
                         * sin(radians(".$table_name.".latitude))) AS distance"))
             ->orderBy('distance','ASC')->distinct();
-//        dd($query);
-
         /*
         $d = 31.0686;       //50km in miles ;
         $r = 3959;          //earth's radius in miles
@@ -999,4 +998,35 @@ class common
         */
     }
 
+    //check user packages is exist(active package) or not, if exist then -1 from available ads and add the ad expiry in the table
+    public static function create_update_ad_expiry($ad){
+        $flag = false;
+        $message = 'success';
+        if(Auth::user()){
+            $user_package = Auth::user()->packages->where('status',12)->first();
+            if($user_package && $user_package->available_ads){
+                $temp_avail_ads = $user_package->available_ads - 1;
+                $user_package->available_ads = $temp_avail_ads;
+                DB::beginTransaction();
+                try{
+                    $temp_avail_ads->update();
+                    //Create ad expiry
+                    UserPackage::updateOrCreate(['user_id' => Auth::id(),'package_id',$user_package->id], ['available_ads' => $temp_avail_ads]);
+                    DB::commit();
+                    $flag = true;
+                }catch (\Exception $e){
+                    DB::rollback();
+                    $flag = false;
+                    $message = 'Noe gikk galt. Prøv igjen senere.';
+                }
+            }else{
+                $message = 'Pakken ble ikke funnet.';
+            }
+        }
+
+        $data['message'] = $message;
+        $data['flag'] = $flag;
+        dd($data);
+        return $data;
+    }
 }

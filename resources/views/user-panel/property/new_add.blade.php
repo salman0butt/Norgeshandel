@@ -103,6 +103,12 @@
                         notify("info","Annonsen din er lagret");
 
                     }else if(event == 'click'){
+
+                        if(!data.flag){
+                            notify("danger",data.message);
+                            return false;
+                        }
+
                         $('.deleted_media').val('');
                         $('.media_position').val('');
                         $('.ad_status').val(data.status);

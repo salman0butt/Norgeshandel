@@ -341,8 +341,20 @@ class PropertyForRentController extends Controller
             $message = '';
             $ad = $property->ad;
 
+
+            $ad_expiry_response = common::create_update_ad_expiry($ad);
+            if(!$ad_expiry_response['flag']){
+                echo json_encode($ad_expiry_response);
+            }
+
+
             if ($ad && $ad->status == 'saved') {
+
+
                 $message = 'Annonsen din er publisert.';
+                $published_date = date("Y-m-d H:i:s");
+                $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+
             } elseif ($ad && $ad->status == 'published') {
                 $media = common::updated_dropzone_images_type($request->all(),'property_for_rent_temp_images',$ad->id);
                 if($request->media_position){
@@ -352,21 +364,20 @@ class PropertyForRentController extends Controller
                     $delete_media = common::delete_json_media($request->deleted_media);
                 }
                 $message = 'Annonsen din er oppdatert.';
+                $response = true;
             }
-            $published_date = date("Y-m-d H:i:s");
 
-            $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+
             if ($response) {
-//        notifications bellow
+                //notifications bellow
                 common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/property-for-rent',$ad);
-//      notifications ended
+                //notifications ended
             }
-//  dd(DB::getQueryLog());
+            //dd(DB::getQueryLog());
 
             $data['success'] = $response;
             $data['message'] = $message;
             $data['status'] = $ad->status;
-            $data['date'] = $published_date;
             echo json_encode($data);
         }else{
             echo $msg;

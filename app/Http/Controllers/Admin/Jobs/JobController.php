@@ -687,7 +687,6 @@ class JobController extends Controller
         $query = DB::table('ads')
             ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
             ->join('users', 'jobs.user_id', '=','users.id')
-//            ->where('ads.status', '=', 'published')
             ->where('ads.visibility', '=', 1)
             ->where('ads.ad_type', '=', 'job')
             ->whereNull('ads.deleted_at')
@@ -698,7 +697,6 @@ class JobController extends Controller
                     ->orwhereDate('ads.sold_at','>',$date);
             });
 
-
         $query->where($arr);
 
         if(isset($request->created_at)){
@@ -708,7 +706,7 @@ class JobController extends Controller
             common::table_search($query, common::get_model_columns(Job::class), $request->search, 'jobs');
 //            $query->where(function ($query) use ($request){
 //                $query->where('jobs.name', 'like', "%".$request->search."%");
-//                $query->orWhere('jobs.keywords', 'like', "%".$request->search."%");
+//                $query->orWhere('jobs.keywords',                                                                              'like', "%".$request->search."%");
 //                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
 //            });
         }

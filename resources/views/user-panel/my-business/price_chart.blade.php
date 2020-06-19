@@ -34,6 +34,7 @@
         <div class="mt-5 mb-5">
             <h1 style="margin-top:8%;">Prisoversikt</h1>
         </div>
+        @include('common.partials.flash-messages')
         <div class="grid">
             <div class="grid__unit row">
                 <div id="price-info-root" class="col-md-8">
@@ -133,6 +134,7 @@
                                         <th>Verdi</th>
                                         <th>Pakkepris</th>
                                         <th>Varighet</th>
+                                        <th>Handling</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -143,6 +145,7 @@
                                             <td>{{$package->worth_values.' kr'}}</td>
                                             <td>{{$package->total_price.' kr'}}</td>
                                             <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>
+                                            <td><a class="btn btn-primary btn-sm" href="{{route('purchase-package',$package->id)}}">Abonnere</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
