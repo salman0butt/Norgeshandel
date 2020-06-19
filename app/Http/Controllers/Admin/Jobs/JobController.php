@@ -751,6 +751,10 @@ class JobController extends Controller
         if($request->jobtype){
             $query = $query->whereIn('jobs.job_type',$request->jobtype);
         }
+        if (isset($request->map_job_type) && $request->map_job_type) {
+            $query = $query->where('jobs.job_type', $request->map_job_type);
+        }
+
 
         if($is_notif){
             if (!empty($after_created)){

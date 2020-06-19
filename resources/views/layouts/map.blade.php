@@ -179,9 +179,9 @@
                 <li>
         <select name="job_type" id="job_type" class="dme-form-control searchKey">
                 <option value="">Velg Jobb</option>
-                <option value="job_fulltime">Alle stillinger</option>
-                <option value="job_parttime">Deltidsstillinger</option>
-                <option value="job_management">Lederstillinger</option>
+            <option value="full_time">Alle stillinger</option>
+            <option value="part_time">Deltidsstillinger</option>
+            <option value="management">Lederstillinger</option>
             </select>
                 </li>
                 @endif 

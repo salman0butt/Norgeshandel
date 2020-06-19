@@ -52,6 +52,7 @@ $(document).on('change', '#property_type',function() {
             data: {"property_type": $(this).val()},
             url: url,
             type: "GET",
+             async: false,
             success: function (response) {
               if($('#collapsibleNavbar > ul > li.nav-item.filter-btn').length > 0){
                    $('#collapsibleNavbar ul .filter-btn:first').remove();
@@ -71,9 +72,10 @@ $(document).on('change', '#property_type',function() {
   $(document).on('change', '#job_type',function() {
    var url = '{{ url('map/select-job') }}';
      $.ajax({
-            data: {"job_type": $(this).val()},
+            data: {"map_job_type": $(this).val()},
             url: url,
             type: "GET",
+            async: false,
             success: function (response) {
               if($('#collapsibleNavbar > ul > li.nav-item.filter-btn').length > 0){
                    $('#collapsibleNavbar ul .filter-btn:first').remove();

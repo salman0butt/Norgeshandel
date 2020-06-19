@@ -71,12 +71,12 @@ class MapController extends Controller
     }
 
     public function selectJobType(Request $request) {
-        if($request->job_type == 'job_fulltime' || $request->job_type == 'job_parttime' || $request->job_type == 'job_management')
+    if($request->map_job_type == 'full_time' || $request->map_job_type == 'part_time' || $request->map_job_type == 'management') 
       {
         $html = view('user-panel.partials.templates.job-filter')->render();
         exit($html);
       }
 
     }
-  
+
 }

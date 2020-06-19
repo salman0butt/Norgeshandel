@@ -11,12 +11,12 @@ $(document).ready(function () {
         }, 100);  
     });
 
-    // $(document).on('change', '#job_type', function () {
-    //     setTimeout(function () {
-    //         var newUrl = $('#mega_menu_form').serialize();
-    //         search(newUrl);
-    //     }, 100);
-    // });
+    $(document).on('change', '#job_type', function () {
+        setTimeout(function () {
+            var newUrl = $('#mega_menu_form').serialize();
+            search(newUrl);
+        }, 100);
+    });
 
 
     function search(data) {
