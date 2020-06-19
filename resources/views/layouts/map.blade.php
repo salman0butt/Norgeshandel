@@ -157,13 +157,13 @@
                         aria-haspopup="true" aria-expanded="false">Norgeshandel</a>
                     <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ url('/map/property') }}">Eiendom</a>
-                        <a class="dropdown-item" href="#">Jobb</a>
+                        <a class="dropdown-item" href="{{ url('/map/job') }}">Jobb</a>
                     </div>
                 </li>
                 @if(\Illuminate\Support\Facades\Request::is('map/property'))
                 <li>
         <select name="property_type" id="property_type" class="dme-form-control searchKey">
-                <option value="">Velg</option>
+                <option value="">Velg Eiendom</option>
                 <option value="property_for_sale">Bolig til salgs </option>
                 <option value="property_for_rent">Bolig til leie</option>
                 <option value="holiday_home_for_sale">Fritidsbolig til salgs</option>
@@ -175,8 +175,16 @@
             </select>
                 </li>
                 @endif  
-            </ul>
-            <!-- Links -->
+        @if(\Illuminate\Support\Facades\Request::is('map/job'))
+                <li>
+        <select name="job_type" id="job_type" class="dme-form-control searchKey">
+                <option value="">Velg Jobb</option>
+                <option value="job_fulltime">Alle stillinger</option>
+                <option value="job_parttime">Deltidsstillinger</option>
+                <option value="job_management">Lederstillinger</option>
+            </select>
+                </li>
+                @endif 
             </ul>
             <!-- Links -->
 

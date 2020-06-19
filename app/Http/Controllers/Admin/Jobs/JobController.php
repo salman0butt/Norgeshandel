@@ -683,10 +683,9 @@ class JobController extends Controller
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
             });
-
-
+      
         $query->where($arr);
-
+   
         if(isset($request->created_at)){
             $query->whereDate('jobs.created_at', $request->created_at);
         }
@@ -698,6 +697,8 @@ class JobController extends Controller
 //                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
 //            });
         }
+         
+        
 
         if (isset($request->deadline)) {
             if (in_array("today", $request->deadline)) {
@@ -713,6 +714,7 @@ class JobController extends Controller
                     ->orWhereDate('jobs.deadline', '<', today()->addDays(7));
             }
         }
+
 
         if(isset($sort) && !empty($sort)) {
             switch ($sort){
@@ -738,6 +740,7 @@ class JobController extends Controller
                     break;
             }
         }
+  
         if(!isset($request->lat) && !isset($request->lon)) {
             $query->orderBy('ads.published_on', 'DESC');
         }
@@ -757,6 +760,15 @@ class JobController extends Controller
             return $jobs;
         }
         $jobs = $query->get();
+
+             //Job Map Filters
+       if ($request->ajax()) {
+             if(isset($request->map) && $request->map){
+                $all_ads = common::propertyMapFilters($query);
+                 return response()->json(['data'=>$all_ads]);
+             }
+        }
+
         $html = view('user-panel.jobs.jobs_filter_page_inner', compact('jobs', 'view', 'sort'))->render();
         exit($html);
     }
