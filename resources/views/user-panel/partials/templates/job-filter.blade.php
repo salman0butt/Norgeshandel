@@ -16,9 +16,9 @@
                                 @if(Request::get('job_type') && !is_array(Request::get('job_type')))
                                     <input type="hidden" name="job_type" value="{{Request::get('job_type') ? Request::get('job_type') : ''}}" >
                                 @endif
-
+                                ​
                                 <span class="input-group-addon pt-2">
-
+​
                                 <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
                                      height="26" width="26">
                                 <path fill="currentColor" fill-rule="evenodd" d="M22.412
@@ -60,7 +60,7 @@
                             }
                             ?>
                         </div>
-
+                        ​
                         <div class="u-mt32 form-group nav-dynamic-checks">
                             <h3 class="u-t5">Ansettelsesform</h3>
                             <?php
@@ -98,13 +98,18 @@
                                 </li>
                             </ul>
                         </div>
-                    @if(\Illuminate\Support\Facades\Request::is('map/select-job'))
-                        <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
-                        <input class="form-control" type="hidden" name="map" value="map">
-                   @endif
+                        @if(\Illuminate\Support\Facades\Request::is('map/select-job'))
+                            <input type="hidden" id="mega_menu_search_url" value="{{url('jobs/mega_menu_search')}}">
+                            <input class="form-control" type="hidden" name="map" value="map">
+
+                            @if(isset(Request()->map_job_type) && Request()->map_job_type)
+                                <input type="hidden" name="map_job_type" value="{{Request()->map_job_type}}">
+                            @endif
+                        @endif
                     </div>
                     <div class="col-md-3">
-                        @if(!Request()->job_type && !Request()->job_type == "management")
+                        {{-- @if(!Request()->job_type && !Request()->job_type == "management") --}}
+                        @if((!Request()->job_type && !Request()->job_type == "management") && !(Request()->map_job_type))
                             <div class="u-mt32 form-group">
                                 <h3 class="u-t5">Heltid/deltid</h3>
                                 <ul class="list list-unstyled">
@@ -117,7 +122,7 @@
                                                                                          class="count"></span></label>
                                         </div>
                                     </li>
-
+                                    ​
                                     <li>
                                         <div class="input-toggle">
                                             <input type="checkbox" name="jobtype[]" value="full_time"
@@ -127,7 +132,7 @@
                                                                                                   class="count"></span></label>
                                         </div>
                                     </li>
-
+                                    ​
                                     <li>
                                         <div class="input-toggle">
                                             <input type="checkbox" name="jobtype[]" value="management"
@@ -137,7 +142,7 @@
                                                                                                     class="count"></span></label>
                                         </div>
                                     </li>
-
+                                    ​
                                 </ul>
                             </div>
                         @endif
@@ -165,14 +170,14 @@
                                         <input type="checkbox" name="created_at" value="{{today()->toDateString()}}"
                                                id="published-1">
                                         <label for="published-1" class="">Nye i dag <span data-name="{{today()->toDateString()}}"
-                                                                                                data-title="created_at"
-                                                                                                class="count"></span></label>
+                                                                                          data-title="created_at"
+                                                                                          class="count"></span></label>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
-
+                    ​
                 </div>
             </form>
         </div>

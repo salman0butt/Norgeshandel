@@ -41,6 +41,12 @@
                     <span class="font-weight-bold">Gi din omtale</span>
                 </a>
             </li>
+
+            <li class="dme-btn-outlined-blue mb-1">
+                <a href="{{url('my-business/packages')}}" style="text-decoration: none;">
+                    <span class="font-weight-bold">Pakker</span>
+                </a>
+            </li>
         </ul>
         <ul class="list-unstyled col-md-4">
             <li class="dme-btn-outlined-blue mb-1">
@@ -91,8 +97,8 @@
                 </a>
             </li>
             <li class="dme-btn-outlined-blue mb-1">
-{{--                <a href="{{url('my-business/job-preferences')}}" style="text-decoration: none;">--}}
-                <a href="{{ url('/job-pref') }}" style="text-decoration: none;">
+                <a href="{{url('my-business/job-preferences')}}" style="text-decoration: none;">
+{{--                <a href="{{ url('/job-pref') }}" style="text-decoration: none;">--}}
                     <span class="font-weight-bold">Mine jobb-preferanser</span>
                 </a>
             </li>

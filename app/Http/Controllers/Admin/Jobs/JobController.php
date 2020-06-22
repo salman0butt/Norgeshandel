@@ -162,6 +162,13 @@ class JobController extends Controller
         }
         $published_date = date("Y-m-d H:i:s");
 
+        if($ad && $ad->job && $ad->job->company && $ad->job->company->full_address && $ad->job->company->latitude && $ad->job->company->longitude){
+            $arr['latitude'] = $ad->job->company->latitude;
+            $arr['longitude'] = $ad->job->company->longitude;
+            $arr['full_address'] = $ad->job->company->full_address;
+        }
+
+
         $ad->job->update($arr);
         $ad->update(['status' => 'published', 'published_on' => $published_date]);
      
@@ -395,7 +402,14 @@ class JobController extends Controller
             'longitude' => $request->longitude,
             'full_address' => $request->full_address,
         );
-        
+
+
+        if($job && $job->company && $job->company->full_address && $job->company->latitude && $job->company->longitude){
+            $arr['latitude'] = $job->company->latitude;
+            $arr['longitude'] = $job->company->longitude;
+            $arr['full_address'] = $job->company->full_address;
+        }
+
         $job->update($arr);
         $company_logo_id = '';
         if ($request->file('company_logo')) {
@@ -673,7 +687,6 @@ class JobController extends Controller
         $query = DB::table('ads')
             ->join('jobs', 'jobs.ad_id', '=', 'ads.id')
             ->join('users', 'jobs.user_id', '=','users.id')
-//            ->where('ads.status', '=', 'published')
             ->where('ads.visibility', '=', 1)
             ->where('ads.ad_type', '=', 'job')
             ->whereNull('ads.deleted_at')
@@ -683,9 +696,7 @@ class JobController extends Controller
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
             });
-      
         $query->where($arr);
-   
         if(isset($request->created_at)){
             $query->whereDate('jobs.created_at', $request->created_at);
         }
@@ -697,8 +708,8 @@ class JobController extends Controller
 //                $query->orWhere('jobs.title', 'like', "%".$request->search."%");
 //            });
         }
-         
-        
+
+
 
         if (isset($request->deadline)) {
             if (in_array("today", $request->deadline)) {
@@ -740,12 +751,13 @@ class JobController extends Controller
                     break;
             }
         }
-  
+
         if(!isset($request->lat) && !isset($request->lon)) {
             $query->orderBy('ads.published_on', 'DESC');
         }
         if($request->job_type){
             $query = $query->where('jobs.job_type',$request->job_type);
+
         } //jobtype
 
         if($request->jobtype){
