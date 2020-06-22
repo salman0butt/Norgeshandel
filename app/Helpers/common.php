@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\AdAgent;
+use App\AdExpiry;
 use App\Admin\Jobs\Job;
 use App\AdVistingTime;
 use App\CommercialPropertyForRent;
@@ -23,6 +24,7 @@ use App\Models\Search;
 use App\Models\Ad;
 use App\Notification;
 use App\Models\Meta;
+use App\Package;
 use App\PropertyForSale;
 use App\PropertyHolidaysHomesForSale;
 use App\User;
@@ -901,7 +903,6 @@ class common
               $ad = Ad::find($ad->ad_id);
               if($ad->company_gallery->first() && $ad->company_gallery->first()->name_unique){
                 $full_path[] = \App\Helpers\common::getMediaPath($ad->company_gallery->first());
-              //  dd($full_path);
               }
               else{
                   $full_path[] = asset('public/images/placeholder.png');
@@ -999,34 +1000,54 @@ class common
     }
 
     //check user packages is exist(active package) or not, if exist then -1 from available ads and add the ad expiry in the table
-    public static function create_update_ad_expiry($ad){
-        $flag = false;
-        $message = 'success';
-        if(Auth::user()){
-            $user_package = Auth::user()->packages->where('status',12)->first();
-            if($user_package && $user_package->available_ads){
-                $temp_avail_ads = $user_package->available_ads - 1;
-                $user_package->available_ads = $temp_avail_ads;
-                DB::beginTransaction();
-                try{
-                    $temp_avail_ads->update();
-                    //Create ad expiry
-                    UserPackage::updateOrCreate(['user_id' => Auth::id(),'package_id',$user_package->id], ['available_ads' => $temp_avail_ads]);
-                    DB::commit();
-                    $flag = true;
-                }catch (\Exception $e){
-                    DB::rollback();
-                    $flag = false;
-                    $message = 'Noe gikk galt. Prøv igjen senere.';
-                }
-            }else{
-                $message = 'Pakken ble ikke funnet.';
-            }
-        }
+    public static function create_update_ad_expiry($ad,$request){
+        if($request['to_publish_ad'] == 'package'){
+            $flag = false;
+            $message = 'success';
 
-        $data['message'] = $message;
-        $data['flag'] = $flag;
-        dd($data);
-        return $data;
+            if(Auth::user() && $request['package_id']){
+                $user_package = Auth::user()->packages->where('id',$request['package_id'])->first(); //UserPackage::find($request['package_id']);
+                if($user_package && $user_package->available_ads){
+                    $temp_avail_ads = $user_package->available_ads - 1;
+                    $user_package->available_ads = $temp_avail_ads;
+
+                    if($temp_avail_ads == 0){
+                        $user_package->status = 0;
+                    }
+
+                    DB::beginTransaction();
+                    try{
+                        $expiry_date = date("Y-m-d");
+                        if($user_package->ad_expiry_unit == 'day'){
+                            $expiry_date = date('Y-m-d', strtotime("+".$user_package->ad_expiry." days"));
+                        }
+
+                        if($user_package->ad_expiry_unit == 'month'){
+                            $expiry_date = date('Y-m-d', strtotime("+".$user_package->ad_expiry." months"));
+                        }
+
+                        if($user_package->ad_expiry_unit == 'year'){
+                            $expiry_date = date('Y-m-d', strtotime("+".$user_package->ad_expiry." years"));
+                        }
+
+                        $user_package->update();
+                        //Create or update ad expiry
+                        AdExpiry::updateOrCreate(['ad_id' => $ad->id], ['expiry' => $expiry_date]);
+                        DB::commit();
+                        $flag = true;
+                    }catch (\Exception $e){
+                        DB::rollback();
+                        $flag = false;
+                        $message = 'Noe gikk galt. Prøv igjen senere.';
+                    }
+                }else{
+                    $message = 'Du har ingen aktiv pakke. Kjøp en pakke fra pakkelisten din for å publisere denne annonsen. Takk';
+                }
+            }
+
+            $data['message'] = $message;
+            $data['flag'] = $flag;
+            return $data;
+        }
     }
 }
