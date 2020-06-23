@@ -230,37 +230,35 @@ foreach ($my_ads as $ad){
 	});
 
 
-	function loadMoreData(page){
+	function loadMoreData(page) {
         var status = $('input[name=status]:checked').val();
         var ad_type = $('input[name=ad_type]:checked').val();
         var url = $('#url').val();
-        if(isEmpty(status) || isEmpty(ad_type) || isEmpty(url)){
+
+        if (isEmpty(status) || isEmpty(ad_type) || isEmpty(url)) {
             full_url = '?page=';
-        }else {
-            full_url =  url+'/'+status+'/'+ad_type+'?page='; 
+        } else {
+            full_url = url + '/' + status + '/' + ad_type + '?page=';
         }
-	  $.ajax(
-	        {
-	            url: full_url + page,
-	            type: "get",
-	            beforeSend: function()
-	            {
-	                $('.ajax-load').show();
-	            }
-	        })
-	        .done(function(data)
-	        {
-	            if(data.html == " "){
-	                $('.ajax-load').html("No more records found");
-	                return;
-	            }
-	            $('.ajax-load').hide();
-	            $("#ads-list").append(data.html);
-	        })
-	        .fail(function(jqXHR, ajaxOptions, thrownError)
-	        {
-	              alert('server not responding...');
-	        });
-	}
+        $.ajax(
+            {
+                url: full_url + page,
+                type: "get",
+                beforeSend: function () {
+                    $('.ajax-load').show();
+                }
+            })
+            .done(function (data) {
+                if (data.html == " ") {
+                    $('.ajax-load').html("No more records found");
+                    return;
+                }
+                $('.ajax-load').hide();
+                $("#ads-list").append(data.html);
+            })
+            .fail(function (jqXHR, ajaxOptions, thrownError) {
+                alert('server not responding...');
+            });
+    }
 </script>
 @endsection
