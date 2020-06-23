@@ -44,7 +44,6 @@
  }
 
 </script>
-
 <script>
 $(document).on('change', '#property_type',function() {
    var url = '{{ url('map/select-property') }}';
