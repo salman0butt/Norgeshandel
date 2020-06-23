@@ -182,9 +182,11 @@ class AdController extends Controller
     }
 
     public function filter_my_ads($status, $ad_type)
-    {  
+    {
         if($status == 'expired'){
-            $status = 'sold';
+            $status = array('sold','deactivate');//'sold';
+        }else{
+            $status = array($status);
         }
         $type = "";
         $table = "";
@@ -207,19 +209,20 @@ class AdController extends Controller
             $query = DB::table('ads')
                 ->select('ads.id as ad_ad_id', 'ads.status', 'ads.ad_type')
                 ->join($table, 'ads.id', '=', $table . '.ad_id')
-                ->where('ads.status', '=', $status)
-                ->where('ads.user_id', '=', Auth::id());
+                ->whereIn('ads.status', $status)
+                ->where('ads.user_id', '=', Auth::id())
+                ->whereNull('ads.deleted_at');
             if ($table == 'jobs') {
                 $query->where('job_type', '=', $type)->where('ads.ad_type','job');
             }
         } else {
             $query = DB::table('ads')->select('ads.id as ad_ad_id', 'ads.status', 'ads.ad_type')
-                ->where('ads.status', '=', $status)->where('user_id', '=', Auth::id());
+                ->whereIn('ads.status', $status)->where('user_id', '=', Auth::id())
+                ->whereNull('ads.deleted_at');
         }
 
         $html = "";
         $ads = $query->orderByDesc('ads.updated_at')->paginate(10);
-    //    dd($ads);
       
         if(count($ads)>0) {
             foreach ($ads as $ad) {
@@ -245,25 +248,24 @@ class AdController extends Controller
             $html='';
         }
 
-        if($status == 'expired'){
-            $status = 'sold';
-        }
+//        if($status == 'expired'){
+//            $status = 'sold';
+//        }
 
-        $property_for_rent = Ad::where('ad_type','property_for_rent')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $property_for_sale = Ad::where('ad_type','property_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $holiday_home_for_sale = Ad::where('ad_type','property_holiday_home_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $property_commercial_for_sale = Ad::where('ad_type','property_commercial_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $property_commercial_for_rent = Ad::where('ad_type','property_commercial_for_rent')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $property_commercial_plots = Ad::where('ad_type','property_commercial_plots')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $property_business_for_sale = Ad::where('ad_type','property_business_for_sale')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $property_flat_wishes_rented = Ad::where('ad_type','property_flat_wishes_rented')->where('status',$status)->where('user_id',Auth::user()->id)->count();
-        $all_ads_count = Ad::where('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_for_rent = Ad::where('ad_type','property_for_rent')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_for_sale = Ad::where('ad_type','property_for_sale')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $holiday_home_for_sale = Ad::where('ad_type','property_holiday_home_for_sale')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_commercial_for_sale = Ad::where('ad_type','property_commercial_for_sale')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_commercial_for_rent = Ad::where('ad_type','property_commercial_for_rent')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_commercial_plots = Ad::where('ad_type','property_commercial_plots')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_business_for_sale = Ad::where('ad_type','property_business_for_sale')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $property_flat_wishes_rented = Ad::where('ad_type','property_flat_wishes_rented')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
+        $all_ads_count = Ad::whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
 
-        $full_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','full_time')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
-        $part_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','part_time')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
-        $management_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','management')->where('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+        $full_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','full_time')->whereIn('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+        $part_time_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','part_time')->whereIn('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
+        $management_job = Ad::join('jobs','jobs.ad_id','ads.id')->where('jobs.job_type','management')->whereIn('ads.status',$status)->where('ads.ad_type','job')->where('ads.user_id',Auth::user()->id)->count();
 
-            // dd($html);
         $ads_count = array('total_ads'=>$all_ads_count,'property_for_rent'=>$property_for_rent,'property_for_sale'=>$property_for_sale,'property_holiday_home_for_sale'=>$holiday_home_for_sale,
             'property_commercial_plots'=>$property_commercial_plots, 'property_commercial_for_sale'=>$property_commercial_for_sale,'property_commercial_for_rent'=>$property_commercial_for_rent,
             'full_time_job'=>$full_time_job,'part_time_job'=>$part_time_job,'management_job'=>$management_job,
