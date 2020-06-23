@@ -21,9 +21,11 @@ if($property !== null)
     <a href="{{url('/', $ad->id)}}" class="image-section col-md-4 p-2">
         <div class="img-fluid radius-8 trailing-border" style="height: 160px;width: 100%;background-image: url('{{$path}}'); background-size: cover; background-position: center;"></div>
         {{--        <img src="{{$path}}" class="img-fluid radius-8 trailing-border" alt="" style="height: 160px;width: 100%;">--}}
+
         @if(!$ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
         @endif
+
         @if($ad->status == 'sold' && $ad->sold_at && $ad->ad_type != 'job')
             <span class="badge badge-success" style="position: absolute;top: 16px;left: 16px;">
                 @if($ad->ad_type == 'property_for_rent' || $ad->ad_type == 'property_flat_wishes_rented' || $ad->ad_type == 'property_commercial_for_rent')
@@ -31,6 +33,11 @@ if($property !== null)
                 @else
                     SOLGT
                 @endif
+            </span>
+        @endif
+        @if($ad->status == 'deactivate' && $ad->ad_type != 'job')
+            <span class="badge badge-warning" style="position: absolute;top: 16px;left: 16px;">
+                Fristen utløpt
             </span>
         @endif
          {{--<div class="product-total-price m-2">--}}
@@ -87,6 +94,15 @@ if($property !== null)
 
         @if($ad->sold_to_user->count() && $ad->sold_to_user->first() && !$ad->ratings->where('from_user_id',$ad->user_id)->first())
             <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$ad->id.'/ratings')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Gi din omtale</a>
+        @endif
+
+        @if($ad && $ad->expiry && $ad->expiry->date_start && $ad->expiry->date_end)
+            <div class="pt-3">
+                <h5>
+                    <span class="badge badge-success">Påbegynt: {{$ad->expiry->date_start}}</span>
+                    <span class="badge badge-warning pl-3">Utløper: {{$ad->expiry->date_end}}</span>
+                </h5>
+            </div>
         @endif
 
         {{--<div class="buttons position-absolute p-2" style="bottom: 0;right: 0">--}}

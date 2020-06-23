@@ -248,10 +248,6 @@ class AdController extends Controller
             $html='';
         }
 
-//        if($status == 'expired'){
-//            $status = 'sold';
-//        }
-
         $property_for_rent = Ad::where('ad_type','property_for_rent')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
         $property_for_sale = Ad::where('ad_type','property_for_sale')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
         $holiday_home_for_sale = Ad::where('ad_type','property_holiday_home_for_sale')->whereIn('status',$status)->where('user_id',Auth::user()->id)->count();
