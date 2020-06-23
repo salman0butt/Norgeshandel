@@ -162,6 +162,7 @@ class PropertyForRentController extends Controller
              //Property for Rent Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                 $query->select(['property_for_rent.heading AS ad_heading', 'property_for_rent.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

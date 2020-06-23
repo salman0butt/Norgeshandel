@@ -763,6 +763,10 @@ class JobController extends Controller
         if($request->jobtype){
             $query = $query->whereIn('jobs.job_type',$request->jobtype);
         }
+        if (isset($request->map_job_type) && $request->map_job_type) {
+            $query = $query->where('jobs.job_type', $request->map_job_type);
+        }
+
 
         if($is_notif){
             if (!empty($after_created)){
@@ -776,6 +780,7 @@ class JobController extends Controller
              //Job Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                $query->select(['jobs.name AS ad_heading', 'jobs.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

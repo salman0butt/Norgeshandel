@@ -216,6 +216,7 @@ class PropertyForSaleController extends Controller
         //Property for sale Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                 $query->select(['property_for_sales.headline AS ad_heading', 'property_for_sales.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

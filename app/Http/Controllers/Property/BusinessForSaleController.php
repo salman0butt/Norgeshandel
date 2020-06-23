@@ -93,6 +93,7 @@ class BusinessForSaleController extends Controller
         //Property Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                 $query->select(['business_for_sales.headline AS ad_heading', 'business_for_sales.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

@@ -99,6 +99,11 @@
         .navbar {
             z-index: 9999;
         }
+
+        #navbarDropdownMenuLink {
+                cursor: pointer;
+        }
+
         .pac-container:after {
             /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
             background-image: none !important;
@@ -157,12 +162,13 @@
             @endif
             @if(\Illuminate\Support\Facades\Request::is('map/job'))
                 <li>
-                    <select name="job_type" id="job_type" class="dme-form-control searchKey">
-                        <option value="">Velg Jobb</option>
-                        <option value="job_fulltime">Alle stillinger</option>
-                        <option value="job_parttime">Deltidsstillinger</option>
-                        <option value="job_management">Lederstillinger</option>
-                    </select>
+        <select name="job_type" id="job_type" class="dme-form-control searchKey">
+                <option value="">Velg Jobb</option>
+            <option value="full_time">Alle stillinger</option>
+            <option value="part_time">Deltidsstillinger</option>
+            <option value="management">Lederstillinger</option>
+            </select>
+
                 </li>
             @endif
         </ul>

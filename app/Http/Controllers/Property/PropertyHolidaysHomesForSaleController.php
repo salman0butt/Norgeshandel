@@ -137,6 +137,7 @@ class PropertyHolidaysHomesForSaleController extends Controller
              //Holiday Home For Sale Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                 $query->select(['property_holidays_homes_for_sales.ad_headline AS ad_heading', 'property_holidays_homes_for_sales.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

@@ -92,6 +92,7 @@ class CommercialPlotController extends Controller
         //Property Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                 $query->select(['commercial_plots.headline AS ad_heading', 'commercial_plots.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

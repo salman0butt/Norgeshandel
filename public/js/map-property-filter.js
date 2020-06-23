@@ -11,6 +11,15 @@ $(document).ready(function () {
         }, 100);  
     });
 
+
+    $(document).on('change', '#job_type', function () {
+        setTimeout(function () {
+            var newUrl = $('#mega_menu_form').serialize();
+            search(newUrl);
+        }, 100);
+    });
+
+
     function search(data) {
         var urlParams = new URLSearchParams(location.search);
         var url = $('#mega_menu_search_url').val();
