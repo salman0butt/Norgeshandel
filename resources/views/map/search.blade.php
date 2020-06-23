@@ -4,23 +4,21 @@
 <div id="map"></div>
 <button id="stree-view">Gateutsikt</button>
 
-
 <div id="infowindow-content">
     <span id="place-name" class="title"></span><br>
-    {{-- <strong>Place ID</strong>: <span id="place-id"></span><br> --}}
     <span id="place-address"></span>
 </div>
-<input type="hidden" id="latitude" value="59.911491">
-<input type="hidden" id="longitude" value="10.757933">
 
 
 <script>
     function initMap() {
+        var lat = parseInt($('#latitude').val()) ? parseInt($('#latitude').val()) : parseInt('59.911491');
+        var lng = parseInt($('#longitude').val()) ? parseInt($('#longitude').val()) : parseInt('10.757933');
         var map = new google.maps.Map(
             document.getElementById('map'), {
                 center: {
-                    lat: 59.911491,
-                    lng: 10.757933
+                    lat: lat,
+                    lng: lng
                 },
                 zoom: 13,
                 mapTypeControlOptions: {
@@ -35,6 +33,7 @@
             (document.getElementById('autocomplete')), {
                 types: ['geocode']
             });
+
 
         autocomplete.bindTo('bounds', map);
 
@@ -58,7 +57,37 @@
         marker.addListener('click', function () {
             infowindow.open(map, marker);
         });
-        
+        ///new marker code start here
+     //   https://css-tricks.com/snippets/javascript/get-url-and-url-parts-in-javascript/
+
+     if(parseInt($('#latitude').val()) && parseInt($('#longitude').val())) {
+        var marker = new google.maps.Marker({
+          position: {lat: lat, lng: lng},
+          map: map
+        });
+      
+
+           var latlng = {lat: lat, lng: lng};
+         geocoder.geocode({'location': latlng}, function(results, status) {
+             let place = results[0].formatted_address; 
+          if (status === 'OK') {
+            if (results[0]) {
+            
+             infowindow.open(map, marker);
+                marker.setVisible(true);
+                infowindow.open(map, marker);
+                infowindowContent.children['place-name'].textContent = place;
+           
+            } else {
+              window.alert('No results found');
+            }
+          }
+        });
+       google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map, marker);
+        });
+    }
+        //new marker code ends here
 
         autocomplete.addListener('place_changed', function () {
             infowindow.close();

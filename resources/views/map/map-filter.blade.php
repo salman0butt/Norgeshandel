@@ -33,9 +33,9 @@
                 <center><img src="${locations[i]['full_path'] ? locations[i]['full_path'] : ''}" style="width:100%; max-width:100%;"/></center>
             </div>
             <div class="col-md-8">
-            <h6><a href="{{ url('/') }}/${locations[i]['ad_id']}">${locations[i]['headline'] ? locations[i]['headline'] : 'N/A'}</a></h6>
-            <p>location: ${locations[i]['full_address'] ? locations[i]['full_address'] : ''} </p>
-            <p>price: ${locations[i]['total_price'] ? locations[i]['total_price'] : ''}</p></div>
+            <h6><a href="{{ url('/') }}/${locations[i]['ad_id']}">${locations[i]['ad_heading'] ? locations[i]['ad_heading'] : 'N/A'}</a></h6>
+            <p>Adresse: ${locations[i]['full_address'] ? locations[i]['full_address'] : ''} </p>
+            <p>Pris: ${locations[i]['total_price'] ? locations[i]['total_price'] : ''}</p></div>
           </div>`);
           infowindow.open(map, marker);
         }

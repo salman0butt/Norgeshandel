@@ -116,7 +116,9 @@
         .navbar {
             z-index: 9999;
         }
-
+        #navbarDropdownMenuLink {
+                cursor: pointer;
+        }
         .pac-container:after {
             /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
 

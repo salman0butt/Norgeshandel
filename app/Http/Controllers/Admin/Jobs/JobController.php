@@ -768,6 +768,7 @@ class JobController extends Controller
              //Job Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                $query->select(['jobs.name AS ad_heading', 'jobs.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

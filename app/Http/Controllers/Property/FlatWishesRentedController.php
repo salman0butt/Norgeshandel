@@ -114,6 +114,7 @@ class FlatWishesRentedController extends Controller
              //Property Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
+                $query->select(['flat_wishes_renteds.headline AS ad_heading', 'flat_wishes_renteds.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }
