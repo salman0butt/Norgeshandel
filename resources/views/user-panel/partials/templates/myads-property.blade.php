@@ -2,8 +2,6 @@
 
 if (isset($ad)) {
     $property = $ad->property;
-
-
     if ($property !== null) {
         $media = $property->ad->company_gallery;
 
