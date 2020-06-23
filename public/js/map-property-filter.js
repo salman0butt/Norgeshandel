@@ -4,12 +4,13 @@ $(document).ready(function () {
     //  var newUrl = $('#mega_menu_form').serialize();
     //  search(newUrl);
     
-    $(document).on('change', '#property_type',function() {
+    $(document).on('blur', '#property_type',function() {
         setTimeout(function() {
         var newUrl = $('#mega_menu_form').serialize();
         search(newUrl);
         }, 100);  
     });
+
 
     $(document).on('change', '#job_type', function () {
         setTimeout(function () {

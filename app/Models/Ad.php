@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\AdAgent;
+use App\AdExpiry;
 use App\Admin\Jobs\Job;
 use App\AdVistingTime;
 use App\BusinessForSale;
@@ -202,7 +203,12 @@ class Ad extends Model
     }
 
     //Ratings
-    Public function ratings(){
+    public function ratings(){
         return $this->hasMany(UserRatingReview::class);
+    }
+
+    //get ad expiry
+    public function expiry(){
+        return $this->hasOne(AdExpiry::class);
     }
 }

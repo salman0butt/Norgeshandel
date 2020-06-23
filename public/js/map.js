@@ -1,4 +1,3 @@
-
 function myFunction(arr) {
 
     if (arr.adresser.length > 0) {

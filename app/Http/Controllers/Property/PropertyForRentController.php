@@ -274,7 +274,7 @@ class PropertyForRentController extends Controller
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price','delivery_date','time_start','time_end','note']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price','delivery_date','time_start','time_end','note','to_publish_ad','package_id']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -343,7 +343,15 @@ class PropertyForRentController extends Controller
             $ad = $property->ad;
 
             if ($ad && $ad->status == 'saved') {
+                $ad_expiry_response = common::create_update_ad_expiry($ad,$request->all());
+                if(!$ad_expiry_response['flag']){
+                    echo json_encode($ad_expiry_response);
+                }
+
                 $message = 'Annonsen din er publisert.';
+                $published_date = date("Y-m-d H:i:s");
+                $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+
             } elseif ($ad && $ad->status == 'published') {
                 $media = common::updated_dropzone_images_type($request->all(),'property_for_rent_temp_images',$ad->id);
                 if($request->media_position){
@@ -353,21 +361,20 @@ class PropertyForRentController extends Controller
                     $delete_media = common::delete_json_media($request->deleted_media);
                 }
                 $message = 'Annonsen din er oppdatert.';
+                $response = true;
             }
-            $published_date = date("Y-m-d H:i:s");
 
-            $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+
             if ($response) {
-//        notifications bellow
+                //notifications bellow
                 common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/property-for-rent',$ad);
-//      notifications ended
+                //notifications ended
             }
-//  dd(DB::getQueryLog());
+            //dd(DB::getQueryLog());
 
             $data['success'] = $response;
             $data['message'] = $message;
             $data['status'] = $ad->status;
-            $data['date'] = $published_date;
             echo json_encode($data);
         }else{
             echo $msg;

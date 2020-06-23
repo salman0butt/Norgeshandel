@@ -20,21 +20,18 @@ class MapController extends Controller
     {
         $html = view('map.search')->render();
         exit($html);
-
     }
     public function direction() {
-
-    $html = view('map.direction')->render();
-    exit($html);
-
+        $html = view('map.direction')->render();
+        exit($html);
     }
     public function propertyFilter() {
         return view('map.map-filter');
     }
-      public function jobFilter() {
+    public function jobFilter() {
         return view('map.map-filter');
     }
-    
+
     public function selectPropertyType(Request $request) {
         if($request->property_type == 'property_for_sale'){
             $html = view('user-panel.partials.templates.filter-property-for-sale')->render();
@@ -47,7 +44,7 @@ class MapController extends Controller
         else if($request->property_type == 'commercial_property_for_sale'){
             $html = view('user-panel.partials.templates.filter-commercial-property-for-sale')->render();
             exit($html);
-            }
+        }
         else if($request->property_type == 'commercial_property_for_rent'){
             $html = view('user-panel.partials.templates.filter-commercial-property-for-rent')->render();
             exit($html);
@@ -56,10 +53,10 @@ class MapController extends Controller
             $html =  view('user-panel.partials.templates.filter-commercial-plots')->render();
             exit($html);
         }
-            else if($request->property_type == 'holiday_home_for_sale'){
+        else if($request->property_type == 'holiday_home_for_sale'){
             $html = view('user-panel.partials.templates.filter-holiday-homes-for-sale')->render();
             exit($html);
-            }
+        }
         else if($request->property_type == 'flat_wishes_rented'){
             $html = view('user-panel.partials.templates.filter-business-for-sale')->render();
             exit($html);
@@ -81,3 +78,4 @@ class MapController extends Controller
     }
 
 }
+
