@@ -65,7 +65,6 @@
           position: {lat: lat, lng: lng},
           map: map
         });
-      
 
            var latlng = {lat: lat, lng: lng};
          geocoder.geocode({'location': latlng}, function(results, status) {

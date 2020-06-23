@@ -180,8 +180,8 @@
 </nav>
 <!--/.Navbar-->
 
+    @yield('content')
 
-@yield('content')
 
 @yield('scripts')
 <script
