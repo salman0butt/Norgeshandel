@@ -24,9 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('deactivate:expireAds')
-            ->everyMinute();
-            //->daily();
+        $schedule->command('deactivate:expireAds')->daily();
 
         // $schedule->command('demo:banner_show')
         //          ->everyMinute();

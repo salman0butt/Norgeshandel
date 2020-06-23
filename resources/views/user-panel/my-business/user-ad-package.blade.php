@@ -1,7 +1,7 @@
 @if($obj->ad && $obj->ad->status == 'saved')
     <div class="ad_published_payment_method_div">
         <div class="form-group">
-            <label class="u-t5">Å publisere annonse</label>
+            <label class="u-t5">Betalingsløsning</label>
             <div class="row pl-3">
                 <div class="col-md-12 input-toggle">
                     <input class="to_user_ad_publish checkmark" type="radio" value="online_payment" name="to_publish_ad" id="online_payment" checked>

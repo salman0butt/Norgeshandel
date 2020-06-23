@@ -145,7 +145,7 @@
                                             <td>{{$package->worth_values.' kr'}}</td>
                                             <td>{{$package->total_price.' kr'}}</td>
                                             <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>
-                                            <td><a class="btn btn-primary btn-sm" href="{{route('purchase-package',$package->id)}}">Abonnere</a></td>
+                                            <td><a class="btn btn-primary btn-sm" href="{{route('purchase-package',$package->id)}}">Kjøp</a></td>
                                         </tr>
                                     @endforeach
                                     </tbody>

@@ -28,7 +28,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="{{url('price-chart')}}" class="" >Purchase Package</a>
+                                <a href="{{url('price-chart')}}" class="" >Kjøp pakke</a>
                             </li>
                         </ol>
                     </nav>

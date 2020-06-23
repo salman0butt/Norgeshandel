@@ -42,14 +42,14 @@ class DeactivateExpireAds extends Command
         $now_date = date('Y-m-d');
         $ads = Ad::where('visibility', '=', 1)->whereNull('sold_at')->where('status', 'published')
             ->whereHas('expiry', function (Builder $query) use($now_date) {
-            $query->whereDate('expiry','<', $now_date);
-            })
+            $query->whereDate('date_end','<', $now_date);
+            })->get();
             /*
             ->where(function ($query){
                 $date = Date('y-m-d',strtotime('-7 days'));
                 $query->where('status', 'published')->orwhereDate('sold_at','>',$date);
             })*/
-            ->get();
+
 
         if($ads->count()){
             foreach ($ads as $ad){
