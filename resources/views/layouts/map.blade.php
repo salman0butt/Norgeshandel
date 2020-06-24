@@ -147,10 +147,10 @@
             <!-- Links -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);" id="sok">Søk</a>
+                    <a class="nav-link" href="@if(\Illuminate\Support\Facades\Request::is('map/property') || \Illuminate\Support\Facades\Request::is('map/job')) {{ url('/map') }} @else javascript:void(0); @endif" id="sok">Søk</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);" id="direction">Ruteplan</a>
+                    <a class="nav-link" href="@if(\Illuminate\Support\Facades\Request::is('map/property') || \Illuminate\Support\Facades\Request::is('map/job')) {{ url('/map') }} @else javascript:void(0); @endif" id="direction">Ruteplan</a>
                 </li>
 
                 <!-- Dropdown -->
