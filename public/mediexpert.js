@@ -593,3 +593,12 @@ function right_banner_ad() {
         }
     });
 }
+
+jQuery(function ($) {
+    $('#click-map').click(function () {
+        return false;
+    }).dblclick(function () {
+        window.open(this.href, "_blank");
+        return false;
+    });
+});

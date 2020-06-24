@@ -178,7 +178,7 @@
                     @endif
                     <div style="width: 306px; height: 306px;">
                      <h5 class="text-muted">{{ $property_data->full_address }}</h5>
-                         <a href="{{ url('/map?lat='.$property_data->latitude.'&long='.$property_data->longitude) }}" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
+                         <a href="{{ url('/map?lat='.$property_data->latitude.'&long='.$property_data->longitude) }}" id="click-map" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
                     </div>
             </div>
         </div>
