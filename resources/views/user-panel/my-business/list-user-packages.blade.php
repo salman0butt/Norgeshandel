@@ -16,7 +16,7 @@
     <main class="user-package">
         <div class="dme-container">
             <div class="row">
-                <div class="breade-crumb col-10">
+                <div class="breade-crumb @if(Auth::user()->hasRole('agent')) col-12 @else col-10 @endif">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business')}}">Min handel</a></li> <!-- ('cv.breadcrumb.sub') -->
@@ -24,15 +24,17 @@
                         </ol>
                     </nav>
                 </div>
-                <div class="breade-crumb col-2 pl-0">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="{{url('price-chart')}}" class="" >Kjøp pakke</a>
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
+                @if(!Auth::user()->hasRole('agent'))
+                    <div class="breade-crumb col-2 pl-0">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{url('price-chart')}}" class="" >Kjøp pakke</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                @endif
             </div>
 
             @include('common.partials.flash-messages')

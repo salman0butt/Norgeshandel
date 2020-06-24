@@ -8,6 +8,7 @@ use App\Admin\Jobs\Job;
 use App\AdVistingTime;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
+use App\EmailReceivedUserForSavedSearch;
 use App\Favorite;
 use App\Http\Controllers\Admin\Jobs\JobController;
 use App\Http\Controllers\Property\BusinessForSaleController;
@@ -569,7 +570,6 @@ class common
         if ($searches->count() > 0) {
             foreach ($searches as $search) {
                 $req = common::get_request_from_search_url($search->filter);
-//                if ($req) {
                 $to_be_sent = false;
                 if ($obj->ad->ad_type == 'job') {
                     $to_be_sent = common::check_job_from_search_parameters($req, $obj);
@@ -597,11 +597,15 @@ class common
                         $user_meta_notification_email = Meta::where('metable_id',$search->user_id)->where('metable_type','App\User')->where('key','notification_email')->first();
                         $user_obj = User::find($search->user_id);
                         if($user_meta_notification_email && $user_obj && $user_obj->email){
+                            $email_saved_search_user = EmailReceivedUserForSavedSearch::create([
+                                'ad_id'=>$ad->id,
+                                'search_id'=>$search->id,
+                            ]);
                             common::property_email_notification($user_obj,'saved_searches',$ad,$search);
                         }
                     }
                 }
-//                }
+
             }
         }
     }
@@ -1006,8 +1010,14 @@ class common
             $message = 'success';
 
             if(Auth::user() && $request['package_id']){
-                $user_package = Auth::user()->packages->where('id',$request['package_id'])->first(); //UserPackage::find($request['package_id']);
-                if($user_package && $user_package->available_ads){
+                if(Auth::user()->hasRole('agent')){
+                    $company_user_id = Auth::user()->created_by_company->user_id;
+                    $user_package = UserPackage::where('user_id',$company_user_id)->where('id',$request['package_id'])->first();
+                }else{
+                    $user_package = Auth::user()->packages->where('id',$request['package_id'])->first(); //UserPackage::find($request['package_id']);
+                }
+
+                if($user_package && $user_package->available_ads && $user_package->status){
                     $temp_avail_ads = $user_package->available_ads - 1;
                     $user_package->available_ads = $temp_avail_ads;
 
@@ -1049,5 +1059,26 @@ class common
             $data['flag'] = $flag;
             return $data;
         }
+    }
+
+    // Create or update ad expiry for free ads like property for rent and flat wishes rented
+    public static function create_update_ad_expiry_for_free_ads($ad){
+        $flag = false;
+        $message = 'success';
+        DB::beginTransaction();
+        try{
+            $expiry_date = date('Y-m-d', strtotime("+45 days"));
+            //Create or update ad expiry
+            AdExpiry::updateOrCreate(['ad_id' => $ad->id], ['date_end' => $expiry_date,'date_start' => date("Y-m-d")]);
+            DB::commit();
+            $flag = true;
+        }catch (\Exception $e){
+            DB::rollback();
+            $flag = false;
+            $message = 'Noe gikk galt. Prøv igjen senere.';
+        }
+        $data['message'] = $message;
+        $data['flag'] = $flag;
+        return $data;
     }
 }

@@ -198,7 +198,16 @@ class CommercialPlotController extends Controller
             $message = '';
             $ad = $property->ad;
             if ($ad && $ad->status == 'saved') {
+                $ad_expiry_response = common::create_update_ad_expiry($ad,$request->all());
+                if(!$ad_expiry_response['flag']){
+                    echo json_encode($ad_expiry_response);
+                    exit();
+                }
+
                 $message = 'Annonsen din er publisert.';
+                $published_date = date("Y-m-d H:i:s");
+                $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
                 $media = common::updated_dropzone_images_type($request->all(),'commercial_plots_temp_images',$ad->id);
@@ -209,13 +218,10 @@ class CommercialPlotController extends Controller
                     $delete_media = common::delete_json_media($request->deleted_media);
                 }
             }
-            $published_date = date("Y-m-d H:i:s");
 
-            $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
-
-//            notification bellow
+            //notification bellow
             common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/commercial-plots',$ad);
-//            end notification
+            //end notification
 
             $msg['message'] = $message;
 //                $data['success'] = $response;
@@ -235,7 +241,7 @@ class CommercialPlotController extends Controller
             if (!$request->owned_plot_facilities) {
                 $request->merge(['owned_plot_facilities' => null]);
             }
-            $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price');
+            $commercial_plot = $request->except('upload_dropzone_images_type','media_position','deleted_media','company_id','agent_id','old_price','to_publish_ad','package_id');
             unset($commercial_plot['commercial_plot_pdf']);
 //            $commercial_plot['user_id'] = Auth::user()->id;
 

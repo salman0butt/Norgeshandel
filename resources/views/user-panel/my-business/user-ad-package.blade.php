@@ -18,13 +18,21 @@
             <label class="u-t5">Brukerpakke</label>
             <div class="row">
                 <div class="col-sm-12 pr-md-0">
+                    @php
+                        if(Auth::user()->hasRole('agent')){
+                            $user_packages = \App\UserPackage::where('user_id',Auth::user()->created_by_company->user_id)->where('status',1)->where('available_ads','>',0)->get();
+                        }else{
+                            $user_packages = Auth::user()->packages->where('status',1)->where('available_ads','>',0);
+                        }
+                    @endphp
                     <select id="package_id" name="package_id" class="dme-form-control"  required>
                         <option value="">Velg</option>
-                        @if(Auth::user()->packages->where('status',1)->count())
-                            @foreach(Auth::user()->packages->where('status',1) as $user_package)
+                        @if($user_packages->count())
+                            @foreach($user_packages as $user_package)
                                 <option value="{{$user_package->id}}">{{$user_package->package->title. '('.$user_package->available_ads.')'}}</option>
                             @endforeach
                         @endif
+
                     </select>
                     <span class="error-span package_id"></span>
 

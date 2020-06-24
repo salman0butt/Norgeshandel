@@ -49,7 +49,7 @@
             <div class="box col-md-3">
                 <div class="content">
                     <p class="text-center"><i class="far fa-envelope" style="font-size:50px;"></i> <span
-                            style="font-size:40px;">120</span></p>
+                            style="font-size:40px;"> {{$ad->email_received_saved_searches->count()}}</span></p>
                     har mottat annonsen på e-post
                 </div>
             </div>

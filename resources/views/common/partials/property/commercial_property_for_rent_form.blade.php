@@ -490,6 +490,10 @@
             </div>
         </div>
 
+        @php $obj = $commercial_property_for_rent; @endphp
+
+        <!-- User AD package -->
+        @include('user-panel.my-business.user-ad-package')
 
         <div class="form-group">
             <h3 class="u-t5">Telefon (valgfritt)</h3>

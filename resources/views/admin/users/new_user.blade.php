@@ -216,59 +216,57 @@ $countries_list = countries();
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group row">
-                    <label for="role_id" class="col-sm-4 control-label col-form-label">User role</label>
-                    <div class="col-sm-8">
 
-                        <select class="form-control custom-select" id="select_role" name="role_id"
-                                style="width: 100%; height:36px;" >
-                            @if(Request::is('admin/users/*/edit'))
-                                <option selected
-                                        value="{{$user->roles->first()->id}}">{{$user->roles->first()->display_name}}</option>
-                            @endif
-                            @if(isset($roles) && count($roles)>0)
-                                @foreach($roles as $role)
-                                    <option
-                                        @if($role->name=='subscriber' && !Request::is('admin/users/*/edit')) selected
-                                        @endif value="{{$role->id}}">{{$role->display_name}}</option>
-                                @endforeach
-                            @endif
+        {{--@if(Request::is('admin/users/*/edit') && isset($user) && !$user->hasRole('company') && !$user->hasRole('agent'))--}}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label for="role_id" class="col-sm-4 control-label col-form-label">User role</label>
+                        <div class="col-sm-8">
 
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
-            </div>
-        </div>
-        <div class="row">
-            <div class="offset-md-3 col-md-6">
-                <hr>
-            </div>
-        </div>
-{{--        @dd($user->allowed_jobs->first()->value)--}}
-{{--    @if(isset($user->roles) && is_countable($user->roles) && count($user->roles)>0)--}}
-{{--        @if($user->roles->first()->name=='company')--}}
-{{--                @dd($user->allowed_job_companies)--}}
-                <div class="row" id="allocation_row">
-                    <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="col-md-2 m-t-15">Allowed Ad types</label>
-                            <div class="col-md-5">
-                                <label for="">Jobs</label>
-                                <input type="number" name="allowed_jobs" min="0" value="@if(isset($user) && !empty(@$user->allowed_job_companies->first()->value)){{@$user->allowed_job_companies->first()->value}}@endif" class="form-control">
-                            </div>
-                            <div class="col-md-5">
-                                <label for="">Properties</label>
-                                <input type="number" name="allowed_properties" min="0" value="@if(isset($user) && !empty(@$user->allowed_property_companies->first()->value)){{@$user->allowed_property_companies->first()->value}}@endif" class="form-control">
-                            </div>
+                            <select class="form-control custom-select" id="select_role" name="role_id"
+                                    style="width: 100%; height:36px;" >
+                                @if(Request::is('admin/users/*/edit'))
+                                    <option selected
+                                            value="{{$user->roles->first()->id}}">{{$user->roles->first()->display_name}}</option>
+                                @endif
+                                @if(isset($roles) && count($roles)>0)
+                                    @foreach($roles as $role)
+                                        <option
+                                            @if($role->name=='subscriber' && !Request::is('admin/users/*/edit')) selected
+                                            @endif value="{{$role->id}}">{{$role->display_name}}</option>
+                                    @endforeach
+                                @endif
+
+                            </select>
                         </div>
                     </div>
                 </div>
-{{--            @endif--}}
-{{--        @endif--}}
+                <div class="col-md-8">
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-md-3 col-md-6">
+                    <hr>
+                </div>
+            </div>
+            <div class="row" id="allocation_row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-md-2 m-t-15">Allowed Ad types</label>
+                        <div class="col-10">
+                            <select class="select2 form-control m-t-15 select2-hidden-accessible" multiple name="allowed_companies[]"
+                            {{--<select class="form-control custom-select" id="time-type" name="display_time_type"--}}
+                                    style="width: 100%;" aria-hidden="true" required>
+                                <option value="job">Jobs</option>
+                                <option value="property">Properties</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {{--@endif--}}
 
         <div class="row">
             <div class="col-md-12">
@@ -292,13 +290,16 @@ $countries_list = countries();
 
         $(document).ready(function (e) {
             if($('#select_role').val()!="4"){
+                $('#allocation_row select').removeAttr('required');
                 $('#allocation_row').slideUp();
             }
             $('#select_role').change(function () {
                 if($(this).val()=='4'){
+                    $('#allocation_row select').attr('required','required')
                     $('#allocation_row').slideDown();
                 }
                 else{
+                    $('#allocation_row select').removeAttr('required');
                     $('#allocation_row').slideUp();
                 }
             });

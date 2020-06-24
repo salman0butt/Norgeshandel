@@ -118,7 +118,11 @@ class PackageController extends Controller
 
     //list user packages(user subscribed packages list)
     public function list_user_packages(){
-        $user_packages = UserPackage::where('user_id',Auth::id())->orderBy('id','DESC')->get();
+        if(Auth::user()->hasRole('agent')){
+            $user_packages = UserPackage::where('user_id',Auth::user()->created_by_company->user_id)->get();
+        }else{
+            $user_packages = UserPackage::where('user_id',Auth::id())->get();
+        }
         return view('user-panel.my-business.list-user-packages',compact('user_packages'));
     }
 

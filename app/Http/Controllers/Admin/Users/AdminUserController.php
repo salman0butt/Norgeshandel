@@ -129,6 +129,7 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         if($request->profile_submit_type && $request->profile_submit_type == 'change-password'){
             $user = User::find($id);
             if($user){
@@ -192,19 +193,22 @@ class AdminUserController extends Controller
             $user->update(['password'=>Hash::make($request->password)]);
         }
 
-        $user->allowed_ads()->delete();
-        $allowed_jobs = new AllowedCompanyAd(['key'=>'jobs', 'value'=>$request->allowed_jobs]);
-        $user->allowed_ads()->save($allowed_jobs);
-        $allowed_property = new AllowedCompanyAd(['key'=>'properties', 'value'=>$request->allowed_properties]);
-        $user->allowed_ads()->save($allowed_property);
+        //$user->allowed_ads()->delete();
+
+        if(isset($request->allowed_companies) && count($request->allowed_companies)){
+            if(is_numeric(array_search('job',$request->allowed_companies))){
+                $allowed_jobs = new AllowedCompanyAd(['key'=>'jobs', 'value'=>1]);
+                $user->allowed_ads()->save($allowed_jobs);
+            }
+            if(is_numeric(array_search('property',$request->allowed_companies))){
+                $allowed_property = new AllowedCompanyAd(['key'=>'properties', 'value'=>1]);
+                $user->allowed_ads()->save($allowed_property);
+            }
+        }
 
         if(isset($request->role_id) && !empty($request->role_id)) {
             $user->roles()->detach();
             $user->roles()->attach($request->role_id);
-        }
-
-        if (isset($request->allowed_ad_types)){
-
         }
 
         if ($request->file('file')) {

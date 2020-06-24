@@ -274,7 +274,7 @@ class PropertyForRentController extends Controller
                 $request->merge(['facilities2' => null]);
             }
 
-            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price','delivery_date','time_start','time_end','note','to_publish_ad','package_id']);
+            $property_for_rent_data = $request->except(['_method', 'upload_dropzone_images_type','media_position','deleted_media','agent_id','old_price','delivery_date','time_start','time_end','note']);
 
             //Manage Facilities
             if (isset($property_for_rent_data['facilities'])) {
@@ -343,9 +343,10 @@ class PropertyForRentController extends Controller
             $ad = $property->ad;
 
             if ($ad && $ad->status == 'saved') {
-                $ad_expiry_response = common::create_update_ad_expiry($ad,$request->all());
+                $ad_expiry_response = common::create_update_ad_expiry_for_free_ads($ad);
                 if(!$ad_expiry_response['flag']){
                     echo json_encode($ad_expiry_response);
+                    exit();
                 }
 
                 $message = 'Annonsen din er publisert.';

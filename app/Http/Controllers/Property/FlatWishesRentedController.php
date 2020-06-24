@@ -205,7 +205,15 @@ class FlatWishesRentedController extends Controller
             $message = '';
             $ad = $property->ad;
             if ($ad && $ad->status == 'saved') {
+                $ad_expiry_response = common::create_update_ad_expiry_for_free_ads($ad);
+                if(!$ad_expiry_response['flag']){
+                    echo json_encode($ad_expiry_response);
+                    exit();
+                }
+
                 $message = 'Annonsen din er publisert.';
+                $published_date = date("Y-m-d H:i:s");
+                $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';
                 $media = common::updated_dropzone_images_type($request->all(),'flat_wishes_rented_temp_images',$ad->id);
@@ -216,13 +224,10 @@ class FlatWishesRentedController extends Controller
                     $delete_media = common::delete_json_media($request->deleted_media);
                 }
             }
-            $published_date = date("Y-m-d H:i:s");
 
-            $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
-
-//            notification bellow
+            //notification bellow
             common::send_search_notification($property, 'saved_search', 'Søk varsel: ny annonse', $this->pusher, 'property/flat-wishes-rented',$ad);
-//            end notification
+            //end notification
             //  dd(DB::getQueryLog());
 
             $msg['message'] = $message;

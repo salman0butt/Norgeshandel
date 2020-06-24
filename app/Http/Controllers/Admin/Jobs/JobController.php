@@ -170,7 +170,16 @@ class JobController extends Controller
 
 
         $ad->job->update($arr);
-        $ad->update(['status' => 'published', 'published_on' => $published_date]);
+
+        if ($ad && $ad->status == 'saved') {
+            $ad_expiry_response = common::create_update_ad_expiry($ad,$request->all());
+            if(!$ad_expiry_response['flag']){
+                echo json_encode($ad_expiry_response);
+                exit();
+            }
+
+            $ad->update(['status' => 'published', 'published_on' => $published_date]);
+        }
      
         if ($request->file('company_logo')) {
             $file = $request->file('company_logo');
@@ -482,9 +491,15 @@ class JobController extends Controller
                 $call_by  = 'controller';
             }
             $ids = $this->update_dummy($request,$call_by);
-            $published_date = date("Y-m-d H:i:s");
-
-            $response = $job->ad->update(['status'=>'published', 'published_on' => $published_date]);
+            if($job && $job->ad && $job->ad->status == 'saved'){
+                $ad_expiry_response = common::create_update_ad_expiry($job->ad,$request->all());
+                if(!$ad_expiry_response['flag']){
+                    echo json_encode($ad_expiry_response);
+                    exit();
+                }
+                $published_date = date("Y-m-d H:i:s");
+                $response = $job->ad->update(['status'=>'published', 'published_on' => $published_date]);
+            }
             $media = common::updated_dropzone_images_type($request->all(),'job_temp_images',$job->ad->id);
             if($request->media_position){
                 $media_position = common::update_media_position($request->media_position);
