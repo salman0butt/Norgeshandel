@@ -267,4 +267,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function buy_ads() {
         return $this->belongsToMany(Ad::class,'ad_sold_to_user','user_id','ad_id');
     }
+
+    //USer Packages
+    public function packages(){
+        return $this->hasMany(UserPackage::class);
+    }
 }

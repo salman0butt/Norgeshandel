@@ -499,6 +499,16 @@ $(document).ready(function (e) {
     });
 
 
+    //Show user package when an ad is going to published
+    $(document).on('click', '.to_user_ad_publish', function (e) {
+        var val = $(this).val();
+        $('.ad_form_user_package_section').addClass('d-none');
+        if(val === 'package'){
+            $('.ad_form_user_package_section').removeClass('d-none');
+        }
+    });
+
+
 });
 
 //Show left banner in a page

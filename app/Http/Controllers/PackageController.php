@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Package;
+use App\UserPackage;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class PackageController extends Controller
@@ -112,5 +114,49 @@ class PackageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //list user packages(user subscribed packages list)
+    public function list_user_packages(){
+        $user_packages = UserPackage::where('user_id',Auth::id())->orderBy('id','DESC')->get();
+        return view('user-panel.my-business.list-user-packages',compact('user_packages'));
+    }
+
+    //User purchased package
+    public function purchase_package($id){
+        if(Auth::user()){
+            if($id){
+                $package = Package::find($id);
+                if($package){
+                    DB::beginTransaction();
+                    try{
+                        UserPackage::create([
+                            'user_id' => Auth::id(),
+                            'package_id' => $package->id,
+                            'total_ads' => $package->no_of_ads,
+                            'available_ads' => $package->no_of_ads,
+                            'total_price' => $package->total_price,
+                            'ad_expiry' => $package->ad_expiry,
+                            'ad_expiry_unit' => $package->ad_expiry_unit,
+                            'purchased_date' => date("Y-m-d"),
+                            'status' => 1,
+                        ]);
+
+                        DB::commit();
+                        Session::flash('success','Pakken er kjøpt!');
+                        return redirect(url('my-business/packages'));
+                    }catch (\Exception $e){
+                        DB::rollback();
+                        return back()->with('danger','noe gikk galt!');
+                    }
+                }else{
+                    return back()->with('danger','Pakken ble ikke funnet.');
+                }
+            }else{
+                return back()->with('danger','Prøv igjen senere.');
+            }
+        }else{
+            return redirect('forbidden');
+        }
     }
 }

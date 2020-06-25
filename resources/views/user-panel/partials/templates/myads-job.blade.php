@@ -26,6 +26,12 @@ if ($job->company_id != 0) {
         @if($job && $job->ad && !$job->ad->visibility)
             <span class="badge badge-primary" style="position: absolute;top: 16px;right: 16px;">skjult</span>
         @endif
+
+        @if($job && $job->ad->status == 'deactivate' && $job->ad->ad_type == 'job')
+            <span class="badge badge-warning" style="position: absolute;top: 16px;left: 16px;">
+                Fristen utløpt
+            </span>
+        @endif
     </a>
     <div class="detailed-section col-sm-8 p-2 position-relative">
         <a href="{{route('jobs.show', compact('job'))}}" style="width:100%; display: block">
@@ -47,6 +53,16 @@ if ($job->company_id != 0) {
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$job->ad->id.'/statistics')}}" class="dme-btn-outlined-blue mr-2 btn-sm statistics-button">Se statistikk</a>
         @endif
         <a style="color:#ac304a !important; padding: 4px !important;" href="{{url('my-business/my-ads/'.$job->ad->id.'/options')}}" class="dme-btn-outlined-blue mr-2 btn-sm">Flere valg</a>
+
+        @if($job->ad && $job->ad->expiry && $job->ad->expiry->date_start && $job->ad->expiry->date_end)
+            <div class="pt-3">
+                <h5>
+                    <span class="badge badge-success">Påbegynt: {{$ad->expiry->date_start}}</span>
+                    <span class="badge badge-warning pl-3">Utløper: {{$ad->expiry->date_end}}</span>
+                </h5>
+            </div>
+        @endif
+
         <?php /*
         <div class="buttons position-absolute p-2" style="bottom: 0;right: 0">
             <a href="{{url('user/ads/options')}}" class="dme-btn-outlined-blue float-right">Flere valg1</a>
