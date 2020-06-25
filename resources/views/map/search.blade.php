@@ -12,15 +12,15 @@
 
 <script>
     function initMap() {
-        var lat = parseInt($('#latitude').val()) ? parseInt($('#latitude').val()) : parseInt('59.911491');
-        var lng = parseInt($('#longitude').val()) ? parseInt($('#longitude').val()) : parseInt('10.757933');
+        var lat = parseFloat($('#latitude').val()) ? parseFloat($('#latitude').val()) : parseFloat('59.911491');
+        var lng = parseFloat($('#longitude').val()) ? parseFloat($('#longitude').val()) : parseFloat('10.757933');
         var map = new google.maps.Map(
             document.getElementById('map'), {
                 center: {
                     lat: lat,
                     lng: lng
                 },
-                zoom: 13,
+                zoom: 8,
                 mapTypeControlOptions: {
                     style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
                     position: google.maps.ControlPosition.TOP_CENTER
@@ -58,33 +58,32 @@
             infowindow.open(map, marker);
         });
         ///new marker code start here
-     //   https://css-tricks.com/snippets/javascript/get-url-and-url-parts-in-javascript/
+     if(parseFloat($('#latitude').val()) && parseFloat($('#longitude').val())) {
+        geocodeLatLng(geocoder, map, infowindow);
 
-     if(parseInt($('#latitude').val()) && parseInt($('#longitude').val())) {
-        var marker = new google.maps.Marker({
-          position: {lat: lat, lng: lng},
-          map: map
-        });
 
-           var latlng = {lat: lat, lng: lng};
-         geocoder.geocode({'location': latlng}, function(results, status) {
-             let place = results[0].formatted_address; 
+      function geocodeLatLng(geocoder, map, infowindow) {
+       // var input = document.getElementById('latlng').value;
+        //var latlngStr = input.split(',', 2);
+        var latlng = {lat: parseFloat($('#latitude').val()), lng: parseFloat($('#longitude').val())};
+        geocoder.geocode({'location': latlng}, function(results, status) {
           if (status === 'OK') {
             if (results[0]) {
-            
-             infowindow.open(map, marker);
-                marker.setVisible(true);
-                infowindow.open(map, marker);
-                infowindowContent.children['place-name'].textContent = place;
-           
+              map.setZoom(13);
+              var marker = new google.maps.Marker({
+                position: latlng,
+                map: map
+              });
+              infowindow.setContent(results[0].formatted_address);
+              infowindow.open(map, marker);
             } else {
               window.alert('No results found');
             }
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
           }
         });
-       google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map, marker);
-        });
+      }
     }
         //new marker code ends here
 
@@ -119,6 +118,7 @@
                 infowindow.open(map, marker);
                 marker.setVisible(true);
                 infowindow.open(map, marker);
+                 infowindow.setContent(place.name);
                 infowindowContent.children['place-name'].textContent = place.name;
                 //infowindowContent.children['place-id'].textContent = place.place_id;
                 infowindowContent.children['place-address'].textContent = results[0].formatted_address;
