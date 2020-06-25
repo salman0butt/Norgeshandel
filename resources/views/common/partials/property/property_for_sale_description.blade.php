@@ -586,7 +586,7 @@ $name = $property_data->ad->company_gallery;
                     </div> --}}
                     <div style="width: 306px; height: 306px;">
                      <h5 class="text-muted">{{ $property_data->full_address }}</h5>
-                          <a href="{{ url('/map?lat='.$property_data->latitude.'&long='.$property_data->longitude) }}" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
+                          <a href="{{ url('/map?lat='.$property_data->latitude.'&long='.$property_data->longitude) }}" id="click-map" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
                     </div>
 
                 </div>
@@ -597,7 +597,6 @@ $name = $property_data->ad->company_gallery;
              @include('user-panel.banner-ads.right-banner')
         </div>
     </main>
-
 @endsection
 @php $map_obj = $property_data @endphp
 @include('common.partials.description_map',compact('map_obj'))

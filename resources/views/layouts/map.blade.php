@@ -121,31 +121,32 @@
     <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="basicExampleNav">
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
 
-        <!-- Links -->
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);" id="sok">Søk</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);" id="direction">Ruteplan</a>
-            </li>
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="@if(\Illuminate\Support\Facades\Request::is('map/property') || \Illuminate\Support\Facades\Request::is('map/job')) {{ url('/map') }} @else javascript:void(0); @endif" id="sok">Søk</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@if(\Illuminate\Support\Facades\Request::is('map/property') || \Illuminate\Support\Facades\Request::is('map/job')) {{ url('/map') }} @else javascript:void(0); @endif" id="direction">Ruteplan</a>
+                </li>
 
-            <!-- Dropdown -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Norgeshandel</a>
-                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{{ url('/map/property') }}">Eiendom</a>
-                    <a class="dropdown-item" href="{{ url('/map/job') }}">Jobb</a>
-                </div>
-            </li>
-            @if(\Illuminate\Support\Facades\Request::is('map/property'))
+                <!-- Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Norgeshandel</a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ url('/map/property') }}">Eiendom</a>
+                        <a class="dropdown-item" href="{{ url('/map/job') }}">Jobb</a>
+                    </div>
+                </li>
+                @if(\Illuminate\Support\Facades\Request::is('map/property'))
+
                 <li>
                     <select name="property_type" id="property_type" class="dme-form-control searchKey">
                         <option value="">Velg Eiendom</option>

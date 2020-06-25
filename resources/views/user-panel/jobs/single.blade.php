@@ -434,7 +434,7 @@ NorgesHandel - {{$job->title}}
                         @endif
 
                     </h5>
-                     <a href="{{ url('/map?lat='.$job->latitude.'&long='.$job->longitude) }}" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
+                     <a href="{{ url('/map?lat='.$job->latitude.'&long='.$job->longitude) }}" id="click-map" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
                 </div><br><br>
                 {{-- <p class="u-mt4">
                         <a href="" class="u-mr8 mr-2">Stort kart</a>
