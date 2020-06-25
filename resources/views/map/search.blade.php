@@ -118,6 +118,7 @@
                 infowindow.open(map, marker);
                 marker.setVisible(true);
                 infowindow.open(map, marker);
+                 infowindow.setContent(place.name);
                 infowindowContent.children['place-name'].textContent = place.name;
                 //infowindowContent.children['place-id'].textContent = place.place_id;
                 infowindowContent.children['place-address'].textContent = results[0].formatted_address;
