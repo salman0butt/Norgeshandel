@@ -162,14 +162,16 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-//        entrust
+        //entrust
         Zizaco\Entrust\EntrustServiceProvider::class,
-//        image intervention
+        //image intervention
         Intervention\Image\ImageServiceProvider::class,
 
-//        pdf generator
+        //pdf generator
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         FarhanWazir\GoogleMaps\GMapsServiceProvider::class,
+        //Export data in excel or csv fromat
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -236,13 +238,14 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-//        pdf generator
+        //pdf generator
         'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
-//        entrust
+        //entrust
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-//        image intervention
+        //image intervention
         'Image' => Intervention\Image\Facades\Image::class,
-
+        //Export eloquent data in excel or csv file
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'GMaps' => FarhanWazir\GoogleMaps\Facades\GMapsFacade::class,
         'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
 

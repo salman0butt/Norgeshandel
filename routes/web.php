@@ -632,6 +632,7 @@ Route::group(['middleware' => 'authverified'], function () {
         //get all reviews and ratings
         Route::get('ratings', 'RatingController@admin_ratings_list')->name('ratings');
         Route::delete('delete-rating/{id}', 'RatingController@delete_rating')->name('delete-rating');
+        Route::get('users/packages', 'PackageController@all_users_packages')->name('users-packages');
 
         //all general resources
         Route::resources([

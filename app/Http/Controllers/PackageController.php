@@ -163,4 +163,11 @@ class PackageController extends Controller
             return redirect('forbidden');
         }
     }
+
+
+    //list all users packages to admin
+    public function all_users_packages(){
+        $users_packages = UserPackage::all();
+        return view('admin.packages.list-users-packages',compact('users_packages'));
+    }
 }

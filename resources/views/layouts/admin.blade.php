@@ -253,6 +253,7 @@
                         <ul aria-expanded="false" class="collapse" id="multiCollapseExample1">
                             <li class="sidebar-item"><a href="{{route('admin.packages.index')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Packages')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{route('admin.packages.create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Package')}} </span></a></li>
+                            <li class="sidebar-item"><a href="{{route('admin.users-packages')}}" class="sidebar-link"><i class="mdi mdi-account-multiple"></i><span class="hide-menu"> {{__('Users Packages')}} </span></a></li>
                         </ul>
                     </li>
                 </ul>

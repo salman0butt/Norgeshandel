@@ -24,7 +24,7 @@ use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Null_;
 use Zizaco\Entrust\EntrustRole;
 use Illuminate\Support\Facades\Mail;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminUserController extends Controller
 {
@@ -37,10 +37,54 @@ class AdminUserController extends Controller
     
      //show all Users to admin
     public function index(Request $request){
+        //dd($request->all());
         if (request()->route()->getPrefix() == '/admin') {
-            $users = User::all();
+            if(!count($request->all())){
+                $users = User::orderBy('id','DESC');
+            }else{
+                $users = User::when(($request->first_name), function($query) use ($request) {
+                    if($request->first_name){
+                        $query->where('first_name','like','%'.$request->first_name.'%');
+                    }
+                })->when(($request->last_name), function($query) use ($request) {
+                    if($request->last_name){
+                        $query->where('last_name','like','%'.$request->last_name.'%');
+                    }
+                })->when(($request->username), function($query) use ($request) {
+                    if($request->username){
+                        $query->where('username','like','%'.$request->username.'%');
+                    }
+                })->when(($request->role_id), function($query) use ($request) {
+                    if(($request->role_id)){
+                        $query->whereHas('roles',function ($q) use($request){
+                            $q->where('roles.id', $request->role_id);
+                        });
+                    }
+                })->when(is_numeric($request->account_status), function($query) use ($request) {
+                    if(is_numeric($request->account_status)){
+                        $query->where('account_status',$request->account_status);
+                    }
+                })->when(($request->email), function($query) use ($request) {
+                    if($request->email){
+                        $query->where('email', 'like', '%' . $request->email . '%');
+                    }
+                })->when(($request->end_date), function($query) use ($request) {
+                    if($request->end_date){
+                        $query->where('created_at','>=',$request->start_date);
+                    }
+                })->when(($request->end_date), function($query) use ($request) {
+                    if($request->end_date){
+                        $query->where('created_at','<=',$request->end_date);
+                    }
+                })->orderBy('id','DESC');
+            }
             if($request->trashed){
-                $users = User::onlyTrashed()->get();
+                $users = $users->onlyTrashed()->get();
+            }else{
+                $users = $users->get();
+            }
+            if(isset($request->export_users) && $request->export_users == 'yes'){
+                return Excel::download(new \App\Exports\User($users), 'users.xlsx');
             }
             $roles = Role::orderBy('id', 'DESC')->get();
             return response()->view('admin.users.users', compact('users','roles'));
