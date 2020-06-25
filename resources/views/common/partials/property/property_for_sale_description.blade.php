@@ -447,7 +447,7 @@ $name = $property_data->ad->company_gallery;
                             <span> {{$property_data->ad->id}}</span>
                         </div>
                         <div class="col-md-12"><span class="font-weight-bold">Sist endret: </span>
-                            <span>{{date("d.m.Y H:i", strtotime($property_data->created_at))}}</span></div>
+                            <span>{{date("d.m.Y H:i", strtotime($property_data->updated_at))}}</span></div>
                         <div class="col-md-12"><a href="{{url('customer-services')}}" class="u-strong">Rapporter annonse</a></div>
                         <div class="col-md-12 u-d2">Annonsene kan være mangelfulle i forhold til lovpålagt
                             opplysningsplikt.

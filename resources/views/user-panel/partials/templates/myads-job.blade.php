@@ -57,8 +57,8 @@ if ($job->company_id != 0) {
         @if($job->ad && $job->ad->expiry && $job->ad->expiry->date_start && $job->ad->expiry->date_end)
             <div class="pt-3">
                 <h5>
-                    <span class="badge badge-success">Påbegynt: {{$job->ad->expiry->date_start}}</span>
-                    <span class="badge badge-warning pl-3">Utløper: {{$job->ad->expiry->date_end}}</span>
+                    <span class="badge badge-success">Påbegynt: {{date("d-m-Y", strtotime($job->ad->expiry->date_start))}}</span>
+                    <span class="badge badge-warning pl-3">Utløper: {{date("d-m-Y", strtotime($job->ad->expiry->date_end))}}</span>
                 </h5>
             </div>
         @endif

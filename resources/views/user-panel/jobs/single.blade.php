@@ -214,7 +214,7 @@ NorgesHandel - {{$job->title}}
                     <div class="col-md-12"><span class="font-weight-bold">Handelskode: </span>
                         <span> {{$job->ad->id}}</span></div>
                     <div class="col-md-12"><span class="font-weight-bold">Oppdatert: </span>
-                        <span>{{ date('d.m.y',strtotime($job->ad->updated_at))}}</span></div>
+                        <span>{{ date('d.m.y',strtotime($job->updated_at))}}</span></div>
                 </div>
             </div>
             {{----}}

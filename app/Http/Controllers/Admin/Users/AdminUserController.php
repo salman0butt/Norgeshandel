@@ -37,7 +37,6 @@ class AdminUserController extends Controller
     
      //show all Users to admin
     public function index(Request $request){
-        //dd($request->all());
         if (request()->route()->getPrefix() == '/admin') {
             if(!count($request->all())){
                 $users = User::orderBy('id','DESC');
