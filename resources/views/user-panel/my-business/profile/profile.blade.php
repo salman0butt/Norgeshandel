@@ -32,15 +32,15 @@
         <!---- end breadcrumb----->
         @include('common.partials.flash-messages')
         @if($user->roles->first()->name=="company")
-        <div class="alert alert-info">
-            For øyeblikket har du
-            <b>{{$user->allowed_job_companies->first() ? $user->allowed_job_companies->first()->value : ''}}
-                stillingsannonser</b>
-            og <b>{{$user->allowed_job_companies->first() ? $user->allowed_property_companies->first()->value : ''}}
-                eiendomsannonser</b>.
-            <a style="text-decoration: underline;" href="{{url('my-business/profile/select_company_profile_type')}}">Be
-                om å øke din grense.</a>
-        </div>
+        {{--<div class="alert alert-info">--}}
+            {{--For øyeblikket har du--}}
+            {{--<b>{{$user->allowed_job_companies->first() ? $user->allowed_job_companies->first()->value : ''}}--}}
+                {{--stillingsannonser</b>--}}
+            {{--og <b>{{$user->allowed_property_companies->first() ? $user->allowed_property_companies->first()->value : ''}}--}}
+                {{--eiendomsannonser</b>.--}}
+            {{--<a style="text-decoration: underline;" href="{{url('my-business/profile/select_company_profile_type')}}">Be--}}
+                {{--om å øke din grense.</a>--}}
+        {{--</div>--}}
         @if($user->allowed_job_companies->first() && (($user->allowed_job_companies->first()->value > 0 &&
         $user->allowed_job_companies->first()->value > count($user->job_companies)) ||
         ($user->allowed_property_companies->first()->value >0 && $user->allowed_property_companies->first()->value >
@@ -54,7 +54,6 @@
         }
         }
         @endphp
-
         <div class="company-profile">
             <div class="row">
                 @if(!(count($user->job_companies)) || !(count($user->property_companies)))
@@ -104,15 +103,13 @@
                                     <select name="company_type" id="company_type" type="text"
                                         class="form-control dme-form-control" required="">
                                         <option value="">Velg...</option>
-                                        @if((count($user->job_companies) < $user->allowed_job_companies->first()->value)
-                                            && !(count($user->job_companies)))
+                                        @if($user->allowed_job_companies->first() && $user->allowed_job_companies->first()->value)
+
                                             <option value="Jobb">Jobb</option>
                                             {{--@else--}}
                                             {{--<option value="" disabled>Jobb (Grensen overskredet)</option>--}}
                                             @endif
-                                            @if((count($user->property_companies)<$user->
-                                                allowed_property_companies->first()->value) &&
-                                                !(count($user->property_companies)))
+                                            @if($user->allowed_property_companies->first() && $user-> allowed_property_companies->first()->value)
                                                 <option value="Eiendom">Eiendom</option>
                                                 {{--@else--}}
                                                 {{--<option value="" disabled>Eiendom (Grensen overskredet)</option>--}}

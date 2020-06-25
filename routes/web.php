@@ -293,6 +293,8 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::post('my-business/my-ads/{id}/sold/add/buyer', 'AdController@add_buyer_in_sold_ad')->name('add-buyer-in-sold-ad');
         Route::get('my-business/my-ads/{id}/ratings', 'RatingController@ad_ratings');
         Route::post('my-business/my-ads/{id}/ratings/store', 'RatingController@store_ratings')->name('ratings-store');
+        Route::post('my-business/my-ads/{id}/reactivate-ad', 'AdController@reactivate_ad')->name('reactivate-ad');
+
         // message
         Route::get('messages/thread/{thread_id}', 'MessageController@view_thread');
         Route::get('messages/delete/{thread_id}', 'MessageController@delete_thread');
@@ -630,6 +632,7 @@ Route::group(['middleware' => 'authverified'], function () {
         //get all reviews and ratings
         Route::get('ratings', 'RatingController@admin_ratings_list')->name('ratings');
         Route::delete('delete-rating/{id}', 'RatingController@delete_rating')->name('delete-rating');
+        Route::get('users/packages', 'PackageController@all_users_packages')->name('users-packages');
 
         //all general resources
         Route::resources([

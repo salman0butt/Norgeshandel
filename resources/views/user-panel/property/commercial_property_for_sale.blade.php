@@ -93,9 +93,19 @@
                     if (event == 'change') {
                         notify("info","Annonsen din er lagret");
                     }else if(event == 'click'){
+                        if(data.flag === false){
+                            notify("error",data.message);
+                            return false;
+                        }
+
                         $('.deleted_media').val('');
                         $('.media_position').val('');
                         $('.ad_status').val(data.status);
+
+                        if(data.status === 'published'){
+                            $('.ad_published_payment_method_div').addClass('d-none');
+                        }
+
                         var message = 'Annonsen din er publisert';
                         if(data.message){
                             message = data.message;
@@ -141,7 +151,7 @@
                 }
             });
 
-            $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
+            $(document).on('change', 'input:not(input[type=date],input[type=radio],select[name=package_id]),textarea', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
 

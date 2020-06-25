@@ -25,51 +25,129 @@
             @include('common.partials.flash-messages')
         </div>
         <div class="col-md-12">
-          @if(Request()->get('trashed'))
-                    <a href="{{url('admin/users')}}">
-                        page moved to the Users
-                    </a>
-                @else
-                    <a href="{{url('admin/users?trashed=users')}}">
-                        page moved to the trash
-                    </a>
-            @endif
-            <form action="{{route('admin.users.change_role')}}" method="POST" class="">
-                {{ csrf_field() }}
                 {{--{{method_field('PUT')}}--}}
-                <div class="form-group row">
-                {{--<label for="delete" class="col-sm-2 control-label col-form-label">With selected</label>--}}
-                {{--<div class="col-sm-2">--}}
-                {{--<select class="select2 form-control custom-select select2-hidden-accessible" style="width: 100%; height:36px;" data-select2-id="1" tabindex="-1" aria-hidden="true">--}}
-                {{--<option value="">Select</option>--}}
-                {{--<option value="delete">Delete</option>--}}
-                {{--</select>--}}
-                {{--</div>--}}
-                {{--<div class="col-md-2">--}}
-                {{--<button type="submit" class="btn btn-success">Apply</button>--}}
-                {{--</div>--}}
-                    <label for="change_role" class="col-sm-2 control-label col-form-label">Change role to</label>
-                    <div class="col-sm-2">
-                        <select name="change_role" class="form-control custom-select" style="width: 100%; height:36px;">
-                            <option value="">Select</option>
-                            @if(isset($roles) && count($roles)>0):
-                            @foreach($roles as $role):
-                            <option value="{{$role->id}}">{{$role->display_name}}</option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div id="users_list">
+            <div class="row">
 
+                <div class="col-6">
+                    <form action="{{route('admin.users.change_role')}}" method="POST" class="">
+                        {{ csrf_field() }}
+                    <div class="form-group row">
+                        <label for="change_role" class="col-sm-4 control-label col-form-label">Change role to</label>
+                        <div class="col-sm-4">
+                            <select name="change_role" class="form-control custom-select" style="width: 100%; height:36px;">
+                                <option value="">Select</option>
+                                @if(isset($roles) && count($roles)>0):
+                                @foreach($roles as $role):
+                                <option value="{{$role->id}}">{{$role->display_name}}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div id="users_list">
+
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" class="btn btn-success" value="Change" name="change_role_submit">
+                        </div>
                     </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="btn btn-success" value="Change" name="change_role_submit">
-                    </div>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <form action="{{route('admin.users.index')}}" method="GET" id="user_filter_form">
+                        {{--@if(Request()->get('trashed'))--}}
+                            {{--<a href="{{url('admin/users')}}">--}}
+                                {{--page moved to the Users--}}
+                            {{--</a>--}}
+                        {{--@else--}}
+                            {{--<a href="{{url('admin/users?trashed=users')}}">--}}
+                                {{--page moved to the trash--}}
+                            {{--</a>--}}
+                        {{--@endif--}}
+                        {{--<button class="btn btn-danger" onclick="document.getElementById('user_filter_form').submit();" value="yes" name="trashed" type="submit"> page moved to the trash</button>--}}
+
+                        <a style="background: #ac304a; color: white;padding: 3px; border-radius: 4px;" href="javascript:" class="pull-right" title="Advanced Search" data-toggle="collapse" data-target="#toggle-search-filters" aria-expanded="true"><i class="fa fa-search fa-2x"></i></a>
+                        <a class="btn btn-primary" href="{{url('admin/users?export_users=yes'.(isset(request()->trashed) ? '&trashed=users' : ''))}}"><i class="fa fa-download pr-1"></i>Export</a>
+                </div>
             </div>
-            </form>
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table">
+
+              <!-- Search Filters -->
+              <div id="toggle-search-filters" class="collapse <?php if(Request()->has('first_name')) echo 'show'; ?>">
+                  <div class="card  clearfix mb-3">
+                      <div class="card-header bg-dark text-white px-2 py-2">
+                          <b>Advanced Search</b>
+                          <a class="float-right" data-toggle="collapse" href="#toggle-search-filters" aria-expanded="true"> <i class="fa fa-times text-white"></i> </a>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div class="card-body py-1">
+                          <div class="form-body">
+                              <div class="row">
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">Fornavn</label>
+                                      <input type="text" class="form-control" name="first_name" value="{{Request()->first_name}}">
+                                  </div>
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">Etternavn</label>
+                                      <input type="text" class="form-control" name="last_name" value="{{Request()->last_name}}">
+                                  </div>
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">Brukernavn</label>
+                                      <input type="text" class="form-control" name="username" value="{{Request()->username}}">
+                                  </div>
+
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">E-post</label>
+                                      <input type="text" class="form-control" name="email" value="{{Request()->email}}">
+                                  </div>
+                              </div>
+
+                              <div class="row mt-1">
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">Status</label>
+                                      <select class="form-control filter" name="account_status">
+                                          <option value="">Status</option>
+                                          <option value="1" {{Request()->account_status && Request()->account_status == '1' ? 'selected' : ''}}>Active</option>
+                                          <option value="0" {{is_numeric(Request()->account_status) && Request()->account_status == '0' ? 'selected' : ''}}>Deactive</option>
+                                      </select>
+                                  </div>
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">Rolle</label>
+                                      <select class="form-control filter" name="role_id">
+                                          <option value="">Velg rolle</option>
+                                          @if($roles->count() > 0)
+                                              @foreach($roles as $role)
+                                                  <option value="{{$role->id}}" {{Request()->role_id && Request()->role_id == $role->id ? 'selected' : ''}}>{{$role->name}}</option>
+                                              @endforeach
+                                          @endif
+                                      </select>
+                                  </div>
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">Opprettet dato Start</label>
+                                      <input type="date" class="form-control" name="start_date" value="{{Request()->start_date}}">
+                                  </div>
+                                  <div class="col-md-3 my-1 px-1">
+                                      <label class="form-label mb-0">Opprettet dato slutt</label>
+                                      <input type="date" class="form-control" name="end_date" value="{{Request()->end_date}}">
+                                  </div>
+                              </div>
+                          </div><!-- .form-body -->
+                          <div class="clearfix"> </div>
+                      </div>
+                      <div class="card-footer py-1">
+                          <div class="row text-right d-block">
+                              <a href="{{route('admin.users.index')}}" class="btn btn-sm btn-default">Reset Search Results</a>
+                              <button type="submit" class="btn btn-sm btn-primary"> Search  </button>
+                          </div>
+                          <div class="clearfix"></div>
+                      </div>
+                  </div>
+
+              </div>
+              </form>
+
+
+              <div class="card">
+                <div class="table-responsive pt-4">
+                    <table class="table" id="zero_config">
                         <thead class="thead-light">
                         <tr>
                             <th colspan="2">
@@ -81,7 +159,6 @@
                             <th scope="col">Display name</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
                             <th scope="col">Role</th>
                             <th scope="col">Ads count</th>
                             <th scope="col">Status</th>
@@ -113,7 +190,6 @@
                                     </td>
                                     <td>{{$user->username}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td>{{$user->mobile_number}}</td>
                                     <td>{{@$user->roles->first()->display_name}}</td>
                                     <td>{{$user->ads->count()}}</td>
                                     <td>

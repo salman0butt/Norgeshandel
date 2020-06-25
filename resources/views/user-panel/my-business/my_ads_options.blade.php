@@ -138,6 +138,13 @@
                                 </button>
                             @endif
                         </div>
+                        <div class="u-pv8 mt-2">
+                            @if($ad->status == 'deactivate')
+                                <button type="button" class="link pl-0" data-toggle="modal" data-target="#reactivateAd">
+                                    Aktiver annonse på nytt
+                                </button>
+                            @endif
+                        </div>
                     </div>
                     {{--<a class="u-pv8 mt-2" href="#">Merk som solgt</a>--}}
 
@@ -238,6 +245,71 @@
         </div>
     </div>
 </div>
+
+<!-- Reactivate ad modal -->
+<div class="modal fade mt-5" id="reactivateAd" tabindex="-1" role="dialog" aria-labelledby="reactivateAd">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Aktiver annonse på nytt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route('reactivate-ad', $ad->id)}}" id="ad-sold" class="mb-0" method="POST">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <h5>Ønsker du å aktivere denne annonsen på nytt. Denne annonsen vil bli publisert igjen.</h5>
+
+                    @if($ad->ad_type != 'property_flat_wishes_rented' && $ad->ad_type != 'property_for_rent')
+                        <label for="keywords-input" class="u-t5">Betalingsløsning</label>
+                        <div class="row pl-3">
+                            <div class="col-md-12 input-toggle">
+                                <input class="to_user_ad_publish checkmark" type="radio" value="online_payment" name="to_publish_ad" id="online_payment" checked>
+                                <label for="online_payment" class="radio-lbl"> Bruk online betaling</label>
+                            </div>
+                            <div class="col-md-12 input-toggle">
+                                <input class="to_user_ad_publish checkmark" type="radio" value="package" name="to_publish_ad" id="package">
+                                <label for="package" class="radio-lbl"> Bruk pakken</label>
+                            </div>
+                        </div>
+                        <div class="form-group ad_form_user_package_section d-none">
+                            <label class="u-t5">Brukerpakke</label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    @php
+                                        if(Auth::user()->hasRole('agent')){
+                                            $user_packages = \App\UserPackage::where('user_id',Auth::user()->created_by_company->user_id)->where('status',1)->where('available_ads','>',0)->get();
+                                        }else{
+                                            $user_packages = Auth::user()->packages->where('status',1)->where('available_ads','>',0);
+                                        }
+                                    @endphp
+                                    <select id="package_id" name="package_id" class="dme-form-control"  required>
+                                        <option value="">Velg</option>
+                                        @if($user_packages->count())
+                                            @foreach($user_packages as $user_package)
+                                                <option value="{{$user_package->id}}">{{$user_package->package->title. '('.$user_package->available_ads.')'}}</option>
+                                            @endforeach
+                                        @endif
+
+                                    </select>
+                                    <span class="error-span package_id"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="modal-footer">
+                    <button type="Submit" class="btn btn-primary">Ja</button>
+                    <a class="btn btn-danger" href="#" data-dismiss="modal">Nei</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 

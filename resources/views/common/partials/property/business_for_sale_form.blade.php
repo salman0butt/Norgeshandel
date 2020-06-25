@@ -224,6 +224,11 @@
             </div>
         </div>
 
+        @php $obj = $business_for_sale_obj; @endphp
+
+        <!-- User AD package -->
+        @include('user-panel.my-business.user-ad-package')
+
         <div class="form-group">
             <h3 class="u-t5">Telefon (valgfritt)</h3>
             <div class="row">

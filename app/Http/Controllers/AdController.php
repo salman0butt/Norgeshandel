@@ -351,7 +351,7 @@ class AdController extends Controller
         $ad = Ad::find($id);
         $date = new DateTime();
         $dateMinus12 = $date->modify("-12 months");
-        $compare_date = $dateMinus12->format("Y-m-t");
+        $compare_date = $dateMinus12->format("Y-m-d");
 
         if($request->type == '15_days_clicks'){
             $compare_date = (date("Y-m-d", strtotime("-15 day")));
@@ -386,17 +386,25 @@ class AdController extends Controller
                     ->get();
 
                 // find last year ad views
-                $ad_views = DB::table('ad_views')->selectRaw('year(created_at) year, monthname(created_at) month, count(ad_id) as count_view')
+                $ad_views = DB::table('ad_views')->select(DB::raw('count(ad_id) as count_view'),DB::raw('YEAR(created_at) year'),DB::raw('MONTH(created_at) month_no'),DB::raw('MONTHName(created_at) month'))
+                    ->groupBy(DB::raw('YEAR(created_at)'), DB::raw('MONTH(created_at)'), DB::raw('MONTHName(created_at)'))
+                    ->where('ad_id',$id)
+                    ->whereDate('created_at','>',$compare_date)
+                    ->get();
+                /*
+                $ad_views = DB::table('ad_views')->selectRaw("year(created_at) year, monthname(created_at) month, count(ad_id) as count_view,DATE_FORMAT(created_at, '%m-%Y') new_date ")
                     ->whereDate('created_at','>',$compare_date)
                     ->where('ad_id',$id)
-                    ->groupBy('year', 'month')
+                    ->groupBy('year','month','new_date')
                     ->get();
+                */
 
                 // find last 15 days ad views
                 if($request->type == '15_days_clicks'){
                     $ad_views = DB::table('ad_views')->selectRaw("COUNT(ad_id) as count_view, date(created_at) date ")
                         ->where('ad_id',$id)
                         ->whereDate('created_at','>',$compare_date)
+                        //->whereDate('created_at','<=',date('Y-m-d'))
                         ->groupBy('date')
                         ->get();
                 }
@@ -441,6 +449,44 @@ class AdController extends Controller
                     $ad->update();
                     DB::commit();
                     Session::flash('success', $message);
+                    return back();
+
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    Session::flash('danger', 'Noe gikk galt.');
+                    return back();
+                }
+            }else{
+                return back();
+            }
+        }else{
+            return back();
+        }
+    }
+
+    //Reactivate the expire ads
+    public function reactivate_ad($id,Request $request){
+        if($id){
+            $ad = Ad::find($id);
+            if($ad && ($ad->user_id == Auth::id() || Auth::user()->hasRole('admin'))){
+                try {
+                    //For free ads
+                    if($ad->ad_type != 'property_for_rent' && $ad->ad_type != 'property_flat_wishes_rented'){
+                        $ad_expiry_response = common::create_update_ad_expiry($ad,$request->all());
+                    }else{ // for paid ads like properties and job ads
+                        $ad_expiry_response = common::create_update_ad_expiry_for_free_ads($ad);
+                    }
+
+                    if(!$ad_expiry_response['flag']){
+                        DB::rollback();
+                        Session::flash('danger', $ad_expiry_response['message']);
+                        return back();
+                    }
+
+                    $ad->status = 'published';
+                    $ad->update();
+                    DB::commit();
+                    Session::flash('success', 'Nå er annonsen din publisert.');
                     return back();
 
                 } catch (\Exception $e) {

@@ -10,6 +10,7 @@ use App\BusinessForSale;
 use App\CommercialPlot;
 use App\CommercialPropertyForRent;
 use App\CommercialPropertyForSale;
+use App\EmailReceivedUserForSavedSearch;
 use App\FlatWishesRented;
 use App\MessageThread;
 use App\Notification;
@@ -211,4 +212,10 @@ class Ad extends Model
     public function expiry(){
         return $this->hasOne(AdExpiry::class);
     }
+
+    //get the total count for those users that have been received an email notification against an ad
+    public function email_received_saved_searches(){
+        return $this->hasMany(EmailReceivedUserForSavedSearch::class);
+    }
+
 }

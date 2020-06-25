@@ -85,29 +85,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function (e) {
-        $('input[data-id=users_checklist]').change(function (e) {
-            var id = '#user_'+$(this).attr('data-value');
-            if(this.checked){
-                $('#users_list').append('<input type="hidden" name="user[]" value="'+$(this).attr('data-value')+'" id="user_'+$(this).attr('data-value')+'">');
-                //console.log($(this).attr('data-value'));
-            }
-            else{
-                $(id).remove();
-            }
-        });
-        $('#mainCheckbox').change(function (e) {
-            $('#users_list input').remove();
-            if (this.checked){
-                $('input[data-id=users_checklist]').each(function (e) {
-//                    //console.log($(this).attr('data-value'));
-                    $('#users_list').append('<input type="hidden" name="user[]" value="'+$(this).attr('data-value')+'" id="user_'+$(this).attr('data-value')+'">');
-                })
-            }
-        })
-    })
-</script>
 @endsection
 
 @section('script')

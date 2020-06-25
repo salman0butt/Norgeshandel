@@ -287,10 +287,6 @@
         @php $obj = $property_for_rent; @endphp
         @include('user-panel.partials.ad-visting-times-section')
 
-        <!-- User AD package -->
-        @include('user-panel.my-business.user-ad-package')
-
-
         <div class="form-group">
             <div class="col-md-12 text-center mt-5 mb-5 bg-maroon-lighter p-4 radius-8">
                 <div class="profile-icon">

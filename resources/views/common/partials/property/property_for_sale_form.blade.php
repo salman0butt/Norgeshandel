@@ -820,6 +820,9 @@ omkostninger.
         @php $obj = $property_for_sale; @endphp
         @include('user-panel.partials.ad-visting-times-section')
 
+        <!-- User AD package -->
+        @include('user-panel.my-business.user-ad-package')
+
         <div class="form-group">
             <h3 class="u-t5">Telefon (valgfritt)</h3>
             <div class="row">

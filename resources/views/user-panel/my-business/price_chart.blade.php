@@ -134,7 +134,10 @@
                                         <th>Verdi</th>
                                         <th>Pakkepris</th>
                                         <th>Varighet</th>
-                                        <th>Handling</th>
+
+                                        @if(!Auth::user()->hasRole('agent'))
+                                            <th>Handling</th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -142,10 +145,12 @@
                                         <tr>
                                             <td>{{$package->title}}</td>
                                             <td>{{$package->no_of_ads}}</td>
-                                            <td>{{$package->worth_values.' kr'}}</td>
-                                            <td>{{$package->total_price.' kr'}}</td>
+                                            <td>{{number_format($package->worth_values,0,""," ").' kr'}}</td>
+                                            <td>{{number_format($package->total_price,0,""," ").' kr'}}</td>
                                             <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>
-                                            <td><a class="btn btn-primary btn-sm" href="{{route('purchase-package',$package->id)}}">Kjøp</a></td>
+                                            @if(!Auth::user()->hasRole('agent'))
+                                                <td><a class="btn btn-primary btn-sm" href="{{route('purchase-package',$package->id)}}">Kjøp</a></td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                     </tbody>
