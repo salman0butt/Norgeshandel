@@ -37,6 +37,7 @@
 
     <![endif]--><style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
 
+
 <body cz-shortcut-listen="true">
 
 <!-- Preloader - style you can find in spinners.css -->
@@ -118,62 +119,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
                         </a>
-                        {{--<div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2" style="display: none;">--}}
-                            {{--<ul class="list-style-none">--}}
-                                {{--<li>--}}
-                                    {{--<div class="">--}}
-                                        {{--<!-- Message -->--}}
-                                        {{--<a href="javascript:void(0)" class="link border-top">--}}
-                                            {{--<div class="d-flex no-block align-items-center p-10">--}}
-                                                {{--<span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>--}}
-                                                {{--<div class="m-l-10">--}}
-                                                    {{--<h5 class="m-b-0">Event today</h5>--}}
-                                                    {{--<span class="mail-desc">Just a reminder that event</span>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</a>--}}
-                                        {{--<!-- Message -->--}}
-                                        {{--<a href="javascript:void(0)" class="link border-top">--}}
-                                            {{--<div class="d-flex no-block align-items-center p-10">--}}
-                                                {{--<span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>--}}
-                                                {{--<div class="m-l-10">--}}
-                                                    {{--<h5 class="m-b-0">Settings</h5>--}}
-                                                    {{--<span class="mail-desc">You can customize this template</span>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</a>--}}
-                                        {{--<!-- Message -->--}}
-                                        {{--<a href="javascript:void(0)" class="link border-top">--}}
-                                            {{--<div class="d-flex no-block align-items-center p-10">--}}
-                                                {{--<span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>--}}
-                                                {{--<div class="m-l-10">--}}
-                                                    {{--<h5 class="m-b-0">Pavan kumar</h5>--}}
-                                                    {{--<span class="mail-desc">Just see the my admin!</span>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</a>--}}
-                                        {{--<!-- Message -->--}}
-                                        {{--<a href="javascript:void(0)" class="link border-top">--}}
-                                            {{--<div class="d-flex no-block align-items-center p-10">--}}
-                                                {{--<span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>--}}
-                                                {{--<div class="m-l-10">--}}
-                                                    {{--<h5 class="m-b-0">Luanch Admin</h5>--}}
-                                                    {{--<span class="mail-desc">Just see the my new admin!</span>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</a>--}}
-                                    {{--</div>--}}
-                                {{--</li>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
                     </li>
-
                     <!-- End Messages -->
-
-
-
                     <!-- User profile and search -->
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="@if(\Illuminate\Support\Facades\Auth::user()->media){{asset(\App\Helpers\common::getMediaPath(\Illuminate\Support\Facades\Auth::user()->media, '66x66'))}}@else{{asset('public/admin/images/users/1.jpg')}}@endif" alt="user" class="rounded-circle" width="31" style="margin-top:15px;"></a>
                         <div class="dropdown-menu dropdown-menu-right user-dd animated">
@@ -184,7 +132,6 @@
                             <a class="dropdown-item" href="{{url('logout')}}"><i class="fa fa-power-off m-r-5 m-l-5"></i> {{__('Logout')}}</a>
                         </div>
                     </li>
-
                     <!-- User profile and search -->
 
                 </ul>
@@ -205,48 +152,54 @@
                 <ul id="sidebarnav" class="p-t-30">
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link active" href="{{url('/admin')}}" ><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">{{__('Dashboard')}}</span></a></li>
 {{--                    @permission('manage_realestates')--}}
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-home-modern"></i><span class="hide-menu">Realestate </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" data-toggle="collapse" href="#properties_dropdown" aria-expanded="false"><i class="mdi mdi-home-modern"></i><span class="hide-menu">Realestate </span></a>
+                        <ul aria-expanded="false" class="collapse" id="properties_dropdown">
                             <li class="sidebar-item"><a href="{{url('admin/property/realestate')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Realestates')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{url('new')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
                         </ul>
                     </li>
+                    
 {{--                    @endpermission--}}
 {{--                    @permission('manage_jobs')--}}
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu">{{__('Jobb')}} </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
+
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" data-toggle="collapse" href="#jobs_dropdown" aria-expanded="false"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu">{{__('Jobb')}} </span></a>
+                        <ul aria-expanded="false" class="collapse" id="jobs_dropdown">
                             <li class="sidebar-item"><a href="{{url('admin/jobs')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Jobs')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{url('admin/jobs/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
                         </ul>
                     </li>
                 {{-- ads mangment --}}
-                  <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu">{{__('Ads Mangemnet')}}</span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
+                    
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" data-toggle="collapse" href="#banner_dropdown" aria-expanded="false"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu">{{__('Ads Mangemnet')}}</span></a>
+                        <ul aria-expanded="false" class="collapse" id="banner_dropdown">
                             <li class="sidebar-item"><a href="{{url('admin/ads')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Banner Ads')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{url('admin/ads/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Banner')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{url('/admin/banner-group/index')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All Banner Group')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{url('/admin/banner-group/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add Banner Group')}} </span></a></li>
                         </ul>
                     </li>
+                    
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/companies-list') }}" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Companies')}}</span></a></li>
                     
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/agent-list') }}" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Agents')}}</span></a></li>
 
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">{{__('Users')}} </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" data-toggle="collapse" href="#users_dropdown" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">{{__('Users')}} </span></a>
+                        <ul aria-expanded="false" class="collapse" id="users_dropdown">
                             <li class="sidebar-item"><a href="{{url('admin/users')}}" class="sidebar-link"><i class="mdi mdi-view-list"></i><span class="hide-menu"> {{__('All users')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{url('admin/users/create')}}" class="sidebar-link"><i class="mdi mdi-plus"></i><span class="hide-menu"> {{__('Add new')}} </span></a></li>
                             <li class="sidebar-item"><a href="{{url('admin/roles/index')}}" class="sidebar-link"><i class="mdi mdi-account-settings"></i><span class="hide-menu"> {{__('Settings')}} </span></a></li>
                         </ul>
                     </li>
 
-                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">{{__('Settings')}} </span></a>
-                        <ul aria-expanded="false" class="collapse  first-level">
+                    <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" data-toggle="collapse" href="#setting_dropdown" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">{{__('Settings')}} </span></a>
+                        <ul aria-expanded="false" class="collapse" id="setting_dropdown">
                             <li class="sidebar-item"><a href="settings-site.php" class="sidebar-link"><i class="mdi mdi-settings"></i><span class="hide-menu"> {{__('Site settings')}} </span></a></li>
                             <li class="sidebar-item"><a href="settings-realestate.php" class="sidebar-link"><i class="mdi mdi-home-modern"></i><span class="hide-menu"> {{__('Realestate')}} </span></a></li>
                             <li class="sidebar-item"><a href="settings-job.php" class="sidebar-link"><i class="mdi mdi-case-sensitive-alt"></i><span class="hide-menu"> {{__('Job')}} </span></a></li>
+
                         </ul>
                     </li>
+
                     <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ url('admin/ratings') }}" aria-expanded="false"><i class="fa fa-star"></i><span class="hide-menu">{{__('Ratings & Reviews')}}</span></a></li>
 
                     <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" data-toggle="collapse" href="#multiCollapseExample1" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">{{__('Packages')}} </span></a>

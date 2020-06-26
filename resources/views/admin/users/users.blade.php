@@ -37,7 +37,7 @@
                 {{--{{method_field('PUT')}}--}}
             <div class="row">
 
-                <div class="col-6">
+                <div class="col-6 d-none">
                     <form action="{{route('admin.users.change_role')}}" method="POST" class="">
                         {{ csrf_field() }}
                     <div class="form-group row">
@@ -61,7 +61,7 @@
                     </div>
                     </form>
                 </div>
-                <div class="col-6 d-flex justify-content-end">
+                <div class="offset-6 col-6 d-flex justify-content-end">
                     <form action="{{route('admin.users.index')}}" method="GET" id="user_filter_form">
                         <input type="hidden" name="trashed" value="{{isset(request()->trashed) ? 'users' : ''}}">
                         <a style="background: #ac304a; color: white;padding: 3px; border-radius: 4px;" href="javascript:" class="pull-right" title="Advanced Search" data-toggle="collapse" data-target="#toggle-search-filters" aria-expanded="true"><i class="fa fa-search fa-2x"></i></a>
@@ -149,12 +149,13 @@
                     <table class="table" id="zero_config">
                         <thead class="thead-light">
                         <tr>
-                            <th colspan="2">
-                                <label class="customcheckbox m-b-20">
-                                    <input type="checkbox" id="mainCheckbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </th>
+                            <th scope="col">Picture</th>
+                            {{--<th colspan="2">--}}
+                                {{--<label class="customcheckbox m-b-20">--}}
+                                    {{--<input type="checkbox" id="mainCheckbox">--}}
+                                    {{--<span class="checkmark"></span>--}}
+                                {{--</label>--}}
+                            {{--</th>--}}
                             <th scope="col">Display name</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
@@ -167,12 +168,12 @@
                         @if(isset($users) && $users->count() > 0)
                             @foreach($users as $user)
                                 <tr>
-                                    <th>
-                                        <label class="customcheckbox">
-                                            <input type="checkbox" class="listCheckbox" data-value="{{$user->id}}" data-id="users_checklist">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </th>
+                                    {{--<th>--}}
+                                        {{--<label class="customcheckbox">--}}
+                                            {{--<input type="checkbox" class="listCheckbox" data-value="{{$user->id}}" data-id="users_checklist">--}}
+                                            {{--<span class="checkmark"></span>--}}
+                                        {{--</label>--}}
+                                    {{--</th>--}}
                                     <td><img style="height: 70px; width:60px;" src="@if($user->media!=null){{asset(\App\Helpers\common::getMediaPath($user->media))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
                                     <td><div class="display_name mb-2">{{$user->first_name}} {{$user->last_name}}</div>
                                     @if(Request()->get('trashed'))
