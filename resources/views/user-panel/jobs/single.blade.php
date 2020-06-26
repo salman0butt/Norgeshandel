@@ -318,7 +318,6 @@ NorgesHandel - {{$job->title}}
                                                     @endif
                                                 </ul>
                                             @endif
-
                                             <ul class="list-unstyled">
                                                 <li class="py-2">{{$job->app_contact_title}}</li>
                                                 <li class="py-2">{{$job->app_contact}}</li>
