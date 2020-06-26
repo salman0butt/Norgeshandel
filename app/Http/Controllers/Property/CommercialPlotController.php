@@ -205,8 +205,8 @@ class CommercialPlotController extends Controller
                 }
 
                 $message = 'Annonsen din er publisert.';
-                $published_date = date("Y-m-d H:i:s");
-                $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+                //$published_date = date("Y-m-d H:i:s");
+                //$response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
             } elseif ($ad && $ad->status == 'published') {
                 $message = 'Annonsen din er oppdatert.';

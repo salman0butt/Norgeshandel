@@ -44,6 +44,7 @@
                     <tr>
                         <th>id</th>
                         <th>Tittel</th>
+                        <th>Type</th>
                         <th>Totalt Annonser</th>
                         <th>Varighet</th>
                         <th>Tilgjengelige annonser</th>
@@ -58,6 +59,7 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$user_package->package ? $user_package->package->title : ''}}</td>
+                                <td>{{$user_package->package ? ucfirst($user_package->package->key) : ''}}</td>
                                 <td>{{$user_package->total_ads}}</td>
                                 <td>{{$user_package->ad_expiry.' '.$user_package->ad_expiry_unit}}</td>
                                 <td>{{$user_package->available_ads}}</td>

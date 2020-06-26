@@ -93,7 +93,7 @@ class PackageController extends Controller
         $package = Package::find($id);
         if($package){
             try{
-                $package->update($request->all());
+                $package->update($request->except('key'));
                 DB::commit();
                 return redirect()->route('admin.packages.index')->with('success', 'Package has been updated successfully.');
             }catch (\Exception $e){

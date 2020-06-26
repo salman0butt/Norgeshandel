@@ -29,14 +29,24 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
+                        <label for="key" class="text-right control-label">Type:</label>
+                        <select class="form-control" id="key" name="key" style="width: 100%;" aria-hidden="true" {{$package && $package->key ? 'disabled' : 'required'}}>
+                            <option value="">Select</option>
+                            <option value="eiendom" {{$package && $package->key== 'eiendom' ? 'selected' : ''}}>Eiendom</option>
+                            <option value="jobb" {{$package && $package->key== 'jobb' ? 'selected' : ''}}>Jobb</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
                         <label for="no_of_ads" class="text-right control-label">No of Ads:</label>
                         <input type="number" min="1" step="1" onkeydown="if(event.key==='.' || event.key==='-'){event.preventDefault();}" class="form-control" id="no_of_ads" value="{{ old('no_of_ads',$package->no_of_ads) }}" name="no_of_ads"
                                placeholder="Total Ads" required>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="total_price" class="text-right control-label">Total Price:</label>
@@ -52,9 +62,7 @@
                                placeholder="Worth Values" required>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="ad_expiry" class="text-right control-label">Ad Expiry:</label>
@@ -76,6 +84,7 @@
                     </div>
                 </div>
             </div>
+
             <hr>
         </div>
 

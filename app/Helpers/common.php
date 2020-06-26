@@ -1042,7 +1042,11 @@ class common
 
                         $user_package->update();
                         //Create or update ad expiry
-                        AdExpiry::updateOrCreate(['ad_id' => $ad->id], ['date_end' => $expiry_date,'date_start' => date("Y-m-d")]);
+                        AdExpiry::updateOrCreate(['ad_id' => $ad->id], ['user_package_id' => $user_package->id,'date_end' => $expiry_date,'date_start' => date("Y-m-d")]);
+
+                        $published_date = date("Y-m-d H:i:s");
+                        $ad = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+
                         DB::commit();
                         $flag = true;
                     }catch (\Exception $e){

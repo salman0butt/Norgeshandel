@@ -1,8 +1,8 @@
 @if($obj->ad && $obj->ad->status == 'saved')
     <div class="ad_published_payment_method_div">
-        <div class="form-group">
-            <label class="u-t5">Betalingsløsning</label>
-            <div class="row pl-3">
+        <div class="form-group @if($obj->ad->ad_type == 'job') row @endif">
+            <label class="u-t5 @if($obj->ad->ad_type == 'job') col-2 @endif">Betalingsløsning</label>
+            <div class=" @if($obj->ad->ad_type == 'job') col-10 @endif">
                 <div class="col-md-12 input-toggle">
                     <input class="to_user_ad_publish checkmark" type="radio" value="online_payment" name="to_publish_ad" id="online_payment" checked>
                     <label for="online_payment" class="radio-lbl"> Bruk online betaling</label>
@@ -14,15 +14,25 @@
             </div>
         </div>
 
-        <div class="form-group ad_form_user_package_section d-none">
-            <label class="u-t5">Brukerpakke</label>
-            <div class="row">
-                <div class="col-sm-12 pr-md-0">
+        <div class="form-group ad_form_user_package_section d-none @if($obj->ad->ad_type == 'job') row @endif">
+            <label class="u-t5 @if($obj->ad->ad_type == 'job') col-2 @endif">Brukerpakke</label>
+            <div class="@if($obj->ad->ad_type == 'job') col-10 @else row @endif">
+                <div class="@if($obj->ad->ad_type != 'job') col-sm-12 @endif pr-md-0">
                     @php
                         if(Auth::user()->hasRole('agent')){
-                            $user_packages = \App\UserPackage::where('user_id',Auth::user()->created_by_company->user_id)->where('status',1)->where('available_ads','>',0)->get();
+                            $user_id = Auth::user()->created_by_company->user_id;
+                            $created_user = \App\User::find($user_id);
+                            $user = $created_user;
                         }else{
-                            $user_packages = Auth::user()->packages->where('status',1)->where('available_ads','>',0);
+                            $user = Auth::user();
+                        }
+
+                        if($user){
+                            if($obj->ad->ad_type == 'job'){
+                                $user_packages = $user->job_packages->where('status',1)->where('available_ads','>',0);
+                            }else{
+                                $user_packages = $user->property_packages->where('status',1)->where('available_ads','>',0);
+                            }
                         }
                     @endphp
                     <select id="package_id" name="package_id" class="dme-form-control"  required>

@@ -268,8 +268,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Ad::class,'ad_sold_to_user','user_id','ad_id');
     }
 
-    //USer Packages
+    //User all Packages
     public function packages(){
         return $this->hasMany(UserPackage::class);
+    }
+
+
+    //User job packages
+    public function job_packages(){
+        return $this->hasMany(UserPackage::class)->whereHas('package',function ($q){
+            $q->where('packages.key','jobb');
+        });
+    }
+    //User property packages
+    public function property_packages(){
+        return $this->hasMany(UserPackage::class)->whereHas('package',function ($q){
+            $q->where('packages.key','eiendom');
+        });
     }
 }
