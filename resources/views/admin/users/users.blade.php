@@ -25,6 +25,15 @@
             @include('common.partials.flash-messages')
         </div>
         <div class="col-md-12">
+            @if(Request()->get('trashed'))
+                <a href="{{url('admin/users')}}">
+                    page moved to the Users
+                </a>
+            @else
+                <a href="{{url('admin/users?trashed=users')}}">
+                    page moved to the trash
+                </a>
+            @endif
                 {{--{{method_field('PUT')}}--}}
             <div class="row">
 
@@ -52,21 +61,11 @@
                     </div>
                     </form>
                 </div>
-                <div class="col-6">
+                <div class="col-6 d-flex justify-content-end">
                     <form action="{{route('admin.users.index')}}" method="GET" id="user_filter_form">
-                        {{--@if(Request()->get('trashed'))--}}
-                            {{--<a href="{{url('admin/users')}}">--}}
-                                {{--page moved to the Users--}}
-                            {{--</a>--}}
-                        {{--@else--}}
-                            {{--<a href="{{url('admin/users?trashed=users')}}">--}}
-                                {{--page moved to the trash--}}
-                            {{--</a>--}}
-                        {{--@endif--}}
-                        {{--<button class="btn btn-danger" onclick="document.getElementById('user_filter_form').submit();" value="yes" name="trashed" type="submit"> page moved to the trash</button>--}}
-
+                        <input type="hidden" name="trashed" value="{{isset(request()->trashed) ? 'users' : ''}}">
                         <a style="background: #ac304a; color: white;padding: 3px; border-radius: 4px;" href="javascript:" class="pull-right" title="Advanced Search" data-toggle="collapse" data-target="#toggle-search-filters" aria-expanded="true"><i class="fa fa-search fa-2x"></i></a>
-                        <a class="btn btn-primary" href="{{url('admin/users?export_users=yes'.(isset(request()->trashed) ? '&trashed=users' : ''))}}"><i class="fa fa-download pr-1"></i>Export</a>
+                        <button name="export_users" value="yes" class="btn btn-primary mr-2" onclick="document.getElementById('user_filter_form').submit();"  ><i class="fa fa-download pr-1"></i>Export</button>
                 </div>
             </div>
 
@@ -165,7 +164,7 @@
                         </tr>
                         </thead>
                         <tbody class="customtable">
-                        @if(isset($users))
+                        @if(isset($users) && $users->count() > 0)
                             @foreach($users as $user)
                                 <tr>
                                     <th>
@@ -203,7 +202,7 @@
                         @else
                             <tr>
                                 <td colspan="8">
-                                    <h4 class="m-2 text-center">There is no user to display!</h4>
+                                    <h5 class="m-2 text-center">There is no user to display!</h5>
                                 </td>
                             </tr>
                         @endif

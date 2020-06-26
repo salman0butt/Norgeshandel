@@ -67,8 +67,8 @@ class AdminUserController extends Controller
                     if($request->email){
                         $query->where('email', 'like', '%' . $request->email . '%');
                     }
-                })->when(($request->end_date), function($query) use ($request) {
-                    if($request->end_date){
+                })->when(($request->start_date), function($query) use ($request) {
+                    if($request->start_date){
                         $query->where('created_at','>=',$request->start_date);
                     }
                 })->when(($request->end_date), function($query) use ($request) {
