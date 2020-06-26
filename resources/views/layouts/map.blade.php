@@ -192,6 +192,31 @@
 <script src="{{asset('public/mediexpert.js')}}"></script>
 <script>
     $(function () {
+     
+        setTimeout(function() {
+            @if(request()->property_type == 'property_for_sale')
+             $('#property_type').find('option[value="property_for_sale"]').attr('selected',true).change();
+           @elseif(request()->property_type == 'property_for_rent')
+             $('#property_type').find('option[value="property_for_rent"]').attr('selected',true).change();
+            @elseif(request()->property_type == 'holiday_home_for_sale')
+             $('#property_type').find('option[value="holiday_home_for_sale"]').attr('selected',true).change();
+            @elseif(request()->property_type == 'flat_wishes_rented')
+             $('#property_type').find('option[value="flat_wishes_rented"]').attr('selected',true).change();
+            @elseif(request()->property_type == 'commercial_property_for_sale')
+             $('#property_type').find('option[value="commercial_property_for_sale"]').attr('selected',true).change();
+            @elseif(request()->property_type == 'commercial_property_for_rent')
+             $('#property_type').find('option[value="commercial_property_for_rent"]').attr('selected',true).change();
+            @elseif(request()->property_type == 'commercial_plot')
+             $('#property_type').find('option[value="commercial_plot"]').attr('selected',true).change();
+            @elseif(request()->property_type == 'Business_for_sale')
+             $('#property_type').find('option[value="Business_for_sale"]').attr('selected',true).change();
+            @elseif(request()->job_type == 'full_time')
+             $('#job_type').find('option[value="full_time"]').attr('selected',true).change();
+            @elseif(request()->job_type == 'management')
+             $('#job_type').find('option[value="management"]').attr('selected',true).change();
+           @endif
+            }, 500);
+    
         var url = '{{ url('/map/search') }}';
         getMap(url);
         $.ajaxSetup({
@@ -227,6 +252,14 @@
             $(this).parent().find('li.nav-item').addClass('active');
             url = '{{ url('/map/direction') }}';
             getMap(url);
+                
+        setTimeout(function() {
+       var destination =  $('#search-address').val();
+            if(destination != ''){
+                $('#dirDestination').val(destination); 
+            }
+        }, 1000);  
+       
         });
     });
 </script>

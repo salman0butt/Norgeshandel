@@ -46,7 +46,7 @@
                 @endif
             </div>
             <div class="pt-3 float-left">
-                <a href="#" class="dme-btn-rounded-back-only"><i class="fa fa-map-marker"></i> <span class="">Vis på
+                <a href="@if(request()->job_type == 'management') {{ url('/map/job?job_type=management') }} @else {{ url('/map/job?job_type=full_time') }} @endif" class="dme-btn-rounded-back-only" target="_blank"><i class="fa fa-map-marker"></i> <span class="">Vis på
                         kart</span></a>
             </div>
         </div>
@@ -93,7 +93,7 @@
     <div class="row mt-3">
         <div class="col-md-12">
             <div style="float: right">
-                {{--                                    {{$jobs->links()}}--}}
+                {{--{{$jobs->links()}}--}}
             </div>
         </div>
     </div>

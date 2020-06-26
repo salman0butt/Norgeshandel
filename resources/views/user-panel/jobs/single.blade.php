@@ -424,7 +424,7 @@ NorgesHandel - {{$job->title}}
                     <h5 class="u-t3"></h5>
                 </div>
                 <div style="width: 306px; height: 250px;">
-                    <h5 class="text-muted">
+                     <a href="{{ url('/map?lat='.$job->latitude.'&long='.$job->longitude) }}" target="_blank"><h5 class="text-muted">
                         @if($job->company)
                         @php
                          $job->company->full_address;
@@ -433,7 +433,7 @@ NorgesHandel - {{$job->title}}
                         {{ $job->full_address }}
                         @endif
 
-                    </h5>
+                    </h5></a>
                      <a href="{{ url('/map?lat='.$job->latitude.'&long='.$job->longitude) }}" id="click-map" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
                 </div><br><br>
                 {{-- <p class="u-mt4">
