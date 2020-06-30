@@ -112,7 +112,7 @@ class CommercialPropertyForSaleController extends Controller
                    //Property Map Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
-                $query->select(['commercial_property_for_sales.headline AS ad_heading', 'commercial_property_for_sales.*']);
+                $query->select(['commercial_property_for_sales.headline AS ad_heading','commercial_property_for_sales.rental_income AS total_price', 'commercial_property_for_sales.*']);
                 $all_ads = common::propertyMapFilters($query);
                  return response()->json(['data'=>$all_ads]);
              }

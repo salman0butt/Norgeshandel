@@ -35,7 +35,7 @@
             <div class="col-md-8">
             <h6><a href="{{ url('/') }}/${locations[i]['ad_id']}">${locations[i]['ad_heading'] ? locations[i]['ad_heading'] : 'N/A'}</a></h6>
             <p>Adresse: ${locations[i]['full_address'] ? locations[i]['full_address'] : ''} </p>
-            <p>Pris: ${locations[i]['total_price'] ? locations[i]['total_price'] : ''}</p></div>
+            <p> ${locations[i]['total_price'] ? 'Pris: '+locations[i]['total_price'] : ''}</p></div>
           </div>`);
           infowindow.open(map, marker);
         }
