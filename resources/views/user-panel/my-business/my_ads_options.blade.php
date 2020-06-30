@@ -259,7 +259,7 @@
             <form action="{{route('reactivate-ad', $ad->id)}}" id="ad-sold" class="mb-0" method="POST">
                 {{csrf_field()}}
                 <div class="modal-body">
-                    <h5>Ønsker du å aktivere denne annonsen på nytt. Denne annonsen vil bli publisert igjen.</h5>
+                    <h5>Ønsker du å aktivere denne annonsen på nytt?</h5>
 
                     @if($ad->ad_type != 'property_flat_wishes_rented' && $ad->ad_type != 'property_for_rent')
                         <label for="keywords-input" class="u-t5">Betalingsløsning</label>
@@ -299,6 +299,7 @@
                             </div>
                         </div>
                     @endif
+
                 </div>
 
                 <div class="modal-footer">

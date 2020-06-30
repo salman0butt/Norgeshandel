@@ -96,7 +96,7 @@ class HomeController extends Controller
     }
     public function paginate(Request $request,$id) {
         $currentPage = $id;
-       Paginator::currentPageResolver(function () use ($currentPage) {
+        Paginator::currentPageResolver(function () use ($currentPage) {
             return $currentPage;
         });
 

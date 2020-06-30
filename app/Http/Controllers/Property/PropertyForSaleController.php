@@ -351,8 +351,9 @@ class PropertyForSaleController extends Controller
                         exit();
                     }
                     $message = 'Annonsen din er publisert.';
-                    $published_date = date("Y-m-d H:i:s");
-                    $response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
+                    $response = true;
+                    //$published_date = date("Y-m-d H:i:s");
+                    //$response = $ad->update(['status' => 'published', 'published_on' => $published_date]);
 
                 } elseif ($ad && $ad->status == 'published') {
                     $message = 'Annonsen din er oppdatert.';

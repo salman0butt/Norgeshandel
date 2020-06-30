@@ -351,6 +351,13 @@ $(document).ready(function (e) {
                         record_store_ajax_request('change', this_obj);
                     }
                 });
+
+                ed.on("keyup", function(){
+
+                    $('.text-editor').html(tinymce.activeEditor.getContent());
+                    explicit_keywords($('.text-editor'));
+                    //var val = $('.text-editor').val();
+                });
             },
 
             height: 300,

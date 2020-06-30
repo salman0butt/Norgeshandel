@@ -3,7 +3,8 @@
 @section('main_title')Packages @endsection
 @section('breadcrumb')
     <a href="#" class="text-muted">Home</a> /
-    <a href="#" class="">Packages</a>
+    <a href="#" class="">Packages</a> /
+    <a href="{{route('admin.packages.create')}}" class="">Create Packages</a>
 @endsection
 @section('style')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -33,6 +34,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">Title</th>
+                            <th scope="col">Type</th>
                             <th scope="col">No of Ads</th>
                             <th scope="col">Price</th>
                             <th scope="col">Expiry</th>
@@ -46,6 +48,7 @@
                             @foreach($packages as $package)
                                 <tr>
                                     <td>{{$package->title}}</td>
+                                    <td>{{ucfirst($package->key)}}</td>
                                     <td>{{$package->no_of_ads}}</td>
                                     <td>{{$package->total_price.' Kr'}}</td>
                                     <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>

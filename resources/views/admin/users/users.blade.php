@@ -25,10 +25,19 @@
             @include('common.partials.flash-messages')
         </div>
         <div class="col-md-12">
+            @if(Request()->get('trashed'))
+                <a href="{{url('admin/users')}}">
+                    page moved to the Users
+                </a>
+            @else
+                <a href="{{url('admin/users?trashed=users')}}">
+                    page moved to the trash
+                </a>
+            @endif
                 {{--{{method_field('PUT')}}--}}
             <div class="row">
 
-                <div class="col-6">
+                <div class="col-6 d-none">
                     <form action="{{route('admin.users.change_role')}}" method="POST" class="">
                         {{ csrf_field() }}
                     <div class="form-group row">
@@ -52,21 +61,11 @@
                     </div>
                     </form>
                 </div>
-                <div class="col-6">
+                <div class="offset-6 col-6 d-flex justify-content-end">
                     <form action="{{route('admin.users.index')}}" method="GET" id="user_filter_form">
-                        {{--@if(Request()->get('trashed'))--}}
-                            {{--<a href="{{url('admin/users')}}">--}}
-                                {{--page moved to the Users--}}
-                            {{--</a>--}}
-                        {{--@else--}}
-                            {{--<a href="{{url('admin/users?trashed=users')}}">--}}
-                                {{--page moved to the trash--}}
-                            {{--</a>--}}
-                        {{--@endif--}}
-                        {{--<button class="btn btn-danger" onclick="document.getElementById('user_filter_form').submit();" value="yes" name="trashed" type="submit"> page moved to the trash</button>--}}
-
+                        <input type="hidden" name="trashed" value="{{isset(request()->trashed) ? 'users' : ''}}">
                         <a style="background: #ac304a; color: white;padding: 3px; border-radius: 4px;" href="javascript:" class="pull-right" title="Advanced Search" data-toggle="collapse" data-target="#toggle-search-filters" aria-expanded="true"><i class="fa fa-search fa-2x"></i></a>
-                        <a class="btn btn-primary" href="{{url('admin/users?export_users=yes'.(isset(request()->trashed) ? '&trashed=users' : ''))}}"><i class="fa fa-download pr-1"></i>Export</a>
+                        <button name="export_users" value="yes" class="btn btn-primary mr-2" onclick="document.getElementById('user_filter_form').submit();"  ><i class="fa fa-download pr-1"></i>Export</button>
                 </div>
             </div>
 
@@ -150,12 +149,13 @@
                     <table class="table" id="zero_config">
                         <thead class="thead-light">
                         <tr>
-                            <th colspan="2">
-                                <label class="customcheckbox m-b-20">
-                                    <input type="checkbox" id="mainCheckbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </th>
+                            <th scope="col">Picture</th>
+                            {{--<th colspan="2">--}}
+                                {{--<label class="customcheckbox m-b-20">--}}
+                                    {{--<input type="checkbox" id="mainCheckbox">--}}
+                                    {{--<span class="checkmark"></span>--}}
+                                {{--</label>--}}
+                            {{--</th>--}}
                             <th scope="col">Display name</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
@@ -165,15 +165,15 @@
                         </tr>
                         </thead>
                         <tbody class="customtable">
-                        @if(isset($users))
+                        @if(isset($users) && $users->count() > 0)
                             @foreach($users as $user)
                                 <tr>
-                                    <th>
-                                        <label class="customcheckbox">
-                                            <input type="checkbox" class="listCheckbox" data-value="{{$user->id}}" data-id="users_checklist">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </th>
+                                    {{--<th>--}}
+                                        {{--<label class="customcheckbox">--}}
+                                            {{--<input type="checkbox" class="listCheckbox" data-value="{{$user->id}}" data-id="users_checklist">--}}
+                                            {{--<span class="checkmark"></span>--}}
+                                        {{--</label>--}}
+                                    {{--</th>--}}
                                     <td><img style="height: 70px; width:60px;" src="@if($user->media!=null){{asset(\App\Helpers\common::getMediaPath($user->media))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
                                     <td><div class="display_name mb-2">{{$user->first_name}} {{$user->last_name}}</div>
                                     @if(Request()->get('trashed'))
@@ -203,7 +203,7 @@
                         @else
                             <tr>
                                 <td colspan="8">
-                                    <h4 class="m-2 text-center">There is no user to display!</h4>
+                                    <h5 class="m-2 text-center">There is no user to display!</h5>
                                 </td>
                             </tr>
                         @endif

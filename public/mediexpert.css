@@ -1264,3 +1264,7 @@ span.stars {float: left}
     font-weight: 500;
     display: inline-block;
 }
+
+.dropzone-file-area{
+    border: 1px dashed #474445 !important;
+}

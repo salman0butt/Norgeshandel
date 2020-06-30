@@ -99,8 +99,8 @@ if($property !== null)
         @if($ad && $ad->expiry && $ad->expiry->date_start && $ad->expiry->date_end)
             <div class="pt-3">
                 <h5>
-                    <span class="badge badge-success">Påbegynt: {{$ad->expiry->date_start}}</span>
-                    <span class="badge badge-warning pl-3">Utløper: {{$ad->expiry->date_end}}</span>
+                    <span class="badge badge-success">Påbegynt: {{date("d-m-Y", strtotime($ad->expiry->date_start))}}</span>
+                    <span class="badge badge-warning pl-3">Utløper: {{date("d-m-Y", strtotime($ad->expiry->date_end))}}</span>
                 </h5>
             </div>
         @endif

@@ -577,8 +577,7 @@
                 var link = '{{url('jobs/update/'.$obj_job->id)}}';
                 @endif
             }
-            //calling address
-            fullAddress()
+
 
             $("input ~ span,select ~ span").each(function (index) {
                 $(".error-span").html('');
@@ -694,6 +693,12 @@
 
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
+
+                var event_name = $(this).attr('name');
+                if(event_name === 'address' || event_name === 'zip'){
+                    //calling address
+                    fullAddress();
+                }
 
             });
 

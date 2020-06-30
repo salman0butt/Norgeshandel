@@ -56,9 +56,9 @@ class JobController extends Controller
     public function index(Request $request)
     {
         if (request()->route()->getPrefix() == '/admin') {
-            $ads = Ad::where('ad_type','job')->get();
+            $ads = Ad::where('ad_type','job')->orderBy('published_on','DESC')->get();
             if($request->trashed){
-                $ads = Ad::where('ad_type','job')->onlyTrashed()->get();
+                $ads = Ad::where('ad_type','job')->onlyTrashed()->orderBy('published_on','DESC')->get();
             }
             return response()->view('admin.jobs.jobs', compact('ads'));
         }

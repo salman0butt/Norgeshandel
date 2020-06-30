@@ -50,7 +50,7 @@
                                  <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
                             </button>
                             <div class="expansion-panel__details collapse" id="multiCollapseExample1">
-                                <table class="data-table mt-2 col-md-5">
+                                <table class="data-table mt-2 col-md-12">
                                     <thead>
                                         <tr>
                                             <td>Bolig til leie:</td>
@@ -109,50 +109,6 @@
                                             <td class="">1990 Kr</td>
                                             <td></td>
                                         </tr>
-                                    </tbody>
-
-                                </table>
-                                <caption>
-                                    <p class="u-t5">Alle priser er i NOK, gjelder pr. annonse og er ekskl.
-                                        moms</p>
-                                </caption>
-                            </div>
-
-                            <button type="button" class="triger-btn mt-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <div class="expansion-panel__summary">
-                                    <div><span class="u-strong u-pr16">Pakker</span>
-                                    </div>
-                                </div>
-                                <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
-                            </button>
-                            <div class="expansion-panel__details collapse show" id="collapseExample">
-                                <table class="table table-hover mt-2 col-md-12">
-                                    <thead>
-                                    <tr>
-                                        <th>Tittel</th>
-                                        <th>Annonser</th>
-                                        <th>Verdi</th>
-                                        <th>Pakkepris</th>
-                                        <th>Varighet</th>
-
-                                        @if(!Auth::user()->hasRole('agent'))
-                                            <th>Handling</th>
-                                        @endif
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($packages as $package)
-                                        <tr>
-                                            <td>{{$package->title}}</td>
-                                            <td>{{$package->no_of_ads}}</td>
-                                            <td>{{number_format($package->worth_values,0,""," ").' kr'}}</td>
-                                            <td>{{number_format($package->total_price,0,""," ").' kr'}}</td>
-                                            <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>
-                                            @if(!Auth::user()->hasRole('agent'))
-                                                <td><a class="btn btn-primary btn-sm" href="{{route('purchase-package',$package->id)}}">Kjøp</a></td>
-                                            @endif
-                                        </tr>
-                                    @endforeach
                                     </tbody>
 
                                 </table>
@@ -231,6 +187,54 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="grid__unit col-md-12">
+                    <button type="button" class="triger-btn mt-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <div class="expansion-panel__summary">
+                            <div><span class="u-strong u-pr16">Pakker</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
+                    </button>
+                    <div class="expansion-panel__details collapse show" id="collapseExample">
+                        <table class="table table-hover mt-2 col-md-12">
+                            <thead>
+                            <tr>
+                                <th>Tittel</th>
+                                <th>Type</th>
+                                <th>Annonser</th>
+                                <th>Verdi</th>
+                                <th>Pakkepris</th>
+                                <th>Varighet</th>
+
+                                @if(!Auth::user()->hasRole('agent'))
+                                    <th>Handling</th>
+                                @endif
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($packages as $package)
+                                <tr>
+                                    <td>{{$package->title}}</td>
+                                    <td>{{ucfirst($package->key)}}</td>
+                                    <td>{{$package->no_of_ads}}</td>
+                                    <td>{{number_format($package->worth_values,0,""," ").' kr'}}</td>
+                                    <td>{{number_format($package->total_price,0,""," ").' kr'}}</td>
+                                    <td>{{$package->ad_expiry.' '.$package->ad_expiry_unit}}</td>
+                                    @if(!Auth::user()->hasRole('agent'))
+                                        <td><a class="btn btn-primary btn-sm" href="{{route('purchase-package',$package->id)}}">Kjøp</a></td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                            </tbody>
+
+                        </table>
+                        <caption>
+                            <p class="u-t5">Alle priser er i NOK, gjelder pr. annonse og er ekskl.
+                                moms</p>
+                        </caption>
                     </div>
                 </div>
             </div>

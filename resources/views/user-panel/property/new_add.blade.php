@@ -145,10 +145,21 @@
         }
         $(document).ready(function () {
 
+            $(document).on('keyup', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
+                var val = $(this).val();
+                if(!isEmpty(val)){
+                    var explicit = explicit_keywords($(this));
+
+                    // if(explicit === 'yes'){
+                    //     alert('Et dårlig ord finnes i annonsen din. Fjern den til publisert annonse. Ellers blir du ikke lagt ut annonsen.');
+                    //     return false;
+                    // }
+                }
+            });
             $(document).on('change', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
                 e.preventDefault();
-
                 if(! $(this).valid()) return false;
+
                 var ad_status = $('.ad_status').val();
                 if(ad_status == 'saved'){
                     record_store_ajax_request('change', (this));
@@ -164,8 +175,15 @@
                 }
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
-                //calling address
-                fullAddress();
+
+                var event_name = $(this).attr('name');
+
+                if(event_name === 'street_address' || event_name === 'address' || event_name === 'zip_code'){
+                    //calling address
+                    fullAddress();
+                }
+
+
             });
             //click button update
             $(document).on('click', '#publiser_annonsen', function(e){
