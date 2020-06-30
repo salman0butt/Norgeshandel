@@ -3,6 +3,114 @@ var added = false;
 var cur_lat = 0;
 var cur_lon = 0;
 
+var new_url_property = '';
+
+function assign_lat_long(new_url=''){
+
+    if(!isEmpty(new_url)){
+        new_url_property = new_url;
+    }
+
+    if(new_url_property && $('#map_lat').val() && $('#map_lng').val()){
+        var map_lat = $('#map_lat').val();
+        var map_lng = $('#map_lng').val();
+        new_url_property += "&map_lat=" + map_lat;//.toFixed(6);
+        new_url_property += "&map_lng=" + map_lng;//.toFixed(6);
+        search(new_url_property);
+    }
+}
+
+function initMap() {
+
+    var map = new google.maps.Map(
+        document.getElementById('map'),
+        {center: {lat: -33.8688, lng: 151.2195}, zoom: 13});
+
+    var input = document.getElementById('pac-input');
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.bindTo('bounds', map);
+
+    // Specify just the place data fields that you need.
+    autocomplete.setFields(['place_id', 'geometry', 'name', 'formatted_address']);
+
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    var infowindow = new google.maps.InfoWindow();
+    var infowindowContent = document.getElementById('infowindow-content');
+    infowindow.setContent(infowindowContent);
+
+    var geocoder = new google.maps.Geocoder;
+
+    var marker = new google.maps.Marker({map: map});
+    marker.addListener('click', function() {
+        infowindow.open(map, marker);
+    });
+    autocomplete.setComponentRestrictions({
+        'country': ['no']
+    });
+
+    autocomplete.addListener('place_changed', function() {
+        infowindow.close();
+        var place = autocomplete.getPlace();
+
+        if (!place.place_id) {
+            return;
+        }
+        geocoder.geocode({'placeId': place.place_id}, function(results, status) {
+            if (status !== 'OK') {
+                window.alert('Geocoder failed due to: ' + status);
+                return;
+            }
+            $('#map_lat').val(results[0].geometry.location.lat());
+            $('#map_lng').val(results[0].geometry.location.lng());
+
+            assign_lat_long();
+            //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+            map.setZoom(11);
+            map.setCenter(results[0].geometry.location);
+            var circle;
+            // Set the position of the marker using the place ID and location.
+            marker.setPlace(
+                {placeId: place.place_id, location: results[0].geometry.location});
+
+            marker.setVisible(true);
+
+
+            // Add circle overlay and bind to marker
+            $(document).on('change','#customRange1',function() {
+                var new_rad = $(this).val();
+                var rad = new_rad * 1609.34;
+                if (!circle || !circle.setRadius) {
+                    circle = new google.maps.Circle({
+                        map: map,
+                        radius: rad,
+                        fillColor: '#555',
+                        strokeColor: '#ffffff',
+                        strokeOpacity: 0.1,
+                        strokeWeight: 3
+                    });
+                    circle.bindTo('center', marker, 'position');
+                } else circle.setRadius(rad);
+            });
+            //infowindowContent.children['place-name'].textContent = place.name;
+            //infowindowContent.children['place-id'].textContent = place.place_id;
+            //infowindowContent.children['place-address'].textContent =
+            //  results[0].formatted_address;
+
+            //infowindow.open(map, marker);
+        });
+    });
+}
+
+$('.smart-scroll').scroll(function() {
+    $('.pac-container').attr("style", "display: none !important");
+});
+$(window).scroll(function() {
+    $('.pac-container').attr("style", "display: none !important");
+});
+
 function get_curr_location(newUrl=''){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -18,7 +126,6 @@ function get_curr_location(newUrl=''){
     }
 }
 
-
 function set_lat_lon(newUrl,sort){
     if(sort === '99' && cur_lat && cur_lon){
         newUrl += "&lat=" + cur_lat.toFixed(6);
@@ -27,7 +134,6 @@ function set_lat_lon(newUrl,sort){
 
     return newUrl;
 }
-
 
 $(document).ready(function () {
     var getUrlParameter = function getUrlParameter(sParam) {
@@ -47,13 +153,14 @@ $(document).ready(function () {
     fix_page_links();
 
     $('.mega-menu input').change(function (e) {
+        var id = $(this).attr('id');
+
         var newUrl = $('#mega_menu_form').serialize();
 
         var view = getUrlParameter('view');
         var sort = getUrlParameter('sort');
         var user_id = getUrlParameter('user_id');
-        // console.log(user_id);
-        // console.log(parseInt(user_id));
+
         if (!isEmpty(user_id)) {
             newUrl += "&user_id=" + user_id;
         }
@@ -63,10 +170,15 @@ $(document).ready(function () {
         if (!isEmpty(sort)) {
             newUrl += "&sort=" + sort;
         }
-        newUrl = set_lat_lon(newUrl,sort);
-        // history.pushState('data', 'NorgesHandel', "?" + newUrl);
 
-        search(newUrl);
+        newUrl = set_lat_lon(newUrl,sort);
+
+        if(id === 'pac-input'){
+            assign_lat_long(newUrl);
+        }else{
+            search(newUrl);
+        }
+
         // fix_page_links();
         var back_url = $('#back_url').val();
         if (!added) {
@@ -191,4 +303,3 @@ $(document).ready(function () {
     // });
 
 });
-

@@ -1085,4 +1085,30 @@ class common
         $data['flag'] = $flag;
         return $data;
     }
+
+    //
+    public static function get_map_filter_ads($request,$table_name,$query){
+        $d = $request['radius'];       //50km in miles ;
+        $r = 3959;          //earth's radius in miles
+        $latitude = $request['map_lat'];   //58.32775757729577;
+        $longitude = $request['map_lng'];  //8.218992760525595;
+
+        $latN = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
+            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(0))));
+
+        $latS = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
+            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(180))));
+
+        $lonE = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(90))
+                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
+                - sin(deg2rad($latitude)) * sin(deg2rad($latN))));
+
+        $lonW = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(270))
+                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
+                - sin(deg2rad($latitude)) * sin(deg2rad($latN)))); //longitude
+        $query->where($table_name.'.latitude','<=',$latN)->where($table_name.'.latitude','>=',$latS)
+            ->where($table_name.'.longitude','<=',$lonE)->where($table_name.'.longitude','>=',$lonW);
+
+        return $query;
+    }
 }
