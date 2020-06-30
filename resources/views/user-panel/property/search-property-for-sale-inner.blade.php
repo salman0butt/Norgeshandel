@@ -38,7 +38,7 @@
                 @include('user-panel.partials.change-view-btn')
             </div>
             <div class="pt-3 float-left">
-                <a href="#" class="dme-btn-rounded-back-only"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
+                <a href="{{ url('/map/property?property_type=property_for_sale') }}" class="dme-btn-rounded-back-only" target="_blank"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
             </div>
         </div>
         <div class="col-md-4">
@@ -135,7 +135,6 @@
                                     @endif
                                     {{--<div class="dealer-logo float-right mt-3"><img src="{{asset('public/images/dealer-logo.png')}} " alt="" class="img-fluid"></div>--}}
                                 </div>
-
                             </a>
                             <div>
                                 @php $ad = $property_for_sale->ad;  @endphp
