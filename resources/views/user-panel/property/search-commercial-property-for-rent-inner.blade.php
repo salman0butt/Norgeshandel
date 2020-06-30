@@ -39,7 +39,7 @@
                 @include('user-panel.partials.change-view-btn')
             </div>
             <div class="pt-3 float-left">
-                <a href="#" class="dme-btn-rounded-back-only"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
+                <a href="{{ url('/map/property?property_type=commercial_property_for_rent') }}" class="dme-btn-rounded-back-only" target="_blank"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
             </div>
         </div>
         <div class="col-md-4">

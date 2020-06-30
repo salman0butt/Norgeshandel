@@ -75,6 +75,7 @@
                 map: map
               });
               infowindow.setContent(results[0].formatted_address);
+              $('#search-address').val(results[0].formatted_address);
               infowindow.open(map, marker);
             } else {
               window.alert('No results found');
@@ -119,6 +120,7 @@
                 marker.setVisible(true);
                 infowindow.open(map, marker);
                  infowindow.setContent(place.name);
+                 $('#search-address').val(place.name);
                 infowindowContent.children['place-name'].textContent = place.name;
                 //infowindowContent.children['place-id'].textContent = place.place_id;
                 infowindowContent.children['place-address'].textContent = results[0].formatted_address;

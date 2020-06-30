@@ -49,11 +49,18 @@
                                 <label for="local_area_name_check"></label>
                             </div>
                             <div class="" style="width:89%; float: right;">
-                                <input type="text" placeholder="Søk etter adresse eller sted" name="local_area_name"
-                                       class="dme-form-control">
-                            </div>
-                            <div style="text-align: right">
-                                <img class="mt-2" src="{{asset('public/images/minimap.PNG')}}" width="89%" alt="">
+                             <div style="display: none">
+                            <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
+                        </div>
+                       <div id="map" style="clear:both; height:250px;"></div>
+                       <input type="range" class="custom-range" id="customRange1" value="20">
+                       <input type="hidden" id="map_lat" name="map_lat" value="">
+                       <input type="hidden" id="map_lng" name="map_lng" value="">
+                        {{-- <div id="infowindow-content">
+                            <span id="place-name"  class="title"></span><br>
+                            <strong>Place ID</strong>: <span id="place-id"></span><br> 
+                            <span id="place-address"></span>
+                        </div> --}}
                             </div>
                         </div>
                         <div class="clearfix"></div>
@@ -218,3 +225,32 @@
         </div>
     </div>
 </li>
+ <style>
+    .pac-container {
+        z-index: 999999 !important;
+        display: block !important;
+    }
+    .pac-container:empty{
+        display: none !important;
+    }
+    .pac-container:after {
+        /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
+        background-image: none !important;
+        height: 0px;
+    }
+    #mega_menu_form #map > div > div > div:nth-child(12),#mega_menu_form .gm-svpc, #mega_menu_form #map > div > div > button {
+        display:none;
+    }
+    #pac-input {
+        width:100%;
+        left:0px !important;
+        border: 2px solid #ac304a;
+    border-radius: 8px !important;
+    padding: 5px 5px 5px 15px;
+    font-size: 25px;
+    color: #474445;
+    /* font-weight: bold; */
+    height: 40px;
+    z-index: 5;
+    }
+</style>
