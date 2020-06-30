@@ -174,8 +174,13 @@
 
                 var postal = $('.zip_code').val();
                 $('#old_zip').attr('value',postal);
-                  //calling address
-                fullAddress();
+
+                var event_name = $(this).attr('name');
+                if(event_name === 'street_address' || event_name === 'address' || event_name === 'zip_code'){
+                    //calling address
+                    fullAddress();
+                }
+                
             });
             //click button update
             $(document).on('click', '#publiser_annonsen', function(e){

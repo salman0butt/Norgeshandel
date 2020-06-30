@@ -34,16 +34,19 @@
                                                    role="grid" aria-describedby="zero_config_info">
                                                 <thead>
                                                 <tr role="row">
-                                                    <th class="sorting_asc_disabled sorting_desc_disabled sorting_asc"
-                                                        tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"
-                                                        aria-sort="ascending"
-                                                        aria-label=": activate to sort column descending"
-                                                        style="width: 24px;">
-                                                        <label class="customcheckbox m-b-20">
-                                                            <input type="checkbox" id="mainCheckbox">
-                                                            <span class="checkmark"></span>
-                                                        </label>
+                                                    <th>
+                                                        #
                                                     </th>
+                                                    {{--<th class="sorting_asc_disabled sorting_desc_disabled sorting_asc"--}}
+                                                        {{--tabindex="0" aria-controls="zero_config" rowspan="1" colspan="1"--}}
+                                                        {{--aria-sort="ascending"--}}
+                                                        {{--aria-label=": activate to sort column descending"--}}
+                                                        {{--style="width: 24px;">--}}
+                                                        {{--<label class="customcheckbox m-b-20">--}}
+                                                            {{--<input type="checkbox" id="mainCheckbox">--}}
+                                                            {{--<span class="checkmark"></span>--}}
+                                                        {{--</label>--}}
+                                                    {{--</th>--}}
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Title: activate to sort column ascending"
@@ -52,7 +55,7 @@
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Category: activate to sort column ascending"
-                                                        style="width: 193px;">Type
+                                                        style="width: 120px;">Type
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
@@ -72,13 +75,18 @@
                                                     <th class="sorting" tabindex="0" aria-controls="zero_config"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Views: activate to sort column ascending"
-                                                        style="width: 78px;">Views
+                                                        style="width: 38px;">Views
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="zero_config"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Views: activate to sort column ascending"
+                                                        style="width: 78px;">Duration
                                                     </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                     @if($ads)
-                                                    @foreach($ads as $ad)
+                                                    @foreach($ads as $key=>$ad)
                                                         <?php
                                                             if(Request()->get('trashed')){
                                                                 $property = $ad->property()->withTrashed()->first();
@@ -88,10 +96,11 @@
                                                         ?>
                                                         <tr role="row" class="odd">
                                                             <th class="sorting_1">
-                                                                <label class="customcheckbox">
-                                                                    <input type="checkbox" class="listCheckbox">
-                                                                    <span class="checkmark"></span>
-                                                                </label>
+                                                                {{$key+1}}
+                                                                {{--<label class="customcheckbox">--}}
+                                                                    {{--<input type="checkbox" class="listCheckbox">--}}
+                                                                    {{--<span class="checkmark"></span>--}}
+                                                                {{--</label>--}}
                                                             </th>
                                                             <td class="sorting_1">
                                                                 @if(Request()->get('trashed'))
@@ -137,6 +146,15 @@
                                                             <td>{{$ad->user ? $ad->user->username : ''}}</td>
                                                             <td>{{$ad->status}} @if($ad->status=='pending') <a href="{{route('jobs.status_change', [$ad, $approve])}}">approve</a>@endif</td>
                                                             <td>{{count($ad->views)}}</td>
+                                                            <td>
+                                                                @if($ad->expiry)
+                                                                    {{$ad->expiry->date_start ? date('d-m-Y',strtotime($ad->expiry->date_start)) : ''}}
+                                                                    <b>To</b>
+                                                                    {{$ad->expiry->date_end ? date('d-m-Y',strtotime($ad->expiry->date_end)) : ''}}
+                                                                @else
+                                                                    N/A
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                     @endif
@@ -155,6 +173,7 @@
                                                         <th rowspan="1" colspan="1">User</th>
                                                         <th rowspan="1" colspan="1">Status</th>
                                                         <th rowspan="1" colspan="1">Views</th>
+                                                        <th rowspan="1" colspan="1">Duration</th>
                                                         {{--<th rowspan="1" colspan="1">Views</th>--}}
                                                     </tr>
                                                 </tfoot>

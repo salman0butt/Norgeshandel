@@ -34,6 +34,7 @@
                         <tr>
                             <th scope="col">User</th>
                             <th scope="col">Package</th>
+                            <th scope="col">Type</th>
                             <th scope="col">Total Ads</th>
                             <th scope="col">Available Ads</th>
                             <th scope="col">Price</th>
@@ -46,6 +47,7 @@
                                 <tr>
                                     <td>{{$users_package->user && $users_package->user->username ? $users_package->user->username : 'NH-Bruker'}}</td>
                                     <td>{{$users_package->package->title}}</td>
+                                    <td>{{ucfirst($users_package->package->key)}}</td>
                                     <td>{{$users_package->total_ads}}</td>
                                     <td>{{$users_package->available_ads}}</td>
                                     <td>{{$users_package->total_price.' Kr'}}</td>

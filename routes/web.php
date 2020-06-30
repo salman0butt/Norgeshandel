@@ -646,6 +646,7 @@ Route::group(['middleware' => 'authverified'], function () {
             'media' => 'MediaController',
 
             'packages' => 'PackageController',
+            'explicit-keywords' => 'ExplicitKeywordController'
         ]);
     });
 

@@ -38,7 +38,6 @@ function myFunction(arr) {
 // }
 
 function addr_search(street, city, zip) {
-
     var xmlhttp = new XMLHttpRequest();
     var url = "https://ws.geonorge.no/adresser/v1/sok?adressetekst="+street+"&poststed="+city+"&postnummer="+zip+"&side=0&asciiKompatibel=true";
    

@@ -65,7 +65,7 @@
                                     <td>{{ $agent->email ?? 'N/A' }}</td>
                                     <td>{{$agent->created_by_company ? $agent->created_by_company->emp_name.' ('.$agent->created_by_company->company_type.')' : ''}}</td>
                                     <td>{{ $agent->mobile_number ?? 'N/A' }}</td>
-                                    <td>{{ ($agent->status ? 'Not Active' : 'Active' ) }}</td>
+                                    <td>{{ ($agent->account_status ? 'Active' : 'Deactivate' ) }}</td>
                                      <td>{{ $agent->created_at }}</td>
                                     <td>
                                         {{--<div class="display_name mb-2">{{$agent->username ?? ''}}</div>--}}

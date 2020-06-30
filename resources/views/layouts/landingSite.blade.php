@@ -225,6 +225,9 @@
 <input type="hidden" id="add_list_url" value="{{url('my-business/add-list')}}">
 <input type="hidden" id="add_fav_url" value="{{url('my-business/add-fav')}}">
 <input type="hidden" id="remove_fav_url" value="{{url('my-business/remove-fav')}}">
+
+@php $keywords = \App\ExplicitKeyword::get('value')->toArray(); $keywords = json_encode($keywords); @endphp
+<input type="hidden" id="explicit_keywords" value="{{$keywords}}">
 <script>
     var ad_id = 0;
 
@@ -265,14 +268,14 @@
             var base = '{{route('login')}}';
             var url = base+'?fav-id='+ad_id ;
             $('#modal_login .modal-body a:first').attr('href',url)
- 
+
         });
         $(document).on('click', 'a.fav', function (e) {
-    
+
             e.preventDefault();
             var url = $('#remove_fav_url').val();
             ad_id = $(this).attr('data-id');
-        
+
             $(this).find('span').removeClass('fa');
             $(this).find('span').addClass('far');
             $(this).addClass('not-fav');
@@ -302,7 +305,7 @@
             @if(session('fav_id'))
             var ad_id = {{ session('fav_id')}};
             @endif
-            
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -316,7 +319,7 @@
                     window.location.reload();
                 }
             });
-           
+
 
             // $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
             // $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
@@ -473,6 +476,7 @@
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
 <script src='{{ asset("public/js/filter-map.js") }}'></script> --}}
 
+
 @yield('map')
 <script>
     var urlParams = new URLSearchParams(location.search);
@@ -506,47 +510,77 @@
         });
     }
 
+    function explicit_keywords(this_obj) {
+
+        var val = (this_obj).val();
+        var form_id = (this_obj).closest('form').attr('id');
+
+
+        var found = '';
+        var exp = $("#explicit_keywords").val();
+        exp = jQuery.parseJSON(exp);
+
+        for ( var i = 0, l = exp.length; i < l; i++ ) {
+            var keyword = exp[i].value;
+            keyword = keyword.toLowerCase();
+            val = val.toLowerCase();
+
+            if(val.indexOf(keyword) != -1){
+                found = 'yes';
+            }
+        }
+        var text_area = '';
+        if(!$('textarea').hasClass('text-editor')){
+            text_area = ' textarea,';
+        }
+        if(isEmpty(found)){
+            $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", false);
+            // $("#"+form_id + text_area +" select,button,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").prop("disabled", false);
+            $("#"+form_id + text_area +" select,input:not(input[type='file'])").removeAttr('style');
+            // $("#"+form_id + text_area +" select,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").removeAttr('style');
+
+            if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
+                $('.mce-edit-area').css('pointer-events','auto');
+                $('.mce-tinymce').css('pointer-events','auto');
+            }
+
+            if( $("div").hasClass('dropzone-file-area')){
+                $('.dropzone-file-area').removeAttr('style');
+            }
+
+        }
+
+        if(!isEmpty(found) && found === 'yes' ){
+            if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
+                $('.mce-edit-area').css('pointer-events','none');
+                $('.mce-tinymce').css('pointer-events','none');
+            }
+
+            if( $("div").hasClass('dropzone-file-area')){
+                $('.dropzone-file-area').css('pointer-events','none');
+                $('.dropzone-file-area').css("background-color", "#ff9393");
+            }
+
+            // $("#"+form_id + text_area +" select,button,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").prop("disabled", true);
+            $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", true);
+            // $("#"+form_id + text_area +" select,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").css("background-color", "#ff9393");
+            $("#"+form_id + text_area +" select,input:not(input[type='file'])").css("background-color", "#ff9393");
+            (this_obj).prop("disabled", false);
+            (this_obj).removeAttr('style');
+            (this_obj).focus();
+
+        }
+    }
+
+
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
                 //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        /*
-
-        $.ajax({
-            url: //url('notifications_count'),
-            type: "get",
-            async: false,
-            dataType: "json",
-            success: function (response) {
-                var count = parseInt(response);
-                if (count > 0) {
-                    $('#notification:not(.page-notifications #notification)').html(count);
-                } else {
-                    $('#notification:not(.page-notifications #notification)').html('');
-                }
-            }
-        }).fail(function (jqXHR, ajaxOptions, thrownError) {
-            $('#notification:not(.page-notifications #notification)').html('');
-        });
-
-        */
-
-        //spinner start here
-       /* $(document).ajaxStart(function () {
-            $("#imageLoader").css("display", "block");
-            $(".pagination_data").css("display", "none");
-        });
-
-        $(document).ajaxComplete(function () {
-            $("#imageLoader").css("display", "none");
-            $(".pagination_data").css("display", "block");
-        });*/
-        //spinner ends here
-
-            @if(Auth::check())
-        var pusher = new Pusher('f607688e883e2a04ab39', {
+        @if(Auth::check())
+            var pusher = new Pusher('f607688e883e2a04ab39', {
                 cluster: 'eu',
                 forceTLS: true
             });

@@ -209,6 +209,8 @@
                             <li class="sidebar-item"><a href="{{route('admin.users-packages')}}" class="sidebar-link"><i class="mdi mdi-account-multiple"></i><span class="hide-menu"> {{__('Users Packages')}} </span></a></li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('admin.explicit-keywords.index') }}" aria-expanded="false"><i class="far fa-keyboard"></i><span class="hide-menu">{{__('Explicit Keywords')}}</span></a></li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->
@@ -312,9 +314,29 @@
      *       Basic Table                   *
      ****************************************/
     if($('#zero_config')){
-        $('#zero_config').DataTable();
+        $('#zero_config').DataTable(
+            {
+                "language": {
+                    "sProcessing":   "Laster...",
+                    "sLengthMenu":   "Vis _MENU_ linjer",
+                    "sZeroRecords":  "Ingen linjer matcher s&oslash;ket",
+                    "sInfo":         "Viser _START_ til _END_ av _TOTAL_ linjer",
+                    "sInfoEmpty":    "Viser 0 til 0 av 0 linjer",
+                    "sInfoFiltered": "(filtrert fra _MAX_ totalt antall linjer)",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "S&oslash;k:",
+                    "sUrl":          "",
+                    "oPaginate": {
+                        "sFirst":    "F&oslash;rste",
+                        "sPrevious": "Forrige",
+                        "sNext":     "Neste",
+                        "sLast":     "Siste"
+                    }
+                },
+            }
+        );
     }
-       $('.url_http').on('change', function(){
+   $('.url_http').on('change', function(){
     s = $(this).val();
     if (!s.match(/^[a-zA-Z]+:\/\//))
     {

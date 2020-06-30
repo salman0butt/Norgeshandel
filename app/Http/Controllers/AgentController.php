@@ -208,8 +208,8 @@ class AgentController extends Controller
     public function admin_agents_list() {
     
         $agents = User::where('created_by_company_id','!=','')->get();
-  
         return view('admin.agents.index',compact('agents'));
+
     }
     public function admin_agent_delete($id) {
          $agent = User::find($id);
