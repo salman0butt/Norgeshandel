@@ -8,16 +8,18 @@
         </div>
         <div class="clearfix"></div>
 
-        <div class="mt-3" style="width:97%;">
+        <div class="mt-3" style="width:100%;">
             <div style="display: none">
                 <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
             </div>
             <div id="map" style="clear:both; height:250px;"></div>
-            <input type="range" class="custom-range" name="radius" id="customRange1" value="20">
+            <input type="range" class="custom-range w-75 mt-3" name="radius" value="10" step="5" id="customRange1" min="5" max="200">
+            <span class="ml-2 valueSpan2"></span>
             <input type="hidden" id="map_lat" name="map_lat" value="">
             <input type="hidden" id="map_lng" name="map_lng" value="">
         </div>
     </div>
+
     <style>
         .pac-container {
             z-index: 999999 !important;
@@ -37,14 +39,18 @@
         #pac-input {
             width:100%;
             left:0px !important;
-            border: 2px solid #ac304a;
+            border: 1px solid #ac304a;
             border-radius: 8px !important;
             padding: 5px 5px 5px 15px;
-            font-size: 25px;
+            font-size: 14px;
             color: #474445;
             /* font-weight: bold; */
-            height: 40px;
+            /*height: 40px;*/
             z-index: 5;
+        }
+        .valueSpan2{
+            font-size: 16px;
+            font-weight: 500;
         }
     </style>
 
