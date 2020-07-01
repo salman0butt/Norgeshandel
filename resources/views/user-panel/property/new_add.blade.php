@@ -145,20 +145,27 @@
         }
         $(document).ready(function () {
 
-            $(document).on('keyup', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
+            $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
                 var val = $(this).val();
                 if(!isEmpty(val)){
-                    var explicit = explicit_keywords($(this));
-
-                    // if(explicit === 'yes'){
-                    //     alert('Et dårlig ord finnes i annonsen din. Fjern den til publisert annonse. Ellers blir du ikke lagt ut annonsen.');
-                    //     return false;
-                    // }
+                    explicit_keywords($(this));
                 }
             });
+
             $(document).on('change', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
+
+                var val = $(this).val();
+                if(!isEmpty(val)){
+                    if(!$(this).hasClass('text-editor')){
+                        var explicit = explicit_keywords($(this));
+                    }
+                    if(explicit === false){
+                        return false;
+                    }
+
+                }
 
                 var ad_status = $('.ad_status').val();
                 if(ad_status == 'saved'){

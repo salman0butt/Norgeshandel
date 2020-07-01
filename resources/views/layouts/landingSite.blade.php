@@ -511,11 +511,10 @@
     }
 
     function explicit_keywords(this_obj) {
+        var label = (this_obj).closest(".form-group").find("label").text();
 
         var val = (this_obj).val();
         var form_id = (this_obj).closest('form').attr('id');
-
-
         var found = '';
         var exp = $("#explicit_keywords").val();
         exp = jQuery.parseJSON(exp);
@@ -533,11 +532,10 @@
         if(!$('textarea').hasClass('text-editor')){
             text_area = ' textarea,';
         }
+
         if(isEmpty(found)){
             $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", false);
-            // $("#"+form_id + text_area +" select,button,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").prop("disabled", false);
             $("#"+form_id + text_area +" select,input:not(input[type='file'])").removeAttr('style');
-            // $("#"+form_id + text_area +" select,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").removeAttr('style');
 
             if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
                 $('.mce-edit-area').css('pointer-events','auto');
@@ -548,6 +546,11 @@
                 $('.dropzone-file-area').removeAttr('style');
             }
 
+            if($('div').hasClass('toast-top-right')){
+                $('#toast-container').css('display','none');
+            }
+
+            return true;
         }
 
         if(!isEmpty(found) && found === 'yes' ){
@@ -561,14 +564,22 @@
                 $('.dropzone-file-area').css("background-color", "#ff9393");
             }
 
-            // $("#"+form_id + text_area +" select,button,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").prop("disabled", true);
             $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", true);
-            // $("#"+form_id + text_area +" select,input:not(input[type='file'],input[name='"+(this_obj).attr('name')+"'])").css("background-color", "#ff9393");
             $("#"+form_id + text_area +" select,input:not(input[type='file'])").css("background-color", "#ff9393");
-            (this_obj).prop("disabled", false);
-            (this_obj).removeAttr('style');
+
             (this_obj).focus();
 
+            if(!(this_obj).hasClass('text-editor')){
+                (this_obj).prop("disabled", false);
+                (this_obj).removeAttr("style");
+                (this_obj).focus();
+            }
+            $('#toast-container').css('display','block');
+            //#toast-container toast toast-error
+            if(!$('div').hasClass('toast-top-right')){
+                notify("error",'You have entered a bad word in '+label+' field. Please remove it to continue to this ad. Thanks');
+            }
+            return false;
         }
     }
 
