@@ -1,3 +1,8 @@
+<style>
+    .range-width{
+        width: 78% !important;
+    }
+</style>
 <li class="nav-item filter-btn">
     <a class="nav-link mega-menu-button" id="mega-menu-button" href="#">
         <span class="fas fa-sliders-h float-left mt-2 color-maroon fa-bars" style="font-size: 1.5em;"></span>
@@ -43,6 +48,7 @@
                             </ul>
                         </div>
 
+                        <!-- include map -->
                         @include('user-panel.partials.templates.ad-map-filter')
 
                         <div class="form-group nav-dynamic-checks">
@@ -57,7 +63,6 @@
                                     <span class="u-t5">Til kr</span>
                                 </div>
                                 <div class="col-sm-4">
-                                    {{--<button type="button" name="size_btn" class="dme-btn-outlined-blue float-right">Søk</button>--}}
                                     <button type="button" name="monthly_rent_btn" class="dme-btn-outlined-blue float-right">Søk</button>
                                 </div>
                             </div>
@@ -66,6 +71,7 @@
                             <input type="hidden" id="mega_menu_search_url" value="{{url('property/property-for-rent/search')}}">
                             <input class="form-control" type="hidden" name="map" value="map">
                        @endif
+
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Størrelse</h3>
                             <div class="row">

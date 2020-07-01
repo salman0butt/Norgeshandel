@@ -6,13 +6,15 @@ var cur_lon = 0;
 var new_url_property = '';
 var new_map_var = '';
 var new_circle_var = '';
- var circle = [];
-function removeAllcircles(circle) {
-    for (var i in circle) {
-        circle[i].setMap(null);
+var circles = [];
+
+function removeAllcircles() {
+    for(var i in circles) {
+        circles[i].setMap(null);
     }
-    circle = [];
+    circles = [];
 }
+
 function assign_lat_long(new_url=''){
 
     if(!isEmpty(new_url)){
@@ -38,7 +40,7 @@ function create_circle(new_url = '') {
     var map_lat = parseFloat($('#map_lat').val());
     var map_lng = parseFloat($('#map_lng').val());
 
-      
+
      circle = new google.maps.Circle({
         strokeColor: "#FF0000",
         strokeOpacity: 0.8,
@@ -49,7 +51,9 @@ function create_circle(new_url = '') {
         center: { lat: map_lat, lng: map_lng },//citymap[city].center,
         radius: rad
     });
-    //new_circle_var.bindTo('center', new_marker_var, 'position');
+
+    // push the circle object to the array
+    circles.push(circle);
 
 }
 
@@ -105,28 +109,15 @@ function initMap() {
             map.setZoom(11);
             map.setCenter(results[0].geometry.location);
 
-           
-            new_circle_var = circle;
             // Set the position of the marker using the place ID and location.
             marker.setPlace(
                 {placeId: place.place_id, location: results[0].geometry.location});
 
             marker.setVisible(true);
 
-            //circle.setMap(null);
-
             new_map_var = map;
-            removeAllcircles(circle);
-            
+            removeAllcircles();
             create_circle();
-
-
-            //infowindowContent.children['place-name'].textContent = place.name;
-            //infowindowContent.children['place-id'].textContent = place.place_id;
-            //infowindowContent.children['place-address'].textContent =
-            //  results[0].formatted_address;
-
-            //infowindow.open(map, marker);
         });
     });
     
