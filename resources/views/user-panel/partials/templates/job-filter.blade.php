@@ -32,6 +32,7 @@
                             </span>
                             </div>
                         </div>
+                        @include('user-panel.partials.templates.ad-map-filter')
                         <div class="u-mt32 form-group nav-dynamic-checks">
                             <h3 class="u-t5">Stilling</h3>
                             <?php
@@ -184,3 +185,4 @@
         </div>
     </div>
 </li>
+    <script src="a{{ asset('public/js/job-filters.js') }}"></script>

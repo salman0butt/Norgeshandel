@@ -781,6 +781,9 @@ class JobController extends Controller
         if (isset($request->map_job_type) && $request->map_job_type) {
             $query = $query->where('jobs.job_type', $request->map_job_type);
         }
+         if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+            $query = common::get_map_filter_ads($request->all(),'jobs',$query);
+        }
 
 
         if($is_notif){
