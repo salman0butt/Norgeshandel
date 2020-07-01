@@ -33,8 +33,8 @@
             background-image: none !important;
             height: 0px;
         }
-        #mega_menu_form #map > div > div > div:nth-child(12),#mega_menu_form .gm-svpc, #mega_menu_form #map > div > div > button {
-            display:none;
+       #mega_menu_form #map > div > div > div:nth-child(12), #mega_menu_form .gm-svpc, #mega_menu_form #map > div > div > button {
+            display:none !important;
         }
         #pac-input {
             width:100%;
@@ -44,14 +44,21 @@
             padding: 5px 5px 5px 15px;
             font-size: 14px;
             color: #474445;
-            /* font-weight: bold; */
-            /*height: 40px;*/
             z-index: 5;
         }
-        .valueSpan2{
+       .valueSpan2{
             font-size: 16px;
             font-weight: 500;
         }
+        a[href^="http://maps.google.com/maps"]{display:none !important}
+        a[href^="https://maps.google.com/maps"]{display:none !important}
+
+       .gmnoprint a, .gmnoprint span, .gm-style-cc {
+            display:none;
+        }
+        /*.gmnoprint div {
+            background:none !important;
+        }/*
     </style>
 
 @endif
