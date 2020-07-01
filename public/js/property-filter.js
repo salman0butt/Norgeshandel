@@ -228,9 +228,11 @@ $(document).ready(function () {
 
         if(id === 'pac-input'){
             assign_lat_long(newUrl);
-        }else if (id === 'customRange1'){
+        }
+        // else if (id === 'customRange1'){
            // create_circle(newUrl);
-        } else{
+        // }
+        else{
             search(newUrl);
         }
 
