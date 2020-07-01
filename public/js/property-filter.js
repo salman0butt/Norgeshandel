@@ -4,6 +4,8 @@ var cur_lat = 0;
 var cur_lon = 0;
 
 var new_url_property = '';
+var new_map_var = '';
+var new_circle_var = '';
 
 function assign_lat_long(new_url=''){
 
@@ -19,6 +21,33 @@ function assign_lat_long(new_url=''){
         search(new_url_property);
     }
 }
+
+function create_circle(new_url=''){
+        if(!isEmpty(new_url)){
+        new_url_property = new_url;
+    }
+
+
+    var new_rad = $('#customRange1').val();
+    var rad = new_rad * 1000;
+    var map_lat = parseFloat($('#map_lat').val());
+    var map_lng = parseFloat($('#map_lng').val());
+
+
+    var cityCircle = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map: new_map_var,
+        center: { lat: map_lat, lng: map_lng },//citymap[city].center,
+        radius: rad
+    });
+    //new_circle_var.bindTo('center', new_marker_var, 'position');
+
+}
+
 
 function initMap() {
 
@@ -70,12 +99,21 @@ function initMap() {
             //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
             map.setZoom(11);
             map.setCenter(results[0].geometry.location);
-           
+
+            var circle;
+            //new_circle_var = circle;
             // Set the position of the marker using the place ID and location.
             marker.setPlace(
                 {placeId: place.place_id, location: results[0].geometry.location});
 
             marker.setVisible(true);
+
+            //circle.setMap(null);
+
+            new_map_var = map;
+            create_circle();
+
+
             //infowindowContent.children['place-name'].textContent = place.name;
             //infowindowContent.children['place-id'].textContent = place.place_id;
             //infowindowContent.children['place-address'].textContent =
@@ -140,7 +178,6 @@ $(document).ready(function () {
     const $value = $('#customRange1');
     $valueSpan.html($value.val()+'km');
     $value.on('input change', () => {
-
         $valueSpan.html($value.val()+'km');
     });
 
@@ -163,7 +200,6 @@ $(document).ready(function () {
 
     $('.mega-menu input').change(function (e) {
         var id = $(this).attr('id');
-
         var newUrl = $('#mega_menu_form').serialize();
 
         var view = getUrlParameter('view');
@@ -184,7 +220,9 @@ $(document).ready(function () {
 
         if(id === 'pac-input'){
             assign_lat_long(newUrl);
-        }else{
+        }else if (id === 'customRange1'){
+            create_circle(newUrl);
+        } else{
             search(newUrl);
         }
 
