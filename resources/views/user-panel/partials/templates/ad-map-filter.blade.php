@@ -33,8 +33,8 @@
             background-image: none !important;
             height: 0px;
         }
-        #mega_menu_form #map > div > div > div:nth-child(12),#mega_menu_form .gm-svpc, #mega_menu_form #map > div > div > button {
-            display:none;
+        #mega_menu_form .gmnoprint ,#mega_menu_form .gm-svpc, #mega_menu_form #map > div > div > button {
+            display:none !important;
         }
         #pac-input {
             width:100%;
@@ -51,6 +51,15 @@
         .valueSpan2{
             font-size: 16px;
             font-weight: 500;
+        }
+        a[href^="http://maps.google.com/maps"]{display:none !important}
+        a[href^="https://maps.google.com/maps"]{display:none !important}
+
+        .gmnoprint a, .gmnoprint span, .gm-style-cc {
+            display:none;
+        }
+        .gmnoprint div {
+            background:none !important;
         }
     </style>
 
