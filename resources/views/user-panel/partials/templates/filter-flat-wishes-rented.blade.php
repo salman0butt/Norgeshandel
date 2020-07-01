@@ -1,3 +1,8 @@
+<style>
+    .range-width{
+        width: 89% !important;
+    }
+</style>
 <li class="nav-item filter-btn">
     <a class="nav-link mega-menu-button" id="mega-menu-button" href="#">
         <span class="fas fa-sliders-h float-left mt-2 color-maroon fa-bars" style="font-size: 1.5em;"></span>
@@ -42,10 +47,13 @@
                                 </li>
                             </ul>
                         </div>
+                        <!-- include map -->
+                        @include('user-panel.partials.templates.ad-map-filter')
+
                          @if(\Illuminate\Support\Facades\Request::is('map/select-property'))
                         <input type="hidden" id="mega_menu_search_url" value="{{url('property/flat-wishes-rented/search')}}">
                         <input class="form-control" type="hidden" name="map" value="map">
-                   @endif
+                        @endif
                         <div class="clearfix"></div>
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Pris</h3>

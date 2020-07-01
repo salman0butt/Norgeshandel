@@ -1,3 +1,8 @@
+<style>
+    .range-width{
+        width: 84% !important;
+    }
+</style>
 <li class="nav-item filter-btn">
     <a class="nav-link mega-menu-button" id="mega-menu-button" href="#">
         <span class="fas fa-sliders-h float-left mt-2 color-maroon fa-bars" style="font-size: 1.5em;"></span>
@@ -42,21 +47,11 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="form-group nav-dynamic-checks">
-                            <h3 class="u-t5">Område, by eller sted</h3>
-                            <div class="float-left mt-2">
-                                <input id="local_area_name_check" type="checkbox" name="local_area_name_check">
-                                <label for="local_area_name_check"></label>
-                            </div>
-                            <div class="" style="width:89%; float: right;">
-                                <input type="text" placeholder="Søk etter adresse eller sted" name="local_area_name"
-                                       class="dme-form-control">
-                            </div>
-                            <div style="text-align: right">
-                                <img class="mt-2" src="http://digitalmedieexpert.no/NorgesHandel/assets/images/minimap.PNG"
-                                     width="89%" alt="">
-                            </div>
-                        </div>
+
+                        <!-- include map -->
+                        @include('user-panel.partials.templates.ad-map-filter')
+
+
                          @if(\Illuminate\Support\Facades\Request::is('map/select-property'))
                         <input type="hidden" id="mega_menu_search_url" value="{{url('property/commercial-property-for-sale/search')}}">
                         <input class="form-control" type="hidden" name="map" value="map">

@@ -209,6 +209,11 @@ class PropertyForSaleController extends Controller
         if (isset($request->company_id) && !empty($request->company_id)) {
             $query->where('ads.company_id', $request->company_id);
         }
+
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+            $query = common::get_map_filter_ads($request->all(),$table,$query);
+        }
+
 //        $query->orderBy('ads.published_on', 'DESC');
          // $all_ads = $query->get();
         //   $img_data = $all_ads->company_gallery->id;

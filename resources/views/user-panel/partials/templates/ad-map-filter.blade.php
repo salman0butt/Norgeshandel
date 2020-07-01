@@ -13,7 +13,7 @@
                 <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
             </div>
             <div id="map" style="clear:both; height:250px;"></div>
-            <input type="range" class="custom-range w-75 mt-3" name="radius" value="10" step="5" id="customRange1" min="5" max="200">
+            <input type="range" class="custom-range range-width mt-3" name="radius" value="10" step="5" id="customRange1" min="5" max="200">
             <span class="ml-2 valueSpan2"></span>
             <input type="hidden" id="map_lat" name="map_lat" value="">
             <input type="hidden" id="map_lng" name="map_lng" value="">
