@@ -356,7 +356,6 @@ $(document).ready(function (e) {
 
                     $('.text-editor').html(tinymce.activeEditor.getContent());
                     explicit_keywords($('.text-editor'));
-                    //var val = $('.text-editor').val();
                 });
             },
 
