@@ -6,7 +6,13 @@ var cur_lon = 0;
 var new_url_property = '';
 var new_map_var = '';
 var new_circle_var = '';
-
+ var circle = [];
+function removeAllcircles(circle) {
+    for (var i in circle) {
+        circle[i].setMap(null);
+    }
+    circle = [];
+}
 function assign_lat_long(new_url=''){
 
     if(!isEmpty(new_url)){
@@ -22,19 +28,18 @@ function assign_lat_long(new_url=''){
     }
 }
 
-function create_circle(new_url=''){
+function create_circle(new_url = '') {
         if(!isEmpty(new_url)){
         new_url_property = new_url;
     }
-
-
+      
     var new_rad = $('#customRange1').val();
     var rad = new_rad * 1000;
     var map_lat = parseFloat($('#map_lat').val());
     var map_lng = parseFloat($('#map_lng').val());
 
-
-    var cityCircle = new google.maps.Circle({
+      
+     circle = new google.maps.Circle({
         strokeColor: "#FF0000",
         strokeOpacity: 0.8,
         strokeWeight: 2,
@@ -100,8 +105,8 @@ function initMap() {
             map.setZoom(11);
             map.setCenter(results[0].geometry.location);
 
-            var circle;
-            //new_circle_var = circle;
+           
+            new_circle_var = circle;
             // Set the position of the marker using the place ID and location.
             marker.setPlace(
                 {placeId: place.place_id, location: results[0].geometry.location});
@@ -111,6 +116,8 @@ function initMap() {
             //circle.setMap(null);
 
             new_map_var = map;
+            removeAllcircles(circle);
+            
             create_circle();
 
 
@@ -122,10 +129,11 @@ function initMap() {
             //infowindow.open(map, marker);
         });
     });
+    
 
     // Add circle overlay and bind to marker
     $(document).on('change', '#customRange1', function () {
-
+        
         var new_rad = $(this).val();
         var rad = new_rad * 1609.34;
         if (!circle || !circle.setRadius) {
@@ -221,7 +229,7 @@ $(document).ready(function () {
         if(id === 'pac-input'){
             assign_lat_long(newUrl);
         }else if (id === 'customRange1'){
-            create_circle(newUrl);
+           // create_circle(newUrl);
         } else{
             search(newUrl);
         }
