@@ -14,12 +14,12 @@ var cur_lon = 0;
 var new_url_property = '';
 var new_map_var = '';
 var new_circle_var = '';
- var circle = [];
-function removeAllcircles(circle) {
-    for (var i in circle) {
-        circle[i].setMap(null);
+ var circles = [];
+function removeAllcircles() {
+    for(var i in circles) {
+        circles[i].setMap(null);
     }
-    circle = [];
+    circles = [];
 }
 function assign_lat_long(new_url=''){
 
@@ -57,7 +57,9 @@ function create_circle(new_url = '') {
         center: { lat: map_lat, lng: map_lng },//citymap[city].center,
         radius: rad
     });
-    //new_circle_var.bindTo('center', new_marker_var, 'position');
+   
+     // push the circle object to the array
+    circles.push(circle);
 
 }
 
@@ -110,11 +112,11 @@ function initMap() {
 
             assign_lat_long();
             //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
-            map.setZoom(11);
+            map.setZoom(9);
             map.setCenter(results[0].geometry.location);
 
            
-            new_circle_var = circle;
+            //new_circle_var = circle;
             // Set the position of the marker using the place ID and location.
             marker.setPlace(
                 {placeId: place.place_id, location: results[0].geometry.location});
@@ -124,7 +126,7 @@ function initMap() {
             //circle.setMap(null);
 
             new_map_var = map;
-            removeAllcircles(circle);
+            removeAllcircles();
             
             create_circle();
 

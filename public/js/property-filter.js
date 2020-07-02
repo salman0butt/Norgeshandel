@@ -106,9 +106,9 @@ function initMap() {
 
             assign_lat_long();
             //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
-            map.setZoom(11);
+            map.setZoom(9);
             map.setCenter(results[0].geometry.location);
-
+            marker1.setMap(null);
             // Set the position of the marker using the place ID and location.
             marker.setPlace(
                 {placeId: place.place_id, location: results[0].geometry.location});
@@ -120,11 +120,28 @@ function initMap() {
             create_circle();
         });
     });
+    var rad = 1000;
+    var circle = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map: map,
+        center: map.getCenter(),
+        radius: rad
+    });
+    circles.push(circle);
+    var marker1 = new google.maps.Marker({
+        position: map.getCenter()
+    });
+
+    // To add the marker to the map, call setMap();
+    marker1.setMap(map);
     
 
     // Add circle overlay and bind to marker
     $(document).on('change', '#customRange1', function () {
-        
         var new_rad = $(this).val();
         var rad = new_rad * 1609.34;
         if (!circle || !circle.setRadius) {
@@ -199,7 +216,25 @@ $(document).ready(function () {
 
     $('.mega-menu input').change(function (e) {
         var id = $(this).attr('id');
-        var newUrl = $('#mega_menu_form').serialize();
+        if($('#local_area_name_check'). prop("checked") == false){
+            var filters = {
+                "radius": true,
+                "map_lng": true,
+                "map_lat": true,
+                "local_area_name": true,
+                "local_area_name_check": true
+            };
+            var newUrl = $('#mega_menu_form').find(":input")
+                .filter(function (i, item) {
+                    return !filters[item.name];
+                }).serialize();
+        }else{
+            if(id === 'local_area_name_check' && $(this). prop("checked") == true){
+                var newUrl = $('#mega_menu_form').find("input[name!=states_and_cities]").serialize();
+            }else{
+                var newUrl = $('#mega_menu_form').serialize();
+            }
+        }
 
         var view = getUrlParameter('view');
         var sort = getUrlParameter('sort');
@@ -351,3 +386,12 @@ $(document).ready(function () {
     // });
 
 });
+
+//default map postion set start
+if ($("#map_lat").length && $("#map_lng").length) {
+    $("#map_lat").val(59.911491);
+    $("#map_lng").val(10.757933);
+    $("#pac-input").val('Oslo, Norge');
+
+}
+//default map position set ends
