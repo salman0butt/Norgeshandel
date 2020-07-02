@@ -216,25 +216,7 @@ $(document).ready(function () {
 
     $('.mega-menu input').change(function (e) {
         var id = $(this).attr('id');
-        if($('#local_area_name_check'). prop("checked") == false){
-            var filters = {
-                "radius": true,
-                "map_lng": true,
-                "map_lat": true,
-                "local_area_name": true,
-                "local_area_name_check": true
-            };
-            var newUrl = $('#mega_menu_form').find(":input")
-                .filter(function (i, item) {
-                    return !filters[item.name];
-                }).serialize();
-        }else{
-            if(id === 'local_area_name_check' && $(this). prop("checked") == true){
-                var newUrl = $('#mega_menu_form').find("input[name!=states_and_cities]").serialize();
-            }else{
-                var newUrl = $('#mega_menu_form').serialize();
-            }
-        }
+        var newUrl = $('#mega_menu_form').serialize();
 
         var view = getUrlParameter('view');
         var sort = getUrlParameter('sort');
