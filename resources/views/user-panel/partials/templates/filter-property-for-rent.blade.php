@@ -115,13 +115,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group nav-dynamic-checks mt-4">
-                            <?php
-                            if (!empty($tax = App\Taxonomy::where('slug', 'states_and_cities')->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
-                            }
-                            ?>
-                        </div>
+                        <!-- include areas like oslo, bergen in filter -->
+                        @include('user-panel.partials.templates.area-property-filter')
 
                     </div>
                     <div style="border-right:1px solid #ddd;" class="col-md-3">

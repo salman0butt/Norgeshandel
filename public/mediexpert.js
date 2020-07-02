@@ -398,7 +398,6 @@ $(document).ready(function (e) {
         }
     });
 
-
     //ACtive and dective the record
     //Change the status
     $('.status').click(function () {
@@ -428,7 +427,6 @@ $(document).ready(function (e) {
             });
         }
     });
-
 
     $("#more_details").click(function (e) {
 
@@ -504,7 +502,6 @@ $(document).ready(function (e) {
         });
     });
 
-
     //Show user package when an ad is going to published
     $(document).on('click', '.to_user_ad_publish', function (e) {
         var val = $(this).val();
@@ -514,6 +511,22 @@ $(document).ready(function (e) {
         }
     });
 
+    //disabled areas when user use map on property/job filter pages
+    $(document).on('click', '#mega_menu_form #map #pac-input,#customRange1, #local_area_name_check', function (e) {
+        var id = $(this).attr('id');
+        if(id === 'customRange1' || id === 'pac-input'){
+            $('#local_area_name_check').prop( "checked", true );
+        }
+
+        if($('#local_area_name_check'). prop("checked") == true){
+            $('#mega_menu_form .property-filter-area-list').css('pointer-events','none');
+            $('#mega_menu_form .property-filter-area-list').css('background-color','#f8f9faa3');
+
+        }
+        else if($('#local_area_name_check'). prop("checked") == false){
+            $('#mega_menu_form .property-filter-area-list').removeAttr('style');
+        }
+    })
 
 });
 

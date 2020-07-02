@@ -1,6 +1,6 @@
 <style>
     .range-width{
-        width: 79% !important;
+        width: 78% !important;
     }
 </style>
 <li class="nav-item filter-btn">
@@ -175,14 +175,8 @@
                         <!--                                        -->
                     </div>
                     <div style="border-right:1px solid #ddd;" class="col-md-3">
-                        <div class="form-group nav-dynamic-checks">
-                            <h3 class="u-t5">Område</h3>
-                            <?php
-                            if (!empty($tax = App\Taxonomy::where('slug', 'states_and_cities')->first())) {
-                                echo App\Helpers\common::map_nav($tax->parent_terms());
-                            }
-                            ?>
-                        </div>
+                        <!-- include areas like oslo, bergen in filter -->
+                        @include('user-panel.partials.templates.area-property-filter')
 
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Type søk</h3>

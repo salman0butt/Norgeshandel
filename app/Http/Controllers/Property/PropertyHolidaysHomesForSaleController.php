@@ -134,6 +134,10 @@ class PropertyHolidaysHomesForSaleController extends Controller
             $sort = $request->sort;
         }
 
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check)){
+            $query = common::get_map_filter_ads($request->all(),'property_holidays_homes_for_sales',$query);
+        }
+
              //Holiday Home For Sale Filters
        if ($request->ajax()) {
              if(isset($request->map) && $request->map){
