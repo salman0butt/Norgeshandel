@@ -97,7 +97,7 @@ class CommercialPlotController extends Controller
                  return response()->json(['data'=>$all_ads]);
              }
         }
-        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check)){
             $query = common::get_map_filter_ads($request->all(),$table,$query);
         }
 

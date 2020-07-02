@@ -99,7 +99,7 @@ class BusinessForSaleController extends Controller
              }
         }
 
-        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check)){
             $query = common::get_map_filter_ads($request->all(),'business_for_sales',$query);
         }
 
