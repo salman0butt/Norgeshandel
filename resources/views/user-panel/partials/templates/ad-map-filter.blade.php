@@ -58,7 +58,7 @@
         }
         /*.gmnoprint div {
             background:none !important;
-        }/*
+        }*/
     </style>
 
 @endif
