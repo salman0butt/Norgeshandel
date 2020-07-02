@@ -2,10 +2,17 @@
 
     <div class="form-group nav-dynamic-checks">
         <h3 class="u-t5">Område, by eller sted</h3>
-        <div class="float-left mt-2">
-            <input id="local_area_name_check" type="checkbox" name="local_area_name_check">
-            <label for="local_area_name_check"></label>
+        <div class="d-flex flex-row">
+            <div class="mt-2">
+                <input id="local_area_name_check" type="checkbox" name="local_area_name_check">
+                <label for="local_area_name_check"></label>
+            </div>
+            <div class="w-100">
+                <input type="range" class="custom-range range-width mt-3" name="radius" value="10" step="5" id="customRange1" min="5" max="200">
+                <span class="ml-2 valueSpan2"></span>
+            </div>
         </div>
+
         <div class="clearfix"></div>
 
         <div class="mt-3" style="width:100%;">
@@ -13,8 +20,7 @@
                 <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
             </div>
             <div id="map" style="clear:both; height:250px;"></div>
-            <input type="range" class="custom-range range-width mt-3" name="radius" value="10" step="5" id="customRange1" min="5" max="200">
-            <span class="ml-2 valueSpan2"></span>
+
             <input type="hidden" id="map_lat" name="map_lat" value="">
             <input type="hidden" id="map_lng" name="map_lng" value="">
         </div>
