@@ -114,7 +114,7 @@ function initMap() {
             //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
             map.setZoom(9);
             map.setCenter(results[0].geometry.location);
-
+            marker1.setMap(null);
            
             //new_circle_var = circle;
             // Set the position of the marker using the place ID and location.
