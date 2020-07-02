@@ -139,6 +139,24 @@ function initMap() {
             //infowindow.open(map, marker);
         });
     });
+      var rad = 1000;
+    var circle = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map: map,
+        center: map.getCenter(),
+        radius: rad
+    });
+    circles.push(circle);
+    var marker1 = new google.maps.Marker({
+        position: map.getCenter()
+    });
+
+    // To add the marker to the map, call setMap();
+    marker1.setMap(map);
     
 
     // Add circle overlay and bind to marker
@@ -295,5 +313,13 @@ $(window).scroll(function() {
                 }
             }*/
         });
+        //default map postion set start
+if ($("#map_lat").length && $("#map_lng").length) {
+    $("#map_lat").val(59.911491);
+    $("#map_lng").val(10.757933);
+    $("#pac-input").val('Oslo, Norge');
+
+}
+//default map position set ends
     </script>
 @endsection
