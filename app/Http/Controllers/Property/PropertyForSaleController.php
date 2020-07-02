@@ -211,11 +211,11 @@ class PropertyForSaleController extends Controller
         }
 
         if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
-            $query = common::get_map_filter_ads($request->all(),$table,$query);
+            $query = common::get_map_filter_ads($request->all(),'property_for_sales',$query);
         }
 
 //        $query->orderBy('ads.published_on', 'DESC');
-         // $all_ads = $query->get();
+         // $all_ads = $query->get();/*
         //   $img_data = $all_ads->company_gallery->id;
        
         //Property for sale Map Filters

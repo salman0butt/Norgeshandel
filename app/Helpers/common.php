@@ -1106,8 +1106,8 @@ class common
         $lonW = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(270))
                 * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
                 - sin(deg2rad($latitude)) * sin(deg2rad($latN)))); //longitude
-//        dd('$latN'.$latN.'$latS'.$latS.'$lonE'.$lonE.'$lonW'.$lonW);
-        $query->where($table_name.'.latitude','<=',$latN)->where($table_name.'.latitude','>=',$latS)
+
+        $query->WhereNotNull($table_name.'.latitude')->WhereNotNull($table_name.'.longitude')->where($table_name.'.latitude','<=',$latN)->where($table_name.'.latitude','>=',$latS)
             ->where($table_name.'.longitude','<=',$lonE)->where($table_name.'.longitude','>=',$lonW);
 
         return $query;
