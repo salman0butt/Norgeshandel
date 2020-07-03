@@ -185,4 +185,3 @@
         </div>
     </div>
 </li>
-    <script src="a{{ asset('public/js/job-filters.js') }}"></script>

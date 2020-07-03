@@ -7,6 +7,7 @@ var new_url_property = '';
 var new_map_var = '';
 var new_circle_var = '';
 var circles = [];
+var new_map_get_center = '';
 
 function removeAllcircles() {
     for(var i in circles) {
@@ -31,7 +32,8 @@ function assign_lat_long(new_url=''){
 }
 
 function create_circle(new_url = '') {
-        if(!isEmpty(new_url)){
+    removeAllcircles();
+    if(!isEmpty(new_url)){
         new_url_property = new_url;
     }
       
@@ -39,7 +41,6 @@ function create_circle(new_url = '') {
     var rad = new_rad * 1000;
     var map_lat = parseFloat($('#map_lat').val());
     var map_lng = parseFloat($('#map_lng').val());
-
 
      circle = new google.maps.Circle({
         strokeColor: "#FF0000",
@@ -52,6 +53,7 @@ function create_circle(new_url = '') {
         radius: rad
     });
 
+
     // push the circle object to the array
     circles.push(circle);
 
@@ -63,7 +65,7 @@ function initMap() {
     var map = new google.maps.Map(
         document.getElementById('map'),
         { center: { lat: 59.911491, lng: 10.757933}, zoom: 13});
-
+    new_map_var = map;
     var input = document.getElementById('pac-input');
 
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -121,7 +123,7 @@ function initMap() {
             create_circle();
         });
     });
-    var rad = 1000;
+    var rad = 80 * 1000;
     var circle1 = new google.maps.Circle({
         strokeColor: "#FF0000",
         strokeOpacity: 0.8,
@@ -132,30 +134,25 @@ function initMap() {
         center: map.getCenter(),
         radius: rad
     });
-   // circles.push(circle1);
+
+    circles.push(circle1);
     var marker1 = new google.maps.Marker({
         position: map.getCenter()
     });
 
+    new_map_get_center = map.getCenter();
     // To add the marker to the map, call setMap();
     marker1.setMap(map);
+
+
     
 
     // Add circle overlay and bind to marker
     $(document).on('change', '#customRange1', function () {
-        var new_rad = $(this).val();
-        var rad = new_rad * 1609.34;
-        if (!circle || !circle.setRadius) {
-            circle = new google.maps.Circle({
-                map: map,
-                radius: rad,
-                fillColor: '#555',
-                strokeColor: '#ffffff',
-                strokeOpacity: 0.1,
-                strokeWeight: 3
-            });
-            circle.bindTo('center', marker, 'position');
-        } else circle.setRadius(rad);
+        //removeAllcircles();
+        create_circle();
+        return false;
+
     });
 }
 
