@@ -61,7 +61,7 @@ function initMap() {
 
     var map = new google.maps.Map(
         document.getElementById('map'),
-        { center: { lat: 59.911491, lng: 10.757933}, zoom: 13});
+        { center: { lat: 59.911491, lng: 10.757933}, zoom: 7});
     new_map_var = map;
     var input = document.getElementById('pac-input');
 
@@ -108,7 +108,7 @@ function initMap() {
             map.setZoom(9);
             map.setCenter(results[0].geometry.location);
             marker1.setMap(null);
-            circle1.setMap(null);
+            // circle1.setMap(null);
             // Set the position of the marker using the place ID and location.
             marker.setPlace(
                 {placeId: place.place_id, location: results[0].geometry.location});
