@@ -69,16 +69,10 @@ class CommercialPropertyForSaleController extends Controller
             $query->whereIn('location', $request->country);
         }
         if (isset($request->search) && !empty($request->search)) {
-//            $query->where('headline', 'like', '%' . $request->search . '%');
             common::table_search($query, common::get_model_columns(CommercialPropertyForSale::class), $request->search, 'commercial_property_for_sales');
         }
         if (isset($request->created_at)) {
             $query->whereDate($table . '.created_at', '=', $request->created_at);
-        }
-        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
-            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table . '.street_address', 'like', '%' . $request->local_area_name . '%');
-            }
         }
 
         if (isset($request->price_from) && !empty($request->price_from)) {
@@ -118,7 +112,7 @@ class CommercialPropertyForSaleController extends Controller
              }
         }
 
-        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check) && $request->local_area_name_check == 'on'){
             $query = common::get_map_filter_ads($request->all(),$table,$query);
         }
 

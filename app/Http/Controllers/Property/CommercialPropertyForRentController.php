@@ -68,16 +68,10 @@ class CommercialPropertyForRentController extends Controller
             $query->whereIn('country', $request->country);
         }
         if (isset($request->search) && !empty($request->search)) {
-//            $query->where('heading', 'like', '%' . $request->search . '%');
             common::table_search($query, common::get_model_columns(CommercialPropertyForRent::class), $request->search, 'commercial_property_for_rents');
         }
         if (isset($request->created_at)) {
             $query->whereDate($table . '.created_at', '=', $request->created_at);
-        }
-        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
-            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table . '.street_address', 'like', '%' . $request->local_area_name . '%');
-            }
         }
 
         if (isset($request->use_area_from) && !empty($request->use_area_from)) {
@@ -111,7 +105,7 @@ class CommercialPropertyForRentController extends Controller
              }
         }
 
-        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check) && $request->local_area_name_check == 'on'){
             $query = common::get_map_filter_ads($request->all(),$table,$query);
         }
 
