@@ -7,10 +7,7 @@
                 <input id="local_area_name_check" type="checkbox" name="local_area_name_check">
                 <label for="local_area_name_check"></label>
             </div>
-            <div class="w-100">
-                <input type="range" class="custom-range range-width mt-3" name="radius" value="50" step="5" id="customRange1" min="5" max="200">
-                <span class="ml-2 valueSpan2"></span>
-            </div>
+     
         </div>
 
         <div class="clearfix"></div>
@@ -20,6 +17,10 @@
                 <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
             </div>
             <div id="map" style="clear:both; height:300px;"></div>
+                   <div class="w-100">
+                <input type="range" class="custom-range range-width mt-3" name="radius" value="50" step="5" id="customRange1" min="5" max="200">
+                <span class="ml-2 valueSpan2"></span>
+            </div>
 
             <input type="hidden" id="map_lat" name="map_lat" value="">
             <input type="hidden" id="map_lng" name="map_lng" value="">
@@ -53,9 +54,9 @@
     padding-left: 5px;
     font-size:18px;
     color: #474445;
-   left:0px !important;
+   left:52px !important;
     height:45px;
-    width:100%;
+    width:86%;
     background-color: #ecdfe2;
     -webkit-transition: box-shadow 0.5s;
     -moz-transition: box-shadow 0.5s;
@@ -76,6 +77,12 @@
         /*.gmnoprint div {
             background:none !important;
         }*/
+        #mega_menu_form > div > div:nth-child(1) > div:nth-child(3) > div.d-flex.flex-row > div,#mega_menu_form > div > div > div > div.d-flex.flex-row > div {
+                position: absolute;
+                z-index: 9999999999999999;
+                background: #fff;
+                padding: 15px 10px;
+        }
     </style>
 
 @endif
