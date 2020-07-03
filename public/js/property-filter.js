@@ -5,9 +5,7 @@ var cur_lon = 0;
 
 var new_url_property = '';
 var new_map_var = '';
-var new_circle_var = '';
 var circles = [];
-var new_map_get_center = '';
 
 function removeAllcircles() {
     for(var i in circles) {
@@ -52,7 +50,6 @@ function create_circle(new_url = '') {
         center: { lat: map_lat, lng: map_lng },//citymap[city].center,
         radius: rad
     });
-
 
     // push the circle object to the array
     circles.push(circle);
@@ -123,6 +120,10 @@ function initMap() {
             create_circle();
         });
     });
+
+    create_circle();
+
+    /*
     var rad = 80 * 1000;
     var circle1 = new google.maps.Circle({
         strokeColor: "#FF0000",
@@ -133,19 +134,14 @@ function initMap() {
         map: map,
         center: map.getCenter(),
         radius: rad
-    });
+    }); */
 
-    circles.push(circle1);
     var marker1 = new google.maps.Marker({
         position: map.getCenter()
     });
 
-    new_map_get_center = map.getCenter();
     // To add the marker to the map, call setMap();
     marker1.setMap(map);
-
-
-    
 
     // Add circle overlay and bind to marker
     $(document).on('change', '#customRange1', function () {
