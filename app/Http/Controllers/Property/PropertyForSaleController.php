@@ -92,12 +92,6 @@ class PropertyForSaleController extends Controller
         if (isset($request->created_at)) {
             $query->whereDate($table . '.updated_at', '=', $request->created_at);
         }
-        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
-            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table . '.local_area_name', 'like', '%' . $request->local_area_name . '%');
-            }
-        }
-
 
         if (isset($request->asking_price_from) && !empty($request->asking_price_from)) {
             $query->where($table . '.asking_price', '>=', (int)$request->asking_price_from);
@@ -210,7 +204,7 @@ class PropertyForSaleController extends Controller
             $query->where('ads.company_id', $request->company_id);
         }
 
-        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check) && $request->local_area_name_check == 'on'){
             $query = common::get_map_filter_ads($request->all(),'property_for_sales',$query);
         }
 

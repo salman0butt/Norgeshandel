@@ -216,26 +216,43 @@ $(document).ready(function () {
 
     $('.mega-menu input').change(function (e) {
         var id = $(this).attr('id');
-        var newUrl = $('#mega_menu_form').serialize();
-        // if ($('#local_area_name_check').prop("checked") == false) {
-        //     var filters = {
-        //         "radius": true,
-        //         "map_lng": true,
-        //         "map_lat": true,
-        //         "local_area_name": true,
-        //         "local_area_name_check": true
-        //     };
-        //     var newUrl = $('#mega_menu_form').find(":input")
-        //         .filter(function (i, item) {
-        //             return !filters[item.name];
-        //         }).serialize();
-        // } else {
-        //     if (id === 'local_area_name_check' && $(this).prop("checked") == true) {
-        //         var newUrl = $('#mega_menu_form').find("input[name!=states_and_cities]").serialize();
-        //     } else {
-        //         var newUrl = $('#mega_menu_form').serialize();
-        //     }
-        // }
+        //var newUrl = $('#mega_menu_form').serialize();
+
+        if(id === 'customRange1' || id === 'pac-input'){
+            $('#local_area_name_check').prop( "checked", true );
+        }
+
+        if($('#local_area_name_check'). prop("checked") == true){
+            $('#mega_menu_form .property-filter-area-list').css('pointer-events','none');
+            $('#mega_menu_form .property-filter-area-list ul').css('opacity','0.5');
+
+        }
+        else if($('#local_area_name_check'). prop("checked") == false){
+            $('#mega_menu_form .property-filter-area-list').removeAttr('style');
+            $('#mega_menu_form .property-filter-area-list ul').css('opacity','1.0');
+        }
+
+
+
+        if($('#local_area_name_check'). prop("checked") == false){
+            var filters = {
+                "radius": true,
+                "map_lng": true,
+                "map_lat": true,
+                "local_area_name": true,
+                "local_area_name_check": true
+            };
+
+            var newUrl = $('#mega_menu_form').find(":input")
+                .filter(function (i, item) {
+                    return !filters[item.name];
+                }).serialize();
+
+        }else if($('#local_area_name_check'). prop("checked") == true){
+            var newUrl = $('#mega_menu_form').find("input[class!=area]").serialize();
+        } else{
+            var newUrl = $('#mega_menu_form').serialize();
+        }
 
         var view = getUrlParameter('view');
         var sort = getUrlParameter('sort');

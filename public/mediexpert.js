@@ -521,11 +521,12 @@ $(document).ready(function (e) {
 
         if($('#local_area_name_check'). prop("checked") == true){
             $('#mega_menu_form .property-filter-area-list').css('pointer-events','none');
-            $('#mega_menu_form .property-filter-area-list').css('background-color','#f8f9faa3');
+            $('#mega_menu_form .property-filter-area-list ul').css('opacity','0.5');
 
         }
         else if($('#local_area_name_check'). prop("checked") == false){
             $('#mega_menu_form .property-filter-area-list').removeAttr('style');
+            $('#mega_menu_form .property-filter-area-list ul').removeAttr('style');
         }
     }); */
 
