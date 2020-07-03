@@ -115,6 +115,7 @@ function initMap() {
             map.setZoom(9);
             map.setCenter(results[0].geometry.location);
             marker1.setMap(null);
+             circle1.setMap(null);
            
             //new_circle_var = circle;
             // Set the position of the marker using the place ID and location.
@@ -140,7 +141,7 @@ function initMap() {
         });
     });
       var rad = 1000;
-    var circle = new google.maps.Circle({
+    var circle1 = new google.maps.Circle({
         strokeColor: "#FF0000",
         strokeOpacity: 0.8,
         strokeWeight: 2,
@@ -150,7 +151,7 @@ function initMap() {
         center: map.getCenter(),
         radius: rad
     });
-    circles.push(circle);
+   // circles.push(circle);
     var marker1 = new google.maps.Marker({
         position: map.getCenter()
     });

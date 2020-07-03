@@ -19,7 +19,7 @@
             <div style="display: none">
                 <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
             </div>
-            <div id="map" style="clear:both; height:250px;"></div>
+            <div id="map" style="clear:both; height:300px;"></div>
 
             <input type="hidden" id="map_lat" name="map_lat" value="">
             <input type="hidden" id="map_lng" name="map_lng" value="">
@@ -43,14 +43,25 @@
             display:none !important;
         }
         #pac-input {
-            width:100%;
-            left:0px !important;
-            border: 1px solid #ac304a;
-            border-radius: 8px !important;
-            padding: 5px 5px 5px 15px;
-            font-size: 14px;
-            color: #474445;
-            z-index: 5;
+            outline: none;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #474445;
+    border-radius: 0;
+    box-shadow: none ;
+    padding-left: 5px;
+    font-size:18px;
+    color: #474445;
+   left:0px !important;
+    height:45px;
+    width:100%;
+    background-color: #ecdfe2;
+    -webkit-transition: box-shadow 0.5s;
+    -moz-transition: box-shadow 0.5s;
+    -ms-transition: box-shadow 0.5s;
+    -o-transition: box-shadow 0.5s;
+    transition: box-shadow 0.5s;
         }
        .valueSpan2{
             font-size: 16px;
