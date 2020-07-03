@@ -48,7 +48,7 @@
                             </ul>
                         </div>
                         <!-- include map -->
-                        @include('user-panel.partials.templates.ad-map-filter')
+                        {{--@include('user-panel.partials.templates.ad-map-filter')--}}
 
                          @if(\Illuminate\Support\Facades\Request::is('map/select-property'))
                         <input type="hidden" id="mega_menu_search_url" value="{{url('property/flat-wishes-rented/search')}}">
@@ -87,6 +87,9 @@
                                 @endfor
                             </ul>
                         </div>
+                    </div>
+
+                    <div style="border-right:1px solid #ddd;" class="col-md-6">
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Boligtype</h3>
                             <?php
@@ -95,9 +98,7 @@
                             }
                             ?>
                         </div>
-                    </div>
 
-                    <div style="border-right:1px solid #ddd;" class="col-md-6">
                         <div class="u-mt32 form-group nav-dynamic-checks">
                             <h3 class="u-t5">Antall beboere</h3>
                             <ul class="list list-unstyled">
@@ -129,7 +130,7 @@
                         </div>
 
                         <!-- include areas like oslo, bergen in filter -->
-                        @include('user-panel.partials.templates.area-property-filter')
+                        {{--@include('user-panel.partials.templates.area-property-filter')--}}
 
                     </div>
                 </div>

@@ -511,25 +511,6 @@ $(document).ready(function (e) {
         }
     });
 
-    //disabled areas when user use map on property/job filter pages
-    /*
-    $(document).on('click', '#mega_menu_form #map #pac-input,#customRange1, #local_area_name_check', function (e) {
-        var id = $(this).attr('id');
-        if(id === 'customRange1' || id === 'pac-input'){
-            $('#local_area_name_check').prop( "checked", true );
-        }
-
-        if($('#local_area_name_check'). prop("checked") == true){
-            $('#mega_menu_form .property-filter-area-list').css('pointer-events','none');
-            $('#mega_menu_form .property-filter-area-list ul').css('opacity','0.5');
-
-        }
-        else if($('#local_area_name_check'). prop("checked") == false){
-            $('#mega_menu_form .property-filter-area-list').removeAttr('style');
-            $('#mega_menu_form .property-filter-area-list ul').removeAttr('style');
-        }
-    }); */
-
 });
 
 //Show left banner in a page

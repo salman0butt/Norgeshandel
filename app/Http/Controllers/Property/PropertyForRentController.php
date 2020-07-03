@@ -86,11 +86,6 @@ class PropertyForRentController extends Controller
         if (isset($request->created_at)) {
             $query->whereDate($table . '.updated_at', '=', $request->created_at);
         }
-        if (isset($request->local_area_name_check) && !empty($request->local_area_name_check)) {
-            if (isset($request->local_area_name) && !empty($request->local_area_name)) {
-                $query->where($table . '.street_address', 'like', '%' . $request->local_area_name . '%');
-            }
-        }
 
         if (isset($request->monthly_rent_from) && !empty($request->monthly_rent_from)) {
             $query->where($table . '.monthly_rent', '>=', (int)$request->monthly_rent_from);
@@ -168,7 +163,7 @@ class PropertyForRentController extends Controller
              }
         }
 
-        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check) && $request->local_area_name_check == 'on'){
             $query = common::get_map_filter_ads($request->all(),$table,$query);
         }
 

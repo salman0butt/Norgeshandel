@@ -65,7 +65,6 @@ class BusinessForSaleController extends Controller
             });
 //        DB::enableQueryLog();
         if (isset($request->search) && !empty($request->search)) {
-//            $query->where('business_for_sales.headline', 'like', '%' . $request->search . '%');
             common::table_search($query, common::get_model_columns(BusinessForSale::class), $request->search, 'business_for_sales');
         }
         if (isset($request->created_at)) {
@@ -99,8 +98,8 @@ class BusinessForSaleController extends Controller
              }
         }
 
-        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
-            $query = common::get_map_filter_ads($request->all(),'business_for_sales',$query);
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check) && $request->local_area_name_check == 'on'){
+                $query = common::get_map_filter_ads($request->all(),'business_for_sales',$query);
         }
 
         switch ($sort) {
