@@ -973,35 +973,13 @@ class common
     //find nearby ads related to current location using lati and longs and miles
     public static function find_nearby_ads($lat,$lon,$query,$table_name){
         $query->WhereNotNull($table_name.'.latitude')->WhereNotNull($table_name.'.longitude')
-        ->select($table_name.".*","ads.published_on","ads.updated_at"
+            ->select($table_name.".*","ads.published_on","ads.updated_at"
             ,DB::raw("6371 * acos(cos(radians(" . $lat . "))
                         * cos(radians(".$table_name.".latitude))
                         * cos(radians(".$table_name.".longitude) - radians(" . $lon . "))
                         + sin(radians(" .$lat. "))
                         * sin(radians(".$table_name.".latitude))) AS distance"))
             ->orderBy('distance','ASC')->distinct();
-        /*
-        $d = 31.0686;       //50km in miles ;
-        $r = 3959;          //earth's radius in miles
-        $latitude = $lat;   //58.32775757729577;
-        $longitude = $lon;  //8.218992760525595;
-
-        $latN = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
-            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(0))));
-
-        $latS = rad2deg(asin(sin(deg2rad($latitude)) * cos($d / $r)
-            + cos(deg2rad($latitude)) * sin($d / $r) * cos(deg2rad(180))));
-
-        $lonE = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(90))
-                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
-                - sin(deg2rad($latitude)) * sin(deg2rad($latN))));
-
-        $lonW = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad(270))
-                * sin($d / $r) * cos(deg2rad($latitude)), cos($d / $r)
-                - sin(deg2rad($latitude)) * sin(deg2rad($latN)))); //longitude
-        $query->where($table_name.'.latitude','<=',$latN)->where($table_name.'.latitude','>=',$latS)
-            ->where($table_name.'.longitude','<=',$lonE)->where($table_name.'.longitude','>=',$lonW);
-        */
     }
 
     //check user packages is exist(active package) or not, if exist then -1 from available ads and add the ad expiry in the table

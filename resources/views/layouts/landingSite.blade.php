@@ -724,7 +724,9 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&language=no&callback=initMap"
             async defer></script>
+    <script src="{{asset('public/js/common-ad-filter.js')}}"></script>
 @endif
+
 
 
 @if(session('fav_id'))

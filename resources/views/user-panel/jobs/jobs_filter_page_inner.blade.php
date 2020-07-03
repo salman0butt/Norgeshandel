@@ -58,7 +58,7 @@
                     <option value="1" @if((isset($sort) && $sort=="1" ) || !isset($sort)) selected @endif>Publisert</option>
                     <option value="2" @if(isset($sort) && $sort=="2" ) selected @endif>Arbeidsgiver</option>
                     <option value="3" @if(isset($sort) && $sort=="3" ) selected @endif>Sted</option>
-                    <option value="4" @if(isset($sort) && $sort=="4" ) selected @endif>Nærmest</option>
+                    <option value="99" @if(isset($sort) && $sort=="99" ) selected @endif>Nærmest</option>
                 </select>
             </div>
         </div>
