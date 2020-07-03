@@ -8,7 +8,7 @@
                 <label for="local_area_name_check"></label>
             </div>
             <div class="w-100">
-                <input type="range" class="custom-range range-width mt-3" name="radius" value="10" step="5" id="customRange1" min="5" max="200">
+                <input type="range" class="custom-range range-width mt-3" name="radius" value="80" step="5" id="customRange1" min="5" max="200">
                 <span class="ml-2 valueSpan2"></span>
             </div>
         </div>
