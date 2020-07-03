@@ -757,7 +757,7 @@ class JobController extends Controller
                 case 3:
                     $query->orderBy('jobs.zip_city', 'asc');
                     break;
-                case 4:
+                case 99:
                     if(isset($request->lat) && $request->lat && isset($request->lon) && $request->lon){
                         common::find_nearby_ads($request->lat, $request->lon,$query,'jobs');
                     }
@@ -781,7 +781,7 @@ class JobController extends Controller
         if (isset($request->map_job_type) && $request->map_job_type) {
             $query = $query->where('jobs.job_type', $request->map_job_type);
         }
-         if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng){
+        if($request->local_area_name && $request->radius && $request->map_lat && $request->map_lng && isset($request->local_area_name_check) && $request->local_area_name_check == 'on'){
             $query = common::get_map_filter_ads($request->all(),'jobs',$query);
         }
 
@@ -815,7 +815,7 @@ class JobController extends Controller
             "1" => "Published",
             "2" => "Employer",
             "3" => "Place",
-            "4" => "Closest",
+            "99" => "Closest",
         ];
         $filters = $request->all();
         $ads = Ad::where(['status' => 'published', 'ad_type' => 'job'])->get();
