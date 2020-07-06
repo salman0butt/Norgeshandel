@@ -17,10 +17,15 @@
                 <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
             </div>
             <div id="map" style="clear:both; height:300px;"></div>
-                   <div class="w-100">
-                <input type="range" class="custom-range range-width mt-3" name="radius" value="50" step="5" id="customRange1" min="5" max="200">
-                <span class="ml-2 valueSpan2"></span>
+
+            <div class="d-flex justify-content-between my-2">
+                <div>Avstand</div>
+                <div>
+                    <span class="ml-2 valueSpan2"></span>
+                </div>
             </div>
+            <input type="range" class="custom-range w-100" name="radius" value="50" step="5" id="customRange1" min="5" max="200">
+
 
             <input type="hidden" id="map_lat" name="map_lat" value="">
             <input type="hidden" id="map_lng" name="map_lng" value="">
@@ -65,8 +70,8 @@
     transition: box-shadow 0.5s;
         }
        .valueSpan2{
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 400;
         }
         a[href^="http://maps.google.com/maps"]{display:none !important}
         a[href^="https://maps.google.com/maps"]{display:none !important}
