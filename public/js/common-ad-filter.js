@@ -13,17 +13,28 @@ function removeAllcircles() {
 }
 
 function assign_lat_long(new_url=''){
-
     if(!isEmpty(new_url)){
         new_url_property = new_url;
     }
+    var filters = {
+        "map_lng": true,
+        "map_lat": true
+    };
+
+    var newUrl = $('#mega_menu_form').find(":input")
+        .filter(function (i, item) {
+            return !filters[item.name];
+        }).serialize();
+    new_url_property = newUrl;
 
     if(new_url_property && $('#map_lat').val() && $('#map_lng').val()){
         var map_lat = $('#map_lat').val();
         var map_lng = $('#map_lng').val();
+
         new_url_property += "&map_lat=" + map_lat;//.toFixed(6);
         new_url_property += "&map_lng=" + map_lng;//.toFixed(6);
-        search(new_url_property);
+        return new_url_property;
+        // search(new_url_property);
     }
 }
 
@@ -100,8 +111,7 @@ function initMap() {
             }
             $('#map_lat').val(results[0].geometry.location.lat());
             $('#map_lng').val(results[0].geometry.location.lng());
-
-            //assign_lat_long();
+            // assign_lat_long();
             //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
             map.setZoom(9);
             map.setCenter(results[0].geometry.location);

@@ -16,13 +16,14 @@ $(document).ready(function () {
 
     search(urlParams.toString());
     fix_page_links();
-
+    var wto;
     $('.mega-menu input').change(function (e) {
         var id = $(this).attr('id');
         //var newUrl = $('#mega_menu_form').serialize();
-
+        var timeout = 0;
         if(id === 'customRange1' || id === 'pac-input'){
             $('#local_area_name_check').prop( "checked", true );
+            timeout = 2000;
         }
 
         if($('#local_area_name_check'). prop("checked") == true){
@@ -30,49 +31,60 @@ $(document).ready(function () {
             $('#mega_menu_form .property-filter-area-list ul').css('opacity','0.5');
 
         }
-        else if($('#local_area_name_check'). prop("checked") == false){
+        else if($('#local_area_name_check'). prop("checked") == false) {
             $('#mega_menu_form .property-filter-area-list').removeAttr('style');
-            $('#mega_menu_form .property-filter-area-list ul').css('opacity','1.0');
+            $('#mega_menu_form .property-filter-area-list ul').css('opacity', '1.0');
         }
 
-        var newUrl = remove_variables_from_url();
+        clearTimeout(wto);
+        wto = setTimeout(function() {
+            var newUrl = remove_variables_from_url();
 
-        var view = getUrlParameter('view');
-        var sort = getUrlParameter('sort');
-        var user_id = getUrlParameter('user_id');
+            var view = getUrlParameter('view');
+            var sort = getUrlParameter('sort');
+            var user_id = getUrlParameter('user_id');
 
-        if (!isEmpty(user_id)) {
-            newUrl += "&user_id=" + user_id;
-        }
-        if (!isEmpty(view)) {
-            newUrl += "&view=" + view;
-        }
-        if (!isEmpty(sort)) {
-            newUrl += "&sort=" + sort;
-        }
+            if (!isEmpty(user_id)) {
+                newUrl += "&user_id=" + user_id;
+            }
+            if (!isEmpty(view)) {
+                newUrl += "&view=" + view;
+            }
+            if (!isEmpty(sort)) {
+                newUrl += "&sort=" + sort;
+            }
 
-        newUrl = set_lat_lon(newUrl,sort);
-
-        if(id === 'pac-input'){
-            assign_lat_long(newUrl);
-        }
-        // else if (id === 'customRange1'){
-           // create_circle(newUrl);
-        // }
-        else{
+            newUrl = set_lat_lon(newUrl,sort);
             search(newUrl);
-        }
 
-        // fix_page_links();
-        var back_url = $('#back_url').val();
-        if (!added) {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
-            added = true;
-        } else {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
-        }
-        // fix_page_links();
+            /*
+            if(id === 'pac-input'){
+                assign_lat_long(newUrl);
+            }
+            // else if (id === 'customRange1'){
+            // create_circle(newUrl);
+            // }
+            else{
+                search(newUrl);
+            }*/
+
+            // fix_page_links();
+            var back_url = $('#back_url').val();
+            if (!added) {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+                added = true;
+            } else {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+            }
+            // fix_page_links();
+            // do stuff when user has been idle for 1 second
+        }, timeout);
+
+
     });
+
+
+
 
     $(document).on('click', 'a.page-link', function (e) {
         e.preventDefault();
