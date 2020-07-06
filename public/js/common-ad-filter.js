@@ -58,7 +58,8 @@ function initMap() {
 
     var map = new google.maps.Map(
         document.getElementById('map'),
-        { center: { lat: 59.911491, lng: 10.757933}, zoom: 7});
+        { center: { lat: parseFloat($('#map_lat').val()), lng: parseFloat($('#map_lng').val())}, zoom: 7});
+        // { center: { lat: 59.911491, lng: 10.757933}, zoom: 7});
     new_map_var = map;
     var input = document.getElementById('pac-input');
 
@@ -100,7 +101,7 @@ function initMap() {
             $('#map_lat').val(results[0].geometry.location.lat());
             $('#map_lng').val(results[0].geometry.location.lng());
 
-            assign_lat_long();
+            //assign_lat_long();
             //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
             map.setZoom(9);
             map.setCenter(results[0].geometry.location);
@@ -203,9 +204,9 @@ function remove_variables_from_url(){
 
 //default map postion set start
 if ($("#map_lat").length && $("#map_lng").length) {
-    $("#map_lat").val(59.911491);
-    $("#map_lng").val(10.757933);
-    $("#pac-input").val('Oslo, Norge');
+    //$("#map_lat").val(59.911491);
+    //$("#map_lng").val(10.757933);
+    //$("#pac-input").val('Oslo, Norge');
 
 }
 //default map position set ends

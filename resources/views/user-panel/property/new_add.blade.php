@@ -164,7 +164,6 @@
                     if(explicit === false){
                         return false;
                     }
-
                 }
 
                 var ad_status = $('.ad_status').val();
