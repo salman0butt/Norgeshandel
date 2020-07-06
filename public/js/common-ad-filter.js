@@ -209,3 +209,12 @@ if ($("#map_lat").length && $("#map_lng").length) {
 
 }
 //default map position set ends
+
+$(document).ready(function () {
+    const $valueSpan = $('.valueSpan2');
+    const $value = $('#customRange1');
+    $valueSpan.html($value.val() + 'km');
+    $value.on('input change', () => {
+        $valueSpan.html($value.val() + 'km');
+    });
+});

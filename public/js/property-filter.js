@@ -1,14 +1,6 @@
 var added = false;
 
 $(document).ready(function () {
-    const $valueSpan = $('.valueSpan2');
-    const $value = $('#customRange1');
-    $valueSpan.html($value.val()+'km');
-    $value.on('input change', () => {
-        $valueSpan.html($value.val()+'km');
-    });
-
-
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
