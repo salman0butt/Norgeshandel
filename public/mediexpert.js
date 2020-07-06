@@ -74,6 +74,84 @@ function get_checked_agent_count(form_id) {
     return true;
 }
 
+function explicit_keywords(this_obj) {
+    var label = (this_obj).closest(".form-group").find("label").text();
+
+    var val = (this_obj).val();
+    var form_id = (this_obj).closest('form').attr('id');
+    var found = '';
+
+    //fetch the explicit keywords
+    var exp = $("#explicit_keywords").val();
+    exp = jQuery.parseJSON(exp);
+
+    //check that a word is found in the current input val
+    for ( var i = 0, l = exp.length; i < l; i++ ) {
+        var keyword = exp[i].value;
+        keyword = keyword.toLowerCase();
+        val = val.toLowerCase();
+
+        if(val.indexOf(keyword) != -1){
+            found = 'yes';
+        }
+    }
+    var text_area = '';
+    if(!$('textarea').hasClass('text-editor')){
+        text_area = ' textarea,';
+    }
+
+    if(isEmpty(found)){
+        $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", false);
+        $("#"+form_id + text_area +" select,input:not(input[type='file'])").removeAttr('style');
+
+        if($("div").hasClass('mce-edit-area')){
+        // if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
+            $('.mce-edit-area').css('pointer-events','auto');
+            $('.mce-tinymce').css('pointer-events','auto');
+        }
+
+        if( $("div").hasClass('dropzone-file-area')){
+            $('.dropzone-file-area').removeAttr('style');
+        }
+
+        return true;
+    }
+
+    if(!isEmpty(found) && found === 'yes' ){
+        if(isEmpty(text_area) && $("div").hasClass('mce-edit-area')){
+        // if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
+            $('.mce-edit-area').css('pointer-events','none');
+            $('.mce-tinymce').css('pointer-events','none');
+        }
+
+        if( $("div").hasClass('dropzone-file-area')){
+            $('.dropzone-file-area').css('pointer-events','none');
+            $('.dropzone-file-area').css("background-color", "#ff9393");
+        }
+        $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", true);
+        $("#"+form_id + text_area +" select,input:not(input[type='file'])").css("background-color", "#ff9393");
+
+        (this_obj).focus();
+
+        if(!(this_obj).hasClass('text-editor')){
+            (this_obj).prop("disabled", false);
+            (this_obj).removeAttr("style");
+            (this_obj).focus();
+        }
+
+        if((this_obj).hasClass('text-editor')){
+            (this_obj).closest(".form-group").find(".mce-edit-area").css('pointer-events','auto');
+            (this_obj).closest(".form-group").find(".mce-tinymce").css('pointer-events','auto');
+        }
+
+        if(!$('div').hasClass('toast-error')){
+            notify("error",'You have entered a bad word in '+label+' field. Please remove it to continue to this ad. Thanks');
+        }
+        return false;
+    }
+}
+
+
 $(document).ready(function (e) {
 
     var ad_agent_click = 0;
@@ -334,28 +412,33 @@ $(document).ready(function (e) {
 
     // Text editor Tinymc
     if($('.text-editor').length > 0){
+        var id = $(this).attr('id');
         tinymce.init({
             menubar: false, // remove menubar if you want to show the menubar
             // statusbar: false,
-            selector:'textarea.text-editor',
+            selector: 'textarea.text-editor',
             setup : function(ed) {
 
-                ed.on("blur", function(e){
+                ed.on("keyup", function(){
+                    ed.save();
+                    tinymce.triggerSave();
+                    $('#'+ed.id).html(tinymce.activeEditor.getContent());
+                    explicit_keywords($('#'+ed.id));
+                });
 
+
+                ed.on("blur", function(e){
                     var ad_status = $('.ad_status').val();
                     if(ad_status == 'saved') {
                         ed.save();
                         tinymce.triggerSave();
-                        $('.text-editor').html(tinymce.activeEditor.getContent());
-                        var this_obj = document.getElementById(ed.id);//$('#'+ed.id);
-                        record_store_ajax_request('change', this_obj);
+                        $('#'+ed.id).html(tinymce.activeEditor.getContent());
+                        var response = explicit_keywords($('#'+ed.id));
+                        if(response === true){
+                            var this_obj = document.getElementById(ed.id);//$('#'+ed.id);
+                            record_store_ajax_request('change', this_obj);
+                        }
                     }
-                });
-
-                ed.on("keyup", function(){
-
-                    $('.text-editor').html(tinymce.activeEditor.getContent());
-                    explicit_keywords($('.text-editor'));
                 });
             },
 

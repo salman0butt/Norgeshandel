@@ -4,7 +4,7 @@
         <h3 class="u-t5">Område, by eller sted</h3>
         <div class="d-flex flex-row">
             <div class="mt-2">
-                <input id="local_area_name_check" type="checkbox" name="local_area_name_check">
+                <input id="local_area_name_check" type="checkbox" name="local_area_name_check" {{isset(Request()->local_area_name_check) && Request()->local_area_name_check == 'on' ? 'checked' : ''}} >
                 <label for="local_area_name_check"></label>
             </div>
      
@@ -14,7 +14,7 @@
 
         <div class="mt-3" style="width:100%;">
             <div style="display: none">
-                <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
+                <input id="pac-input" class="controls" name="local_area_name" value="{{isset(Request()->local_area_name) ? Request()->local_area_name : 'Oslo, Norge'}}" type="text" placeholder="Enter a location">
             </div>
             <div id="map" style="clear:both; height:300px;"></div>
 
@@ -24,11 +24,10 @@
                     <span class="ml-2 valueSpan2"></span>
                 </div>
             </div>
-            <input type="range" class="custom-range w-100" name="radius" value="50" step="5" id="customRange1" min="5" max="200">
+            <input type="range" class="custom-range w-100" name="radius" value="{{isset(Request()->radius) ? Request()->radius : '50'}}" step="5" id="customRange1" min="5" max="200">
 
-
-            <input type="hidden" id="map_lat" name="map_lat" value="">
-            <input type="hidden" id="map_lng" name="map_lng" value="">
+            <input type="hidden" id="map_lat" name="map_lat" value="{{isset(Request()->map_lat) ? Request()->map_lat : '59.911491'}}">
+            <input type="hidden" id="map_lng" name="map_lng" value="{{isset(Request()->map_lng) ? Request()->map_lng : '10.757933'}}">
         </div>
     </div>
 
