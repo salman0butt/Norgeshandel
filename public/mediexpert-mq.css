@@ -7,6 +7,9 @@
 
 }
 @media (max-width: 576px) {
+    #searchs-padd {
+         display: none;
+    }
     .right-ad, .left-ad{
         display: none;
     }
@@ -68,13 +71,17 @@
     height:calc(100vh - 51px);
 }
 @media (max-width: 991px) {
-    .nav-link div{
+    .trailing-border {
+        min-height:200px !important;
+        height:200px !important;
+    }
+    /* .nav-link div{
         display: none;
     }
     .top-bar .nav-item {
         min-width: 100px !important;
         width: 100px !important;
-    }
+    } */
     .top-ad{
         height:70px;
     }
@@ -86,9 +93,9 @@
     }
 }
 @media (max-width: 767px) {
-    .navbar-brand img{
+    /* .navbar-brand img{
         content: url("assets/images/NorgesHondel-logo-sm.png");
-    }
+    } */
     .nav-icons{
         width:24px;
     }
@@ -125,4 +132,71 @@
         width:100%;
         display: block;
     }
+}
+ /* new media query */
+
+@media (min-width:320px) and (max-width:767px) {
+    .navbar-toggler {
+        padding-left: 42%;
+    }
+
+    div#home-contain {
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    #searchs-box {
+        margin-bottom: 10px;
+        margin-top: 10px !important;
+    }
+
+    #main-catgory {
+        width: 50% !important;
+    }
+
+    #collapsibleNavbar>ul>li {
+        display: block !important;
+        width: 100% !important;
+
+    }
+    .dme-container>div.row.mt-5.home-grid>div {
+        width: 50% !important;
+    }
+    #property-category {
+    padding-right: 1rem !important;
+    }
+    #box-searches {
+        margin-left: 3.6%;
+        margin-right: 3.6%;
+    }
+    /* .mt-5 {
+        margin-top:unset !important;
+        margin-top:1 rem !important;
+    } */
+      li.page-item {
+
+          display: none;
+      }
+
+      .page-item:first-child,
+      .page-item:nth-child(2),
+      .page-item:nth-last-child(2),
+      .page-item:last-child,
+      .page-item.active,
+      .page-item.disabled {
+
+          display: block;
+      }
+      #job-sub-cat {
+          width: unset !important;
+      }
+
+}
+
+@media (min-width:300px) and (max-width:359px) {
+    .navbar-toggler {
+        padding-left: 36%;
+    }
+
 }

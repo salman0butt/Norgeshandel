@@ -31,7 +31,7 @@
                 <?php $date = Date('y-m-d',strtotime('-7 days')); ?>
                 <div class="col-md-8">
                     <div class="row">
-                        <ul class="product-sub-cat-list pl-3">
+                        <ul class="product-sub-cat-list pl-3" id="property-category">
                             <li class="dme-btn-outlined-blue" style="">
                                 <a href="{{url('property/property-for-sale/search')}}">Bolig til salgs <span class="u-stone">
                                         (<?php echo \App\Models\Ad::where('ad_type','property_for_sale')->where(function ($query) use ($date){
@@ -102,18 +102,19 @@
                     <!--                ended row-->
                 </div>
                 <!--            ended col-->
-                <div class="col-md-4 pr-5">
+                <div class="col-md-4 pr-5 pt-2 bg-maroon-lighter maroon-box radius-8" id="box-searches">
                     @include('user-panel.partials.searches-history')
                 </div>
                 <!--            ended col-->
             </div>
         
             <!--        ended row-->
+                <div class="col-md-12">
+                        <h2 class="u-t3 mt-2" id="cat-title">Anbefalinger til deg</h2>
+                    </div>
             <div class="row mt-5 home-grid">
                 @if($ads && is_countable($ads) && count($ads)>0)
-                    <div class="col-md-12">
-                        <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
-                    </div>
+    
                     @foreach($ads as $ad)
                         @include('user-panel.partials.templates.propert-sequare')
                     @endforeach
