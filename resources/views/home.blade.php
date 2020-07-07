@@ -27,9 +27,9 @@
         <div class="row top-ad" id="top_banner_ad">
             @include('user-panel.banner-ads.top-banner')
         </div>
-        <div class="row pt-4"></div>
-        <div class="row pl-3">
-            <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8">
+        <div class="row pt-4" id="searchs-padd"></div>
+        <div class="row pl-3" id=home-contain>
+            <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8" id="searchs-box">
                 @include('user-panel.partials.searches-history')
             </div>
             <!--            ended col-->
@@ -61,7 +61,7 @@
                 </div>
                 <input type="hidden" value="{{ Auth::check() ? Auth::user()->id : '' }}" id="userId">
                 <div class="row">
-                    <div class="col-sm-4 offset-sm-2 pt-3 text-center">
+                    <div class="col-sm-2 col-md-4 offset-sm-2 pt-3 text-center" id="main-catgory">
                         <a href="property/realestate" class="category">
                             <div class="category-icon" style="margin-top: 15px;">
                                 <img src="{{asset('public/images/Eiendom_ikon_maroon.svg')}}">
@@ -69,7 +69,7 @@
                             <div class="category-title color-grey font-weight-bold">Eiendom</div>
                         </a>
                     </div>
-                    <div class="col-sm-4 text-center pt-3">
+                    <div class="col-sm-2 col-md-4 text-center pt-3" id="main-catgory">
                         <a href="{{url('jobs')}}" class="category">
                             <div class="category-icon">
                                 <img src="{{asset('public/images/Jobb_ikon_maroon.svg')}}">
@@ -84,7 +84,7 @@
         </div>
         <!--        ended row-->
         <div class="row mt-5 home-grid">
-            <div id="data-get"></div>
+            {{-- <div id="data-get"></div> --}}
             {{-- @if($ads && is_countable($ads) && count($ads)>0)
                     <div class="col-md-12">
                         <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>

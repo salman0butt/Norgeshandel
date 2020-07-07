@@ -61,18 +61,18 @@
                     {{--                </div>--}}
                     <div class="row">
                         <ul class="product-sub-cat-list pl-3 pt-3 col-md-12">
-                            <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
+                            <li class="col-sm-4 pl-0 pr-0" style="margin-right: 5px;" id="job-sub-cat">
                                 <!--                            --><?php //$filters = [];?>
                                 <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger
                                     ({{$ads->count()}})</a>
                             </li>
-                            <li class="col-sm-4 pl-0 pr-0" style="width: 200px;margin-right: 5px;">
+                            <li class="col-sm-4 pl-0 pr-0" style="margin-right: 5px;"  id="job-sub-cat">
                                 <?php $array = ['job_type' => 'management'];?>
                                 <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger
                                     ({{$management_jobs->count()}})</a>
                             </li>
                             <?php $filters = ['job_type' => []]; ?>
-                            <li class="col-sm-4 pl-0 pr-0" style="width: 200px;">
+                            <li class="col-sm-4 pl-0 pr-0" style=""  id="job-sub-cat">
                                 <a href="{{ url('/companies') }}" class="nav-link dme-btn-outlined-blue">Bedriftsprofiler
                                     ({{$companies->count()}})</a>
                             </li>
@@ -81,7 +81,7 @@
                     <!--                ended row-->
                 </div>
                 <!--            ended col-->
-                <div class="col-md-4 pr-5">
+                <div class="col-md-4 pr-5 pt-2 bg-maroon-lighter maroon-box radius-8" id="box-searches">
                     @include('user-panel.partials.searches-history')
                 </div>
                 <!--            ended col-->
@@ -110,10 +110,11 @@
                 </div>
             </div>
             <!--        ended row-->
-            <div class="row mt-5 home-grid">
-                <div class="col-md-12">
-                    <h2 class="u-t3 mb-4">Anbefalinger til deg</h2>
+               <div class="col-md-12">
+                    <h2 class="u-t3 mb-0" id="cat-title">Anbefalinger til deg</h2>
                 </div>
+            <div class="row mt-5 home-grid">
+             
                 @if($ads && is_countable($ads) && count($ads)>0)
                     @foreach($ads as $ad)
                         <?php $job = $ad->job; ?>
