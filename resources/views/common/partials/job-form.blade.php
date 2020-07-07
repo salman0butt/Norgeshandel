@@ -668,9 +668,26 @@
                 }
             });
 
+            $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
+                var val = $(this).val();
+                // if(!isEmpty(val)){
+                explicit_keywords($(this));
+                // }
+            });
+
             $("input:not(input[type=date],input[type=radio],select[name=package_id]),textarea").on('change', function (e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
+
+                var val = $(this).val();
+                if(!isEmpty(val)){
+                    if(!$(this).hasClass('text-editor')){
+                        var explicit = explicit_keywords($(this));
+                    }
+                    if(explicit === false){
+                        return false;
+                    }
+                }
 
                 var ad_status = $('.ad_status').val();
                 if(ad_status == 'saved'){
@@ -737,8 +754,9 @@
 
             e.preventDefault();
         });
-        $('#deadline_type').change(function (e) {
-            if ($(this).val() == 'Soonest') {
+
+        $(document).on('change', '#deadline_type', function (e) {
+            if ($(this).val() === 'Snarest') {
                 $(this).next().val('');
                 $(this).next().slideUp();
             } else {

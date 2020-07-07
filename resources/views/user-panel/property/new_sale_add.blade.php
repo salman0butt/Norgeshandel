@@ -192,9 +192,9 @@
 
         $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
             var val = $(this).val();
-            if(!isEmpty(val)){
+            // if(!isEmpty(val)){
                 explicit_keywords($(this));
-            }
+            // }
         });
 
         $(document).on('change', 'input:not(input[type=date],input[type=radio],select[name=package_id]),textarea', function(e) {

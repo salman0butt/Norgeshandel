@@ -147,9 +147,9 @@
 
             $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
                 var val = $(this).val();
-                if(!isEmpty(val)){
+                // if(!isEmpty(val)){
                     explicit_keywords($(this));
-                }
+                // }
             });
 
             $(document).on('change', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
