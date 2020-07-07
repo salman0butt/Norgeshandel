@@ -101,8 +101,8 @@ function explicit_keywords(this_obj) {
     }
 
     if(isEmpty(found)){
-        $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", false);
-        $("#"+form_id + text_area +" select,input:not(input[type='file'])").removeAttr('style');
+        $("#"+form_id + text_area +" select,button,input:not(input[multiple=multiple])").prop("disabled", false);
+        $("#"+form_id + text_area +" select,input:not(input[multiple=multiple],input[type=file])").css("background-color",'#ecdfe2');
 
         if($("div").hasClass('mce-edit-area')){
         // if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
@@ -111,7 +111,7 @@ function explicit_keywords(this_obj) {
         }
 
         if( $("div").hasClass('dropzone-file-area')){
-            $('.dropzone-file-area').removeAttr('style');
+            $('.dropzone-file-area').css("background-color",'#fff');
         }
 
         return true;
@@ -128,8 +128,8 @@ function explicit_keywords(this_obj) {
             $('.dropzone-file-area').css('pointer-events','none');
             $('.dropzone-file-area').css("background-color", "#ff9393");
         }
-        $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", true);
-        $("#"+form_id + text_area +" select,input:not(input[type='file'])").css("background-color", "#ff9393");
+        $("#"+form_id + text_area +" select,button,input:not(input[multiple=multiple])").prop("disabled", true);
+        $("#"+form_id + text_area +" select,input:not(input[multiple=multiple],input[type=file])").css("background-color", "#ff9393");
 
         (this_obj).focus();
 
@@ -147,6 +147,7 @@ function explicit_keywords(this_obj) {
         if(!$('div').hasClass('toast-error')){
             notify("error",'You have entered a bad word in '+label+' field. Please remove it to continue to this ad. Thanks');
         }
+
         return false;
     }
 }

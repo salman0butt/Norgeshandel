@@ -105,7 +105,8 @@ class HomeController extends Controller
             $date = Date('y-m-d',strtotime('-7 days'));
             $query->where('status', 'published')
                 ->orwhereDate('sold_at','>',$date);
-        })->where('visibility', '=', 1)->orderBy('id', 'desc')->paginate(getenv('PAGINATION'));
+        })->where('visibility', '=', 1)->orderBy('published_on', 'desc')->paginate(getenv('PAGINATION'));
+
         $html = "";
         if ($ads && is_countable($ads) && count($ads) > 0) {
             foreach ($ads as $ad) {
