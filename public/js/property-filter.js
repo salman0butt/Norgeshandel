@@ -21,9 +21,10 @@ $(document).ready(function () {
         var id = $(this).attr('id');
         //var newUrl = $('#mega_menu_form').serialize();
         var timeout = 0;
+
         if(id === 'customRange1' || id === 'pac-input'){
             $('#local_area_name_check').prop( "checked", true );
-            timeout = 2000;
+            timeout = 1000;
         }
 
         if($('#local_area_name_check'). prop("checked") == true){
@@ -57,17 +58,6 @@ $(document).ready(function () {
             newUrl = set_lat_lon(newUrl,sort);
             search(newUrl);
 
-            /*
-            if(id === 'pac-input'){
-                assign_lat_long(newUrl);
-            }
-            // else if (id === 'customRange1'){
-            // create_circle(newUrl);
-            // }
-            else{
-                search(newUrl);
-            }*/
-
             // fix_page_links();
             var back_url = $('#back_url').val();
             if (!added) {
@@ -82,9 +72,6 @@ $(document).ready(function () {
 
 
     });
-
-
-
 
     $(document).on('click', 'a.page-link', function (e) {
         e.preventDefault();
