@@ -1268,3 +1268,9 @@ span.stars {float: left}
 .dropzone-file-area{
     border: 1px dashed #474445 !important;
 }
+#job-sub-cat {
+    width: 200px;
+}
+#cat-title {
+    margin-top: 1em;
+}
