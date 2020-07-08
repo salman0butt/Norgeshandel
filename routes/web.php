@@ -304,7 +304,7 @@ Route::group(['middleware' => 'authverified'], function () {
         Route::get('/messages', 'MessageController@index');
 
         Route::post('message', 'MessageController@send');
-        Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
+//        Route::get('messages/read_all/{thread_id}', 'MessageController@read_all');
 
         Route::get('notifications', 'NotificationController@index');
         Route::get('notifications_count', 'NotificationController@notifications_count');
@@ -648,6 +648,7 @@ Route::group(['middleware' => 'authverified'], function () {
             'packages' => 'PackageController',
             'explicit-keywords' => 'ExplicitKeywordController'
         ]);
+        Route::post('destroy-multiple-keywords', 'ExplicitKeywordController@destroy_multiple_keywords')->name('destroy-multiple-keywords');
     });
 
     Route::get('reset', function () {

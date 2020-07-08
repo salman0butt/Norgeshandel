@@ -197,11 +197,11 @@
 
                                             <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon"
                                                  data-thread-id="{{$thread->id}}">
-                                                @if(count($thread->get_unread)>0)
+                                                {{--@if(count($thread->get_unread)>0)--}}
                                                     <span data-thread-id="{{$thread->id}}"
-                                                          class="badge badge-primary pending"
+                                                          class="badge badge-primary pending {{count($thread->get_unread) == 0 ? 'd-none' : ''}}"
                                                           style="">{{count($thread->get_unread)}}</span>
-                                                @endif
+                                                {{--@endif--}}
                                                 <img
                                                         src="{{is_countable($thread->ad->company_gallery) && count($thread->ad->company_gallery) > 0 ? asset(\App\Helpers\common::getMediaPath($thread->ad->company_gallery->first()),"150x150"):asset('public/images/placeholder.png')}}"
                                                         {{--src="{{asset('public/images/placeholder.png')}}"--}}
@@ -250,7 +250,6 @@
                     {{--</div>--}}
             </div>
         </div>
-
     </main>
     <!-- <script src="https://js.pusher.com/5.0/pusher.min.js"></script> -->
     <script>
@@ -259,7 +258,7 @@
         var message_thread_id = 0;
 
         $(document).ready(function () {
-    
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -278,7 +277,7 @@
                     scrollToBottomFunc();
                 }
             });
-            
+
 
             // $('.thread.active').first().trigger('click');
             // Enable pusher logging - don't include this in production
@@ -295,26 +294,34 @@
 
                     if ($('.thread-link-' + data.thread_id).length < 1) {
                         var thread_url = "{{url('messages/thread')}}/" +data.thread_id;
-                        var dummy_user_image = "{{asset('public/images/profile-placeholder.png')}}";
+                        var thread_delete_url = "{{url('messages/delete')}}/" +data.thread_id;
+                        var dummy_user_image = data.receiver_img_src; //asset('public/images/profile-placeholder.png');
                         var thread = '' +
-                            '<a href="'+thread_url+'" class="thread thread-link-' + data.thread_id + '" id="' + data.thread_id + '" data-id="' + data.thread_id + '">\n' +
-                            '    <div class="row chat-thread-tab thread-tab-' + data.thread_id + '">\n' +
-                            '        <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon" data-thread-id="' + data.thread_id + '">\n' +
-                            '                <span  data-thread-id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
-                            '                      style="">1</span>\n' +
-                            '            <img src='+data.ad_img_src+'\n' +
-                            '                 class="profile-post-image" alt="">\n' +
-                            '            <img src="'+dummy_user_image+'"\n' +
-                            '                class="profile-image" alt="Profile image" style="">\n' +
-                            '        </div>\n' +
-                            '        <div class="col-md-9 p-0 mt-1 profile-name">\n' +
-                            '            <span class="font-weight-bold align-middle" style="min-height: 1em;"></span>\n' +
-                            '             <p class="text-muted thread-ad-title mb-0">'+data.ad_title+'</p>\n'+
-                            '               <span class="thread-time">'+data.last_message_date+'</span>\n'+
-                            '            <span class="thread-message">' + data.message + '</span>\n' +
-                            '        </div>\n' +
-                            '    </div>\n' +
-                            '</a>\n';
+                            '<div class="position-relative">\n' +
+                                '<a href="'+thread_url+'" class="thread thread-link-' + data.thread_id + '" id="' + data.thread_id + '" data-id="' + data.thread_id + '">\n' +
+                                '    <div class="row chat-thread-tab thread-tab-' + data.thread_id + '">\n' +
+                                '        <div class="col-md-3 p-0 float-left profile-icon text-center thread-icon" data-thread-id="' + data.thread_id + '">\n' +
+                                '                <span  data-thread-id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
+                                '                      style="">0</span>\n' +
+                                '            <img src='+data.ad_img_src+'\n' +
+                                '                 class="profile-post-image" alt="">\n' +
+                                '            <img src="'+dummy_user_image+'"\n' +
+                                '                class="profile-image" alt="Profile image" style="">\n' +
+                                '        </div>\n' +
+                                '        <div class="col-md-9 p-0 mt-1 profile-name">\n' +
+                                '            <span class="font-weight-bold align-middle" style="min-height: 1em;"></span>\n' +
+                                '             <p class="text-muted thread-ad-title mb-0">'+data.ad_title+'</p>\n'+
+                                '               <span class="thread-time">'+data.last_message_date+'</span>\n'+
+                                '            <span class="thread-message">' + data.message + '</span>\n' +
+                                '        </div>\n' +
+                                '    </div>\n' +
+                                '</a>\n' +
+                                ' <a href="'+thread_delete_url+'"\n' +
+                                    'class="position-absolute text-muted thread-delete-button"\n' +
+                                    'style="top: 15px;right:0">\n' +
+                                    '<span class="fa fa-trash" style="font-size: 1.3em;"></span>\n' +
+                                '</a>\n' +
+                            '</div>';
 
                         $('.chat-thread-list').prepend(thread);
                     }
@@ -358,21 +365,27 @@
 
                         // if receiver is not selected, add notification for that user
                         var pending = parseInt(jQuery('span[data-thread-id=' + data.thread_id + ']').html());
-                        alert(pending+'sadfsdf');
-                        if (pending) {
+                        if(pending+1){
+                            $('span[data-thread-id=' + data.thread_id + ']').removeClass('d-none');
                             $('span[data-thread-id=' + data.thread_id + ']').html(pending+1);
-                        } else {
-                            pending = 1;
-                            // if($('.thread-icon[data-thread-id=' + data.thread_id + ']:not(.active .thread-icon[data-thread-id=' + data.thread_id + '])').length == 0) {
-                            //     alert('not');
-                            // }else{
-                            //     alert('not available');
-                            // }
-
-                            $('.thread-icon[data-thread-id=' + data.thread_id + ']:not(.active .thread-icon[data-thread-id=' + data.thread_id + '])').append('' +
-                                '<span data-thread_id="' + data.thread_id + '" data-value="'+pending+'" class="badge badge-primary pending"\n' +
-                                '>'+pending+'</span>');
                         }
+
+                        var div = jQuery('span[data-thread-id=' + data.thread_id + ']').closest('.position-relative');
+                        var remove_div = jQuery('span[data-thread-id=' + data.thread_id + ']').closest('.position-relative').remove();
+
+                        $('.chat-thread-list').prepend(div);
+
+
+
+                        // if (pending) {
+                        //     $('span[data-thread-id=' + data.thread_id + ']').html(pending+1);
+                        // } else {
+                        //     pending = 1;
+                        //
+                        //     $('.thread-icon[data-thread-id=' + data.thread_id + ']:not(.active .thread-icon[data-thread-id=' + data.thread_id + '])').append('' +
+                        //         '<span data-thread_id="' + data.thread_id + '" data-value="'+pending+'" class="badge badge-primary pending"\n' +
+                        //         '>'+pending+'</span>');
+                        // }
                     }
                 }
             });

@@ -118,7 +118,9 @@
                                 <div class="title color-grey">Ny liste</div>
                                 <div class="detail u-t5 text-muted"></div>
                                 <div class="dealer-logo float-right mt-3">
-                                {{-- <img src="#" style="max-height: 40px;" alt="" class="img-fluid"></div> --}}
+
+                                    {{--<img src="#" style="max-height: 40px;" alt="" class="img-fluid"></div>--}}
+
                             </div>
                         </a>
                     </div>
@@ -254,7 +256,7 @@
 
     $(document).ready(function () {
         @if(Auth::check())
-        getLists();
+        //getLists();
         @endif
         $(document).on('blur', 'input[type=url]', function () {
             var string = $(this).val();

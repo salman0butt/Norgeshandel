@@ -6,6 +6,7 @@ use App\Helpers\common;
 use App\Media;
 use App\MessageThread;
 use App\Models\Ad;
+use App\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Message;
@@ -37,7 +38,11 @@ class MessageController extends Controller
     }
 
     public function view_thread($thread_id, $new_id = 0){
-        $threads = Auth::user()->threads;
+//        $threads = Auth::user()->threads; //zain code
+//        $threads = Auth::user()->threads()->whereHas('messages', function($q) {
+//            $q->orderBy('id','desc');
+//        })->get(); //ameer code
+        $threads = Auth::user()->threads()->orderBy('updated_at','desc')->get(); //ameer code
         $active_thread = MessageThread::find($thread_id);
         Message::where('message_thread_id', $active_thread->id)->where('to_user_id', '=', Auth::id())->update(['read_at'=>now()]);
         return view('user-panel.chat.messages', compact('active_thread', 'threads', 'new_id'));
@@ -57,7 +62,10 @@ class MessageController extends Controller
     public function show_thread($thread_id){
         if(Auth::check()) {
             $active_thread = MessageThread::find($thread_id);
-            $threads = Auth::user()->threads;
+//            $threads = Auth::user()->threads()->whereHas('messages', function($q) {
+//                $q->orderBy('id','desc');
+//            })->get(); // ameer code
+            $threads = Auth::user()->threads()->orderBy('updated_at','desc')->get();; //zain code
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');
@@ -66,11 +74,26 @@ class MessageController extends Controller
     public function index(Request $request)
     {
         if(Auth::check()) {
-            $active_thread = MessageThread::orderBy('id', 'desc')->first();
-            if($active_thread){
+            $recent_unread_message = Message::where('to_user_id',Auth::id())->where(function ($query){
+                $query->whereNull('deleted_by')->orwhere('deleted_by','<>',Auth::id());
+            })->whereNull('read_at')->orderBy('id','desc')->first();  //ameer code
+
+            if($recent_unread_message){
+                $active_thread = MessageThread::find($recent_unread_message->message_thread_id);
+            }else{
+                $active_thread = MessageThread::orderBy('updated_at','desc')
+                    ->whereHas('messages', function (Builder $query) {
+                        $query->whereNotNull('message')->where(function ($q) {
+                            $q->whereNull('deleted_by')
+                                ->orWhere('deleted_by', '!=', Auth::id());
+                        });
+                    }, '>', 0)->first(); //zain code;
+            }
+            if($active_thread && $recent_unread_message){
                 Message::where('message_thread_id', $active_thread->id)->where('to_user_id', '=', Auth::id())->update(['read_at'=>now()]);
             }
-            $threads = Auth::user()->threads;
+            $threads = Auth::user()->threads()->orderBy('updated_at','desc')->get();
+
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');
@@ -101,9 +124,7 @@ class MessageController extends Controller
 //            950445,
             $options
         );
-//        dd(env('PAGINATION'));
-//        dd($pusher);
-//
+
         $files = array();
         $media = $message->media;
         if (count($media)>0){
@@ -115,7 +136,15 @@ class MessageController extends Controller
         }
         $ad_img_src = asset('public/images/placeholder.png');
         $ad_title = '';
-        $last_message_date = '';
+        $last_message_date = ''; //to_user_id
+
+        $receiver_avatar_src = asset('public/images/profile-placeholder.png');
+        if($message->from_user_id){
+            $receiver = User::find($message->from_user_id);
+            if($receiver->media!=null){
+                $receiver_avatar_src = asset(\App\Helpers\common::getMediaPath($receiver->media));
+            }
+        }
         if($message->message_thread_id){
             $message_thread = MessageThread::find($message->message_thread_id);
             if($message_thread){
@@ -137,7 +166,7 @@ class MessageController extends Controller
             }
         }
         $data = ['message'=>$request->message, 'thread_id'=>$message->message_thread_id,
-            'ad_img_src'=>$ad_img_src,'ad_title'=>$ad_title,'last_message_date'=>$last_message_date,
+            'ad_img_src'=>$ad_img_src,'receiver_img_src'=>$receiver_avatar_src,'ad_title'=>$ad_title,'last_message_date'=>$last_message_date,
             'from_user_id'=>$request->from_user_id, 'to_user_id'=>$request->to_user_id, 'files'=>$files];
         $pusher->trigger('my-channel', 'my-event', $data);
         $pusher->trigger('header-chat-notification', 'header-chat-notification-event', $data);
