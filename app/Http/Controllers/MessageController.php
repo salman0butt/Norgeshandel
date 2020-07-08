@@ -42,7 +42,7 @@ class MessageController extends Controller
 //        $threads = Auth::user()->threads()->whereHas('messages', function($q) {
 //            $q->orderBy('id','desc');
 //        })->get(); //ameer code
-        $threads = Auth::user()->threads()->orderBy('id','desc')->get(); //ameer code
+        $threads = Auth::user()->threads()->orderBy('updated_at','desc')->get(); //ameer code
         $active_thread = MessageThread::find($thread_id);
         Message::where('message_thread_id', $active_thread->id)->where('to_user_id', '=', Auth::id())->update(['read_at'=>now()]);
         return view('user-panel.chat.messages', compact('active_thread', 'threads', 'new_id'));
@@ -65,7 +65,7 @@ class MessageController extends Controller
 //            $threads = Auth::user()->threads()->whereHas('messages', function($q) {
 //                $q->orderBy('id','desc');
 //            })->get(); // ameer code
-            $threads = Auth::user()->threads()->orderBy('id','desc')->get();; //zain code
+            $threads = Auth::user()->threads()->orderBy('updated_at','desc')->get();; //zain code
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');
@@ -81,16 +81,19 @@ class MessageController extends Controller
             if($recent_unread_message){
                 $active_thread = MessageThread::find($recent_unread_message->message_thread_id);
             }else{
-                $active_thread = MessageThread::orderBy('id', 'desc')->first(); //zain code;
+                $active_thread = MessageThread::orderBy('updated_at','desc')
+                    ->whereHas('messages', function (Builder $query) {
+                        $query->whereNotNull('message')->where(function ($q) {
+                            $q->whereNull('deleted_by')
+                                ->orWhere('deleted_by', '!=', Auth::id());
+                        });
+                    }, '>', 0)->first(); //zain code;
             }
-
-            if($active_thread){
+            if($active_thread && $recent_unread_message){
                 Message::where('message_thread_id', $active_thread->id)->where('to_user_id', '=', Auth::id())->update(['read_at'=>now()]);
             }
+            $threads = Auth::user()->threads()->orderBy('updated_at','desc')->get();
 
-            $threads = Auth::user()->threads()->orderBy('id','desc')->get();//->whereHas('one_side_messages', function($q) {
-//                $q->orderBy('id','asc');
-//            })->get(); //zain code
             return view('user-panel.chat.messages', compact('active_thread', 'threads'));
         }
         return redirect('forbidden');

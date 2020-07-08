@@ -39,13 +39,26 @@ class ExplicitKeywordController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'value' => 'required|unique:explicit_keywords',
-        ]);
+//        $validatedData = $request->validate([
+//            'value' => 'required|unique:explicit_keywords',
+//        ]);
         DB::beginTransaction();
         try{
-            $explicit_keyword = new ExplicitKeyword($request->all());
-            $explicit_keyword->save();
+            if (str_contains($request->value, ',')) {
+                $values = explode(',',$request->value);
+                $values = array_filter($values);
+                if(count($values)){
+                    foreach ($values as $value){
+                        $explicit_keyword = new ExplicitKeyword();
+                        $explicit_keyword->value = $value;
+                        $explicit_keyword->save();
+                    }
+                }
+            }else{
+                $explicit_keyword = new ExplicitKeyword($request->all());
+                $explicit_keyword->save();
+            }
+
             DB::commit();
             Session::flash('success', 'Record has been added successfully.');
             return back();
@@ -96,9 +109,9 @@ class ExplicitKeywordController extends Controller
     {
         $explicit_keyword = ExplicitKeyword::find($id);
         if($explicit_keyword){
-            $validatedData = $request->validate([
-                'value' => 'required|unique:explicit_keywords,value,'.$id
-            ]);
+//            $validatedData = $request->validate([
+//                'value' => 'required|unique:explicit_keywords,value,'.$id
+//            ]);
 
             DB::beginTransaction();
             try{
@@ -144,6 +157,21 @@ class ExplicitKeywordController extends Controller
 
         }else{
             return back()->with(Session::flash('danger', 'Record not found.'));
+        }
+    }
+
+    //
+    public function destroy_multiple_keywords(Request $request){
+        DB::beginTransaction();
+        try{
+            $explicit_keywords = ExplicitKeyword::whereIn('id',$request->keywords)->delete();
+            DB::commit();
+            Session::flash('success', 'Record has been deleted successfully.');
+            return back();
+        }catch (\Exception $e){
+            DB::rollback();
+            Session::flash('danger', 'Something went wrong.');
+            return back();
         }
     }
 }

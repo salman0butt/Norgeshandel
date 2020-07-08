@@ -250,7 +250,6 @@
                     {{--</div>--}}
             </div>
         </div>
-
     </main>
     <!-- <script src="https://js.pusher.com/5.0/pusher.min.js"></script> -->
     <script>
@@ -259,7 +258,7 @@
         var message_thread_id = 0;
 
         $(document).ready(function () {
-    
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -278,7 +277,7 @@
                     scrollToBottomFunc();
                 }
             });
-            
+
 
             // $('.thread.active').first().trigger('click');
             // Enable pusher logging - don't include this in production
@@ -370,6 +369,13 @@
                             $('span[data-thread-id=' + data.thread_id + ']').removeClass('d-none');
                             $('span[data-thread-id=' + data.thread_id + ']').html(pending+1);
                         }
+
+                        var div = jQuery('span[data-thread-id=' + data.thread_id + ']').closest('.position-relative');
+                        var remove_div = jQuery('span[data-thread-id=' + data.thread_id + ']').closest('.position-relative').remove();
+
+                        $('.chat-thread-list').prepend(div);
+
+
 
                         // if (pending) {
                         //     $('span[data-thread-id=' + data.thread_id + ']').html(pending+1);

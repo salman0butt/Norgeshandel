@@ -27,11 +27,29 @@
         <div class="col-md-12">
             <div class="card">
             <br>
+                <div class="row">
+
+                    <div class="col-6">
+
+                    </div>
+                </div>
+                
                 <div class="table-responsive">
                     <table class="table" id="zero_config">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col">#</th>
+                            <th width="5">
+                                <label class="customcheckbox mt-3">
+                                    <input type="checkbox" id="mainCheckbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <form action="{{route('admin.destroy-multiple-keywords')}}" method="POST" class="ml-4">
+                                    {{ csrf_field() }}
+                                    <div id="keywords_list"></div>
+                                    <input type="submit" id="delete_keywords" class="btn btn-danger btn-sm" value="DELETE" name="change_role_submit">
+                                </form>
+                            </th>
+                            {{--<th scope="col">#</th>--}}
                             <th scope="col">Keyword</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -40,7 +58,14 @@
                         @if($explicit_keywords->count())
                             @foreach($explicit_keywords as $key=>$explicit_keyword)
                                 <tr>
-                                    <td>{{$key+1}}</td>
+                                    <th>
+                                        <label class="customcheckbox">
+                                        <input type="checkbox" class="listCheckbox" data-value="{{$explicit_keyword->id}}" data-id="keywords_checklist">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </th>
+                                    
+{{--                                    <td>{{$key+1}}</td>--}}
                                     <td>{{$explicit_keyword->value}}</td>
                                     <td>
                                         <a href="#updateModal" class="edit-modal btn btn-primary btn-sm" data-ajaxurl="{{route('admin.explicit-keywords.edit', $explicit_keyword->id)}}" data-toggle="modal"   data-target="#updateModal">
@@ -88,6 +113,7 @@
                     <div class="form-group">
                         <label class="control-label">Value</label>
                         <input type="text" class="form-control input-lg" name="value">
+                        <span>Use "," to add multiple keywords</span>
                     </div>
                 </div>
 
@@ -127,6 +153,38 @@
 
 @section('script')
     <script>
+        $(document).ready(function (e) {
+            $('#delete_keywords').click(function (e) {
+                var len = $( "#keywords_list" ).children('input').length;
+                if(len === 0){
+                    alert('Please select at least one record to delete it. Thanks!');
+                    return false;
+                }
+
+            });
+
+
+
+            $('input[data-id=keywords_checklist]').change(function (e) {
+                var id = '#keyword_'+$(this).attr('data-value');
+                if(this.checked){
+                    $('#keywords_list').append('<input type="hidden" name="keywords[]" value="'+$(this).attr('data-value')+'" id="keyword_'+$(this).attr('data-value')+'">');
+                    //console.log($(this).attr('data-value'));
+                }
+                else{
+                    $(id).remove();
+                }
+            });
+            $('#mainCheckbox').change(function (e) {
+                $('#keywords_list input').remove();
+                if (this.checked){
+                    $('input[data-id=keywords_checklist]').each(function (e) {
+                        $('#keywords_list').append('<input type="hidden" name="keywords[]" value="'+$(this).attr('data-value')+'" id="keyword_'+$(this).attr('data-value')+'">');
+                    })
+                }
+            })
+        })
+        
         $(document).on('click','.edit-modal',function (e) {
             e.preventDefault();
             var action = $(this).data('ajaxurl');
