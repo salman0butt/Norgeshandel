@@ -145,7 +145,7 @@ function explicit_keywords(this_obj) {
         }
 
         if(!$('div').hasClass('toast-error')){
-            notify("error",'You have entered a bad word in '+label+' field. Please remove it to continue to this ad. Thanks');
+            notify("error",'Du har skrevet inn et dårlig ord i '+label+' feltet. Fjern den for å fortsette til denne annonsen. Takk');
         }
 
         return false;
