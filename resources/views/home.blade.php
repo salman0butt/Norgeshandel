@@ -29,12 +29,12 @@
         </div>
         <div class="row pt-4" id="searchs-padd"></div>
         <div class="row pl-3" id=home-contain>
-            <div class="col-md-4 pt-5 bg-maroon-lighter maroon-box radius-8" id="searchs-box">
+            <div class="col-md-4 order-1 pt-5 bg-maroon-lighter maroon-box radius-8" id="searchs-box">
                 @include('user-panel.partials.searches-history')
             </div>
             <!--            ended col-->
 
-            <div class="col-md-8">
+            <div class="col-md-8 order-0">
                 <div class="input-group search-box position-relative">
                     <input type="text" name="search" id="search" class="form-control search-control"
                         placeholder="Søk her..." autofocus autocomplete="off">
@@ -61,7 +61,7 @@
                 </div>
                 <input type="hidden" value="{{ Auth::check() ? Auth::user()->id : '' }}" id="userId">
                 <div class="row">
-                    <div class="col-sm-2 col-md-4 offset-sm-2 pt-3 text-center" id="main-catgory">
+                    <div class="col-sm-4 col-md-4 offset-sm-2 pt-3 text-center" id="main-catgory">
                         <a href="property/realestate" class="category">
                             <div class="category-icon" style="margin-top: 15px;">
                                 <img src="{{asset('public/images/Eiendom_ikon_maroon.svg')}}">
@@ -69,7 +69,7 @@
                             <div class="category-title color-grey font-weight-bold">Eiendom</div>
                         </a>
                     </div>
-                    <div class="col-sm-2 col-md-4 text-center pt-3" id="main-catgory">
+                    <div class="col-sm-4 col-md-4 text-center pt-3" id="main-catgory">
                         <a href="{{url('jobs')}}" class="category">
                             <div class="category-icon">
                                 <img src="{{asset('public/images/Jobb_ikon_maroon.svg')}}">
