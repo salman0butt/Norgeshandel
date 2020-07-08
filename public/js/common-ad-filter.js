@@ -5,6 +5,8 @@ var circles = [];
 var cur_lat = 0;
 var cur_lon = 0;
 
+var range_slider_value = 0;
+
 function removeAllcircles() {
     for(var i in circles) {
         circles[i].setMap(null);
@@ -43,8 +45,14 @@ function create_circle(new_url = '') {
     if(!isEmpty(new_url)){
         new_url_property = new_url;
     }
+    var new_rad = 0;
+    if(range_slider_value){
+        new_rad = range_slider_value;
+    }else{
+        new_rad = $('#hidden_range_val').val();
+    }
+    // var new_rad = $('#customRange1').val();
 
-    var new_rad = $('#customRange1').val();
     var rad = new_rad * 1000;
     var map_lat = parseFloat($('#map_lat').val());
     var map_lng = parseFloat($('#map_lng').val());
@@ -59,6 +67,15 @@ function create_circle(new_url = '') {
         center: { lat: map_lat, lng: map_lng },//citymap[city].center,
         radius: rad
     });
+    new_rad = parseFloat(new_rad);
+
+    var zoomArray = {5:10.9, 10:9.9, 15:9.52, 20:8.9, 25:8.7, 30:8.55, 35:8, 40:7.9, 45:7.65, 50:7.59
+        , 55:7.56, 60:7.53, 65:7, 70:6.95, 75:6.90, 80:6.85, 85:6.80, 90:6.75, 95:6.70, 100: 6.65
+        , 105:6.60, 110:6.55, 115:6.53, 120:6.53, 125:6.53, 130:6, 135:6, 140:6, 145:6, 150:6
+        , 155:5.95, 160:5.90, 165:5.85, 170:5.80, 175:5.75, 180:5.70, 185:5.65, 190:5.60, 195:5.58, 200:5.55};
+    var zoom = zoomArray[new_rad];
+
+    new_map_var.setZoom(zoom);
 
     // push the circle object to the array
     circles.push(circle);
@@ -113,7 +130,7 @@ function initMap() {
             $('#map_lng').val(results[0].geometry.location.lng());
             // assign_lat_long();
             //console.log(results[0].geometry.location.lat(),results[0].geometry.location.lng());
-            map.setZoom(9);
+            map.setZoom(20);
             map.setCenter(results[0].geometry.location);
             marker1.setMap(null);
             // circle1.setMap(null);
@@ -152,6 +169,7 @@ function initMap() {
 
     // Add circle overlay and bind to marker
     $(document).on('change', '#customRange1', function () {
+        range_slider_value = $(this).val();
         create_circle();
         return false;
 
@@ -224,7 +242,7 @@ if ($("#map_lat").length && $("#map_lng").length) {
 $(document).ready(function () {
     const $valueSpan = $('.valueSpan2');
     const $value = $('#customRange1');
-    $valueSpan.html($value.val() + 'km');
+    // $valueSpan.html('10km');
     $value.on('input change', () => {
         $valueSpan.html($value.val() + 'km');
     });

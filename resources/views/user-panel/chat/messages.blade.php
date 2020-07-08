@@ -353,17 +353,25 @@
                         scrollToBottomFunc();
                     }
                     $('.thread-tab-' + data.thread_id + ' .thread-message').text(data.message);
+
                     if (!isEmpty($('.thread-link-' + data.thread_id))) {
 
                         // if receiver is not selected, add notification for that user
-                        var pending = parseInt($('span[data-thread-id=' + data.thread_id + ']').html());
-
+                        var pending = parseInt(jQuery('span[data-thread-id=' + data.thread_id + ']').html());
+                        alert(pending+'sadfsdf');
                         if (pending) {
-                            $('span[data-thread-id=' + data.thread_id + ']').html(pending + 1);
+                            $('span[data-thread-id=' + data.thread_id + ']').html(pending+1);
                         } else {
+                            pending = 1;
+                            // if($('.thread-icon[data-thread-id=' + data.thread_id + ']:not(.active .thread-icon[data-thread-id=' + data.thread_id + '])').length == 0) {
+                            //     alert('not');
+                            // }else{
+                            //     alert('not available');
+                            // }
+
                             $('.thread-icon[data-thread-id=' + data.thread_id + ']:not(.active .thread-icon[data-thread-id=' + data.thread_id + '])').append('' +
-                                '<span data-thread_id="' + data.thread_id + '" class="badge badge-primary pending"\n' +
-                                '>1</span>');
+                                '<span data-thread_id="' + data.thread_id + '" data-value="'+pending+'" class="badge badge-primary pending"\n' +
+                                '>'+pending+'</span>');
                         }
                     }
                 }
@@ -392,7 +400,6 @@
                 var attachment = $("#attachment").val();
 
                 if (message == '' && attachment == '') {
-                    //console.log('no message1');
                     return false;
                 }
                 if (message == '' && attachment != '' || message != '') {

@@ -68,13 +68,20 @@
                             <div class="mt-2 ml-2">Ny annonse</div>
                         </a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="{{url('/messages')}}">
-                            @if(\Auth::check() && count(\Auth::user()->unread_messages())>0 )
-                            <span class="badge badge-primary pending position-absolute" id="chat-notification" style="left:0">
-                                {{count(\Auth::user()->unread_messages())>0 ? count(\Auth::user()->unread_messages()):""}}
-                            </span>
+                            @if(\Auth::check())
+                                <span class="badge badge-primary pending position-absolute {{count(\Auth::user()->unread_messages()) ? '' : 'd-none'}}" id="chat-notification" style="left:0">
+                                    {{count(\Auth::user()->unread_messages()) > 0 ? count(\Auth::user()->unread_messages()): ""}}
+                                </span>
                             @endif
+
+                            {{--@if(\Auth::check() && count(\Auth::user()->unread_messages())>0 )--}}
+                                {{--<span class="badge badge-primary pending position-absolute" id="chat-notification" style="left:0">--}}
+                                    {{--{{count(\Auth::user()->unread_messages()) > 0 ? count(\Auth::user()->unread_messages()): ""}}--}}
+                                {{--</span>--}}
+                            {{--@endif--}}
                                 <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
                             <div class="mt-2 ml-2">Meldinger</div>
                         </a>
