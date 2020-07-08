@@ -152,6 +152,8 @@
                 // }
             });
 
+
+
             $(document).on('change', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;

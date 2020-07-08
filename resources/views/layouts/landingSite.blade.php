@@ -92,6 +92,7 @@
 @include('user-panel.partials.header')
 @endif
 @yield('page_content')
+
 <div id="modal_select_category" class="modal fade" role="dialog">
     <div class="modal-dialog pt-5">
         <div class="modal-content smart-scroll" style="max-height: calc(100vh - 100px); overflow-y: scroll;">
@@ -398,7 +399,6 @@
 
                     if (postalCode.result == "Ugyldig postnummer") {
                         $('#zip_code-error').css('display', 'block');
-                        //console.log(postalCode.result);
                         if (document.getElementById('zip_code-error') == null) {
                             $("input[name='zip_code']").after("<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
                         } else {
@@ -416,7 +416,6 @@
                         });
 
                         $('#zip_city').val(res);
-                        //console.log(res);
                     }
                 }
             };
@@ -495,7 +494,6 @@
 
             },
             error: function (error) {
-                //console.log(error);
             }
         });
     }
@@ -515,6 +513,7 @@
                 //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         @if(Auth::check())
             var pusher = new Pusher('f607688e883e2a04ab39', {
                 cluster: 'eu',
@@ -525,12 +524,28 @@
         var channel = pusher.subscribe('header-chat-notification');
         channel.bind('header-chat-notification-event', function (data) {
             if (data.to_user_id == '{{Auth::id()}}') {
-                var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
-                if (isEmpty(prev)) {
+                var prev = $('#chat-notification').html();
+                // var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
+                if (!(prev > 0)) {
                     prev = 0;
                 }
-                prev++;
-                $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+
+                @if(Request::is('messages') || Request::is('messages/thread/*'))
+                    if(data.thread_id !== $(".thread.active").attr('id')){
+                        prev++;
+                    }
+                @else
+                    prev++;
+                @endif
+
+
+                if(prev){
+                    $('#chat-notification').removeClass('d-none');
+                }else{
+                    $('#chat-notification').addClass('d-none');
+                }
+                // $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+                $('#chat-notification').html(prev);
             }
         });
         var notifications = pusher.subscribe('notification');
@@ -593,8 +608,6 @@
             else if(businesses_for_sale)
              type = 'business-for-sale';
 
-          //console.log(type);
-
             if(!isEmpty(type)) {
                 if (!isEmpty(value)) {
                     var url = "{{url('/recentearches')}}";
@@ -610,7 +623,6 @@
                             return true;
                         },
                         error: function (error) {
-                            // console.log(error);
                             return false;
                         }
                     });
