@@ -24,7 +24,7 @@
                     <span class="ml-2 valueSpan2">{{isset(Request()->radius) ? Request()->radius : '10'}}km</span>
                 </div>
             </div>
-            <input type="range" class="custom-range w-100" name="radius" value="{{isset(Request()->radius) ? Request()->radius : '100'}}" step="5" id="customRange1" min="5" max="200">
+            <input type="range" class="custom-range w-100" name="radius" value="{{isset(Request()->radius) ? Request()->radius : '70'}}" step="5" id="customRange1" min="5" max="200">
 
             <input type="hidden" id="hidden_range_val" value="{{isset(Request()->radius) ? Request()->radius : '10'}}">
             <input type="hidden" id="map_lat" name="map_lat" value="{{isset(Request()->map_lat) ? Request()->map_lat : '59.911491'}}">
