@@ -49,7 +49,8 @@
         $ad_obj = $obj_job->ad;
     }
     ?>
-
+    <div class="dme-container">
+<div class="row main-form-mobile">
 <form action="#" name="job-form" id="job-form" method="POST" @if(Auth::user()->roles->first()->name != "company" && Auth::user()->roles->first()->name != "agent") class="dropzone addMorePics p-0" @endif
     data-action="@if(Request::is('jobs/*/edit') || Request::is('complete/job/*')){{route('jobs.update', $job->id)}}
     @else {{route('jobs.store')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
@@ -72,7 +73,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h4 class="text-muted pl-3 pr-3">{{__('About the position')}}</h4>
-                <div class="pl-3">
+                <div class="pl-md-3">
 
                     <!-- Company Section -->
                     @include('user-panel.partials.ad_company_section')
@@ -536,7 +537,8 @@
 
 </form>
 @endsection
-
+</div>
+</div>
 @section('script')
 
     <script type="text/javascript">

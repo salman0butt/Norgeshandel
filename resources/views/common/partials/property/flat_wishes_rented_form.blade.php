@@ -30,7 +30,7 @@
     <input type="hidden" name="latitude" id="latitude" value="{{ $flat_wishes_rented->latitude ?? '' }}">
     <input type="hidden" name="longitude" id="longitude" value="{{ $flat_wishes_rented->longitude ?? '' }}">
     <input type="hidden" name="full_address" id="full_address" value="{{ $flat_wishes_rented->full_address ?? '' }}">
-    <div class="pl-3">
+    <div class="pl-md-3">
 
         <!-- Company Section -->
         @include('user-panel.partials.ad_company_section')

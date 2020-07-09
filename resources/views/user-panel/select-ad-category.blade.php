@@ -14,7 +14,7 @@ hr {
                     <h2 class="mt-4 text-center">Hva skal du annonsere?</h2>
                     <div class="row">
                         @if(!Auth::user()->hasRole('agent') || (Auth::user()->hasRole('agent') && Auth::user()->created_by_company && Auth::user()->created_by_company->company_type == "Eiendom"))
-                            <div class="col-sm-4 offset-sm-2 pt-2 text-center align-content-center @if((Auth::user()->hasRole('agent') && Auth::user()->created_by_company && Auth::user()->created_by_company->company_type == "Eiendom")) m-auto @endif">
+                            <div class="col-sm-4 offset-sm-2 pt-2 text-center align-content-center @if((Auth::user()->hasRole('agent') && Auth::user()->created_by_company && Auth::user()->created_by_company->company_type == "Eiendom")) m-auto @endif" id="main-catgory">
                                 <a href="#" class="category" data-dme-toggle="collapse" data-dme-target="home">
                                     <div class="category-icon" style="margin-top: 15px;">
                                         <img src="{{asset('public/images/Eiendom_ikon_maroon.svg')}}" style="max-height: 180px;">
@@ -25,7 +25,7 @@ hr {
                         @endif
 
                         @if(!Auth::user()->hasRole('agent') || (Auth::user()->hasRole('agent') && Auth::user()->created_by_company && Auth::user()->created_by_company->company_type == "Jobb"))
-                            <div class="col-sm-4 text-center pt-4 text-center align-content-center @if((Auth::user()->hasRole('agent') && Auth::user()->created_by_company && Auth::user()->created_by_company->company_type == "Jobb")) m-auto @endif">
+                            <div class="col-sm-4 text-center pt-2 text-center align-content-center @if((Auth::user()->hasRole('agent') && Auth::user()->created_by_company && Auth::user()->created_by_company->company_type == "Jobb")) m-auto @endif" id="main-catgory">
                                 <a href="" class="category nav nav-pills" data-dme-toggle="collapse" data-dme-target="job">
                                     <div class="category-icon" style="width:245px;">
                                         <img src="{{asset('public/images/Jobb_ikon_maroon.svg')}}" style="max-height: 180px;">

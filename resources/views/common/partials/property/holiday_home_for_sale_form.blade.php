@@ -1,6 +1,6 @@
 <form action="#" method="post" id="property_holiday_home_for_sale_form" class="dropzone addMorePics p-0" data-action="@if(Request::is('holiday/home/for/sale/*/edit') || Request::is('complete/ad/*')){{url('update-upload-images?ad_id='.$holiday_home_for_sale1->ad->id)}}
       @else {{route('upload-images')}} @endif" enctype="multipart/form-data" data-append_input='yes'>
-    <div class="pl-3">
+    <div class="pl-md-3">
         @php
         $holiday_home_for_sale = new \App\PropertyHolidaysHomesForSale();
         if(isset($holiday_home_for_sale1)){
