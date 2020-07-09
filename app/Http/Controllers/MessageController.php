@@ -8,6 +8,7 @@ use App\Media;
 use App\MessageThread;
 use App\Models\Ad;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Message;
