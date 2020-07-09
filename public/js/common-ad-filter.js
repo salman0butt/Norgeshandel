@@ -45,7 +45,7 @@ function create_circle(new_url = '') {
     if(!isEmpty(new_url)){
         new_url_property = new_url;
     }
-    var new_rad = $('#radius').val();
+    var new_rad = parseFloat($('#radius').val());
 
     // if(range_slider_value){
     //     new_rad = range_slider_value;
