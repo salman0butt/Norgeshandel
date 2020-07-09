@@ -2,7 +2,7 @@
     <div class="ad_published_payment_method_div">
         <div class="form-group @if($obj->ad->ad_type == 'job') row @endif">
             <label class="u-t5 @if($obj->ad->ad_type == 'job') col-2 @endif">Betalingsløsning</label>
-            <div class=" @if($obj->ad->ad_type == 'job') col-10 @endif">
+            <div class=" @if($obj->ad->ad_type == 'job') col-md-10 col-sm-12 col-xs-12 @endif">
                 <div class="col-md-12 input-toggle">
                     <input class="to_user_ad_publish checkmark" type="radio" value="online_payment" name="to_publish_ad" id="online_payment" checked>
                     <label for="online_payment" class="radio-lbl"> Bruk online betaling</label>

@@ -221,9 +221,12 @@
       .category-icon {
           padding-top: unset !important;
       }
-          #property-category>li>a {
-              font-size: 14px !important;
-          }
+    #property-category>li>a {
+        font-size: 14px !important;
+    }
+    .main-form-mobile {
+        padding: 0px 20px;
+    }
 
 
 }
