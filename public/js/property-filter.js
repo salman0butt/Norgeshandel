@@ -22,7 +22,8 @@ $(document).ready(function () {
         //var newUrl = $('#mega_menu_form').serialize();
         var timeout = 0;
 
-        if(id === 'customRange1' || id === 'pac-input'){
+        if(id === 'radius' || id === 'pac-input'){
+
             $('#local_area_name_check').prop( "checked", true );
             timeout = 1000;
         }

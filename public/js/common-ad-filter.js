@@ -45,12 +45,13 @@ function create_circle(new_url = '') {
     if(!isEmpty(new_url)){
         new_url_property = new_url;
     }
-    var new_rad = 0;
-    if(range_slider_value){
-        new_rad = range_slider_value;
-    }else{
-        new_rad = $('#hidden_range_val').val();
-    }
+    var new_rad = $('#radius').val();
+
+    // if(range_slider_value){
+    //     new_rad = range_slider_value;
+    // }else{
+    //     new_rad = $('#hidden_range_val').val();
+    // }
     // var new_rad = $('#customRange1').val();
 
     var rad = new_rad * 1000;
@@ -168,7 +169,7 @@ function initMap() {
     marker1.setMap(map);
 
     // Add circle overlay and bind to marker
-    $(document).on('change', '#customRange1', function () {
+    $(document).on('change', '#radius', function () {
         range_slider_value = $(this).val();
         create_circle();
         return false;
@@ -245,5 +246,23 @@ $(document).ready(function () {
     // $valueSpan.html('10km');
     $value.on('input change', () => {
         $valueSpan.html($value.val() + 'km');
+    });
+
+
+
+    $(function() {
+        var valMap = [1,2,3,4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,60,70,80,90,100,120,140,160,180,200];
+
+        $("#slider").slider({
+            // min: 0,
+            range: "min",
+            value: 9,
+            max: valMap.length - 1,
+            slide: function(event, ui) {
+                $(".valueSpan2").text(valMap[ui.value]);
+                $("#radius").val(valMap[ui.value]).change();
+            },
+        });
+
     });
 });
