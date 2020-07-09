@@ -27,12 +27,12 @@
 <!-- property for rent -->
 <main>
     <div class="dme-container">
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1 mt-5 mb-5">
                 <h2 class="text-muted">Bedrifter til salgs</h2>
             </div>
         </div>
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1">
                 @include('common.partials.property.business_for_sale_form')
             </div>

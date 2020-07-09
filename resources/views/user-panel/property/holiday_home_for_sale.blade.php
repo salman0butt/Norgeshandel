@@ -26,13 +26,13 @@
     <input type="hidden" class="ad_status" value="{{$property_status}}">
 <main>
     <div class="dme-container">
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
                 <h2 class="text-muted">Fritidsbolig til salgs</h2>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1">
                  @include('common.partials.property.holiday_home_for_sale_form')
             </div>

@@ -1274,3 +1274,8 @@ span.stars {float: left}
 #cat-title {
     margin-top: 1em;
 }
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}

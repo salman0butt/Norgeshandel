@@ -143,7 +143,7 @@
                         @include('user-panel.partials.templates.filter-flat-wishes-rented')
                     @endif
             
-                    <li class="">
+                    <li class="order-sm-0">
                         <a class="nav-link position-relative" href="{{url('notifications')}}">
                             @if(\Auth::check() && Auth::user()->header_unread_notifications()->count() >0)
                                 <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">
@@ -155,13 +155,13 @@
                     </li>
 
 
-                    <li class="">
+                    <li class="order-sm-1">
                         <a class="nav-link" href="{{url('/new')}}">
                             <i class="fas fa-plus nav-icons"></i>
                         </a>
                     </li>
 
-                    <li class="">
+                    <li class="order-sm-2">
                         <a class="nav-link position-relative" href="{{url('/messages')}}">
                             @if(\Auth::check())
                                 <span class="badge badge-primary pending position-absolute {{count(\Auth::user()->unread_messages()) ? '' : 'd-none'}}" id="chat-notification" style="left:0">
@@ -172,14 +172,14 @@
                         
                         </a>
                     </li>
-                    <li class="" style="padding-bottom: 2px;">
+                    <li class="order-sm-3" style="padding-bottom: 2px;">
                         @if(Auth::check())
                         <a class="nav-link" href="{{url('my-business')}}">
                           <i class="fas fa-user-circle nav-icons"></i>
                         </a>
                         @else
                             <a class="nav-link" href="{{url('login')}}">
-                                <div class="mt-2 ml-2">Logg inn</div>
+                                <i class="fas fa-user-circle nav-icons"></i>
                             </a>
                         @endif
                     </li>
