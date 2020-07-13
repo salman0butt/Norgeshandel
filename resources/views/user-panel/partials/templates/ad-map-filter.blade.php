@@ -1,34 +1,45 @@
 @if(!Request::is('map/select-property') && !Request::is('map/select-job'))
 
     <div class="form-group nav-dynamic-checks">
+
+
+
         <h3 class="u-t5">Område, by eller sted</h3>
         <div class="d-flex flex-row">
             <div class="mt-2">
-                <input id="local_area_name_check" type="checkbox" name="local_area_name_check">
+                <input id="local_area_name_check" type="checkbox" name="local_area_name_check" {{isset(Request()->local_area_name_check) && Request()->local_area_name_check == 'on' ? 'checked' : ''}} >
                 <label for="local_area_name_check"></label>
             </div>
      
         </div>
 
         <div class="clearfix"></div>
-
         <div class="mt-3" style="width:100%;">
-            <div style="display: none">
-                <input id="pac-input" class="controls" name="local_area_name" type="text" placeholder="Enter a location">
+            <div style="display: block;margin-left: 15%;width: 99%;">
+                <input id="pac-input" class="controls" name="local_area_name" value="{{isset(Request()->local_area_name) ? Request()->local_area_name : 'Oslo, Norge'}}" type="text" placeholder="Enter a location">
             </div>
+
             <div id="map" style="clear:both; height:300px;"></div>
 
             <div class="d-flex justify-content-between my-2">
                 <div>Avstand</div>
                 <div>
-                    <span class="ml-2 valueSpan2"></span>
+                    {{--<span class="ml-2 valueSpan2">{{isset(Request()->radius) ? Request()->radius : '10'}}km</span>--}}
+                    <span class="ml-2 valueSpan2">{{isset(Request()->radius) ? Request()->radius : '10'}}</span>km
+
+                    <input type="hidden" id="radius" name="radius"  value="{{isset(Request()->radius) ? Request()->radius : '10'}}">
+
                 </div>
             </div>
-            <input type="range" class="custom-range w-100" name="radius" value="50" step="5" id="customRange1" min="5" max="200">
+            {{--<p>--}}
+                {{--Nonlinear Value: <span id="nlVal">10</span><br/>--}}
+            {{--</p>--}}
+            <div id="slider"></div>
+            {{--<input type="range" class="custom-range w-100" name="radius" value="{{isset(Request()->radius) ? Request()->radius : '70'}}" step="5" id="customRange1" min="5" max="200">--}}
 
-
-            <input type="hidden" id="map_lat" name="map_lat" value="">
-            <input type="hidden" id="map_lng" name="map_lng" value="">
+            {{--<input type="hidden" id="hidden_range_val" value="{{isset(Request()->radius) ? Request()->radius : '10'}}">--}}
+            <input type="hidden" id="map_lat" name="map_lat" value="{{isset(Request()->map_lat) ? Request()->map_lat : '59.911491'}}">
+            <input type="hidden" id="map_lng" name="map_lng" value="{{isset(Request()->map_lng) ? Request()->map_lng : '10.757933'}}">
         </div>
     </div>
 
@@ -87,6 +98,15 @@
                 z-index: 9999999999999999;
                 background: #fff;
                 padding: 15px 10px;
+        }
+        #slider .ui-widget-header{
+            background: #0075ff !important;
+        }
+        #slider .ui-state-default{
+            background: #0075ff !important;
+        }
+        #mega_menu_form .gmnoprint {
+            display:none !important;
         }
     </style>
 

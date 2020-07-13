@@ -48,12 +48,16 @@
                 search(urlParams.toString());
                 history.pushState('', 'NorgesHandel', "?" + urlParams.toString());
             });
+            var wto;
             $('.mega-menu input').change(function (e) {
                 var id = $(this).attr('id');
                 //var newUrl = $('#mega_menu_form').serialize();
 
+                var timeout = 0;
+
                 if(id === 'customRange1' || id === 'pac-input'){
                     $('#local_area_name_check').prop( "checked", true );
+                    timeout = 1000;
                 }
 
                 if($('#local_area_name_check'). prop("checked") == true){
@@ -65,38 +69,33 @@
                     $('#mega_menu_form .property-filter-area-list').removeAttr('style');
                     $('#mega_menu_form .property-filter-area-list ul').css('opacity','1.0');
                 }
-                var newUrl = remove_variables_from_url();
-                // var newUrl = $('#mega_menu_form').serialize();
-                urlParams = new URLSearchParams(location.search);
-                var view = urlParams.get('view');
-                var sort = urlParams.get('sort');
 
-                var x = new URLSearchParams(newUrl);
-                if (!isEmpty(view)) {
-                    newUrl += "&view=" + view;
-                }
-                if (!isEmpty(sort)) {
-                    newUrl += "&sort=" + sort;
-                }
+                clearTimeout(wto);
+                wto = setTimeout(function() {
+                    var newUrl = remove_variables_from_url();
+                    // var newUrl = $('#mega_menu_form').serialize();
+                    urlParams = new URLSearchParams(location.search);
+                    var view = urlParams.get('view');
+                    var sort = urlParams.get('sort');
 
-                newUrl = set_lat_lon(newUrl,sort);
-
-                if(id === 'pac-input'){
-                    assign_lat_long(newUrl);
-                }
-                else{
-                    search(newUrl);
-                }
-
-
-                search(newUrl);
-                if(!added){
-                    history.pushState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
-                    added = true;
-                }
-                else{
-                    history.replaceState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
+                    var x = new URLSearchParams(newUrl);
+                    if (!isEmpty(view)) {
+                        newUrl += "&view=" + view;
                     }
+                    if (!isEmpty(sort)) {
+                        newUrl += "&sort=" + sort;
+                    }
+                    newUrl = set_lat_lon(newUrl,sort);
+                    search(newUrl);
+                    if(!added){
+                        history.pushState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
+                        added = true;
+                    }
+                    else{
+                        history.replaceState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);
+                    }
+                }, timeout);
+
             });
         });
     </script>

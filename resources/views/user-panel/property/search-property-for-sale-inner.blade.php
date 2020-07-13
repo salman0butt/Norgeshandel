@@ -30,10 +30,10 @@
         </div>
     </div>
     <div class="row mt-1">
-        <div class="col-md-4 pt-4">
+        <div class="col-md-4 pt-4" id="mobile-view-filter-left">
               @include('user-panel.inner_saved_search')
         </div>
-        <div class="col-md-4 pt-4">
+        <div class="col-md-4 pt-4" id="mobile-view-filter-right">
             <div class="pt-3 float-left" style="min-width: 53px;">
                 @include('user-panel.partials.change-view-btn')
             </div>
@@ -70,7 +70,7 @@
                 <div class="alert alert-warning col-md-6 offset-md-3">Ingen innlegg funnet!</div>
             @endif
             <div class="col-md-12">
-                <div class="<?php
+                <div class="pl-0 pr-0 <?php
                 echo $col === 'grid' ? 'row' : '' ?> order_specific_result" id="">
                     @foreach ($add_array as $key => $value)
                         <?php
@@ -85,11 +85,11 @@
                         }
                         $image_path = !empty($full_path_photos)? $full_path_photos : asset('public/images/placeholder.png');
                         ?>
-                        <div class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position: relative">
+                        <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position: relative">
                             <a href="{{url('/', $property_for_sale->ad->id)}}"
                                class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                 <div
-                                    class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
+                                    class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
                                     <div class="trailing-border box-image"
                                          style="background-image: url('{{$image_path}}');height: 175px; width:100%"
                                     >

@@ -30,12 +30,12 @@
 <!-- property for sale -->
 <main>
     <div class="dme-container">
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1 mt-5 mb-5">
                 <h2 class="text-muted">Bolig til Salgs</h2>
             </div>
         </div>
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1">
                 <div class="notice"></div>
                 @include('common.partials.property.property_for_sale_form')
@@ -190,11 +190,28 @@
 
         });
 
+        $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
+            var val = $(this).val();
+            // if(!isEmpty(val)){
+                explicit_keywords($(this));
+            // }
+        });
+
         $(document).on('change', 'input:not(input[type=date],input[type=radio],select[name=package_id]),textarea', function(e) {
 
             e.preventDefault();
 
             if(! $(this).valid()) return false;
+
+            var val = $(this).val();
+            if(!isEmpty(val)){
+                if(!$(this).hasClass('text-editor')){
+                    var explicit = explicit_keywords($(this));
+                }
+                if(explicit === false){
+                    return false;
+                }
+            }
 
             var ad_status = $('.ad_status').val();
             if(ad_status == 'saved'){

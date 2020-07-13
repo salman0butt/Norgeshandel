@@ -663,7 +663,7 @@ input[type=checkbox]:focus{
 }
 .mega-menu{
     width:100%;
-    height: 400px;
+    height: 450px;
     max-height: calc(100vh - 49px);
 }
 .side-menu{
@@ -1267,4 +1267,18 @@ span.stars {float: left}
 
 .dropzone-file-area{
     border: 1px dashed #474445 !important;
+}
+#job-sub-cat {
+    width: 200px;
+}
+#cat-title {
+    margin-top: 1em;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+#mobile-filter {
+    float:left;
 }

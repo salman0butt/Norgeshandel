@@ -31,11 +31,11 @@
         <div class="col-md-4 pt-4">
        @include('user-panel.inner_saved_search')
         </div>
-        <div class="col-md-4 pt-4">
+        <div class="col-md-4 pt-4" id="mobile-view-filter-left">
             <div class="pt-3 float-left" style="min-width: 53px;">
                 @include('user-panel.partials.change-view-btn')
             </div>
-            <div class="pt-3 float-left">
+            <div class="pt-3 float-left" id="mobile-view-filter-right">
                 <a href="{{ url('/map/property?property_type=commercial_plot') }}" class="dme-btn-rounded-back-only" target="_blank"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
             </div>
         </div>
@@ -85,10 +85,10 @@
                     }
                     ?>
 
-                    <div class="<?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
+                    <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/', $commercial_plot->ad->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
-                            <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
+                            <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
                                 <div class="trailing-border box-image" style="height: 174.93px; width:100%;background-image: url('@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif')">
 {{--                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"--}}
 {{--                                        alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">--}}

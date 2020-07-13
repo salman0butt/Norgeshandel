@@ -30,12 +30,12 @@
     <!-- property for rent -->
     <main>
         <div class="dme-container">
-            <div class="row">
+            <div class="row main-form-mobile">
                 <div class="col-md-10 offset-md-1 mt-5 mb-5">
                     <h2 class="text-muted">Bolig til leie</h2>
                 </div>
 
-                <div class="row">
+                <div class="row" class="main-form-mobile">
                     <div class="col-md-10 offset-md-1">
                         @include('common.partials.property.property_for_rent_form')
                     </div>
@@ -147,10 +147,12 @@
 
             $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
                 var val = $(this).val();
-                if(!isEmpty(val)){
+                // if(!isEmpty(val)){
                     explicit_keywords($(this));
-                }
+                // }
             });
+
+
 
             $(document).on('change', 'input:not(input[type=date]),textarea, .text-editor', function(e) {
                 e.preventDefault();
@@ -164,7 +166,6 @@
                     if(explicit === false){
                         return false;
                     }
-
                 }
 
                 var ad_status = $('.ad_status').val();

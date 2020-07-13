@@ -192,7 +192,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(MessageThread::class);
     }
     public function unread_messages(){
-        return Message::where('to_user_id', $this->id)->whereNull('read_at')->get();
+        return Message::where('to_user_id', $this->id)->whereNull('read_at')->where(function ($query){
+            $query->whereNull('deleted_by')
+                ->orwhere('deleted_by','<>',$this->id);
+        })->get();
     }
 
     public function notifications()

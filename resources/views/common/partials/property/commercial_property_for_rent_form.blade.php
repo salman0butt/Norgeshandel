@@ -25,7 +25,7 @@
   @if(Request::is('add/new/commercial/property/for/rent/*/edit') || Request::is('complete/ad/*'))
   @method('PATCH')
   @endif
-    <div class="pl-3">
+    <div class="pl-md-3">
     <input type="hidden" id="old_zip" value="{{ (isset($commercial_property_for_rent->zip_code) ? $commercial_property_for_rent->zip_code : '') }}">
         <input type="hidden" name="upload_dropzone_images_type" value="commercial_property_for_rent_temp_images">
         <input type="hidden" id="zip_city" name="zip_city" value="{{ (isset($commercial_property_for_rent->zip_city) ? $commercial_property_for_rent->zip_city : '') }}">

@@ -27,13 +27,13 @@
 
 <main>
     <div class="dme-container">
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
                 <h2 class="text-muted">Næringseiendom til leie</h2>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1">
 
                 @include('common.partials.property.commercial_property_for_rent_form')
@@ -155,9 +155,26 @@
             }
         });
 
+        $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
+            var val = $(this).val();
+            // if(!isEmpty(val)){
+                explicit_keywords($(this));
+            // }
+        });
+
         $(document).on('change', 'input:not(input[type=date],input[type=radio],select[name=package_id]),textarea', function(e) {
             e.preventDefault();
             if(! $(this).valid()) return false;
+
+            var val = $(this).val();
+            if(!isEmpty(val)){
+                if(!$(this).hasClass('text-editor')){
+                    var explicit = explicit_keywords($(this));
+                }
+                if(explicit === false){
+                    return false;
+                }
+            }
 
             var ad_status = $('.ad_status').val();
             if(ad_status == 'saved'){
@@ -183,11 +200,12 @@
                     fullAddress();
                 }
             });
-            //click button update
-            $("#publiserannonsen").click(function (e) {
-                e.preventDefault();
-                record_store_ajax_request('click', (this));
-            });
+
+        //click button update
+        $("#publiserannonsen").click(function (e) {
+            e.preventDefault();
+            record_store_ajax_request('click', (this));
+        });
 
 
 

@@ -6,6 +6,11 @@
 
     <script src="{{asset('public/admin/js/jquery.min.js')}}"></script>
 
+    @if(Request::is('property/*/search') || Request::is('jobs/search'))
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    @endif
     <script src="{{asset('public/admin/js/bootstrap.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('public/css/bootstrap.min.css')}}">
 
@@ -92,6 +97,7 @@
 @include('user-panel.partials.header')
 @endif
 @yield('page_content')
+
 <div id="modal_select_category" class="modal fade" role="dialog">
     <div class="modal-dialog pt-5">
         <div class="modal-content smart-scroll" style="max-height: calc(100vh - 100px); overflow-y: scroll;">
@@ -116,8 +122,10 @@
                             <div class="detailed-section col-sm-12 pl-2 pr-2">
                                 <div class="title color-grey">Ny liste</div>
                                 <div class="detail u-t5 text-muted"></div>
-                                <div class="dealer-logo float-right mt-3"><img src="#" style="max-height: 40px;" alt=""
-                                                                               class="img-fluid"></div>
+                                <div class="dealer-logo float-right mt-3">
+
+                                    {{--<img src="#" style="max-height: 40px;" alt="" class="img-fluid"></div>--}}
+
                             </div>
                         </a>
                     </div>
@@ -253,7 +261,7 @@
 
     $(document).ready(function () {
         @if(Auth::check())
-        getLists();
+        //getLists();
         @endif
         $(document).on('blur', 'input[type=url]', function () {
             var string = $(this).val();
@@ -398,7 +406,6 @@
 
                     if (postalCode.result == "Ugyldig postnummer") {
                         $('#zip_code-error').css('display', 'block');
-                        //console.log(postalCode.result);
                         if (document.getElementById('zip_code-error') == null) {
                             $("input[name='zip_code']").after("<label id='zip_code-error' class='error' for='zip_code' style='display: block;'>Ugyldig verdi</label>");
                         } else {
@@ -416,7 +423,6 @@
                         });
 
                         $('#zip_city').val(res);
-                        //console.log(res);
                     }
                 }
             };
@@ -495,7 +501,6 @@
 
             },
             error: function (error) {
-                //console.log(error);
             }
         });
     }
@@ -509,87 +514,13 @@
             $(this).attr('href', "?" + par.toString());
         });
     }
-
-    function explicit_keywords(this_obj) {
-        var label = (this_obj).closest(".form-group").find("label").text();
-
-        var val = (this_obj).val();
-        var form_id = (this_obj).closest('form').attr('id');
-        var found = '';
-        var exp = $("#explicit_keywords").val();
-        exp = jQuery.parseJSON(exp);
-
-        for ( var i = 0, l = exp.length; i < l; i++ ) {
-            var keyword = exp[i].value;
-            keyword = keyword.toLowerCase();
-            val = val.toLowerCase();
-
-            if(val.indexOf(keyword) != -1){
-                found = 'yes';
-            }
-        }
-        var text_area = '';
-        if(!$('textarea').hasClass('text-editor')){
-            text_area = ' textarea,';
-        }
-
-        if(isEmpty(found)){
-            $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", false);
-            $("#"+form_id + text_area +" select,input:not(input[type='file'])").removeAttr('style');
-
-            if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
-                $('.mce-edit-area').css('pointer-events','auto');
-                $('.mce-tinymce').css('pointer-events','auto');
-            }
-
-            if( $("div").hasClass('dropzone-file-area')){
-                $('.dropzone-file-area').removeAttr('style');
-            }
-
-            if($('div').hasClass('toast-top-right')){
-                $('#toast-container').css('display','none');
-            }
-
-            return true;
-        }
-
-        if(!isEmpty(found) && found === 'yes' ){
-            if(!this_obj.hasClass('text-editor') && $("div").hasClass('mce-edit-area')){
-                $('.mce-edit-area').css('pointer-events','none');
-                $('.mce-tinymce').css('pointer-events','none');
-            }
-
-            if( $("div").hasClass('dropzone-file-area')){
-                $('.dropzone-file-area').css('pointer-events','none');
-                $('.dropzone-file-area').css("background-color", "#ff9393");
-            }
-
-            $("#"+form_id + text_area +" select,button,input:not(input[type='file'])").prop("disabled", true);
-            $("#"+form_id + text_area +" select,input:not(input[type='file'])").css("background-color", "#ff9393");
-
-            (this_obj).focus();
-
-            if(!(this_obj).hasClass('text-editor')){
-                (this_obj).prop("disabled", false);
-                (this_obj).removeAttr("style");
-                (this_obj).focus();
-            }
-            $('#toast-container').css('display','block');
-            //#toast-container toast toast-error
-            if(!$('div').hasClass('toast-top-right')){
-                notify("error",'You have entered a bad word in '+label+' field. Please remove it to continue to this ad. Thanks');
-            }
-            return false;
-        }
-    }
-
-
     $(document).ready(function () {
         $.ajaxSetup({
             headers: {
                 //'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         @if(Auth::check())
             var pusher = new Pusher('f607688e883e2a04ab39', {
                 cluster: 'eu',
@@ -600,12 +531,28 @@
         var channel = pusher.subscribe('header-chat-notification');
         channel.bind('header-chat-notification-event', function (data) {
             if (data.to_user_id == '{{Auth::id()}}') {
-                var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
-                if (isEmpty(prev)) {
+                var prev = $('#chat-notification').html();
+                // var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
+                if (!(prev > 0)) {
                     prev = 0;
                 }
-                prev++;
-                $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+
+                @if(Request::is('messages') || Request::is('messages/thread/*'))
+                    if(data.thread_id !== $(".thread.active").attr('id')){
+                        prev++;
+                    }
+                @else
+                    prev++;
+                @endif
+
+
+                if(prev){
+                    $('#chat-notification').removeClass('d-none');
+                }else{
+                    $('#chat-notification').addClass('d-none');
+                }
+                // $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+                $('#chat-notification').html(prev);
             }
         });
         var notifications = pusher.subscribe('notification');
@@ -668,8 +615,6 @@
             else if(businesses_for_sale)
              type = 'business-for-sale';
 
-          //console.log(type);
-
             if(!isEmpty(type)) {
                 if (!isEmpty(value)) {
                     var url = "{{url('/recentearches')}}";
@@ -685,7 +630,6 @@
                             return true;
                         },
                         error: function (error) {
-                            // console.log(error);
                             return false;
                         }
                     });
@@ -717,8 +661,20 @@
     $('body').on('focusin', '.date-picker', function(e) {
         date_picker();
     });
+    //mobile menu
+
+    function mobileMenu(x) {
+ jQuery(".mobile-header #collapsibleNavbar > ul > li.filter-btn").removeClass("nav-item");
+ //jQuery("#mobile-filter").hide();
+
+}
+
+var x = window.matchMedia("(max-width: 767px)")
+mobileMenu(x) // Call listener function at run time
+x.addListener(mobileMenu) // Attach listener function on state changes
 
 </script>
+
 
 @if(Request::is('property/*/search') || Request::is('jobs/search'))
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>

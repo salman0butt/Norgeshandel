@@ -28,13 +28,13 @@
     <input type="hidden" class="ad_status" value="{{$property_status}}">
 <main>
     <div class="dme-container">
-        <div class="row">
+        <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1 mt-5 mb-5 pl-4">
                 <h2 class="text-muted">Bolig ønskes leid</h2>
             </div>
         </div>
 
-          <div class="row">
+          <div class="row main-form-mobile">
             <div class="col-md-10 offset-md-1">
                   @include('common.partials.property.flat_wishes_rented_form')
             </div>
@@ -143,11 +143,27 @@
                 }
             });
 
-
+            $(document).on('keyup', 'input:not(input[type=date],.text-editor),textarea', function(e) {
+                var val = $(this).val();
+                // if(!isEmpty(val)){
+                    explicit_keywords($(this));
+                // }
+            });
 
             $(document).on('change', 'input:not(input[type=date]),textarea', function(e) {
                 e.preventDefault();
                 if(! $(this).valid()) return false;
+
+                var val = $(this).val();
+                if(!isEmpty(val)){
+                    if(!$(this).hasClass('text-editor')){
+                        var explicit = explicit_keywords($(this));
+                    }
+                    if(explicit === false){
+                        return false;
+                    }
+                }
+
                 var ad_status = $('.ad_status').val();
                 if(ad_status == 'saved'){
                     record_store_ajax_request('change', (this));

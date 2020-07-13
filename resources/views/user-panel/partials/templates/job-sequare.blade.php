@@ -35,7 +35,7 @@ if ($job->company_id != 0) {
 //        }
 //    }
     ?>
-<div class="col-sm-4 pr-0">
+<div class="col-md-4 col-sm-6 pr-0 product-list-mobile">
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1" style="text-decoration: none;">
         <div class="image-section col-sm-12 px-2 pt-2">
             <div class="trailing-border" style="height: 302px; width:100%;

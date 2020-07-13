@@ -28,10 +28,10 @@
         </div>
     </div>
     <div class="row mt-1">
-        <div class="col-md-4 pt-4">
-            <!--                    <button class="dme-btn-outlined-blue">Lagre søk</button>-->
-        </div>
-        <div class="col-md-4 pt-4">
+        <div class="col-md-4 pt-4" id="mobile-view-filter-left">
+           @include('user-panel.inner_saved_search')
+        </div> 
+        <div class="col-md-4 pt-4" id="mobile-view-filter-right" >
             <div class="pt-3 float-left" style="min-width: 53px;">
                 @if(isset($view) && $view=="list")
                     <a href="{{url('jobs/search?view=grid')}}" data-name="grid" id="view"
@@ -73,7 +73,7 @@
 
     {{-- search saved button start --}}
 
-    @include('user-panel.inner_saved_search')
+    
     {{-- search saved button ends --}}
     <div class="row">
         @if($jobs && is_countable($jobs) && count($jobs)>0)

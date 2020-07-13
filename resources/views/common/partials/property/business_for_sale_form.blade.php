@@ -22,7 +22,7 @@
     @if(Request::is('add/business/for/sale/*/edit') || Request::is('complete/ad/*'))
         @method('PATCH')
     @endif
-    <div class="pl-3">
+    <div class="pl-md-3">
         <input type="hidden" name="upload_dropzone_images_type" value="business_for_sale_temp_images">
         <input type="hidden" name="media_position" class="media_position">
         <input type="hidden" name="deleted_media" class="deleted_media">

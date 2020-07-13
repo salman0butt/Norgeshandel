@@ -1,5 +1,5 @@
     <!-- Button trigger modal -->
-    <button type="button" id="save_search_dialog_btn" class="btn bg-maroon text-white" data-toggle="modal"
+    <button type="button" id="save_search_dialog_btn" class="btn bg-maroon text-white btn-sm" data-toggle="modal"
        @if(Auth::check()) data-target="#basicExampleModal" @else    data-target="#modal_saved" @endif style="margin-top: -3%;position: absolute;z-index: 999;">
         Lagre søk
     </button>

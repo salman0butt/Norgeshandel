@@ -35,7 +35,7 @@
         @if(Request::is('commercial/plots/*/edit'))
     <input type="hidden" name="old_price" id="old_price" value="{{ $commercial_plot->monthly_rent ?? '' }}">
     @endif
-    <div class="pl-3">
+    <div class="pl-md-3">
 
         <!-- Company Section -->
         @include('user-panel.partials.ad_company_section')
