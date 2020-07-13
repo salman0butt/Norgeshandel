@@ -94,6 +94,12 @@
     .desktop-header {
         display: none;
     }
+    .cgrid .title {
+        margin-top: 15% !important;
+    }
+    .cgrid .location {
+        font-size: 12px !important;
+    }
     /* .nav-link div{
         display: none;
     }

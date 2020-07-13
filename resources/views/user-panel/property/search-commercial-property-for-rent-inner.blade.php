@@ -93,7 +93,7 @@
                         class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="{{url('/', $property_commercial_property_for_rent->ad->id)}}"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
-                            <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
+                            <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
                                 <div class="trailing-border box-image" style="background-image: url('@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif');height: 174.93px; width:100%">
 {{--                                    <img src="@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif"--}}
 {{--                                        alt="" class="img-fluid radius-8" style="height: 174.93px; width:100%">--}}

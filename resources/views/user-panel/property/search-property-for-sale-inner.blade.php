@@ -89,7 +89,7 @@
                             <a href="{{url('/', $property_for_sale->ad->id)}}"
                                class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                 <div
-                                    class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
+                                    class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
                                     <div class="trailing-border box-image"
                                          style="background-image: url('{{$image_path}}');height: 175px; width:100%"
                                     >

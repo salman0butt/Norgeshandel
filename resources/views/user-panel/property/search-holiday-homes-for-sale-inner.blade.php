@@ -86,7 +86,7 @@
                     <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="<?php echo e(url('/', $property_holiday_home_for_sale->ad->id)); ?>"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
-                            <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-4' ?>  p-2">
+                            <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
 
                                 <div class="trailing-border box-image" style="background-image: url('@if(!empty($full_path)){{$full_path}}@else{{asset('public/images/placeholder.png')}}@endif');height: 174.93px; width:100%;">
                                     @if($property_holiday_home_for_sale->ad && $property_holiday_home_for_sale->ad->status == 'sold' && $property_holiday_home_for_sale->ad->sold_at)

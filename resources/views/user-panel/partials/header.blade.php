@@ -142,7 +142,8 @@
                                     {{count(\Auth::user()->unread_messages()) > 0 ? count(\Auth::user()->unread_messages()): ""}}
                                 </span>
                             @endif
-                                <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
+                            <i class="far fa-comment-alt nav-icons"></i>
+                                {{-- <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;"> --}}
                         
                         </a>
                     </li>
