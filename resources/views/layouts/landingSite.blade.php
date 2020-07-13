@@ -661,8 +661,20 @@
     $('body').on('focusin', '.date-picker', function(e) {
         date_picker();
     });
+    //mobile menu
+
+    function mobileMenu(x) {
+ jQuery(".mobile-header #collapsibleNavbar > ul > li.filter-btn").removeClass("nav-item");
+ //jQuery("#mobile-filter").hide();
+
+}
+
+var x = window.matchMedia("(max-width: 767px)")
+mobileMenu(x) // Call listener function at run time
+x.addListener(mobileMenu) // Attach listener function on state changes
 
 </script>
+
 
 @if(Request::is('property/*/search') || Request::is('jobs/search'))
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>

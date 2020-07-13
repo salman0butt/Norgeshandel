@@ -70,7 +70,7 @@ function create_circle(new_url = '') {
     });
     new_rad = parseFloat(new_rad);
 
-    var zoomArray = {1:13, 2:12, 3:11.60, 4:11,5:10.9, 6:10.8, 7:10.6, 8:10, 9:10, 10:9.9, 15:9.52, 20:8.9, 25:8.7, 30:8.55, 35:8, 40:7.9, 45:7.65, 50:7.59
+    var zoomArray = {1:13, 2:12, 3:11.60, 4:11,5:10.9, 6:10.8, 7:10.6, 8:10, 9:10, 10:9.5, 15:9, 20:8.9, 25:8.7, 30:8, 35:7.95, 40:7.9, 45:7.65, 50:7.59
         , 55:7.56, 60:7.53, 65:7, 70:6.95, 75:6.90, 80:6.85, 85:6.80, 90:6.75, 95:6.70, 100: 6.65
         , 105:6.60, 110:6.55, 115:6.53, 120:6.53, 125:6.53, 130:6, 135:6, 140:6, 145:6, 150:6
         , 155:5.95, 160:5.90, 165:5.85, 170:5.80, 175:5.75, 180:5.70, 185:5.65, 190:5.60, 195:5.58, 200:5.55};
@@ -87,19 +87,21 @@ function initMap() {
 
     var map = new google.maps.Map(
         document.getElementById('map'),
-        { center: { lat: parseFloat($('#map_lat').val()), lng: parseFloat($('#map_lng').val())}, zoom: 7});
+        { center: { lat: parseFloat($('#map_lat').val()), lng: parseFloat($('#map_lng').val())}, zoom: 13});
         // { center: { lat: 59.911491, lng: 10.757933}, zoom: 7});
     new_map_var = map;
     var input = document.getElementById('pac-input');
 
-    var autocomplete = new google.maps.places.Autocomplete(input);
+    var autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ['geocode']
+    });
 
-    autocomplete.bindTo('bounds', map);
+    // autocomplete.bindTo('bounds', map);
 
     // Specify just the place data fields that you need.
     autocomplete.setFields(['place_id', 'geometry', 'name', 'formatted_address']);
 
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
     var infowindow = new google.maps.InfoWindow();
     var infowindowContent = document.getElementById('infowindow-content');
