@@ -176,7 +176,7 @@
                         @endphp
                         @include('user-panel.partials.templates.landing_page_company_information')
                     @endif
-                    <div style="width: 306px; height: 306px;">
+                    <div style="width: 100%; height: 306px;">
                      <a href="{{ url('/map?lat='.$property_data->latitude.'&long='.$property_data->longitude) }}" target="_blank"> <h5 class="text-muted">{{ $property_data->full_address }}</h5></a>
                          <a href="{{ url('/map?lat='.$property_data->latitude.'&long='.$property_data->longitude) }}" id="click-map" target="_blank"><div id="map" style="height: 100%; width: 100%;"></div></a>
                     </div>

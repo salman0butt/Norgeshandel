@@ -28,14 +28,14 @@
         </div>
     </div>
     <div class="row mt-1">
-        <div class="col-md-4 pt-4">
+        <div class="col-md-4 pt-4" id="mobile-view-filter-left">
        @include('user-panel.inner_saved_search')
         </div>
-        <div class="col-md-4 pt-4" id="mobile-view-filter-left">
-            <div class="pt-3 float-left" style="min-width: 53px;">
+        <div class="col-md-4 pt-4" id="mobile-view-filter-right">
+            <div class="pt-3 float-left" style="min-width: 53px;" >
                 @include('user-panel.partials.change-view-btn')
             </div>
-            <div class="pt-3 float-left" id="mobile-view-filter-right">
+            <div class="pt-3 float-left">
                 <a href="{{ url('/map/property?property_type=commercial_plot') }}" class="dme-btn-rounded-back-only" target="_blank"><i class="fa fa-map-marker"></i> <span class="">Vis på kart</span></a>
             </div>
         </div>

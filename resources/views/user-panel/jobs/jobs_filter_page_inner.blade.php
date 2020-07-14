@@ -75,7 +75,7 @@
 
     
     {{-- search saved button ends --}}
-    <div class="row">
+    <div class="row" id="job-list-pages">
         @if($jobs && is_countable($jobs) && count($jobs)>0)
             @foreach($jobs as $job)
                 @if($job != null)

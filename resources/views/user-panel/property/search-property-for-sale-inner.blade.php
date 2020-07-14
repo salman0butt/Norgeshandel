@@ -89,7 +89,7 @@
                             <a href="{{url('/', $property_for_sale->ad->id)}}"
                                class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                 <div
-                                    class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
+                                    class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-xs-4 col-sm-4 col-md-4' ?>  p-2">
                                     <div class="trailing-border box-image"
                                          style="background-image: url('{{$image_path}}');height: 175px; width:100%"
                                     >
@@ -100,7 +100,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-8' ?> p-2">
+                                <div class="detailed-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-xs-8 col-sm-8 col-md-8' ?> p-2">
                                     {{--<div class="week-status u-t5 text-muted" style="">Betalt plassering</div>--}}
                                     <div class="{{$col=='grid'?'location':'text-left'}} u-t5 text-muted mt-2">
                                         @if($property_for_sale->street_address)
