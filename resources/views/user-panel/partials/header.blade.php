@@ -115,33 +115,7 @@
             @endif
             <div class="" id="collapsibleNavbar">
                 <ul class="nav ml-auto" style="">
-                    @if(\Illuminate\Support\Facades\Request::is('jobs/search'))
-                        @include('user-panel.partials.templates.job-filter')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search'))
-                        @include('user-panel.partials.templates.filter-property-for-sale')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/property-for-rent/search'))
-                        @include('user-panel.partials.templates.filter-property-for-rent')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/commercial-property-for-sale/search'))
-                        @include('user-panel.partials.templates.filter-commercial-property-for-sale')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/commercial-property-for-rent/search'))
-                        @include('user-panel.partials.templates.filter-commercial-property-for-rent')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/commercial-plots/search'))
-                        @include('user-panel.partials.templates.filter-commercial-plots')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/holiday-homes-for-sale/search'))
-                        @include('user-panel.partials.templates.filter-holiday-homes-for-sale')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/business-for-sale/search'))
-                        @include('user-panel.partials.templates.filter-business-for-sale')
-                    @endif
-                    @if(\Illuminate\Support\Facades\Request::is('property/flat-wishes-rented/search'))
-                        @include('user-panel.partials.templates.filter-flat-wishes-rented')
-                    @endif
+   
             
                     <li class="order-sm-0">
                         <a class="nav-link position-relative" href="{{url('notifications')}}">
@@ -168,7 +142,8 @@
                                     {{count(\Auth::user()->unread_messages()) > 0 ? count(\Auth::user()->unread_messages()): ""}}
                                 </span>
                             @endif
-                                <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;">
+                            <i class="far fa-comment-alt nav-icons"></i>
+                                {{-- <img src="{{asset('public/images/Meldinger_ikon.svg')}}" class="nav-icons" style="max-width: 20px; float: left;"> --}}
                         
                         </a>
                     </li>
@@ -183,6 +158,33 @@
                             </a>
                         @endif
                     </li>
+                                     @if(\Illuminate\Support\Facades\Request::is('jobs/search'))
+                        @include('user-panel.partials.templates.job-filter')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/property-for-sale/search'))
+                        @include('user-panel.partials.templates.filter-property-for-sale')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/property-for-rent/search'))
+                        @include('user-panel.partials.templates.filter-property-for-rent')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/commercial-property-for-sale/search'))
+                        @include('user-panel.partials.templates.filter-commercial-property-for-sale')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/commercial-property-for-rent/search'))
+                        @include('user-panel.partials.templates.filter-commercial-property-for-rent')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/commercial-plots/search'))
+                        @include('user-panel.partials.templates.filter-commercial-plots')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/holiday-homes-for-sale/search'))
+                        @include('user-panel.partials.templates.filter-holiday-homes-for-sale')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/business-for-sale/search'))
+                        @include('user-panel.partials.templates.filter-business-for-sale')
+                    @endif
+                    @if(\Illuminate\Support\Facades\Request::is('property/flat-wishes-rented/search'))
+                        @include('user-panel.partials.templates.filter-flat-wishes-rented')
+                    @endif
                 </ul>
             </div>
         </nav>

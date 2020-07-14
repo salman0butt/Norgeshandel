@@ -29,12 +29,12 @@
         </div>
         <div class="row pt-4" id="searchs-padd"></div>
         <div class="row pl-3" id=home-contain>
-            <div class="col-md-4 order-1 pt-5 bg-maroon-lighter maroon-box radius-8" id="searchs-box">
+            <div class="col-md-4 order-md-0 order-lg-0 order-sm-1 order-1 pt-5 bg-maroon-lighter maroon-box radius-8" id="searchs-box">
                 @include('user-panel.partials.searches-history')
             </div>
             <!--            ended col-->
 
-            <div class="col-md-8 order-0">
+            <div class="col-md-8 order-md-1 order-lg-1 order-sm-0 order-0">
                 <div class="input-group search-box position-relative">
                     <input type="text" name="search" id="search" class="form-control search-control"
                         placeholder="Søk her..." autofocus autocomplete="off">

@@ -14,11 +14,11 @@
         </div>
 
         <div class="clearfix"></div>
-
         <div class="mt-3" style="width:100%;">
-            <div style="display: none">
+            <div style="display: block;margin-left: 15%;width: 99%;">
                 <input id="pac-input" class="controls" name="local_area_name" value="{{isset(Request()->local_area_name) ? Request()->local_area_name : 'Oslo, Norge'}}" type="text" placeholder="Enter a location">
             </div>
+
             <div id="map" style="clear:both; height:300px;"></div>
 
             <div class="d-flex justify-content-between my-2">
@@ -100,10 +100,16 @@
                 padding: 15px 10px;
         }
         #slider .ui-widget-header{
-            background: #0075ff !important;
+            background:rgb(220, 53, 69) !important;
         }
         #slider .ui-state-default{
-            background: #0075ff !important;
+            background: rgb(220, 53, 69) !important;
+        }
+        #mega_menu_form .gmnoprint {
+            display:none !important;
+        }
+        div#slider {
+         background: rgba(172, 48, 74, 0.7) !important;
         }
     </style>
 

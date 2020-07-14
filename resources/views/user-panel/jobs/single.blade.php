@@ -422,7 +422,7 @@ NorgesHandel - {{$job->title}}
                 <div class="mt-3 location">
                     <h5 class="u-t3"></h5>
                 </div>
-                <div style="width: 306px; height: 250px;">
+                <div style="width: 100%; height: 250px;">
                      <a href="{{ url('/map?lat='.$job->latitude.'&long='.$job->longitude) }}" target="_blank"><h5 class="text-muted">
                         @if($job->company)
                         @php
