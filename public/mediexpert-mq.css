@@ -63,6 +63,16 @@
     #mega-menu-button>div {
         display: none;
     }
+    #job-list-pages .cgrid .location {
+        position: absolute;
+        top: -200px !important;
+    }
+    .product-sub-cat-list li a {
+        font-size: 14px;
+    }
+}
+@media (max-width: 1023px) {
+
 }
 @media (min-width: 1250px) {
     .dme-container, .container {
@@ -87,6 +97,9 @@
     height:calc(100vh - 51px);
 }
 @media (max-width: 991px) {
+        #carouselExampleIndicators .carousel-item a img {
+            max-height: 30%;
+        }
     .trailing-border {
         min-height:200px !important;
         height:200px !important;
@@ -121,19 +134,79 @@
      /* .navbar-brand img{
       content: url("assets/images/NorgesHondel-logo-mobile.png");
     }  */
+    #myTabContent,
+    #fav-page,
+    #job_pref {
+        padding: 0px 20px;
+    }
+   .dme-btn-outlined-blue {
+        font-size: 0.7rem !important;
+    }
+
+    .profile-icon .profile-image {
+        bottom: -60px;
+    }
+    span.font-weight-bold.align-middle {
+        margin-left: 26%;
+    }
+    p.text-muted.thread-ad-title.mb-0 {
+        padding-top: 9%;
+    }
+    #my_ads_sidebar,
+    .my-ads-list {
+        padding: 0px 20px;
+    }
+    .u-t2 {
+        font-size: 20px;
+        line-height: 30px;
+        }
+        /* #property-category>li>a {
+         font-size: 10px !important;
+        } */
+    .breadcrumb {
+      padding: 0.15rem 1rem !important;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        height: 20px;
+        width: 20px;
+    }
+    /* body>main>div.dme-container.p-3>div.row.mt-4>div.col-md-8>div.row.pl-4.pr4>a>button {
+        font-size: 14px !important;
+    } */
     .nav-icons{
         width:24px;
     }
     .nav-container{
         width:100%;
     }
-        .product-list-mobile {
+        .product-list-mobile:not(.product-list-mobile.clist) {
             width: 50% !important;
             float: left;
             padding: 0px 10px;
         }
 }
 @media (max-width: 575px) {
+    .clist .trailing-border {
+        min-height: 100px !important;
+        height: 100px !important;
+    }
+    .clist .image-section {
+        width: 33% !important;
+    }
+    .clist .detailed-section {
+        width: 66% !important;
+        display: block !important;
+        float: left !important;
+    }
+    .product-list-mobile.col-sm-4.pr-0.cgrid,
+    .product-list-mobile.col-sm-6.pr-0.cgrid {
+        width: 50%;
+    }
+    #job-list-pages .location.u-t5.text-muted.mt-2.float-left {
+        top: -15%;
+        font-size: 12px !important;
+    }
     .home-grid {
      margin-top: 10px !important;
     }

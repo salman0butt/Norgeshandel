@@ -1,7 +1,7 @@
 @extends('layouts.landingSite')
 @section('page_content')
     <main>
-        <div class="dme-container">
+        <div class="dme-container" id="fav-page">
             <div class="row">
                 <div class="col-md-8 mt-5 mb-5">
                     <div class="row">

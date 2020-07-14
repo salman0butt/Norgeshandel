@@ -100,13 +100,16 @@
                 padding: 15px 10px;
         }
         #slider .ui-widget-header{
-            background: #0075ff !important;
+            background:rgb(220, 53, 69) !important;
         }
         #slider .ui-state-default{
-            background: #0075ff !important;
+            background: rgb(220, 53, 69) !important;
         }
         #mega_menu_form .gmnoprint {
             display:none !important;
+        }
+        div#slider {
+         background: rgba(172, 48, 74, 0.7) !important;
         }
     </style>
 

@@ -43,7 +43,7 @@ foreach ($my_ads as $ad){
             @include('common.partials.flash-messages')
             <div class="row">
              
-                <aside class="col-md-3">
+                <aside class="col-md-3" id="my_ads_sidebar">
                     <div class="form-group">
                         <h3 class="u-t5">Status</h3>
                         <div class="pl-3 pr-3">
