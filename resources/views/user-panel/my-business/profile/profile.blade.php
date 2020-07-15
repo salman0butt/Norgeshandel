@@ -838,7 +838,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-2">
+            <div class="row mb-2" id="prfile-pad">
                 <div class="col-md-6 mt-4">
                     <h5>Slett konto</h5>
                     <ul class="pl-3">

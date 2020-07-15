@@ -450,7 +450,8 @@
                     "sLast":     "Siste"
                 }
             },
-            "order": [[ 0, "desc" ]]
+            "order": [[ 0, "desc" ]],
+             "scrollX": true
         });
     }
 </script>
