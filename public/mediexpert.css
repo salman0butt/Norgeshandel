@@ -1231,7 +1231,7 @@ label span.count{
         background: #ecdfe285;
     }
 #carouselExampleIndicators .carousel-item a img {
-height: 650px;
+max-height: 650px;
 background-position: center;
 background-size: cover;
 

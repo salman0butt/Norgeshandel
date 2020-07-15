@@ -27,15 +27,15 @@
 </head>
 <body class="bg-light-grey" cz-shortcut-listen="true">
 
-<main class="" style="margin-top: 60px;margin-bottom: 20px;">
+<main class="" style="margin-top: 60px;margin-bottom: 20px;" id="login-page-main">
 <div class="dme-container">
         <div class="row shadow">
             <div class="col-md-8 text-center bg-maroon-lighter p-5">
-                <img src="{{asset('public/images/NorgesHondel-logo.png')}}" alt="" class="mb-3 mt-5">
+                <img src="{{asset('public/images/NorgesHondel-logo.png')}}" alt="" class="mb-3 mt-5" id="login-logo">
                 <p>Logg inn for å personalisere Norgeshandel, lagre søk, chat, varsler.</p>
                 <p><a href="{{ url('/customer-services') }}" class="mr-4">Hjelp</a> Tilbake til <a href="{{ url('/') }}">NorgesHandel</a></p>
             </div>
-            <div class="col-md-4 bg-white pt-5 pb-3">
+            <div class="col-md-4 bg-white pt-5 pb-3" id="login-page">
                 @include('common.partials.flash-messages')
 
                 <form method="POST" action="{{ route('login') }}" id="login_page" name="login_page">
