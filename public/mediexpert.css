@@ -1292,3 +1292,10 @@ html, body {
   /* #job-list-pages .clist .location {
       top: -15px !important;
   } */
+  .left-ad,
+  .right-ad {
+      width: calc(calc(100% - 1010px) / 2);
+      position: fixed;
+      top: 51px;
+      height: calc(100vh - 51px);
+  }
