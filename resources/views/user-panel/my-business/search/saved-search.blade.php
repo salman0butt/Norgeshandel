@@ -16,7 +16,7 @@
             </div>
             <!---- end breadcrumb----->
             @include('common.partials.flash-messages')
-            <div class="row">
+            <div class="row" id="saved-searched-page">
                 <div class="col-md-12">
                     <h3>Lagrede søk</h3>
                     <p>Søk på noe du har lyst på og trykk «Lagre søk». Da varsler NorgesHandel deg når det dukker opp
