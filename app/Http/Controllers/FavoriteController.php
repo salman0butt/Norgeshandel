@@ -64,12 +64,15 @@ class FavoriteController extends Controller
     }
 
     public function add_fav($list_id, $ad_id){
-        $this->remove_trash();
-        $fav = new Favorite();
-        $fav->ad_id = $ad_id;
-        $fav->list_id = $list_id;
-        $fav->user_id = Auth::user()->id;
-        $fav->save();
+        $fav = Favorite::where(['ad_id'=>$ad_id, 'user_id'=>Auth::user()->id])->first();
+
+        if(!$fav){
+            $fav = new Favorite();
+            $fav->ad_id = $ad_id;
+            $fav->list_id = $list_id;
+            $fav->user_id = Auth::user()->id;
+            $fav->save();
+        }
     }
 
     public function remove_fav($ad_id){

@@ -1,5 +1,5 @@
-<div class="col-sm-4 pr-0">
-    <a href="#" class="row product-list-item mr-1 p-sm-1 mt-3" data-id="{{$list->id}}" id="select_list" style="text-decoration: none;">
+<div class="col-sm-4 pr-0 appended-fav-list">
+    <a href="javascript:void(0);" class="row product-list-item mr-1 p-sm-1 mt-3" data-id="{{$list->id}}" id="select_list" style="text-decoration: none;">
         <div class="image-section col-sm-12  p-2">
             <div class="trailing-border">
                 <span style="width: 100%; min-height: 150px;padding-top:55px;font-size: 35px;" class="fas fa-list radius-8"></span>

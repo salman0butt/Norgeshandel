@@ -27,7 +27,7 @@
 
     <link rel="stylesheet" href="{{asset('public/css/ladda-themeless.min.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/toastr.min.css')}}">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="{{asset('public/css/jssocials.css')}}">
     <link rel="stylesheet" href="{{asset('public/css/jssocials-theme-flat.css')}}">
@@ -35,66 +35,66 @@
 
     <!--    incluedes   -->
     {{--<script src="https://cdn.tiny.cloud/1/pyzh8nk5zts8kmnwuypdooa95t19aknwf2lnw5xg1pr8sjqc/tinymce/5/tinymce.min.js"--}}
-            {{--referrerpolicy="origin"></script>--}}
+    {{--referrerpolicy="origin"></script>--}}
     <script src="{{asset('public/js/html2canvas.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
             integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
             crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-  crossorigin=""/>
-          {{-- <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
-        <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css'/> --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+          integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+          crossorigin=""/>
+    {{-- <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css'/> --}}
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('style')
-<link rel="stylesheet" href="{{ asset('public/css/intlTelInput.min.css') }}">
-<style>
-    span.far.fa-heart.text-muted,span.fa.fa-heart.text-muted {
-        line-height: unset !important;
-    }
-    th.dow {
-    padding: 8px;
-}
+    <link rel="stylesheet" href="{{ asset('public/css/intlTelInput.min.css') }}">
+    <style>
+        span.far.fa-heart.text-muted,span.fa.fa-heart.text-muted {
+            line-height: unset !important;
+        }
+        th.dow {
+            padding: 8px;
+        }
 
-</style>
-<script>
-    function views(this_obj) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var url = "{{ url('views') }}";
-        var banner_id = this_obj;
-        if (banner_id != '') {
-            $.ajax({
-                type: "POST",
-                url: url+'/'+banner_id,
-                dataType: "json",
-                async: true,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                   return true;
-                },
-                error: function (jqXhr, json,
-                    errorThrown) { // this are default for ajax errors
-                    var errors = jqXhr.responseJSON;
-                  return false;
+    </style>
+    <script>
+        function views(this_obj) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            var url = "{{ url('views') }}";
+            var banner_id = this_obj;
+            if (banner_id != '') {
+                $.ajax({
+                    type: "POST",
+                    url: url+'/'+banner_id,
+                    dataType: "json",
+                    async: true,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        return true;
+                    },
+                    error: function (jqXhr, json,
+                                     errorThrown) { // this are default for ajax errors
+                        var errors = jqXhr.responseJSON;
+                        return false;
+                    }
+                });
+            }
         }
-    }
-</script>
+    </script>
 </head>
 <body class="@yield('body_class')">
 @if(Request::is('account/*'))
-@include('user-panel.partials.account_setting_header')
+    @include('user-panel.partials.account_setting_header')
 @else
-@include('user-panel.partials.header')
+    @include('user-panel.partials.header')
 @endif
 @yield('page_content')
 
@@ -109,7 +109,8 @@
                     </div>
                     <div class="col-md-6"></div>
                 </div>
-                <div class="row" id="fav_lists">
+
+                <div id="fav_lists" class="row">
                     <div class="col-sm-4 pr-0">
                         <a data-toggle="modal" data-dismiss="modal" data-target="#modal_new_category" href="#"
                            id="new-list" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
@@ -124,7 +125,8 @@
                                 <div class="detail u-t5 text-muted"></div>
                                 <div class="dealer-logo float-right mt-3">
 
-                                    {{--<img src="#" style="max-height: 40px;" alt="" class="img-fluid"></div>--}}
+                                    <!-- that was a dummy image to show the model of fav list categories, there is no need of any display it thanks -->
+                                    <img src="{{asset('public/images/NorgesHondel-logo-mobile.png')}}" style="max-height: 40px;" alt="" class="img-fluid d-none"></div>
 
                             </div>
                         </a>
@@ -135,6 +137,7 @@
         </div>
     </div>
 </div>
+
 <div id="modal_new_category" class="modal fade" role="dialog">
     <div class="modal-dialog pt-5">
         <div class="modal-content">
@@ -208,7 +211,7 @@
             <div class="modal-body" id="list-body">
                 <div class="row">
                     <div class="col-md-6">
-                    <h4>Lagre søk</h4>
+                        <h4>Lagre søk</h4>
                     </div>
                     <div class="col-md-6">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -218,7 +221,7 @@
                     <div class="col-md-12 text-center pt-3">
                         <a href="{{route('login')}}" class="btn bg-maroon text-white col-md-7">Logg inn</a>
                     </div>
-                       <div class="col-md-12 text-center pt-3 mt-2">
+                    <div class="col-md-12 text-center pt-3 mt-2">
                         <a href="{{route('register')}}" class="dme-btn-outlined-blue col-md-8">Opprett ny konto</a>
                     </div>
                     <div class="col-md-12 text-center pt-3">
@@ -240,29 +243,32 @@
     var ad_id = 0;
 
     @if(Auth::check())
-    function getLists() {
-        var url = $('#get_fav_url').val();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: url,
-            type: "GET",
-            success: function (response) {
-                $('#fav_lists').html($('#fav_lists').html() + response);
-            }
-//                    document.getElementById("contact_us").reset();
-        });
-    }
+        function getLists() {
+            var url = $('#get_fav_url').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (response) {
+                    $('#fav_lists .appended-fav-list').remove();
+                    $('#fav_lists').html($('#fav_lists').html() + response); //$(html).not(':first').remove();
+                }
+    //                    document.getElementById("contact_us").reset();
+            });
+        }
 
     @endif
 
     $(document).ready(function () {
-        @if(Auth::check())
-        //getLists();
-        @endif
+        // Zain code commented by Ameer Hamza due to the call a route more then one time that is an error
+        {{--@if(Auth::check())--}}
+        {{--getLists();--}}
+        {{--@endif--}}
+        //End of zain code
         $(document).on('blur', 'input[type=url]', function () {
             var string = $(this).val();
             if (!~string.indexOf("http")) {
@@ -271,24 +277,38 @@
             $(this).val(string);
             return $(this);
         });
+
         $(document).on('click', 'a.not-fav', function () {
+
             ad_id = $(this).attr('data-id');
             var base = '{{route('login')}}';
             var url = base+'?fav-id='+ad_id ;
-            $('#modal_login .modal-body a:first').attr('href',url)
+            $('#modal_login .modal-body a:first').attr('href',url);
+
+
+            @if(Auth::check())
+                getLists();
+                
+                var wto = setTimeout(function() {
+                        $('#modal_select_category').modal('show');
+                    }, 400);
+            @endif
 
         });
-        $(document).on('click', 'a.fav', function (e) {
 
+        $(document).on('click', 'a.fav', function (e) {
             e.preventDefault();
+
             var url = $('#remove_fav_url').val();
             ad_id = $(this).attr('data-id');
+            var this_obj = $(this);
 
             $(this).find('span').removeClass('fa');
             $(this).find('span').addClass('far');
             $(this).addClass('not-fav');
             $(this).removeClass('fav');
             $(this).attr('data-target', "#modal_select_category");
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -299,20 +319,40 @@
                 type: "GET",
                 async: false,
                 success: function (response) {
-                    location.reload();
+                    notify("warning",'Annonsen er fjernet fra favorittlisten din.');
+                    getLists();
+
+                    @if(Request::is('my-business/favorite-list/*'))
+                        this_obj.closest('.end_fav_item').remove();
+
+                        if($('.fav-list').find('div.end_fav_item').length === 0){
+                            $('.fav-list').html('<div class="col-md-12">\n' +
+                                '<div class="alert alert-warning p-3">Det er ingen elementer på listen!</div>\n' +
+                                '</div>');
+                        }
+                    @endif
+
+                    //location.reload();
                 }
             });
+
+
+
             if ($(this).closest('.favorite-list-item').length > 0) {
                 $(this).closest('.favorite-list-item').remove();
             }
         });
-        $(document).on('click', '#select_list', function () {
+        $(document).on('click', '#select_list', function (e) {
+            e.stopPropagation();
             $('#modal_select_category').modal('hide');
             var url = $('#add_fav_url').val();
             var list_id = $(this).attr('data-id');
+
             @if(session('fav_id'))
-            var ad_id = {{ session('fav_id')}};
+                var ad_id = {{ session('fav_id')}};
             @endif
+
+            var fav_obj = $("a[data-id='"+ad_id+"']");
 
             $.ajaxSetup({
                 headers: {
@@ -324,7 +364,15 @@
                 type: "GET",
                 async: false,
                 success: function (response) {
-                    window.location.reload();
+                    notify("success",'Annonsen er lagt til i favorittlisten din.');
+                    fav_obj.find('span').removeClass('far');
+                    fav_obj.find('span').addClass('fa');
+                    fav_obj.addClass('fav');
+                    fav_obj.removeClass('not-fav');
+                    fav_obj.removeAttr('data-target');
+
+                    getLists();
+                    //window.location.reload();
                 }
             });
 
@@ -354,8 +402,11 @@
                 }
             });
             setTimeout(function () {
-                var data = '<div class="col-sm-4 pr-0">' + $('#fav_lists>div:first-child').html() + '</div>';
-                $('#fav_lists').html(data);
+                // $('#fav_lists .appended-fav-list').remove();
+                // $('#fav_lists').html($('#fav_lists').html() + data); //$(html).not(':first').remove();
+
+                // var data = '<div class="col-sm-4 pr-0">' + $('#fav_lists>div:first-child').html() + '</div>';
+                // $('#fav_lists').html(data);
                 getLists();
             }, 500);
         });
@@ -400,7 +451,7 @@
 
         if (zip_code) {
             var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
+            xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) { //
                     const postalCode = JSON.parse(this.responseText);
 
@@ -419,7 +470,7 @@
 
                         str = postalCode.result;
                         res = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-                        return letter.toUpperCase();
+                            return letter.toUpperCase();
                         });
 
                         $('#zip_city').val(res);
@@ -476,8 +527,8 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('public/js/map.js') }}"></script>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-  crossorigin=""></script>
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
 {{-- <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
 <script src='{{ asset("public/js/filter-map.js") }}'></script> --}}
@@ -521,8 +572,8 @@
             }
         });
 
-        @if(Auth::check())
-            var pusher = new Pusher('f607688e883e2a04ab39', {
+                @if(Auth::check())
+        var pusher = new Pusher('f607688e883e2a04ab39', {
                 cluster: 'eu',
                 forceTLS: true
             });
@@ -538,9 +589,9 @@
                 }
 
                 @if(Request::is('messages') || Request::is('messages/thread/*'))
-                    if(data.thread_id !== $(".thread.active").attr('id')){
-                        prev++;
-                    }
+                if(data.thread_id !== $(".thread.active").attr('id')){
+                    prev++;
+                }
                 @else
                     prev++;
                 @endif
@@ -583,59 +634,59 @@
     var site_url = "<?php echo url('/'); ?>";
 </script>
 <script>
-        var job = '{{ \Request::is("jobs/*") }}';
-        var property_for_rent = '{{ \Request::is("property/property-for-rent/*") }}';
-        var holiday_home_for_sale = '{{ \Request::is("property/holiday-homes-for-sale/*") }}';
-        var property_for_sale = '{{ \Request::is("property/property-for-sale/*") }}';
-        var flat_wishes_rented = '{{ \Request::is("property/flat-wishes-rented/*") }}';
-        var commercial_property_for_sale = '{{ \Request::is("property/commercial-property-for-sale/*") }}';
-        var commercial_property_for_rent = '{{ \Request::is("property/commercial-property-for-rent/*") }}';
-        var commercial_plot = '{{ \Request::is("property/commercial-plots/*") }}';
-        var businesses_for_sale  = '{{ \Request::is("property/business-for-sale/*") }}';
-        var strsearch = urlParams;
-            strsearch.delete('page');
-            var value = strsearch.toString();
-            var type = '';
-            if(job)
-            type = strsearch.get('job_type');
-            else if(property_for_rent)
-             type = 'property-for-rent';
-            else if(holiday_home_for_sale)
-             type = 'holiday-homes-for-sale';
-            else if(property_for_sale)
-             type = 'property-for-sale';
-            else if(flat_wishes_rented)
-             type = 'flat-wishes-rented';
-            else if(commercial_property_for_sale)
-             type = 'commercial-property-for-sale';
-            else if(commercial_property_for_rent)
-             type = 'commercial-property-for-rent';
-            else if(commercial_plot)
-             type = 'commercial-plots';
-            else if(businesses_for_sale)
-             type = 'business-for-sale';
+    var job = '{{ \Request::is("jobs/*") }}';
+    var property_for_rent = '{{ \Request::is("property/property-for-rent/*") }}';
+    var holiday_home_for_sale = '{{ \Request::is("property/holiday-homes-for-sale/*") }}';
+    var property_for_sale = '{{ \Request::is("property/property-for-sale/*") }}';
+    var flat_wishes_rented = '{{ \Request::is("property/flat-wishes-rented/*") }}';
+    var commercial_property_for_sale = '{{ \Request::is("property/commercial-property-for-sale/*") }}';
+    var commercial_property_for_rent = '{{ \Request::is("property/commercial-property-for-rent/*") }}';
+    var commercial_plot = '{{ \Request::is("property/commercial-plots/*") }}';
+    var businesses_for_sale  = '{{ \Request::is("property/business-for-sale/*") }}';
+    var strsearch = urlParams;
+    strsearch.delete('page');
+    var value = strsearch.toString();
+    var type = '';
+    if(job)
+        type = strsearch.get('job_type');
+    else if(property_for_rent)
+        type = 'property-for-rent';
+    else if(holiday_home_for_sale)
+        type = 'holiday-homes-for-sale';
+    else if(property_for_sale)
+        type = 'property-for-sale';
+    else if(flat_wishes_rented)
+        type = 'flat-wishes-rented';
+    else if(commercial_property_for_sale)
+        type = 'commercial-property-for-sale';
+    else if(commercial_property_for_rent)
+        type = 'commercial-property-for-rent';
+    else if(commercial_plot)
+        type = 'commercial-plots';
+    else if(businesses_for_sale)
+        type = 'business-for-sale';
 
-            if(!isEmpty(type)) {
-                if (!isEmpty(value)) {
-                    var url = "{{url('/recentearches')}}";
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        url: url + '/' + value + '/' + urlParams.get('search') + '/' + type,
-                        type: "POST",
-                        success: function (response) {
-                            return true;
-                        },
-                        error: function (error) {
-                            return false;
-                        }
-                    });
+    if(!isEmpty(type)) {
+        if (!isEmpty(value)) {
+            var url = "{{url('/recentearches')}}";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
+            });
+            $.ajax({
+                url: url + '/' + value + '/' + urlParams.get('search') + '/' + type,
+                type: "POST",
+                success: function (response) {
+                    return true;
+                },
+                error: function (error) {
+                    return false;
+                }
+            });
+        }
 
-            }
+    }
 
 
 </script>
@@ -664,14 +715,14 @@
     //mobile menu
 
     function mobileMenu(x) {
- jQuery(".mobile-header #collapsibleNavbar > ul > li.filter-btn").removeClass("nav-item");
- //jQuery("#mobile-filter").hide();
+        jQuery(".mobile-header #collapsibleNavbar > ul > li.filter-btn").removeClass("nav-item");
+        //jQuery("#mobile-filter").hide();
 
-}
+    }
 
-var x = window.matchMedia("(max-width: 767px)")
-mobileMenu(x) // Call listener function at run time
-x.addListener(mobileMenu) // Attach listener function on state changes
+    var x = window.matchMedia("(max-width: 767px)")
+    mobileMenu(x) // Call listener function at run time
+    x.addListener(mobileMenu) // Attach listener function on state changes
 
 </script>
 
@@ -686,12 +737,13 @@ x.addListener(mobileMenu) // Attach listener function on state changes
 
 
 @if(session('fav_id'))
-<script>
-$(function() {
-    $('#modal_select_category').modal('show');
-});
-</script>
+    <script>
+        $(function() {
+            getLists();
+            $('#modal_select_category').modal('show');
+        });
+    </script>
 @endif
- {{ session()->forget('fav_id') }}
+{{ session()->forget('fav_id') }}
 </body>
 </html>
