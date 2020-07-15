@@ -118,8 +118,8 @@ class common
             $html .= '
             <li>
                 <div class="input-toggle">
-                    <input type="checkbox" class="'.$class.'" name="' . $term->taxonomy->slug . '[]" value="' . $value . '" id="' . $term->taxonomy->id . '-' . $term->id . '" '.($url_params ? is_numeric(array_search($value,$url_params)) ? "checked" : "" : "").'>
-                    <label for="' . $term->taxonomy->id . '-' . $term->id . '" class="">' . $term->name . ' <span data-name="' . $term->name . '" data-title="' . $term->taxonomy->slug . '" class="count"></span></label>
+                    <input type="checkbox" class="'.$class.'" name="' . $term->taxonomy->slug . '[]" value="' . $value . '" '.($url_params ? is_numeric(array_search($value,$url_params)) ? "checked" : "" : "").'>
+                    <label class="">' . $term->name . ' <span data-name="' . $term->name . '" data-title="' . $term->taxonomy->slug . '" class="count"></span></label>
                 </div>
                 ';
             if (!empty($terms = $term->getChildren)) {
@@ -589,7 +589,7 @@ class common
                 if ($to_be_sent) {
                     $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $type, 'user_id' => $search->user_id, 'notifiable_id' => $ad->id, 'data' => $message]);
                     $notif->save();
-                    $data = array('detail' => $message, 'to_user_id' => $search->user_id);
+                    $data = array('detail' => $message, 'to_user_id' => $search->user_id,'id' => $notif->id);
                     $pusher->trigger('notification', 'notification-event', $data);
 
                     //Send email notification if user check the email notification in settings
@@ -700,7 +700,7 @@ class common
             foreach ($ids as $user_id) {
                 $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'ad_sold', 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Eiendom er solgt']);
                 $notif->save();
-                $data = array('detail' => 'Eiendom er solgt', 'to_user_id' => $user_id);
+                $data = array('detail' => 'Eiendom er solgt', 'to_user_id' => $user_id,'id' => $notif->id);
                 $pusher->trigger('notification', 'notification-event', $data);
 
                 //Send email notification if user check the email notification in settings
@@ -728,7 +728,7 @@ class common
 
                 $notif = new Notification(['notifiable_type' => Ad::class, 'type' => $property_type, 'user_id' => $user_id, 'notifiable_id' => $ad->id, 'data' => 'Prisen har blitt endret']);
                 $notif->save();
-                $data = array('detail' => 'Eiendom oppdatert', 'to_user_id' => $user_id);
+                $data = array('detail' => 'Eiendom oppdatert', 'to_user_id' => $user_id,'id' => $notif->id);
                 $pusher->trigger('notification', 'notification-event', $data);
 
 
@@ -948,7 +948,7 @@ class common
                 if($count){
                     $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'new_job_posted', 'user_id' => $following->user->id, 'notifiable_id' => $ad->id, 'data' => 'En ny jobb legges ut relatert til din jobbpreferanse.']);
                     $notif->save();
-                    $data = array('detail' => 'En ny jobb legges ut relatert til din jobbpreferanse.', 'to_user_id' => $following->user->id);
+                    $data = array('detail' => 'En ny jobb legges ut relatert til din jobbpreferanse.', 'to_user_id' => $following->user->id,'id' => $notif->id);
                     $pusher->trigger('notification', 'notification-event', $data);
 
 

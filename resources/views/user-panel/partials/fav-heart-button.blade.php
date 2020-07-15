@@ -1,6 +1,6 @@
 <a href="#" class="add-to-fav @if(Auth::check() && count($ad->favorite($ad->id))>0) fav @else not-fav @endif"
    @if(Auth::check() && count($ad->favorite($ad->id))<1)
-    data-target="#modal_select_category"
+    {{--data-target="#modal_select_category"--}}
     @endif
     @if(Auth::check())
     data-toggle="modal" data-id="{{$ad->id}}"

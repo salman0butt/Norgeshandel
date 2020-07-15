@@ -18,7 +18,7 @@
                     <a href="{{url('notifications-read-all')}}" class="m-2">Merk alt som lest</a>
                     <a class="m-2" href="{{ url('/setting') }}">Innstillinger</a>
                 </div>
-                <div class="row">
+                <div class="row all_notifications">
                     @php($count = 0)
                     @php($added = array())
                     @if(is_countable($notifications) && count($notifications) > 0)
@@ -105,7 +105,7 @@
                             @endif
                         @endforeach
                     @else
-                        <div style="display:block;text-align:center;margin:0 auto;margin-top:50px;">
+                        <div style="display:block;text-align:center;margin:0 auto;margin-top:50px;" class="no_notification_found">
                             <h1 class="text-center text-muted">Ingen varsler å vise</h1>
                         </div>
                     @endif

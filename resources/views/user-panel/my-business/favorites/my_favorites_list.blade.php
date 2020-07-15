@@ -54,7 +54,6 @@
                     <div class="alert alert-warning p-3">Det er ingen elementer på listen!</div>
                 @endif
             </div>
-            <div class="col-md-4"></div>
         </div>
     </div>
 </main>
