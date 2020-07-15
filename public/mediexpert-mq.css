@@ -1,15 +1,488 @@
+/* extra smal devices */
+@media (max-width: 350px) {
+    .fileinput-exists {
+        height: 70px !important;
+    }
+}
+
+@media (min-width:300px) and (max-width:359px) {
+    .navbar-toggler {
+        padding-left: 36%;
+    }
+}
+  
+@media (max-width: 440px) {
+    .fileinput-exists {
+        height: 80px !important;
+    }
+}
+
+/* medium devcies */
+@media (max-width: 576px) {
+    .clist .trailing-border {
+        min-height: 100px !important;
+        height: 100px !important;
+    }
+
+    .clist .image-section {
+        width: 33% !important;
+    }
+
+    .clist .detailed-section {
+        width: 66% !important;
+        display: block !important;
+        float: left !important;
+    }
+
+    .product-list-mobile.col-sm-4.pr-0.cgrid,
+    .product-list-mobile.col-sm-6.pr-0.cgrid {
+        width: 50%;
+    }
+
+    #job-list-pages .location.u-t5.text-muted.mt-2.float-left {
+        top: -15%;
+        font-size: 12px !important;
+    }
+
+    .home-grid {
+        margin-top: 10px !important;
+    }
+
+    .top-bar .nav-item {
+        width: 100%;
+        background-color: #fff;
+        border-top: 1px solid #ced4da;
+        border-bottom: 1px solid #ced4da;
+        margin-bottom: -1px;
+    }
+
+    .navbar {
+        background-color: white;
+    }
+
+    .nav-link div {
+        display: block;
+        text-align: left;
+        padding-left: 30px;
+    }
+
+    .navbar-toggler {
+        cursor: pointer;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+    }
+
+    .product-img {
+        width: 100%;
+    }
+
+    .product-sub-cat-list li {
+        width: 100%;
+        display: block;
+    }
+
+    #searchs-padd {
+        display: none;
+    }
+
+    .right-ad,
+    .left-ad {
+        display: none;
+    }
+
+    .dme-container,
+    .nav-container {
+        margin: auto;
+        max-width: 540px;
+    }
+
+    #job-sub-cat {
+        display: block !important;
+        width: unset !important;
+        width: 100% !important;
+    }
+
+    #job-sub-cat {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .fileinput-exists {
+        height: 100px !important;
+    }
+}
+
+/* min 576px */
+@media (min-width: 576px) {
+
+    .right-ad,
+    .left-ad {
+        display: none;
+    }
+
+    .dme-container,
+    .nav-container {
+        margin: auto;
+        max-width: 540px;
+    }
+}
+
+/* new media query */
+
+@media (min-width:320px) and (max-width:767px) {
+    .navbar-toggler {
+        padding-left: 42%;
+    }
+
+    div#home-contain {
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    #searchs-box {
+        margin-bottom: 10px;
+        margin-top: 10px !important;
+    }
+
+    #main-catgory {
+        width: 50% !important;
+    }
+
+    #collapsibleNavbar>ul>li {
+        display: block !important;
+        /* width: 16% !important; */
+
+    }
+
+    .navbar-brand {
+        margin-top: 5px !important;
+    }
+
+    .mobile-header .navbar-nav {
+        margin-left: 20% !important;
+    }
+
+    .dme-container>div.row.mt-5.home-grid>div {
+        width: 50% !important;
+    }
+
+    #property-category {
+        padding-right: 1rem !important;
+    }
+
+    #box-searches {
+        margin-left: 3.6%;
+        margin-right: 3.6%;
+    }
+
+    /* .mt-5 {
+        margin-top:unset !important;
+        margin-top:1 rem !important;
+    } */
+    li.page-item {
+
+        display: none;
+    }
+
+    .page-item:first-child,
+    .page-item:nth-child(2),
+    .page-item:nth-last-child(2),
+    .page-item:last-child,
+    .page-item.active,
+    .page-item.disabled {
+
+        display: block;
+    }
+
+    #job-sub-cat {
+        width: unset !important;
+    }
+
+    .input-group.search-box.position-relative {
+        margin-top: 2%;
+    }
+
+    .product-price,
+    .product-location {
+        font-size: 0.6rem !important;
+    }
+
+    .category-icon {
+        padding-top: unset !important;
+    }
+
+    #property-category>li>a {
+        font-size: 14px !important;
+    }
+
+    .main-form-mobile {
+        padding: 0px 20px;
+    }
+
+    #mobile-view-filter-left {
+        width: 30%;
+        display: block;
+        float: left;
+    }
+
+    #mobile-view-filter-right {
+        width: 70%;
+        display: block;
+        float: left;
+    }
+
+
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+    .profile-icon .profile-post-image {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .col-md-9.p-0.mt-1.profile-name {
+        padding-left: 5% !important;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .dme-container,
+    .nav-container {
+        max-width: 720px;
+    }
+}
+
+/* max 767px */
+@media (max-width: 767px) {
+
+    #prfile-pad,
+    #saved-searched-page,
+    #login-page {
+        padding: 0px 20px;
+    }
+
+    a[data-fslightbox="gallery1"] {
+        height: unset !important;
+    }
+
+    #login-page-main {
+        margin: 0px !important;
+    }
+
+    #login-logo {
+        width: 80%;
+    }
+
+    #myTabContent,
+    #fav-page,
+    #job_pref {
+        padding: 0px 20px;
+    }
+
+    .dme-btn-outlined-blue {
+        font-size: 0.7rem !important;
+    }
+
+    .profile-icon .profile-image {
+        bottom: -60px;
+    }
+
+    span.font-weight-bold.align-middle {
+        margin-left: 26%;
+    }
+
+    p.text-muted.thread-ad-title.mb-0 {
+        padding-top: 9%;
+    }
+
+    #my_ads_sidebar,
+    .my-ads-list {
+        padding: 0px 20px;
+    }
+
+    .u-t2 {
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    /* #property-category>li>a {
+         font-size: 10px !important;
+        } */
+    .breadcrumb {
+        padding: 0.15rem 1rem !important;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        height: 20px;
+        width: 20px;
+    }
+
+    /* body>main>div.dme-container.p-3>div.row.mt-4>div.col-md-8>div.row.pl-4.pr4>a>button {
+        font-size: 14px !important;
+    } */
+    .nav-icons {
+        width: 24px;
+    }
+
+    .nav-container {
+        width: 100%;
+    }
+
+    .product-list-mobile:not(.product-list-mobile.clist) {
+        width: 50% !important;
+        float: left;
+        padding: 0px 10px;
+    }
+
+    .nav-flat li {
+        display: inline;
+    }
+
+    .nav-flat li a {
+        display: inline;
+    }
+
+    .dropdown-menu li {
+        display: block;
+    }
+
+    .dropdown-menu li a {
+        display: block;
+    }
+
+    #mobile-filter {
+        display: none;
+    }
+
+    .mobile-header .nav-link {
+        display: block;
+        padding: .5rem 0.5rem;
+    }
+
+    .fileinput-exists {
+        height: 121px !important;
+    }
+}
 
 
 
+/*bootstrap overridden style*/
+@media (max-width: 991px) {
+    #mega-menu-button>div {
+        display: none;
+    }
 
+    #job-list-pages .cgrid .location {
+        position: absolute;
+        top: -200px !important;
+    }
 
+    .product-sub-cat-list li a {
+        font-size: 14px;
+    }
 
+    #carouselExampleIndicators .carousel-item a img {
+        max-height: 30% !important;
+    }
 
+    .trailing-border {
+        min-height: 200px !important;
+        height: 200px !important;
+    }
 
+    .desktop-header {
+        display: none;
+    }
 
+    .cgrid .title {
+        margin-top: 15% !important;
+    }
 
+    .cgrid .location {
+        font-size: 12px !important;
+    }
 
+    .top-ad {
+        height: 70px;
+    }
 
+    .top-ad img {
+        height: 70px;
+    }
 
+    .search-control {
+        font-size: 20px;
+    }
+}
 
+@media (min-width: 991px) {
+    .mobile-header {
+        display: none;
+    }
 
+    .dme-container,
+    .nav-container {
+        max-width: 960px;
+    }
+
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 0;
+        padding-top: 10px;
+    }
+
+}
+
+@media (min-width: 1200px) {
+
+    .dme-container,
+    .container,
+    .nav-container {
+        max-width: 1010px;
+    }
+
+    .dme-container {
+        margin-left: 0;
+    }
+
+    .right-ad {
+        width: calc(100% - 1010px) !important;
+        display: block !important;
+    }
+
+}
+
+@media (min-width: 1250px) {
+
+    .dme-container,
+    .container {
+        max-width: 1010px;
+        margin: auto;
+    }
+
+    .left-ad,
+    .right-ad {
+        width: calc(calc(100% - 1010px)/2) !important;
+        display: block;
+    }
+}
+
+.left-ad,
+.right-ad {
+    width: calc(calc(100% - 1010px) / 2);
+    position: fixed;
+    top: 51px;
+    height: calc(100vh - 51px);
+}
+
+/* horizontal mobile devices */
+/* For 1366 Resolution */
+@media only screen and (min-width: 1030px) and (max-width: 1366px) {
+    .dme-container {
+        padding: 0px 5% !important;
+    }
+}
