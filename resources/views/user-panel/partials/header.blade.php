@@ -51,11 +51,16 @@
                     {{--</li>--}}
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="{{url('notifications')}}">
-                            @if(\Auth::check() && Auth::user()->header_unread_notifications()->count() >0)
-                                <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">
-                                     {{ Auth::user()->header_unread_notifications()->count()}}
+                            @if(\Auth::check())
+                                <span class="badge badge-primary pending position-absolute {{ Auth::user()->header_unread_notifications()->count() ? '' : 'd-none'}}" id="notification" style="left:0">
+                                    {{Auth::user()->header_unread_notifications()->count() > 0 ? Auth::user()->header_unread_notifications()->count(): 0}}
                                 </span>
                             @endif
+{{--                            @if(\Auth::check() && Auth::user()->header_unread_notifications()->count() >0)--}}
+                                {{--<span class="badge badge-primary pending position-absolute" id="notification" style="left:0">--}}
+{{--                                     {{ Auth::user()->header_unread_notifications()->count()}}--}}
+                                {{--</span>--}}
+                            {{--@endif--}}
                             <i class="far fa-bell nav-icons"></i>
                             <div class="mt-2 ml-2">Varslinger</div>
                         </a>
@@ -119,11 +124,13 @@
             
                     <li class="order-sm-0">
                         <a class="nav-link position-relative" href="{{url('notifications')}}">
-                            @if(\Auth::check() && Auth::user()->header_unread_notifications()->count() >0)
-                                <span class="badge badge-primary pending position-absolute" id="notification" style="left:0">
-                                     {{ Auth::user()->header_unread_notifications()->count()}}
+
+                            @if(\Auth::check())
+                                <span class="badge badge-primary pending position-absolute {{ Auth::user()->header_unread_notifications()->count() ? '' : 'd-none'}}" id="notification" style="left:0">
+                                    {{Auth::user()->header_unread_notifications()->count() > 0 ? Auth::user()->header_unread_notifications()->count(): 0}}
                                 </span>
                             @endif
+
                             <i class="far fa-bell nav-icons"></i>
                         </a>
                     </li>

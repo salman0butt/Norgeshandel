@@ -114,6 +114,18 @@ class NotificationController extends Controller
         return redirect()->back();
     }
 
+    public function get_single_notification(Request $request){
+        $notification = Notification::find($request->notification_id);
+
+        if($notification){
+            $read_notifications = Auth::user()->header_unread_notifications();
+            $read_notifications->update(['secondary_read_at'=>now()]);
+
+            $html = view('common.partials.notifications.single-notification', compact('notification'))->render();
+            exit($html);
+        }
+    }
+
 //    public function showAllNotifications(Request $request)
 //    {
 //        if (User::find(Auth::user()->id)->is('admin')) {

@@ -109,7 +109,7 @@
             display:none !important;
         }
         div#slider {
-         background: rgba(172, 48, 74, 0.7) !important;
+         /*background: rgba(172, 48, 74, 0.7) !important;*/
         }
     </style>
 

@@ -131,13 +131,15 @@
                                 </button>
                             @endif
                         </div>
-                        <div class="u-pv8 mt-2">
-                            @if($ad->sold_at && $ad->status == 'sold' && $ad->ad_type != 'job' && !$ad->sold_to_user->count())
-                                <button type="button" class="link pl-0" data-toggle="modal" data-target="#soldAdUser">
+
+                        @if($ad->sold_at && $ad->status == 'sold' && $ad->ad_type != 'job' && !$ad->sold_to_user->count())
+                            <div class="u-pv8 mt-2">
+                                <button type="button" class="link pl-0 text-left" data-toggle="modal" data-target="#soldAdUser">
                                     Velg bruker og gi din vurdering av handelen.
                                 </button>
-                            @endif
-                        </div>
+                            </div>
+
+                        @endif
                         <div class="u-pv8 mt-2">
                             @if($ad->status == 'deactivate')
                                 <button type="button" class="link pl-0" data-toggle="modal" data-target="#reactivateAd">
