@@ -10,7 +10,7 @@
         padding-left: 36%;
     }
 }
-
+  
 @media (max-width: 440px) {
     .fileinput-exists {
         height: 80px !important;
