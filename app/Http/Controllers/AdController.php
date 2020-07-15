@@ -318,7 +318,7 @@ class AdController extends Controller
                     $notif = new Notification(['notifiable_type' => Ad::class, 'type' => 'ad_sold', 'user_id' => $request->user_id, 'notifiable_id' => $ad->id, 'data' => $user_name.' har valgt deg til å være kjøper av denne annonsen. Nå kan du gi din vurdering til vedkommende.']);
                     $notif->save();
 
-                    $data = array('detail' => 'Velg som kjøper', 'to_user_id' => $request->user_id);
+                    $data = array('detail' => 'Velg som kjøper', 'to_user_id' => $request->user_id,'id' => $notif->id);
                     $this->pusher->trigger('notification', 'notification-event', $data);
 
                     // Send email notification to buyer

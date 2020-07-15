@@ -288,7 +288,7 @@
 
             @if(Auth::check())
                 getLists();
-                
+
                 var wto = setTimeout(function() {
                         $('#modal_select_category').modal('show');
                     }, 400);
@@ -484,6 +484,7 @@
 
     function jquery_data_tables_languages(table_id){
         (table_id).DataTable({
+            "scrollX": true,
             "language": {
                 "sProcessing":   "Laster...",
                 "sLengthMenu":   "Vis _MENU_ linjer",
@@ -572,61 +573,78 @@
             }
         });
 
-                @if(Auth::check())
-        var pusher = new Pusher('f607688e883e2a04ab39', {
-                cluster: 'eu',
-                forceTLS: true
-            });
-        Pusher.logToConsole = true;
-
-        var channel = pusher.subscribe('header-chat-notification');
-        channel.bind('header-chat-notification-event', function (data) {
-            if (data.to_user_id == '{{Auth::id()}}') {
-                var prev = $('#chat-notification').html();
-                // var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
-                if (!(prev > 0)) {
-                    prev = 0;
-                }
-
-                @if(Request::is('messages') || Request::is('messages/thread/*'))
-                if(data.thread_id !== $(".thread.active").attr('id')){
-                    prev++;
-                }
-                @else
-                    prev++;
-                @endif
-
-
-                if(prev){
-                    $('#chat-notification').removeClass('d-none');
-                }else{
-                    $('#chat-notification').addClass('d-none');
-                }
-                // $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
-                $('#chat-notification').html(prev);
-            }
-        });
-        var notifications = pusher.subscribe('notification');
-        notifications.bind('notification-event', function (data) {
-            if (data.to_user_id == '{{Auth::id()}}') {
-                $.ajax({
-                    url: '{{url('notifications_count')}}',
-                    type: "get",
-                    async: false,
-                    dataType: "json",
-                    success: function (response) {
-                        var count = parseInt(response);
-                        if (count > 0) {
-                            $('#notification:not(.page-notifications #notification)').html(count);
-                        } else {
-                            $('#notification:not(.page-notifications #notification)').html('');
-                        }
-                    }
-                }).fail(function (jqXHR, ajaxOptions, thrownError) {
-                    $('#notification:not(.page-notifications #notification)').html('');
+        @if(Auth::check())
+            var pusher = new Pusher('f607688e883e2a04ab39', {
+                    cluster: 'eu',
+                    forceTLS: true
                 });
-            }
-        });
+            Pusher.logToConsole = true;
+
+            var channel = pusher.subscribe('header-chat-notification');
+            channel.bind('header-chat-notification-event', function (data) {
+                if (data.to_user_id == '{{Auth::id()}}') {
+                    var prev = $('#chat-notification').html();
+                    // var prev = $('#chat-notification:not(.page-messages #chat-notification)').html();
+                    if (!(prev > 0)) {
+                        prev = 0;
+                    }
+
+                    @if(Request::is('messages') || Request::is('messages/thread/*'))
+                    if(data.thread_id !== $(".thread.active").attr('id')){
+                        prev++;
+                    }
+                    @else
+                        prev++;
+                    @endif
+
+                    if(prev){
+                        $('#chat-notification').removeClass('d-none');
+                    }else{
+                        $('#chat-notification').addClass('d-none');
+                    }
+                    // $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+                    $('#chat-notification').html(prev);
+                }
+            });
+
+            var notifications = pusher.subscribe('notification');
+            notifications.bind('notification-event', function (data) {
+                if (data.to_user_id == '{{Auth::id()}}') {
+                    var prev = $('#notification').html();
+
+                    if (!(prev > 0)) {
+                        prev = 0;
+                    }
+
+                    @if(Request::is('notifications')) //get_single_notification
+                        var get_single_notification_url = '{{url('get-single-notification?notification_id=')}}'+ data.id
+                        $.ajax({
+                            url: get_single_notification_url,
+                            type: "get",
+                            success: function (response) {
+                                if($('div').hasClass('no_notification_found')){
+                                    $('.no_notification_found').remove();
+                                }
+                                $('.all_notifications:first').prepend(response);
+                            }
+                        }).fail(function (jqXHR, ajaxOptions, thrownError) {
+                            alert('Server ikke funnet.');
+                        });
+
+                    @else
+                        prev++;
+                    @endif
+
+                    if(prev){
+                        $('#notification').removeClass('d-none');
+                    }else{
+                        $('#notification').addClass('d-none');
+                    }
+                    // $('#chat-notification:not(.page-messages #chat-notification)').html(prev);
+                    $('#notification').html(prev);
+
+                }
+            });
         @endif
     });
 
