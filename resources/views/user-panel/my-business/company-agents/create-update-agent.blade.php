@@ -11,11 +11,10 @@
     <main>
         <div class="dme-container">
             <div class="row">
-                <div class="col-md-10 offset-md-1 mt-5 mb-5">
+                <div class="col-md-10 offset-md-1 my-5">
                     @include('common.partials.flash-messages')
-                    <h2 class="text-muted">{{$agent->name ? 'Oppdater' : 'Opprett'}} ansatt profil</h2>
-
-                    <form action="@if(Request::is('my-business/company-agents/*/edit')) {{route('company-agents.update',$agent->id)}} @else {{route('company-agents.store')}} @endif" method="post" id="company_agent" enctype="multipart/form-data">
+                    <form class="main-form-mobile" action="@if(Request::is('my-business/company-agents/*/edit')) {{route('company-agents.update',$agent->id)}} @else {{route('company-agents.store')}} @endif" method="post" id="company_agent" enctype="multipart/form-data">
+                        <h2 class="text-muted">{{$agent->name ? 'Oppdater' : 'Opprett'}} ansatt profil</h2>
                         @if(Request::is('my-business/company-agents/*/edit'))
                             @method('PUT')
                         @endif

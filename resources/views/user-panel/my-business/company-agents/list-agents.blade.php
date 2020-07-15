@@ -26,7 +26,7 @@
     <main class="cv">
         <div class="dme-container">
             <div class="row">
-                <div class="breade-crumb col-8">
+                <div class="breade-crumb col-md-8">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business')}}">Min handel</a></li> <!-- ('cv.breadcrumb.sub') -->
@@ -35,7 +35,7 @@
                         </ol>
                     </nav>
                 </div>
-                <div class="breade-crumb col-4">
+                <div class="breade-crumb col-md-4">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{url('my-business/company-agents/create')}}"> Legg til ansatt</a></li> <!-- ('cv.breadcrumb.main') -->
