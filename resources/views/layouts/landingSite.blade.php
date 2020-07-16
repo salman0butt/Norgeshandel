@@ -343,48 +343,51 @@
                 $(this).closest('.favorite-list-item').remove();
             }
         });
-        $(document).on('click', '#select_list', function (e) {
-            e.stopPropagation();
-            $('#modal_select_category').modal('hide');
-            var url = $('#add_fav_url').val();
-            var list_id = $(this).attr('data-id');
 
-            @if(session('fav_id'))
-                var ad_id = {{ session('fav_id')}};
-            @endif
+        @if(!Request::is('my-business/favorites'))
+            $(document).on('click', '#select_list', function (e) {
+                e.stopPropagation();
+                $('#modal_select_category').modal('hide');
+                var url = $('#add_fav_url').val();
+                var list_id = $(this).attr('data-id');
 
-            var fav_obj = $("a[data-id='"+ad_id+"']");
+                @if(session('fav_id')) //favorites
+                    var ad_id = {{ session('fav_id')}};
+                @endif
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+                var fav_obj = $("a[data-id='"+ad_id+"']");
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: url + '/' + list_id + '/' + ad_id,
+                    type: "GET",
+                    async: false,
+                    success: function (response) {
+                        notify("success",'Annonsen er lagt til i favorittlisten din.');
+                        fav_obj.find('span').removeClass('far');
+                        fav_obj.find('span').addClass('fa');
+                        fav_obj.addClass('fav');
+                        fav_obj.removeClass('not-fav');
+                        fav_obj.removeAttr('data-target');
+
+                        getLists();
+                        //window.location.reload();
+                    }
+                });
+
+
+                // $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
+                // $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
+                // $('a[data-id="'+ad_id+'"]').addClass('fav');
+                // $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
+                // $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
+
             });
-            $.ajax({
-                url: url + '/' + list_id + '/' + ad_id,
-                type: "GET",
-                async: false,
-                success: function (response) {
-                    notify("success",'Annonsen er lagt til i favorittlisten din.');
-                    fav_obj.find('span').removeClass('far');
-                    fav_obj.find('span').addClass('fa');
-                    fav_obj.addClass('fav');
-                    fav_obj.removeClass('not-fav');
-                    fav_obj.removeAttr('data-target');
-
-                    getLists();
-                    //window.location.reload();
-                }
-            });
-
-
-            // $('a[data-id="'+ad_id+'"]').find('span').removeClass('far');
-            // $('a[data-id="'+ad_id+'"]').find('span').addClass('fa');
-            // $('a[data-id="'+ad_id+'"]').addClass('fav');
-            // $('a[data-id="'+ad_id+'"]').removeClass('not-fav');
-            // $('a[data-id="'+ad_id+'"]').removeAttr('data-target');
-
-        });
+        @endif
         $('#new-list').click(function (e) {
             e.preventDefault();
         });
