@@ -2,7 +2,7 @@
     @foreach($ratings as $key=>$rating)
         <div class="review-block p-3 col-12">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-md-3 col-sm-6">
                     <img src="@if($rating->from_user->media!=null){{asset(\App\Helpers\common::getMediaPath($rating->from_user->media))}}@else {{asset('public/images/profile-placeholder.png')}} @endif" alt="Profile image" class="img-rounded" style="width: 75px; border-radius: 50%">
                     <div class="review-block-name"><a href="#">{{($rating->from_user && $rating->from_user->username) ? $rating->from_user->username : 'NH-Bruker' }}</a></div>
                     <div class="review-block-date">{{$rating->created_at->format('d M Y')}}
@@ -10,7 +10,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-9">
+                <div class="col-md-9 col-sm-6">
                     <div class="review-block-rate">
                         <div class="rating-stars">
                             @for($i=1;$i<=5;$i++)

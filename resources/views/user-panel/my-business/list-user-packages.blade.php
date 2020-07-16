@@ -16,7 +16,7 @@
     <main class="user-package">
         <div class="dme-container">
             <div class="row">
-                <div class="breade-crumb @if(Auth::user()->hasRole('agent')) col-12 @else col-10 @endif">
+                <div class="breade-crumb @if(Auth::user()->hasRole('agent')) col-sm-12 @else col-md-10 col-sm-6 @endif">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item active" aria-current="page"><a href="{{url('my-business')}}">Min handel</a></li> <!-- ('cv.breadcrumb.sub') -->
@@ -25,7 +25,7 @@
                     </nav>
                 </div>
                 @if(!Auth::user()->hasRole('agent'))
-                    <div class="breade-crumb col-2 pl-0">
+                    <div class="breade-crumb col-md-2 col-sm-6 pl-0">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">

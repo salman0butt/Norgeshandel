@@ -1,7 +1,7 @@
 @extends('layouts.landingSite')
 @section('page_content')
     <main>
-        <div class="dme-container">
+        <div class="dme-container myads-rating-form main-form-mobile">
             <div class="row">
                 <div class="col-md-10 offset-md-1 mt-5 mb-2">
                     <h2 class="text-muted">Rangeringer og anmeldelser</h2>
@@ -21,7 +21,7 @@
                             {{$ad->user->username ? $ad->user->username : 'NH-Brkuer'}}
                         @endif
                     </h4>
-                    <form action="{{route('ratings-store',$ad->id)}}" method="POST">
+                    <form action="{{route('ratings-store',$ad->id)}}" method="POST" class="">
                         @csrf
                         <div class="">
                             <div class="form-group">
