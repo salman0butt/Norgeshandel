@@ -9,7 +9,7 @@
         }
     @endphp
     <main>
-        <div class="dme-container">
+        <div class="dme-container col-12">
             <div class="row">
                 <div class="col-md-10 offset-md-1 my-5">
                     @include('common.partials.flash-messages')

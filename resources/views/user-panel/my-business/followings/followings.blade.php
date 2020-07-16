@@ -1,7 +1,7 @@
 @extends('layouts.landingSite')
 @section('page_content')
 <main class="dme-wrapper">
-    <div class="dme-container">
+    <div class="dme-container col-12">
         <div class="breade-crumb">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -10,7 +10,7 @@
                 </ol>
             </nav>
         </div>            <!---- end breadcrumb----->
-        <h3 class="mb-5">Firmaer jeg følger</h3>
+        <h3 class="mb-3">Firmaer jeg følger</h3>
         @if(count($followings)>0)
         <h4 class="mb-3">Jobb</h4>
         <ul class="list list-unstyled">
@@ -18,15 +18,15 @@
                 @if($following->company && $following->company->company_type == "Jobb")
                     <li>
                         <div class="row my-3">
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-4 col-4">
                                 <img src="{{$following->company->company_logo->first() ? \App\Helpers\common::getMediaPath($following->company->company_logo->first()) : asset('/public/images/1280x720.png')}}" alt="logo" width="100">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-4 col-4 company-follow-title">
                                 <a href="{{url('/single-company/'.$following->company->id)}}">
                                     <h5 class="m-0 float-left font-weight-normal">{{$following->company->emp_name}}</h5>
                                 </a>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-4 col-4">
                                 <button class="dme-btn-outlined-blue float-right follow-company-button" data-url="{{url('company-follow')}}" data-company_id="{{$following->company_id}}">Slutt å følge</button>
                             </div>
                         </div>

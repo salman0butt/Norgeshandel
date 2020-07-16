@@ -29,11 +29,11 @@
                 <label class="u-t5">Vil du legge til en kollega?</label>
                 <div class="row">
                     @foreach($agents as $agent)
-                        <div class="col-md-6 input-toggle d-flex align-items-center">
+                        <div class="col-md-6 input-toggle d-flex align-items-center col-12">
                             <input id="{{$agent->first_name}}-{{$agent->id}}" type="checkbox" value="{{$agent->id}}" class="ad_agent_id" name="agent_id[]" {{is_numeric(array_search($agent->id, $ad_agents_array)) ? 'checked' : ''}}>
                             <label class="smalltext" for="{{$agent->first_name}}-{{$agent->id}}">
                                 <div class="media">
-                                    <div class="trailing-border" style="height: 100px; width:100px;
+                                    <div class="agent-trailing-border" style="height: 100px; width:100px;
                                             background-image: url('@if($agent->media) {{\App\Helpers\common::getMediaPath($agent->media)}} @else{{asset('public/images/male-avatar.jpg')}}@endif');
                                             background-position: center; @if($agent->media) background-repeat: no-repeat; background-size: 100%; @else background-size: cover;  @endif">
                                     </div>

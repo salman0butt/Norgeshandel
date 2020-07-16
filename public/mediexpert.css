@@ -562,7 +562,7 @@ input[type=checkbox]:focus{
 
 
 
-.trailing-border{
+.trailing-border, .agent-trailing-border{
 	/*width:350;*/
 	/*height:250px;*/
 	background-color:transparent;
@@ -571,10 +571,10 @@ input[type=checkbox]:focus{
     overflow: hidden;
     /*transition: padding 1s;*/
 }
-/*.trailing-border:hover{*/
+/*.trailing-border, .agent-trailing-border:hover{*/
 /*    padding:5px;*/
 /*}*/
-.trailing-border:hover:before{
+.trailing-border:hover:before, .agent-trailing-border:hover:before{
     transition:.5s transform linear .5s, height linear .5s;
     /*transition: .2s transform linear .4s,.2s height linear .2s;*/
     height: 2px;
@@ -582,7 +582,7 @@ input[type=checkbox]:focus{
     transform: translateX(100%);
     /*border-color: transparent;*/
 }
-.trailing-border:hover:after{
+.trailing-border:hover:after, .agent-trailing-border:hover:after{
     transition:.5s transform linear .5s, height linear .5s;
     /*transition: .2s transform linear .4s,.2s height linear .2s;*/
     transform: translateX(-100%);
@@ -590,21 +590,21 @@ input[type=checkbox]:focus{
     /*border-color: transparent;*/
 }
 .trailing-border:before,
-.trailing-border:after{
+.trailing-border:after, .agent-trailing-border:before, .agent-trailing-border:after{
     border-radius:10px;
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
 }
-.trailing-border:before{
+.trailing-border:before, .agent-trailing-border:before{
     bottom:0;
     right:0;
     border-bottom: 2px solid rgba(172,48,74,1);
     border-left: 2px solid rgba(172,48,74,1);
     z-index: 0;
 	}
-.trailing-border:after{
+.trailing-border:after, .agent-trailing-border:after{
     top: 0;
     left: 0;
     border-top: 2px solid rgba(172,48,74,1);

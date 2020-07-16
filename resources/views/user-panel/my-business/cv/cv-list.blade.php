@@ -31,7 +31,7 @@
         }
     </style>
     <main class="cv">
-        <div class="dme-container">
+        <div class="dme-container col-12">
             <div class="breade-crumb">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -75,7 +75,7 @@
                                 <tbody>
                                 @if($cvs->count() > 0)
                                     @foreach($cvs as $key=>$cv)
-                                        @if(!$cv->meta && !$cv->user->cv_requests_sent())
+                                        @if(!$cv->meta && $cv->user && !$cv->user->cv_requests_sent())
                                             <tr>
                                                 <td>{{$cv->id}}</td>
                                                 <td>

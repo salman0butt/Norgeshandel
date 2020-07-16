@@ -19,44 +19,44 @@
         height: 130px;
     }
 
-    .search input[type=search] {
-        -webkit-font-smoothing: antialiased;
-        font: inherit;
-        margin: 0;
-        line-height: normal;
-        font-size: 14px;
-        font-weight: 300;
-        max-width: 100%;
-        outline: none;
-        transition: border .12s ease-in-out;
-        border-radius: 30px;
-        box-sizing: border-box;
-        color: #999;
-        height: 40px;
-        padding-left: 40px;
-        padding-right: 20px;
-        -webkit-appearance: none;
-        width: 100%;
-        border: 1px solid #fff;
-        width: 548px;
-        display: block;
-        margin: 0 auto;
-        position: relative;
-        top: 50px;
-    }
+    /*.search input[type=search] {*/
+        /*-webkit-font-smoothing: antialiased;*/
+        /*font: inherit;*/
+        /*margin: 0;*/
+        /*line-height: normal;*/
+        /*font-size: 14px;*/
+        /*font-weight: 300;*/
+        /*max-width: 100%;*/
+        /*outline: none;*/
+        /*transition: border .12s ease-in-out;*/
+        /*border-radius: 30px;*/
+        /*box-sizing: border-box;*/
+        /*color: #999;*/
+        /*height: 40px;*/
+        /*padding-left: 40px;*/
+        /*padding-right: 20px;*/
+        /*-webkit-appearance: none;*/
+        /*width: 100%;*/
+        /*border: 1px solid #fff;*/
+        /*width: 548px;*/
+        /*display: block;*/
+        /*margin: 0 auto;*/
+        /*position: relative;*/
+        /*top: 50px;*/
+    /*}*/
 
-    .relative {
-        position: relative;
-    }
+    /*.relative {*/
+        /*position: relative;*/
+    /*}*/
 
-    .fa-search {
-        position: absolute;
-        bottom: -40px;
-        left: 515px;
-        z-index: 999999999;
-        color: gray;
-        font-size: 20px;
-    }
+    /*.fa-search {*/
+        /*position: absolute;*/
+        /*bottom: -40px;*/
+        /*left: 515px;*/
+        /*z-index: 999999999;*/
+        /*color: gray;*/
+        /*font-size: 20px;*/
+    /*}*/
 
     .section-content {
         --reach-menu-button: 1;
@@ -104,19 +104,51 @@
         margin: 50px 100px;
     }
 
+    .useful-info .input-group{
+        background: white;
+        width: 40%;
+        margin: auto;
+        padding: 6px;
+        border-radius: 24px
+    }
+    .useful-info .input-group input{
+        border: none
+    }
+    .useful-info .input-group .input-group-append{
+        padding-top: 10px;
+        padding-right: 19px;
+    }
+    .useful-info .search-section{
+        padding-top: 39px;
+    }
+    .useful-info .input-group input:focus{
+        box-shadow: none;
+    }
+
 </style>
 
 <main role="main">
-    <div id="zen-section" class="zen_tmpl">
+    <div id="zen-section" class="zen_tmpl useful-info">
         <section class="section hero secondary">
             <div class="hero-inner">
                 <form role="search" class="search search-full" data-search="" data-instant="true" autocomplete="off"
                     action="#" accept-charset="UTF-8" method="get">
-                    <div class="form-group relative">
-                        <i class="fas fa-search"></i>
-                        <input type="search" name="query" id="query" placeholder="Hva kan vi hjelpe deg med? Søk her"
-                            autocomplete="off" aria-label="Hva kan vi hjelpe deg med? Søk her">
+
+                    <div class="search-section">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Hva kan vi hjelpe deg med? Søk her">
+                            <div class="input-group-append">
+                                <i class="fas fa-search fa-lg"></i>
+                            </div>
+                        </div>
                     </div>
+
+
+                    {{--<div class="form-group relative">--}}
+                        {{--<i class="fas fa-search"></i>--}}
+                        {{--<input type="search" name="query" id="query" placeholder="Hva kan vi hjelpe deg med? Søk her"--}}
+                            {{--autocomplete="off" aria-label="Hva kan vi hjelpe deg med? Søk her">--}}
+                    {{--</div>--}}
                 </form>
             </div>
         </section>
@@ -144,7 +176,7 @@
                     <header class="page-header">
                     <h1>Lagrede søk</h1>
                     </header>
-                    <ul class="article-list">
+                    <ul class="article-list pl-1">
                         <li id="art-360011189379" class="article-list-item ">
                             <a href=#" class="article-list-link">Slik endrer du et søk du allerede har lagret</a>
                         </li>

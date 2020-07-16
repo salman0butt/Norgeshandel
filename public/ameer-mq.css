@@ -1,0 +1,36 @@
+/* max 767px */
+@media (max-width: 767px) {
+    .useful-info .section-container{
+        margin: 0px;
+    }
+    .useful-info .section-container h1{
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 576px) {
+    .price-chart, .saved-search-section{
+        width: 460px;
+        margin: auto;
+    }
+
+}
+
+@media (max-width: 360px) {
+    .price-chart, .saved-search-section{
+        width: 320px !important;
+        margin: auto !important;
+    }
+
+}
+
+
+@media (max-width: 440px) {
+    .price-chart, .saved-search-section{
+        width: 380px;
+        margin: auto;
+    }
+    .company-follow-title h5{
+        font-size: 18px ;
+    }
+}

@@ -14,7 +14,7 @@
 
 @section('page_content')
     <main class="user-package">
-        <div class="dme-container">
+        <div class="dme-container col-12">
             <div class="row">
                 <div class="breade-crumb @if(Auth::user()->hasRole('agent')) col-sm-12 @else col-md-10 col-sm-6 @endif">
                     <nav aria-label="breadcrumb">

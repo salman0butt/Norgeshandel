@@ -24,7 +24,7 @@
         }
     </style>
     <main class="cv">
-        <div class="dme-container">
+        <div class="dme-container col-12">
             <div class="row">
                 <div class="breade-crumb col-md-8">
                     <nav aria-label="breadcrumb">

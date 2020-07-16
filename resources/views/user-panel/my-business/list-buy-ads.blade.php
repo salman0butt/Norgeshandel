@@ -20,7 +20,7 @@
 
 @section('page_content')
     <main class="cv">
-        <div class="dme-container">
+        <div class="dme-container col-12">
             <div class="row">
                 <div class="breade-crumb col-12">
                     <nav aria-label="breadcrumb">
