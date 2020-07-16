@@ -21,6 +21,7 @@
     <!--    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">-->
     <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
     <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
+    <link rel="stylesheet" href="{{asset('public/ameer-mq.css')}}">
 
     <link rel="stylesheet" href="{{asset('public/css/validate-error.css')}}">
 

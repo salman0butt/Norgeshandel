@@ -28,7 +28,7 @@
     }
 
 </style>
-<div class="dme-container">
+<div class="dme-container col-12">
 
     <div class="pageholder mt-5">
         <div class="mt-5 mb-5">
@@ -36,7 +36,7 @@
         </div>
         @include('common.partials.flash-messages')
         <div class="grid">
-            <div class="grid__unit row">
+            <div class="grid__unit row price-chart">
                 <div id="price-info-root" class="col-md-8">
                     <p class="u-mb32 pb-2">Annonsepriser beregnes ut fra hvor mange annonser din bedrift har lagt ut i løpet
                         av de siste 12 månedene. Her finner du prisen på den neste annonsen du legger ut. </p>
@@ -123,6 +123,7 @@
                     </div>
 
                 </div>
+
                 <div class="grid__unit col-md-4">
                     <div class="organisation-contact">
                         <div class="panel panel--info panel--kill-last-margin p-3" data-reactroot="">
@@ -131,8 +132,8 @@
                                 bedriftssenteret</a><br><a href="#" target="_blank" rel="noopener noreferrer"
                                 class="link u-t5">Spørsmål om faktura og
                                 betaling</a>
-                            <div class="media u-pt8">
-                                <div class="media__img m-2"><svg width="64" height="64" viewBox="0 0 85 85"
+                            <div class="row">
+                                <div class="col-lg-3"><svg width="64" height="64" viewBox="0 0 85 85"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <g fill="none" fill-rule="evenodd">
                                             <circle fill="#CCFFEC" cx="42.5" cy="42.5" r="42.5"></circle>
@@ -179,7 +180,7 @@
                                             </g>
                                         </g>
                                     </svg></div>
-                                <div class="media__body mt-2">
+                                <div class="col-lg-9">
                                     <h4 class="u-mb0" style="font-size:18px">Kundeservice</h4><a
                                         href="mailto:bedrift@norgshandle.no"
                                         class="link">bedrift@norgshandle.no</a><br>09 88 33 22<br>Mandag - fredag: 9 -
@@ -190,7 +191,7 @@
                     </div>
                 </div>
 
-                <div class="grid__unit col-md-12">
+                <div class="grid__unit col-md-12 col-sm-12">
                     <button type="button" class="triger-btn mt-3" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                         <div class="expansion-panel__summary">
                             <div><span class="u-strong u-pr16">Pakker</span>
@@ -198,7 +199,7 @@
                         </div>
                         <i class="fas fa-chevron-up" style="position:absolute;right:30px;"></i>
                     </button>
-                    <div class="expansion-panel__details collapse show" id="collapseExample">
+                    <div class="expansion-panel__details collapse show table-responsive" id="collapseExample">
                         <table class="table table-hover mt-2 col-md-12">
                             <thead>
                             <tr>

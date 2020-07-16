@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label class="u-t5"> Vil du legge til en kollega?</label>
+    <label class="u-t5"> Vil du legge til en kollega1?</label>
     <div class="row">
         @if($agents->count() > 0)
             @foreach($agents as $agent)
