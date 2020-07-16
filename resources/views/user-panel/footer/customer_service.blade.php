@@ -47,9 +47,9 @@ top:100px;
 }
 .fa-search {
     position: absolute;
-    bottom: -90px;
-    right: 400px;
-    z-index: 999999999;
+    bottom: -230%;
+    right: 32%;
+    z-index: 999;
     color: gray;
     font-size: 20px;
 }

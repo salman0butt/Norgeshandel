@@ -4,9 +4,10 @@
 
 <style>
 .banner__left__content {
-    padding-left:200px;
-    padding-right:150px;
-    padding-top:100px;
+    padding-left: 20%;
+    padding-right: 15%;
+    padding-top: 18%;
+    padding-bottom: 10%;
 }
 .banner__left__content {
     font-size:19px;
@@ -17,7 +18,7 @@
 }
 </style>
 
-<div class="container u-mb32" style="margin-top:5%;">
+<div class="container u-mb32" style="margin-top:5%;" id="customer-admin-page">
     <div class="u-mb64">
         <div class="row">
             <div class="grid__unit col-md-8">
@@ -167,7 +168,7 @@
                 </div>
             </div>
             <div class="col-md-6 pr-0 pl-0">
-                <img src="{{ url('public/images/1280x720.png') }}" alt="banner" class="w-100">
+                <img src="{{ url('public/images/1280x720.png') }}" alt="banner" class="w-100 h-100">
             </div>
         </div>
     </div>
