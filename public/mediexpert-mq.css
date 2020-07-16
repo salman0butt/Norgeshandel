@@ -1,4 +1,3 @@
-
 /* extra smal devices */
 @media (max-width: 350px) {
     .fileinput-exists {
@@ -92,7 +91,29 @@
     .left-ad {
         display: none;
     }
+
+    .dme-container,
+    .nav-container {
+        margin: auto;
+        max-width: 540px;
+    }
+
+    #job-sub-cat {
+        display: block !important;
+        width: unset !important;
+        width: 100% !important;
+    }
+
+    #job-sub-cat {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .fileinput-exists {
+        height: 100px !important;
+    }
 }
+
 /* min 576px */
 @media (min-width: 576px) {
 
@@ -201,12 +222,6 @@
         padding: 0px 20px;
     }
 
-    .main-form-mobile h2{
-        font-size: 24px;
-        font-weight: 400
-    }
-
-
     #mobile-view-filter-left {
         width: 30%;
         display: block;
@@ -244,9 +259,12 @@
 /* max 767px */
 @media (max-width: 767px) {
 
+    #fav-page-margin {
+        margin-top: 0px !important;
+    }
     li.breadcrumb-item a {
     font-size: 14px;
-}
+    }
     #prfile-pad,
     #saved-searched-page,
     #login-page {
@@ -355,146 +373,70 @@
     .fileinput-exists {
         height: 121px !important;
     }
-}
+        #busniess-page {
+            margin-top: 20% !important;
+            width: 80% !important;
+        }
 
-/* medium devcies */
-@media (max-width: 576px) {
-    .clist .trailing-border {
-        min-height: 100px !important;
-        height: 100px !important;
-    }
-
-    .clist .image-section {
-        width: 33% !important;
-    }
-
-    .clist .detailed-section {
-        width: 66% !important;
-        display: block !important;
-        float: left !important;
-    }
-
-    .product-list-mobile.col-sm-4.pr-0.cgrid,
-    .product-list-mobile.col-sm-6.pr-0.cgrid {
-        width: 50%;
-    }
-
-    #job-list-pages .location.u-t5.text-muted.mt-2.float-left {
-        top: -15%;
-        font-size: 12px !important;
-    }
-
-    .home-grid {
-        margin-top: 10px !important;
-    }
-
-    .top-bar .nav-item {
-        width: 100%;
-        background-color: #fff;
-        border-top: 1px solid #ced4da;
-        border-bottom: 1px solid #ced4da;
-        margin-bottom: -1px;
-    }
-
-    .navbar {
-        background-color: white;
-    }
-
-    .nav-link div {
-        display: block;
-        text-align: left;
-        padding-left: 30px;
-    }
-
-    .navbar-toggler {
-        cursor: pointer;
-    }
-
-    .navbar-toggler:focus {
-        outline: none;
-    }
-
-    .product-img {
-        width: 100%;
-    }
-
-    .product-sub-cat-list li {
-        width: 100%;
-        display: block;
-    }
-
-    #searchs-padd {
-        display: none;
-    }
-
-    .right-ad,
-    .left-ad {
-        display: none;
-    }
-
-    .dme-container,
-    .nav-container {
-        margin: auto;
-        max-width: 540px;
-    }
-
-    #job-sub-cat {
-        display: block !important;
-        width: unset !important;
-        width: 100% !important;
-    }
-
-    #job-sub-cat {
-        display: block !important;
-        width: 100% !important;
-    }
-
-    .fileinput-exists {
-        height: 100px !important;
-    }
-
-    .review-block .col-sm-6{
-        width: 300px !important;
-        margin: auto;
-        text-align: center;
-        border-bottom: 1px solid #bcbcbc;
-        padding: 12px 0;
-    }
-    .dummy-ratings {
-        text-align: center;
-    }
-
-    .myads-rating-form h2{
-        font-size: 23px !important;
-        font-weight: 500 !important;
-    }
-    .myads-rating-form h4{
-        font-size: 16px !important;
-        font-weight: 400 !important;
-    }
-    .myads-rating-form h5{
-        font-size: 18px !important;
-        font-weight: 500 !important;
-    }
+        .grid__unit .link--dark .media--top {
+            width: 50% !important;
+        }
+        #about-page {
+            padding: 0px 20px;
+        }
+        #cookie-page {
+            margin-top: 12% !important;
+            padding: 0 2%;
+        }
+        .fa-search {
+            bottom: -226% !important;
+            right: 12% !important;
+        }
+        #announcements>ul {
+         padding-inline-start: 0px;
+        }
+        section#announcements li {
+            padding-left: 2% !important;
+        }
+        #zen-home>div>section.section.knowledge-base.mb-5>section>ul {
+            padding-inline-start: 0px !important;
+        }
+        .knowledge-base li {
+            padding: 0.5% 0.5%  !important;
+        }
+        #ext-links>ul {
+          padding-inline-start: 0px !important;
+        }
+        #el-telefon,
+        #el-om-Norgeshandel,
+        #el-Norgeshandel-shopping-bis {
+        width: unset !important; 
+         float: unset !important; 
+        }
+        .knowledge-base li a h4 {
+            font-size: 14px !important;
+        }
 
 }
 
-/* extra smal devices */
-@media (max-width: 350px) {
-    .fileinput-exists {
-        height: 70px !important;
-    }
-}
 
-
-@media (max-width: 440px) {
-    .fileinput-exists {
-        height: 80px !important;
-    }
-}
 
 /*bootstrap overridden style*/
 @media (max-width: 991px) {
+          #el-telefon,
+          #el-om-Norgeshandel,
+          #el-Norgeshandel-shopping-bis {
+              width: unset !important;
+              float: unset !important;
+          }
+
+        #zen-home>div>section.section.knowledge-base.mb-5>section>ul,
+        #announcements>ul {
+                 padding-inline-start: 0px !important;
+             }
+          #cookie-page {
+              margin-top: 10% !important;
+          }
     #mega-menu-button>div {
         display: none;
     }
@@ -518,7 +460,7 @@
     }
 
     .desktop-header {
-        display: none;
+        display: none !important;
     }
 
     .cgrid .title {
@@ -540,21 +482,28 @@
     .search-control {
         font-size: 20px;
     }
-
-    .myads-rating-form h2{
-        font-size: 30px;
-        font-weight: 500;
-    }
-    .myads-rating-form h4{
-        font-size: 20px;
-        font-weight: 400;
+    #busniess-page {
+        margin-top: 10% !important;
+        width: 80% !important;
     }
 
+    /* .grid__unit .link--dark .media--top {
+        width: 30% !important;
+    } */
+    #customer-admin-page {
+        margin-top: 15% !important;
+    }
+    .banner__left__content {
+            padding-left: 0px !important; 
+            padding-right: 0px !important; 
+            padding-top: 0px !important; 
+        padding: 20px 0px !important;
+    }
 }
 
 @media (min-width: 991px) {
     .mobile-header {
-        display: none;
+        display: none !important;
     }
 
     .dme-container,
@@ -614,7 +563,7 @@
 /* horizontal mobile devices */
 /* For 1366 Resolution */
 @media only screen and (min-width: 1030px) and (max-width: 1366px) {
-    .dme-container {
+    /* .dme-container {
         padding: 0px 5% !important;
-    }
+    } */
 }

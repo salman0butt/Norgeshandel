@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mt-5 pt-5">
+                <div class="col-md-4 mt-5 pt-5" id="fav-page-margin">
                     <div class="input-group search-box ">
                         <input type="text" name="landing_list_search" id="landing_list_search" class="form-control search-control" placeholder="Filtrer..." autofocus="">
                         <label for="search"><span class="input-group-addon">

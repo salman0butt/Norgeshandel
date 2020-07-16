@@ -27,7 +27,7 @@
 }
 </style>
 
-<div class="container u-mb32" style="margin-top:5%;display:block;width:45%;">
+<div class="container u-mb32" id="busniess-page" style="margin-top:5%;display:block;width:45%;">
     <div class="panel">
         <h2>
             <font style="vertical-align: inherit;">
