@@ -4,13 +4,13 @@
         height: 70px !important;
     }
 }
-
+/* new */
 @media (min-width:300px) and (max-width:359px) {
     .navbar-toggler {
         padding-left: 36%;
     }
 }
-  
+  /* 400px */
 @media (max-width: 440px) {
     .fileinput-exists {
         height: 80px !important;
@@ -259,6 +259,9 @@
 /* max 767px */
 @media (max-width: 767px) {
 
+    li.breadcrumb-item a {
+    font-size: 14px;
+}
     #prfile-pad,
     #saved-searched-page,
     #login-page {
