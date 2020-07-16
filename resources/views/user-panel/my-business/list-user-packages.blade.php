@@ -25,7 +25,7 @@
                     </nav>
                 </div>
                 @if(!Auth::user()->hasRole('agent'))
-                    <div class="breade-crumb col-md-2 col-sm-6 pl-0">
+                    <div class="breade-crumb col-md-2 col-sm-6">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
