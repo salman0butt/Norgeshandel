@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="redirectTo" value="{{(isset($link->value) ? $link->value : '')}}">
-                    <input type="hidden" name="previousToken" value="{{session()->token()}}">
+                    <input type="hidden" name="previousToken" value="{{session()->token()}}"><br>
                     <div class="form-group">
                         <button type="submit" class="dme-btn-outlined-blue">
                             Logg inn
