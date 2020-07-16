@@ -1,10 +1,97 @@
 
-
+/* extra smal devices */
+@media (max-width: 350px) {
+    .fileinput-exists {
+        height: 70px !important;
+    }
+}
+/* new */
 @media (min-width:300px) and (max-width:359px) {
     .navbar-toggler {
         padding-left: 36%;
     }
 }
+  /* 400px */
+@media (max-width: 440px) {
+    .fileinput-exists {
+        height: 80px !important;
+    }
+}
+
+/* medium devcies */
+@media (max-width: 576px) {
+    .clist .trailing-border {
+        min-height: 100px !important;
+        height: 100px !important;
+    }
+
+    .clist .image-section {
+        width: 33% !important;
+    }
+
+    .clist .detailed-section {
+        width: 66% !important;
+        display: block !important;
+        float: left !important;
+    }
+
+    .product-list-mobile.col-sm-4.pr-0.cgrid,
+    .product-list-mobile.col-sm-6.pr-0.cgrid {
+        width: 50%;
+    }
+
+    #job-list-pages .location.u-t5.text-muted.mt-2.float-left {
+        top: -15%;
+        font-size: 12px !important;
+    }
+
+    .home-grid {
+        margin-top: 10px !important;
+    }
+
+    .top-bar .nav-item {
+        width: 100%;
+        background-color: #fff;
+        border-top: 1px solid #ced4da;
+        border-bottom: 1px solid #ced4da;
+        margin-bottom: -1px;
+    }
+
+    .navbar {
+        background-color: white;
+    }
+
+    .nav-link div {
+        display: block;
+        text-align: left;
+        padding-left: 30px;
+    }
+
+    .navbar-toggler {
+        cursor: pointer;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+    }
+
+    .product-img {
+        width: 100%;
+    }
+
+    .product-sub-cat-list li {
+        width: 100%;
+        display: block;
+    }
+
+    #searchs-padd {
+        display: none;
+    }
+
+    .right-ad,
+    .left-ad {
+        display: none;
+    }
 
 
 
@@ -160,6 +247,9 @@
 /* max 767px */
 @media (max-width: 767px) {
 
+    li.breadcrumb-item a {
+    font-size: 14px;
+}
     #prfile-pad,
     #saved-searched-page,
     #login-page {
