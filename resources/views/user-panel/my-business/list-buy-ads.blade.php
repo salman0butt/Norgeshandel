@@ -82,45 +82,6 @@
                         @else
                             <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty">Ingen opptak funnet</td></tr>
                         @endif
-
-                        @if(Auth::user()->buy_ads->count() > 0)
-                            @foreach(Auth::user()->buy_ads as $key=>$buy_ad)
-                                @if($buy_ad && $buy_ad->user)
-                                    <tr>
-                                        <td>{{$key+1}}</td>
-                                        <td>{{$buy_ad->getTitle()}}</td>
-                                        <td>{{$buy_ad->user->username ? $buy_ad->user->username : 'NH-Bruker'}}</td>
-                                        <td>
-                                            @if($buy_ad->ratings->where('from_user_id',Auth::id())->first())
-                                                @for($i=1;$i<=5;$i++)
-                                                    <span class="fa fa-star {{$i <= ($buy_ad->ratings->where('from_user_id',Auth::id())->first()->general_ratings/2)  ? 'checked' : ''}}"></span>
-                                                @endfor
-                                            @else
-                                                Avventer
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{url('/'.$buy_ad->id)}}" title="Vis annonse"><i class="fa fa-eye fa-lg"></i></a>
-                                            @if(!$buy_ad->ratings->where('from_user_id',Auth::id())->first())
-                                                <a href="{{url('my-business/my-ads/'.$buy_ad->id.'/ratings')}}" title="Gi din omtale"><i class="fab fa-telegram-plane"></i></a>
-                                            @endif
-                                        </td>
-                                        {{--<td>--}}
-                                        {{--<img class="img-thumbnail img-fluid" src="{{$agent->media ? \App\Helpers\common::getMediaPath($agent->media,'150x150') : asset('/public/images/male-avatar.jpg')}}" alt="logo" width="100">--}}
-                                        {{--</td>--}}
-                                        {{--<td>{{$agent->created_by_company && $agent->created_by_company->emp_name ? $agent->created_by_company->emp_name.' ('.$agent->created_by_company->company_type.')' : ''}}</td>--}}
-                                        {{--<td>{{$agent->position}}</td>--}}
-                                        {{--<td>{{$agent->email}}</td>--}}
-                                        {{--<td>--}}
-                                        {{--<a href="{{route('company-agents.edit',$agent->id)}}"><i class="fa fa-edit"></i></a>--}}
-                                        {{--</td>--}}
-                                    </tr>
-                                @endif
-                            @endforeach
-                        @else
-                            <tr class="odd"><td valign="top" colspan="9" class="dataTables_empty">Ingen opptak funnet</td></tr>
-                        @endif
-
                     </tbody>
                 </table>
             </div>
@@ -132,5 +93,5 @@
         $(document).ready( function () {
             jquery_data_tables_languages($('#buy_ads_table'));
         } );
-    </script>\
+    </script>
 @endsection

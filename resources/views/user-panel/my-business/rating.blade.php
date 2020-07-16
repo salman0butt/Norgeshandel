@@ -20,7 +20,7 @@
     </div>
 
     <!--------bread-crumb end----->
-    <div class="row mt-5 mb-5 pl-4 pr-4">
+    <div class="row mt-5 mb-5 pl-4 pr-4 dummy-ratings">
         <div class="col-md-4 mt-3">
             <div class="card ">
                 <div class="card-header p-4">
