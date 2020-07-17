@@ -6,6 +6,29 @@
     .useful-info .section-container h1{
         font-size: 26px;
     }
+    .review-block .col-sm-6{
+        width: 300px !important;
+        margin: auto;
+        text-align: center;
+        border-bottom: 1px solid #bcbcbc;
+        padding: 12px 0;
+    }
+    .dummy-ratings {
+        text-align: center;
+    }
+
+    .myads-rating-form h2{
+        font-size: 23px !important;
+        font-weight: 500 !important;
+    }
+    .myads-rating-form h4{
+        font-size: 16px !important;
+        font-weight: 400 !important;
+    }
+    .myads-rating-form h5{
+        font-size: 18px !important;
+        font-weight: 500 !important;
+    }
 }
 
 @media (max-width: 576px) {
