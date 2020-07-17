@@ -6,7 +6,7 @@
 }
 </style>
 <main class="company_request_form pb-5">
-    <div class="dme-container">
+    <div class="dme-container col-12">
         <div class="breade-crumb">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -60,8 +60,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 collapse" id="form_manual_entry">
-                <form class="contact-info-form" method="post" name="contact_info_form"
+            <div class="col-md-12 col-lg-8 collapse" id="form_manual_entry">
+                <form class="contact-info-form col-12" method="post" name="contact_info_form"
                     action="{{route('request_company_profile')}}">
                     {{csrf_field()}}
                     <div class="bg-maroon-lighter radius-8 company_details p-2 mb-3 d-none">
@@ -78,7 +78,7 @@
                     <input type="hidden" name="form_type" value="manual_entry">
                     <div class="form-group row company_name_section">
                         <label for="org_name_2" class="col-md-2">Firmanavn</label>
-                        <input name="org_name" class="form-control col-md-4" id="org_name_2" type="text" maxlength="255"
+                        <input name="org_name" class="form-control col-md-4 mx-3" id="org_name_2" type="text" maxlength="255"
                             required="required">
                         <div class="col-md-6"></div>
                     </div>

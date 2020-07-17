@@ -7,7 +7,7 @@
         <div class="container-fluid text-left">
             <form action="" id="mega_menu_form">
                 <div class="row">
-                    <div style="border-right:1px solid #ddd;" class="col-md-4">
+                    <div style="border-right:1px solid #ddd;" class="col-md-4 col-sm-6 col-12">
                         <div class="form-group nav-dynamic-checks">
                             <label for="search" class="mb-1 font-weight-bold">Søk i Eiendom</label>
                             <div class="input-group search-box">
@@ -85,11 +85,11 @@
                             </div>
                         </div>
                     </div>
-                    <div style="border-right:1px solid #ddd;" class="col-md-4">
+                    <div style="border-right:1px solid #ddd;" class="col-md-4 col-sm-6 col-12">
                         <!-- include areas like oslo, bergen in filter -->
                         @include('user-panel.partials.templates.area-property-filter')
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-12 col-12">
                         <div class="u-mt32 form-group">
                             <h3 class="u-t5">Type lokale</h3>
                             <?php

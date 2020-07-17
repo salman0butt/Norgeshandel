@@ -19,7 +19,7 @@
 @endsection
 
 @section('page_content')
-<main class="dme-container mt-5">
+<main class="dme-container mt-5 col-12">
     <div class="breade-crumb">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="grid__unit col-md-5">
-                <div class="sidebar u-pv8 mt-5">
+                <div class="sidebar u-pv8 my-3">
                     <a class="u-pv8 mt-2" href="@if($ad->ad_type == 'job') {{route('jobs.show', $ad->job)}} @else {{url('/', $ad->id)}} @endif">Se annonsen</a>
                     <div class="u-pt8">
                         <div class="u-pv8 mt-2">

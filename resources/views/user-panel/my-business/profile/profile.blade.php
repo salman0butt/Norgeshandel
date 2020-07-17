@@ -20,7 +20,7 @@
 @endsection
 @section('page_content')
 <main class="profile">
-    <div class="dme-container">
+    <div class="dme-container col-12">
         <div class="breade-crumb">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">

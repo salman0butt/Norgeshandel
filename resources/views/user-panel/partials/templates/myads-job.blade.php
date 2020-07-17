@@ -37,7 +37,7 @@ if ($job->company_id != 0) {
         <a href="{{route('jobs.show', compact('job'))}}" style="width:100%; display: block">
             <div class="week-status u-t5 text-muted" style="">{{$job->name}}</div>
             @if($job->address)
-                <div class="location u-t5 text-muted mt-2">{{$job->address ? $job->address.', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
+                <div class="location u-t5 py-1 text-muted mt-2">{{$job->address ? $job->address.', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
             @endif
             <p class="detail u-t5 text-muted">{{$job->headline}}<br>{{$empname}}</p>
         </a>

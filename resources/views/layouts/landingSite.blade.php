@@ -418,6 +418,7 @@
 </script>
 <footer>
     <nav class="navbar navbar-expand-sm justify-content-center text-center footer-nav">
+
         <ul class="footer-nav-ul mb-1 p-0">
             <li><a href="{{ url('/become-business') }}">Bli bedriftskunde</a></li>
             <li><a href="{{ url('/customer-admin-for-business') }}">Admin for bedrifter</a></li>
@@ -752,8 +753,8 @@
 
 @if(Request::is('property/*/search') || Request::is('jobs/search'))
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&language=no&callback=initMap"
-            async defer></script>
+    {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&language=no&callback=initMap"--}}
+            {{--async defer></script>--}}
     <script src="{{asset('public/js/common-ad-filter.js')}}"></script>
 @endif
 

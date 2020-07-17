@@ -6,6 +6,33 @@
     .useful-info .section-container h1{
         font-size: 26px;
     }
+
+    .myads-rating-form h2{
+        font-size: 28px;
+    }
+    .myads-rating-form h4{
+         font-size: 20px;
+         font-weight: 500;
+     }
+
+    .find_detail_button{
+        margin-top: 10px;
+    }
+
+
+
+}
+
+@media (max-width: 576px) {
+    .price-chart, .saved-search-section{
+        width: 460px;
+        margin: auto;
+    }
+
+    .fileinput-exists {
+        height: 100px !important;
+    }
+
     .review-block .col-sm-6{
         width: 300px !important;
         margin: auto;
@@ -29,12 +56,17 @@
         font-size: 18px !important;
         font-weight: 500 !important;
     }
-}
 
-@media (max-width: 576px) {
-    .price-chart, .saved-search-section{
-        width: 460px;
-        margin: auto;
+    .filter_ad_view{
+        width: -webkit-fill-available !important;
+    }
+
+    #busniess-page h2{
+        font-size: 26px;
+    }
+
+    #busniess-page .panel{
+        margin-top: 78px;
     }
 
 }
@@ -43,6 +75,10 @@
     .price-chart, .saved-search-section{
         width: 320px !important;
         margin: auto !important;
+    }
+
+    .fileinput-exists {
+        height: 70px !important;
     }
 
 }
@@ -55,5 +91,9 @@
     }
     .company-follow-title h5{
         font-size: 18px ;
+    }
+
+    .fileinput-exists {
+        height: 80px !important;
     }
 }

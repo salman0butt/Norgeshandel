@@ -104,7 +104,7 @@ function explicit_keywords(this_obj) {
         }
 
         if(isEmpty(found)){
-            $("#"+form_id + text_area +" select,button,input:not(input[multiple=multiple],input[type=file])").prop("disabled", false);
+            $("#"+form_id + text_area +" select,button,input:not(input[multiple=multiple])").prop("disabled", false);
             $("#"+form_id + text_area +" select,input:not(input[multiple=multiple],input[type=file],input[type=checkbox],input[type=radio])").css("background-color",'#ecdfe2');
 
             // $("#"+form_id+" input[type='checkbox']").css("background-color",'white');
