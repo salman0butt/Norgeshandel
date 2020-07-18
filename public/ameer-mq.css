@@ -18,9 +18,28 @@
     .find_detail_button{
         margin-top: 10px;
     }
+}
 
+@media (max-width: 991px) {
+    .desktop-header .desktop-logo, .desktop-header button, .desktop-header .desktop-header-li {
+        display: none !important;
+    }
 
+    .navbar-expand-sm .navbar-nav {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
 
+    #collapsibleNavbar{
+        display: none;
+    }
+}
+@media (min-width: 991px) {
+    .mobile-header-li, .mobile-logo {
+        display: none !important;
+    }
 }
 
 @media (max-width: 576px) {
