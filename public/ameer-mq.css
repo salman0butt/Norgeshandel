@@ -35,6 +35,9 @@
     #collapsibleNavbar{
         display: none;
     }
+    #fav_lists .image-section span{
+        font-size: 80px !important;
+    }
 }
 @media (min-width: 991px) {
     .mobile-header-li, .mobile-logo {
@@ -86,6 +89,9 @@
 
     #busniess-page .panel{
         margin-top: 78px;
+    }
+    #basicExampleModal{
+        margin-top: 25px;
     }
 
 }

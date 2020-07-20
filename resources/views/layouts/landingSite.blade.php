@@ -112,7 +112,7 @@
                 </div>
 
                 <div id="fav_lists" class="row">
-                    <div class="col-sm-4 pr-0">
+                    <div class="col-sm-12 col-md-6 pr-0 col-lg-4">
                         <a data-toggle="modal" data-dismiss="modal" data-target="#modal_new_category" href="#"
                            id="new-list" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section col-sm-12 p-2">
