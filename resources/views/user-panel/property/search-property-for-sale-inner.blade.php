@@ -2,9 +2,9 @@
 .cgrid .trailing-border img {
     min-height: 302px !important;
 }
-.cgrid .add-to-fav {
+/*.cgrid .add-to-fav {
     top: 55px !important;
-}
+}*/
 .cgrid .location {
     top: -5px !important;
     left: 10px !important;

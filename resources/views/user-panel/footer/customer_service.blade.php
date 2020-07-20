@@ -142,7 +142,7 @@ font-size:20px;
 
 
         <div class="dme-container">
-            <section id="announcements" style="">
+            {{-- <section id="announcements" style="">
                 <ul>
                     <li>
                         <h3 class="title" style="font-size:20px;">Svindelforsøk med norgeshandel/ SPID Sikker betaling. Betaling gjennom norgeshandel</h3>
@@ -161,7 +161,7 @@ font-size:20px;
                         </div>
                     </li>
                 </ul>
-            </section>
+            </section> --}}
 
 
             <section class="section knowledge-base mb-5">

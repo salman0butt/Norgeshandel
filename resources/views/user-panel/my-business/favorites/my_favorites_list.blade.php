@@ -1,7 +1,7 @@
 @extends('layouts.landingSite')
 @section('page_content')
 <main>
-    <div class="dme-container">
+    <div class="dme-container" id="fav-padder">
         <div class="row">
             <div class="col-md-8 mt-5 mb-5">
                 <div class="row">
@@ -11,7 +11,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mt-5 pt-5">
+            <div class="col-md-4 mt-5 pt-5" id="search-padding">
                 <div class="input-group search-box ">
                     <input type="text" name="landing_list_search" id="landing_list_search" class="form-control search-control" placeholder="Filtrer..." autofocus="">
                     <label for="search"><span class="input-group-addon">
