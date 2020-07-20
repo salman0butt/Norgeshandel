@@ -104,10 +104,10 @@
         width: 100% !important;
     }
 
-    #job-sub-cat {
+    /* #job-sub-cat {
         display: block !important;
         width: 100% !important;
-    }
+    } */
 
     .fileinput-exists {
         height: 100px !important;
@@ -196,10 +196,10 @@
 
         display: block;
     }
-
+/* 
     #job-sub-cat {
         width: unset !important;
-    }
+    } */
 
     .input-group.search-box.position-relative {
         margin-top: 2%;
@@ -258,9 +258,16 @@
 
 /* max 767px */
 @media (max-width: 767px) {
-
+    #fav-padder {
+     padding: 0 2%;
+    }
+    #search-padding {
+        margin: 0px !important;
+        padding-top: 0px !important;
+    }
     #fav-page-margin {
         margin-top: 0px !important;
+        padding-top: 0px !important;
     }
     li.breadcrumb-item a {
     font-size: 14px;
@@ -289,9 +296,9 @@
         padding: 0px 20px;
     }
 
-    .dme-btn-outlined-blue {
+    /* .dme-btn-outlined-blue {
         font-size: 0.7rem !important;
-    }
+    } */
 
     .profile-icon .profile-image {
         bottom: -60px;
@@ -382,7 +389,8 @@
             width: 50% !important;
         }
         #about-page {
-            padding: 0px 20px;
+            padding: 0 2% !important;
+            margin-top: 20% !important;
         }
         #cookie-page {
             margin-top: 12% !important;
@@ -422,7 +430,11 @@
 
 
 /*bootstrap overridden style*/
-@media (max-width: 991px) {
+@media (max-width: 990px) {
+    #about-page {
+        padding: 0 2% !important;
+        margin-top: 13% !important;
+    }
           #el-telefon,
           #el-om-Norgeshandel,
           #el-Norgeshandel-shopping-bis {
@@ -435,7 +447,7 @@
                  padding-inline-start: 0px !important;
              }
           #cookie-page {
-              margin-top: 10% !important;
+              margin-top: 13% !important;
           }
     #mega-menu-button>div {
         display: none;
@@ -462,10 +474,10 @@
     .desktop-header {
         /*display: none !important;*/
     }
-
+/* 
     .cgrid .title {
         margin-top: 15% !important;
-    }
+    } */
 
     .cgrid .location {
         font-size: 12px !important;
@@ -502,6 +514,18 @@
 }
 
 @media (min-width: 991px) {
+    #about-page {
+        padding: 0 2% !important;
+        margin-top: 5% !important;
+    }
+      #cookie-page {
+          margin-top: 8% !important;
+      }
+        #job-list-pages .cgrid .location {
+            position: absolute;
+            top: -300px !important;
+            font-size: 12px;
+        }
     .mobile-header {
         /*display: none !important;*/
     }
