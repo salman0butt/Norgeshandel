@@ -63,12 +63,12 @@
                         <ul class="product-sub-cat-list pl-3 pt-3 col-md-12">
                             <li class="col-sm-4 pl-0 pr-0" style="margin-right: 5px;" id="job-sub-cat">
                                 <!--                            --><?php //$filters = [];?>
-                                <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger
+                                <a href="{{route('search')}}?view=list" class="nav-link dme-btn-outlined-blue">Alle stillinger
                                     ({{$ads->count()}})</a>
                             </li>
                             <li class="col-sm-4 pl-0 pr-0" style="margin-right: 5px;"  id="job-sub-cat">
                                 <?php $array = ['job_type' => 'management'];?>
-                                <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger
+                                <a href="{{route('search', $array)}}?view=list" class="nav-link dme-btn-outlined-blue">Lederstillinger
                                     ({{$management_jobs->count()}})</a>
                             </li>
                             <?php $filters = ['job_type' => []]; ?>
