@@ -7,7 +7,7 @@
         <div class="container-fluid text-left">
             <form action="" id="mega_menu_form">
                 <div class="row">
-                    <div style="border-right:1px solid #ddd;" class="col-md-3">
+                    <div style="border-right:1px solid #ddd;" class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
                             <label for="search" class="mb-1 font-weight-bold">Søk i Jobb</label>
                             <div class="input-group search-box">
@@ -32,7 +32,9 @@
                             </span>
                             </div>
                         </div>
+
                         @include('user-panel.partials.templates.ad-map-filter')
+
                         <div class="u-mt32 form-group nav-dynamic-checks">
                             <h3 class="u-t5">Stilling</h3>
                             <?php
@@ -42,7 +44,7 @@
                             ?>
                         </div>
                     </div>
-                    <div style="border-right:1px solid #ddd;" class="col-md-3">
+                    <div style="border-right:1px solid #ddd;" class="col-lg-3 col-sm-6 col-12">
                         <div class="u-mt32 form-group nav-dynamic-checks">
                             <h3 class="u-t5">Bransje</h3>
                             <?php
@@ -52,7 +54,7 @@
                             ?>
                         </div>
                     </div>
-                    <div style="border-right:1px solid #ddd;" class="col-md-3">
+                    <div style="border-right:1px solid #ddd;" class="col-lg-3 col-sm-6 col-12">
                         <div class="property-filter-area-list">
                             <div class="u-mt32 form-group nav-dynamic-checks">
                                 <h3 class="u-t5">Område</h3>
@@ -111,7 +113,7 @@
                    @endif
 
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         {{-- @if(!Request()->job_type && !Request()->job_type == "management") --}}
                         @if((!Request()->job_type && !Request()->job_type == "management") && !(Request()->map_job_type))
                             <div class="u-mt32 form-group">

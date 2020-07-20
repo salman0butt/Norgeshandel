@@ -152,7 +152,7 @@
     }
 
     #collapsibleNavbar>ul>li {
-        display: block !important;
+        /*display: block !important;*/
         /* width: 16% !important; */
 
     }
@@ -472,7 +472,7 @@
     }
 
     .desktop-header {
-        display: none !important;
+        /*display: none !important;*/
     }
 /* 
     .cgrid .title {
@@ -527,7 +527,7 @@
             font-size: 12px;
         }
     .mobile-header {
-        display: none !important;
+        /*display: none !important;*/
     }
 
     .dme-container,

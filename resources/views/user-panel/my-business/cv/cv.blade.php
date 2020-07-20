@@ -1162,7 +1162,7 @@ $industries = $industry->terms;
                                     <div class="tab-pane fade show active mt-5 cv-requests-tabs" id="nav-home" role="tabpanel"
                                          aria-labelledby="nav-home-tab">
 
-                                        <table class="table table-striped" id="unanswered_requests_table">
+                                        <table class="table table-striped w-100" id="unanswered_requests_table">
                                             <thead>
                                             <tr>
                                                 <th scope="col">{{ __('cv.date') }}</th>
@@ -1199,7 +1199,7 @@ $industries = $industry->terms;
                                          aria-labelledby="nav-profile-tab">
 
 
-                                        <table class="table table-striped" id="answered_requests_table">
+                                        <table class="table table-striped w-100" id="answered_requests_table">
                                             <thead>
                                             <tr>
                                                <th scope="col">{{ __('cv.date') }}</th>

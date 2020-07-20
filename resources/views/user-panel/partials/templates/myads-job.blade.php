@@ -36,8 +36,10 @@ if ($job->company_id != 0) {
     <div class="detailed-section col-sm-8 p-2 position-relative">
         <a href="{{route('jobs.show', compact('job'))}}" style="width:100%; display: block">
             <div class="week-status u-t5 text-muted" style="">{{$job->name}}</div>
-            <div class="location u-t5 text-muted mt-2">{{$job->address ? $job->address.', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
-            <p class="detail u-t5 mt-3 text-muted">{{$job->headline}}<br>{{$empname}}</p>
+            @if($job->address)
+                <div class="location u-t5 py-1 text-muted mt-2">{{$job->address ? $job->address.', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
+            @endif
+            <p class="detail u-t5 text-muted">{{$job->headline}}<br>{{$empname}}</p>
         </a>
         <form action="{{route('jobs.destroy', compact('job'))}}" METHOD="POST" onsubmit="javascript:return confirm('Vil du slette denne annonsen?')">
             {{csrf_field()}}

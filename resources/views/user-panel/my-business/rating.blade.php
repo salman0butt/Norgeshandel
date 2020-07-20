@@ -9,7 +9,7 @@
         font-size: 18px;
     }
 </style>
-<div class="dme-container">
+<div class="dme-container col-12">
     <div class="breade-crumb">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

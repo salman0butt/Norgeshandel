@@ -1,13 +1,13 @@
 @extends('layouts.landingSite')
 <style>
-    .box {
-        min-height: 200px;
-        background: #d3d3d38a;
-        border-radius:10px;
-        padding: 25px;
-        margin: 10px;
-        text-align:center;
-    }
+    /*.box {*/
+        /*min-height: 200px;*/
+        /*!*background: #d3d3d38a;*!*/
+        /*border-radius:10px ;*/
+        /*!*padding: 25px;*!*/
+        /*!*margin: 10px 20px;*!*/
+        /*text-align:center;*/
+    /*}*/
     .col-md-3 {
         -ms-flex: 2 0 25% !important;
         flex: 2 0 25% !important;
@@ -15,6 +15,14 @@
     }
     .content .far,.content span {
         color:#AC304A;
+    }
+    .box .content{
+        min-height: 200px;
+        background: #d3d3d38a;
+        border-radius:10px ;
+        padding: 25px;
+        margin: 10px 0;
+        text-align:center;
     }
     .boxed {
         background: #ac304a1f;
@@ -32,44 +40,44 @@
             }
         }
     @endphp
-    <div class="dme-container">
-        <div class="row">
-            <div class="col-md-10 offset-md-1 mt-3 mb-4">
-                <h2 class="text-muted">{{\App\Helpers\common::get_ad_attribute($ad,'heading')}}</h2>
+    <div class="dme-container col-12">
+        <div class="row px-3">
+            <div class="col-md-12 m-auto mt-3 my-4">
+                <h2 class="text-muted mt-4">{{\App\Helpers\common::get_ad_attribute($ad,'heading')}}</h2>
                 <a href="@if($ad->ad_type == 'job') {{route('jobs.show', $ad->job)}} @else {{url('/', $ad->id)}} @endif" style="float:right;margin-top: -3%;font-weight:600;">Se annonsen</a>
             </div>
         </div>
-        <div class="row parent-box col-md-10 offset-1 mb-5">
-            <div class="box col-md-3">
+        <div class="row parent-box col-lg-12 m-auto  col-md-12 col-12 mb-5 px-0">
+            <div class="box col-lg-4 col-sm-6 col-12">
                 <div class="content">
                     <p class="text-center"><i class="far fa-heart" style="font-size:50px;"></i> <span
                             style="font-size:40px;">{{$count_favorite}}</span></p> har annonsen som favoritt
                 </div>
             </div>
-            <div class="box col-md-3">
+            <div class="box col-lg-4  col-sm-6 col-12">
                 <div class="content">
                     <p class="text-center"><i class="far fa-envelope" style="font-size:50px;"></i> <span
                             style="font-size:40px;"> {{$ad->email_received_saved_searches->count()}}</span></p>
                     har mottat annonsen på e-post
                 </div>
             </div>
-            <div class="box col-md-3">
+            <div class="box col-lg-4  col-sm-12 col-12">
                 <div class="content">
                     <p class="text-center"><i class="far fa-comments" style="font-size:50px;"></i> <span
                             style="font-size:40px;">{{$count_thread}}</span></p>
                     har trykket på send melding
                 </div>
             </div>
-            <div class="mt-5">
+            <div class="mt-5 col-12">
                 <form>
-                    <h4 style="display:inline;" class="ut-5 total_clicks_count"><span>{{$total_clicks}}</span> klikk på annonsen</h4>
-                    <select style="display:inline;width:unset;margin-left: 20px;" class="form-control filter_ad_view">
+                    <h4 style="display:inline;" class="ut-5 total_clicks_count float-left"><span>{{$total_clicks}}</span> klikk på annonsen</h4>
+                    <select style="display:inline;width:unset;" class="form-control filter_ad_view float-right">
                         <option value="all_clicks">i hele annonseringsperioden</option>
                         <option value="15_days_clicks">de siste 14 dagene</option>
                     </select>
                 </form>
 
-                <p class="d-none all_clicks_count">{{$total_clicks}} klikk i hele annonseringsperioden</p>
+                <p class="d-none all_clicks_count mt-4 float-left col-12 pl-0">{{$total_clicks}} klikk i hele annonseringsperioden</p>
 
             </div>
 
@@ -168,7 +176,7 @@
         }]
       },
       options: {
-        responsive: false,
+        responsive: true,
         scales: {
           xAxes: [{
             ticks: {

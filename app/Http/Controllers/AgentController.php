@@ -25,7 +25,11 @@ class AgentController extends Controller
      */
     public function index()
     {
-        return view('user-panel.my-business.company-agents.list-agents');
+        if(Auth::user()->hasRole('company')){
+            return view('user-panel.my-business.company-agents.list-agents');
+        }else{
+            return redirect('forbidden');
+        }
     }
 
     /**
@@ -35,8 +39,12 @@ class AgentController extends Controller
      */
     public function create()
     {
-        $agent = new Agent();
-        return view('user-panel.my-business.company-agents.create-update-agent',compact('agent'));
+        if(Auth::user()->hasRole('company')){
+            $agent = new Agent();
+            return view('user-panel.my-business.company-agents.create-update-agent',compact('agent'));
+        }else{
+            return redirect('forbidden');
+        }
     }
 
     /**

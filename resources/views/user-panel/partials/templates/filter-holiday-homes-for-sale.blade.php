@@ -7,7 +7,7 @@
         <div class="container-fluid text-left">
             <form action="" id="mega_menu_form">
                 <div class="row">
-                    <div style="border-right:1px solid #ddd;" class="col-md-3">
+                    <div style="border-right:1px solid #ddd;" class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group nav-dynamic-checks">
                             <label for="search" class="mb-1 font-weight-bold">Søk i Eiendom</label>
                             <div class="input-group search-box">
@@ -123,7 +123,7 @@
                         </div>
                         <!--                                        -->
                     </div>
-                    <div style="border-right:1px solid #ddd;" class="col-md-3">
+                    <div style="border-right:1px solid #ddd;" class="col-lg-3 col-sm-6 col-12">
                         <!-- include areas like oslo, bergen in filter -->
                         @include('user-panel.partials.templates.area-property-filter')
 
@@ -162,7 +162,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div style="border-right:1px solid #ddd;" class="col-md-3">
+                    <div style="border-right:1px solid #ddd;" class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Fasiliteter</h3>
                             <?php
@@ -180,7 +180,7 @@
                             ?>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group nav-dynamic-checks">
                             <h3 class="u-t5">Visningsdato</h3>
                             <ul class="list-unstyled">

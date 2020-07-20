@@ -56,8 +56,10 @@ if(count($media)>0){
             </a>
         </div>
         <div class="detailed-section @if(Request::is('my-business/favorite-list/*')) col-md-9 @else col-md-8 @endif position-relative p-2">
-            <div class="product-location text-muted mb-0 mt-2 u-d1" style="font-size: 16px; color: #6c757d!important;">{{$job->address ? Str::limit($job->address,30).', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
-            <div class="location u-t5 text-muted mt-2 float-left">{{$job->sector}}</div>
+            @if($job->address)
+                <div class="product-location text-muted mb-0 mt-2 u-d1" style="font-size: 16px; color: #6c757d!important;">{{$job->address ? Str::limit($job->address,30).', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
+            @endif
+            <div class="location text-muted mt-2 float-left">{{$job->sector}}</div>
             <div class="clearfix"></div>
             <div class="title color-grey">{{$job->name}}</div>
             <div class="detail u-t5 my-2 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>

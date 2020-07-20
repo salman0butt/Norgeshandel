@@ -125,7 +125,7 @@ header .nav-item a{
     text-align: center;
 }
 header .nav-item:hover{
-    border-bottom: 2px solid #ac304a;
+    /*border-bottom: 2px solid #ac304a;*/
 }
 header .nav-icons{
     color: #ac304a ;

@@ -6,6 +6,43 @@
     .useful-info .section-container h1{
         font-size: 26px;
     }
+
+    .myads-rating-form h2{
+        font-size: 28px;
+    }
+    .myads-rating-form h4{
+         font-size: 20px;
+         font-weight: 500;
+     }
+
+    .find_detail_button{
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 991px) {
+    .desktop-header .desktop-logo, .desktop-header button, .desktop-header .desktop-header-li {
+        display: none !important;
+    }
+
+    .navbar-expand-sm .navbar-nav {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+    #collapsibleNavbar{
+        display: none;
+    }
+    #fav_lists .image-section span{
+        font-size: 80px !important;
+    }
+}
+@media (min-width: 991px) {
+    .mobile-header-li, .mobile-logo {
+        display: none !important;
+    }
 }
 
 @media (max-width: 576px) {
@@ -14,12 +51,59 @@
         margin: auto;
     }
 
+    .fileinput-exists {
+        height: 100px !important;
+    }
+
+    .review-block .col-sm-6{
+        width: 300px !important;
+        margin: auto;
+        text-align: center;
+        border-bottom: 1px solid #bcbcbc;
+        padding: 12px 0;
+    }
+    .dummy-ratings {
+        text-align: center;
+    }
+
+    .myads-rating-form h2{
+        font-size: 23px !important;
+        font-weight: 500 !important;
+    }
+    .myads-rating-form h4{
+        font-size: 16px !important;
+        font-weight: 400 !important;
+    }
+    .myads-rating-form h5{
+        font-size: 18px !important;
+        font-weight: 500 !important;
+    }
+
+    .filter_ad_view{
+        width: -webkit-fill-available !important;
+    }
+
+    #busniess-page h2{
+        font-size: 26px;
+    }
+
+    #busniess-page .panel{
+        margin-top: 78px;
+    }
+    #basicExampleModal{
+        margin-top: 25px;
+    }
+
 }
 
 @media (max-width: 360px) {
     .price-chart, .saved-search-section{
         width: 320px !important;
         margin: auto !important;
+    }
+
+    .fileinput-exists {
+        height: 70px !important;
     }
 
 }
@@ -32,5 +116,9 @@
     }
     .company-follow-title h5{
         font-size: 18px ;
+    }
+
+    .fileinput-exists {
+        height: 80px !important;
     }
 }

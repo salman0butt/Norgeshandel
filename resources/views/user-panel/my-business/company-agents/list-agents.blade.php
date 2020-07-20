@@ -24,7 +24,7 @@
         }
     </style>
     <main class="cv">
-        <div class="dme-container col-12">
+        <div class="dme-container">
             <div class="row">
                 <div class="breade-crumb col-md-8">
                     <nav aria-label="breadcrumb">
@@ -46,7 +46,7 @@
 
             @include('common.partials.flash-messages')
             <div class="mt-5 mb-5">
-                <table class="table table-hover table-bordered table-striped" id="agents_table">
+                <table class="table table-hover table-bordered table-striped w-100" id="agents_table">
                     <thead>
                     <tr>
                         <th>id</th>

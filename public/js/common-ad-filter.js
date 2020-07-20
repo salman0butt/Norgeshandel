@@ -269,4 +269,26 @@ $(document).ready(function () {
         });
 
     });
+
+
+    (function($) {
+        var $window = $(window);
+            // $html = $('html');
+
+        $window.resize(function resize(){
+            if ($window.width() < 992) {
+                if($('#collapsibleNavbar .filter-btn').hasClass('nav-item')){
+                    $('#collapsibleNavbar .filter-btn').removeClass('nav-item');
+                }
+                // return $html.addClass('mobile');
+            }else{
+                if(!$('#collapsibleNavbar .filter-btn').hasClass('nav-item')){
+                    $('#collapsibleNavbar .filter-btn').addClass('nav-item');
+
+                }
+            }
+
+            // $html.removeClass('mobile');
+        }).trigger('resize');
+    })(jQuery);
 });
