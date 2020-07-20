@@ -39,7 +39,7 @@
                             <h3 class="u-t5">Stilling</h3>
                             <?php
                             if (!empty($tax = \App\Taxonomy::where('slug', 'job_function')->first())) {
-                                echo \App\Helpers\common::map_nav($tax->parent_terms());
+                                echo \App\Helpers\common::map_nav($tax->parent_terms(),Request()->job_function);
                             }
                             ?>
                         </div>
@@ -60,7 +60,7 @@
                                 <h3 class="u-t5">Område</h3>
                                 <?php
                                 if (!empty($tax = \App\Taxonomy::where('slug', 'states_and_cities')->first())) {
-                                    echo \App\Helpers\common::map_nav($tax->parent_terms());
+                                    echo \App\Helpers\common::map_nav($tax->parent_terms(),Request()->states_and_cities);
                                 }
                                 ?>
                             </div>
@@ -123,29 +123,22 @@
                                         <div class="input-toggle">
                                             <input type="checkbox" name="jobtype[]" value="part_time"
                                                    id="job_type_part_time" {{Request()->jobtype ? is_numeric(array_search('part_time', Request()->jobtype)) ? "checked" : "" : ''}}>
-                                            <label for="job_type_part_time">Deltid <span data-name="part_time"
-                                                                                         data-title="jobtype"
-                                                                                         class="count"></span></label>
+                                            <label for="job_type_part_time">Deltid <span data-name="part_time" data-title="jobtype" class="count"></span></label>
                                         </div>
                                     </li>
-                                    ​
                                     <li>
                                         <div class="input-toggle">
                                             <input type="checkbox" name="jobtype[]" value="full_time"
                                                    id="job_type_full_time" {{Request()->jobtype ? is_numeric(array_search('full_time', Request()->jobtype)) ? "checked" : "" : ''}}>
-                                            <label for="job_type_full_time" class="">Heltid <span data-name="full_time"
-                                                                                                  data-title="jobtype"
-                                                                                                  class="count"></span></label>
+                                            <label for="job_type_full_time" class="">Heltid <span data-name="full_time" data-title="jobtype" class="count"></span></label>
                                         </div>
                                     </li>
-                                    ​
+
                                     <li>
                                         <div class="input-toggle">
                                             <input type="checkbox" name="jobtype[]" value="management"
                                                    id="job_type_management" {{Request()->jobtype ? is_numeric(array_search('management', Request()->jobtype)) ? "checked" : "" : ''}}>
-                                            <label for="job_type_management" class="">Ledelse <span data-name="management"
-                                                                                                    data-title="jobtype"
-                                                                                                    class="count"></span></label>
+                                            <label for="job_type_management" class="">Ledelse <span data-name="management" data-title="jobtype" class="count"></span></label>
                                         </div>
                                     </li>
                                     ​

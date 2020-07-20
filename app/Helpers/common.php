@@ -110,10 +110,16 @@ class common
 
     public static function map_nav($terms,$url_params='')
     {
-        //
-        $html = '<ul class="list list-unstyled">';
+        $style = '';
+        if($url_params && count($url_params) && $terms->first() && $terms->first()->getParent){
+            if(is_numeric(array_search($terms->first()->getParent->name,$url_params))){
+                $style = 'display:block';
+            }
+        }
+        $html = '<ul class="list list-unstyled" style="'.$style.'">';
         foreach ($terms as $term) {
-            $value = $term->taxonomy->slug == 'states_and_cities' ? $term->serial : $term->name;
+            $value = $term->taxonomy->slug == 'states_and_cities' ? $term->name : $term->name; //Ameer Code
+//            $value = $term->taxonomy->slug == 'states_and_cities' ? $term->serial : $term->name; //Zain code
             $class = $term->taxonomy->slug == 'states_and_cities' ? 'area' : '';
             $html .= '
             <li>
@@ -123,7 +129,11 @@ class common
                 </div>
                 ';
             if (!empty($terms = $term->getChildren)) {
-                $html .= common::map_nav($terms);
+                $new_url_params = '';
+                if($url_params){
+                    $new_url_params = $url_params;
+                }
+                $html .= common::map_nav($terms,$new_url_params);
             }
             $html .= '</li>';
         }
