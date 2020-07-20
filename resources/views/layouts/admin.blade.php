@@ -210,7 +210,7 @@
                         </ul>
                     </li>
 
-                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('admin.explicit-keywords.index') }}" aria-expanded="false"><i class="far fa-keyboard"></i><span class="hide-menu">{{__('Explicit Keywords')}}</span></a></li>
+                    <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('admin.explicit-keywords.index') }}" aria-expanded="false"><i class="mdi mdi-view-list"></i><span class="hide-menu">{{__('Explicit Keywords')}}</span></a></li>
                 </ul>
             </nav>
             <!-- End Sidebar navigation -->

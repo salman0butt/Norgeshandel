@@ -167,7 +167,7 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4 smart-scroll"
+                <div class="col-md-4 smart-scroll threads-list"
                      style="border-right: 1px solid #ecdfe2; height: calc(100vh - 50px); overflow-y: scroll; overflow-x: hidden">
                     <div class="mt-3 text-center profile-icon">
                         <img src="{{$user_avatar}}"
@@ -496,6 +496,24 @@
                 scrollTop: $('#conversation').get(0).scrollHeight
             }, 50);
         }
+
+
+        (function($) {
+            var $window = $(window);
+            // $html = $('html');
+
+            $window.resize(function resize(){
+                if ($window.width() < 768) {
+                    $('div .active').closest('.position-relative').after($('#thread-data'));
+                    // $('div .active').closest('.position-relative').insertBefore('#thread-data');
+                }else{
+                    $('.threads-list').after($('#thread-data'));
+                }
+
+                // $html.removeClass('mobile');
+            }).trigger('resize');
+        })(jQuery);
+
 
     </script>
 

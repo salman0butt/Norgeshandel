@@ -265,7 +265,7 @@
         <!-- ============================================================== -->
         <div class="row">
             <!-- column -->
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Latest Ads</h4>
@@ -377,7 +377,7 @@
             </div>
             <!-- column -->
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 d-none">
                 <!-- toggle part -->
                 <div id="accordian-4">
                     <div class="card">

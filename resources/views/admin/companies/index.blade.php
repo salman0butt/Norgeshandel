@@ -60,7 +60,7 @@
                                             <span class="checkmark"></span>
                                         </label>
                                     </th>
-                                    <td><img style="height: 70px; width:60px;" src="@if($company->company_logo->first()!=null){{asset(\App\Helpers\common::getMediaPath($company->company_logo->first()))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
+                                    <td><img style="height: 50px; width:110px;" src="@if($company->company_logo->first()!=null){{asset(\App\Helpers\common::getMediaPath($company->company_logo->first()))}}@else {{asset('public/admin/images/users/1.jpg')}} @endif" alt="" class="mr-2"></td>
                                     <td>{{ $company->emp_name }}</td>
                                     <td>{{ $company->company_type }}</td>
                                     <td>{{ $company->user->username }}</td>
@@ -68,13 +68,13 @@
                                     <td>{{$company->agents->count()}}</td>
                                     <td>{{ ($company->trashed() ? 'Deleted' : 'Active' ) }}</td>
                                      <td>{{ $company->created_at }}</td>
-                                    <td><div class="display_name mb-2">{{$company->user->name}}</div>
-                                     <a href="{{ url('admin/company/agent/'.$company->id) }}" class="btn btn-info float-left mr-1 btn-sm">View Agents</a>
-                                        <a href="{{route('admin.company.view', $company->id)}}" class="btn btn-primary float-left mr-1 btn-sm">View Detail</a>
+                                    <td><div class="display_name">{{$company->user->name}}</div>
+                                     <a href="{{ url('admin/company/agent/'.$company->id) }}" class="btn btn-info float-left mb-1 btn-sm">View Agents</a>
+                                        <a href="{{route('admin.company.view', $company->id)}}" class="btn btn-primary float-left mb-1 btn-sm">View Detail</a>
                                         @if (!$company->trashed())
                                         <form action="{{route('admin.company.delete', $company->id)}}" method="POST"  onsubmit="jarascript:return confirm('Do you want to delete this Company? Ads are deleted from this user. And you can\'t restore it again. Thanks!')">
                                             {{ csrf_field() }} {{method_field('DELETE')}}
-                                            <input type="submit" name="DELETE" VALUE="DELETE" class="btn btn-danger btn-sm">
+                                            <input type="submit" name="Delete" VALUE="DELETE" class="btn btn-danger btn-sm">
                                         </form>
                                         @endif
                                     </td>
