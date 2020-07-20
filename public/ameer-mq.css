@@ -18,6 +18,9 @@
     .find_detail_button{
         margin-top: 10px;
     }
+    .dealer-logo{
+        max-width: 75px;
+    }
 }
 
 @media (max-width: 991px) {
@@ -93,9 +96,11 @@
     #basicExampleModal{
         margin-top: 25px;
     }
-
     .send-message-box span{
         font-size: 25px !important;
+    }
+    .dealer-logo{
+        max-width: 60px;
     }
 
 }

@@ -500,16 +500,20 @@
 
         (function($) {
             var $window = $(window);
-            // $html = $('html');
-
             $window.resize(function resize(){
                 if ($window.width() < 768) {
                     $('div .active').closest('.position-relative').after($('#thread-data'));
+                    document.getElementById('thread-data').scrollIntoView();
+
                 }else{
                     $('.threads-list').after($('#thread-data'));
+                    var scroll_div = $('div .active').closest('.position-relative');
+                    if(scroll_div.position().top > 483){
+                        $('.threads-list').animate({
+                            scrollTop: scroll_div.offset().top
+                        }, 2000);
+                    }
                 }
-
-                // $html.removeClass('mobile');
             }).trigger('resize');
         })(jQuery);
 

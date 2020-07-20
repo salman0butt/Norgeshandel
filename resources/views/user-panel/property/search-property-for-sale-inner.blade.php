@@ -85,7 +85,7 @@
                         }
                         $image_path = !empty($full_path_photos)? $full_path_photos : asset('public/images/placeholder.png');
                         ?>
-                        <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position: relative">
+                        <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-6 col-md-4 col-12 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position: relative">
                             <a href="{{url('/', $property_for_sale->ad->id)}}"
                                class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                                 <div

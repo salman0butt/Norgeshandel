@@ -10,42 +10,43 @@ if(isset($job)){
     $ad = $job->ad;
 }
 
-//if(!isset($job)){
-//    $job = $ad->job;
-//}
-//$job = \App\Admin\Jobs\Job::find($job->id);
 $media = array();
 if($job->ad && $job->ad->media){
     $media = $job->ad->media;
 }
-if(count($media)>0){
-    foreach ($media as $item){
-        if ($item->type=='logo'){
-            $logo = \App\Helpers\common::getMediaPath($item, '66x66');
-        }
+if($ad && $ad->company_gallery->count() > 0){
+    $company_gallery = $ad->company_gallery->first();
+    if($company_gallery){
+        $gallery = \App\Helpers\common::getMediaPath($company_gallery);
     }
-    if ($job && $job->ad && $job->ad->company_gallery && $job->ad->company_gallery->first()){
-        $gallery = \App\Helpers\common::getMediaPath($job->ad->company_gallery->first(), '360x360');
+}
+if ($job->company_id != 0) {
+    if (is_countable($job->company->company_logo) && count($job->company->company_logo) > 0) {
+        $logo = \App\Helpers\common::getMediaPath($job->company->company_logo->first());
+    }
+} else {
+    if (is_countable($job->ad->company_logo) && count($job->ad->company_logo) > 0) {
+        $logo = \App\Helpers\common::getMediaPath($job->ad->company_logo->first());
     }
 }
 ?>
 <div class="col-sm-12 pr-0 end_fav_item product-list-mobile clist" data-name="{{$job->name}}">
 
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
-        <div class="image-section @if(Request::is('my-business/favorite-list/*')) col-sm-3 @else col-sm-4 @endif  p-2">
-            <div class="trailing-border" style="height:{{(Request()->get('view') && Request()->get('view') == 'list')? '174.93px;':'180px;'}}; width: 100%;
-                background-image: url('@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif'); background-size: cover; background-position: center;">
+        <div class="image-section @if(Request::is('my-business/favorite-list/*')) col-sm-3 @else col-sm-6 col-md-6 col-lg-4 @endif  p-2">
+            <div class="trailing-border" style="height:{{(Request()->get('view') && Request()->get('view') == 'list')? '100%;':'100%;'}}; width: 100%;
+                background-image: url('@if(!empty($logo)){{$logo}}@else{{asset('public/images/placeholder.png')}}@endif'); background-size: 100% auto; background-position: center;background-repeat: no-repeat;">
 {{--                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="" alt="" class="img-fluid radius-8">--}}
                 <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;"></div>
             </div>
         </div>
-        <div class="detailed-section @if(Request::is('my-business/favorite-list/*')) col-md-9 @else col-md-8 col-sm-8 @endif p-2">
+        <div class="detailed-section @if(Request::is('my-business/favorite-list/*')) col-md-9 @else col-sm-6 col-md-6 col-lg-8 @endif p-2">
             <div class="product-location text-muted mb-0 mt-2 u-d1" style="font-size: 16px; color: #6c757d!important;">{{$job->address ? Str::limit($job->address,30).', ' : ''}}{{$job->zip_city ? Str::ucfirst(Str::lower($job->zip_city)) : ''}}</div>
             <div class="location u-t5 text-muted mt-2 float-left">{{$job->sector}}</div>
             <div class="clearfix"></div>
             <div class="title color-grey">{{$job->name}}</div>
             <div class="detail u-t5 mt-1 float-left text-muted">{{$job->emp_name}} <br>{{$job->positions}} stillinger</div>
-            <div class="dealer-logo float-right mt-1" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>
+{{--            <div class="dealer-logo float-right mt-1" ><img src="{{$logo}}" style="max-height: 40px;" alt="" class="img-fluid"></div>--}}
         </div>
     </a>
     @if(Request::is('my-business/favorite-list/*'))

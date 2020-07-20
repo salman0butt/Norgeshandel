@@ -83,7 +83,7 @@
 
                     ?>
 
-                    <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
+                    <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-6 col-md-4 col-12 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="<?php echo e(url('/', $property_holiday_home_for_sale->ad->id)); ?>"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
