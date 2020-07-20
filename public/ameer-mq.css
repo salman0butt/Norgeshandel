@@ -94,6 +94,10 @@
         margin-top: 25px;
     }
 
+    .send-message-box span{
+        font-size: 25px !important;
+    }
+
 }
 
 @media (max-width: 360px) {
@@ -120,5 +124,9 @@
 
     .fileinput-exists {
         height: 80px !important;
+    }
+
+    .send-message-box span{
+        font-size: 18px !important;
     }
 }

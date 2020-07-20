@@ -73,11 +73,11 @@
     <div class="col-md-12" style="background-color: #fdfdfd">
         <div class="send-message-box" style="">
             <div class="row">
-                <div class="col-md-10 text-center m-0 p-0">
+                <div class="col-10 col-md-10 text-center m-0 p-0">
                     <textarea class="form-control message-input" id="message-input"
                               placeholder="Skriv meldingen din her..."></textarea>
                 </div>
-                <div class="col-md-1 bg-light-grey m-0 p-0 text-center position-relative">
+                <div class="col-1 col-md-1 bg-light-grey m-0 p-0 text-center position-relative">
                     <form action="#" id="attachment-form" enctype="multipart/form-data">
                     <input type="file" multiple name="attachment[]" id="attachment" accept=".doc,.docx,.pdf,.txt,.jpg,.jpeg,.png"
                            style="width: 100%;height: 100%;opacity: 0;cursor: pointer;position: absolute;top: 0;z-index: 9;left: 0;">
@@ -86,7 +86,7 @@
                     </a>
                     </form>
                 </div>
-                <div class="col-md-1 bg-maroon-lighter m-0 p-0 text-center">
+                <div class="col-1 col-md-1 bg-maroon-lighter m-0 p-0 text-center">
                     <a href="#" id="send_button" style="display: block;width: 100%;height: 100%;">
                         <span class="fa fa-paper-plane" style="font-size: 30px;margin-top: 35px;"></span>
                     </a>

@@ -505,7 +505,6 @@
             $window.resize(function resize(){
                 if ($window.width() < 768) {
                     $('div .active').closest('.position-relative').after($('#thread-data'));
-                    // $('div .active').closest('.position-relative').insertBefore('#thread-data');
                 }else{
                     $('.threads-list').after($('#thread-data'));
                 }
