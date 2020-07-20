@@ -27,7 +27,7 @@
         </ul>
     </nav>
 </div> --}}
-        <div id="content-start" style="padding: 0px 20px;">
+        <div id="content-start" style="padding: 0px 20px;" class="setting-page">
             <div class="u-mb32 mt-5 mb-5">
                 <h1>Innstillinger</h1>
                 @include('common.partials.flash-messages')
