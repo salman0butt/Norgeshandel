@@ -424,6 +424,9 @@
         .knowledge-base li a h4 {
             font-size: 14px !important;
         }
+        .setting-page label {
+            font-size: 0.8rem !important;
+        }
 
 }
 
