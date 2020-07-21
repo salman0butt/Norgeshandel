@@ -71,19 +71,22 @@
             </div>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div style="float: right">
-                {{--                                    {{$jobs->links()}}--}}
-            </div>
-        </div>
-    </div>
+    {{--<div class="row mt-3">--}}
+        {{--<div class="col-md-12">--}}
+            {{--<div style="float: right">--}}
+                {{--{{$jobs->links()}}--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     {{-- search saved button start --}}
 
     
     {{-- search saved button ends --}}
     <div class="row" id="job-list-pages">
+        <div class="col-md-12 outer-div">
+            <div class="inner-div">{{ $jobs->links() }}</div>
+        </div>
         @if($jobs && is_countable($jobs) && count($jobs)>0)
             @foreach($jobs as $job)
                 @if($job != null)
@@ -97,14 +100,17 @@
         @else
             <div class="col-md-6 offset-md-3 alert alert-warning">Ingen annonser funnet!</div>
         @endif
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div style="float: right">
-                {{--{{$jobs->links()}}--}}
-            </div>
+        <div class="col-md-12 outer-div">
+            <div class="inner-div">{{ $jobs->links() }}</div>
         </div>
     </div>
+    {{--<div class="row mt-3">--}}
+        {{--<div class="col-md-12">--}}
+            {{--<div style="float: right">--}}
+                {{--{{$jobs->links()}}--}}
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
     <script>
         var wrapper = document.getElementById('dme-wrapper');
         if (wrapper == null){

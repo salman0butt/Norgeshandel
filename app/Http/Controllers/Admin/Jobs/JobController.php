@@ -76,15 +76,16 @@ class JobController extends Controller
             $query->where('ads.status', 'published')
                 ->orwhereDate('ads.sold_at','>',$date);
         })->where('visibility',1)
-            ->orderBy('published_on', 'desc')
-            ->paginate(getenv('PAGINATION'));;
-        $management_jobs = Ad::join('jobs','ads.id','jobs.ad_id')
+            ->orderBy('published_on', 'desc');
+        $ads_count = $ads->count();
+        $ads = $ads->paginate(getenv('PAGINATION'));;
+        $management_jobs_count = Ad::join('jobs','ads.id','jobs.ad_id')
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->where('ads.visibility',1)->where('jobs.job_type','management')->paginate(getenv('PAGINATION'));
+            })->where('ads.visibility',1)->where('jobs.job_type','management')->count();
         $companies = Company::where('company_type','Jobb')->get();
-        return response()->view('user-panel.jobs.jobs', compact('ads', 'recent_search','saved_search','management_jobs','companies'));
+        return response()->view('user-panel.jobs.jobs', compact('ads_count','ads', 'recent_search','saved_search','management_jobs_count','companies'));
     }
 
     /**
@@ -637,7 +638,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->orderBy('ads.published_on','DESC')->limit(getenv('PAGINATION'))->get();
+            })->orderBy('ads.published_on','DESC')->paginate(getenv('PAGINATION'));//->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
@@ -793,7 +794,7 @@ class JobController extends Controller
             $jobs = $query->get();
             return $jobs;
         }
-        $jobs = $query->get();
+        $jobs = $query->paginate(getenv('PAGINATION'));
 
              //Job Map Filters
        if ($request->ajax()) {
