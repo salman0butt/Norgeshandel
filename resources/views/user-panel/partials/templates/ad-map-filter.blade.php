@@ -100,7 +100,7 @@
                 padding: 15px 10px;
         }
         #slider .ui-widget-header{
-            background:rgb(220, 53, 69) !important;
+            background:#ECDFE2 !important;
         }
         #slider .ui-state-default{
             background: rgb(220, 53, 69) !important;

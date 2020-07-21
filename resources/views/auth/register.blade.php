@@ -17,16 +17,16 @@
 </head>
 <body class="bg-light-grey" cz-shortcut-listen="true">
 
-<main class="" style="margin-top: 60px;margin-bottom: 20px;">
+<main class="register-main" style="margin-top: 60px;margin-bottom: 20px;">
 <div class="dme-container">
         <div class="row shadow">
             <div class="col-md-8 text-center bg-maroon-lighter p-5">
-                <img src="{{asset('public/images/NorgesHondel-logo.png')}}" alt="" class="mb-3 mt-5">
+                <img src="{{asset('public/images/NorgesHondel-logo.png')}}" alt="" class="mb-3 mt-5 register-img">
                 <p>Logg inn for å personalisere Norgeshandel, lagre søk, chat, varsler.</p>
                 <p><a href="{{ url('/customer-services') }}" class="mr-4">Hjelp</a> Tilbake til <a href="{{ url('/') }}">NorgesHandel</a></p>
             </div>
-            <div class="col-md-4 bg-white p-3">
-                <form method="POST" action="{{ route('register') }}" id="register_page">
+            <div class="col-md-4 bg-white p-3" id="register_page">
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <h3>Registrer her</h3>
                     <div class="form-group hide">
@@ -104,8 +104,10 @@
                             <label for="radiuscheckbox" aria-label="Husk meg på denne enheten">Husk meg på denne enheten</label>
                         </div>
                     </div>
-
+                       
                     <div class="form-group">
+                 <br>
+                 <br>
                         <button type="submit" class="dme-btn-outlined-blue mt-3">
                             Fortsett
                         </button>

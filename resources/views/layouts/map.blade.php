@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="{{asset('public/mediexpert.css')}}">
     <link rel="stylesheet" href="{{asset('public/mediexpert-mq.css')}}">
+     <link rel="stylesheet" href="{{asset('public/ameer-mq.css')}}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="{{ asset('public/css/diriection.css') }}" type="text/css" rel="stylesheet" />
@@ -83,11 +84,13 @@
         .primary-color {
             background: #ac304a;
         }
+        @media (min-width: 768px) {
         .navbar {
             padding: 5px 10px !important;
         }
+        }
         .navbar-nav li {
-            padding: 0px 15px !important;
+            padding: 0px 8px !important;
         }
         .navbar-nav li a:hover {
             background: #ac304ad9;
@@ -109,10 +112,17 @@
             background-image: none !important;
             height: 0px;
         }
+   
+     @media (max-width: 992px){
+              .navbar-toggler {
+            width: 100% !important;
+             padding-left: 90% !important;
+             }
+        } 
     </style>
 </head>
 
-<body>
+<body id="mapper-page">
 @include('user-panel.partials.header')
 <br><br>
 <!--Navbar-->
@@ -262,6 +272,28 @@
        
         });
     });
+</script>
+<script>
+        (function($) {
+        var $window = $(window);
+            // $html = $('html');
+
+        $window.resize(function resize(){
+            if ($window.width() < 992) {
+                if($('#collapsibleNavbar .filter-btn').hasClass('nav-item')){
+                    $('#collapsibleNavbar .filter-btn').removeClass('nav-item');
+                }
+                // return $html.addClass('mobile');
+            }else{
+                if(!$('#collapsibleNavbar .filter-btn').hasClass('nav-item')){
+                    $('#collapsibleNavbar .filter-btn').addClass('nav-item');
+
+                }
+            }
+
+            // $html.removeClass('mobile');
+        }).trigger('resize');
+    })(jQuery);
 </script>
 @yield('scripts')
 
