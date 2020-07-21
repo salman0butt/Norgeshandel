@@ -280,7 +280,6 @@ class PropertyForSaleController extends Controller
 //    zain
     public function new_property_for_sale(Request $request)
     {
-
         DB::beginTransaction();
         try{
             $company_id = 0;

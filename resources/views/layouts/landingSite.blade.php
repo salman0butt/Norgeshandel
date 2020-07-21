@@ -751,7 +751,7 @@
 </script>
 
 
-@if(Request::is('property/*/search') || Request::is('jobs/search'))
+@if(!Request::is('property/flat-wishes-rented/search') && Request::is('property/*/search') || Request::is('jobs/search'))
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9Ctn550_sIhRLl-ZlZeCVr7P_yLgqg7Y&libraries=places&language=no&callback=initMap"
             async defer></script>

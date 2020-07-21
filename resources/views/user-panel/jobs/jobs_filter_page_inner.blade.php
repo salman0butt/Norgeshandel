@@ -2,7 +2,7 @@
     <div class="left-ad float-left" id="left_banner_ad">
         @include('user-panel.banner-ads.left-banner')
     </div>
-<div class="dme-container pl-3 pr-3">
+<div id="job_inner_page" class="dme-container pl-3 pr-3">
     <div class="row top-ad" id="top_banner_ad">
         @include('user-panel.banner-ads.top-banner')
     </div>
@@ -33,16 +33,24 @@
         </div> 
         <div class="col-md-4 pt-4" id="mobile-view-filter-right" >
             <div class="pt-3 float-left" style="min-width: 53px;">
-                @if(isset($view) && $view=="list")
+                @if(isset($view) && $view=="grid")
+                    <a href="{{url('jobs/search?view=list')}}" data-name="list" id="view"
+                       class="change_view dme-btn-rounded-back-only">
+                        <i class="fa fa-list"></i>
+                    </a>
+                    {{--<a href="{{url('jobs/search?view=grid')}}" data-name="grid" id="view"--}}
+                       {{--class="change_view dme-btn-rounded-back-only">--}}
+                        {{--<i class="fa fa-th"></i>--}}
+                    {{--</a>--}}
+                @else
                     <a href="{{url('jobs/search?view=grid')}}" data-name="grid" id="view"
                        class="change_view dme-btn-rounded-back-only">
                         <i class="fa fa-th"></i>
                     </a>
-                @else
-                    <a href="{{url('jobs/search/?view=list')}}" data-name="list" id="view"
-                       class="change_view dme-btn-rounded-back-only">
-                        <i class="fa fa-list"></i>
-                    </a>
+                    {{--<a href="{{url('jobs/search/?view=list')}}" data-name="list" id="view"--}}
+                       {{--class="change_view dme-btn-rounded-back-only">--}}
+                        {{--<i class="fa fa-list"></i>--}}
+                    {{--</a>--}}
                 @endif
             </div>
             <div class="pt-3 float-left">
@@ -79,10 +87,10 @@
         @if($jobs && is_countable($jobs) && count($jobs)>0)
             @foreach($jobs as $job)
                 @if($job != null)
-                    @if(isset($view) && $view == "list")
-                        @include('user-panel.partials.templates.job-list')
-                    @else
+                    @if(isset($view) && $view == "grid")
                         @include('user-panel.partials.templates.job-sequare')
+                    @else
+                        @include('user-panel.partials.templates.job-list')
                     @endif
                 @endif
             @endforeach
@@ -97,6 +105,14 @@
             </div>
         </div>
     </div>
+    <script>
+        var wrapper = document.getElementById('dme-wrapper');
+        if (wrapper == null){
+            document.getElementById("left_banner_ad").style.display = "none";
+            document.getElementById("jobs_inner_page").style.display = "none";
+            location.reload();
+        }
+    </script>
 </div> <!--    ended container-->
   <div class="right-ad pull-right" id="right_banner_ad">
         @include('user-panel.banner-ads.right-banner')

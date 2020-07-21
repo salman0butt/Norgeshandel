@@ -14,7 +14,7 @@
 <div class="left-ad float-left" id="left_banner_ad">
     @include('user-panel.banner-ads.left-banner')
 </div>
-<div class="dme-container pl-3 pr-3">
+<div id="holiday_homes_for_sale_inner_page" class="dme-container pl-3 pr-3">
         <div class="row top-ad" id="top_banner_ad">
             @include('user-panel.banner-ads.top-banner')
         </div>
@@ -83,7 +83,7 @@
 
                     ?>
 
-                    <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-4 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
+                    <div class="product-list-mobile <?php echo $col === 'grid' ? 'col-sm-6 col-md-4 col-12 pr-0' : '' ?> <?php echo $col === 'grid' ? 'cgrid' : 'clist' ?>" style="position:relative">
                         <a href="<?php echo e(url('/', $property_holiday_home_for_sale->ad->id)); ?>"
                            class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
                             <div class="image-section <?php echo $col === 'grid' ? 'col-sm-12' : 'col-sm-12 col-xs-12 col-md-4' ?>  p-2">
@@ -149,6 +149,8 @@
     <script>
             var wrapper = document.getElementById('dme-wrapper');
             if (wrapper == null){
+                document.getElementById("left_banner_ad").style.display = "none";
+                document.getElementById("holiday_homes_for_sale_inner_page").style.display = "none";
                 location.reload();
             }
     </script>
