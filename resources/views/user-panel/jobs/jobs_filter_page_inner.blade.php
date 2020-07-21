@@ -239,8 +239,6 @@ $var = json_encode($counts);
                 $(this).parent().parent().css("opacity", '0.5');
             }
         });
-
-
     });
 
 </script>

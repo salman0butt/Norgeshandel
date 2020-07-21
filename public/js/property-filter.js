@@ -17,6 +17,8 @@ $(document).ready(function () {
     search(urlParams.toString());
     fix_page_links();
     var wto;
+    var wto1;
+
     $('.mega-menu input').change(function (e) {
         var id = $(this).attr('id');
         //var newUrl = $('#mega_menu_form').serialize();
@@ -26,6 +28,14 @@ $(document).ready(function () {
 
             $('#local_area_name_check').prop( "checked", true );
             timeout = 1000;
+        }
+        var sort = getUrlParameter('sort');
+
+
+        if(sort === '99' && (!cur_lon || !cur_lat)) {
+            get_curr_location();
+            timeout = 1000;
+
         }
 
         if($('#local_area_name_check'). prop("checked") == true){
@@ -43,7 +53,7 @@ $(document).ready(function () {
             var newUrl = remove_variables_from_url();
 
             var view = getUrlParameter('view');
-            var sort = getUrlParameter('sort');
+
             var user_id = getUrlParameter('user_id');
 
             if (!isEmpty(user_id)) {
@@ -56,11 +66,17 @@ $(document).ready(function () {
                 newUrl += "&sort=" + sort;
             }
 
-            newUrl = set_lat_lon(newUrl,sort);
+            if(sort === '99') {
+                newUrl += "&lat=" + cur_lat.toFixed(6);
+                newUrl += "&lon=" + cur_lon.toFixed(6);
+            }
+
+            // newUrl = set_lat_lon(newUrl,sort);
             search(newUrl);
 
             // fix_page_links();
             var back_url = $('#back_url').val();
+
             if (!added) {
                 window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
                 added = true;
@@ -96,18 +112,42 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
-        newUrl = set_lat_lon(newUrl,sort);
-        // history.pushState('data', 'NorgesHandel', "?" + newUrl);
-        search(newUrl);
-        // fix_page_links();
-        var back_url = $('#back_url').val();
-        if (!added) {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
-            added = true;
-        } else {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+//        newUrl = set_lat_lon(newUrl,sort);
+        var timeout = 0;
+        if(sort === '99' && (!cur_lon || !cur_lat)) {
+            get_curr_location();
+            timeout = 1000;
+
         }
+        clearTimeout(wto1);
+        wto1 = setTimeout(function() {
+            if(sort === '99') {
+                newUrl += "&lat=" + cur_lat.toFixed(6);
+                newUrl += "&lon=" + cur_lon.toFixed(6);
+            }
+            search(newUrl);
+
+            var back_url = $('#back_url').val();
+
+            if (!added) {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+                added = true;
+            } else {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+            }
+        }, timeout);
+
+        // search(newUrl);
+        // // fix_page_links();
+        // var back_url = $('#back_url').val();
+        // if (!added) {
+        //     window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+        //     added = true;
+        // } else {
+        //     window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+        // }
     });
+
 
     $(document).on('change', '#sort_by', function () {
         var newUrl = remove_variables_from_url();
@@ -128,24 +168,44 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
-        // newUrl = set_lat_lon(newUrl,sort);
+
+        var timeout = 0;
 
         if(sort === '99' && (!cur_lon || !cur_lat)) {
-            get_curr_location(newUrl);
-        }else{
-            newUrl = set_lat_lon(newUrl,sort);
-            search(newUrl);
+            get_curr_location();
+            timeout = 1000;
+
         }
+        clearTimeout(wto1);
+        wto1 = setTimeout(function() {
+            if(sort === '99') {
+                newUrl += "&lat=" + cur_lat.toFixed(6);
+                newUrl += "&lon=" + cur_lon.toFixed(6);
+                //newUrl = set_lat_lon(newUrl,sort);
+            }
+            search(newUrl);
+
+            var back_url = $('#back_url').val();
+
+            if (!added) {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+                added = true;
+            } else {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+            }
+        }, timeout);
+
+        // newUrl = set_lat_lon(newUrl,sort);
+
+        // if(sort === '99' && (!cur_lon || !cur_lat)) {
+        //     get_curr_location(newUrl);
+        // }else{
+        //     newUrl = set_lat_lon(newUrl,sort);
+        //     search(newUrl);
+        // }
 
 
         // fix_page_links();
-        var back_url = $('#back_url').val();
-        if (!added) {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
-            added = true;
-        } else {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
-        }
 
     });
     $(document).on('click', '#view', function (e) {
@@ -173,17 +233,41 @@ $(document).ready(function () {
         if (!isEmpty(page)) {
             newUrl += "&page=" + page;
         }
-        newUrl = set_lat_lon(newUrl,sort);
-        // history.pushState('data', 'NorgesHandel', "?" + newUrl);
-        search(newUrl);
-        // fix_page_links();
-        var back_url = $('#back_url').val();
-        if (!added) {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
-            added = true;
-        } else {
-            window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+        var timeout = 0;
+        if(sort === '99' && (!cur_lon || !cur_lat)) {
+            get_curr_location();
+            timeout = 1000;
+
         }
+        clearTimeout(wto1);
+        wto1 = setTimeout(function() {
+            if(sort === '99') {
+                newUrl += "&lat=" + cur_lat.toFixed(6);
+                newUrl += "&lon=" + cur_lon.toFixed(6);
+            }
+            search(newUrl);
+
+            var back_url = $('#back_url').val();
+            if (!added) {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+                added = true;
+            } else {
+                window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+            }
+        }, timeout);
+
+
+        //newUrl = set_lat_lon(newUrl,sort);
+        // history.pushState('data', 'NorgesHandel', "?" + newUrl);
+        //search(newUrl);
+        // fix_page_links();
+        // var back_url = $('#back_url').val();
+        // if (!added) {
+        //     window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+        //     added = true;
+        // } else {
+        //     window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+        // }
     });
 
     // $(window).on('popstate', function (e) {

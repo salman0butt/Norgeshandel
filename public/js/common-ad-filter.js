@@ -187,14 +187,15 @@ $(window).scroll(function() {
 });
 
 function get_curr_location(newUrl=''){
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             cur_lat = position.coords.latitude;
             cur_lon = position.coords.longitude;
-            if(newUrl){
-                newUrl = set_lat_lon(newUrl,'99');
-                search(newUrl);
-            }
+            // if(newUrl){
+            //     newUrl = set_lat_lon(newUrl,'99');
+            //     // search(newUrl);
+            // }
         }, function() {
             alert('Du fant ikke nærmeste annonser fordi vi ikke får tilgang til posisjonen din. Fjern blokkeringen av siden vår fra nettleserinnstillingene dine og prøv igjen. Takk');
         });
@@ -206,6 +207,7 @@ function set_lat_lon(newUrl,sort){
         newUrl += "&lat=" + cur_lat.toFixed(6);
         newUrl += "&lon=" + cur_lon.toFixed(6);
     }
+
     return newUrl;
 }
 
