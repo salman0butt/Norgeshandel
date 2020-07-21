@@ -86,7 +86,7 @@
                             <div class="col-md-12"><span class="font-weight-bold">Type lokale </span>&nbsp;<span
                                    >
                                  @if(count($property_type) > 0)
-                                    <ul class="row">
+                                    <ul class="row facilty-page">
                                         @foreach($property_type as $value)
                                             <li class="col-md-6">{{$value}}</li>
                                         @endforeach
@@ -153,7 +153,7 @@
                                 <div class="bg-light-grey radius-8 col-md-12 p-3">
                                     <div>
                                         <span class="font-weight-bold">Fasiliteter &nbsp;</span>
-                                        <ul class="row">
+                                        <ul class="row facilty-page">
                                             @foreach($facilities as $key=>$val)
                                                 <li class="col-6">
                                                     <?php

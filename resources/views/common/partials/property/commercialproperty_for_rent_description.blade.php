@@ -19,7 +19,7 @@
                 @include('user-panel.banner-ads.top-banner')
             </div>
         </div>
-        <div class="dme-container p-3">
+        <div class="dme-container p-3" id="description-page">
            <div class="breade-crumb">
                 <nav aria-label="breadcrumb">
                     <div class="row pl-3 pr-3">
@@ -79,7 +79,7 @@
                         @endphp
                         <div class="col-md-12"><span class="font-weight-bold">Type lokale </span>&nbsp;<span>
                                 @if(is_countable($property_type))
-                                    <ul class="row">
+                                    <ul class="row facilty-page">
                                         @foreach($property_type as $value)
                                              <li class="col-6">{{$value}}</li>
                                         @endforeach
@@ -174,7 +174,7 @@
                         @if(count($facilities))
                             <div class="col-md-12 more_details_section">
                                 <span class="font-weight-bold">Fasiliteter</span>
-                                <ul class="row">
+                                <ul class="row facilty-page">
                                     @foreach($facilities as $key=>$val)
                                         <li class="col-6">
                                             <?php
