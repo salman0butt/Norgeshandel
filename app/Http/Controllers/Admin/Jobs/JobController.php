@@ -638,7 +638,7 @@ class JobController extends Controller
             ->where(function ($query) use ($date){
                 $query->where('ads.status', 'published')
                     ->orwhereDate('ads.sold_at','>',$date);
-            })->orderBy('ads.published_on','DESC')->limit(getenv('PAGINATION'))->get();
+            })->orderBy('ads.published_on','DESC')->paginate(getenv('PAGINATION'));//->get();
         return response()->view('user-panel.jobs.jobs_filter_page', compact('jobs'));
     }
 
@@ -794,7 +794,7 @@ class JobController extends Controller
             $jobs = $query->get();
             return $jobs;
         }
-        $jobs = $query->get();
+        $jobs = $query->paginate(getenv('PAGINATION'));
 
              //Job Map Filters
        if ($request->ajax()) {
