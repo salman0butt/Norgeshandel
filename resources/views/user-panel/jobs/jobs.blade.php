@@ -64,12 +64,12 @@
                             <li class="col-sm-4 pl-0 pr-0" style="margin-right: 5px;" id="job-sub-cat">
                                 <!--                            --><?php //$filters = [];?>
                                 <a href="{{route('search')}}" class="nav-link dme-btn-outlined-blue">Alle stillinger
-                                    ({{$ads->count()}})</a>
+                                    ({{$ads_count}})</a>
                             </li>
                             <li class="col-sm-4 pl-0 pr-0" style="margin-right: 5px;"  id="job-sub-cat">
                                 <?php $array = ['job_type' => 'management'];?>
                                 <a href="{{route('search', $array)}}" class="nav-link dme-btn-outlined-blue">Lederstillinger
-                                    ({{$management_jobs->count()}})</a>
+                                    ({{$management_jobs_count}})</a>
                             </li>
                             <?php $filters = ['job_type' => []]; ?>
                             <li class="col-sm-4 pl-0 pr-0" style=""  id="job-sub-cat">

@@ -164,6 +164,7 @@
                     urlParams = new URLSearchParams(location.search);
                     var view = urlParams.get('view');
 
+
                     var x = new URLSearchParams(newUrl);
                     if (!isEmpty(view)) {
                         newUrl += "&view=" + view;
@@ -176,7 +177,7 @@
                         newUrl += "&lon=" + cur_lon.toFixed(6);
                     }
 
-                    newUrl = set_lat_lon(newUrl,sort);
+                    // newUrl = set_lat_lon(newUrl,sort);
                     search(newUrl);
                     {{--if(!added){--}}
                         {{--history.pushState('{{url('jobs')}}', 'NorgesHandel', "?" + newUrl);--}}
