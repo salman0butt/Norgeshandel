@@ -17,7 +17,7 @@
 <div class="left-ad float-left" id="left_banner_ad">
     @include('user-panel.banner-ads.left-banner')
 </div>
-<div class="dme-container pl-3 pr-3">
+<div id="commercial_property_for_rent_inner_page" class="dme-container pl-3 pr-3">
      <div class="row top-ad" id="top_banner_ad">
             @include('user-panel.banner-ads.top-banner')
       </div>
@@ -156,6 +156,8 @@
     <script>
         var wrapper = document.getElementById('dme-wrapper');
         if (wrapper == null){
+            document.getElementById("left_banner_ad").style.display = "none";
+            document.getElementById("commercial_property_for_rent_inner_page").style.display = "none";
             location.reload();
         }
     </script>

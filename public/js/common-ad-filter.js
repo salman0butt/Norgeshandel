@@ -250,8 +250,6 @@ $(document).ready(function () {
         $valueSpan.html($value.val() + 'km');
     });
 
-
-
     $(function() {
         var valMap = [1,2,3,4,5,6,7,8,9,10,15,20,25,30,35,40,45,50,60,70,80,90,100,120,140,160,180,200];
         var radius_value = parseInt($('#radius').val());
@@ -269,7 +267,6 @@ $(document).ready(function () {
         });
 
     });
-
 
     (function($) {
         var $window = $(window);
@@ -291,4 +288,5 @@ $(document).ready(function () {
             // $html.removeClass('mobile');
         }).trigger('resize');
     })(jQuery);
+
 });

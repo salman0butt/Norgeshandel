@@ -99,26 +99,26 @@
                             <ul class="list list-unstyled">
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="1" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(1,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
-                                        <label for="number_of_tenants-1"> 1 person<span data-name="1 person" data-title="number_of_tenants" class="count"></span></label>
+                                        <input type="checkbox" name="number_of_tenants[]" value="1" {{Request()->number_of_tenants ? is_numeric(array_search(1,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
+                                        <label> 1 person<span data-name="1 person" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="2" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(2,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
-                                        <label for="number_of_tenants-2"> 2 personer<span data-name="2 personer" data-title="number_of_tenants" class="count"></span></label>
+                                        <input type="checkbox" name="number_of_tenants[]" value="2" {{Request()->number_of_tenants ? is_numeric(array_search(2,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
+                                        <label> 2 personer<span data-name="2 personer" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="3" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(3,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
-                                        <label for="number_of_tenants-3"> 3 personer<span data-name="3 personer" data-title="number_of_tenants" class="count"></span></label>
+                                        <input type="checkbox" name="number_of_tenants[]" value="3" {{Request()->number_of_tenants ? is_numeric(array_search(3,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
+                                        <label> 3 personer<span data-name="3 personer" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="input-toggle">
-                                        <input type="checkbox" name="number_of_tenants[]" value="4" id="number_of_tenants-" {{Request()->number_of_tenants ? is_numeric(array_search(4,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
-                                        <label for="number_of_tenants-"> 4 eller flere<span data-name="4 eller flere" data-title="number_of_tenants" class="count"></span></label>
+                                        <input type="checkbox" name="number_of_tenants[]" value="4" {{Request()->number_of_tenants ? is_numeric(array_search(4,Request()->number_of_tenants)) ? "checked" : "" : ""}}>
+                                        <label > 4 eller flere<span data-name="4 eller flere" data-title="number_of_tenants" class="count"></span></label>
                                     </div>
                                 </li>
                             </ul>
