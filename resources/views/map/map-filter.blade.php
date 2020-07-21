@@ -45,6 +45,28 @@
 
 </script>
 <script>
+function remve_nav_class() {
+   (function($) {
+        var $window = $(window);
+            // $html = $('html');
+
+        $window.resize(function resize(){
+            if ($window.width() < 992) {
+                if($('#collapsibleNavbar .filter-btn').hasClass('nav-item')){
+                    $('#collapsibleNavbar .filter-btn').removeClass('nav-item');
+                }
+                // return $html.addClass('mobile');
+            }else{
+                if(!$('#collapsibleNavbar .filter-btn').hasClass('nav-item')){
+                    $('#collapsibleNavbar .filter-btn').addClass('nav-item');
+
+                }
+            }
+
+            // $html.removeClass('mobile');
+        }).trigger('resize');
+    })(jQuery);
+}
 $(document).on('change', '#property_type',function() {
    var url = '{{ url('map/select-property') }}';
      $.ajax({
@@ -53,12 +75,13 @@ $(document).on('change', '#property_type',function() {
             type: "GET",
              async: false,
             success: function (response) {
-              if($('#collapsibleNavbar > ul > li.nav-item.filter-btn').length > 0){
+              if($('#collapsibleNavbar > ul > li.filter-btn').length > 0){
                    $('#collapsibleNavbar ul .filter-btn:first').remove();
                      $('#collapsibleNavbar ul:first').prepend(response);
               }else {
                 $('#collapsibleNavbar ul:first').prepend(response);
               }
+              remve_nav_class();
 
             },
             error: function (error) {
@@ -76,12 +99,13 @@ $(document).on('change', '#property_type',function() {
             type: "GET",
             async: false,
             success: function (response) {
-              if($('#collapsibleNavbar > ul > li.nav-item.filter-btn').length > 0){
+              if($('#collapsibleNavbar > ul > li.filter-btn').length > 0){
                    $('#collapsibleNavbar ul .filter-btn:first').remove();
                      $('#collapsibleNavbar ul:first').prepend(response);
               }else {
                 $('#collapsibleNavbar ul:first').prepend(response);
               }
+              remve_nav_class();
 
             },
             error: function (error) {
