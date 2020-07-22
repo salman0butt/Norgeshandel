@@ -34,7 +34,7 @@ if ($job->company_id != 0) {
 
     <a href="{{url('jobs', compact('job'))}}" class="row product-list-item mr-1 p-sm-1 mt-3" style="text-decoration: none;">
         <div class="image-section @if(Request::is('my-business/favorite-list/*')) col-sm-3 @else col-sm-6 col-md-6 col-lg-4 @endif  p-2">
-            <div class="trailing-border" style="height:{{(Request()->get('view') && Request()->get('view') == 'list')? '100%;':'100%;'}}; width: 100%;
+            <div class="trailing-border" style="height:{{(Request()->get('view') && Request()->get('view') == 'list') ? '175px;':'100%;'}}; width: 100%;
                 background-image: url('@if(!empty($logo)){{$logo}}@else{{asset('public/images/placeholder.png')}}@endif'); background-size: 100% auto; background-position: center;background-repeat: no-repeat;">
 {{--                <img src="@if(!empty($gallery)){{$gallery}}@else{{asset('public/images/placeholder.png')}}@endif" style="" alt="" class="img-fluid radius-8">--}}
                 <div class="product-price"><img src="{{asset('public/images/Jobb_ikon_white.svg')}}" width="23px;"></div>
