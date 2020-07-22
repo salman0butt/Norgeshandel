@@ -198,6 +198,60 @@
                 }, timeout);
 
             });
+
+            $(document).on('click', 'a.page-link', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+
+                urlParams = new URLSearchParams(location.search);
+                var sort = urlParams.get('sort');
+                var view = urlParams.get('view');
+                // var page = urlParams.get('page');
+                urlParams.delete('view');
+                urlParams.delete('page');
+                urlParams.delete('sort');
+                urlParams.delete('lat');
+                urlParams.delete('lon');
+
+                var page_param = url.split('=');
+                var page = page_param[1];
+                var newUrl = urlParams.toString();
+
+                if (!isEmpty(sort)) {
+                    newUrl += "&sort=" + sort;
+                }
+                if (!isEmpty(view)) {
+                    newUrl += "&view=" + view;
+                }
+                if (!isEmpty(page)) {
+                    newUrl += "&page=" + page;
+                }
+
+                var timeout = 0;
+                if(sort === '99' && (!cur_lon || !cur_lat)) {
+                    get_curr_location();
+                    timeout = 1000;
+
+                }
+                clearTimeout(wto1);
+                wto1 = setTimeout(function() {
+                    if(sort === '99') {
+                        newUrl += "&lat=" + cur_lat.toFixed(6);
+                        newUrl += "&lon=" + cur_lon.toFixed(6);
+                    }
+                    search(newUrl);
+
+                    var back_url = $('#back_url').val();
+
+                    if (!added) {
+                        window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+                        added = true;
+                    } else {
+                        window.history.replaceState(back_url, 'NorgesHandel', "?" + newUrl);
+                    }
+                }, timeout);
+
+            });
         });
     </script>
 @endsection
