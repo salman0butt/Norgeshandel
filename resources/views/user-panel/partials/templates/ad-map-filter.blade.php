@@ -16,7 +16,7 @@
         <div class="clearfix"></div>
         <div class="mt-3" style="width:100%;">
             <div style="display: block;margin-left: 15%;width: 99%;">
-                <input id="pac-input" class="controls" name="local_area_name" value="{{isset(Request()->local_area_name) ? Request()->local_area_name : 'Oslo, Norge'}}" type="text" placeholder="Enter a location">
+                <input id="pac-input" class="controls" name="local_area_name" value="{{isset(Request()->local_area_name) ? Request()->local_area_name : 'Oslo, Norge'}}" type="text" placeholder="Søk etter adresse">
             </div>
 
             <div id="map" style="clear:both; height:300px;"></div>

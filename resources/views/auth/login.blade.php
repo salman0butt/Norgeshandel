@@ -45,7 +45,7 @@
                         <label for="email" class="u-t5">Skriv inn din e-postadresse</label>
                         <div class="" style="">
                             <input id="email" type="email" class="dme-form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                            Skriv inn din e-postadresse
+                           
 
                             @error('email')
                             <span class="invalid-feedback" role="alert">
