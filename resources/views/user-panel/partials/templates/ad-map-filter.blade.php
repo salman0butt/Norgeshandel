@@ -61,24 +61,24 @@
         }
         #pac-input {
             outline: none;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 1px solid #474445;
-    border-radius: 0;
-    box-shadow: none ;
-    padding-left: 5px;
-    font-size:18px;
-    color: #474445;
-   left:52px !important;
-    height:45px;
-    width:86%;
-    background-color: #ecdfe2;
-    -webkit-transition: box-shadow 0.5s;
-    -moz-transition: box-shadow 0.5s;
-    -ms-transition: box-shadow 0.5s;
-    -o-transition: box-shadow 0.5s;
-    transition: box-shadow 0.5s;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            border-bottom: 1px solid #474445;
+            border-radius: 0;
+            box-shadow: none ;
+            padding-left: 5px;
+            font-size:18px;
+            color: #474445;
+           left:52px !important;
+            height:45px;
+            width:86%;
+            background-color: #ecdfe2;
+            -webkit-transition: box-shadow 0.5s;
+            -moz-transition: box-shadow 0.5s;
+            -ms-transition: box-shadow 0.5s;
+            -o-transition: box-shadow 0.5s;
+            transition: box-shadow 0.5s;
         }
        .valueSpan2{
             font-size: 14px;
@@ -96,8 +96,9 @@
         #mega_menu_form > div > div:nth-child(1) > div:nth-child(3) > div.d-flex.flex-row > div,#mega_menu_form > div > div > div > div.d-flex.flex-row > div {
                 position: absolute;
                 z-index: 9999999999999999;
-                background: #fff;
-                padding: 15px 10px;
+                /*background: #fff;*/
+                padding: 15px 0 15px 10px;
+                background: transparent;
         }
         #slider .ui-widget-header{
             background:#ECDFE2 !important;
