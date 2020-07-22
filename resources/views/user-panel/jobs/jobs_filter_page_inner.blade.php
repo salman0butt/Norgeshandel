@@ -218,15 +218,15 @@ $var = json_encode($counts);
             }
         });
 
-        $.each($('.pagination .page-link'), function () {
-            var link = $(this).attr('href');
-            if (!isEmpty(link)) {
-                var urlParams = new URLSearchParams(location.search);
-                urlParams.delete('page');
-                urlParams.set('page', GetURLParameter(link, 'page'));
-                $(this).attr('href', "?" + urlParams.toString());
-            }
-        });
+        // $.each($('.pagination .page-link'), function () {
+        //     var link = $(this).attr('href');
+        //     if (!isEmpty(link)) {
+        //         var urlParams = new URLSearchParams(location.search);
+        //         urlParams.delete('page');
+        //         urlParams.set('page', GetURLParameter(link, 'page'));
+        //         $(this).attr('href', "?" + urlParams.toString());
+        //     }
+        // });
         var x = "{{$var}}";
         var counts = JSON.parse(x.replace(/&quot;/g, '\"'));
         var d = new Date();
